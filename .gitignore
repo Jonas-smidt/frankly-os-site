@@ -1,0 +1,10 @@
+# Bygges automatisk af GitHub Action — skal ikke committes
+site/
+
+# Python
+__pycache__/
+*.pyc
+
+# Diverse
+.DS_Store
+*.local

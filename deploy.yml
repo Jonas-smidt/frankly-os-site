@@ -1,0 +1,54 @@
+name: Deploy Frankly OS
+
+# Hvornår siden bygges og lægges live:
+on:
+  schedule:
+    - cron: "0 * * * *"   # hver hele time (henter nyeste fra Drive)
+  workflow_dispatch: {}    # "Run workflow"-knap = manuel opdatering med det samme
+  push:
+    branches: [main]       # bygger også når repoet ændres
+
+# Rettigheder som GitHub Pages-deploy kræver
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+# Undgå at to kørsler deployer oven i hinanden
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Hent repoet
+        uses: actions/checkout@v4
+
+      - name: Opsæt Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Installer afhængigheder
+        run: pip install -r requirements.txt
+
+      - name: Synkronisér indhold fra Google Drive
+        env:
+          GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+          DRIVE_FOLDER_ID: ${{ vars.DRIVE_FOLDER_ID || '1SbreMcr9vbHbGlLXZL7NNDoEUUKOsCdB' }}
+          SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
+        run: python scripts/sync_from_drive.py
+
+      - name: Pak siden som Pages-artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+
+      - name: Deploy til GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
