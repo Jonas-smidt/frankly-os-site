@@ -32,7 +32,7 @@ SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico")
 
 # ---- Kode-lås (simpelt "gardin", ikke rigtig sikkerhed) ----
-GATE_CODE = os.environ.get("SITE_CODE", "frankly").strip()
+GATE_CODE = (os.environ.get("SITE_CODE") or "frankly").strip()
 GATE_CODE_B64 = base64.b64encode(GATE_CODE.encode("utf-8")).decode("ascii")
 
 GATE_TEMPLATE = """<script>(function(){
