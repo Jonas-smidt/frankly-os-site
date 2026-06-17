@@ -40,8 +40,9 @@ jobs:
       - name: Synkronisér indhold fra Google Drive
         env:
           GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
-          DRIVE_FOLDER_ID: ${{ vars.DRIVE_FOLDER_ID || '1SbreMcr9vbHbGlLXZL7NNDoEUUKOsCdB' }}
+          DRIVE_FOLDER_ID: ${{ vars.DRIVE_FOLDER_ID || '1MhCxVzXJDJc_sHT5fXZjaxiqLTaWe8vW' }}
           SITE_DOMAIN: ${{ vars.SITE_DOMAIN }}
+          SITE_CODE: ${{ vars.SITE_CODE }}
         run: python scripts/sync_from_drive.py
 
       - name: Pak siden som Pages-artifact
