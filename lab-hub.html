@@ -251,8 +251,8 @@
     },
     {
       name:"Brand Assistant", tm:false, emoji:"💬",
-      desc:"Ask what you can and can't do — \"can I use the logo in green?\" Answers from the rules, never guesses. Runs in Claude.",
-      category:"Brand", href:"PASTE_CLAUDE_ARTIFACT_LINK_HERE", status:"claude", id:"TOOL_03"
+      desc:"Ask what you can and can't do — \"can I use the logo in green?\" Instant answers straight from the rules. Searchable, no AI.",
+      category:"Brand", href:"frankly-brand-assistant.html", status:"live", id:"TOOL_03"
     },
     {
       name:"Business card", tm:true, emoji:"📇",
@@ -303,8 +303,30 @@
       name:"Process poster", tm:false, emoji:"🔁",
       desc:"The 7-stage Frankly OS process spine — from task in to learn, with the quality door.",
       category:"Frankly OS", href:"frankly-os-process-poster.html", status:"live", id:"TOOL_13"
+    },
+    {
+      name:"Do you know Frankly?", tm:false, emoji:"🧠",
+      desc:"A 15-question brand quiz — voice, colours and the words we use. Great for new joiners.",
+      category:"Fun", href:"frankly-quiz.html", status:"live", id:"TOOL_14"
     }
   ];
+
+  const KW={
+    TOOL_01:"email gmail signature disclaimer footer",
+    TOOL_02:"brand colors colours hex fonts type logo rules guide reference",
+    TOOL_03:"brand assistant rules logo colours fonts voice can i do dont allowed",
+    TOOL_04:"business card vcard qr contact",
+    TOOL_05:"dictionary glossary terms premium selvrisiko deductible churn mga loss ratio embedded insurance jargon ordbog definitions",
+    TOOL_06:"qr code link",
+    TOOL_07:"linkedin post character count preview",
+    TOOL_08:"image resize resizer crop format instagram story hero",
+    TOOL_09:"drop protection game",
+    TOOL_10:"decision chicken random yes no coin flip",
+    TOOL_11:"system map os architecture layers routes",
+    TOOL_12:"toolbox map capabilities connectors agents skills compute",
+    TOOL_13:"process poster pipeline stages quality door",
+    TOOL_14:"quiz test trivia onboarding brand know newcomer"
+  };
 
   const STATUS_LABEL={live:"Live",beta:"Beta",soon:"Coming soon",claude:"Runs in Claude"};
   let activeCat="All", query="";
@@ -349,7 +371,7 @@
     const q=norm(query);
     const items=TOOLS.filter(t=>
       (activeCat==="All"||t.category===activeCat)&&
-      (!q||norm(t.name).includes(q)||norm(t.desc).includes(q)||norm(t.category).includes(q))
+      (!q||norm(t.name).includes(q)||norm(t.desc).includes(q)||norm(t.category).includes(q)||norm(KW[t.id]).includes(q))
     );
     document.getElementById('grid').innerHTML=items.map(card).join('');
     document.getElementById('noresult').style.display=items.length?'none':'block';
