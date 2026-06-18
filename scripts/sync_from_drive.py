@@ -36,6 +36,7 @@ GATE_CODE = (os.environ.get("SITE_CODE") or "frankly").strip()
 GATE_CODE_B64 = base64.b64encode(GATE_CODE.encode("utf-8")).decode("ascii")
 
 GATE_TEMPLATE = """<script>(function(){
+  if(window.top!==window.self) return;
   try{ if(sessionStorage.getItem('flab_ok')==='1') return; }catch(e){}
   var OK="__OKB64__";
   var de=document.documentElement; de.style.visibility='hidden';
