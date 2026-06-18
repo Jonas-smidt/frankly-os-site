@@ -141,6 +141,19 @@ def main():
             images += 1
             print("billede: %s" % name)
 
+    # Repo-hostede ekstrasider: alle .html i repo-roden (undtagen hub'en).
+    # Bruges til sider der uploades direkte til repoet (fx fra en lokal fil),
+    # i stedet for via Drive. Får også kode-låsen injiceret.
+    for p in sorted(pathlib.Path(".").glob("*.html")):
+        if p.name.lower() == HUB_FILE.name.lower():
+            continue
+        out = safe_name(p.name)
+        if not out.lower().endswith((".html", ".htm")):
+            out += ".html"
+        (SITE_DIR / out).write_bytes(inject_gate(p.read_bytes()))
+        pages += 1
+        print("repo-side: %s -> site/%s" % (p.name, out))
+
     # Forside = repoets hub (også med kode-lås)
     (SITE_DIR / "index.html").write_bytes(inject_gate(HUB_FILE.read_bytes()))
 
