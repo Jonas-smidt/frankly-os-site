@@ -1,0 +1,202 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frankly — Hvad er dækket?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FFD3E3; --pink-deep:#FFACCA; --pink-soft:#F3DEE4; --pink-wash:#FCEAF1;
+    --grounded:#2D0011; --ink:#111111;
+    --limestone:#F5F4F1; --limestone-soft:#F0EEE9; --limestone-aged:#ECE9E4; --limestone-edge:#E3DDD5;
+    --grey:#6B6B6B; --grey-d:#5A5A5A; --amber:#8A6D3B; --amber-bg:#FBF3E3;
+    --maxw:960px;
+    --font:'Switzer','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+    --font-display:'Almarena Neue Display','Switzer','Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{background:var(--limestone);color:var(--ink);font-family:var(--font);line-height:1.6;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:36px 22px 60px;}
+  .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);border:0;}
+
+  .topbar{display:flex;align-items:center;gap:10px;margin-bottom:34px;}
+  .topbar .logo{height:30px;width:auto;display:block;}
+
+  .hero{position:relative;overflow:hidden;border-radius:20px;background:var(--pink-soft);padding:38px 34px 34px;margin-bottom:26px;}
+  .hero .eyebrow{font-size:13px;font-weight:600;letter-spacing:0.02em;color:var(--grounded);opacity:.7;margin:0 0 12px;}
+  .hero h1{font-size:38px;line-height:1.08;letter-spacing:-0.02em;font-weight:700;color:var(--grounded);margin:0 0 14px;max-width:18ch;}
+  .hero p{font-size:17px;color:var(--grounded);opacity:.82;margin:0;max-width:54ch;}
+  .ribbon{position:absolute;right:-26px;top:-18px;width:260px;height:260px;opacity:.85;pointer-events:none;}
+
+  .legend{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin:0 4px 16px;font-size:13.5px;color:var(--grey-d);}
+  .legend .chip{cursor:default}
+
+  .chip{display:inline-flex;align-items:center;gap:7px;padding:6px 12px;border-radius:999px;font-size:13.5px;font-weight:500;white-space:nowrap;}
+  .chip svg{width:16px;height:16px;flex:0 0 auto;}
+  .chip.yes{background:var(--pink-deep);color:var(--grounded);}
+  .chip.no{background:var(--limestone-aged);color:var(--grey);}
+  .chip.dep{background:var(--amber-bg);color:var(--amber);}
+
+  table{width:100%;border-collapse:separate;border-spacing:0;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 1px 3px rgba(45,0,17,.06);}
+  thead th{font-weight:600;font-size:14.5px;text-align:center;padding:18px 14px 16px;color:var(--grounded);background:var(--limestone-soft);vertical-align:bottom;}
+  thead th .sub{display:block;font-weight:400;font-size:12px;color:var(--grey-d);margin-top:3px;}
+  thead th.scenario-h{text-align:left;background:#fff;}
+  thead th.frankly-h{background:var(--pink);}
+  tbody th{text-align:left;padding:15px 14px;font-weight:500;font-size:15px;border-top:1px solid var(--limestone-aged);color:var(--ink);vertical-align:middle;}
+  tbody th .lbl{display:flex;align-items:center;gap:12px;}
+  tbody th .ico{width:26px;height:26px;flex:0 0 auto;color:var(--grounded);opacity:.8;}
+  tbody th .ico svg{width:26px;height:26px;}
+  tbody td{text-align:center;padding:15px 14px;border-top:1px solid var(--limestone-aged);vertical-align:middle;}
+  td.frankly{background:var(--pink-wash);}
+
+  .know{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;margin-top:26px;}
+  .know .card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(45,0,17,.05);}
+  .know .card .ico{width:30px;height:30px;color:var(--grounded);margin-bottom:12px;}
+  .know .card .ico svg{width:30px;height:30px;}
+  .know .card h3{font-size:16px;font-weight:600;color:var(--grounded);margin:0 0 6px;}
+  .know .card p{font-size:14px;color:var(--grey-d);margin:0;line-height:1.55;}
+
+  .foot{margin-top:30px;background:var(--grounded);border-radius:18px;padding:26px 28px;color:#fff;}
+  .foot .cta{font-size:19px;font-weight:600;letter-spacing:-0.01em;margin:0 0 14px;color:#fff;}
+  .foot .contact{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14.5px;margin-bottom:16px;}
+  .foot .contact a,.foot .contact span{color:var(--pink);text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
+  .foot .contact svg{width:16px;height:16px;}
+  .foot .disclaimer{font-size:12px;line-height:1.55;color:rgba(255,255,255,.62);margin:0;}
+  .hero h1,.know .card h3,.foot .cta{font-family:var(--font-display);}
+
+  @media (max-width:680px){
+    .wrap{padding:26px 16px 48px;}
+    .hero{padding:28px 22px;}
+    .hero h1{font-size:29px;}
+    .hero p{font-size:15.5px;}
+    .ribbon{width:170px;height:170px;right:-30px;top:-26px;opacity:.6;}
+    table,thead,tbody,tr,th,td{display:block;width:100%;}
+    thead{display:none;}
+    tbody tr{background:#fff;border-radius:14px;margin-bottom:12px;box-shadow:0 1px 3px rgba(45,0,17,.05);overflow:hidden;}
+    tbody th{border-top:none;padding:16px 16px 8px;font-size:16px;}
+    tbody td{border-top:none;text-align:left;padding:7px 16px;display:flex;justify-content:space-between;align-items:center;gap:14px;}
+    tbody td:last-child{padding-bottom:14px;}
+    tbody td::before{content:attr(data-label);font-size:13.5px;color:var(--grey-d);font-weight:500;}
+    td.frankly{background:transparent;}
+    td.frankly::before{color:var(--grounded);font-weight:600;}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <div class="topbar">
+    <img class="logo" alt="Frankly" src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiPz4KPHN2ZyBpZD0iTGF5ZXJfMSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIiB2ZXJzaW9uPSIxLjEiIHZpZXdCb3g9IjAgMCAxNDcuMzEgMzYuNjMiPgogIDwhLS0gR2VuZXJhdG9yOiBBZG9iZSBJbGx1c3RyYXRvciAzMC4zLjAsIFNWRyBFeHBvcnQgUGx1Zy1JbiAuIFNWRyBWZXJzaW9uOiAyLjEuMyBCdWlsZCAxODIpICAtLT4KICA8Zz4KICAgIDxwYXRoIGQ9Ik0xMzkuNzksMTcuMTl2LTMuNTZoLTEuM3YtLjkyaDMuNzN2LjkyaC0xLjN2My41NmgtMS4xM1oiLz4KICAgIDxwYXRoIGQ9Ik0xNDIuNjksMTcuMTl2LTQuNDhoMS4zOGwuOTIsMi44NmguMDFsLjkyLTIuODZoMS4zOHY0LjQ4aC0xLjA3di0yLjc5aC0uMDFsLS44MywyLjc5aC0uNzlsLS44My0yLjc5aC0uMDF2Mi43OWgtMS4wN1oiLz4KICA8L2c+CiAgPGc+CiAgICA8cGF0aCBkPSJNMzkuOTgsOS45M2MuNDcsMCwuODgtLjMxLjg4LS43OHYtM2MwLS4zNy0uMjUtLjY4LS42MS0uNzctLjY4LS4xOC0xLjUtLjI2LTIuNDYtLjI2LTIuMjIsMC0zLjkxLjYzLTUuMDcsMS44OS0xLjE2LDEuMjYtMS43NSwzLjAxLTEuNzUsNS4yNXYuNDZoLTIuMjVjLS40MywwLS43OS4zNS0uNzkuNzl2Mi43N2MwLC40My4zNS43OS43OS43OWgxLjQ2Yy40MywwLC43OS4zNS43OS43OXYxMC42NmMwLC40My4zNS43OS43OS43OWg0LjMzYy40MywwLC43OS0uMzUuNzktLjc5di0xMC42NmMwLS40My4zNS0uNzkuNzktLjc5aDMuMzhjLjUxLDAsLjc5LjM4Ljc5Ljc5djEwLjY1YzAsLjQzLjM1Ljc5Ljc5Ljc5aDQuMzNjLjQzLDAsLjc5LS4zNS43OS0uNzl2LTcuNTNjMC0yLjM3LDEuMjQtMy41NiwzLjcyLTMuNTYuMDMsMCwuMDYsMCwuMDksMCwxLjQyLjAyLDIuNjItMS4wNiwyLjYyLTIuNDh2LTEuNzFjMC0uMzUtLjIyLS42Ny0uNTUtLjc1LS4zNi0uMS0uOC0uMTQtMS4zMS0uMTQtMS4wOSwwLTIuMDcuMjctMi45NC44Mi0uODcuNTQtMS4yMywxLjMzLTEuNjIsMi4zNXYtMi4wOWMtLjA1LS4zOS0uMzgtLjY5LS43OC0uNjloLTEwLjA5di0uMzlzLS4wNC0yLjM5LDMuMS0yLjM5WiIvPgogICAgPHBhdGggZD0iTTY2LjIsMTQuODNjLS41LS43OC0xLjItMS40MS0yLjEtMS44OC0uOS0uNDctMS45LS43LTIuOTgtLjctMS4zOSwwLTIuNjQuMzctMy43NSwxLjExLTEuMTEuNzQtMS45OCwxLjc3LTIuNjEsMy4xLS42MywxLjMzLS45NSwyLjg1LS45NSw0LjU3cy4zMSwzLjE5LjkzLDQuNDhjLjYyLDEuMjksMS40OCwyLjI5LDIuNTksMi45OCwxLjExLjcsMi4zNywxLjA0LDMuNzgsMS4wNCwxLjA5LDAsMi4wOS0uMjIsMy0uNjcuOTEtLjQ1LDEuNjEtMS4wNiwyLjA5LTEuODR2MS40NmMwLC40My4zNS43OS43OS43OWg0LjIzYy40MywwLC43OS0uMzUuNzktLjc5di0xNWMwLS40My0uMzUtLjc5LS43OS0uNzloLTQuMjNjLS40MywwLS43OS4zNS0uNzkuNzl2MS4zM1pNNjUuMzYsMjQuMDZjLS41Ny43Mi0xLjM3LDEuMDgtMi40MSwxLjA4cy0xLjg4LS4zNS0yLjQ1LTEuMDYtLjg1LTEuNzItLjg1LTMuMDUuMjktMi40My44OC0zLjE4Yy41OS0uNzUsMS4zOS0xLjEzLDIuNDEtMS4xM3MxLjg1LjM2LDIuNDEsMS4wOWMuNTYuNzMuODUsMS43OC44NSwzLjE1cy0uMjgsMi4zOC0uODUsMy4xWiIvPgogICAgPHBhdGggZD0iTTczLjU1LDI4LjQ5YzAsLjQzLjM1Ljc5Ljc5Ljc5aDQuMzNjLjQzLDAsLjc5LS4zNS43OS0uNzl2LTguNDRjMC0uOTguMjctMS43Ny44Mi0yLjM2czEuMjYtLjksMi4xNS0uOWMuNzQsMCwxLjI4LjIyLDEuNjMuNjcuMzUuNDUuNTIsMS4xOC41MiwyLjJ2OC44NGMwLC40My4zNS43OS43OS43OWg0LjMzYy40MywwLC43OS0uMzUuNzktLjc5di05LjFjMC0yLjM5LS40OC00LjE4LTEuNDUtNS4zNy0uOTctMS4xOC0yLjQzLTEuNzgtNC4zOS0xLjc4LTEuMTcsMC0yLjIzLjI1LTMuMTYuNzUtLjQ1LjI0LS44Ny41NC0xLjI1Ljg4LS40OC40My0xLjIzLjE2LTEuMzEtLjQ4aDBjLS4wNS0uNC0uMzgtLjY5LS43OC0uNjloLTMuNzljLS40NiwwLS44NC40LS43OS44NnYxNC45MloiLz4KICAgIDxwYXRoIGQ9Ik0xMDkuMDUsMjcuMjlsLTQuODItNi4xMmMtLjIzLS4yOS0uMjItLjcuMDEtLjk5bDUuMDYtNi4xNWMuNDItLjUxLjA2LTEuMjktLjYxLTEuMjloLTQuOTRjLS4yNCwwLS40Ni4xMS0uNjEuMjlsLTMuOTEsNC44NWMtLjQ3LjU4LTEuNC4yNS0xLjQtLjQ5VjUuOWMwLS40My0uMzUtLjc5LS43OS0uNzloLTQuMzNjLS40MywwLS43OS4zNS0uNzkuNzl2MjIuNmMwLC40My4zNS43OS43OS43OWg0LjMzYy40MywwLC43OS0uMzUuNzktLjc5di00LjA5YzAtLjc1Ljk0LTEuMDcsMS40LS40OWw0LDUuMDdjLjE1LjE5LjM4LjMuNjIuM2gxMS43MmMuNDMsMCwuNzktLjM1Ljc5LS43OVY1LjljMC0uNDMtLjM1LS43OS0uNzktLjc5aC00LjMzYy0uNDMsMC0uNzkuMzUtLjc5Ljc5djIwLjkxYzAsLjc1LS45NCwxLjA3LTEuNC40OVoiLz4KICAgIDxwYXRoIGQ9Ik0xMzAuMDIsMTMuMmwtMi45MSw3LjIyYy0uMjcuNjYtMS4yLjY2LTEuNDYsMGwtMi44LTcuMmMtLjEyLS4zLS40MS0uNS0uNzMtLjVoLTQuMzljLS41NywwLS45NS41OC0uNzIsMS4xLDEuMDQsMi4zMiwzLjUxLDcuNzcsNS4yOCwxMS42OCwxLjg4LDMuMzctLjUsNS4zNC0zLjc4LDYuNTQtLjQzLjExLS42OS41Ni0uNTYuOTlsLjkzLDMuMDRjLjExLjM3LjQ5LjYyLjg3LjU1LDEuOTItLjMxLDMuNTYtLjkyLDQuOTItMS44NSwxLjUxLTEuMDMsMi43Ny0yLjY3LDMuNzctNC45MWw3LjExLTE2LjA1Yy4yMy0uNTItLjE1LTEuMS0uNzItMS4xaC00LjA3Yy0uMzIsMC0uNjEuMTktLjczLjQ5WiIvPgogIDwvZz4KICA8Zz4KICAgIDxwYXRoIGQ9Ik0xLjE2LDEyLjE4Yy41LS40LDEuMDMtLjcsMS42LS45Ny43LS4zMSwxLjM5LS41NywyLjExLS44LDEuMjYtLjQsMi41MS0uNzEsMy43OS0xLjAxbDMuNDYtLjgxYy45MS0uMjEsMS43OC0uNDQsMi42Ny0uNzMuNTktLjE5LDEuMTQtLjQzLDEuNjctLjc4LDEuNTItLjk4LDEuNzMtMi44MSwxLjYzLTQuNjktLjE3LTMuMjktLjk0LTIuMjMtLjk0LTIuMjMtLjI1LjMtLjU1LjUtLjg2LjcxLS40NC4yNC0uODguNDQtMS4zNi42MS0uODguMzEtMS43NS41Ni0yLjY1Ljc4bC00LjA4LDEuMDFjLS45Ny4yNC0xLjkxLjUyLTIuODYuODQtMS4zLjQ0LTIuNzUsMS4wOC0zLjc4LDIuMDktLjU0LjUzLS44OSwxLjIxLTEuMDIsMi4wMi0uMywxLjc3LS4zMSwzLjE3LS4yNyw0Ljk5LjI3LS40My41NC0uNzUuODktMS4wM1oiLz4KICAgIDxwYXRoIGQ9Ik0xNS41MywxMy41M2wtMi4yNy0uNDljLTEuNjEtLjM1LTMuMi0uNjgtNC44LTEuMTEtMS4xOS0uMzItMi4zNi0uNjgtMy41MS0xLjFsLTEuMjYuNDRjLS41MS4xOC0uOTguNDItMS40Ny42Ny0uNjYuMzgtMi4xNCwxLjM3LTEuNywyLjQzLjI3LjY1Ljk3LDEuMDYsMS41LDEuMzksMS42MS44NiwzLjI2LDEuNDUsNC45OCwxLjk2LDEuMzUtLjQsMi42Ny0uNzUsNC4wNC0xLjA1bDMuNzgtLjgzYy40Ny0uMTIsMi44NS0uNjQsMi44NC0xLjMsMC0uMzEtLjYyLS41Ni0uODUtLjY0LS40My0uMTUtLjg1LS4yOC0xLjI5LS4zOFoiLz4KICAgIDxwYXRoIGQ9Ik0xNy4yNCwxNS41MmMtMS4xLjUxLTIuMzIuNzUtMy41LDEuMDFsLTQuMTUuOTNjLTEuMTUuMjYtMi4yNi41OS0zLjM4Ljk3LTEuNjQuNTUtMy44NSwxLjQ4LTUuMDgsMi44OC0uNS41Ny0uNzksMS4yOC0uOTEsMi4wOC0uMTIuODUtLjE4LDEuNjktLjIxLDIuNTUtLjAzLjc5LjAyLDEuNjkuMTEsMi41MSwxLjYyLTIuNDcsNy4xNS00LjIsOS42OC00Ljc1bDIuNzctLjYxYzEuMjEtLjI3LDIuNzEtLjUyLDMuNzctMS4xOSwxLjA0LS42NywxLjM2LTEuOSwxLjUtMy4yMS4xNC0xLjIzLjE2LTIuNDQuMTEtMy43Mi0uMjEuMjQtLjQ0LjQyLS43MS41NVoiLz4KICAgIDxwYXRoIGQ9Ik03LjgxLDI3LjkzYy0xLjAzLS44OC0yLjA4LTEuNDgtMy4yNC0yLjEtMS4zMS42MS0yLjY3LDEuMjktMy43NSwyLjMzLS4xNi4xOC0uMy4zNS0uNDIuNTctLjQzLjgxLjMxLDEuNDQuODUsMS43OS40OS4zMi45OC41OCwxLjUuODVsMS40Ljc2YzEuNjUuOTUsMy41OSwyLjE1LDQuNTQsMy45LjgyLDEuNzUsMS4xMy0uODYsMS4xOS0xLjUuMDktMS4xLjA4LTIuMi0uMS0zLjE0LS4yNy0xLjQ0LS45OC0yLjU4LTEuOTctMy40N1oiLz4KICA8L2c+Cjwvc3ZnPg==">
+  </div>
+
+  <section class="hero">
+    <svg class="ribbon" viewBox="0 0 240 240" fill="none" aria-hidden="true">
+      <defs>
+        <linearGradient id="rg" x1="0" y1="0" x2="1" y2="1">
+          <stop offset="0" stop-color="#FFACCA"/>
+          <stop offset="0.55" stop-color="#FFD3E3"/>
+          <stop offset="1" stop-color="#FFD3E3" stop-opacity="0.15"/>
+        </linearGradient>
+      </defs>
+      <path d="M28 150 C 70 60, 150 50, 188 120 S 250 210, 196 96" stroke="url(#rg)" stroke-width="34" stroke-linecap="round"/>
+    </svg>
+    <p class="eyebrow">Overblik over din dækning</p>
+    <h1>Hvad er dækket — og af hvem?</h1>
+    <p>Tre ting kan dække dine ejendele: din Frankly-dækning, producentens garanti og din indboforsikring. Her ser du hurtigt, hvem der træder til hvornår.</p>
+  </section>
+
+  <div class="legend">
+    <span class="chip yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dækket</span>
+    <span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span>
+    <span class="chip dep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 14c2-4 5-4 7 0s5 4 7 0"/></svg>Afhænger af dine betingelser</span>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th class="scenario-h">Hvis det sker…</th>
+        <th class="frankly-h">Frankly<span class="sub">Dækning mod uheld</span></th>
+        <th>Producentens garanti<span class="sub">Følger med købet</span></th>
+        <th>Indboforsikring<span class="sub">Din hjemforsikring</span></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="7" y="3" width="10" height="18" rx="2"/><path d="M11 18h2"/><path d="M12.5 6.5l-1.6 3 2 .9-1 2.6"/></svg></span>Skærmen revner — du taber den</span></th>
+        <td class="frankly" data-label="Frankly"><span class="chip yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dækket</span></td>
+        <td data-label="Producentens garanti"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Indboforsikring"><span class="chip dep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 14c2-4 5-4 7 0s5 4 7 0"/></svg>Afhænger</span></td>
+      </tr>
+      <tr>
+        <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3s5.5 6 5.5 10a5.5 5.5 0 0 1-11 0C6.5 9 12 3 12 3z"/></svg></span>Væskeskade — vand eller spild</span></th>
+        <td class="frankly" data-label="Frankly"><span class="chip yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dækket</span></td>
+        <td data-label="Producentens garanti"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Indboforsikring"><span class="chip dep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 14c2-4 5-4 7 0s5 4 7 0"/></svg>Afhænger</span></td>
+      </tr>
+      <tr>
+        <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2c1 3.2 4 4.6 4 8.2a4 4 0 0 1-8 0c0-1.2.4-2.2 1.2-3.1.3 1.1.9 1.7 1.6 2.1.2-2.4.8-4.7 1.2-7.2z"/></svg></span>Brandskade</span></th>
+        <td class="frankly" data-label="Frankly"><span class="chip yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dækket</span></td>
+        <td data-label="Producentens garanti"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Indboforsikring"><span class="chip yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dækket</span></td>
+      </tr>
+      <tr>
+        <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a3.6 3.6 0 0 0-4.8 4.3l-5.6 5.6 2.2 2.2 5.6-5.6a3.6 3.6 0 0 0 4.3-4.8l-2.2 2.2-1.9-.3-.3-1.9z"/></svg></span>Fabrikationsfejl — den svigter af sig selv</span></th>
+        <td class="frankly" data-label="Frankly"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Producentens garanti"><span class="chip yes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Dækket</span></td>
+        <td data-label="Indboforsikring"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+      </tr>
+      <tr>
+        <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="11" width="14" height="9" rx="2"/><path d="M8 11V8a4 4 0 0 1 7.3-2.3"/></svg></span>Tyveri</span></th>
+        <td class="frankly" data-label="Frankly"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Producentens garanti"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Indboforsikring"><span class="chip dep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 14c2-4 5-4 7 0s5 4 7 0"/></svg>Afhænger</span></td>
+      </tr>
+      <tr>
+        <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>Bortkomst — tabt væk</span></th>
+        <td class="frankly" data-label="Frankly"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Producentens garanti"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Indboforsikring"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+      </tr>
+      <tr>
+        <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg></span>Slid og ælde over tid</span></th>
+        <td class="frankly" data-label="Frankly"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Producentens garanti"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+        <td data-label="Indboforsikring"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
+      </tr>
+    </tbody>
+  </table>
+
+  <section class="know" aria-label="Godt at vide">
+    <div class="card">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="M3 10h18"/><circle cx="16.5" cy="13.5" r="1.3"/></svg></span>
+      <h3>Selvrisiko</h3>
+      <p>Du betaler en fast selvrisiko per skade, før reparationen laves. Beløbet står i din egen oversigt.</p>
+    </div>
+    <div class="card">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l7 3v6c0 4-3 6.6-7 8-4-1.4-7-4-7-8V6z"/><path d="M9 12l2 2 4-4"/></svg></span>
+      <h3>Op til 2 skader om året</h3>
+      <p>Din Frankly-dækning kan bruges til to skader per år på dit udstyr.</p>
+    </div>
+    <div class="card">
+      <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg></span>
+      <h3>Også i udlandet</h3>
+      <p>Du er dækket i hele verden i op til 60 dage om året. Reparationen sker i Danmark.</p>
+    </div>
+  </section>
+
+  <section class="foot">
+    <p class="cta">I tvivl om en skade? Sig til — vi hjælper dig videre.</p>
+    <div class="contact">
+      <a href="tel:+4570604440"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M5 4h4l2 5-2.5 1.5a11 11 0 0 0 5 5L20 13l-1 4a2 2 0 0 1-2 1.6A15 15 0 0 1 4 6 2 2 0 0 1 5 4z"/></svg>+45 70 60 44 40</a>
+      <a href="mailto:contact@franklyinsure.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>contact@franklyinsure.com</a>
+      <a href="https://www.franklyinsure.com"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c2.5 3 2.5 15 0 18M12 3c-2.5 3-2.5 15 0 18"/></svg>franklyinsure.com</a>
+    </div>
+    <p class="disclaimer">Forenklet overblik — ikke en del af din aftale. Indboforsikring varierer fra selskab til selskab, især ved tyveri og elektronik, så tjek dine egne betingelser. De bindende vilkår står i dine dokumenter (dokumentet med oplysninger om forsikringsproduktet og Policens ordlyd).</p>
+  </section>
+</main>
+</body>
+</html>
