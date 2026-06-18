@@ -66,8 +66,14 @@
   .foot .contact{display:flex;flex-wrap:wrap;gap:8px 22px;font-size:14.5px;margin-bottom:16px;}
   .foot .contact a,.foot .contact span{color:var(--pink);text-decoration:none;display:inline-flex;align-items:center;gap:7px;}
   .foot .contact svg{width:16px;height:16px;}
-  .foot .disclaimer{font-size:12px;line-height:1.55;color:rgba(255,255,255,.62);margin:0;}
+  .foot .disclaimer{font-size:12px;line-height:1.55;color:rgba(255,255,255,.78);margin:0;}
   .hero h1,.know .card h3,.foot .cta{font-family:var(--font-display);}
+
+  tbody tr.group th{background:var(--limestone-soft);text-align:left;padding:11px 14px;border-top:1px solid var(--limestone-aged);
+    font-size:11.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--grey-d);font-weight:600;}
+  .tablenote{display:flex;gap:9px;margin:14px 4px 0;font-size:13.5px;line-height:1.5;color:var(--grey-d);}
+  .tablenote svg{width:16px;height:16px;flex:0 0 auto;color:var(--amber);margin-top:2px;}
+  .tablenote b{color:var(--grounded);font-weight:600;}
 
   @media (max-width:680px){
     .wrap{padding:26px 16px 48px;}
@@ -84,6 +90,9 @@
     tbody td::before{content:attr(data-label);font-size:13.5px;color:var(--grey-d);font-weight:500;}
     td.frankly{background:transparent;}
     td.frankly::before{color:var(--grounded);font-weight:600;}
+    tbody tr.group{background:transparent;box-shadow:none;border-radius:0;margin:10px 0 2px;overflow:visible;}
+    tbody tr.group th{background:transparent;padding:4px 4px 2px;border:0;font-size:11.5px;}
+    .tablenote{margin:14px 2px 0;}
   }
 </style>
 </head>
@@ -155,6 +164,7 @@
         <td data-label="Producentens garanti"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
         <td data-label="Indboforsikring"><span class="chip dep"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M4 14c2-4 5-4 7 0s5 4 7 0"/></svg>Afhænger</span></td>
       </tr>
+      <tr class="group"><th colspan="4">Det her dækker ingen forsikring — og det er helt normalt</th></tr>
       <tr>
         <th><span class="lbl"><span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4.3-4.3"/></svg></span>Bortkomst — tabt væk</span></th>
         <td class="frankly" data-label="Frankly"><span class="chip no"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M5 12h14"/></svg>Ikke dækket</span></td>
@@ -169,6 +179,8 @@
       </tr>
     </tbody>
   </table>
+
+  <p class="tablenote"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14c2-4 5-4 7 0s5 4 7 0"/></svg><span><b>„Afhænger"</b> betyder, at din indboforsikring kan dække skaden — men efter dens egne regler og selvrisiko. De er forskellige fra selskab til selskab, så tjek dine egne betingelser.</span></p>
 
   <section class="know" aria-label="Godt at vide">
     <div class="card">
