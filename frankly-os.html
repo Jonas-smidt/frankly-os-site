@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Frankly OS - Visual System</title>
+<title>Frankly OS - Live System Map</title>
 <link rel="preconnect" href="https://api.fontshare.com">
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
 <style>
@@ -13,460 +13,908 @@
     --limestone:#F5F4F1;
     --blush:#FFF6FA;
     --stone:#ECE9E4;
-    --stone-2:#F0EEE9;
     --stone-4:#E3DDD5;
     --bordeaux:#2D0011;
     --white:#FFFFFF;
     --grey-1:#585C60;
-    --grey-2:#838383;
-    --muted:var(--grey-1);
-    --line:var(--stone-4);
     --success:#057642;
     --success-live:#27C966;
-    --amber:#9A6A18;
-    --amber-soft:#FFF4D8;
+    --amber:#A46F00;
+    --ink-soft:rgba(45,0,17,.64);
+    --white-soft:rgba(255,255,255,.72);
+    --line-light:rgba(255,246,250,.24);
+    --line-dark:rgba(45,0,17,.18);
     --font-display:"Almarena Neue Display","Almarena Neue","Switzer",Georgia,serif;
     --font-sans:"Switzer",system-ui,-apple-system,sans-serif;
-    --radius-xs:6px;
-    --radius-sm:8px;
-    --radius-md:12px;
-    --radius-card:16px;
-    --radius-xl:24px;
-    --radius-pill:999px;
-    --space-2:8px;
-    --space-3:12px;
-    --space-4:16px;
-    --space-5:24px;
-    --space-6:32px;
-    --space-7:48px;
-    --space-8:64px;
     --ease:cubic-bezier(.22,.61,.36,1);
   }
+
   *{box-sizing:border-box}
   html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
   body{
     margin:0;
-    background:
-      linear-gradient(rgba(45,0,17,.035) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(45,0,17,.035) 1px, transparent 1px),
-      var(--limestone);
-    background-size:56px 56px;
-    color:var(--bordeaux);
+    background:var(--bordeaux);
+    color:var(--limestone);
     font-family:var(--font-sans);
-    line-height:1.5;
+    line-height:1.45;
     -webkit-font-smoothing:antialiased;
   }
   a{color:inherit}
-  button,input{font:inherit}
-  .wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
+  button{font:inherit}
+  .page{min-height:100vh;background:var(--bordeaux)}
+  .wrap{width:min(1220px,calc(100% - 40px));margin:0 auto}
 
-  .topbar{position:sticky;top:0;z-index:20;background:rgba(255,255,255,.9);border-bottom:1px solid rgba(45,0,17,.12);backdrop-filter:blur(18px)}
-  .topbar .wrap{display:flex;align-items:center;gap:18px;padding:12px 0}
-  .brand{display:flex;align-items:center;gap:10px;font-weight:900;color:var(--bordeaux);letter-spacing:0}
-  .brand-mark{display:grid;place-items:center;width:34px;height:34px;border-radius:var(--radius-sm);background:var(--calm-pink);border:1px solid rgba(45,0,17,.14);font-size:13px;box-shadow:0 10px 24px -18px rgba(45,0,17,.45)}
-  .nav{margin-left:auto;display:flex;gap:8px;flex-wrap:wrap}
-  .nav a{font-size:11px;font-weight:900;text-decoration:none;text-transform:uppercase;letter-spacing:.12em;color:rgba(45,0,17,.52);padding:8px 10px;border-radius:var(--radius-sm)}
-  .nav a:hover{background:var(--limestone);color:var(--bordeaux)}
-
-  .hero{position:relative;overflow:hidden;background:var(--calm-pink);border-bottom:1px solid rgba(45,0,17,.12)}
-  .hero::before{
+  .deck-viewport{
+    min-height:100svh;
+    display:grid;
+    grid-template-rows:1fr auto;
+    align-items:center;
+    gap:18px;
+    padding:18px 0 24px;
+    background:
+      linear-gradient(180deg,rgba(45,0,17,0) 0%,rgba(0,0,0,.18) 100%),
+      var(--bordeaux);
+    overflow:hidden;
+  }
+  .stage{
+    position:relative;
+    width:min(100vw,1480px,calc((100svh - 132px) * 1.777));
+    min-width:320px;
+    aspect-ratio:16/9;
+    margin:auto;
+    overflow:hidden;
+    isolation:isolate;
+    background:
+      linear-gradient(rgba(255,246,250,.055) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,246,250,.055) 1px,transparent 1px),
+      radial-gradient(circle at 22% 36%,rgba(255,211,227,.26),transparent 28%),
+      var(--bordeaux);
+    background-size:58px 58px,58px 58px,100% 100%,100% 100%;
+    box-shadow:0 38px 110px rgba(0,0,0,.34);
+  }
+  .stage::before{
     content:"";
     position:absolute;
     inset:0;
+    z-index:0;
     background:
-      linear-gradient(rgba(45,0,17,.055) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(45,0,17,.055) 1px, transparent 1px);
-    background-size:72px 72px;
-    mask-image:linear-gradient(90deg, rgba(0,0,0,.8), rgba(0,0,0,.18));
+      linear-gradient(90deg,rgba(45,0,17,.14),transparent 18%,transparent 78%,rgba(45,0,17,.2)),
+      linear-gradient(180deg,rgba(255,255,255,.06),transparent 22%,transparent 82%,rgba(0,0,0,.28));
     pointer-events:none;
   }
-  .hero::after{
+  .stage-topline{
+    position:absolute;
+    z-index:5;
+    top:20px;
+    left:28px;
+    right:28px;
+    display:grid;
+    grid-template-columns:1.2fr 1fr 1fr auto;
+    gap:24px;
+    align-items:start;
+    color:rgba(245,244,241,.72);
+    font-size:9px;
+    font-weight:800;
+    letter-spacing:.07em;
+    line-height:1.2;
+    text-transform:uppercase;
+  }
+  .stage-topline b{display:block;color:var(--limestone);font-weight:900}
+  .seed{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    min-width:46px;
+    min-height:20px;
+    border:1px solid rgba(245,244,241,.68);
+    border-radius:999px;
+    padding:3px 10px;
+    color:var(--limestone);
+    text-decoration:none;
+  }
+  .brand-lockup{
+    position:absolute;
+    z-index:5;
+    left:8.6%;
+    bottom:16.5%;
+    width:min(39%,520px);
+    color:var(--limestone);
+  }
+  .brand-word{
+    display:flex;
+    align-items:center;
+    gap:10px;
+    margin-bottom:18px;
+    font-size:clamp(22px,3.2vw,48px);
+    font-weight:900;
+    letter-spacing:0;
+  }
+  .brand-glyph{
+    position:relative;
+    width:.72em;
+    height:.72em;
+    display:inline-block;
+  }
+  .brand-glyph::before,
+  .brand-glyph::after{
     content:"";
     position:absolute;
-    right:-80px;
-    top:42px;
-    width:420px;
-    height:180px;
-    border:22px solid rgba(255,172,202,.6);
-    border-left-color:transparent;
-    border-bottom-color:transparent;
-    border-radius:100% 0 0 0;
-    transform:rotate(-12deg);
-    pointer-events:none;
+    left:0;
+    width:100%;
+    height:32%;
+    border-radius:999px;
+    background:var(--limestone);
   }
-  .hero .wrap{position:relative;z-index:1;display:grid;grid-template-columns:minmax(0,1.02fr) minmax(360px,.98fr);gap:34px;align-items:stretch;padding:78px 0 44px}
-  .stage-spec{position:absolute;z-index:2;color:rgba(45,0,17,.45);font-size:9.5px;font-weight:900;letter-spacing:.14em;line-height:1.7;text-transform:uppercase;pointer-events:none}
-  .stage-spec.tl{left:28px;top:20px}
-  .stage-spec.tr{right:28px;top:20px;text-align:right}
-  .stage-spec.bl{left:28px;bottom:18px}
-  .stage-spec.br{right:28px;bottom:18px;text-align:right}
-  .barcode{display:inline-block;width:66px;height:12px;margin-right:8px;vertical-align:middle;background:repeating-linear-gradient(90deg, rgba(45,0,17,.45) 0 1.5px, transparent 1.5px 3px, rgba(45,0,17,.45) 3px 5.5px, transparent 5.5px 7px)}
-  .dots{letter-spacing:.36em}
-  .eyebrow{margin:0 0 14px;color:rgba(45,0,17,.55);font-size:11px;font-weight:900;letter-spacing:.14em;text-transform:uppercase}
-  h1{margin:0;color:var(--bordeaux);font-family:var(--font-display);font-size:clamp(56px,9vw,112px);font-weight:900;line-height:.9;letter-spacing:0}
-  h1 .tm{font-family:var(--font-sans);font-size:12px;font-weight:900;vertical-align:super}
-  .lead{max-width:700px;margin:22px 0 0;color:rgba(45,0,17,.78);font-size:clamp(16px,2vw,19px);line-height:1.48}
-  .hero-actions{display:flex;flex-wrap:wrap;gap:10px;margin-top:28px}
-  .button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;border:1px solid var(--bordeaux);border-radius:var(--radius-md);padding:11px 18px;background:var(--bordeaux);color:#fff;text-decoration:none;font-size:14px;font-weight:900;transition:transform 320ms var(--ease),opacity 220ms var(--ease),background 220ms var(--ease)}
-  .button.secondary{background:rgba(255,255,255,.16);color:var(--bordeaux)}
-  .button:hover{opacity:.88}
-  .button.secondary:hover{background:rgba(45,0,17,.06);opacity:1}
-  .status-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
-  .pill{display:inline-flex;align-items:center;gap:8px;min-height:32px;border:1px solid rgba(45,0,17,.13);border-radius:var(--radius-pill);background:rgba(255,255,255,.72);color:var(--bordeaux);padding:7px 11px;font-size:12px;font-weight:900}
-  .dot{width:8px;height:8px;border-radius:50%;background:var(--success)}
-  .dot.paused{background:var(--amber)}
+  .brand-glyph::before{top:8%;transform:rotate(-18deg)}
+  .brand-glyph::after{bottom:8%;transform:rotate(18deg)}
+  .brand-word sup{font-size:.24em;margin-left:-4px}
+  h1{
+    margin:0;
+    max-width:11ch;
+    color:var(--limestone);
+    font-family:var(--font-display);
+    font-size:clamp(35px,5.2vw,76px);
+    line-height:.93;
+    font-weight:900;
+    letter-spacing:0;
+  }
+  .stage-copy{
+    margin:16px 0 0;
+    max-width:520px;
+    color:rgba(245,244,241,.82);
+    font-size:clamp(12px,1.2vw,17px);
+    line-height:1.35;
+  }
+  .stage-actions{
+    display:flex;
+    flex-wrap:wrap;
+    gap:8px;
+    margin-top:18px;
+  }
+  .text-link{
+    color:var(--limestone);
+    text-decoration:none;
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+    border-bottom:1px solid rgba(245,244,241,.65);
+    padding-bottom:3px;
+  }
 
-  .system-board{position:relative;background:rgba(255,255,255,.62);border:1px solid rgba(45,0,17,.14);border-radius:var(--radius-card);padding:18px;display:grid;gap:12px;align-content:start;box-shadow:0 28px 80px -56px rgba(45,0,17,.55);backdrop-filter:blur(10px)}
-  .system-board::before{
-    content:"";
+  .map-stage{
     position:absolute;
-    left:26px;
-    right:26px;
-    top:112px;
-    height:3px;
-    background:linear-gradient(90deg,var(--calm-deep),rgba(255,172,202,.18));
-    border-radius:var(--radius-pill);
+    inset:12% 3% 13% 43%;
+    z-index:3;
   }
-  .board-head{display:flex;justify-content:space-between;gap:14px;align-items:flex-start;border-bottom:1px solid rgba(45,0,17,.12);padding-bottom:12px}
-  .board-head strong{display:block;color:var(--bordeaux);font-size:14px}
-  .board-head span{display:block;margin-top:2px;color:rgba(45,0,17,.62);font-size:12px}
-  .board-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .board-node{position:relative;border:1px solid rgba(45,0,17,.12);border-radius:var(--radius-md);background:rgba(255,255,255,.76);padding:13px;min-height:112px}
-  .board-node::before{content:"";position:absolute;left:13px;top:-18px;width:11px;height:11px;border:2px solid var(--calm-deep);border-radius:50%;background:var(--white)}
-  .board-node small{display:block;margin-bottom:8px;color:rgba(45,0,17,.45);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-  .board-node strong{display:block;color:var(--bordeaux);font-size:15px;line-height:1.15}
-  .board-node p{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.38}
+  .system-svg{display:block;width:100%;height:100%;overflow:visible}
+  .map-title{font-family:var(--font-display);font-weight:900;letter-spacing:0}
+  .map-meta{font-family:var(--font-sans);font-size:17px;font-weight:900;letter-spacing:.16em;text-transform:uppercase}
+  .map-label{font-family:var(--font-sans);font-size:22px;font-weight:900}
+  .map-small{font-family:var(--font-sans);font-size:14px;font-weight:800;letter-spacing:.04em}
+  .map-line{
+    fill:none;
+    stroke:rgba(255,246,250,.72);
+    stroke-width:4;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .map-line.learning{stroke:rgba(255,172,202,.84);stroke-dasharray:10 13}
+  .map-ribbon{
+    fill:none;
+    stroke:rgba(255,172,202,.44);
+    stroke-width:58;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+  }
+  .node-dot{fill:var(--calm-pink);stroke:var(--limestone);stroke-width:4}
+  .node-dot.dark{fill:var(--bordeaux);stroke:var(--calm-pink)}
+  .node-halo{fill:rgba(255,211,227,.13)}
+  .node-text{fill:var(--limestone)}
+  .node-text.dark{fill:var(--bordeaux)}
+  .loop-ring{
+    fill:none;
+    stroke:var(--calm-deep);
+    stroke-width:10;
+    stroke-linecap:round;
+    stroke-dasharray:38 22;
+    animation:ring-drift 12s linear infinite;
+  }
+  .loop-core{fill:rgba(255,246,250,.9)}
+  .readout{
+    position:absolute;
+    z-index:5;
+    right:4.4%;
+    bottom:5.5%;
+    display:grid;
+    grid-template-columns:repeat(3,minmax(64px,1fr));
+    gap:10px;
+    width:min(33%,420px);
+    color:var(--limestone);
+  }
+  .readout span{
+    display:block;
+    color:rgba(245,244,241,.55);
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .readout b{
+    display:block;
+    margin-top:4px;
+    font-family:var(--font-display);
+    font-size:clamp(23px,3.6vw,50px);
+    line-height:.9;
+  }
+  .stage-caption{
+    position:absolute;
+    z-index:5;
+    right:4.4%;
+    top:13%;
+    max-width:240px;
+    color:rgba(245,244,241,.65);
+    font-size:10px;
+    font-weight:800;
+    letter-spacing:.07em;
+    line-height:1.45;
+    text-transform:uppercase;
+  }
+  .stage-caption::before{
+    content:"";
+    display:block;
+    width:72px;
+    height:11px;
+    margin-bottom:12px;
+    background:repeating-linear-gradient(90deg,rgba(245,244,241,.75) 0 2px,transparent 2px 4px,rgba(245,244,241,.75) 4px 8px,transparent 8px 11px);
+  }
 
-  main{padding:34px 0 58px}
-  section{margin:0 auto 42px}
-  .section-head{display:flex;justify-content:space-between;gap:18px;align-items:flex-end;border-bottom:1px solid var(--line);padding-bottom:12px;margin-bottom:16px}
-  .section-head h2{margin:0;color:var(--bordeaux);font-family:var(--font-display);font-size:clamp(30px,4.8vw,50px);font-weight:900;line-height:1;letter-spacing:0}
-  .section-head p{margin:0;max-width:560px;color:var(--muted);font-size:14px}
-  .metric-grid,.explain-grid,.health-grid,.layer-grid,.route-grid,.plan-grid,.glossary-grid{display:grid;gap:12px}
-  .metric-grid{grid-template-columns:repeat(4,minmax(0,1fr));margin-bottom:18px}
-  .explain-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .health-grid{grid-template-columns:repeat(auto-fit,minmax(190px,1fr))}
-  .layer-grid{grid-template-columns:repeat(auto-fit,minmax(260px,1fr))}
-  .route-grid{grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
-  .plan-grid,.glossary-grid{grid-template-columns:repeat(auto-fit,minmax(240px,1fr))}
+  .filmstrip{
+    width:min(100vw,1480px,calc((100svh - 132px) * 1.777));
+    min-width:320px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:repeat(7,minmax(78px,1fr));
+    gap:10px;
+    padding:0 14px;
+  }
+  .thumb{
+    display:grid;
+    grid-template-columns:auto 1fr;
+    gap:7px;
+    align-items:center;
+    min-height:44px;
+    color:rgba(245,244,241,.68);
+    text-decoration:none;
+    font-size:9px;
+    font-weight:900;
+    letter-spacing:.09em;
+    text-transform:uppercase;
+  }
+  .thumb span{color:var(--calm-pink);font-size:14px}
+  .thumb i{
+    display:block;
+    height:31px;
+    border:1px solid rgba(255,211,227,.24);
+    background:
+      linear-gradient(120deg,transparent 45%,rgba(255,211,227,.36) 46% 52%,transparent 53%),
+      linear-gradient(rgba(255,255,255,.11) 1px,transparent 1px),
+      rgba(255,211,227,.08);
+    background-size:100% 100%,12px 12px,100% 100%;
+  }
+  .thumb:hover{color:var(--limestone)}
+  .thumb:hover i{border-color:rgba(255,211,227,.62)}
 
-  .metric,.explain-card,.health,.layer,.route,.plan,.glossary,.loop-card{background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);padding:16px;box-shadow:0 18px 50px -42px rgba(45,0,17,.42)}
-  .metric{border-top:6px solid var(--bordeaux);min-height:112px;background:linear-gradient(180deg,var(--white),var(--blush))}
-  .metric small,.route small,.plan small{display:block;color:rgba(45,0,17,.48);font-size:10px;font-weight:900;letter-spacing:.12em;text-transform:uppercase}
-  .metric strong{display:block;margin-top:8px;color:var(--bordeaux);font-family:var(--font-display);font-size:36px;line-height:1}
-  .metric span{display:block;margin-top:5px;color:var(--muted);font-size:13px}
-  .explain-card{border-top:6px solid var(--calm-deep);min-height:156px}
-  .explain-card strong,.health strong,.layer h3,.route strong,.plan strong,.glossary strong,.loop-card strong{display:block;margin:0 0 7px;color:var(--bordeaux);font-size:15px;line-height:1.2}
-  .explain-card p,.health p,.layer p,.route p,.plan p,.glossary p,.loop-card p{margin:0;color:var(--muted);font-size:13px;line-height:1.42}
-  .health{border-left:6px solid var(--success);min-height:112px}
-  .health.paused,.health.gated{border-left-color:var(--amber)}
-  .state-label{display:inline-flex;margin-top:10px;border-radius:var(--radius-pill);padding:5px 8px;background:#E8F5EF;color:var(--success);font-size:10px;font-weight:900;letter-spacing:.1em;text-transform:uppercase}
-  .health.paused .state-label,.health.gated .state-label{background:var(--amber-soft);color:var(--amber)}
-  .layer{display:flex;flex-direction:column;min-height:228px;border-top:6px solid var(--calm-deep);transition:transform 320ms var(--ease),box-shadow 320ms var(--ease)}
-  .layer:hover{transform:translateY(-4px);box-shadow:0 28px 70px -48px rgba(45,0,17,.48)}
-  .layer-top{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;margin-bottom:10px}
-  .layer h3{font-size:19px}
-  .layer .folder{color:rgba(45,0,17,.52);font-size:12px;font-weight:800}
-  .open-link{flex:0 0 auto;text-decoration:none;border:1px solid var(--line);border-radius:var(--radius-pill);padding:6px 9px;background:var(--limestone);font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:var(--bordeaux)}
-  .open-link:hover{border-color:var(--bordeaux)}
-  .item-list{display:flex;flex-wrap:wrap;gap:6px;margin-top:13px}
-  .item-list span{display:inline-flex;align-items:center;min-height:28px;border:1px solid var(--line);border-radius:var(--radius-pill);padding:5px 8px;background:var(--limestone);color:var(--muted);font-size:12px;font-weight:700}
+  .content{
+    background:var(--limestone);
+    color:var(--bordeaux);
+  }
+  .chapter{
+    padding:82px 0;
+    border-top:1px solid rgba(45,0,17,.14);
+  }
+  .chapter.dark{
+    background:var(--bordeaux);
+    color:var(--limestone);
+    border-color:rgba(245,244,241,.16);
+  }
+  .chapter-head{
+    display:grid;
+    grid-template-columns:minmax(180px,.55fr) minmax(0,1.45fr);
+    gap:44px;
+    align-items:end;
+    margin-bottom:42px;
+  }
+  .kicker{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+  }
+  .dark .kicker{color:rgba(245,244,241,.56)}
+  h2{
+    margin:8px 0 0;
+    font-family:var(--font-display);
+    font-size:clamp(38px,7vw,96px);
+    font-weight:900;
+    line-height:.88;
+    letter-spacing:0;
+  }
+  .chapter-head p{
+    margin:0;
+    max-width:640px;
+    color:var(--ink-soft);
+    font-size:18px;
+    line-height:1.35;
+  }
+  .dark .chapter-head p{color:rgba(245,244,241,.68)}
 
-  .flow-strip{display:grid;grid-template-columns:repeat(6,minmax(140px,1fr));gap:10px}
-  .flow-step{position:relative;background:var(--white);border:1px solid var(--line);border-radius:var(--radius-card);padding:14px;min-height:148px;box-shadow:0 18px 50px -44px rgba(45,0,17,.36)}
-  .flow-step::after{content:"";position:absolute;right:-10px;top:50%;width:10px;border-top:2px solid var(--calm-deep)}
-  .flow-step:last-child::after{display:none}
-  .flow-step b{display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:var(--calm-pink);color:var(--bordeaux);font-size:12px;margin-bottom:12px}
-  .flow-step strong{display:block;color:var(--bordeaux);font-size:14px;line-height:1.2}
-  .flow-step p{margin:7px 0 0;color:var(--muted);font-size:12px;line-height:1.35}
+  .river{
+    position:relative;
+    min-height:460px;
+    overflow:hidden;
+    background:
+      linear-gradient(rgba(45,0,17,.05) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(45,0,17,.05) 1px,transparent 1px),
+      var(--calm-pink);
+    background-size:46px 46px;
+  }
+  .river svg{
+    display:block;
+    width:100%;
+    height:auto;
+  }
 
-  .loop-layout{display:grid;grid-template-columns:minmax(280px,.95fr) minmax(0,1.05fr);gap:16px;align-items:start}
-  .loop-cycle{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}
-  .loop-card{min-height:132px;border-top:6px solid var(--calm-deep)}
-  .route{border-top:6px solid var(--success);min-height:122px}
-  .route strong{font-size:16px}
-  .route p{margin-top:8px}
-  .plan{border-top:6px solid var(--calm-deep);min-height:136px}
-  .plan.next,.plan.future{border-top-color:var(--amber)}
-  .glossary{border-left:6px solid var(--success);min-height:120px}
-  .toolbar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
-  .filter-button{border:1px solid var(--line);border-radius:var(--radius-md);background:var(--white);color:rgba(45,0,17,.62);padding:9px 12px;font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;cursor:pointer}
-  .filter-button.active{background:var(--bordeaux);border-color:var(--bordeaux);color:#fff}
-  .data-note{margin-top:16px;color:var(--muted);font-size:12px}
-  footer{border-top:1px solid var(--line);background:var(--white);padding:28px 0;color:rgba(45,0,17,.55);font-size:12px}
+  .ledger{
+    display:grid;
+    grid-template-columns:1fr;
+    border-top:1px solid var(--line-dark);
+  }
+  .ledger-row{
+    display:grid;
+    grid-template-columns:92px minmax(140px,.55fr) minmax(0,1.1fr) 120px;
+    gap:18px;
+    align-items:center;
+    min-height:88px;
+    border-bottom:1px solid var(--line-dark);
+  }
+  .dark .ledger-row{border-color:rgba(245,244,241,.18)}
+  .ledger-no{
+    color:rgba(45,0,17,.42);
+    font-family:var(--font-display);
+    font-size:42px;
+    font-weight:900;
+    line-height:1;
+  }
+  .dark .ledger-no{color:rgba(255,211,227,.58)}
+  .ledger-name{font-size:20px;font-weight:900}
+  .ledger-row p{margin:0;color:var(--ink-soft);font-size:14px}
+  .dark .ledger-row p{color:rgba(245,244,241,.62)}
+  .state{
+    justify-self:end;
+    display:inline-flex;
+    align-items:center;
+    gap:8px;
+    color:var(--ink-soft);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .dark .state{color:rgba(245,244,241,.7)}
+  .state::before{
+    content:"";
+    width:10px;
+    height:10px;
+    border-radius:50%;
+    background:var(--success);
+  }
+  .state.paused::before{background:var(--amber)}
+  .state.gated::before{background:var(--calm-deep)}
+
+  .route-board{
+    display:grid;
+    grid-template-columns:minmax(220px,.58fr) minmax(0,1.42fr);
+    border-top:1px solid rgba(245,244,241,.18);
+  }
+  .route-index{
+    padding:18px 28px 18px 0;
+    border-right:1px solid rgba(245,244,241,.18);
+  }
+  .route-index strong{
+    display:block;
+    font-family:var(--font-display);
+    font-size:clamp(56px,9vw,128px);
+    line-height:.8;
+  }
+  .route-index span{
+    display:block;
+    margin-top:18px;
+    color:rgba(245,244,241,.58);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .routes{
+    display:grid;
+  }
+  .route-row{
+    display:grid;
+    grid-template-columns:minmax(160px,.45fr) minmax(0,1fr) 120px;
+    gap:18px;
+    align-items:center;
+    min-height:74px;
+    padding-left:28px;
+    border-bottom:1px solid rgba(245,244,241,.18);
+  }
+  .route-row b{font-size:18px}
+  .route-row p{margin:0;color:rgba(245,244,241,.62);font-size:13px}
+  .route-row span{
+    justify-self:end;
+    color:var(--calm-pink);
+    font-size:10px;
+    font-weight:900;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+
+  .loop-plate{
+    position:relative;
+    min-height:560px;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 50% 50%,rgba(255,172,202,.28),transparent 24%),
+      linear-gradient(rgba(245,244,241,.06) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(245,244,241,.06) 1px,transparent 1px),
+      var(--bordeaux);
+    background-size:100% 100%,56px 56px,56px 56px,100% 100%;
+  }
+  .loop-plate svg{display:block;width:100%;height:auto}
+
+  .plan-list{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    border-top:1px solid var(--line-dark);
+  }
+  .plan-step{
+    min-height:210px;
+    padding:20px 18px;
+    border-right:1px solid var(--line-dark);
+    border-bottom:1px solid var(--line-dark);
+  }
+  .plan-step:last-child{border-right:0}
+  .plan-step span{
+    display:block;
+    color:rgba(45,0,17,.48);
+    font-size:11px;
+    font-weight:900;
+    letter-spacing:.12em;
+    text-transform:uppercase;
+  }
+  .plan-step b{
+    display:block;
+    margin-top:18px;
+    font-family:var(--font-display);
+    font-size:30px;
+    line-height:1;
+  }
+  .plan-step p{margin:14px 0 0;color:var(--ink-soft);font-size:14px}
+
+  footer{
+    padding:28px 0;
+    background:var(--bordeaux);
+    color:rgba(245,244,241,.54);
+    font-size:11px;
+    font-weight:800;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+  }
   footer .wrap{display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px}
 
-  .metric,.explain-card,.flow-step,.health,.layer,.loop-card,.route,.glossary,.plan{
+  [data-reveal]{
     opacity:0;
-    transform:translateY(10px);
-    animation:rise-in 520ms var(--ease) forwards;
+    transform:translateY(18px);
+    animation:rise 700ms var(--ease) forwards;
   }
-  .metric:nth-child(2),.explain-card:nth-child(2),.flow-step:nth-child(2),.health:nth-child(2),.layer:nth-child(2),.route:nth-child(2),.glossary:nth-child(2),.plan:nth-child(2){animation-delay:60ms}
-  .metric:nth-child(3),.explain-card:nth-child(3),.flow-step:nth-child(3),.health:nth-child(3),.layer:nth-child(3),.route:nth-child(3),.glossary:nth-child(3),.plan:nth-child(3){animation-delay:120ms}
-  .flow-step:nth-child(4),.health:nth-child(4),.layer:nth-child(4),.route:nth-child(4),.glossary:nth-child(4),.plan:nth-child(4){animation-delay:180ms}
-  .flow-step:nth-child(5),.health:nth-child(5),.layer:nth-child(5),.route:nth-child(5),.glossary:nth-child(5){animation-delay:240ms}
-  .flow-step:nth-child(6),.health:nth-child(6),.layer:nth-child(6),.route:nth-child(6),.glossary:nth-child(6){animation-delay:300ms}
-  @keyframes rise-in{to{opacity:1;transform:none}}
+  [data-reveal="2"]{animation-delay:80ms}
+  [data-reveal="3"]{animation-delay:160ms}
+  @keyframes rise{to{opacity:1;transform:none}}
+  @keyframes ring-drift{to{stroke-dashoffset:-240}}
 
-  @media(max-width:960px){
-    .hero .wrap{grid-template-columns:1fr}
-    .metric-grid,.explain-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-    .flow-strip{grid-template-columns:repeat(3,minmax(0,1fr))}
-    .flow-step::after{display:none}
-    .loop-layout{grid-template-columns:1fr}
+  @media(max-width:920px){
+    .filmstrip{
+      width:100vw;
+      overflow-x:auto;
+      grid-template-columns:repeat(7,112px);
+      padding:0 14px 4px;
+    }
+    .chapter-head,
+    .route-board{
+      grid-template-columns:1fr;
+    }
+    .route-index{
+      border-right:0;
+      border-bottom:1px solid rgba(245,244,241,.18);
+      padding-right:0;
+    }
+    .route-row{
+      grid-template-columns:1fr;
+      padding:18px 0;
+    }
+    .route-row span{justify-self:start}
+    .plan-list{grid-template-columns:1fr 1fr}
   }
   @media(max-width:680px){
-    .wrap{width:min(100% - 28px,1180px)}
-    body{background-size:40px 40px}
-    .topbar{position:static}
-    .topbar .wrap{align-items:flex-start;flex-direction:column}
-    .nav{margin-left:0}
-    .hero .wrap{padding:42px 0 30px}
-    .hero::after,.stage-spec{display:none}
-    .board-grid,.metric-grid,.explain-grid,.flow-strip,.loop-cycle{grid-template-columns:1fr}
-    .section-head{display:block}
-    .section-head p{margin-top:8px}
-    .hero-actions .button{width:100%}
+    .wrap{width:min(100% - 28px,1220px)}
+    .deck-viewport{padding-top:0}
+    .stage{
+      width:100vw;
+      aspect-ratio:3/4;
+      min-height:720px;
+      box-shadow:none;
+    }
+    .stage-topline{
+      grid-template-columns:1fr 1fr;
+      left:18px;
+      right:18px;
+      top:16px;
+      gap:12px;
+      font-size:8px;
+    }
+    .brand-lockup{
+      left:24px;
+      right:24px;
+      bottom:32px;
+      width:auto;
+    }
+    .map-stage{
+      inset:106px 8px 292px 8px;
+    }
+    .stage-caption,
+    .readout{display:none}
+    .brand-word{font-size:28px}
+    h1{font-size:44px}
+    .stage-copy{font-size:14px}
+    .chapter{padding:58px 0}
+    .chapter-head{gap:18px;margin-bottom:28px}
+    .chapter-head p{font-size:16px}
+    .ledger-row{
+      grid-template-columns:58px 1fr;
+      gap:10px 14px;
+      align-items:start;
+      padding:18px 0;
+    }
+    .ledger-row p{grid-column:2}
+    .state{grid-column:2;justify-self:start}
+    .ledger-no{font-size:30px}
+    .plan-list{grid-template-columns:1fr}
+    .plan-step{border-right:0}
   }
-  @media (prefers-reduced-motion:reduce){
-    *{animation:none!important;transition:none!important}
-    .metric,.explain-card,.flow-step,.health,.layer,.loop-card,.route,.glossary,.plan{opacity:1;transform:none}
+  @media(prefers-reduced-motion:reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+    [data-reveal]{opacity:1;transform:none}
   }
 </style>
 </head>
 <body>
-  <header class="topbar">
-    <div class="wrap">
-      <a class="brand" href="index.html" aria-label="Back to Frankly Lab">
-        <span class="brand-mark">OS</span>
-        <span>Frankly OS</span>
-      </a>
-      <nav class="nav" aria-label="Frankly OS sections">
-        <a href="#overview">Overview</a>
-        <a href="#map">Map</a>
-        <a href="#loop">Loop</a>
-        <a href="#routes">Routes</a>
-        <a href="#plan">Live Plan</a>
-      </nav>
-    </div>
-  </header>
-
-  <section class="hero" id="overview">
-    <div class="stage-spec tl"><span class="barcode"></span>OS / 16:9 / LIVE MAP<br>ASSET_ID FRANKLY_OS_V2</div>
-    <div class="stage-spec tr">DRIVE_TO_SITE<br>METADATA-FIRST<br><span class="dots">· · · · · ·</span></div>
-    <div class="stage-spec bl">© 2026 — FRANKLY™ INTERNAL SYSTEM</div>
-    <div class="stage-spec br">HUMANMADE + AI<br>SUPERVISED LOOP</div>
-    <div class="wrap">
-      <div>
-        <p class="eyebrow">Internal operating system / visual layer</p>
-        <h1>Frankly<span class="tm">TM</span><br>OS</h1>
-        <p class="lead">A shared system for AI-assisted work: rules, routes, source material, outputs and learning in one operating model. This page makes the system visible before anyone has to open the folders.</p>
-        <div class="hero-actions">
-          <a class="button" href="#map">Open system map</a>
-          <a class="button secondary" href="#loop">See agentic loop</a>
-        </div>
-        <div class="status-row" id="statusRow" aria-label="System status"></div>
+<div class="page">
+  <section class="deck-viewport" id="overview" aria-label="Frankly OS overview">
+    <div class="stage">
+      <div class="stage-topline" aria-hidden="true">
+        <div><b>frankly</b> Operating system</div>
+        <div>Supervised AI loop<br>Drive as source</div>
+        <div>Generated <span data-generated>2026-06-30 16:10</span><br>No paid API required</div>
+        <a class="seed" href="#map">Map</a>
       </div>
 
-      <aside class="system-board" aria-label="Frankly OS summary">
-        <div class="board-head">
-          <div>
-            <strong>Current system state</strong>
-            <span id="generatedText">Loading manifest</span>
-          </div>
-          <span class="pill"><span class="dot"></span><span id="liveState">Ready</span></span>
+      <div class="stage-caption">A live visual layer for the internal system. Source folders stay in Drive. This page explains the operating model before anyone opens the files.</div>
+
+      <div class="map-stage" aria-hidden="true">
+        <svg class="system-svg" viewBox="0 0 1120 760" role="img" aria-label="Flowchart showing Brain, Routes, Skills, Agentic Loop, Outputs and Learning">
+          <defs>
+            <marker id="arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#FFF6FA"></path>
+            </marker>
+            <marker id="pink-arrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse">
+              <path d="M 0 0 L 10 5 L 0 10 z" fill="#FFACCA"></path>
+            </marker>
+            <filter id="nodeShadow" x="-30%" y="-30%" width="160%" height="160%">
+              <feDropShadow dx="0" dy="20" stdDeviation="18" flood-color="#000000" flood-opacity=".24"></feDropShadow>
+            </filter>
+          </defs>
+
+          <path class="map-ribbon" d="M124 386 C268 194 433 172 566 304 C681 418 790 416 932 256"></path>
+          <path class="map-ribbon" d="M276 616 C414 526 562 534 701 628 C804 698 932 688 1012 588" opacity=".46"></path>
+
+          <path class="map-line" marker-end="url(#arrow)" d="M176 352 C286 272 344 270 456 330"></path>
+          <path class="map-line" marker-end="url(#arrow)" d="M258 498 C358 514 421 492 502 438"></path>
+          <path class="map-line" marker-end="url(#arrow)" d="M555 536 C590 597 676 640 772 618"></path>
+          <path class="map-line" marker-end="url(#arrow)" d="M730 334 C802 274 880 252 960 274"></path>
+          <path class="map-line learning" marker-end="url(#pink-arrow)" d="M940 518 C830 670 540 706 214 432"></path>
+
+          <g transform="translate(594 400)">
+            <circle class="node-halo" r="176"></circle>
+            <circle class="loop-ring" r="124"></circle>
+            <circle class="loop-core" r="90" filter="url(#nodeShadow)"></circle>
+            <text class="map-meta" fill="#2D0011" text-anchor="middle" y="-16">AGENTIC</text>
+            <text class="map-title" fill="#2D0011" text-anchor="middle" font-size="54" y="38">Loop</text>
+            <text class="map-small" fill="#585C60" text-anchor="middle" y="68">reason / act / observe / validate</text>
+          </g>
+
+          <g transform="translate(146 360)" filter="url(#nodeShadow)">
+            <circle class="node-dot" r="70"></circle>
+            <text class="map-label node-text dark" text-anchor="middle" y="-8">Brain</text>
+            <text class="map-small" fill="#2D0011" text-anchor="middle" y="22">rules + gates</text>
+          </g>
+
+          <g transform="translate(258 508)" filter="url(#nodeShadow)">
+            <circle class="node-dot dark" r="56"></circle>
+            <text class="map-label node-text" text-anchor="middle" y="-4">Routes</text>
+            <text class="map-small node-text" text-anchor="middle" y="24">methods</text>
+          </g>
+
+          <g transform="translate(496 626)" filter="url(#nodeShadow)">
+            <circle class="node-dot" r="64"></circle>
+            <text class="map-label node-text dark" text-anchor="middle" y="-8">Skills</text>
+            <text class="map-small" fill="#2D0011" text-anchor="middle" y="22">templates + tools</text>
+          </g>
+
+          <g transform="translate(776 618)" filter="url(#nodeShadow)">
+            <circle class="node-dot dark" r="58"></circle>
+            <text class="map-label node-text" text-anchor="middle" y="-4">Source</text>
+            <text class="map-small node-text" text-anchor="middle" y="24">Drive material</text>
+          </g>
+
+          <g transform="translate(968 286)" filter="url(#nodeShadow)">
+            <circle class="node-dot" r="72"></circle>
+            <text class="map-label node-text dark" text-anchor="middle" y="-8">Outputs</text>
+            <text class="map-small" fill="#2D0011" text-anchor="middle" y="22">maps + products</text>
+          </g>
+
+          <g transform="translate(948 520)" filter="url(#nodeShadow)">
+            <circle class="node-dot dark" r="61"></circle>
+            <text class="map-label node-text" text-anchor="middle" y="-4">Learning</text>
+            <text class="map-small node-text" text-anchor="middle" y="24">feedback</text>
+          </g>
+
+          <g opacity=".72">
+            <text class="map-meta" fill="#FFD3E3" x="22" y="44">OS MAP / 01</text>
+            <text class="map-small" fill="rgba(245,244,241,.7)" x="22" y="70">Human-made system, AI-assisted execution</text>
+            <text class="map-meta" fill="#FFD3E3" x="806" y="724">DRIVE -> SITE -> LOOP</text>
+          </g>
+        </svg>
+      </div>
+
+      <div class="brand-lockup" data-reveal>
+        <div class="brand-word"><span class="brand-glyph"></span>frankly<sup>TM</sup></div>
+        <h1>Our operating system, made visible.</h1>
+        <p class="stage-copy">A live map of how requests move through rules, routes, source material, AI loops, outputs and learning.</p>
+        <div class="stage-actions">
+          <a class="text-link" href="#flow">Follow the flow</a>
+          <a class="text-link" href="#routes">Open routes</a>
         </div>
-        <div class="board-grid">
-          <div class="board-node">
-            <small>01 / Brain</small>
-            <strong>Rules and decisions</strong>
-            <p>System behavior, roadmap, feedback and gates.</p>
-          </div>
-          <div class="board-node">
-            <small>02 / Routes</small>
-            <strong>Reusable work paths</strong>
-            <p>How common types of work should be handled.</p>
-          </div>
-          <div class="board-node">
-            <small>03 / Loop</small>
-            <strong>Reason to validation</strong>
-            <p>The engine that improves work until it is done or stopped.</p>
-          </div>
-          <div class="board-node">
-            <small>04 / Output</small>
-            <strong>Deliverables and lessons</strong>
-            <p>Finished artifacts plus reusable system learning.</p>
-          </div>
-        </div>
-      </aside>
+      </div>
+
+      <div class="readout" aria-label="System counters">
+        <div><span>Layers</span><b data-count="layers">9</b></div>
+        <div><span>Routes</span><b data-count="routes">7</b></div>
+        <div><span>Gates</span><b data-count="gates">1</b></div>
+      </div>
     </div>
+
+    <nav class="filmstrip" aria-label="Page sections">
+      <a class="thumb" href="#overview"><span>01</span><i></i>System map</a>
+      <a class="thumb" href="#flow"><span>02</span><i></i>Work flow</a>
+      <a class="thumb" href="#health"><span>03</span><i></i>Health</a>
+      <a class="thumb" href="#map"><span>04</span><i></i>Layers</a>
+      <a class="thumb" href="#loop"><span>05</span><i></i>Loop</a>
+      <a class="thumb" href="#routes"><span>06</span><i></i>Routes</a>
+      <a class="thumb" href="#plan"><span>07</span><i></i>Next</a>
+    </nav>
   </section>
 
-  <main class="wrap">
-    <section>
-      <div class="metric-grid" id="metricGrid"></div>
-      <div class="section-head">
-        <h2>What This Is</h2>
-        <p>The plain-English layer for Jonas, the team and future agents. It explains the operating model before the file structure.</p>
-      </div>
-      <div class="explain-grid" id="explainGrid"></div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>How Work Moves</h2>
-        <p>A normal request moves through rules, routes, source material, validation, output and learning.</p>
-      </div>
-      <div class="flow-strip" id="flowStrip"></div>
-    </section>
-
-    <section>
-      <div class="section-head">
-        <h2>System Health</h2>
-        <p>Active, paused and gated states are visible without exposing sensitive source content.</p>
-      </div>
-      <div class="toolbar" id="healthFilters" aria-label="Health filters"></div>
-      <div class="health-grid" id="healthGrid"></div>
-    </section>
-
-    <section id="map">
-      <div class="section-head">
-        <h2>Operating Layers</h2>
-        <p>Each layer is a real part of the Drive OS. Open links point back to the source of truth.</p>
-      </div>
-      <div class="layer-grid" id="layerGrid"></div>
-    </section>
-
-    <section id="loop">
-      <div class="section-head">
-        <h2>Agentic Loop</h2>
-        <p>The loop is supervised by default: it reasons, acts, observes, validates, corrects and stops cleanly.</p>
-      </div>
-      <div class="loop-layout">
-        <div class="loop-card">
-          <strong>Default mode</strong>
-          <p>Supervised Codex plus Drive. Slack automation and paid API automation remain paused until Jonas approves budget and scope.</p>
+  <main class="content">
+    <section class="chapter" id="flow">
+      <div class="wrap">
+        <div class="chapter-head">
+          <div>
+            <p class="kicker">02 / Flowchart</p>
+            <h2>How work moves</h2>
+          </div>
+          <p>One request should never disappear into a folder. The flow shows how a task enters the OS, selects a route, uses source material, loops until validated and returns learning to the system.</p>
         </div>
-        <div class="loop-cycle" id="loopCycle"></div>
+      </div>
+      <div class="river" aria-label="Frankly OS work flow">
+        <svg viewBox="0 0 1440 520" role="img" aria-label="Request to output flowchart">
+          <defs>
+            <marker id="flowArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto">
+              <path d="M0 0 L10 5 L0 10 z" fill="#2D0011"></path>
+            </marker>
+          </defs>
+          <path d="M74 270 C220 120 334 120 474 242 C617 367 741 374 882 246 C1010 132 1144 160 1348 318" fill="none" stroke="#2D0011" stroke-width="5" stroke-linecap="round" marker-end="url(#flowArrow)"></path>
+          <path d="M260 354 C424 472 696 478 938 380 C1110 310 1222 334 1348 430" fill="none" stroke="rgba(45,0,17,.36)" stroke-width="3" stroke-dasharray="9 13" stroke-linecap="round"></path>
+          <g font-family="Switzer,system-ui,sans-serif" fill="#2D0011">
+            <g transform="translate(92 236)">
+              <circle r="42" fill="#2D0011"></circle><text y="8" text-anchor="middle" fill="#FFF6FA" font-size="22" font-weight="900">01</text>
+              <text y="82" text-anchor="middle" font-size="27" font-weight="900">Request</text><text y="110" text-anchor="middle" font-size="15" fill="#585C60">Goal + limits</text>
+            </g>
+            <g transform="translate(336 145)">
+              <circle r="42" fill="#FFF6FA"></circle><text y="8" text-anchor="middle" font-size="22" font-weight="900">02</text>
+              <text y="82" text-anchor="middle" font-size="27" font-weight="900">Brain</text><text y="110" text-anchor="middle" font-size="15" fill="#585C60">Rules + gates</text>
+            </g>
+            <g transform="translate(560 268)">
+              <circle r="42" fill="#2D0011"></circle><text y="8" text-anchor="middle" fill="#FFF6FA" font-size="22" font-weight="900">03</text>
+              <text y="82" text-anchor="middle" font-size="27" font-weight="900">Route</text><text y="110" text-anchor="middle" font-size="15" fill="#585C60">Reusable method</text>
+            </g>
+            <g transform="translate(784 344)">
+              <circle r="42" fill="#FFF6FA"></circle><text y="8" text-anchor="middle" font-size="22" font-weight="900">04</text>
+              <text y="82" text-anchor="middle" font-size="27" font-weight="900">Source</text><text y="110" text-anchor="middle" font-size="15" fill="#585C60">Drive + skills</text>
+            </g>
+            <g transform="translate(990 236)">
+              <circle r="42" fill="#2D0011"></circle><text y="8" text-anchor="middle" fill="#FFF6FA" font-size="22" font-weight="900">05</text>
+              <text y="82" text-anchor="middle" font-size="27" font-weight="900">Loop</text><text y="110" text-anchor="middle" font-size="15" fill="#585C60">Act + validate</text>
+            </g>
+            <g transform="translate(1252 312)">
+              <circle r="42" fill="#FFF6FA"></circle><text y="8" text-anchor="middle" font-size="22" font-weight="900">06</text>
+              <text y="82" text-anchor="middle" font-size="27" font-weight="900">Output</text><text y="110" text-anchor="middle" font-size="15" fill="#585C60">Deliverable + learning</text>
+            </g>
+          </g>
+        </svg>
       </div>
     </section>
 
-    <section id="routes">
-      <div class="section-head">
-        <h2>Routes</h2>
-        <p>Routes are repeatable work paths. They keep methods reusable while source-heavy material stays in source folders.</p>
+    <section class="chapter" id="health">
+      <div class="wrap">
+        <div class="chapter-head">
+          <div>
+            <p class="kicker">03 / System state</p>
+            <h2>Health without noise</h2>
+          </div>
+          <p>Statuses are shown as a ledger instead of boxes. Active means usable now, paused means intentionally waiting, gated means visible but requiring human approval.</p>
+        </div>
+        <div class="ledger" id="healthLedger"></div>
       </div>
-      <div class="route-grid" id="routeGrid"></div>
     </section>
 
-    <section>
-      <div class="section-head">
-        <h2>Plain Language Glossary</h2>
-        <p>System terms translated into the way a new team member should understand them.</p>
+    <section class="chapter dark" id="map">
+      <div class="wrap">
+        <div class="chapter-head">
+          <div>
+            <p class="kicker">04 / Drive structure</p>
+            <h2>Operating layers</h2>
+          </div>
+          <p>The Drive remains the source of truth. The website should become the visual skin that explains what each layer does and where the work belongs.</p>
+        </div>
+        <div class="ledger" id="layerLedger"></div>
       </div>
-      <div class="glossary-grid" id="glossaryGrid"></div>
     </section>
 
-    <section id="plan">
-      <div class="section-head">
-        <h2>Live Plan</h2>
-        <p>The path from this embedded visual system to a truly Drive-backed live dashboard.</p>
+    <section class="chapter dark" id="loop">
+      <div class="wrap">
+        <div class="chapter-head">
+          <div>
+            <p class="kicker">05 / Agentic loop</p>
+            <h2>The feedback engine</h2>
+          </div>
+          <p>The loop is supervised by default. It stops when the goal is met, when evidence fails, when a gate appears or when budget/scope says pause.</p>
+        </div>
       </div>
-      <div class="plan-grid" id="planGrid"></div>
-      <p class="data-note" id="dataNote">Manifest source: embedded fallback.</p>
+      <div class="loop-plate" aria-label="Agentic loop diagram">
+        <svg viewBox="0 0 1440 560" role="img" aria-label="Reason action observation validation correction termination loop">
+          <defs>
+            <marker id="loopArrow" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto">
+              <path d="M0 0 L10 5 L0 10 z" fill="#FFD3E3"></path>
+            </marker>
+          </defs>
+          <circle cx="720" cy="280" r="170" fill="none" stroke="#FFACCA" stroke-width="10" stroke-dasharray="34 20"></circle>
+          <path d="M720 92 C938 92 1114 238 1114 280 C1114 364 938 468 720 468 C502 468 326 364 326 280 C326 196 502 92 720 92" fill="none" stroke="rgba(255,211,227,.42)" stroke-width="4" marker-end="url(#loopArrow)"></path>
+          <g font-family="Switzer,system-ui,sans-serif" font-weight="900">
+            <text x="720" y="262" fill="#FFF6FA" font-size="72" text-anchor="middle" font-family="Georgia,serif">Loop</text>
+            <text x="720" y="304" fill="rgba(245,244,241,.68)" font-size="16" letter-spacing="2" text-anchor="middle">REASON / ACT / OBSERVE / VALIDATE</text>
+            <g fill="#FFD3E3" font-size="26">
+              <text x="710" y="64" text-anchor="middle">Reason</text>
+              <text x="1086" y="192" text-anchor="middle">Action</text>
+              <text x="1116" y="388" text-anchor="middle">Observation</text>
+              <text x="720" y="526" text-anchor="middle">Validation</text>
+              <text x="328" y="388" text-anchor="middle">Correction</text>
+              <text x="354" y="192" text-anchor="middle">Termination</text>
+            </g>
+            <g fill="rgba(245,244,241,.62)" font-size="13" letter-spacing="1.4">
+              <text x="84" y="510">HUMAN-IN-THE-LOOP BY DEFAULT</text>
+              <text x="1110" y="510">PAID AUTOMATION: PAUSED</text>
+            </g>
+          </g>
+        </svg>
+      </div>
+    </section>
+
+    <section class="chapter dark" id="routes">
+      <div class="wrap">
+        <div class="chapter-head">
+          <div>
+            <p class="kicker">06 / Route network</p>
+            <h2>Reusable paths</h2>
+          </div>
+          <p>Routes are not documents for storage. They are repeatable paths the system can choose when new work arrives.</p>
+        </div>
+        <div class="route-board">
+          <div class="route-index">
+            <strong data-count="routes-large">7</strong>
+            <span>active route families</span>
+          </div>
+          <div class="routes" id="routeRows"></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="chapter" id="plan">
+      <div class="wrap">
+        <div class="chapter-head">
+          <div>
+            <p class="kicker">07 / Live plan</p>
+            <h2>From page to live OS</h2>
+          </div>
+          <p>This page is the visual layer. The next move is to connect it to a Drive metadata endpoint, so changes in the system can be reflected without editing the site by hand.</p>
+        </div>
+        <div class="plan-list" id="planList"></div>
+      </div>
     </section>
   </main>
 
   <footer>
     <div class="wrap">
-      <span>Frankly OS visual system / metadata-first / no paid API required</span>
-      <span>Drive remains the source of truth.</span>
+      <span>Frankly OS / visual system / drive-first</span>
+      <span>Slack and paid API automation stay paused until approved.</span>
     </div>
   </footer>
+</div>
 
 <script>
 const SYSTEM_DATA = {
   generated:"2026-06-30 16:10",
-  refreshSeconds:60,
-  root:"https://drive.google.com/drive/folders/1SbreMcr9vbHbGlLXZL7NNDoEUUKOsCdB",
-  mode:"metadata-first",
   summary:{
-    title:"Frankly OS Visual System",
-    status:"V1 ready",
-    source:"Drive is source of truth. This website renders a readable system map from a JSON-shaped manifest.",
+    status:"V2 visual map ready",
     next:"Connect a Drive metadata endpoint to turn this into a true live dashboard."
-  },
-  explain:{
-    cards:[
-      {title:"What this is",text:"Frankly OS is a shared operating system for AI-assisted work. It keeps rules, routes, source material, outputs and learning in one Drive structure."},
-      {title:"What live means",text:"The page is a read layer. Drive stays the source of truth, while the website can read a manifest and refresh the view without editing the OS."},
-      {title:"How to use it",text:"Start with health, follow the work flow, then open the layer or route that explains the part of the system you are using."}
-    ],
-    howToRead:[
-      {title:"A person asks for a task",detail:"The request starts with a goal, a desired output and any limits such as budget, approval or privacy."},
-      {title:"The Brain sets the rules",detail:"brain/system.md and brain/ai-loop.md define behavior, paused areas, validation rules and gates."},
-      {title:"A Route chooses the method",detail:"Routes are reusable work paths such as visual production, partner pitch, research or system operations."},
-      {title:"Skills and source support the work",detail:"Templates, checklists, the design system and source folders give context without overloading route files."},
-      {title:"The loop improves the result",detail:"The agentic loop reasons, acts, observes, validates and corrects until the goal is met, gated or safely stopped."},
-      {title:"Outputs and lessons return",detail:"Finished artifacts live in outputs, while reusable learning is filed into the right system file or feedback register."}
-    ],
-    glossary:[
-      {term:"Brain",meaning:"The control plane: rules, roadmap, feedback and system decisions."},
-      {term:"Routes",meaning:"Repeatable ways of doing work, like playbooks for common tasks."},
-      {term:"Skills",meaning:"Templates, checklists and specialist helpers used by the routes."},
-      {term:"Source Material",meaning:"Raw or semi-processed references, examples, research and imported material."},
-      {term:"Outputs",meaning:"Generated maps, prototypes, client deliverables and finished artifacts."},
-      {term:"Agentic Loop",meaning:"The work engine: reason, act, observe, validate, correct and stop."},
-      {term:"Feedback Loop",meaning:"The memory layer that turns useful lessons into active system improvements."},
-      {term:"Gated",meaning:"Visible, but requires human approval before action."}
-    ]
   },
   health:[
     {name:"Drive source",state:"active",detail:"Canonical OS files live in Google Drive."},
     {name:"Agentic loop",state:"active",detail:"Supervised Codex plus Drive loop is live."},
-    {name:"Design system",state:"active",detail:"Default visual language is active."},
-    {name:"Slack automation",state:"paused",detail:"Paused until budget approval."},
+    {name:"Design system",state:"active",detail:"Frankly visual system is the default product language."},
+    {name:"Slack automation",state:"paused",detail:"Paused until budget approval and private test scope are approved."},
     {name:"Paid API automation",state:"paused",detail:"Paused until Jonas approves spend and scope."},
-    {name:"Security cleanup",state:"gated",detail:"Recovery codes were found in source material and were not opened."}
+    {name:"Security cleanup",state:"gated",detail:"Sensitive source material remains gated and is not exposed here."}
   ],
   layers:[
-    {id:"start",name:"Start",folder:"Frankly OS/",url:"https://drive.google.com/file/d/1P82aMbd5nRX5nQeeIWXUXZXiIJ-GrgS6/view",role:"Entry point and boot instructions",items:["README.md","Fast kickoff","Run an Agentic Loop"],state:"active"},
-    {id:"brain",name:"Brain",folder:"brain/",url:"https://drive.google.com/drive/folders/1YlrheiSRGTMYOA823qETr1KQ7PtOBpYa",role:"Control plane",items:["system.md","ai-loop.md","system-intake.md","feedback-loop.md","roadmap.md"],state:"active"},
-    {id:"agentic-loop",name:"Agentic Loop",folder:"library/routes/system-operations/",url:"https://drive.google.com/drive/folders/1oyrq9bMC8ptyWX40Leg7LZWrNOW_XJSu",role:"Goal-directed work engine",items:["Reason","Action","Observation","Validation","Termination"],state:"active"},
-    {id:"design-system",name:"Design System",folder:"library/design-system/",url:"https://drive.google.com/drive/folders/1cCkYdj08y5ZGulmOx7pR9uTnoRgDyXug",role:"Visual and product UI canon",items:["frankly-design-system.md","tokens","components","motion"],state:"active"},
-    {id:"routes",name:"Routes",folder:"library/routes/",url:"https://drive.google.com/drive/folders/143toiFT62iYeAzN5ze-s7fKsCRX2InJy",role:"Reusable work paths",items:["visual-production","partner-pitch","content-growth","research","system-operations"],state:"active"},
-    {id:"skills",name:"Skills",folder:"skills/",url:"https://drive.google.com/drive/folders/1a4cv_khVkrDuScusNDs4mfZsgSf22PJh",role:"Templates, specialists and checklists",items:["agentic-loop-run-template.md","agentic-loop-quality-door.md","checklists"],state:"active"},
-    {id:"source",name:"Source Material",folder:"source-material/",url:"https://drive.google.com/drive/folders/1WVU0A_61fnyFmc2cKmjztfdyKCnjdns6",role:"Raw and semi-processed source",items:["partner-cases","research","danish-originals","imported-extracts"],state:"active"},
-    {id:"outputs",name:"Outputs",folder:"outputs/system-maps/",url:"https://drive.google.com/drive/folders/1vmkbRCdIyVzvxqM8iHu9YMNY4gPNATHL",role:"Generated visualizations and deliverables",items:["system-map.html","toolbox-map.html","live-system-map.html","system-live-data.json"],state:"active"},
-    {id:"automation",name:"Future Automation",folder:"paused",url:"https://drive.google.com/drive/folders/1SbreMcr9vbHbGlLXZL7NNDoEUUKOsCdB",role:"Slack/API/background jobs after approval",items:["Google Apps Script endpoint","private Slack prototype","scheduled system checks"],state:"paused"}
+    {name:"Start",folder:"Frankly OS/",state:"active",detail:"Entry point, boot instructions and fast kickoff."},
+    {name:"Brain",folder:"brain/",state:"active",detail:"Control plane for rules, roadmap, feedback and system decisions."},
+    {name:"Agentic Loop",folder:"library/routes/system-operations/",state:"active",detail:"Goal-directed work engine with validation and termination rules."},
+    {name:"Design System",folder:"library/design-system/",state:"active",detail:"Visual and product UI canon for outputs, products and maps."},
+    {name:"Routes",folder:"library/routes/",state:"active",detail:"Reusable work paths for recurring tasks."},
+    {name:"Skills",folder:"skills/",state:"active",detail:"Templates, quality doors, checklists and specialist helpers."},
+    {name:"Source Material",folder:"source-material/",state:"active",detail:"Raw and semi-processed references, examples and research."},
+    {name:"Outputs",folder:"outputs/system-maps/",state:"active",detail:"Generated visualizations, prototypes and deliverables."},
+    {name:"Future Automation",folder:"paused",state:"paused",detail:"Slack/API/background jobs after budget and access approval."}
   ],
   routes:[
-    {name:"visual-production",state:"active",files:8,detail:"Images, motion, 3D, upscaling and visual production craft."},
-    {name:"partner-pitch",state:"active",files:5,detail:"Reusable partner pitch logic and deck pipeline routes."},
-    {name:"content-growth",state:"active",files:3,detail:"Search, lifecycle communication and brand copy production."},
-    {name:"presentation-systems",state:"active",files:2,detail:"Deck systems, pitch narratives and presentation production."},
-    {name:"product-clarity",state:"active",files:1,detail:"Product clarity and coverage explanation logic."},
-    {name:"research",state:"active",files:1,detail:"Reusable research route and source handling rules."},
-    {name:"system-operations",state:"active",files:2,detail:"Agentic loop architecture, live visualization and maintenance routes."}
+    {name:"visual-production",state:"active",detail:"Images, motion, 3D, upscaling and visual production craft."},
+    {name:"partner-pitch",state:"active",detail:"Reusable partner pitch logic and deck pipeline routes."},
+    {name:"content-growth",state:"active",detail:"Search, lifecycle communication and brand copy production."},
+    {name:"presentation-systems",state:"active",detail:"Deck systems, pitch narratives and presentation production."},
+    {name:"product-clarity",state:"active",detail:"Product clarity and coverage explanation logic."},
+    {name:"research",state:"active",detail:"Reusable research route and source handling rules."},
+    {name:"system-operations",state:"active",detail:"Agentic loop architecture, live visualization and maintenance routes."}
   ],
   livePlan:[
-    {step:"V1",name:"Website visual system",state:"done",detail:"This repo-hosted page makes the OS readable on os.franklydesign.dk."},
+    {step:"V1",name:"Website visual system",state:"done",detail:"Repo-hosted page makes the OS readable on os.franklydesign.dk."},
     {step:"V2",name:"Drive metadata endpoint",state:"next",detail:"Google Apps Script scans selected Drive folders and returns metadata JSON."},
     {step:"V3",name:"Auto-refreshing manifest",state:"next",detail:"The page fetches the endpoint every 1-5 minutes and shows stale states clearly."},
     {step:"V4",name:"Agentic status layer",state:"future",detail:"Show active loop runs, validation state, pending gates and filed lessons."}
   ]
 };
 
-const LOOP_STEPS = [
-  {title:"Reason",text:"Understand the goal, context, constraints and success condition."},
-  {title:"Action",text:"Use tools, files, browsers or APIs to move the work forward."},
-  {title:"Observation",text:"Read the result of the action instead of assuming it worked."},
-  {title:"Validation",text:"Compare the result to the goal, evidence and quality door."},
-  {title:"Correction",text:"Adjust the route, fix the output or file a blocker."},
-  {title:"Termination",text:"Stop when the goal is met, gated, blocked or budget-limited."}
-];
-
-let activeHealthFilter = "all";
 let currentData = SYSTEM_DATA;
 
 function esc(value){
@@ -482,111 +930,46 @@ function countByState(items,state){
   return items.filter((item)=>item.state===state).length;
 }
 
-function renderMetric(label,value,detail){
-  return `<article class="metric"><small>${esc(label)}</small><strong>${esc(value)}</strong><span>${esc(detail)}</span></article>`;
+function stateClass(state){
+  if(state === "paused") return "state paused";
+  if(state === "gated") return "state gated";
+  return "state";
 }
 
-function render(data, sourceLabel){
+function renderLedger(targetId, rows, folderMode=false){
+  document.getElementById(targetId).innerHTML = rows.map((row,index)=>`
+    <article class="ledger-row" data-reveal="${(index % 3) + 1}">
+      <div class="ledger-no">${String(index + 1).padStart(2,"0")}</div>
+      <div class="ledger-name">${esc(folderMode ? row.folder : row.name)}</div>
+      <p>${esc(folderMode ? `${row.name}: ${row.detail}` : row.detail)}</p>
+      <span class="${stateClass(row.state)}">${esc(row.state)}</span>
+    </article>
+  `).join("");
+}
+
+function render(data){
   currentData = data;
-  const health = data.health || [];
-  const layers = data.layers || [];
-  const routes = data.routes || [];
-  const explain = data.explain || {cards:[],howToRead:[],glossary:[]};
-  const activeCount = countByState(health,"active");
-  const pausedCount = countByState(health,"paused");
-  const gatedCount = countByState(health,"gated");
+  document.querySelectorAll("[data-generated]").forEach((node)=>node.textContent = data.generated);
+  document.querySelectorAll('[data-count="layers"]').forEach((node)=>node.textContent = data.layers.length);
+  document.querySelectorAll('[data-count="routes"], [data-count="routes-large"]').forEach((node)=>node.textContent = data.routes.length);
+  document.querySelectorAll('[data-count="gates"]').forEach((node)=>node.textContent = countByState(data.health,"gated"));
 
-  document.getElementById("generatedText").textContent = `Manifest generated ${data.generated}`;
-  document.getElementById("liveState").textContent = data.summary.status;
-  document.getElementById("dataNote").textContent = `Manifest source: ${sourceLabel}. Next: ${data.summary.next}`;
-  document.getElementById("statusRow").innerHTML = [
-    `<span class="pill"><span class="dot"></span>${activeCount} active</span>`,
-    `<span class="pill"><span class="dot paused"></span>${pausedCount} paused</span>`,
-    `<span class="pill"><span class="dot paused"></span>${gatedCount} gated</span>`,
-    `<span class="pill">No paid API required</span>`
-  ].join("");
+  renderLedger("healthLedger", data.health);
+  renderLedger("layerLedger", data.layers, true);
 
-  document.getElementById("metricGrid").innerHTML = [
-    renderMetric("Layers",layers.length,"Operating areas"),
-    renderMetric("Routes",routes.length,"Reusable work paths"),
-    renderMetric("Active",activeCount,"Healthy system checks"),
-    renderMetric("Gates",gatedCount,"Needs human approval")
-  ].join("");
-
-  document.getElementById("explainGrid").innerHTML = explain.cards.map((card)=>`
-    <article class="explain-card">
-      <strong>${esc(card.title)}</strong>
-      <p>${esc(card.text)}</p>
-    </article>
-  `).join("");
-
-  document.getElementById("flowStrip").innerHTML = explain.howToRead.map((step,index)=>`
-    <article class="flow-step">
-      <b>${index + 1}</b>
-      <strong>${esc(step.title)}</strong>
-      <p>${esc(step.detail)}</p>
-    </article>
-  `).join("");
-
-  renderHealth(data);
-
-  document.getElementById("layerGrid").innerHTML = layers.map((layer)=>`
-    <article class="layer">
-      <div class="layer-top">
-        <div>
-          <h3>${esc(layer.name)}</h3>
-          <div class="folder">${esc(layer.folder)}</div>
-        </div>
-        <a class="open-link" href="${esc(layer.url)}" target="_blank" rel="noreferrer">Open</a>
-      </div>
-      <p>${esc(layer.role)}</p>
-      <div class="item-list">${layer.items.map((item)=>`<span>${esc(item)}</span>`).join("")}</div>
-    </article>
-  `).join("");
-
-  document.getElementById("loopCycle").innerHTML = LOOP_STEPS.map((step,index)=>`
-    <article class="loop-card">
-      <strong>${index + 1}. ${esc(step.title)}</strong>
-      <p>${esc(step.text)}</p>
-    </article>
-  `).join("");
-
-  document.getElementById("routeGrid").innerHTML = routes.map((route)=>`
-    <article class="route">
-      <small>${esc(route.state)} / ${esc(route.files)} files</small>
-      <strong>${esc(route.name)}</strong>
+  document.getElementById("routeRows").innerHTML = data.routes.map((route,index)=>`
+    <article class="route-row" data-reveal="${(index % 3) + 1}">
+      <b>${esc(route.name)}</b>
       <p>${esc(route.detail)}</p>
+      <span>${String(index + 1).padStart(2,"0")} / ${esc(route.state)}</span>
     </article>
   `).join("");
 
-  document.getElementById("glossaryGrid").innerHTML = explain.glossary.map((item)=>`
-    <article class="glossary">
-      <strong>${esc(item.term)}</strong>
-      <p>${esc(item.meaning)}</p>
-    </article>
-  `).join("");
-
-  document.getElementById("planGrid").innerHTML = data.livePlan.map((item)=>`
-    <article class="plan ${esc(item.state)}">
-      <small>${esc(item.step)} / ${esc(item.state)}</small>
-      <strong>${esc(item.name)}</strong>
+  document.getElementById("planList").innerHTML = data.livePlan.map((item)=>`
+    <article class="plan-step">
+      <span>${esc(item.step)} / ${esc(item.state)}</span>
+      <b>${esc(item.name)}</b>
       <p>${esc(item.detail)}</p>
-    </article>
-  `).join("");
-}
-
-function renderHealth(data){
-  const filters = ["all","active","paused","gated"];
-  document.getElementById("healthFilters").innerHTML = filters.map((filter)=>`
-    <button class="filter-button ${filter===activeHealthFilter ? "active" : ""}" type="button" data-health-filter="${esc(filter)}">${esc(filter)}</button>
-  `).join("");
-
-  const items = (data.health || []).filter((item)=>activeHealthFilter==="all" || item.state===activeHealthFilter);
-  document.getElementById("healthGrid").innerHTML = items.map((item)=>`
-    <article class="health ${esc(item.state)}">
-      <strong>${esc(item.name)}</strong>
-      <p>${esc(item.detail)}</p>
-      <span class="state-label">${esc(item.state)}</span>
     </article>
   `).join("");
 }
@@ -595,25 +978,17 @@ async function loadData(){
   const params = new URLSearchParams(window.location.search);
   const endpoint = params.get("data");
   if(!endpoint){
-    render(SYSTEM_DATA,"embedded manifest");
+    render(SYSTEM_DATA);
     return;
   }
   try{
     const response = await fetch(`${endpoint}${endpoint.includes("?") ? "&" : "?"}t=${Date.now()}`, {cache:"no-store"});
     if(!response.ok) throw new Error(`HTTP ${response.status}`);
-    const data = await response.json();
-    render(data,endpoint);
+    render(await response.json());
   }catch(error){
-    render(SYSTEM_DATA,"embedded fallback");
+    render(SYSTEM_DATA);
   }
 }
-
-document.getElementById("healthFilters").addEventListener("click",(event)=>{
-  const button = event.target.closest("[data-health-filter]");
-  if(!button) return;
-  activeHealthFilter = button.getAttribute("data-health-filter");
-  renderHealth(currentData);
-});
 
 loadData();
 </script>
