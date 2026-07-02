@@ -1,0 +1,442 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agent Brief Builder</title>
+<link rel="icon" href="assets/frankly-logo-small.png">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="frankly-surfaces.css">
+</head>
+<body class="surface-page no-scroll">
+  <header class="site-nav" aria-label="Frankly navigation">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="frankly-os.html" aria-label="Frankly OS">
+        <img class="brand-logo brand-logo-light" src="assets/frankly-logo-small.png" alt="frankly">
+        <span class="nav-surface-label">OS</span>
+      </a>
+      <nav class="nav-links" aria-label="Local surfaces">
+        <a href="onboarding.html">Start here</a>
+        <a href="frankly-os.html">OS</a>
+        <a href="frankly-os.html#control">Loop Control</a>
+        <a href="lab-hub.html#queue">Queue</a>
+        <a href="lab-hub.html#surface-gates">Surface gates</a>
+        <a class="active" href="agent-brief-builder.html">Brief builder</a>
+        <a href="mission-control-queue.html">Mission control</a>
+        <a href="progress-map.html">Progress map</a>
+        <a href="lab-hub.html">Lab</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <section class="brief-builder-hero" id="brief-builder">
+      <div class="wide-wrap brief-builder-hero-grid">
+        <div class="brief-builder-copy">
+          <p class="eyebrow">Agent Brief Builder</p>
+          <h1>Turn one idea into bigger chat missions.</h1>
+          <p>Build prompts that let chats run longer, stay inside the gates and return with reviewable chunks.</p>
+        </div>
+        <div class="brief-signal-board" aria-label="Briefing pipeline state">
+          <div><b>4</b><span>mission roles</span></div>
+          <div><b>0</b><span>public actions</span></div>
+          <div><b>1</b><span>review checkpoint</span></div>
+          <div><b>local</b><span>no API runtime</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="band brief-workbench-band">
+      <div class="wrap">
+        <div class="brief-workbench">
+          <form class="brief-form" id="briefForm">
+            <div class="brief-form-head">
+              <span class="kicker">Input</span>
+              <h2>Shape the work.</h2>
+            </div>
+
+            <label>
+              <span>Goal or messy idea</span>
+              <textarea id="goalInput" rows="5">Build this prompt-orchestration idea into our Frankly OS pipeline so future chats can work on larger missions with less babysitting.</textarea>
+            </label>
+
+            <label>
+              <span>Context</span>
+              <textarea id="contextInput" rows="4">We already have Agentic Loop Runtime, Loop Control, local site feeds, surface gates, QA scripts and Lab as the workbench.</textarea>
+            </label>
+
+            <div class="brief-form-grid">
+              <label>
+                <span>Outcome</span>
+                <input id="outcomeInput" type="text" value="A local prompt pipeline, usable Lab tool and OS docs">
+              </label>
+              <label>
+                <span>Domain</span>
+                <select id="domainInput">
+                  <option value="system">System / OS</option>
+                  <option value="website">Website / product page</option>
+                  <option value="growth">Growth / content</option>
+                  <option value="partner">Partner / commercial</option>
+                  <option value="research">Research / source work</option>
+                </select>
+              </label>
+              <label>
+                <span>Autonomy</span>
+                <select id="autonomyInput">
+                  <option value="productive">Productive local</option>
+                  <option value="guarded">Guarded</option>
+                  <option value="aggressive">Aggressive local</option>
+                </select>
+              </label>
+              <label>
+                <span>Tracks</span>
+                <select id="tracksInput">
+                  <option value="4">4 missions</option>
+                  <option value="3">3 missions</option>
+                  <option value="2">2 missions</option>
+                </select>
+              </label>
+            </div>
+
+            <div class="brief-actions">
+              <button class="surface-button" type="submit">Generate</button>
+              <button class="surface-button secondary" type="button" id="copyBatchButton">Copy batch</button>
+              <button class="surface-button ghost" type="button" id="resetBriefButton">Reset</button>
+            </div>
+          </form>
+
+          <aside class="brief-output-panel">
+            <div class="brief-output-head">
+              <span class="kicker">Batch</span>
+              <h2 id="batchTitle">Prompt orchestration batch</h2>
+              <p id="batchSummary">Ready for larger autonomous chat work.</p>
+            </div>
+            <div class="brief-batch-stats" id="briefStats"></div>
+            <pre id="batchPrompt" class="brief-prompt-output"></pre>
+          </aside>
+        </div>
+      </div>
+    </section>
+
+    <section class="band white">
+      <div class="wrap">
+        <div class="section-heading">
+          <div>
+            <span class="kicker">Missions</span>
+            <h2>Start fewer chats. Make each one matter.</h2>
+          </div>
+          <p id="missionSummary">Each prompt has a role, success condition, guardrails, validation and stop rules.</p>
+        </div>
+        <div class="mission-grid" id="missionGrid"></div>
+      </div>
+    </section>
+
+    <section class="brief-review-band">
+      <div class="wrap brief-review-grid">
+        <div>
+          <span class="kicker">Review</span>
+          <h2>Come back at the checkpoint.</h2>
+          <p><a class="surface-button secondary" href="mission-control-queue.html">Open mission queue</a></p>
+        </div>
+        <div id="reviewChecklist" class="review-checklist"></div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="lab-hub.html">
+        <img class="brand-logo" src="assets/frankly-logo-small.png" alt="frankly">
+        <span>Lab</span>
+      </a>
+      <span class="footer-meta">Internal surface. Frankly&trade; 2026.</span>
+    </div>
+  </footer>
+
+<script>
+const ROUTES = {
+  system: {
+    route: "agent-briefing-pipeline",
+    skills: ["frankly-agent-briefing-pipeline-skill", "frankly-agentic-loop-execution-skill", "frankly-evidence-trace-skill"],
+    artifact: "OS route, skill, manifest update or local Lab surface"
+  },
+  website: {
+    route: "website-publishing-workflow",
+    skills: ["frankly-website-page-production-skill", "frankly-browser-visual-qa-skill", "frankly-publishing-gate-skill"],
+    artifact: "local page, QA report and publish gate"
+  },
+  growth: {
+    route: "blog-seo-content-engine",
+    skills: ["frankly-blog-seo-content-engine-skill", "frankly-copy-review-skill", "frankly-ai-search-schema-checklist-skill"],
+    artifact: "brief, draft, metadata and noindex review gate"
+  },
+  partner: {
+    route: "partner-activation",
+    skills: ["frankly-partner-kit-activation-skill", "frankly-presentation-storytelling-skill", "frankly-copy-review-skill"],
+    artifact: "partner kit, seller lines, FAQ or activation plan"
+  },
+  research: {
+    route: "external-skill-research-swarm",
+    skills: ["frankly-research-swarm-coordinator-skill", "frankly-source-distillation-skill", "frankly-resource-to-skill-skill"],
+    artifact: "source-backed synthesis, scorecard and OS decision"
+  }
+};
+
+const AUTONOMY = {
+  guarded: "Guarded. Continue through safe local analysis and drafting, but stop before public, paid, Slack, install, sensitive or product/legal actions.",
+  productive: "Productive local. Continue through safe local edits, checks and documentation. Ask only when blocked by a real approval gate.",
+  aggressive: "Aggressive local. Complete multiple safe local cycles, run available QA, file follow-ups and return with a reviewable chunk."
+};
+
+const ROLE_LIBRARY = [
+  {
+    role: "Architect",
+    goal: "turn the raw idea into route, scope, success criteria, source map and mission split",
+    deliver: "route decision, non-goals, source list, risks and build order"
+  },
+  {
+    role: "Builder",
+    goal: "create the concrete artifact or implementation using the chosen route",
+    deliver: "changed files, generated artifact, local notes and runnable output"
+  },
+  {
+    role: "Reviewer",
+    goal: "check quality, risk, missing evidence, user value and gate compliance",
+    deliver: "findings, risks, missing tests, recommended fixes and confidence level"
+  },
+  {
+    role: "Integrator",
+    goal: "fold useful output back into Frankly OS memory and next-work surfaces",
+    deliver: "manifest, README, report, evidence and follow-up ledger updates"
+  }
+];
+
+function esc(value) {
+  return String(value || "")
+    .replace(/&/g, "&amp;")
+    .replace(/</g, "&lt;")
+    .replace(/>/g, "&gt;")
+    .replace(/"/g, "&quot;");
+}
+
+function clean(value, fallback) {
+  const text = String(value || "").trim();
+  return text || fallback;
+}
+
+function collectInput() {
+  const domain = document.getElementById("domainInput").value;
+  return {
+    goal: clean(document.getElementById("goalInput").value, "Create a larger Frankly OS work mission."),
+    context: clean(document.getElementById("contextInput").value, "Use current Frankly OS files, routes, gates and local QA conventions."),
+    outcome: clean(document.getElementById("outcomeInput").value, "A reviewable local artifact with evidence."),
+    domain,
+    route: ROUTES[domain],
+    autonomy: document.getElementById("autonomyInput").value,
+    tracks: Number(document.getElementById("tracksInput").value || 4)
+  };
+}
+
+function missionPrompt(input, role, index) {
+  return `Mission ${index}: ${role.role}
+
+You are working inside Frankly OS.
+
+Goal:
+${input.goal}
+
+Your role:
+${role.role}. Your job is to ${role.goal}.
+
+Context:
+${input.context}
+
+Route:
+${input.route.route}
+
+Useful skills:
+${input.route.skills.map((skill) => `- ${skill}`).join("\n")}
+
+Autonomy:
+${AUTONOMY[input.autonomy]}
+
+Guardrails:
+- No public deploy without Jonas approval.
+- No paid API spend without approval.
+- No Slack or company-visible automation without approval.
+- No plugin install without approval.
+- No product/legal/customer-facing claims without source approval.
+- If a detail is useful but non-blocking, record it as a follow-up and keep going.
+
+Expected artifact:
+${input.route.artifact}
+
+Success condition:
+Deliver ${role.deliver}. The output must be concrete enough for Jonas to review without micro-managing the process.
+
+Validation:
+- Check changed files or produced artifacts.
+- Note what was verified and what was not.
+- Run available local QA if you changed code, data, links, CSS or inline scripts.
+- Keep gates visible.
+
+Stop rules:
+Ask Jonas only if blocked by approval, sensitive material, public action, paid/API/Slack action, plugin install or product/legal uncertainty.
+
+Final response:
+Outcome:
+Changed files/artifacts:
+Validation:
+Risks/gates:
+Follow-ups:
+Recommended next move:`;
+}
+
+function buildBatch(input) {
+  const roles = ROLE_LIBRARY.slice(0, input.tracks);
+  const missions = roles.map((role, index) => ({
+    ...role,
+    prompt: missionPrompt(input, role, index + 1)
+  }));
+  const batchPrompt = `Frankly OS mission batch
+
+Batch goal:
+${input.goal}
+
+Desired outcome:
+${input.outcome}
+
+Shared context:
+${input.context}
+
+Route:
+${input.route.route}
+
+Autonomy:
+${AUTONOMY[input.autonomy]}
+
+Run pattern:
+Start ${missions.length} larger chat mission(s). Each chat should work to a reviewable chunk before returning. Do not stop for preference-only details; record follow-ups and keep moving inside the guardrails.
+
+Missions:
+${missions.map((mission, index) => `${index + 1}. ${mission.role} - ${mission.goal}.`).join("\n")}
+
+Review checkpoint:
+Review changed files/artifacts, validation, risks/gates, follow-ups and recommended next move after the missions return.`;
+
+  return {missions, batchPrompt};
+}
+
+function renderStats(input, missions) {
+  document.getElementById("briefStats").innerHTML = [
+    {label:"route", value:input.route.route},
+    {label:"missions", value:String(missions.length)},
+    {label:"autonomy", value:input.autonomy.replace("aggressive", "aggressive local")},
+    {label:"gates", value:"6"}
+  ].map((stat) => `
+    <div>
+      <b>${esc(stat.value)}</b>
+      <span>${esc(stat.label)}</span>
+    </div>
+  `).join("");
+}
+
+function renderMissions(missions) {
+  document.getElementById("missionGrid").innerHTML = missions.map((mission, index) => `
+    <article class="mission-card">
+      <div class="mission-card-head">
+        <span>${String(index + 1).padStart(2, "0")}</span>
+        <button type="button" data-copy-mission="${index}">Copy</button>
+      </div>
+      <h3>${esc(mission.role)}</h3>
+      <p>${esc(mission.goal)}</p>
+      <pre>${esc(mission.prompt)}</pre>
+    </article>
+  `).join("");
+}
+
+function renderReview(input, missions) {
+  document.getElementById("missionSummary").textContent = `${missions.length} mission prompts are ready for ${input.route.route}.`;
+  document.getElementById("reviewChecklist").innerHTML = [
+    "Outcome matches the original goal.",
+    "Changed files or artifacts are named.",
+    "Validation is evidence-based.",
+    "Risks and approval gates are visible.",
+    "Follow-ups are recorded instead of becoming interruptions.",
+    "Next move is specific enough to run."
+  ].map((item, index) => `
+    <article>
+      <span>${String(index + 1).padStart(2, "0")}</span>
+      <b>${esc(item)}</b>
+    </article>
+  `).join("");
+}
+
+function setCopyState(button, label) {
+  const original = button.textContent;
+  button.textContent = label;
+  window.setTimeout(() => {
+    button.textContent = original;
+  }, 1200);
+}
+
+async function copyText(text, button) {
+  try {
+    await navigator.clipboard.writeText(text);
+    if (button) setCopyState(button, "Copied");
+  } catch (error) {
+    const area = document.createElement("textarea");
+    area.value = text;
+    document.body.appendChild(area);
+    area.select();
+    document.execCommand("copy");
+    area.remove();
+    if (button) setCopyState(button, "Copied");
+  }
+}
+
+let currentBatch = {missions: [], batchPrompt: ""};
+
+function generate() {
+  const input = collectInput();
+  currentBatch = buildBatch(input);
+  document.getElementById("batchTitle").textContent = `${input.route.route} batch`;
+  document.getElementById("batchSummary").textContent = input.outcome;
+  document.getElementById("batchPrompt").textContent = currentBatch.batchPrompt;
+  renderStats(input, currentBatch.missions);
+  renderMissions(currentBatch.missions);
+  renderReview(input, currentBatch.missions);
+}
+
+document.getElementById("briefForm").addEventListener("submit", (event) => {
+  event.preventDefault();
+  generate();
+});
+
+document.getElementById("copyBatchButton").addEventListener("click", (event) => {
+  copyText(currentBatch.batchPrompt, event.currentTarget);
+});
+
+document.getElementById("resetBriefButton").addEventListener("click", () => {
+  document.getElementById("goalInput").value = "Build this prompt-orchestration idea into our Frankly OS pipeline so future chats can work on larger missions with less babysitting.";
+  document.getElementById("contextInput").value = "We already have Agentic Loop Runtime, Loop Control, local site feeds, surface gates, QA scripts and Lab as the workbench.";
+  document.getElementById("outcomeInput").value = "A local prompt pipeline, usable Lab tool and OS docs";
+  document.getElementById("domainInput").value = "system";
+  document.getElementById("autonomyInput").value = "productive";
+  document.getElementById("tracksInput").value = "4";
+  generate();
+});
+
+document.getElementById("missionGrid").addEventListener("click", (event) => {
+  const button = event.target.closest("[data-copy-mission]");
+  if (!button) return;
+  const index = Number(button.getAttribute("data-copy-mission"));
+  const mission = currentBatch.missions[index];
+  if (mission) copyText(mission.prompt, button);
+});
+
+generate();
+</script>
+</body>
+</html>

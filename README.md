@@ -1,99 +1,194 @@
-# Frankly OS — live website
+# Frankly OS Site
 
-Dette repo lægger dine Frankly OS-sider live på dit eget domæne og holder dem
-**automatisk i sync** med Drive-mappen **"Frankly OS"**. Du fortsætter med at
-arbejde præcis som nu (lægge/rette HTML-filer i Drive) — siden opdaterer sig selv.
+This folder contains the local website surface for Frankly OS, Frankly Lab and related product clarity pages.
 
-## Sådan virker det
+## Current Role
 
-```
-Drive-mappen "Frankly OS"      GitHub (denne kode)            Dit domæne
-  system-map.html        →   Action henter filerne   →   os.ditdomæne.dk
-  ...-process-poster.html     hver time og bygger          (GitHub Pages)
-  toolbox-map.html            et website
-```
+The site is not only a static mirror of Drive files anymore. It is becoming the visual operating layer for the OS:
 
-En GitHub Action kører **hver time** (og når du selv trykker på knappen). Den
-henter alle HTML-sider fra Drive-mappen, bygger en forside der linker til dem,
-og udgiver det hele på GitHub Pages. Lægger du en ny side i mappen, dukker den
-automatisk op på forsiden.
+- `frankly-os.html` is the operating console and system map.
+- `lab-hub.html` is the tools and experiments hub.
+- `agent-brief-builder.html` is the local prompt builder for larger autonomous chat missions.
+- `mission-control-queue.html` is the local queue for larger mission batches before thread handoff.
+- `progress-map.html` is the current machine-state visualization: what is built, active and gated.
+- `onboarding.html` is the internal start surface for first-run orientation.
+- `frankly-daekningsoverblik.html` is the first product clarity surface.
 
----
+The current build is local and draft-state. Public deployment, paid API automation and Slack automation remain paused until Jonas explicitly approves them.
 
-## Engangsopsætning (ca. 15 min)
+## Source Of Truth
 
-> Tip: Jeg kan også klikke det meste igennem for dig via Claude in Chrome — så
-> logger du bare ind undervejs. Sig til, hvis du vil det i stedet for guiden.
+Google Drive remains the canonical source for Frankly OS system files. Local files in this repo are implementation and preview artifacts used to test the website experience before publishing.
 
-### A. Læg koden på GitHub
-1. Opret evt. en gratis konto på <https://github.com>.
-2. Klik **New repository**. Navn fx `frankly-os-site`. Vælg **Public** (indholdet
-   er alligevel offentligt). Opret.
-3. På repo-siden: **Add file → Upload files**. Træk **hele indholdet** af denne
-   mappe ind (eller upload `frankly-os-site.zip` udpakket). 
-4. ⚠️ Tjek at mappen `.github/workflows/deploy.yml` kom med — den er afgørende.
-   Skriv `deploy.yml` i repo-søgningen hvis du er i tvivl. **Commit changes**.
+When Drive sync is available again, the site can be connected to a metadata endpoint or GitHub Action. Until then, local manifest updates should be treated as draft evidence, not production data.
 
-### B. Giv siden læse-adgang til Drive (service account)
-Dette er det eneste lidt tekniske trin. Følg det roligt:
-1. Gå til <https://console.cloud.google.com> og log ind som `js@franklyinsure.com`.
-2. Opret et projekt (øverst, "Select a project" → **New project**), fx
-   `frankly-os-site`. Vælg det bagefter.
-3. Slå Drive-API til: søg **Google Drive API** øverst → **Enable**.
-4. **APIs & Services → Credentials → Create credentials → Service account**.
-   Navn fx `frankly-os-sync` → **Done** (spring roller over).
-5. Klik på den nye service account → fanen **Keys → Add key → Create new key →
-   JSON**. En `.json`-fil downloades. Gem den godt (kan ikke hentes igen).
-6. Kopiér service-accountens **e-mail** (ligner
-   `frankly-os-sync@frankly-os-site.iam.gserviceaccount.com`).
-7. I Google Drive: højreklik på mappen **"Frankly OS" → Del/Share**, indsæt
-   e-mailen, giv rollen **Læser (Viewer)**, send.
-8. I GitHub: repoet → **Settings → Secrets and variables → Actions → New
-   repository secret**. 
-   - Name: `GCP_SA_KEY`
-   - Secret: åbn `.json`-filen i en teksteditor, kopiér **alt**, indsæt. Save.
+## Key Local Files
 
-### C. Slå GitHub Pages til
-1. Repoet → **Settings → Pages**.
-2. Under **Build and deployment → Source**, vælg **GitHub Actions**.
+- `frankly-os.html` - main OS visualization page.
+- `lab-hub.html` - Frankly Lab hub page.
+- `agent-brief-builder.html` - local Agent Brief Builder tool for bigger chat mission batches.
+- `mission-control-queue.html` - local Mission Control Queue for manual launch, review and integration of larger mission batches.
+- `progress-map.html` - local Frankly OS Progress Map for machine status, active batch and next path.
+- `onboarding.html` - internal start surface and first-run entry gate.
+- `frankly-daekningsoverblik.html` - coverage/product clarity page.
+- `blog/index.html` - local draft blog index, currently noindex.
+- `blog/cykelforsikring.html` - source-updated local draft article for the Blog SEO route pilot, currently noindex.
+- `robots.txt` - blocks draft blog pages.
+- `sitemap.xml` - local sitemap shell; draft blog pages are excluded until approval.
+- `data/activation-queue-data.json` - local same-origin activation queue feed for HTTP previews.
+- `data/surface-gate-registry.json` - local same-origin surface gate feed for HTTP previews.
+- `data/mission-control-queue.json` - local same-origin Mission Control feed for HTTP previews.
+- `data/README.md` - local data-feed source and regeneration notes.
+- `CNAME` - configured custom domain target.
+- `scripts/sync_from_drive.py` - optional Drive sync helper.
 
-Nu kører den. Tjek fanen **Actions** → "Deploy Frankly OS" → grønt flueben.
-Din side er live på `https://<dit-brugernavn>.github.io/frankly-os-site/`
-indtil domænet er sat på.
+## Current Run
 
-### D. Sæt domænet på (franklydesign.dk hos Simply.com)
-Repoet er sat op til subdomænet **os.franklydesign.dk** (se filen `CNAME`), så
-hoveddomænet franklydesign.dk er frit til andre test.
+The latest site-level review is documented in:
 
-1. **GitHub:** repoet → **Settings → Pages → Custom domain** → skriv
-   `os.franklydesign.dk` → **Save**. (Bekræfter blot det, `CNAME`-filen allerede siger.)
-2. **Simply.com:** log ind → **Mine produkter** → vælg `franklydesign.dk` →
-   **DNS / DNS-indstillinger** → tilføj en record:
-   - Type: **CNAME** · Navn/host: **os** · Værdi/peger på: **DIT-GITHUB-BRUGERNAVN.github.io.**
-   - (DIT-GITHUB-BRUGERNAVN er det navn, du oprettede repoet under.)
-3. Vent til det slår igennem (typisk minutter, op til 24 t), og sæt flueben i
-   **Enforce HTTPS** under Settings → Pages.
+`../os-visualization/reports/whole-site-lab-updated-skill-run-2026-06-30.md`
 
-**Vil du hellere bruge hoveddomænet `franklydesign.dk`?** Ret `CNAME`-filen til
-`franklydesign.dk`, sæt Custom domain = `franklydesign.dk` i GitHub, og opret hos
-Simply fire **A**-records på host **@**:
-`185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`
-(valgfrit IPv6/AAAA: `2606:50c0:8000::153` til `…8003::153`).
+The latest blog source verification is documented in:
 
----
+`../os-visualization/reports/cykelforsikring-danish-source-verification-2026-07-01.md`
 
-## Daglig brug
-- **Ret en side:** erstat HTML-filen i "Frankly OS"-mappen i Drive. Live inden for
-  en time.
-- **Vil du se ændringen nu?** GitHub → **Actions → Deploy Frankly OS → Run workflow**.
-- **Ny side:** læg en ny `.html` i mappen — den dukker automatisk op på forsiden.
+The latest loop engineering and choice-interface update is documented in:
 
-## Fejlfinding
-- **Forsiden siger "Ingen sider fundet":** mappen er ikke delt med service-account-e-mailen (trin B7).
-- **Action fejler med "GCP_SA_KEY mangler":** secret'en er ikke tilføjet rigtigt (trin B8).
-- **Domænet virker ikke endnu:** DNS er ikke slået igennem, eller forkert record. Det github.io-link virker imens.
+`../os-visualization/reports/loop-engineering-choice-interface-2026-07-01.md`
 
-## Senere (valgfrit)
-Lige nu **spejler** siden de færdige HTML-filer fra Drive. Vi kan opgradere
-Action'en til selv at køre dine `build-map.py` / `render.py` og **regenerere**
-siderne fra `brain`-data — så bygger den fra kilden i stedet for at kopiere.
+The latest Loop Control panel update is documented in:
+
+`../os-visualization/reports/loop-control-panel-2026-07-01.md`
+
+The latest shared surface navigation update is documented in:
+
+`../os-visualization/reports/shared-surface-navigation-2026-07-01.md`
+
+The latest V14 activation queue implementation is documented in:
+
+`../os-visualization/reports/v14-activation-pilot-implementation-2026-07-01.md`
+
+The latest Lab operating queue update is documented in:
+
+`../os-visualization/reports/lab-operating-queue-2026-07-01.md`
+
+The latest product clarity review-gate update is documented in:
+
+`../os-visualization/reports/product-clarity-review-gate-2026-07-01.md`
+
+The latest onboarding entry-gate update is documented in:
+
+`../os-visualization/reports/onboarding-entry-gate-2026-07-01.md`
+
+The latest blog publishing-gate update is documented in:
+
+`../os-visualization/reports/blog-publishing-gate-2026-07-01.md`
+
+The latest cykelforsikring article review-gate update is documented in:
+
+`../os-visualization/reports/article-review-gate-cykelforsikring-2026-07-01.md`
+
+The latest surface gate registry update is documented in:
+
+`../os-visualization/reports/surface-gate-registry-2026-07-01.md`
+
+The latest site data-feed update is documented in:
+
+`../os-visualization/reports/site-data-feeds-2026-07-01.md`
+
+The latest site data-feed sync generator update is documented in:
+
+`../os-visualization/reports/site-data-feed-sync-generator-2026-07-01.md`
+
+The latest local static QA runner update is documented in:
+
+`../os-visualization/reports/local-site-qa-runner-2026-07-01.md`
+
+The latest Agent Brief Builder update is documented in:
+
+`../os-visualization/reports/agent-briefing-pipeline-2026-07-01.md`
+
+The latest Mission Control Queue update is documented in:
+
+`../os-visualization/reports/mission-control-queue-2026-07-01.md`
+
+The latest Mission Control batch run is documented in:
+
+`../os-visualization/reports/mission-control-batch-009-product-legal-source-intake-pack-run-2026-07-01.md`
+
+The latest Mission Control agent review is documented in:
+
+`../os-visualization/reports/mission-control-batch-001-agent-review-2026-07-01.md`
+
+The latest Frankly OS Progress Map update is documented in:
+
+`../os-visualization/reports/frankly-os-progress-map-2026-07-01.md`
+
+The latest website machine-surface integration is documented in:
+
+`../os-visualization/reports/website-machine-surface-integration-2026-07-02.md`
+
+Latest product clarity evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-product-clarity-review-gate-browser-qa/`
+
+Latest onboarding evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-onboarding-entry-gate-browser-qa/`
+
+Latest blog publishing-gate evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-blog-publishing-gate-browser-qa/`
+
+Latest article review-gate evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-article-review-gate-browser-qa/`
+
+Latest surface gate registry evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-surface-gate-registry-browser-qa/`
+
+Latest site data-feed evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-site-data-feeds-browser-qa/`
+
+Latest Agent Brief Builder evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-agent-brief-builder-browser-qa/`
+
+Latest Mission Control Queue evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260701-mission-control-queue-browser-qa/`
+
+Latest Mission Control batch outputs are stored in:
+
+`../os-visualization/mission-control/batches/MCQ-009/`
+
+Earlier whole-site evidence screenshots are stored in:
+
+`../os-visualization/evidence/20260630-213345-site-lab-rerun/`
+
+## Build Direction
+
+The current priority is the Frankly OS machine, not more site surfaces. Existing pages should be maintained and QA'd, but new pages should only be built when they expose or validate machine state.
+
+1. Keep Frankly OS, Lab and Mission Control healthy as operating surfaces.
+2. Use Mission Control and the loop runner to make work resumable.
+3. Build new surfaces only when they make machine state clearer.
+4. Keep all durable system files in English.
+5. Run browser and screenshot QA before any publish step.
+6. Run `python3 os-visualization/scripts/run-local-site-qa.py` before browser QA when local data, links, CSS or inline scripts change.
+7. Use `agent-brief-builder.html` or `python3 os-visualization/scripts/generate-mission-brief.py` to turn broad goals into fewer, larger local chat missions.
+8. Use `mission-control-queue.html` to track those batches manually before any supervised thread handoff is approved.
+9. Use `progress-map.html` to see current machine progress before starting new work.
+10. Start future machine workstreams from `../os-visualization/mission-control/handoff-packets/current-machine-handoff.md`.
+11. Run `python3 os-visualization/scripts/validate-machine-state.py` after future active Mission Control batch updates.
+12. Use MCQ-009 to fill `SRC-001` through `SRC-009` with approved source documents and owner confirmations before changing customer-facing copy.
+
+## Guardrails
+
+- Do not publish publicly without approval.
+- Do not enable paid API runtime without approval.
+- Do not connect Slack automation without approval.
+- Do not expose sensitive source material.
+- Prefer local evidence and reversible changes before deployment.

@@ -1,0 +1,1129 @@
+{
+  "generated": "2026-07-01",
+  "status": "implemented-product-legal-evidence-inbox-review-ready",
+  "summary": "Mission Control Queue tracks larger local mission batches with copyable prompts, state, gates, review checkpoints, batch history and returned run output before any automatic thread spawning or connector writes are approved. MCQ-010 adds a Product/Legal Evidence Inbox so source documents and owner confirmations can be recorded before source rows, claims or customer-facing copy move forward.",
+  "route": "os-visualization/routes/mission-control-queue-route.md",
+  "skill": "os-visualization/skills/frankly-mission-control-queue-skill.md",
+  "siteSurface": "frankly-os-site/mission-control-queue.html",
+  "currentBatchId": "MCQ-010",
+  "counts": {
+    "batches": 10,
+    "missions": 40,
+    "activeBatches": 10,
+    "automatedSpawns": 0,
+    "reviewCheckpoints": 10,
+    "reviewReadyBatches": 10,
+    "completedMissionOutputs": 40,
+    "agentReviews": 1
+  },
+  "gates": [
+    "no automatic thread creation without Jonas approval",
+    "no connector writes without approval",
+    "no public deploy without approval",
+    "no paid API spend without approval",
+    "no Slack/company-visible automation without approval",
+    "no plugin install without approval",
+    "no product/legal/customer-facing claims without source approval"
+  ],
+  "reviewContract": [
+    "Outcome",
+    "Changed files/artifacts",
+    "Validation",
+    "Risks/gates",
+    "Follow-ups",
+    "Recommended next move"
+  ],
+  "batches": [
+    {
+      "id": "MCQ-001",
+      "title": "Parallel workstreams without babysitting",
+      "state": "review-ready",
+      "routeName": "agent-briefing-pipeline",
+      "autonomy": "productive local",
+      "goal": "Make Frankly OS better at running multiple larger workstreams without Jonas having to babysit every chat.",
+      "context": "Agent Brief Builder is implemented locally. Frankly OS has local routes, skills, site data feeds, surface gates, static QA and browser QA evidence. The next layer should queue bigger missions before any automated thread spawning.",
+      "outcome": "A supervised Mission Control Queue with copyable prompts, visible gates, review checkpoint and OS integration path.",
+      "checkpoint": "Review the four local mission outputs and decide whether the pattern is useful enough for a real multi-chat pilot.",
+      "nextMove": "MCQ-001 passed agent review for local use. Keep automation gated and use the pattern on MCQ-002.",
+      "review": {
+        "id": "MCQ-001-AGENT-REVIEW-001",
+        "state": "agent-reviewed-useful",
+        "reviewed": "2026-07-01",
+        "reportFile": "os-visualization/reports/mission-control-batch-001-agent-review-2026-07-01.md",
+        "decision": "Useful enough for the next local manual Mission Control batch, but not Jonas-accepted automation.",
+        "findings": [
+          "The queue is useful as a local operating board.",
+          "Automatic thread spawning remains approval-gated.",
+          "Run output should stay visible before integration.",
+          "The next proof should be a real operational batch."
+        ]
+      },
+      "run": {
+        "id": "MCQ-001-RUN-001",
+        "mode": "single-thread-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-001/",
+        "reportFile": "os-visualization/reports/mission-control-batch-001-run-2026-07-01.md",
+        "summary": "The first Mission Control batch was run locally as four mission outputs. It validates the queue structure, but not yet real parallel multi-chat execution.",
+        "decision": "Keep automatic thread handoff gated. Use the queue manually on one real workstream before designing automation.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-001/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-001/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-001/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-001/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-001/run-summary.md"
+          }
+        ],
+        "findings": [
+          "Mission Control should show returned mission output, not only prepared prompts.",
+          "The honest state after this local run is review-ready, not integrated.",
+          "The next proof should be a real product, partner, growth or OS batch.",
+          "Automatic thread creation remains a separate Jonas-approved layer."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the operating model for parallel Frankly OS workstreams.",
+          "promptGoal": "Design how larger mission batches should be split, queued, reviewed and integrated without creating constant user interrupts.",
+          "expectedOutput": "Mission model, queue fields, review cadence, approval gates and suggested next build order.",
+          "validation": "Check against existing Agent Brief Builder route, surface gates and follow-up ledger.",
+          "stopRule": "Stop before proposing automatic thread spawning as enabled behavior.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-001/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the next local Mission Control surface or data artifact.",
+          "promptGoal": "Implement the queue as a local OS artifact with copyable mission prompts, state, gates and review checkpoints.",
+          "expectedOutput": "Changed local files, data artifact, site surface and QA notes.",
+          "validation": "Run local static QA and browser QA if site files, CSS, data or scripts change.",
+          "stopRule": "Do not publish, install plugins, call paid APIs or create threads automatically.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-001/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Check whether the queue reduces micro-management risk.",
+          "promptGoal": "Review the Mission Control Queue for clarity, autonomy, gate safety, prompt quality and missing evidence.",
+          "expectedOutput": "Findings, risks, missing tests, confidence level and recommended fixes.",
+          "validation": "Compare rendered UI, data artifact, route and skill against the review contract.",
+          "stopRule": "Do not rewrite the implementation unless asked; report prioritized issues first.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-001/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold the useful pattern back into Frankly OS.",
+          "promptGoal": "Update OS reports, README, live data, surface gates and follow-up ledger after the queue is validated.",
+          "expectedOutput": "Filed report, updated status artifacts, follow-up decisions and next recommended work.",
+          "validation": "Verify JSON parses, generated feeds are current and local QA still passes.",
+          "stopRule": "Do not mark automated handoff complete unless it has actually been built and approved.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-001/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-002",
+      "title": "Partner activation kit pilot",
+      "state": "review-ready",
+      "routeName": "partner-activation",
+      "autonomy": "productive local",
+      "goal": "Create a review-ready partner activation kit structure for a representative consumer electronics retail partner without external sharing or unsupported claims.",
+      "context": "Frankly has a test-next partner activation route, partner kit activation skill, product marketing context, copy review, coverage clarity and publishing gate. This batch should validate Mission Control on a real operational workstream, not more meta-system work.",
+      "outcome": "A practical internal partner kit with audience split, asset list, checkout copy drafts, seller lines, FAQ, support path, approval gates and first 1-90 day activation plan.",
+      "checkpoint": "Hold MCQ-002 as a review-ready internal draft until Jonas's new partner deck produces fresh learning.",
+      "nextMove": "Park partner-kit templating until the new partner deck learning lands. Let MCQ-003 carry the machine-core priority shift next.",
+      "parking": {
+        "state": "parked-pending-partner-deck-learning",
+        "reason": "Jonas is building a new partner deck in parallel, and that deck may change the partner narrative, proof needs and activation structure.",
+        "resumeWhen": "New partner deck learning is available for synthesis.",
+        "preserve": [
+          "audience split",
+          "support-path gates",
+          "approval checklist",
+          "1-90 day activation plan",
+          "external-use blockers"
+        ]
+      },
+      "run": {
+        "id": "MCQ-002-RUN-001",
+        "mode": "single-thread-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-002/",
+        "reportFile": "os-visualization/reports/mission-control-batch-002-partner-activation-run-2026-07-01.md",
+        "summary": "The second Mission Control batch was run locally on a real partner activation workstream. It produced a representative internal partner kit while keeping external use gated.",
+        "decision": "Keep the kit as an internal review draft and park templating until Jonas's new partner deck produces fresh learning. Do not use it externally until a real partner, product facts, commercial terms, support path and approvals are supplied.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-002/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-002/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-002/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-002/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-002/run-summary.md"
+          }
+        ],
+        "findings": [
+          "Partner activation is a good first non-meta Mission Control test.",
+          "The kit is useful as an internal structure, not approved partner-facing copy.",
+          "Coverage, commercial terms, support owners and logo rules remain source gaps.",
+          "Audience separation makes the kit reusable across leadership, sellers, support, customers and operators.",
+          "Partner-kit templating should wait for the new partner deck learning.",
+          "The next useful batch is machine core."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the partner activation operating model, audience split, kit architecture and gates.",
+          "promptGoal": "Use the partner activation route to design a representative electronics retail partner kit that is useful internally but blocked from external use.",
+          "expectedOutput": "Product marketing context, partner job, audience split, kit architecture, source needs, mission split and approval gates.",
+          "validation": "Check against product-marketing context, partner kit activation, copy review, coverage clarity and publishing gate requirements.",
+          "stopRule": "Stop before naming a real partner, inventing commercial terms or approving customer-facing claims.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-002/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Draft the representative partner activation kit.",
+          "promptGoal": "Create the internal kit with one-liner, product description placeholder, checkout copy drafts, seller lines, FAQ, support path, asset list, launch checklist and 1-90 day activation plan.",
+          "expectedOutput": "Review-ready partner kit draft with placeholders for product/legal, commercial, support and partner-specific facts.",
+          "validation": "Check that product claims are sourced or marked, audiences are separated, support path is visible and external use is gated.",
+          "stopRule": "Do not publish, email, sync, Slack, deploy or write partner-facing material externally.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-002/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Risk-check the kit for unsupported claims, partner usability and approval gaps.",
+          "promptGoal": "Review the partner kit against the route quality door and identify what must be fixed before a real partner pilot.",
+          "expectedOutput": "Prioritized findings, quality-door table, risks, confidence and recommended fixes.",
+          "validation": "Verify audience separation, support path, marked placeholders, external sharing gate and no hidden automation.",
+          "stopRule": "Do not rewrite into external-ready copy without approved facts.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-002/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold the partner activation batch back into Frankly OS.",
+          "promptGoal": "Update Mission Control, site feed, reports, README, live data and follow-up ledger so MCQ-002 is visible as a review-ready local run.",
+          "expectedOutput": "Filed report, updated queue state, browser/static QA notes, follow-ups and next recommended work.",
+          "validation": "Verify JSON parses, feeds are synced, local QA passes and browser QA proves the batch selector and run output render.",
+          "stopRule": "Do not mark partner material approved for external use.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-002/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-003",
+      "title": "Machine core priority shift",
+      "state": "review-ready",
+      "routeName": "agentic-loop-runtime",
+      "autonomy": "productive local",
+      "goal": "Shift Frankly OS energy from building additional site pages to strengthening the operating machine: run state, Mission Control lifecycle, memory, evidence, workflow eval and gated handoff.",
+      "context": "Jonas wants more energy spent on the machine than on diverse pages. Frankly OS already has Agent Brief Builder, Mission Control Queue, a loop runner, agentic-loop route, follow-up ledger, site data feeds and static QA. MCQ-003 should improve the operating layer without creating a new page.",
+      "outcome": "A machine-core priority map, active batch state, updated follow-up priority and a local run record that makes the machine-first decision durable.",
+      "checkpoint": "Review whether the next work should evaluate and harden Mission Control plus loop runner before any new page or automation layer.",
+      "nextMove": "Use MCQ-004 to run workflow eval and install Prompt Agent v0.1 as a local mission-start layer.",
+      "run": {
+        "id": "MCQ-003-RUN-001",
+        "mode": "single-thread-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-003/",
+        "reportFile": "os-visualization/reports/mission-control-batch-003-machine-core-run-2026-07-01.md",
+        "summary": "The third Mission Control batch shifted the next priority toward the Frankly OS machine rather than additional site pages.",
+        "decision": "Machine core is the next priority. New pages are maintenance-only unless they expose or validate the machine. Partner-kit templating remains parked pending new partner deck learning.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-003/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-003/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-003/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-003/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-003/run-summary.md"
+          },
+          {
+            "label": "Machine priority map",
+            "file": "os-visualization/system-intelligence/machine-core-priority-map.json"
+          }
+        ],
+        "findings": [
+          "Jonas wants machine energy prioritized over new page builds.",
+          "The machine is the chain from intake to route, batch, loop, evidence, eval and memory.",
+          "New pages should be built only when they expose or validate machine state.",
+          "Partner-kit templating remains parked until new partner deck learning lands.",
+          "The next useful step is workflow eval of Mission Control plus loop runner.",
+          "Automation remains gated until the supervised machine proves itself."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define what the Frankly OS machine is and how it should prioritize work.",
+          "promptGoal": "Translate Jonas's machine-over-pages preference into operating layers, state language, gates and next build order.",
+          "expectedOutput": "Machine definition, priority shift, state language, gates and recommended next move.",
+          "validation": "Check against agentic-loop runtime route, Mission Control Queue, loop runner and workflow eval skill.",
+          "stopRule": "Do not propose new site pages as the default next build.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-003/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Create the machine-core priority artifact.",
+          "promptGoal": "Build a local machine-core priority map that records principles, backlog, parked work, gates and success signals.",
+          "expectedOutput": "Machine-core JSON artifact and operating rule for future work.",
+          "validation": "Ensure the artifact is valid JSON and included in static QA.",
+          "stopRule": "Do not add a new page unless needed to expose machine state.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-003/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Check whether machine-first improves behavior rather than just adding documents.",
+          "promptGoal": "Review the machine-core shift for overengineering, gate safety, priority clarity and evidence quality.",
+          "expectedOutput": "Prioritized findings, quality-door table, risks and recommended fixes.",
+          "validation": "Compare the artifact and queue changes against workflow eval and agentic-loop rules.",
+          "stopRule": "Do not approve automation or page expansion.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-003/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold the machine-core priority shift back into Frankly OS.",
+          "promptGoal": "Update Mission Control, live data, follow-up ledger, README, QA runner, site feed and loop run card so machine core becomes the active priority.",
+          "expectedOutput": "Filed report, updated queue state, synced feed, QA evidence and next recommended work.",
+          "validation": "Verify JSON parses, feeds are synced, local QA passes and the loop run card is completed.",
+          "stopRule": "Do not mark supervised handoff or automation complete.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-003/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-004",
+      "title": "Workflow eval + Prompt Agent v0.1",
+      "state": "review-ready",
+      "routeName": "agent-briefing-pipeline",
+      "autonomy": "aggressive local",
+      "goal": "Evaluate whether Mission Control plus loop runner reduces babysitting, then add a local prompt-agent layer that turns broad intentions into larger mission prompts.",
+      "context": "Jonas wants to spend more energy on the machine than on building pages. Frankly OS has Agent Brief Builder, Mission Control Queue, MCQ-001 through MCQ-003, loop runner, workflow eval skill, follow-up ledger and static QA. The next layer should create stronger starting prompts without spawning chats automatically.",
+      "outcome": "Prompt Agent v0.1 exists as a local blueprint and generator script, backed by workflow eval and a generated sample prompt pack.",
+      "checkpoint": "Review whether the generated mission pack is good enough for one real workstream test before designing supervised thread handoff.",
+      "nextMove": "Use MCQ-005 to create a machine handoff packet and make resume behavior explicit before supervised thread handoff.",
+      "run": {
+        "id": "MCQ-004-RUN-001",
+        "mode": "single-thread-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-004/",
+        "reportFile": "os-visualization/reports/mission-control-batch-004-workflow-eval-prompt-agent-run-2026-07-01.md",
+        "summary": "The fourth Mission Control batch evaluated the current machine and added a deterministic local prompt-agent generator for larger mission prompts.",
+        "decision": "Adjust and promote the local Mission Control plus loop-runner pattern. Use Prompt Agent v0.1 locally, but keep automatic thread spawning and connector writes gated.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-004/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-004/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-004/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-004/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-004/run-summary.md"
+          },
+          {
+            "label": "Workflow eval",
+            "file": "os-visualization/system-intelligence/workflow-eval-machine-2026-07-01.json"
+          },
+          {
+            "label": "Prompt agent blueprint",
+            "file": "os-visualization/system-intelligence/prompt-agent-blueprint.json"
+          },
+          {
+            "label": "Prompt generator script",
+            "file": "os-visualization/scripts/generate-mission-brief.py"
+          },
+          {
+            "label": "Generated prompt pack",
+            "file": "os-visualization/mission-control/generated-prompts/workflow-eval-prompt-agent-v01.md"
+          }
+        ],
+        "findings": [
+          "The machine is useful enough for local promotion, but not automatic orchestration.",
+          "Prompt generation should be deterministic and local before any thread spawning.",
+          "The generator reduces repeated prompt scaffolding and forces context, gates, artifacts and validation into each mission.",
+          "Resume state still needs a future handoff packet so active work can restart faster.",
+          "The next proof is one real large workstream generated by Prompt Agent v0.1."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the workflow eval and prompt-agent operating model.",
+          "promptGoal": "Evaluate the gap between broad user intent and current mission prompts, then define the local prompt-agent shape without automation.",
+          "expectedOutput": "Operating model, scope, route choice, done criteria and next build order.",
+          "validation": "Check against workflow eval skill, Agent Briefing Pipeline, Mission Control Queue, loop runner and machine-core priority map.",
+          "stopRule": "Do not propose automatic thread spawning as complete or enabled.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-004/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the local prompt-agent artifacts.",
+          "promptGoal": "Create the workflow eval artifact, prompt-agent blueprint, local generator script and sample generated prompt pack.",
+          "expectedOutput": "Valid JSON artifacts, executable local script and generated markdown prompt pack.",
+          "validation": "Run the generator and local static QA.",
+          "stopRule": "Do not call paid APIs, create threads, write connectors, publish, deploy or post to Slack.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-004/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Check whether Prompt Agent v0.1 reduces babysitting risk without overstating autonomy.",
+          "promptGoal": "Review the prompt-agent layer for overclaiming, generic prompts, missing gates, missing validation and weak resume state.",
+          "expectedOutput": "Prioritized findings, quality-door table, residual risk and next proof needed.",
+          "validation": "Compare generated prompts against the Agent Briefing Pipeline prompt quality door.",
+          "stopRule": "Do not approve live automation.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-004/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold Prompt Agent v0.1 back into Frankly OS.",
+          "promptGoal": "Update Mission Control, skills, QA runner, site feed, reports, follow-up ledger, README and live data so the prompt-agent layer becomes visible.",
+          "expectedOutput": "Filed report, updated OS state, synced feeds, QA result and next recommended workstream test.",
+          "validation": "Verify JSON parses, feeds are current, local QA passes and generated prompt output exists.",
+          "stopRule": "Do not mark supervised handoff complete.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-004/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-005",
+      "title": "Machine Handoff + Resume Packet v0.1",
+      "state": "review-ready",
+      "routeName": "agentic-loop-runtime",
+      "autonomy": "aggressive local",
+      "goal": "Harden Frankly OS machine state and resume behavior so future chats can continue without rebuilding context.",
+      "context": "Prompt Agent v0.1 generated this real machine workstream. Frankly OS has MCQ-001 through MCQ-004, a loop runner, prompt-agent blueprint, follow-up ledger, machine-core priority map, local static QA and Mission Control. The missing layer is one compact read-first handoff packet.",
+      "outcome": "Machine Handoff v0.1 exists as structured state plus a read-first packet for future chats.",
+      "checkpoint": "Review whether future chats should start by reading the handoff packet before any new workstream.",
+      "nextMove": "MCQ-006 scored the first resumed handoff proof, and MCQ-007 completed the first non-meta product clarity business proof. Use the approval pack to collect product/legal source material before supervised thread handoff design.",
+      "run": {
+        "id": "MCQ-005-RUN-001",
+        "mode": "prompt-agent-generated-single-thread-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-005/",
+        "reportFile": "os-visualization/reports/mission-control-batch-005-machine-handoff-run-2026-07-01.md",
+        "summary": "The fifth Mission Control batch used Prompt Agent v0.1 on a real machine workstream and created a current handoff packet for future chats.",
+        "decision": "Promote Machine Handoff v0.1 for local use. Keep automatic thread creation and connector writes gated.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-005/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-005/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-005/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-005/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-005/run-summary.md"
+          },
+          {
+            "label": "Machine handoff state",
+            "file": "os-visualization/system-intelligence/machine-handoff-state.json"
+          },
+          {
+            "label": "Current handoff packet",
+            "file": "os-visualization/mission-control/handoff-packets/current-machine-handoff.md"
+          },
+          {
+            "label": "Generated prompt pack",
+            "file": "os-visualization/mission-control/generated-prompts/machine-handoff-resume-packet-v01.md"
+          }
+        ],
+        "findings": [
+          "Prompt Agent v0.1 can generate a real machine workstream prompt pack.",
+          "Future chats now have one read-first handoff packet.",
+          "Handoff state records active batch, gates, parked work, read order and next actions.",
+          "The packet reduces context rebuilding risk but still needs a fresh workstream test.",
+          "Automatic thread creation remains gated until handoff proves useful."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the handoff/resume operating model.",
+          "promptGoal": "Use Prompt Agent v0.1 output to design the compact handoff layer future chats should read first.",
+          "expectedOutput": "Operating model, scope, done criteria and build order for handoff state.",
+          "validation": "Check against Mission Control, loop state, follow-up ledger and machine-core priority map.",
+          "stopRule": "Do not enable automatic thread creation.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-005/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the handoff state and read-first packet.",
+          "promptGoal": "Create machine-handoff-state.json and current-machine-handoff.md so future chats can resume without rebuilding context.",
+          "expectedOutput": "Machine-readable JSON state, read-first markdown packet and generated prompt pack.",
+          "validation": "Ensure JSON parses and local static QA includes the new handoff artifact.",
+          "stopRule": "Do not build a new page or write to external systems.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-005/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Risk-check the handoff layer for stale state and overclaiming.",
+          "promptGoal": "Review whether the handoff packet is useful, concise, gated and honest about what remains unproven.",
+          "expectedOutput": "Findings, quality-door table, residual risk and next proof needed.",
+          "validation": "Compare handoff packet against active queue, prompt-agent blueprint and follow-up ledger.",
+          "stopRule": "Do not approve supervised thread handoff.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-005/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold Machine Handoff v0.1 back into Frankly OS.",
+          "promptGoal": "Update Mission Control, QA runner, follow-up ledger, README, live data, reports and loop run card so handoff becomes active.",
+          "expectedOutput": "Updated OS state, synced feed, QA result, filed report and next workstream test.",
+          "validation": "Verify JSON parses, feeds are current and local QA passes.",
+          "stopRule": "Do not mark automation complete.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-005/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-006",
+      "title": "Handoff Proof + Intervention Scorecard v0.1",
+      "state": "review-ready",
+      "routeName": "agentic-loop-runtime + mission-control-queue + workflow-eval",
+      "autonomy": "aggressive local",
+      "goal": "Evaluate whether Machine Handoff v0.1 reduced context rebuilding and Jonas intervention in the first resumed workstream.",
+      "context": "Started from current-machine-handoff.md after Jonas wrote 'forsaet'. Use MCQ-005, machine-handoff-state.json, Mission Control Queue, prompt-agent blueprint, loop runner, follow-up ledger and static/browser QA evidence. Do not build a new page. Measure what the agent could infer without asking Jonas.",
+      "outcome": "Handoff Proof v0.1 scores the first resumed workstream at 23/25 with zero Jonas clarifying questions and zero micro-decisions after start.",
+      "checkpoint": "Review whether Machine Handoff v0.1 is good enough as the default read-first packet before a non-meta business workstream test.",
+      "nextMove": "MCQ-007 ran one non-meta product clarity workstream from current-machine-handoff.md. Use the approval pack to collect current product/legal source material before any customer-facing copy change.",
+      "run": {
+        "id": "MCQ-006-RUN-001",
+        "mode": "handoff-proof-single-thread-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-006/",
+        "reportFile": "os-visualization/reports/mission-control-batch-006-handoff-proof-run-2026-07-01.md",
+        "summary": "The sixth Mission Control batch used Machine Handoff v0.1 as the read-first entrypoint and scored whether the resumed workstream reduced context rebuilding.",
+        "decision": "Promote Machine Handoff v0.1 as the default local read-first packet. Keep automatic thread creation and connector writes gated.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-006/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-006/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-006/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-006/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-006/run-summary.md"
+          },
+          {
+            "label": "Handoff proof scorecard",
+            "file": "os-visualization/system-intelligence/handoff-proof-scorecard-2026-07-01.json"
+          },
+          {
+            "label": "Generated prompt pack",
+            "file": "os-visualization/mission-control/generated-prompts/handoff-proof-intervention-scorecard-v01.md"
+          }
+        ],
+        "findings": [
+          "The first resumed workstream started from local state with zero clarifying questions.",
+          "The handoff packet supplied active batch, gates, parked work, key files and next action.",
+          "Overall handoff score is 23/25.",
+          "Handoff freshness is now the main risk to manage.",
+          "Automatic thread creation remains gated.",
+          "The next proof should be a non-meta business workstream."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the handoff proof model and intervention scoring dimensions.",
+          "promptGoal": "Evaluate whether a resumed chat can infer state, gates, parked work and next action from the handoff packet without asking Jonas.",
+          "expectedOutput": "Proof model, scoring dimensions, decision rule and recommended next proof.",
+          "validation": "Compare against current-machine-handoff.md, machine-handoff-state.json, Mission Control Queue and follow-up ledger.",
+          "stopRule": "Do not approve automatic thread creation.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-006/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the handoff proof scorecard.",
+          "promptGoal": "Create a machine-readable scorecard for intervention count, state recall, gate safety, follow-up handling and reviewability.",
+          "expectedOutput": "Valid JSON scorecard, generated prompt pack and MCQ-006 local artifacts.",
+          "validation": "Ensure JSON parses and static QA includes the scorecard.",
+          "stopRule": "Do not build a new page or write to external systems.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-006/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Risk-check the handoff proof and automation claims.",
+          "promptGoal": "Review whether the handoff proof is strong enough for local promotion while still blocking automatic thread handoff.",
+          "expectedOutput": "Prioritized findings, quality-door table, residual risk and next proof.",
+          "validation": "Check the scorecard against actual resumed behavior and approval gates.",
+          "stopRule": "Do not treat one proof run as automation approval.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-006/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold Handoff Proof v0.1 back into Frankly OS.",
+          "promptGoal": "Update Mission Control, handoff state, current packet, QA runner, follow-up ledger, README, live data, reports and loop run card.",
+          "expectedOutput": "Updated OS state, synced feed, QA result, filed report and next non-meta workstream recommendation.",
+          "validation": "Verify JSON parses, feeds are current, local QA passes and active batch renders.",
+          "stopRule": "Do not mark supervised handoff complete.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-006/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-007",
+      "title": "Product Clarity Approval Pack v0.1",
+      "state": "review-ready",
+      "routeName": "coverage-at-a-glance + mission-control-queue + workflow-eval",
+      "autonomy": "aggressive local",
+      "goal": "Create an internal Product Clarity Approval Pack v0.1 for the existing coverage overview without changing customer-facing copy.",
+      "context": "Started from current-machine-handoff.md after MCQ-006 proved resume mechanics. Uses the coverage-at-a-glance route, product marketing context, coverage clarity, copy review, publishing gate, product clarity review-gate report and frankly-daekningsoverblik.html. No publishing, no product/legal approval and no customer-facing copy changes.",
+      "outcome": "A product clarity claim/source matrix, channel guidance, approval checklist and business handoff score for the existing coverage overview.",
+      "checkpoint": "Review whether the approval pack is useful enough to request current product/legal source material before changing coverage page, checkout, email or support copy.",
+      "nextMove": "Collect current product/legal source material for the approval checklist, then update one approved channel at a time.",
+      "run": {
+        "id": "MCQ-007-RUN-001",
+        "mode": "product-clarity-business-workstream-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-007/",
+        "reportFile": "os-visualization/reports/mission-control-batch-007-product-clarity-approval-pack-run-2026-07-01.md",
+        "summary": "The seventh Mission Control batch used Machine Handoff v0.1 on a non-meta product clarity workstream and created an internal source/approval pack.",
+        "decision": "Use the approval pack for product/legal source collection. Do not change customer-facing copy, publish, deploy or approve product claims yet.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-007/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-007/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-007/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-007/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-007/run-summary.md"
+          },
+          {
+            "label": "Product clarity approval pack",
+            "file": "os-visualization/system-intelligence/product-clarity-approval-pack-2026-07-01.json"
+          },
+          {
+            "label": "Generated prompt pack",
+            "file": "os-visualization/mission-control/generated-prompts/product-clarity-approval-pack-v01.md"
+          }
+        ],
+        "findings": [
+          "Machine Handoff v0.1 works on a non-meta product clarity task with zero Jonas clarifying questions.",
+          "The coverage page is useful as a structure but still product/legal gated.",
+          "Nine current claims need source status and approval tracking.",
+          "Deductible, annual damage limit, worldwide coverage and repair path are high-risk product terms.",
+          "Channel reuse should happen one approved channel at a time.",
+          "No customer-facing copy was changed."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the product clarity approval/source model.",
+          "promptGoal": "Turn the current coverage overview into a reviewable internal source and approval model without approving public claims.",
+          "expectedOutput": "Claim categories, required sources, approval gates, channel risks and done criteria.",
+          "validation": "Compare against coverage-at-a-glance route, coverage clarity skill, copy review skill, publishing gate and product clarity review gate.",
+          "stopRule": "Do not invent product terms, approve claims or change customer-facing copy.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-007/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the approval pack and channel guidance.",
+          "promptGoal": "Create a machine-readable product clarity approval pack with claim matrix, channel-safe guidance, approval checklist and business handoff score.",
+          "expectedOutput": "Valid JSON approval pack and local batch artifacts.",
+          "validation": "Ensure JSON parses and every claim remains source-gated.",
+          "stopRule": "Do not publish, deploy, call connectors or alter public product copy.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-007/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Risk-check product/legal claims and handoff behavior.",
+          "promptGoal": "Review the approval pack for unsupported claims, channel overreach, missing source requirements and babysitting reduction.",
+          "expectedOutput": "Findings, quality-door table, residual risk and next approval actions.",
+          "validation": "Check high-risk product terms and third-party insurance claims remain approval-gated.",
+          "stopRule": "Do not mark the page, checkout, email, support or partner copy as approved.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-007/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold the product clarity workstream back into Frankly OS.",
+          "promptGoal": "Update Mission Control, handoff state, current packet, QA runner, follow-up ledger, README, live data, reports, site feeds and loop run card.",
+          "expectedOutput": "Updated OS state, synced feed, QA result, filed report and next source-collection recommendation.",
+          "validation": "Verify JSON parses, feeds are current, local QA passes and active batch renders.",
+          "stopRule": "Do not mark product/legal review complete.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-007/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-008",
+      "title": "Machine State Consistency Guard v0.1",
+      "state": "review-ready",
+      "routeName": "agentic-loop-runtime + mission-control-queue + workflow-eval",
+      "autonomy": "aggressive local",
+      "goal": "Add a local read-only guard that detects drift across Mission Control, handoff state, live data, site feed, loop state, prompt packs, evidence and gates.",
+      "context": "Started after MCQ-007 proved Machine Handoff v0.1 on a non-meta product clarity workstream. The next machine improvement is to catch stale active batch references, stale next moves, missing artifacts, feed drift and unclosed loop runs before future chats inherit bad state.",
+      "outcome": "A local machine-state consistency guard script, machine-readable guard artifact and static QA integration.",
+      "checkpoint": "Review whether the guard catches active-batch drift and can be run after every Mission Control batch update.",
+      "nextMove": "Run the guard after each future batch update. Keep MCQ-007 product/legal source collection as the next business workstream.",
+      "run": {
+        "id": "MCQ-008-RUN-001",
+        "mode": "machine-state-consistency-guard-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-008/",
+        "reportFile": "os-visualization/reports/mission-control-batch-008-machine-state-consistency-guard-run-2026-07-01.md",
+        "summary": "The eighth Mission Control batch added a read-only local guard for machine-state drift and integrated it into static QA.",
+        "decision": "Use the guard after every active Mission Control batch change. Keep repairs manual and reviewable for v0.1.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-008/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-008/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-008/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-008/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-008/run-summary.md"
+          },
+          {
+            "label": "Machine state consistency guard",
+            "file": "os-visualization/system-intelligence/machine-state-consistency-guard-2026-07-01.json"
+          },
+          {
+            "label": "Guard script",
+            "file": "os-visualization/scripts/validate-machine-state.py"
+          },
+          {
+            "label": "Generated prompt pack",
+            "file": "os-visualization/mission-control/generated-prompts/machine-state-consistency-guard-v01.md"
+          }
+        ],
+        "findings": [
+          "Machine-state drift is now a first-class QA target.",
+          "The guard checks active batch alignment across canonical queue, site feed, handoff state, priority map, prompt agent and live data.",
+          "The guard checks current batch files, generated prompt pack, browser evidence, gates and stale next-move phrases.",
+          "Loop state is a warning during active work and a strict failure after finish.",
+          "Static QA now includes the guard as a non-strict check.",
+          "The guard does not auto-repair or create external side effects."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the machine-state consistency guard model.",
+          "promptGoal": "Identify the highest-risk drift points across Mission Control, handoff, live data, site feed, loop state, prompt packs, evidence and gates.",
+          "expectedOutput": "Guard scope, check list, strict/non-strict behavior and stop rules.",
+          "validation": "Compare against MCQ-007 drift symptoms, current handoff packet, QA runner and Mission Control queue.",
+          "stopRule": "Do not design automatic repairs or external writes.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-008/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the read-only guard and integrate it into static QA.",
+          "promptGoal": "Create validate-machine-state.py, machine-state-consistency-guard JSON and static QA integration.",
+          "expectedOutput": "Executable local script, machine-readable artifact and static QA output with machineStateGuard.",
+          "validation": "Run the guard and local static QA.",
+          "stopRule": "Do not mutate files from the guard script.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-008/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Risk-check the guard for false confidence and build-time blocking.",
+          "promptGoal": "Review whether the guard catches useful drift without blocking active work or pretending screenshots were visually inspected.",
+          "expectedOutput": "Findings, residual risks and promotion recommendation.",
+          "validation": "Check normal mode, strict-loop mode, evidence existence behavior and gate coverage.",
+          "stopRule": "Do not mark supervised thread handoff approved.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-008/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold Machine State Consistency Guard v0.1 back into Frankly OS.",
+          "promptGoal": "Update Mission Control, handoff state, current packet, live data, reports, README files, site feed and loop run card.",
+          "expectedOutput": "Updated OS state, synced feed, QA results, browser evidence and strict post-finish validation.",
+          "validation": "Verify JSON parses, feeds are current, guard passes, browser QA renders active batch and strict loop mode passes after finish.",
+          "stopRule": "Do not enable automatic thread creation or auto-repair.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-008/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-009",
+      "title": "Product/Legal Source Intake Pack v0.1",
+      "state": "review-ready",
+      "routeName": "coverage-at-a-glance + mission-control-queue + workflow-eval",
+      "autonomy": "aggressive local",
+      "goal": "Create a local source-intake pack that turns MCQ-007 product clarity claims into concrete source requests without changing customer-facing copy.",
+      "context": "Started after MCQ-008 installed Machine State Consistency Guard v0.1. MCQ-007 left product/legal source collection as the next business workstream. No approved product terms, IPID, policy wording, legal approvals or support-owner confirmations are present in the local workspace, so this batch structures collection rather than approving claims.",
+      "outcome": "A product/legal source intake register with nine claim-level source requests, eight approval checklist requests, accepted/rejected source types, metadata requirements, channel release order and ready conditions.",
+      "checkpoint": "Review whether the pack is specific enough to request current product/legal source material without asking Jonas to micromanage the shape of the request.",
+      "nextMove": "Fill SRC-001 through SRC-009 with approved source documents and owner confirmations before updating any product clarity, checkout, email, support or partner copy.",
+      "run": {
+        "id": "MCQ-009-RUN-001",
+        "mode": "product-legal-source-intake-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-009/",
+        "reportFile": "os-visualization/reports/mission-control-batch-009-product-legal-source-intake-pack-run-2026-07-01.md",
+        "summary": "The ninth Mission Control batch converted the MCQ-007 product clarity source follow-up into a local source-intake register.",
+        "decision": "Use the source-intake pack to collect documents and owner confirmations. Keep all claims awaiting-source and keep customer-facing copy unchanged until approvals land.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-009/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-009/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-009/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-009/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-009/run-summary.md"
+          },
+          {
+            "label": "Product/legal source intake pack",
+            "file": "os-visualization/system-intelligence/product-legal-source-intake-pack-2026-07-01.json"
+          },
+          {
+            "label": "Generated prompt pack",
+            "file": "os-visualization/mission-control/generated-prompts/product-legal-source-intake-pack-v01.md"
+          }
+        ],
+        "findings": [
+          "MCQ-007 needed source collection, not more copywriting.",
+          "No local approved product/legal source documents were found for high-risk claims.",
+          "The pack keeps all nine claims awaiting-source until owner-approved evidence lands.",
+          "Accepted source types now require owner, date, version, approved excerpt, channel scope and storage location.",
+          "Channel release should start with an internal support answer draft before public or checkout copy.",
+          "Customer-facing copy remains unchanged."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the product/legal source-intake operating model.",
+          "promptGoal": "Turn MCQ-007 approval checklist into source classes, owner roles, metadata rules, channel gates and collection sequence.",
+          "expectedOutput": "Source-intake model, accepted/rejected source types, owner map, release order and stop rules.",
+          "validation": "Compare against MCQ-007 claim matrix, coverage route, copy review and publishing gate.",
+          "stopRule": "Do not approve claims or change customer-facing copy.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-009/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the source-intake register.",
+          "promptGoal": "Create a machine-readable product/legal source intake pack with claim-level source requests and approval checklist mapping.",
+          "expectedOutput": "Valid JSON source-intake artifact and local batch outputs.",
+          "validation": "Ensure every claim remains awaiting-source and JSON parses.",
+          "stopRule": "Do not invent product terms or write channel copy.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-009/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Risk-check the source-intake pack.",
+          "promptGoal": "Review whether the pack prevents false claim approval while making source collection easier.",
+          "expectedOutput": "Findings, residual risks, recommendation and blocked channels.",
+          "validation": "Check source metadata, high-risk claim handling and channel release order.",
+          "stopRule": "Do not mark product/legal review complete.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-009/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold Product/Legal Source Intake Pack v0.1 back into Frankly OS.",
+          "promptGoal": "Update Mission Control, handoff state, current packet, live data, reports, README files, site feed and loop run card.",
+          "expectedOutput": "Updated OS state, synced feed, QA results, browser evidence and strict post-finish validation.",
+          "validation": "Verify JSON parses, feeds are current, guard passes, browser QA renders active batch and strict loop mode passes after finish.",
+          "stopRule": "Do not change customer-facing copy or approve product/legal claims.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-009/integrator.md"
+        }
+      ]
+    },
+    {
+      "id": "MCQ-010",
+      "title": "Product/Legal Evidence Inbox v0.1",
+      "state": "review-ready",
+      "routeName": "coverage-at-a-glance + mission-control-queue + workflow-eval",
+      "autonomy": "aggressive local",
+      "goal": "Create a local evidence inbox and validator for product/legal source documents mapped to SRC-001 through SRC-009 without approving claims or changing customer-facing copy.",
+      "context": "Started after MCQ-009 created the Product/Legal Source Intake Pack. The source register names nine source requests, but no approved evidence records exist yet. This batch gives future work a structured place to add source documents and owner confirmations before any source status or copy can change.",
+      "outcome": "A local Product/Legal Evidence Inbox with incoming, records and templates folders, a machine-readable inbox artifact, a read-only validator and static QA integration.",
+      "checkpoint": "Review whether the inbox and validator prevent source auto-approval while making SRC-001 through SRC-009 easier to fill.",
+      "nextMove": "Add source records or owner confirmations to the Evidence Inbox, run validate-source-intake.py, then update source-intake statuses only where validated evidence exists.",
+      "run": {
+        "id": "MCQ-010-RUN-001",
+        "mode": "product-legal-evidence-inbox-local-run",
+        "state": "review-ready",
+        "started": "2026-07-01",
+        "completed": "2026-07-01",
+        "outputFolder": "os-visualization/mission-control/batches/MCQ-010/",
+        "reportFile": "os-visualization/reports/mission-control-batch-010-product-legal-evidence-inbox-run-2026-07-01.md",
+        "summary": "The tenth Mission Control batch installed a local evidence inbox and validator for product/legal source material.",
+        "decision": "Use the inbox as the next source collection target. Keep claims unapproved and customer-facing copy unchanged until validated evidence and separate copy approval exist.",
+        "artifacts": [
+          {
+            "label": "Architect output",
+            "file": "os-visualization/mission-control/batches/MCQ-010/architect.md"
+          },
+          {
+            "label": "Builder output",
+            "file": "os-visualization/mission-control/batches/MCQ-010/builder.md"
+          },
+          {
+            "label": "Reviewer output",
+            "file": "os-visualization/mission-control/batches/MCQ-010/reviewer.md"
+          },
+          {
+            "label": "Integrator output",
+            "file": "os-visualization/mission-control/batches/MCQ-010/integrator.md"
+          },
+          {
+            "label": "Run summary",
+            "file": "os-visualization/mission-control/batches/MCQ-010/run-summary.md"
+          },
+          {
+            "label": "Product/legal evidence inbox artifact",
+            "file": "os-visualization/system-intelligence/product-legal-evidence-inbox-2026-07-01.json"
+          },
+          {
+            "label": "Source-intake validator script",
+            "file": "os-visualization/scripts/validate-source-intake.py"
+          },
+          {
+            "label": "Generated prompt pack",
+            "file": "os-visualization/mission-control/generated-prompts/product-legal-evidence-inbox-v01.md"
+          }
+        ],
+        "findings": [
+          "Source collection needs an inbox before any row can move out of awaiting-source.",
+          "Evidence records require owner, date, version, excerpt, scope and storage location.",
+          "Approved source does not equal approved customer-facing copy.",
+          "The validator is read-only and integrated into static QA.",
+          "No product/legal claims were approved.",
+          "Customer-facing copy remains unchanged."
+        ]
+      },
+      "missions": [
+        {
+          "id": "architect",
+          "role": "Architect",
+          "state": "review",
+          "purpose": "Define the evidence inbox operating model.",
+          "promptGoal": "Turn MCQ-009 source requests into an evidence intake workflow with approval boundaries, record schema and stop rules.",
+          "expectedOutput": "Inbox model, record fields, source slot rules and approval boundary.",
+          "validation": "Compare against MCQ-009 source requests and product/legal stop rules.",
+          "stopRule": "Do not approve source rows, claims or copy.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-010/architect.md"
+        },
+        {
+          "id": "builder",
+          "role": "Builder",
+          "state": "review",
+          "purpose": "Build the local evidence inbox and validator.",
+          "promptGoal": "Create folders, templates, machine-readable inbox artifact and validate-source-intake.py.",
+          "expectedOutput": "Local inbox structure, JSON artifact and executable validator.",
+          "validation": "validate-source-intake.py passes with nine open source requests and zero approvals.",
+          "stopRule": "Do not store sensitive documents or mark records approved without owner evidence.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-010/builder.md"
+        },
+        {
+          "id": "reviewer",
+          "role": "Reviewer",
+          "state": "review",
+          "purpose": "Risk-check the evidence workflow.",
+          "promptGoal": "Review whether records can prove source scope without silently approving claims or customer copy.",
+          "expectedOutput": "Findings, residual risk and recommendation.",
+          "validation": "Check required metadata, status rules and channel boundary.",
+          "stopRule": "Do not convert evidence records into public claims.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-010/reviewer.md"
+        },
+        {
+          "id": "integrator",
+          "role": "Integrator",
+          "state": "review",
+          "purpose": "Fold Evidence Inbox v0.1 back into Frankly OS.",
+          "promptGoal": "Update Mission Control, handoff state, prompt-agent, live data, static QA, site feed, report and browser evidence.",
+          "expectedOutput": "Updated OS state, synced feed, prompt pack, QA results and browser screenshots.",
+          "validation": "Run source-intake validator, machine-state guard, static QA and browser QA.",
+          "stopRule": "Do not change customer-facing copy or approve product/legal claims.",
+          "outputFile": "os-visualization/mission-control/batches/MCQ-010/integrator.md"
+        }
+      ]
+    }
+  ]
+}

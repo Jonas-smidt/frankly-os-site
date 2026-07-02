@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Frankly Blog - lokale udkast</title>
+<meta name="description" content="Lokale Frankly blogudkast til SEO, produktklarhed og kildebaseret indhold. Ikke publiceret.">
+<link rel="icon" href="../assets/frankly-logo-small.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FFD3E3; --pink-deep:#FFACCA; --pink-soft:#F3DEE4; --pink-wash:#FCEAF1;
+    --grounded:#2D0011; --ink:#111; --limestone:#F5F4F1; --limestone-soft:#F0EEE9;
+    --edge:#E3DDD5; --grey:#5F5F5F; --white:#fff; --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--limestone);color:var(--ink);font-family:var(--font);line-height:1.55}
+  a{color:inherit}
+  .wrap{max-width:980px;margin:0 auto;padding:28px 20px 64px}
+  .topbar{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:42px}
+  .brand{font-weight:700;color:var(--grounded);text-decoration:none}
+  .nav{display:flex;gap:14px;flex-wrap:wrap;font-size:14px;color:var(--grey)}
+  .nav a{text-decoration:none}
+  .draft{display:inline-flex;align-items:center;border:1px solid var(--edge);border-radius:999px;padding:7px 11px;background:var(--white);font-size:13px;color:var(--grey);margin-bottom:18px}
+  h1{font-size:clamp(34px,6vw,64px);line-height:1.02;letter-spacing:0;margin:0 0 16px;color:var(--grounded);max-width:11ch}
+  .intro{font-size:18px;max-width:640px;color:#4D3A42;margin:0 0 34px}
+  .publish-gate{display:grid;grid-template-columns:minmax(220px,.5fr) minmax(0,1fr);margin:0 0 28px;background:var(--grounded);color:var(--limestone);border-radius:8px;overflow:hidden}
+  .publish-panel{padding:24px;border-right:1px solid rgba(255,255,255,.18)}
+  .publish-panel span,.publish-state{display:block;color:rgba(245,244,241,.58);font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:.04em}
+  .publish-panel h2{margin:12px 0 0;color:#fff;font-size:31px;line-height:1.02;letter-spacing:0;max-width:10ch}
+  .publish-panel p{margin:12px 0 0;color:rgba(245,244,241,.72);font-size:14px;line-height:1.45}
+  .publish-stats{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin-top:18px;background:rgba(245,244,241,.16)}
+  .publish-stats div{min-height:70px;padding:12px;background:rgba(255,255,255,.06)}
+  .publish-stats b,.publish-stats small{display:block}
+  .publish-stats b{font-size:24px;line-height:1;color:#fff}
+  .publish-stats small{margin-top:7px;color:rgba(245,244,241,.58);font-size:10px;font-weight:700;text-transform:uppercase;line-height:1.18}
+  .publish-ledger{padding:20px 24px}
+  .publish-row{display:grid;grid-template-columns:94px minmax(0,1fr) minmax(118px,.34fr);gap:16px;align-items:start;padding:16px 0;border-bottom:1px solid rgba(245,244,241,.16)}
+  .publish-row:first-child{border-top:1px solid rgba(245,244,241,.16)}
+  .publish-row b{display:block;color:#fff;font-size:18px;line-height:1.12}
+  .publish-row p{margin:6px 0 0;color:rgba(245,244,241,.66);font-size:13px;line-height:1.4}
+  .publish-next{color:rgba(245,244,241,.74);font-size:12px;font-weight:700;line-height:1.35}
+  .grid{display:grid;grid-template-columns:minmax(0,1fr);gap:16px}
+  .article{display:grid;grid-template-columns:1fr auto;gap:24px;align-items:center;background:var(--white);border:1px solid var(--edge);border-radius:8px;padding:22px;text-decoration:none}
+  .article:hover{border-color:var(--pink-deep)}
+  .article h2{margin:0 0 8px;color:var(--grounded);font-size:24px;line-height:1.18;letter-spacing:0}
+  .article p{margin:0;color:var(--grey);max-width:620px}
+  .badge{white-space:nowrap;background:var(--pink-wash);color:var(--grounded);border-radius:999px;padding:8px 11px;font-size:13px;font-weight:600}
+  .note{margin-top:28px;border-top:1px solid var(--edge);padding-top:18px;color:var(--grey);font-size:13px}
+  @media (max-width:680px){
+    .topbar{align-items:flex-start;flex-direction:column;margin-bottom:30px}
+    .publish-gate{grid-template-columns:1fr}
+    .publish-panel{border-right:0;border-bottom:1px solid rgba(255,255,255,.18)}
+    .publish-row{grid-template-columns:1fr;gap:8px}
+    .article{grid-template-columns:1fr}
+    .badge{width:max-content}
+  }
+</style>
+</head>
+<body>
+<main class="wrap">
+  <header class="topbar">
+    <a class="brand" href="../frankly-os.html">Frankly</a>
+    <nav class="nav" aria-label="Lokale sider">
+      <a href="../onboarding.html">Start</a>
+      <a href="#publish-gate">Publishing gate</a>
+      <a href="../frankly-os.html">OS</a>
+      <a href="../progress-map.html">Progress map</a>
+      <a href="../mission-control-queue.html">Mission control</a>
+      <a href="../lab-hub.html">Lab</a>
+      <a href="../frankly-daekningsoverblik.html">Dækningsoverblik</a>
+    </nav>
+  </header>
+
+  <span class="draft">Lokalt blogudkast - ikke publiceret</span>
+  <h1>Blog drafts</h1>
+  <p class="intro">Kildebaserede artikeludkast til Frankly. Siderne her er private previews, sat til noindex og må ikke bruges offentligt før produkt, juridisk og publishing gate er godkendt.</p>
+
+  <section class="publish-gate" id="publish-gate" aria-label="Publishing gate">
+    <aside class="publish-panel">
+      <span>Publishing gate</span>
+      <h2>Noindex er aktiv. Publicering er lukket.</h2>
+      <p>Bloggen kan bruges til intern SEO- og kildearbejde, men må ikke genbruges offentligt før gates er lukket.</p>
+      <div class="publish-stats" aria-label="Publishing gate metrics">
+        <div><b>1</b><small>aktivt udkast</small></div>
+        <div><b>noindex</b><small>meta aktiv</small></div>
+        <div><b>robots</b><small>blokerer blog</small></div>
+        <div><b>0</b><small>sitemap urls</small></div>
+      </div>
+    </aside>
+    <div class="publish-ledger">
+      <article class="publish-row">
+        <span class="publish-state">Active</span>
+        <span>
+          <b>Kildeopdateret udkast</b>
+          <p>Cykelforsikring-artiklen har danske kildefakta, men er stadig et lokalt preview.</p>
+        </span>
+        <span class="publish-next">Brug internt til review, ikke som rådgivning.</span>
+      </article>
+      <article class="publish-row">
+        <span class="publish-state">Blocked</span>
+        <span>
+          <b>Produkt og juridisk</b>
+          <p>Frankly-specifik cykeldækning, vilkår og formuleringer skal godkendes.</p>
+        </span>
+        <span class="publish-next">Godkend før publicering.</span>
+      </article>
+      <article class="publish-row">
+        <span class="publish-state">Blocked</span>
+        <span>
+          <b>Publishing setup</b>
+          <p>Canonical, sitemap, aktiv schema, author og reviewer policy er ikke klar.</p>
+        </span>
+        <span class="publish-next">Hold draft ude af index.</span>
+      </article>
+      <article class="publish-row">
+        <span class="publish-state">Allowed</span>
+        <span>
+          <b>Næste sikre arbejde</b>
+          <p>Forbedr kilder, intern struktur og produktspørgsmål lokalt.</p>
+        </span>
+        <span class="publish-next">Ingen deploy eller public push.</span>
+      </article>
+    </div>
+  </section>
+
+  <section class="grid" aria-label="Blogudkast">
+    <a class="article" href="cykelforsikring.html">
+      <span>
+        <h2>Cykelforsikring: hvad skal du tjekke først?</h2>
+        <p>Et dansk SEO-udkast om cykelforsikring, indboforsikring, tyveri, uheld og Franklys rolle. Nu med kildefakta om lås, låsebevis og stelnummer.</p>
+      </span>
+      <span class="badge">Gated draft</span>
+    </a>
+  </section>
+
+  <p class="note">Dette index er en lokal test af blog-infrastruktur. `robots.txt` blokerer `/blog/`, og sitemap inkluderer ikke draftartikler endnu.</p>
+</main>
+</body>
+</html>

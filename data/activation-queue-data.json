@@ -1,0 +1,125 @@
+{
+  "updated": "2026-07-01",
+  "status": "implemented-browser-qa-passed",
+  "source": "os-visualization/system-intelligence/external-capability-activation-queue.md",
+  "summary": "Seventy external capability candidates are registered. Eight are activated for the next supervised Frankly OS pass.",
+  "stats": {
+    "registered": 70,
+    "activateNow": 8,
+    "localAdaptations": 7,
+    "approvalGatedInstalls": 2
+  },
+  "lanes": [
+    {
+      "id": "install",
+      "label": "Install next",
+      "items": [
+        "build-web-apps",
+        "build-web-data-visualization"
+      ],
+      "gate": "Jonas approval before install"
+    },
+    {
+      "id": "adapt",
+      "label": "Adapt locally",
+      "items": [
+        "creative-first-ui",
+        "motion-ref-skill",
+        "anthropic-frontend-design",
+        "make-interfaces-feel-better",
+        "remotion-marketing-video-skill"
+      ],
+      "gate": "Local Frankly-native skill adaptation only"
+    },
+    {
+      "id": "audit",
+      "label": "Audit / pilot",
+      "items": [
+        "codex-site-visual-system-extractor"
+      ],
+      "gate": "Dependency and script audit before promotion"
+    }
+  ],
+  "items": [
+    {
+      "rank": 1,
+      "name": "build-web-apps",
+      "score": 15,
+      "lane": "install",
+      "action": "install-next",
+      "destination": "website/page production, browser QA, frontend implementation",
+      "pilot": "V14 Frankly OS page polish and local QA",
+      "gate": "plugin install approval"
+    },
+    {
+      "rank": 2,
+      "name": "build-web-data-visualization",
+      "score": 15,
+      "lane": "install",
+      "action": "install-next",
+      "destination": "OS visualization, dashboards, charts, route atlas",
+      "pilot": "Improve route/capability visualization model",
+      "gate": "plugin install approval"
+    },
+    {
+      "rank": 3,
+      "name": "creative-first-ui",
+      "score": 14,
+      "lane": "adapt",
+      "action": "adapt",
+      "destination": "frankly-web-experience-design-skill.md",
+      "pilot": "Write Frankly-native page brief rules for cinematic/visual-first pages",
+      "gate": "no raw skill install"
+    },
+    {
+      "rank": 4,
+      "name": "motion-ref-skill",
+      "score": 14,
+      "lane": "adapt",
+      "action": "adapt",
+      "destination": "frankly-motion-graphics-direction-skill.md and frankly-interaction-motion-skill.md",
+      "pilot": "Add calm motion reference rules for OS loop/status interactions",
+      "gate": "no raw skill install"
+    },
+    {
+      "rank": 5,
+      "name": "anthropic-frontend-design",
+      "score": 14,
+      "lane": "adapt",
+      "action": "adapt",
+      "destination": "frankly-web-experience-design-skill.md and frankly-visual-quality-door.md",
+      "pilot": "Add non-generic frontend QA checks to visual quality door",
+      "gate": "no raw skill install"
+    },
+    {
+      "rank": 6,
+      "name": "make-interfaces-feel-better",
+      "score": 13,
+      "lane": "adapt",
+      "action": "adapt",
+      "destination": "frankly-browser-visual-qa-skill.md and frankly-visual-quality-door.md",
+      "pilot": "Add micro-polish checklist for text fit, rhythm, controls and alignment",
+      "gate": "no raw skill install"
+    },
+    {
+      "rank": 7,
+      "name": "codex-site-visual-system-extractor",
+      "score": 12,
+      "lane": "audit",
+      "action": "audit/pilot",
+      "destination": "frankly-design-token-extraction-skill.md",
+      "pilot": "Audit scripts and run only a no-network/local-source token extraction pilot",
+      "gate": "dependency/script audit"
+    },
+    {
+      "rank": 8,
+      "name": "remotion-marketing-video-skill",
+      "score": 12,
+      "lane": "adapt",
+      "action": "adapt",
+      "destination": "frankly-remotion-video-production-skill.md",
+      "pilot": "Create one code-driven video brief for an OS/route explainer",
+      "gate": "no render service or paid API"
+    }
+  ]
+}

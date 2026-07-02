@@ -1,0 +1,705 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frankly OS Progress Map</title>
+<link rel="icon" href="assets/frankly-logo-small.png">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="frankly-surfaces.css?v=progressmap">
+<style>
+  :root {
+    --ink: #10201a;
+    --muted: #5f6d68;
+    --line: #d9e3de;
+    --soft: #f6f8f5;
+    --green: #1f7a55;
+    --green-soft: #dff3e9;
+    --amber: #b77a12;
+    --amber-soft: #fff1ce;
+    --red: #b23b3b;
+    --red-soft: #ffe1df;
+    --blue: #2f6f9f;
+    --blue-soft: #dfeef8;
+    --violet: #7356a6;
+    --violet-soft: #ece5fb;
+  }
+
+  body.progress-map-page {
+    background: #fbfcfa;
+    color: var(--ink);
+  }
+
+  .progress-shell {
+    padding: 32px 0 56px;
+  }
+
+  .progress-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1.35fr) minmax(320px, .65fr);
+    gap: 18px;
+    align-items: stretch;
+    margin-bottom: 18px;
+  }
+
+  .progress-title,
+  .progress-current {
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 8px;
+    padding: clamp(18px, 3vw, 28px);
+  }
+
+  .progress-title h1 {
+    margin: 8px 0 10px;
+    max-width: 920px;
+    font-size: clamp(34px, 5vw, 72px);
+    line-height: .95;
+    letter-spacing: 0;
+  }
+
+  .progress-title p,
+  .progress-current p,
+  .progress-section > p {
+    color: var(--muted);
+    font-size: 16px;
+    line-height: 1.55;
+    max-width: 820px;
+  }
+
+  .progress-current h2 {
+    margin: 8px 0 10px;
+    font-size: clamp(28px, 4vw, 44px);
+    letter-spacing: 0;
+  }
+
+  .progress-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--green);
+    font-size: 12px;
+    font-weight: 800;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+  }
+
+  .progress-kicker::before {
+    content: "";
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    background: var(--green);
+  }
+
+  .metric-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 10px;
+    margin: 18px 0;
+  }
+
+  .metric {
+    min-height: 104px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 8px;
+    padding: 14px;
+  }
+
+  .metric b {
+    display: block;
+    margin-bottom: 8px;
+    font-size: clamp(28px, 4vw, 46px);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .metric span {
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: .04em;
+  }
+
+  .metric.is-active {
+    background: var(--amber-soft);
+    border-color: #e2c47e;
+  }
+
+  .metric.is-clear {
+    background: var(--green-soft);
+    border-color: #acd8c3;
+  }
+
+  .progress-section {
+    margin-top: 18px;
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 8px;
+    padding: clamp(18px, 3vw, 28px);
+  }
+
+  .section-head {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+    gap: 18px;
+    margin-bottom: 18px;
+  }
+
+  .section-head h2 {
+    margin: 4px 0 0;
+    font-size: clamp(24px, 3vw, 38px);
+    letter-spacing: 0;
+  }
+
+  .legend {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    color: var(--muted);
+    font-size: 13px;
+    font-weight: 700;
+  }
+
+  .legend span {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .legend i {
+    width: 10px;
+    height: 10px;
+    border-radius: 999px;
+    display: inline-block;
+  }
+
+  .dot-done { background: var(--green); }
+  .dot-active { background: var(--amber); }
+  .dot-gated { background: var(--red); }
+
+  .roadmap {
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 10px;
+  }
+
+  .road-step {
+    position: relative;
+    min-height: 156px;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: var(--soft);
+  }
+
+  .road-step strong {
+    display: block;
+    margin: 8px 0;
+    font-size: 18px;
+    line-height: 1.15;
+    letter-spacing: 0;
+  }
+
+  .road-step p {
+    margin: 0;
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.35;
+  }
+
+  .road-step .number {
+    display: inline-grid;
+    width: 30px;
+    height: 30px;
+    place-items: center;
+    border-radius: 50%;
+    color: #fff;
+    font-weight: 900;
+    background: var(--green);
+  }
+
+  .road-step.done {
+    background: var(--green-soft);
+    border-color: #acd8c3;
+  }
+
+  .road-step.active {
+    background: var(--amber-soft);
+    border-color: #e2c47e;
+  }
+
+  .road-step.gated {
+    background: var(--red-soft);
+    border-color: #edb2ad;
+  }
+
+  .road-step.active .number { background: var(--amber); }
+  .road-step.gated .number { background: var(--red); }
+
+  .timeline-strip {
+    display: grid;
+    grid-template-columns: repeat(10, minmax(112px, 1fr));
+    gap: 8px;
+    overflow-x: auto;
+    padding-bottom: 6px;
+  }
+
+  .timeline-item {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 12px;
+    min-height: 118px;
+    background: #fff;
+  }
+
+  .timeline-item b {
+    display: block;
+    color: var(--green);
+    font-size: 13px;
+    margin-bottom: 8px;
+  }
+
+  .timeline-item span {
+    display: block;
+    font-size: 14px;
+    font-weight: 800;
+    line-height: 1.2;
+  }
+
+  .timeline-item.active {
+    background: var(--amber-soft);
+    border-color: #e2c47e;
+  }
+
+  .bar-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 12px;
+  }
+
+  .bar-row {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: #fff;
+  }
+
+  .bar-row header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    margin-bottom: 10px;
+  }
+
+  .bar-row strong {
+    font-size: 16px;
+  }
+
+  .bar-row span {
+    color: var(--muted);
+    font-weight: 800;
+  }
+
+  .bar-track {
+    height: 14px;
+    border-radius: 999px;
+    background: #edf1ee;
+    overflow: hidden;
+  }
+
+  .bar-fill {
+    height: 100%;
+    border-radius: 999px;
+    background: var(--green);
+  }
+
+  .bar-fill.active { background: var(--amber); }
+  .bar-fill.gated { background: var(--red); }
+  .bar-fill.blue { background: var(--blue); }
+
+  .flow-lanes {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .lane {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 14px;
+    background: var(--soft);
+  }
+
+  .lane h3 {
+    margin: 0 0 12px;
+    font-size: 20px;
+    letter-spacing: 0;
+  }
+
+  .lane ul,
+  .next-list,
+  .gate-list {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: grid;
+    gap: 8px;
+  }
+
+  .lane li,
+  .next-list li,
+  .gate-list li {
+    border: 1px solid var(--line);
+    background: #fff;
+    border-radius: 8px;
+    padding: 10px 12px;
+    color: var(--ink);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.35;
+    overflow-wrap: anywhere;
+  }
+
+  .next-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+    gap: 12px;
+    align-items: start;
+  }
+
+  .next-panel {
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    padding: 16px;
+    background: var(--blue-soft);
+  }
+
+  .next-panel h3 {
+    margin: 0 0 8px;
+    font-size: 22px;
+  }
+
+  .next-panel p {
+    margin: 0;
+    color: #243f52;
+    line-height: 1.45;
+  }
+
+  .gate-list {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .gate-list li {
+    background: var(--red-soft);
+    border-color: #edb2ad;
+  }
+
+  .footer-note {
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  @media (max-width: 1040px) {
+    .progress-header,
+    .bar-grid,
+    .flow-lanes,
+    .next-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .metric-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .roadmap {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 680px) {
+    .progress-shell {
+      padding-top: 18px;
+    }
+
+    .metric-grid,
+    .roadmap,
+    .gate-list {
+      grid-template-columns: 1fr;
+    }
+
+    .section-head {
+      display: block;
+    }
+
+    .legend {
+      margin-top: 12px;
+    }
+
+    .progress-title,
+    .progress-current,
+    .progress-section {
+      padding: 16px;
+    }
+  }
+</style>
+</head>
+<body class="surface-page progress-map-page">
+  <header class="site-nav" aria-label="Frankly navigation">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="frankly-os.html" aria-label="Frankly OS">
+        <img class="brand-logo brand-logo-light" src="assets/frankly-logo-small.png" alt="frankly">
+        <span class="nav-surface-label">Progress</span>
+      </a>
+      <nav class="nav-links" aria-label="Local surfaces">
+        <a href="onboarding.html">Start here</a>
+        <a href="frankly-os.html">OS</a>
+        <a href="lab-hub.html#queue">Lab queue</a>
+        <a href="mission-control-queue.html">Mission control</a>
+        <a class="active" href="progress-map.html">Progress map</a>
+        <a href="agent-brief-builder.html">Brief builder</a>
+        <a href="lab-hub.html#surface-gates">Surface gates</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="progress-shell">
+    <div class="wide-wrap">
+      <section class="progress-header" id="progress" aria-label="Current Frankly OS status">
+        <div class="progress-title">
+          <span class="progress-kicker">Frankly OS progress</span>
+          <h1>The machine works. Now it needs evidence.</h1>
+          <p>We have moved the work from small chat stops into a local machine with Mission Control, Prompt Agent, handoff, guard, source intake and an evidence inbox. The next job is not more structure. It is filling the first source records.</p>
+        </div>
+        <aside class="progress-current">
+          <span class="progress-kicker">Active batch</span>
+          <h2>MCQ-010</h2>
+          <p>Product/Legal Evidence Inbox v0.1 is active and validated. It is ready for sources, but no claims or customer-facing copy are approved.</p>
+        </aside>
+      </section>
+
+      <section class="metric-grid" aria-label="Key metrics">
+        <div class="metric is-active">
+          <b>10</b>
+          <span>Mission batches</span>
+        </div>
+        <div class="metric">
+          <b>40</b>
+          <span>Missions</span>
+        </div>
+        <div class="metric is-clear">
+          <b>11/0/0</b>
+          <span>Strict guard</span>
+        </div>
+        <div class="metric is-active">
+          <b>0/9</b>
+          <span>Evidence records</span>
+        </div>
+        <div class="metric is-clear">
+          <b>0</b>
+          <span>Copy changes</span>
+        </div>
+      </section>
+
+      <section class="progress-section" aria-labelledby="roadmap-title">
+        <div class="section-head">
+          <div>
+            <span class="progress-kicker">Roadmap</span>
+            <h2 id="roadmap-title">Where we are going</h2>
+          </div>
+          <div class="legend" aria-label="Legend">
+            <span><i class="dot-done"></i> built</span>
+            <span><i class="dot-active"></i> active now</span>
+            <span><i class="dot-gated"></i> gated</span>
+          </div>
+        </div>
+        <div class="roadmap">
+          <article class="road-step done">
+            <span class="number">1</span>
+            <strong>Machine core</strong>
+            <p>Mission Control, Prompt Agent, handoff and QA are in place.</p>
+          </article>
+          <article class="road-step done">
+            <span class="number">2</span>
+            <strong>Source intake</strong>
+            <p>9 product/legal source requests are defined as SRC-001 through SRC-009.</p>
+          </article>
+          <article class="road-step active">
+            <span class="number">3</span>
+            <strong>Evidence inbox</strong>
+            <p>The inbox is ready. It needs the first owner-approved source records.</p>
+          </article>
+          <article class="road-step gated">
+            <span class="number">4</span>
+            <strong>SRC approval</strong>
+            <p>An SRC can only move when the validator approves the record.</p>
+          </article>
+          <article class="road-step gated">
+            <span class="number">5</span>
+            <strong>Internal draft</strong>
+            <p>The first copy output should be an internal support answer draft.</p>
+          </article>
+          <article class="road-step gated">
+            <span class="number">6</span>
+            <strong>Customer channel</strong>
+            <p>Only one channel at a time after source and copy review.</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="progress-section" aria-labelledby="timeline-title">
+        <div class="section-head">
+          <div>
+            <span class="progress-kicker">Timeline</span>
+            <h2 id="timeline-title">What we have built</h2>
+          </div>
+          <p class="footer-note">All 10 batches are review-ready locally. MCQ-010 is the active direction.</p>
+        </div>
+        <div class="timeline-strip" aria-label="Mission Control timeline">
+          <article class="timeline-item"><b>MCQ-001</b><span>Parallel workstreams</span></article>
+          <article class="timeline-item"><b>MCQ-002</b><span>Partner activation pilot</span></article>
+          <article class="timeline-item"><b>MCQ-003</b><span>Machine core priority</span></article>
+          <article class="timeline-item"><b>MCQ-004</b><span>Prompt Agent</span></article>
+          <article class="timeline-item"><b>MCQ-005</b><span>Machine handoff</span></article>
+          <article class="timeline-item"><b>MCQ-006</b><span>Handoff proof</span></article>
+          <article class="timeline-item"><b>MCQ-007</b><span>Product clarity pack</span></article>
+          <article class="timeline-item"><b>MCQ-008</b><span>State guard</span></article>
+          <article class="timeline-item"><b>MCQ-009</b><span>Source intake</span></article>
+          <article class="timeline-item active"><b>MCQ-010</b><span>Evidence inbox</span></article>
+        </div>
+      </section>
+
+      <section class="progress-section" aria-labelledby="progress-title">
+        <div class="section-head">
+          <div>
+            <span class="progress-kicker">Progress</span>
+            <h2 id="progress-title">How far we are</h2>
+          </div>
+        </div>
+        <div class="bar-grid">
+          <article class="bar-row">
+            <header><strong>Machine operating layer</strong><span>80%</span></header>
+            <div class="bar-track"><div class="bar-fill" style="width: 80%"></div></div>
+          </article>
+          <article class="bar-row">
+            <header><strong>Resume behavior</strong><span>75%</span></header>
+            <div class="bar-track"><div class="bar-fill blue" style="width: 75%"></div></div>
+          </article>
+          <article class="bar-row">
+            <header><strong>Source pipeline structure</strong><span>70%</span></header>
+            <div class="bar-track"><div class="bar-fill active" style="width: 70%"></div></div>
+          </article>
+          <article class="bar-row">
+            <header><strong>Product/legal evidence</strong><span>0%</span></header>
+            <div class="bar-track"><div class="bar-fill gated" style="width: 0%"></div></div>
+          </article>
+          <article class="bar-row">
+            <header><strong>Customer-facing copy readiness</strong><span>0%</span></header>
+            <div class="bar-track"><div class="bar-fill gated" style="width: 0%"></div></div>
+          </article>
+          <article class="bar-row">
+            <header><strong>Automation and thread spawning</strong><span>0%</span></header>
+            <div class="bar-track"><div class="bar-fill gated" style="width: 0%"></div></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="progress-section" aria-labelledby="layers-title">
+        <div class="section-head">
+          <div>
+            <span class="progress-kicker">Layers</span>
+            <h2 id="layers-title">What the machine can do now</h2>
+          </div>
+        </div>
+        <div class="flow-lanes">
+          <article class="lane">
+            <h3>Built and stable</h3>
+            <ul>
+              <li>Mission Control shows batches, prompts, gates and run output.</li>
+              <li>Prompt Agent creates larger mission packs locally.</li>
+              <li>The handoff packet tells new chats where to start.</li>
+              <li>Machine State Guard catches drift between state files.</li>
+            </ul>
+          </article>
+          <article class="lane">
+            <h3>Active now</h3>
+            <ul>
+              <li>Evidence Inbox is ready for source documents and owner confirmations.</li>
+              <li>validate-source-intake.py passes with 9 open source slots.</li>
+              <li>Static QA includes both machineStateGuard and sourceIntake.</li>
+              <li>MCQ-010 browser QA is green on desktop and mobile.</li>
+            </ul>
+          </article>
+          <article class="lane">
+            <h3>Deliberately gated</h3>
+            <ul>
+              <li>No claims are approved.</li>
+              <li>No customer-facing copy has changed.</li>
+              <li>No automation or thread spawning is approved.</li>
+              <li>Partner kit is parked until new partner deck learning lands.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="progress-section" aria-labelledby="next-title">
+        <div class="section-head">
+          <div>
+            <span class="progress-kicker">Next</span>
+            <h2 id="next-title">Next concrete steps</h2>
+          </div>
+        </div>
+        <div class="next-grid">
+          <div>
+            <ol class="next-list">
+              <li>Create the first JSON record in <code>source-intake/product-legal-evidence-inbox/records/</code>.</li>
+              <li>Run <code>python3 os-visualization/scripts/validate-source-intake.py</code>.</li>
+              <li>Fix metadata, owner, excerpt, scope or channels if the validator fails.</li>
+              <li>Move only the matching SRC status when the record passes.</li>
+              <li>Repeat until enough rows can support an internal support answer draft.</li>
+            </ol>
+          </div>
+          <aside class="next-panel">
+            <h3>Start low-risk</h3>
+            <p>The best first records are probably SRC-004, SRC-006 or SRC-009, because they can lead to an internal support draft before we touch public or customer-facing copy.</p>
+          </aside>
+        </div>
+      </section>
+
+      <section class="progress-section" aria-labelledby="gates-title">
+        <div class="section-head">
+          <div>
+            <span class="progress-kicker">Gates</span>
+            <h2 id="gates-title">What we still do not do</h2>
+          </div>
+        </div>
+        <ul class="gate-list">
+          <li>No public deploy.</li>
+          <li>No Slack or company-visible automation.</li>
+          <li>No connector writes.</li>
+          <li>No paid API spend.</li>
+          <li>No plugin installs.</li>
+          <li>No automatic thread creation.</li>
+          <li>No product/legal claims without evidence.</li>
+          <li>No customer-facing copy without separate review.</li>
+        </ul>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="frankly-os.html">
+        <img class="brand-logo" src="assets/frankly-logo-small.png" alt="frankly">
+        <span>OS</span>
+      </a>
+      <span class="footer-meta">Internal progress surface. Frankly 2026.</span>
+    </div>
+  </footer>
+</body>
+</html>

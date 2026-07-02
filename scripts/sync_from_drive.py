@@ -20,16 +20,16 @@ import re
 import json
 import base64
 import pathlib
-
-from google.oauth2 import service_account
-from googleapiclient.discovery import build
-from googleapiclient.http import MediaIoBaseDownload
+import shutil
 
 FOLDER_ID = os.environ.get("DRIVE_FOLDER_ID", "1MhCxVzXJDJc_sHT5fXZjaxiqLTaWe8vW")
 SITE_DIR = pathlib.Path("site")
 HUB_FILE = pathlib.Path("lab-hub.html")  # hub'ens forside (committet i repoet)
 SCOPES = ["https://www.googleapis.com/auth/drive.readonly"]
 IMAGE_EXTS = (".png", ".jpg", ".jpeg", ".gif", ".svg", ".webp", ".ico")
+STATIC_FILES = ("frankly-surfaces.css", "robots.txt", "sitemap.xml")
+STATIC_DIRS = ("assets", "data")
+SKIP_DIRS = {".git", ".github", "__pycache__", "site"}
 
 # ---- Kode-lås (simpelt "gardin", ikke rigtig sikkerhed) ----
 GATE_CODE = (os.environ.get("SITE_CODE") or "frankly").strip()
@@ -44,10 +44,10 @@ GATE_TEMPLATE = """<script>(function(){
     de.style.visibility='';
     var o=document.createElement('div'); o.id='__flab_gate';
     o.setAttribute('style','position:fixed;inset:0;z-index:2147483647;background:radial-gradient(1200px 600px at 75% -10%,#FFE4EF,#F5F4F1 45%);display:flex;align-items:center;justify-content:center;font-family:Inter,-apple-system,Segoe UI,sans-serif');
-    o.innerHTML='<div style="background:#fff;padding:36px 32px;border-radius:20px;box-shadow:0 20px 60px rgba(45,0,17,.12);max-width:340px;width:88%;text-align:center"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#b06">Frankly Lab</div><h1 style="font-size:23px;margin:8px 0 4px;color:#2D0011;letter-spacing:-.3px">Adgangskode</h1><p style="color:#7a5563;font-size:14px;margin:0 0 18px">Indtast koden for at fortsætte.</p><input id="__flab_in" type="password" style="width:100%;padding:12px 14px;border:1px solid #f0d6e0;border-radius:12px;font-size:16px;box-sizing:border-box" /><div id="__flab_err" style="color:#d8607a;font-size:13px;height:18px;margin-top:6px"></div><button id="__flab_b" style="margin-top:6px;width:100%;padding:12px;border:0;border-radius:12px;background:#2D0011;color:#fff;font-weight:700;font-size:15px;cursor:pointer">Lås op</button></div>';
+    o.innerHTML='<div style="background:#fff;padding:36px 32px;border-radius:20px;box-shadow:0 20px 60px rgba(45,0,17,.12);max-width:340px;width:88%;text-align:center"><div style="font-size:12px;letter-spacing:.14em;text-transform:uppercase;color:#b06">Frankly OS</div><h1 style="font-size:23px;margin:8px 0 4px;color:#2D0011;letter-spacing:-.3px">Access code</h1><p style="color:#7a5563;font-size:14px;margin:0 0 18px">Enter the code to continue.</p><input id="__flab_in" type="password" style="width:100%;padding:12px 14px;border:1px solid #f0d6e0;border-radius:12px;font-size:16px;box-sizing:border-box" /><div id="__flab_err" style="color:#d8607a;font-size:13px;height:18px;margin-top:6px"></div><button id="__flab_b" style="margin-top:6px;width:100%;padding:12px;border:0;border-radius:12px;background:#2D0011;color:#fff;font-weight:700;font-size:15px;cursor:pointer">Unlock</button></div>';
     document.body.appendChild(o);
     var i=o.querySelector('#__flab_in'), b=o.querySelector('#__flab_b'), e=o.querySelector('#__flab_err');
-    function go(){ var v=''; try{ v=btoa(i.value); }catch(x){ v=''; } if(v===OK){ try{ sessionStorage.setItem('flab_ok','1'); }catch(x){} o.remove(); } else { e.textContent='Forkert kode'; i.value=''; i.focus(); } }
+    function go(){ var v=''; try{ v=btoa(i.value); }catch(x){ v=''; } if(v===OK){ try{ sessionStorage.setItem('flab_ok','1'); }catch(x){} o.remove(); } else { e.textContent='Wrong code'; i.value=''; i.focus(); } }
     b.onclick=go; i.addEventListener('keydown',function(ev){ if(ev.key==='Enter') go(); }); i.focus();
   }
   if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',mount); else mount();
@@ -59,7 +59,10 @@ GATE_SNIPPET = GATE_TEMPLATE.replace("__OKB64__", GATE_CODE_B64)
 def drive_client():
     raw = os.environ.get("GCP_SA_KEY")
     if not raw:
-        raise SystemExit("GCP_SA_KEY mangler. Tilføj service-account-JSON'en som GitHub secret.")
+        return None
+    from google.oauth2 import service_account
+    from googleapiclient.discovery import build
+
     info = json.loads(raw)
     creds = service_account.Credentials.from_service_account_info(info, scopes=SCOPES)
     return build("drive", "v3", credentials=creds, cache_discovery=False)
@@ -88,6 +91,8 @@ def list_children(svc, folder_id):
 
 
 def download(svc, file_id):
+    from googleapiclient.http import MediaIoBaseDownload
+
     buf = io.BytesIO()
     dl = MediaIoBaseDownload(buf, svc.files().get_media(fileId=file_id))
     done = False
@@ -114,48 +119,86 @@ def inject_gate(html_bytes):
     return (GATE_SNIPPET + html).encode("utf-8")
 
 
+def should_skip(path):
+    return any(part in SKIP_DIRS for part in path.parts)
+
+
+def copy_static_assets():
+    for name in STATIC_FILES:
+        src = pathlib.Path(name)
+        if src.exists():
+            dst = SITE_DIR / name
+            dst.parent.mkdir(parents=True, exist_ok=True)
+            shutil.copy2(src, dst)
+            print("statisk fil: %s -> site/%s" % (name, name))
+
+    for name in STATIC_DIRS:
+        src = pathlib.Path(name)
+        if src.exists():
+            dst = SITE_DIR / name
+            if dst.exists():
+                shutil.rmtree(dst)
+            shutil.copytree(src, dst)
+            print("statisk mappe: %s -> site/%s" % (name, name))
+
+
+def copy_repo_html():
+    pages = 0
+    for p in sorted(pathlib.Path(".").rglob("*.html")):
+        if should_skip(p):
+            continue
+        if p.name.lower() == HUB_FILE.name.lower():
+            continue
+        rel = p.relative_to(pathlib.Path("."))
+        out = SITE_DIR / rel
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_bytes(inject_gate(p.read_bytes()))
+        pages += 1
+        print("repo-side: %s -> site/%s" % (rel, rel))
+    return pages
+
+
 def main():
     if not HUB_FILE.exists():
         raise SystemExit("lab-hub.html mangler i repoet (forsiden/hub'en).")
 
-    svc = drive_client()
+    if SITE_DIR.exists():
+        shutil.rmtree(SITE_DIR)
     SITE_DIR.mkdir(parents=True, exist_ok=True)
 
+    svc = drive_client()
+
     pages, images = 0, 0
-    for f in list_children(svc, FOLDER_ID):
-        mime = f.get("mimeType", "")
-        name = f["name"]
-        if mime == "application/vnd.google-apps.folder":
-            continue
-        if mime == "text/html" or name.lower().endswith((".html", ".htm")):
-            if name.strip().lower() == "index.html":
-                continue  # forsiden kommer fra repoets lab-hub.html
-            out = safe_name(name)
-            if not out.lower().endswith((".html", ".htm")):
-                out += ".html"
-            (SITE_DIR / out).write_bytes(inject_gate(download(svc, f["id"])))
-            pages += 1
-            print("side: %s -> site/%s" % (name, out))
-        elif mime.startswith("image/") or name.lower().endswith(IMAGE_EXTS):
-            (SITE_DIR / safe_name(name)).write_bytes(download(svc, f["id"]))
-            images += 1
-            print("billede: %s" % name)
+    if svc:
+        for f in list_children(svc, FOLDER_ID):
+            mime = f.get("mimeType", "")
+            name = f["name"]
+            if mime == "application/vnd.google-apps.folder":
+                continue
+            if mime == "text/html" or name.lower().endswith((".html", ".htm")):
+                if name.strip().lower() == "index.html":
+                    continue  # forsiden kommer fra repoets lab-hub.html
+                out = safe_name(name)
+                if not out.lower().endswith((".html", ".htm")):
+                    out += ".html"
+                (SITE_DIR / out).write_bytes(inject_gate(download(svc, f["id"])))
+                pages += 1
+                print("side: %s -> site/%s" % (name, out))
+            elif mime.startswith("image/") or name.lower().endswith(IMAGE_EXTS):
+                (SITE_DIR / safe_name(name)).write_bytes(download(svc, f["id"]))
+                images += 1
+                print("billede: %s" % name)
+    else:
+        print("GCP_SA_KEY mangler; springer Drive-sync over og bygger repo-hostede sider.")
 
-    # Repo-hostede ekstrasider: alle .html i repo-roden (undtagen hub'en).
-    # Bruges til sider der uploades direkte til repoet (fx fra en lokal fil),
-    # i stedet for via Drive. Får også kode-låsen injiceret.
-    for p in sorted(pathlib.Path(".").glob("*.html")):
-        if p.name.lower() == HUB_FILE.name.lower():
-            continue
-        out = safe_name(p.name)
-        if not out.lower().endswith((".html", ".htm")):
-            out += ".html"
-        (SITE_DIR / out).write_bytes(inject_gate(p.read_bytes()))
-        pages += 1
-        print("repo-side: %s -> site/%s" % (p.name, out))
+    copy_static_assets()
+    pages += copy_repo_html()
 
-    # Forside = repoets hub (også med kode-lås)
-    (SITE_DIR / "index.html").write_bytes(inject_gate(HUB_FILE.read_bytes()))
+    # Forside = repoets hub (også med kode-lås). Behold også lab-hub.html,
+    # fordi de lokale surfaces linker direkte til den.
+    hub_bytes = inject_gate(HUB_FILE.read_bytes())
+    (SITE_DIR / "index.html").write_bytes(hub_bytes)
+    (SITE_DIR / HUB_FILE.name).write_bytes(hub_bytes)
 
     # Drift-filer
     (SITE_DIR / ".nojekyll").write_text("")

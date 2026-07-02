@@ -1,0 +1,131 @@
+{
+  "generated": "2026-07-02",
+  "status": "local-registry-active",
+  "source": "os-visualization/system-intelligence/surface-gate-registry.json",
+  "summary": "Canonical local registry for Frankly site surfaces, gate state, QA evidence and remaining approvals.",
+  "counts": {
+    "surfaces": 9,
+    "browserQaPassed": 9,
+    "publicReady": 0,
+    "approvalGated": 9
+  },
+  "surfaces": [
+    {
+      "id": "onboarding-entry",
+      "name": "Start / onboarding",
+      "page": "onboarding.html",
+      "state": "local-live",
+      "gate": "internal-start-surface",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/onboarding-entry-gate-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-onboarding-entry-gate-browser-qa/",
+      "nextApproval": "Decide sitemap/robots behavior before public use.",
+      "anchor": "entry-gate"
+    },
+    {
+      "id": "os-activation",
+      "name": "Frankly OS activation queue",
+      "page": "frankly-os.html",
+      "state": "local-live",
+      "gate": "public-deploy-and-plugin-install-gated",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/v14-activation-pilot-implementation-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-v14-activation-browser-qa/",
+      "nextApproval": "Public deploy and official plugin installs require Jonas approval.",
+      "anchor": "activation"
+    },
+    {
+      "id": "lab-operating-queue",
+      "name": "Frankly Lab operating queue",
+      "page": "lab-hub.html",
+      "state": "local-live",
+      "gate": "live-actions-and-installs-gated",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/lab-operating-queue-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-lab-operating-queue-browser-qa/",
+      "nextApproval": "Public deploy, paid API, Slack automation and installs remain gated.",
+      "anchor": "queue"
+    },
+    {
+      "id": "agent-brief-builder",
+      "name": "Agent Brief Builder",
+      "page": "agent-brief-builder.html",
+      "state": "local-live",
+      "gate": "internal-prompt-orchestration-surface",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/agent-briefing-pipeline-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-agent-brief-builder-browser-qa/",
+      "nextApproval": "Keep as local prompt builder until thread automation, public use or connector writes are explicitly approved.",
+      "anchor": "brief-builder"
+    },
+    {
+      "id": "mission-control-queue",
+      "name": "Mission Control Queue",
+      "page": "mission-control-queue.html",
+      "state": "local-live",
+      "gate": "thread-handoff-and-connector-writes-gated",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/mission-control-queue-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-mission-control-queue-browser-qa/",
+      "nextApproval": "Keep as local queue until automatic thread creation, connector writes or public use are explicitly approved.",
+      "anchor": "mission-control"
+    },
+    {
+      "id": "progress-map",
+      "name": "Frankly OS Progress Map",
+      "page": "progress-map.html",
+      "state": "local-live",
+      "gate": "public-deploy-and-source-status-gated",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/frankly-os-progress-map-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-progress-map-browser-qa/",
+      "nextApproval": "Keep as an internal progress surface until public deploy and product/legal source status changes are approved.",
+      "anchor": "progress"
+    },
+    {
+      "id": "product-clarity-review",
+      "name": "Product clarity review gate",
+      "page": "frankly-daekningsoverblik.html",
+      "state": "review-gated",
+      "gate": "product-legal-approval-needed",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/product-clarity-review-gate-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-product-clarity-review-gate-browser-qa/",
+      "nextApproval": "Product/legal must approve terms, exclusions, deductibles and wording.",
+      "anchor": "review"
+    },
+    {
+      "id": "blog-publishing",
+      "name": "Blog draft publishing gate",
+      "page": "blog/index.html",
+      "state": "noindex-gated",
+      "gate": "publishing-setup-and-product-legal-needed",
+      "browserQa": "passed",
+      "publicUse": "blocked",
+      "reportFile": "os-visualization/reports/blog-publishing-gate-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-blog-publishing-gate-browser-qa/",
+      "nextApproval": "Keep blog out of sitemap until source, legal, author/reviewer and schema policy are approved.",
+      "anchor": "publish-gate"
+    },
+    {
+      "id": "cykelforsikring-article-review",
+      "name": "Cykelforsikring article review gate",
+      "page": "blog/cykelforsikring.html",
+      "state": "noindex-review-gated",
+      "gate": "product-claim-source-and-publishing-approval-needed",
+      "browserQa": "passed",
+      "publicUse": "blocked",
+      "reportFile": "os-visualization/reports/article-review-gate-cykelforsikring-2026-07-01.md",
+      "evidenceFolder": "os-visualization/evidence/20260701-article-review-gate-browser-qa/",
+      "nextApproval": "Frankly bicycle-specific claims, warranty/reklamation sources, author/reviewer, canonical, sitemap and schema remain blocked.",
+      "anchor": "article-gate"
+    }
+  ]
+}
