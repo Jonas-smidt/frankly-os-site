@@ -53,8 +53,9 @@
     border:5px solid #D95757;background:#fff;
     display:flex;align-items:center;justify-content:center;
     font-weight:800;font-size:14px;color:var(--grounded);
-    flex:none;transition:transform .2s;
+    flex:none;transition:transform .2s,border-color .2s;
   }
+  .limit.alex{border-color:var(--deep-calm);}
   .limit.pulse{animation:limitpulse .6s infinite;}
   @keyframes limitpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
   .progresswrap{padding:0 16px 10px;background:#fff;}
@@ -75,6 +76,12 @@
   /* ---------- canvas ---------- */
   .stage{position:relative;background:var(--limestone-2);line-height:0;}
   canvas{width:100%;height:auto;display:block;touch-action:none;}
+  .mutebtn{
+    position:absolute;top:10px;left:12px;z-index:6;
+    width:36px;height:36px;border-radius:50%;border:none;cursor:pointer;
+    background:rgba(255,255,255,.9);font-size:15px;line-height:36px;text-align:center;
+    box-shadow:0 2px 10px rgba(45,0,17,.14);
+  }
   /* ---------- toast ---------- */
   .toast{
     position:absolute;top:14px;left:50%;transform:translate(-50%,-8px);
@@ -92,33 +99,38 @@
     position:absolute;inset:0;z-index:5;
     background:rgba(245,244,241,.96);
     display:flex;flex-direction:column;align-items:center;justify-content:center;
-    text-align:center;padding:28px 26px;gap:0;
-    line-height:1.5; /* .stage sets line-height:0 for the canvas; restore for text */
+    justify-content:safe center;
+    text-align:center;padding:22px 24px;gap:0;
+    line-height:1.5;              /* .stage sets line-height:0 for the canvas */
+    overflow-y:auto;              /* never let content overlap when space is tight */
   }
   .overlay.hidden{display:none;}
-  .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;opacity:.55;margin-bottom:8px;}
-  .title{font-size:34px;font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-bottom:10px;}
-  .sub{font-size:14px;line-height:1.5;max-width:300px;opacity:.8;margin-bottom:18px;}
-  .heroart{margin:2px 0 16px;}
+  .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;font-weight:700;opacity:.55;margin-bottom:6px;}
+  .title{font-size:clamp(26px,7.5vw,34px);font-weight:800;letter-spacing:-.02em;line-height:1.05;margin-bottom:10px;}
+  .sub{font-size:13.5px;line-height:1.5;max-width:300px;opacity:.8;margin-bottom:14px;}
+  .heroart{margin:0 0 12px;line-height:0;}
   .controls{
-    display:flex;flex-direction:column;gap:6px;font-size:12.5px;opacity:.75;
-    margin-bottom:22px;font-weight:500;
+    display:flex;flex-direction:column;gap:4px;font-size:12px;opacity:.75;
+    margin-bottom:16px;font-weight:500;line-height:1.5;
   }
   .controls b{font-weight:700;}
+  .modebtns{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;}
   .btn{
     background:var(--grounded);color:#fff;border:none;cursor:pointer;
-    font-family:inherit;font-size:15px;font-weight:700;
-    padding:14px 34px;border-radius:999px;
+    font-family:inherit;font-size:14.5px;font-weight:700;
+    padding:13px 26px;border-radius:999px;
     transition:transform .12s,box-shadow .12s;
     box-shadow:0 8px 22px rgba(45,0,17,.18);
   }
   .btn:hover{transform:translateY(-1px);}
   .btn:active{transform:translateY(1px);}
   .btn.pink{background:var(--deep-calm);color:var(--grounded);}
-  .endpremium{font-size:52px;font-weight:800;letter-spacing:-.03em;margin:6px 0 2px;}
+  .btn.alex{background:#1F000B;color:var(--deep-calm);}
+  .bestline{font-size:11.5px;font-weight:600;opacity:.55;margin-top:14px;min-height:14px;}
+  .endpremium{font-size:48px;font-weight:800;letter-spacing:-.03em;margin:6px 0 2px;}
   .endpremium small{font-size:16px;font-weight:600;opacity:.5;}
-  .verdict{font-size:14.5px;line-height:1.55;max-width:300px;opacity:.85;margin:10px 0 24px;}
-  .disclaimer{font-size:10.5px;opacity:.45;margin-top:20px;line-height:1.5;}
+  .verdict{font-size:14px;line-height:1.55;max-width:300px;opacity:.85;margin:10px 0 20px;}
+  .disclaimer{font-size:10.5px;opacity:.45;margin-top:16px;line-height:1.5;}
   .pausehint{position:absolute;bottom:10px;right:14px;font-size:10px;opacity:.4;font-weight:600;z-index:2;}
   .touchhint{display:none;}
   @media (pointer:coarse){
@@ -131,7 +143,7 @@
 <div class="frame">
   <div class="hud">
     <div class="premium">
-      <div class="label">Your premium</div>
+      <div class="label" id="premiumLabel">Your premium</div>
       <div class="value" id="premiumVal">129 <small>kr/md</small></div>
     </div>
     <div class="speedwrap">
@@ -149,6 +161,7 @@
 
   <div class="stage">
     <canvas id="game" width="420" height="640"></canvas>
+    <button class="mutebtn" id="muteBtn" title="Sound on/off">🔊</button>
     <div class="toast" id="toast"></div>
     <div class="pausehint keyhint">P = pause</div>
 
@@ -158,7 +171,7 @@
       <div class="title">Frankly's BMW</div>
       <div class="sub">Drive nicely through Amager — from Christmas Møllers Plads to Amager Strandpark. The calmer you drive, the lower your premium.</div>
       <div class="heroart">
-        <svg width="230" height="120" viewBox="0 0 230 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <svg width="210" height="106" viewBox="0 0 230 120" fill="none" xmlns="http://www.w3.org/2000/svg">
           <defs>
             <linearGradient id="rib" x1="0" y1="0" x2="230" y2="0" gradientUnits="userSpaceOnUse">
               <stop offset="0" stop-color="#FFACCA"/>
@@ -166,9 +179,7 @@
               <stop offset="1" stop-color="#FFD3E3" stop-opacity=".4"/>
             </linearGradient>
           </defs>
-          <!-- ribbon behind -->
           <path d="M-10 78 C 50 108, 95 96, 118 66" stroke="url(#rib)" stroke-width="22" stroke-linecap="round"/>
-          <!-- car, top view -->
           <g transform="rotate(-90 115 60) translate(115 60)">
             <rect x="-21" y="-38" width="42" height="76" rx="14" fill="#2D0011"/>
             <rect x="-15" y="-20" width="30" height="30" rx="8" fill="#4A2230"/>
@@ -179,29 +190,37 @@
             <rect x="-24" y="-14" width="5" height="9" rx="2.5" fill="#FFACCA"/>
             <rect x="19" y="-14" width="5" height="9" rx="2.5" fill="#FFACCA"/>
           </g>
-          <!-- ribbon in front -->
+          <image href="data:image/png;base64,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" x="106" y="47" width="13" height="26"/>
           <path d="M118 66 C 140 38, 185 30, 240 44" stroke="url(#rib)" stroke-width="22" stroke-linecap="round"/>
         </svg>
       </div>
       <div class="controls keyhint">
-        <span><b>↑ ↓</b> speed up / brake &nbsp;·&nbsp; <b>← →</b> steer</span>
-        <span>Stay under the limit. Mind the bike lane. Stop at red.</span>
+        <span><b>↑ ↓</b> speed · <b>← →</b> steer · <b>H</b> horn</span>
+        <span>Stay under the limit. Mind the bike lane. Avoid claims.</span>
+        <span><b>Alexander's Mode:</b> Space to shoot. Everything pays. Dodge the claims.</span>
       </div>
       <div class="controls touchhint">
-        <span><b>Touch left / right</b> to steer — the car cruises by itself</span>
-        <span><b>Hold bottom of screen</b> to brake. Stop at red.</span>
+        <span><b>Touch left / right</b> steers — the car cruises by itself</span>
+        <span><b>Bottom of screen:</b> brake (nice mode) · fire (Alexander's Mode)</span>
       </div>
-      <button class="btn" id="startBtn">Start driving</button>
+      <div class="modebtns">
+        <button class="btn" id="startBtn">Start driving</button>
+        <button class="btn alex" id="alexBtn">Alexander's Mode</button>
+      </div>
+      <div class="bestline" id="bestLine"></div>
       <div class="disclaimer">Just a game — not actual pricing.<br>Frankly™</div>
     </div>
 
     <!-- END OVERLAY -->
     <div class="overlay hidden" id="endOverlay">
       <div class="kicker">Amager Strandpark</div>
-      <div class="title" style="font-size:26px;">You made it to the beach</div>
+      <div class="title" id="endTitle" style="font-size:26px;">You made it to the beach</div>
       <div class="endpremium" id="endPremium">— <small>kr/md</small></div>
       <div class="verdict" id="endVerdict"></div>
-      <button class="btn pink" id="againBtn">Drive again</button>
+      <div class="modebtns">
+        <button class="btn pink" id="againBtn">Drive again</button>
+        <button class="btn alex" id="againAlexBtn">Alexander's Mode</button>
+      </div>
       <div class="disclaimer">Just a game — not actual pricing.<br>Frankly™</div>
     </div>
 
@@ -217,8 +236,8 @@
 <script>
 "use strict";
 /* =========================================================
-   Frankly's BMW — drive nicely through Amager
-   Single-file canvas game. Brand: Frankly™
+   Frankly's BMW v2 — drive nicely through Amager
+   Modes: nice (premium down) · Alexander's Mode (chaos up)
    ========================================================= */
 
 const W = 420, H = 640;
@@ -249,27 +268,36 @@ const C = {
   grounded: "#2D0011",
   limestone: "#F5F4F1",
   asphalt: "#DCDAD4",
-  asphaltLine: "#FFFFFF",
   bikeLane: "#D3D6CE",
   sidewalk: "#EDEBE6",
   curb: "#C9C6BF",
   npc: ["#E8743F", "#3F6FB5", "#2E8B6E", "#3FA8A3", "#E7B93F"],
+  bus: "#F2C94C",
   windshield: "rgba(45,0,17,.28)",
   sand: "#F0E3C8",
   water: "#BFD9E2",
 };
 
+/* ---------- brand mark (pink ribbon, extracted from the wordmark) ---------- */
+const MARK = new Image();
+MARK.src = "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAADoAAAB4CAYAAACjK+FPAAAXV0lEQVR4nN2deZRdV3Xmf/ucO7z3qkqSJ7ltx3jAFiaCeFBZkgeM5DRJB2hjW1XVxgOGQIc0ELJYQBIaOlXq7pUVOqEXiZu12ummwZC2w6uyjYc4yxi7KiBbsizhSRU8CBvPxLJbUr1647337P7j3FeqkkrWVJPzrfWWSqp377vfO+fss8+3v3ME/0KhqtL+U//qnni+n2dWoOWyBdDv3btUh58vzPfzzDhUVXTbtghAhzaeqXc+8ZIObv46gMzvo80ctFy20teX+Z83foAguoFS6V1UKhWC+KJgvh/wSKCqpv2jiGR684+PJ17ye4h8ijh+B2O7W3R2dTFe/c23FVFVFQYHPbnRXhURN/G78sN/QBh8kmLH2TRqUBt3GGMwRjEsWtBEFRX6B4RV14QsHXMikgDZxO9v3/Je4OOk2eXEhdMRgcruFBGDGAMoaSrA6QtqjCoIqjAwYjmxS+TT3cmU35e3LMZkZ6NyMcKHgd+go6uDVhOSlkMVRMykSxxhZGi1Ns47Ue3vN6xZY1izxk3uipB31Vt+dgIFfQ9Ztg5rLyGMzsJYUAetJrgsAxHA7HtzVWwguOyVOSeq/WpYjtCLTkvsR4+XGE+uxempCOeDriKMOwkjSBNoNbNJFxhEDsxBZHanFwWhXJ7yTbengIn33PHYaaSt38HpclTPQeRkCsWTCWPIEmg2IMsUwQECsm/LHQRmnKiqCgMIa0YMa9ZkIqJTfn/H1jNIslMx5iKyrAdjfo1S5xLAt1iWQdpyqDgEOehWOwBmJOr6sI+BQUQkA5T1OAC9fesK0mwp8G+Bc0myZYTR0UQxJC3IUhivpACIGhTxUTMfc0fOEThColpWy3EjIiIpedjX4eGAN0rnIPIpjD0TMZdSmpRTtyNk0nIwQSx/DpmdXO1wxmh70p481rR832Ls0b9Dlrwfa38Dpyvo7IpxDupVB+ikG8xIVzxoCOC0edAtqv39huUDknfNTIeHA3Z2XYFmZ+H4KFH4boIipBm0GlAdy/LmsVM/eA4DvaoSRkIzefKgPlXLaqVP8oT5oSLGfhxjP08YnUUUQ6MOrabiv4T2nDbvczRoRqHDUq999y1bVPv7DYD0SaY3bzyeoxZfSnX8q8SF5ahCo+5o1J0PHmKYoeA2Y8gX38Cv9vut6/BwIGvXpgD6w0f/PfBViqVTaNQhaTqUvdOthQVVxRjBuSbIpdO2gJbLVtauTbX80BnY4C+I48tpNmBsZ+YDiZiF0DHfEiKOQtFQqz1Iz/mb9iHaXsDq3228ijD+JoXC8VQrPp8UY6e754KFqqDuJhFxU9qlHXS0vOlzFDtuIEshSVJkgY29A0FJKZUCqtU7GL3nSpYv3xPr95B8+OMUi98maSqZkwU9DqeDakYQGJw2yZLLpO+C+7RfjQHQ7wwXpE8yHXzwQuL4m6SpvO1IqipKSly0iBFcNuBJ9htZLy7I9c+WdpQjCL9BGC6mWsneHuNRFfAzgLWWQikgSZ4haXxFei+4bbJgZhjEiIjDnH41pY7VVKvpgiapOTk0Q4xQ6rR0dllEdtOo/iWvvLRaei+4TVWnpKkBDOY/usvzFeTCmjhUFRH1MgmKMRYbCHEBqmMtarUHQJ9FmzdK7/tGIY83PkubgPjF8YsFeO1nFApn0Wy4eR+bnpzzX7yx2ACs9a9aLQP3PCa4B5feIz2r7p24rF8NA+jea2CAQEA1eH0FJjwzz1fnvkVVFSRDAFVLGAlBYDEWauMZLttBmr6Gc7ch7j40fk56ztuRX2oYGTGMjDhZL47103+Enx/T5CSOOtay+/8lIOEs08qXbT6HRFUIQqFQDECgWYek9Quy7Hlc9hBhcD/V2pNyzft2Tr6JlsuW3glt1037SZPQXvBmPoDNBtT5EQKgEISWIAJjvMKgCknrNWpuBHVPIfoL6vEP5WPnVKfcZbL+1Nvr9h6DB4InasxvkaYcrvA0lVc7eOAQDGFssBYQT65WeYnMvYxzowg/xoZPE9uX5bLuN/a5VV4Vy4kpewlrhwJPVHkH7oCt/1ZwnpgajDEEoRAXDM0GpMlztJqvIWxGzPOQ3sm6lS8Ke4lmqoYRDDtQenEionsrhkcCT1Q4DZf5nw4WqoqQgljCyBDFhqQFSdIkaT6Dc3eC20Imw9K3avc+l/cPByzfoYz2ah4pD2qsHS7ayfrBJQjtsK9qCAKhc1FIowHN+s/Jsodw6QaUbWg2Kj2r6pMum1QcGlUGBjQX1Dz2EylnEr78PbR5O1H8TlpNx/TSvo+UxlqKJR9f6rUdBOFNaDZKJRjcJ3jsPb7mGQdYfqnvSoWiIYqhWkmoVb6FjW6iK3pWfnsqOQDdsiXkuefcQiHYxvRE2xN4FAfYABq1zTj3dbS5Abd4F9L4ABX3JR16+BJsOE6a3I+1PyDlSenunhiPbeWQXlyurc4b8em6riJi6VoMld3PkKRfkKsuuEdvfvBcovA6jOmj2HESzvkSgjH+pQqt1lO47KdgbsHxM+nrnhKEdHg4YM0aB9OnaXNItJFQKIW+sOO+xO7sOyxdfALS+s+0WlfQuURo1CBt5ZqtSp7g+IeOYksQQL0GqttR3YpyFza9j+yVN6eI3pMD1Bx0c9Hh4YA3O54hit+BsZZGbQOJfpKAEJF+4rgXG0CtCuj+a5H+6R2C5lMOhFG7hlnFZU8RhreSZfdTbzy7d0oHUwKYMjCArF8/Y9ON6M0bjyc0j7L46BMY2/096em+Xm/d1APB9ykUC9SrXp4QOdQ1qgNVFIO1QhBCsQS7dzYxdicue5YgvJc024I0H5V1F72+9w20XLaMHicMrHEMDJBPS4fV8qLlh4qIfQFkSHpXfkZv2/oXdHR+iWqlXU2eAdVdFR+IMsSEE8uuKIbaOGTuJdAdoBsR8zQueIBW9s9yzTRp4bAGMAJr1vgM5yCJi/7vDV0sif6r9Kz8Qx18ZIglR69j1xs1kAgjwYwn++1cGAUVB2qJIsEEYPK43Kg1EHkVp08gPInVf8Tp07wR/PM+vgZV4W+2BiyrqF+qTd/dRYefL7Brx3Gk+kkWH9XP7p0JEMzhulQnvfKnEksQ+jHunK+htlpNRDcTRY/Rar3OYnsDdRK5rLs25WZtT8TIGr8+bd8SQG/Z+G4K8eMoQpbYeVl8T4bPo3Py4kuNxghRAeKCn9bq1XGcVhF+DPIz1L1JKJvk8pVPT9xmkjjmiQ5u+iiLj76ZsZ1zsfA+XOSKnyqCYAKLET/Ow9iXKhuNCqp3INxBKx2Vj17wc1UVEcktZk78vLhgErZpIYD11XGxZKmSJEptPGP3mwn1WoZIF4XCtXQtHiQKHtTyQ58TEVVVyVt087lYuwGhQJbLoG9H7BHVHBDQtUSojH2RJ7u/abRcttK78lHSZIAozgnqrK0LZxUT0RxLVBCyFJx7XtaLE83TOBFRHdr8FYLwz1AHaZLlfrqFpfNOxkQLAiiEkSUqgMsgc1tpVP4I594kLBZl0jXiyT7yQaz9HoXiMVTHAGYoaThSqOYiW/tlsIEhinxWagKoVl7CubvpKt7IC88/y1HHLyOK7yZpDk2MRRFR7e830nP+PSSNtTRqP0JsSqnL5iXyLC8HzBUv9UNIEyAFEYLQUChZOhYFxAWDc7up1Yap1b5FUlvLWGUZYeuPGa+exrEn3EEYPkocnYTKM/u00hQn8+CWVYT2U6h+iijydjXnslmx0LTXwP4vliDw+XGh5JOGWgVUXyfLHkbkfsT8lEblRcIdYwSndJHybzB8BJHfotS5mDSFRj2jWDLU63807cN6Y+KgSF9fpv39hvd+6FJwfWCupVgqkiTexoboYZNWdXmENIDBhlDq9N2wWYdmvYryJEE4RJb+Egm288QdTwKw6iPHUE8+gmMZYj6Etb9OFIGx0KhBlmYovhcuWhJS2f0f3/IBtVy29PW6tjSp5a1nIOl1WHs9YXSKf6gmaJZNZDDTklaFyU5OFeKi8Y7N1Pv/Wo3XCIK7yLLtiDzGKTIi3d2Jfn/TImKzBmuWou4M4FrELKXUEWKM72WtJrlQ7lDdk9kpKV2LAsZ3f+UgfUZly+iothNmvenhY1gUrCFzH0P4AMWOIs75lshcimkL4YrXeyWgUPRKhBhPrFl/AnVbwP4UCe4he2aX9PW19OYHz6UQH0fmLkH0MjCn0tHZRRTnqV/NR1XnMhRF1OxXeG8THdv11i26z3X9/Ybly2WqPW7zu4jDD5AkV6PazZJjQmrjvhGthWIHVHZDlj6G6ouEwTdI5TV6ztsOCuUNJxN1vo80+V3gHcSFMyiUPKk0yVs8zUAdKgJqffw/iOGipHR2BVQr04/RA17flkH2kkD09q0riOMLqdV+nyg+ilZjO8XSf6M+tl16LnpK79uymHH3r8n0TJQLEfNe0FPpXORbOUuh1XS5UiH4iqgcQeDLiIuWZu0zRxQ5cw+8MDgo8OtW+t7T2uc9t2x8N6H9MMacQ5ZdTqmzNNEYScu/vEQDqjPrm1BVolhI3fVHZqvpz0lOqm7pd4YLdBZ/GxtciHMfwgbLKXX6WFEbh/p4Xl1TIG81cplmZmcsX+tNE1CtHhZRVTUMDkrbCAmgQ5vWIkEfzl1KHC8jLngzZJJAZVfq1UK1ewLHbCda6j/KZYqhcUhEtV8NDNA2/ettW96Jag/G/Ducnkupw4f6ZkNpNrPcRS1AkAeQmeez34cFAgvq3kCDbQdFVPv7Ta7AeYLlze/HsA51H6NQWpw7PZXqmPNWOvHk5hMiirGCpDVZt+KFt04YQBgethMuzzsfP49G8/exfJxiZ0ij5ucz/24zt67jA0BxFAqGRuNB6V158X6/de1XI+vFsXZtqkMbzwTzp8BHKRQsSRNqlQzF7NF7Fw5HAESVIFSk/jjsp3v5xF4y7S1bek/5BMh6CsUTadQBsrz17ELjtg/UCU5GYRqiEzbWW36yjELnf6HU2Ue1AvWay8eeXXCtty8cQWioVl7BZkMKMoVovvjO9NZNq1F7B4XiUq8MEsy7yepQoOoodAQk6Xdl3erXtVy2E0TbtjK9ZcP7MOHdiFnE+G5fQng7QdURhJZGbQeafjffWeXlTu3vN96r+8hK4uLdiCwiabkFbX6cDqoOY8AaIWl9Q/ou3M7goPHiWD5HcuempSTBT4iiZTTrLhfG3iZQv5ctCAJElFbyOY47/29ghPbUGLB8uYiI0/LGz7OoaxmVsRQxC91angtkqoAQxoa4YKiNv0ySfJbe1XftbSXwAvatW84jjH5CksS4dP5rL9PBL90yVAQjwUQRKk2h1fgn4Ae49Gbpu3A7+GRnMtHcOeZ+k0Kxg2Y9XRgkta1H7Vm2xUVDoWhQ5/dxJ8k2smyUNLubavWH8om1DfALjnxXxBTFMtAtGvLc5stp1HReppApInSOMPdCeEMkuevzEbLWBrKsjrH/wFGVTe3xB5Pknr3vlSPguc3HYGQZzkm+GXz2iYEvCzpVgiAgLuxJI71Z6xe0Wq+g7u9BfkQQ19DsJblijxstv5UwMGJZvyabvGScDgGSngBhNHvlllxh925PCKOAIBCM9bXOnTvGaTa34dKdILeg5hks2+XKlW/uc6cbt/g5/fdWZIi0/Qzp3u+bDgFEZxHYRSTJTLqvFSXzdUzrPfCFosE5qFZ+RdLchpoHsMGzOPu09Kx4ctqblNUymo+1ATQ/hwE+fegPFCD6awQRpKnjYM2P+0dG2wff2RXksmaVVutVWo0fgLxIy94u16ycYsKYsN200dvrEL/LceLfjtAYGaDuZD8u/ZR0GNiz47dY8j748bEqrcadtFqPEnT9X156/k35ww822xdMqIjHHSf5+Qsz5svdHwKQJe159xDgJ2vFEYYBYexF5TQdIatvIXX/R3rP+fmUC/L94JN28s86uckIUDnRm5L1IHeSq19wx4U8G6m9SqN2N1n6fem7YMPEu1QN3/1lxCdOa4JyoKg42wgQXYpzPuC/Nc8MVUtHpyVz0Kg/jkv/mqR5r/Rd+ArkXXJkxDIy0j4OpOEvnf8cJEBM5wGmFl8mLJYszkGjeRfa+qb0rn6g/QYtb4vgnzJ8RnJQ4X6uYUDjad0ofmLPiAuWuCg0av+AJhfIleddhjMN/fvRG/XWR3oApO89LUZ7lf7++W+6/UB0aPPLGHsSWTppHtUMyW3ltfEtSPAZWXfeI3rrprOx8Z9i5EriQu745CaS9EbpW7UR8qDTt2+uOd/YK7dVAEdcsgRBnXrty9Kz8nxcs0Nv2/oAEjxGFF9JswljuzLSVIkK1xNFP9XbHv2WDj14ivT5zULtHf8LBaJDm1/B2BPJUi9+hZHgsn9Egk/zRuVVji72Y+0XCEMzybM7ybyR/73UKSStX5G6P5Z1530P8pTt1buymfTdHi4MUJ/Yyl8oCUnyl3LFijUk9Ys4tvNXFEtfJG0ZauP+sBdfEJo0FnNdt1rJcO5fEUc36a2P3KXlDe+ST3cnrLpmQWhOBqVGXBCsTahVr5Ge87+sQ1v/Bx2Lvo3LSoxXUpxOQ3AKBBFLljoa1YxS54eJOu7T8kPvlw8ua+6T4s0DDMJxoLtoJVcx+sKQ3r71Hrq6PkutmvoAdUiWVi9sj1dSRE4miO/TwY3/Sfr6Mi2Xre456WLOITr48P24bJAdL/8tJ53xCIXiWf5Bj7BI5BU5IS4KtfG/lb7V17VNWzP07IeEgIZeT0d4Iu98z+Ok6ekzQhJAxOCc0qxndHZdq4MPj4nIZxXNC4hzS9jIdatfxuknCOPTadRbM3q4hIjgnKFWzeha/Bn9waYvCKL0z31OKFp+6GjEbiOMjidpHYkx4i2gIJJhQ0vizpbeFU9MVOvmCIZC1KBdjp618TNhxACSG/SHP+9iAJ3L4GTksu4aRp4ligWdvf2bIIakmdG15BJc9UoRUX8g29zAqCI0m18kaTUIggDV2Vw3Cs2GkmZf1fKLRfpwc9WqhgEVufriLdSrl4PspFiy+ZFas0BY/K7hMDwNeb1bmLtWNbJenKqKXHXRvTQqq2nWv02haAkji9+VMLPdWdURFwJwvwvA6MCcTDN7HNiToqAObb4O9MtEhfcC/rzMmfLoqipBIKTZLpLWcrn64lfnIpHY48BeL077+42iIj0rv0+QXESj8Xmy9BfEBa/N+vF7ZA8kImQZBMEiCuF5AHPRfaceILp+vRNEtVy2cvnFFelbdQOJrqDR+O8gFTq62pW2Ixy/mhEXDKm8A4DjRmY9IE37TUpfX6aq4o0b3buld+UXMen5tJq3ICYhLlrgSCRLRxCCcCIAz+xreZ9p7Dfda2uvefgXEXkauFpv3fR1mtnXiKIev7G27vJk4BDOcBDxEmt2LABHHTXrGdIB89qcsE4chrhu9eNArw49fAli/pwwvMCX95Lc+3cwB/tqTtQuzb/IWSd6yF1G+/sN6wdU8NtHWP7BL2DlTyh2HOtt4O7AxSpVf2Zfs74Z98KF0teXKSqzuaI5PAd225CM332vQ1vOwsrXyNJegjAiSd768Kc20Vb9IbIXLpkLood7zPIkp2fZSk/3U3LFimtx7npExolivxY9EHTubARHtPacCFgTmwou+Du9+cGnCcPvUOo4m0Y9ARaEODaz3u72/rbycCfh4v9FoXQV42Mpwt7CmiOKDa3Go5xqV0l3dzLb2dGMZiSeZNlK39pxkP9AdffX6FoU4HPmyW9VfxoHb0h3vjl9lnvxjKdefpuXGrni3F2sW/lnVMa+QaFoMWZycqHYANDXIbfozXIJY1ZyTJ83q2FgQKR35ZdoNv+cuGBx+TFYe/xcrwCwfGD+MqMjRXv5p8sHrKyTr+jQ5tV0LlpDdTxF1ODPsnhptj5/b8zqqsEHl/wkSeEPaNTHsDYAMTSqLUQfBqB39itvs748aqv0sm7lNtL0T4gih7GAjJP98nFgYnvJvwhM/IdQg5se1fu2qw5t/rGCzJ1mNGfobX/kDX57pfufAjpxptEs4/8DMcPFz8MGXekAAAAASUVORK5CYII=";
+let markReady = false;
+MARK.onload = () => { markReady = true; };
+
 /* ---------- world config ---------- */
-const PXPM = 7;                 // pixels per metre
-const ROUTE_LEN = 2200;         // metres to the beach
-const PLAYER_SCREEN_Y = 500;    // where the car front sits on screen
-const ROAD_L = 44, ROAD_R = 290;          // car lanes
-const BIKE_L = 290, BIKE_R = 340;         // bike lane
-const LANES = [85, 167, 249];             // lane centres
+const PXPM = 7;
+const ROUTE_LEN = 2200;
+const PLAYER_SCREEN_Y = 500;
+const ROAD_L = 44, ROAD_R = 290;
+const BIKE_L = 290, BIKE_R = 340;
+const LANES = [85, 167, 249];
 const BIKE_X = 315;
 const CAR_W = 34, CAR_H = 56;
+const BUS_W = 36, BUS_H = 108;
 
 const START_PREMIUM = 129, MIN_PREMIUM = 49, MAX_PREMIUM = 189;
+const REWARD = { car: 30, bus: 80, bike: 20, ped: 15, door: 10, parked: 30 };
+const CLAIM_COST = 25, MAX_CLAIMS = 4;
 
 const MILESTONES = [
   { d: 0,    name: "Christmas Møllers Plads" },
@@ -280,7 +308,7 @@ const MILESTONES = [
 ];
 const LIGHTS_D    = [400, 900, 1450, 1950];
 const CROSSINGS_D = [250, 650, 1150, 1700, 2050];
-const ZONES30 = [ { from: 1250, to: 1550 }, { from: 2040, to: 2200 } ]; // school zone + beach approach
+const ZONES30 = [ { from: 1250, to: 1550 }, { from: 2040, to: 2200 } ];
 
 /* ---------- state ---------- */
 let state = null;
@@ -288,10 +316,7 @@ let running = false, paused = false;
 let lastT = 0;
 
 function makeLight(d, i) {
-  return {
-    d, phase: (i * 2.7) % 9,     // stagger the cycles
-    penalized: false, waiting: false, rewarded: false,
-  };
+  return { d, phase: (i * 2.7) % 9, penalized: false, waiting: false, rewarded: false };
 }
 // red 0–3.5s, amber 3.5–4.3s, green 4.3–9s (cycle 9s)
 function lightColor(l, t) {
@@ -300,17 +325,37 @@ function lightColor(l, t) {
   if (p < 4.3) return "amber";
   return "green";
 }
-
 function makeCrossing(d, i) {
   return { d, peds: [], triggered: false, seed: i * 7 + 3 };
 }
+function makeParked() {
+  // parked cars along the left curb, some with doors waiting to swing open
+  const arr = [];
+  let d = 160;
+  let i = 0;
+  while (d < ROUTE_LEN - 160) {
+    const nearEvent = [...LIGHTS_D, ...CROSSINGS_D].some((e) => Math.abs(e - d) < 30);
+    if (!nearEvent) {
+      arr.push({
+        d, x: 56, hasDoor: i % 2 === 0, doorOpen: false, doorT: 0, triggered: false,
+        hit: false, alpha: 1, spin: 0, vx: 0,
+        color: i % 3 === 0 ? "#C9C2B8" : (i % 3 === 1 ? "#AEB8B4" : "#C7B8AE"),
+      });
+      i++;
+    }
+    d += 140 + ((i * 37) % 90);
+  }
+  return arr;
+}
 
-function reset() {
+function reset(mode) {
   state = {
-    d: 0,                    // metres travelled (front of car)
-    x: LANES[1],             // car centre x
-    speed: 0,                // km/h
+    mode: mode || "nice",
+    d: 0,
+    x: LANES[1],
+    speed: mode === "alex" ? 40 : 0,
     premium: START_PREMIUM,
+    haul: 0,
     time: 0,
     lastSafeTickD: 0,
     lastHitTime: -9,
@@ -318,7 +363,8 @@ function reset() {
     speedingWarned: false,
     bikeLaneWarned: false,
     shake: 0,
-    cars: [], bikes: [],
+    cars: [], bikes: [], bullets: [], claims: [], effects: [],
+    parked: makeParked(),
     lights: LIGHTS_D.map(makeLight),
     crossings: CROSSINGS_D.map(makeCrossing),
     nextCarD: 120, nextBikeD: 200,
@@ -326,19 +372,103 @@ function reset() {
     meltToastAt: START_PREMIUM - 10,
     finished: false,
     touchMode: false,
+    shootCooldown: 0,
+    lastShotAt: -9,
+    hornCooldown: 0,
+    hornToastShown: false,
+    claimToastShown: false,
   };
   updateHUD(true);
 }
 
+/* ---------- sound (all synthesized, no assets) ---------- */
+let AC = null, master = null, engineOsc = null, engineGain = null;
+let muted = false;
+try { muted = localStorage.getItem("fbmw_mute") === "1"; } catch (e) {}
+
+function initAudio() {
+  if (AC) return;
+  try {
+    const Ctx = window.AudioContext || window.webkitAudioContext;
+    if (!Ctx) return;
+    AC = new Ctx();
+    master = AC.createGain();
+    master.gain.value = muted ? 0 : 1;
+    master.connect(AC.destination);
+  } catch (e) { AC = null; }
+}
+function setMuted(m) {
+  muted = m;
+  try { localStorage.setItem("fbmw_mute", m ? "1" : "0"); } catch (e) {}
+  if (master) master.gain.value = m ? 0 : 1;
+  document.getElementById("muteBtn").textContent = m ? "🔇" : "🔊";
+}
+function startEngine() {
+  if (!AC || engineOsc) return;
+  engineOsc = AC.createOscillator();
+  engineOsc.type = "sawtooth";
+  const filt = AC.createBiquadFilter();
+  filt.type = "lowpass"; filt.frequency.value = 220;
+  engineGain = AC.createGain(); engineGain.gain.value = 0;
+  engineOsc.connect(filt); filt.connect(engineGain); engineGain.connect(master);
+  engineOsc.start();
+}
+function stopEngine() {
+  if (engineGain) engineGain.gain.value = 0;
+}
+function updateEngine() {
+  if (!AC || !engineOsc || !state) return;
+  if (!running || paused) { engineGain.gain.value = 0; return; }
+  engineOsc.frequency.value = 34 + state.speed * 1.15;
+  engineGain.gain.value = state.speed > 1 ? 0.028 : 0.008;
+}
+function blip(type, f0, f1, dur, vol, curve) {
+  if (!AC || muted) return;
+  try {
+    const o = AC.createOscillator(), g = AC.createGain();
+    o.type = type;
+    o.frequency.setValueAtTime(f0, AC.currentTime);
+    if (f1) o.frequency.exponentialRampToValueAtTime(Math.max(f1, 1), AC.currentTime + dur);
+    g.gain.setValueAtTime(vol, AC.currentTime);
+    g.gain.exponentialRampToValueAtTime(0.001, AC.currentTime + dur);
+    o.connect(g); g.connect(master);
+    o.start(); o.stop(AC.currentTime + dur + 0.02);
+  } catch (e) {}
+}
+function noiseBurst(dur, vol, freq) {
+  if (!AC || muted) return;
+  try {
+    const n = Math.floor(AC.sampleRate * dur);
+    const buf = AC.createBuffer(1, n, AC.sampleRate);
+    const ch = buf.getChannelData(0);
+    for (let i = 0; i < n; i++) ch[i] = (Math.random() * 2 - 1) * (1 - i / n);
+    const src = AC.createBufferSource(); src.buffer = buf;
+    const filt = AC.createBiquadFilter(); filt.type = "bandpass"; filt.frequency.value = freq || 500;
+    const g = AC.createGain(); g.gain.value = vol;
+    src.connect(filt); filt.connect(g); g.connect(master);
+    src.start();
+  } catch (e) {}
+}
+const SFX = {
+  tick:  () => blip("sine", 840, 1200, 0.09, 0.05),
+  up:    () => blip("sine", 300, 180, 0.14, 0.06),
+  thud:  () => { blip("triangle", 95, 45, 0.16, 0.14); noiseBurst(0.09, 0.06, 250); },
+  pew:   () => blip("square", 950, 260, 0.09, 0.05),
+  poof:  () => noiseBurst(0.16, 0.09, 600),
+  kr:    () => { blip("sine", 520, 520, 0.07, 0.05); setTimeout(() => blip("sine", 780, 780, 0.09, 0.05), 70); },
+  claim: () => { blip("sawtooth", 220, 90, 0.25, 0.09); },
+  horn:  () => { blip("sawtooth", 440, 440, 0.32, 0.07); blip("sawtooth", 554, 554, 0.32, 0.07); },
+};
+
 /* ---------- input ---------- */
 const keys = {};
-const touch = { left: false, right: false, brake: false };
+const touch = { left: false, right: false, brake: false, fire: false };
 
 window.addEventListener("keydown", (e) => {
   const k = e.key;
   if (["ArrowUp","ArrowDown","ArrowLeft","ArrowRight"," "].includes(k)) e.preventDefault();
   keys[k.toLowerCase()] = true;
-  if ((k === "Enter" || k === " ") && !running) startGame();
+  if ((k === "Enter" || k === " ") && !running) startGame("nice");
   if ((k === "p" || k === "P" || k === "Escape") && running) togglePause();
 });
 window.addEventListener("keyup", (e) => { keys[e.key.toLowerCase()] = false; });
@@ -348,11 +478,11 @@ function zoneFor(e) {
   const rect = canvas.getBoundingClientRect();
   const px = (e.clientX - rect.left) / rect.width;
   const py = (e.clientY - rect.top) / rect.height;
-  if (py > 0.82) return "brake";
+  if (py > 0.82) return state && state.mode === "alex" ? "fire" : "brake";
   return px < 0.5 ? "left" : "right";
 }
 function syncTouch() {
-  touch.left = touch.right = touch.brake = false;
+  touch.left = touch.right = touch.brake = touch.fire = false;
   for (const z of pointers.values()) touch[z] = true;
 }
 canvas.addEventListener("pointerdown", (e) => {
@@ -375,6 +505,7 @@ for (const ev of ["pointerup", "pointercancel", "pointerleave"]) {
 function rand(a, b) { return a + Math.random() * (b - a); }
 function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
 function screenY(dObj) { return PLAYER_SCREEN_Y - (dObj - state.d) * PXPM; }
+function fmt(n) { return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g, "."); }
 
 function currentLimit() {
   for (const z of ZONES30) if (state.d >= z.from && state.d < z.to) return 30;
@@ -383,18 +514,20 @@ function currentLimit() {
 function segmentName() {
   let name = MILESTONES[0].name;
   for (const m of MILESTONES) if (state.d >= m.d) name = m.name;
+  if (state.mode === "alex") return name;
   for (const z of ZONES30) {
     if (state.d >= z.from && state.d < z.to) return name + "  ·  30 zone";
   }
   return name;
 }
 
-/* ---------- premium ---------- */
+/* ---------- premium / haul ---------- */
 function bumpPremium(delta, msg, kind) {
   const before = state.premium;
   state.premium = clamp(state.premium + delta, MIN_PREMIUM, MAX_PREMIUM);
   if (msg) showToast(msg, kind);
-  flashPremium(delta < 0 ? "down" : "up");
+  flashMoney(delta < 0 ? "down" : "up");
+  if (delta < 0) SFX.tick(); else SFX.up();
   if (delta < 0 && state.premium <= state.meltToastAt && state.premium > MIN_PREMIUM) {
     state.meltToastAt -= 10;
     setTimeout(() => { if (running && !paused) showToast("Your premium is melting. Keep it calm.", "good"); }, 900);
@@ -405,6 +538,24 @@ function bumpPremium(delta, msg, kind) {
   if (before < MAX_PREMIUM && state.premium === MAX_PREMIUM) {
     setTimeout(() => { if (running && !paused) showToast("That's the ceiling. From here it can only get better.", ""); }, 900);
   }
+}
+function addHaul(amount, label, worldX, worldD) {
+  state.haul = Math.max(0, state.haul + amount);
+  flashMoney(amount >= 0 ? "downAlex" : "up");
+  if (label) showToast(label, amount >= 0 ? "good" : "bad");
+  if (amount > 0) { SFX.kr(); spawnFloat("+" + amount + " kr", worldX, worldD, false); }
+  else { SFX.claim(); spawnFloat(amount + " kr", worldX, worldD, true); }
+}
+
+/* ---------- effects ---------- */
+function spawnPoof(x, d) {
+  state.effects.push({ kind: "poof", x, d, t: 0 });
+  if (state.effects.length > 40) state.effects.shift();
+  SFX.poof();
+}
+function spawnFloat(txt, x, d, bad) {
+  state.effects.push({ kind: "float", txt, x, d, t: 0, bad: !!bad });
+  if (state.effects.length > 40) state.effects.shift();
 }
 
 /* ---------- toasts & HUD ---------- */
@@ -418,31 +569,43 @@ function showToast(msg, kind) {
 }
 
 const premiumEl = document.getElementById("premiumVal");
+const premiumLabelEl = document.getElementById("premiumLabel");
 const speedEl = document.getElementById("speedVal");
 const limitEl = document.getElementById("limitChip");
 const fillEl = document.getElementById("progressFill");
 const placeEl = document.getElementById("placeName");
 
 let premiumFlashTimer = null;
-function flashPremium(dir) {
-  premiumEl.style.color = dir === "down" ? "var(--down)" : "var(--up)";
+function flashMoney(dir) {
+  premiumEl.style.color = (dir === "down" || dir === "downAlex") ? "var(--down)" : "var(--up)";
   clearTimeout(premiumFlashTimer);
   premiumFlashTimer = setTimeout(() => { premiumEl.style.color = ""; }, 600);
 }
 
 function updateHUD(force) {
-  premiumEl.innerHTML = Math.round(state.premium) + " <small>kr/md</small>";
-  speedEl.textContent = Math.round(state.speed);
-  const lim = currentLimit();
-  limitEl.textContent = lim;
-  const speeding = state.speed > lim + 4;
-  limitEl.classList.toggle("pulse", speeding);
-  speedEl.parentElement.style.color = speeding ? "var(--up)" : "";
-  fillEl.style.width = clamp(state.d / ROUTE_LEN * 100, 0, 100) + "%";
+  const s = state;
+  if (s.mode === "alex") {
+    premiumLabelEl.textContent = "Your haul";
+    premiumEl.innerHTML = fmt(s.haul) + " <small>kr</small>";
+    limitEl.textContent = "∞";
+    limitEl.classList.add("alex");
+    limitEl.classList.remove("pulse");
+    speedEl.parentElement.style.color = s.speed > 110 ? "var(--deep-calm)" : "";
+  } else {
+    premiumLabelEl.textContent = "Your premium";
+    premiumEl.innerHTML = Math.round(s.premium) + " <small>kr/md</small>";
+    const lim = currentLimit();
+    limitEl.textContent = lim;
+    limitEl.classList.remove("alex");
+    const speeding = s.speed > lim + 4;
+    limitEl.classList.toggle("pulse", speeding);
+    speedEl.parentElement.style.color = speeding ? "var(--up)" : "";
+  }
+  speedEl.textContent = Math.round(s.speed);
+  fillEl.style.width = clamp(s.d / ROUTE_LEN * 100, 0, 100) + "%";
   placeEl.textContent = segmentName();
 }
 
-// milestone dots on the progress bar
 (function placeDots() {
   const bar = document.getElementById("progressBar");
   for (const m of MILESTONES) {
@@ -454,35 +617,68 @@ function updateHUD(force) {
   }
 })();
 
+/* ---------- high scores ---------- */
+function loadBest() {
+  let bp = null, bh = null;
+  try {
+    bp = localStorage.getItem("fbmw_best_premium");
+    bh = localStorage.getItem("fbmw_best_haul");
+  } catch (e) {}
+  return { bp: bp ? parseInt(bp, 10) : null, bh: bh ? parseInt(bh, 10) : null };
+}
+function saveBest() {
+  const { bp, bh } = loadBest();
+  try {
+    if (state.mode === "nice") {
+      const p = Math.round(state.premium);
+      if (bp === null || p < bp) localStorage.setItem("fbmw_best_premium", String(p));
+    } else {
+      const h = Math.round(state.haul);
+      if (bh === null || h > bh) localStorage.setItem("fbmw_best_haul", String(h));
+    }
+  } catch (e) {}
+}
+function renderBestLine() {
+  const { bp, bh } = loadBest();
+  const bits = [];
+  if (bp !== null) bits.push("Best premium: " + bp + " kr/md");
+  if (bh !== null) bits.push("Best haul: " + fmt(bh) + " kr");
+  document.getElementById("bestLine").textContent = bits.join("  ·  ");
+}
+
 /* ---------- spawning ---------- */
 function spawnAhead() {
-  const horizon = state.d + 110;
-  while (state.nextCarD < horizon) {
-    const dSpawn = state.nextCarD;
-    // keep clear of crossings and stop lines
+  const s = state;
+  const horizon = s.d + 110;
+  const alex = s.mode === "alex";
+  while (s.nextCarD < horizon) {
+    const dSpawn = s.nextCarD;
     const nearEvent = [...LIGHTS_D, ...CROSSINGS_D].some((e) => Math.abs(e - dSpawn) < 24);
     if (!nearEvent) {
       const lane = Math.floor(rand(0, 3));
-      const clash = state.cars.some((c) => c.lane === lane && Math.abs(c.d - dSpawn) < 30);
+      const clash = s.cars.some((c) => c.lane === lane && Math.abs(c.d - dSpawn) < 32);
       if (!clash) {
-        state.cars.push({
+        const isBus = Math.random() < (alex ? 0.18 : 0.1);
+        s.cars.push({
           d: dSpawn, lane, x: LANES[lane],
-          v: rand(24, 40), color: C.npc[Math.floor(rand(0, C.npc.length))],
-          hit: false, alpha: 1,
+          v: isBus ? rand(20, 28) : rand(24, 40),
+          color: isBus ? C.bus : C.npc[Math.floor(rand(0, C.npc.length))],
+          kind: isBus ? "bus" : "car",
+          hit: false, alpha: 1, spin: 0, vx: 0,
         });
       }
     }
-    state.nextCarD += rand(70, 150);
+    s.nextCarD += alex ? rand(55, 115) : rand(70, 150);
   }
-  while (state.nextBikeD < horizon) {
-    const dSpawn = state.nextBikeD;
-    state.bikes.push({
+  while (s.nextBikeD < horizon) {
+    const dSpawn = s.nextBikeD;
+    s.bikes.push({
       d: dSpawn, x: BIKE_X, v: rand(14, 19),
       swerveAt: Math.random() < 0.45 ? dSpawn + rand(20, 60) : -1,
-      swerving: 0, hit: false, alpha: 1,
+      swerving: 0, hit: false, alpha: 1, spin: 0, vx: 0,
       color: C.npc[Math.floor(rand(0, C.npc.length))],
     });
-    state.nextBikeD += rand(120, 260);
+    s.nextBikeD += alex ? rand(90, 190) : rand(120, 260);
   }
 }
 
@@ -497,28 +693,63 @@ function playerHit(cost, msg) {
   state.lastHitTime = state.time;
   state.shake = 0.28;
   state.speed = Math.max(0, state.speed * 0.35);
+  SFX.thud();
   bumpPremium(cost, msg + " +" + cost + " kr/md", "bad");
+}
+
+/* Alexander's Mode: something got hit — pay out, fling it, spawn a claim */
+const ALEX_LINES = {
+  car:   ["Bodywork. ", "Respray needed. ", "That'll buff out. "],
+  bus:   ["That was the 5C. ", "Movia will call. "],
+  bike:  ["Cyclist down. ", "Bike lane cleared. "],
+  ped:   ["Pedestrian... acquired. ", "He's fine. Probably. "],
+  door:  ["Door's off. ", "Ding dong. "],
+  parked:["It was parked. ", "No witnesses. "],
+};
+function alexReward(kind, obj, shot) {
+  const amount = REWARD[kind] || 15;
+  const lines = ALEX_LINES[kind] || [""];
+  const line = lines[Math.floor(rand(0, lines.length))];
+  addHaul(amount, line + "+" + amount + " kr", obj.x, obj.d);
+  spawnPoof(obj.x, obj.d);
+  obj.hit = true;
+  obj.vx = (obj.x < state.x ? -1 : 1) * rand(40, 120) * (shot ? 0.6 : 1);
+  obj.spin = rand(3, 8) * (Math.random() < 0.5 ? -1 : 1);
+  // a claim is filed. it will come for you.
+  if (state.claims.length < MAX_CLAIMS) {
+    state.claims.push({
+      d: state.d - rand(18, 30),
+      x: clamp(state.x + rand(-70, 70), ROAD_L + 12, BIKE_R - 12),
+      t: 0, gone: false,
+    });
+    if (!state.claimToastShown) {
+      state.claimToastShown = true;
+      setTimeout(() => { if (running && !paused) showToast("A claim has been filed. It's gaining on you.", ""); }, 1100);
+    }
+  }
 }
 
 /* ---------- update ---------- */
 function update(dt) {
   const s = state;
   s.time += dt;
+  const alex = s.mode === "alex";
 
   /* --- speed control --- */
   const lim = currentLimit();
+  const maxSpeed = alex ? 160 : 82;
   const gas = keys["arrowup"] || keys["w"];
-  const brake = keys["arrowdown"] || keys["s"] || touch.brake;
+  const brake = (keys["arrowdown"] || keys["s"] || touch.brake) && !alex ? true : (keys["arrowdown"] || keys["s"]);
   if (s.touchMode && !gas) {
-    // gentle auto-cruise for touch players
-    const target = brake ? 0 : Math.min(lim, 48);
-    s.speed += clamp(target - s.speed, -55 * dt, 26 * dt);
+    const target = touch.brake && !alex ? 0 : (alex ? 115 : Math.min(lim, 48));
+    s.speed += clamp(target - s.speed, -55 * dt, (alex ? 45 : 26) * dt);
   } else {
-    if (gas) s.speed += 30 * dt;
-    else s.speed -= 7 * dt;
-    if (brake) s.speed -= 62 * dt;
+    if (gas) s.speed += (alex ? 55 : 30) * dt;
+    else s.speed -= (alex ? 3 : 7) * dt;
+    if (brake) s.speed -= (alex ? 70 : 62) * dt;
   }
-  s.speed = clamp(s.speed, 0, 82);
+  if (alex && !s.touchMode && !gas && !brake) s.speed += 20 * dt; // the car WANTS to go
+  s.speed = clamp(s.speed, 0, maxSpeed);
 
   /* --- steering --- */
   const left = keys["arrowleft"] || keys["a"] || touch.left;
@@ -527,98 +758,146 @@ function update(dt) {
   const steerSpeed = 150 + s.speed * 1.6;
   s.x = clamp(s.x + steer * steerSpeed * dt, ROAD_L + CAR_W / 2 + 2, BIKE_R - CAR_W / 2 - 2);
 
-  // bike-lane nudge (warning only, once per visit)
   const inBikeLane = s.x + CAR_W / 2 > BIKE_L + 8;
-  if (inBikeLane && !s.bikeLaneWarned && s.speed > 8) {
-    s.bikeLaneWarned = true;
-    showToast("You're in the bike lane. This is Copenhagen.");
-  } else if (!inBikeLane) s.bikeLaneWarned = false;
+  if (!alex) {
+    if (inBikeLane && !s.bikeLaneWarned && s.speed > 8) {
+      s.bikeLaneWarned = true;
+      showToast("You're in the bike lane. This is Copenhagen.");
+    } else if (!inBikeLane) s.bikeLaneWarned = false;
+  }
 
   /* --- move forward --- */
   const prevD = s.d;
   s.d += (s.speed / 3.6) * dt;
 
-  /* --- safe-driving tick --- */
-  const safeNow = s.speed <= lim + 2 && s.speed >= 14 && (s.time - s.lastHitTime) > 3;
-  if (safeNow) {
-    if (s.d - s.lastSafeTickD >= 28) {
-      s.lastSafeTickD = s.d;
-      bumpPremium(-1, null);
+  /* --- nice mode: premium economy --- */
+  if (!alex) {
+    const safeNow = s.speed <= lim + 2 && s.speed >= 14 && (s.time - s.lastHitTime) > 3;
+    if (safeNow) {
+      if (s.d - s.lastSafeTickD >= 28) {
+        s.lastSafeTickD = s.d;
+        bumpPremium(-1, null);
+      }
+    } else {
+      s.lastSafeTickD = Math.max(s.lastSafeTickD, s.d - 20);
     }
-  } else {
-    s.lastSafeTickD = Math.max(s.lastSafeTickD, s.d - 20);
-  }
-
-  /* --- speeding penalty --- */
-  if (s.speed > lim + 5) {
-    s.speedingTimer += dt;
-    if (!s.speedingWarned) {
-      s.speedingWarned = true;
-      showToast(lim === 30 ? "School zone. 30 means 30." : "Easy now — 50 means 50.", "bad");
-    }
-    if (s.speedingTimer >= 2) {
+    if (s.speed > lim + 5) {
+      s.speedingTimer += dt;
+      if (!s.speedingWarned) {
+        s.speedingWarned = true;
+        showToast(lim === 30 ? "School zone. 30 means 30." : "Easy now — 50 means 50.", "bad");
+      }
+      if (s.speedingTimer >= 2) {
+        s.speedingTimer = 0;
+        bumpPremium(+1, null);
+      }
+    } else {
       s.speedingTimer = 0;
-      bumpPremium(+1, null);
+      if (s.speed < lim + 2) s.speedingWarned = false;
     }
-  } else {
-    s.speedingTimer = 0;
-    if (s.speed < lim + 2) s.speedingWarned = false;
   }
 
-  /* --- spawn & move NPC cars --- */
+  /* --- shooting (Alexander's Mode) --- */
+  s.shootCooldown = Math.max(0, s.shootCooldown - dt);
+  if (alex && (keys[" "] || keys["j"] || touch.fire) && s.shootCooldown === 0) {
+    s.shootCooldown = 0.18;
+    s.lastShotAt = s.time;
+    s.bullets.push({ x: s.x - CAR_W / 2 - 6, d: s.d + 3, dead: false });
+    SFX.pew();
+  }
+  for (const b of s.bullets) {
+    if (b.dead) continue;
+    b.d += ((s.speed + 150) / 3.6) * dt;
+    if (b.d > s.d + 130) b.dead = true;
+  }
+  s.bullets = s.bullets.filter((b) => !b.dead);
+
+  /* --- horn --- */
+  s.hornCooldown = Math.max(0, s.hornCooldown - dt);
+  if (keys["h"] && s.hornCooldown === 0) {
+    s.hornCooldown = 0.9;
+    SFX.horn();
+    let scattered = false;
+    for (const cr of s.crossings) {
+      if (Math.abs(cr.d - s.d) > 90) continue;
+      for (const p of cr.peds) {
+        if (!p.done && !p.hit) { p.v *= 1.8; scattered = true; }
+      }
+    }
+    if (!s.hornToastShown) {
+      s.hornToastShown = true;
+      showToast(scattered ? "Very Copenhagen of you." : "Honk. The street shrugs.");
+    }
+  }
+
+  /* --- spawn & move NPC cars/buses --- */
   spawnAhead();
   for (const c of s.cars) {
-    if (c.hit) { c.alpha -= dt * 1.6; continue; }
+    if (c.hit) { c.alpha -= dt * 1.4; c.x += c.vx * dt; c.d += (c.v / 3.6) * dt * 0.3; continue; }
     let v = c.v;
-    // stop at red lights
+    const lenM = (c.kind === "bus" ? BUS_H : CAR_H) / PXPM / 2;
     for (const l of s.lights) {
       const col = lightColor(l, s.time);
-      const gap = l.d - (c.d + 2.2);
+      const gap = l.d - (c.d + lenM);
       if ((col === "red" || col === "amber") && gap > -1 && gap < 16) { v = 0; break; }
     }
-    // follow the car ahead in same lane
     for (const o of s.cars) {
       if (o === c || o.lane !== c.lane || o.hit) continue;
       const gap = o.d - c.d;
-      if (gap > 0 && gap < 9) { v = Math.min(v, 0); break; }
-      if (gap > 0 && gap < 16) { v = Math.min(v, o.v); break; }
+      const need = lenM + (o.kind === "bus" ? BUS_H : CAR_H) / PXPM / 2;
+      if (gap > 0 && gap < need + 1) { v = Math.min(v, 0); break; }
+      if (gap > 0 && gap < need + 8) { v = Math.min(v, o.v); break; }
     }
     c.d += (v / 3.6) * dt;
   }
-  s.cars = s.cars.filter((c) => c.alpha > 0 && c.d > s.d - 30);
+  s.cars = s.cars.filter((c) => c.alpha > 0 && c.d > s.d - 35);
 
-  /* --- move bikes --- */
+  /* --- bikes --- */
   for (const b of s.bikes) {
-    if (b.hit) { b.alpha -= dt * 1.6; continue; }
+    if (b.hit) { b.alpha -= dt * 1.4; b.x += b.vx * dt; continue; }
     b.d += (b.v / 3.6) * dt;
     if (b.swerveAt > 0 && b.d > b.swerveAt) { b.swerving = 1.6; b.swerveAt = -1; }
     if (b.swerving > 0) {
       b.swerving -= dt;
-      b.x += ((BIKE_L - 18) - b.x) * 2.2 * dt;   // drift toward car lane edge
+      b.x += ((BIKE_L - 18) - b.x) * 2.2 * dt;
     } else {
       b.x += (BIKE_X - b.x) * 2.2 * dt;
     }
   }
-  s.bikes = s.bikes.filter((b) => b.alpha > 0 && b.d > s.d - 30);
+  s.bikes = s.bikes.filter((b) => b.alpha > 0 && b.d > s.d - 35);
 
-  /* --- traffic lights: penalties & patience --- */
-  for (const l of s.lights) {
-    const col = lightColor(l, s.time);
-    const distToLine = l.d - s.d;
-    if (!l.penalized && col === "red" && prevD < l.d && s.d >= l.d && s.speed > 6) {
-      l.penalized = true;
-      bumpPremium(+6, "That light was red. +6 kr/md", "bad");
+  /* --- parked cars & doors --- */
+  for (const p of s.parked) {
+    if (p.hit) { p.alpha -= dt * 1.4; p.x += p.vx * dt; continue; }
+    const dist = p.d - s.d;
+    if (p.hasDoor && !p.triggered && dist < 55 && dist > 0 && s.x < 120) {
+      p.triggered = true;
+      if (Math.random() < 0.55) p.doorOpen = true;
     }
-    if (col === "red" && !l.rewarded && distToLine > 0 && distToLine < 14 && s.speed < 3) {
-      l.waiting = true;
-    }
-    if (l.waiting && !l.rewarded && col === "green") {
-      l.rewarded = true; l.waiting = false;
-      bumpPremium(-2, "Patience pays. −2 kr/md", "good");
+    if (p.doorOpen && p.doorT < 1) p.doorT = Math.min(1, p.doorT + dt * 3.5);
+  }
+  state.parked = s.parked.filter((p) => p.alpha > 0);
+
+  /* --- traffic lights (nice mode only penalties) --- */
+  if (!alex) {
+    for (const l of s.lights) {
+      const col = lightColor(l, s.time);
+      const distToLine = l.d - s.d;
+      if (!l.penalized && col === "red" && prevD < l.d && s.d >= l.d && s.speed > 6) {
+        l.penalized = true;
+        bumpPremium(+6, "That light was red. That's a claim waiting. +6 kr/md", "bad");
+      }
+      if (col === "red" && !l.rewarded && distToLine > 0 && distToLine < 14 && s.speed < 3) {
+        l.waiting = true;
+      }
+      if (l.waiting && !l.rewarded && col === "green") {
+        l.rewarded = true; l.waiting = false;
+        bumpPremium(-2, "Patience pays. −2 kr/md", "good");
+      }
     }
   }
 
-  /* --- pedestrians at crossings --- */
+  /* --- pedestrians --- */
   for (const cr of s.crossings) {
     const dist = cr.d - s.d;
     if (!cr.triggered && dist < 110 && dist > 0) {
@@ -631,12 +910,13 @@ function update(dt) {
           dir: fromLeft ? 1 : -1,
           v: rand(5.5, 7.5) * PXPM,
           delay: i * rand(0.4, 0.9),
-          done: false, hit: false, alpha: 1, walk: 0,
+          done: false, hit: false, alpha: 1, walk: 0, vx: 0, d: cr.d,
         });
       }
     }
     for (const p of cr.peds) {
-      if (p.done || p.hit) { if (p.hit) p.alpha = Math.max(0, p.alpha - dt * 1.6); continue; }
+      if (p.hit) { p.alpha = Math.max(0, p.alpha - dt * 1.4); p.x += p.vx * dt; continue; }
+      if (p.done) continue;
       if (p.delay > 0) { p.delay -= dt; continue; }
       p.x += p.dir * p.v * dt;
       p.walk += dt * 8;
@@ -644,22 +924,89 @@ function update(dt) {
     }
   }
 
-  /* --- collisions (screen space, matching drawn positions) --- */
+  /* --- claims chase you (Alexander's Mode) --- */
+  if (alex) {
+    for (const cl of s.claims) {
+      if (cl.gone) continue;
+      cl.t += dt;
+      const chase = Math.min(s.speed + 14, 135);
+      cl.d += (chase / 3.6) * dt;
+      cl.x += clamp(s.x - cl.x, -60 * dt, 60 * dt);
+      const cy = screenY(cl.d);
+      if (overlaps(s.x, PLAYER_SCREEN_Y + CAR_H / 2, CAR_W, CAR_H, cl.x, cy, 18, 16, 2)) {
+        cl.gone = true;
+        s.shake = 0.22;
+        addHaul(-CLAIM_COST, "A claim caught up with you. −" + CLAIM_COST + " kr", cl.x, cl.d);
+      }
+      if (cl.d > s.d + 20 || cl.t > 30) cl.gone = true;
+    }
+    s.claims = s.claims.filter((c) => !c.gone);
+  }
+
+  /* --- collisions: player & bullets vs world --- */
   const pcx = s.x, pcy = PLAYER_SCREEN_Y + CAR_H / 2;
+
+  // bullets first
+  if (alex) {
+    for (const b of s.bullets) {
+      if (b.dead) continue;
+      const by = screenY(b.d);
+      let hitSomething = false;
+      for (const c of s.cars) {
+        if (c.hit) continue;
+        const ch = c.kind === "bus" ? BUS_H : CAR_H;
+        if (overlaps(b.x, by, 6, 10, c.x, screenY(c.d), CAR_W, ch, 4)) {
+          alexReward(c.kind, c, true); hitSomething = true; break;
+        }
+      }
+      if (!hitSomething) for (const k of s.bikes) {
+        if (k.hit) continue;
+        if (overlaps(b.x, by, 6, 10, k.x, screenY(k.d), 16, 30, 2)) {
+          alexReward("bike", k, true); hitSomething = true; break;
+        }
+      }
+      if (!hitSomething) for (const cr of s.crossings) {
+        const cy = screenY(cr.d);
+        if (cy < -60 || cy > H + 60) continue;
+        for (const p of cr.peds) {
+          if (p.hit || p.done || p.delay > 0) continue;
+          if (p.x > ROAD_L - 10 && p.x < BIKE_R + 10 &&
+              overlaps(b.x, by, 6, 10, p.x, cy, 16, 16, 2)) {
+            alexReward("ped", p, true); hitSomething = true; break;
+          }
+        }
+        if (hitSomething) break;
+      }
+      if (!hitSomething) for (const pk of s.parked) {
+        if (pk.hit) continue;
+        if (overlaps(b.x, by, 6, 10, pk.x, screenY(pk.d), 28, 50, 4)) {
+          alexReward("parked", pk, true); hitSomething = true; break;
+        }
+      }
+      if (hitSomething) b.dead = true;
+    }
+    s.bullets = s.bullets.filter((b) => !b.dead);
+  }
+
+  // player body
   for (const c of s.cars) {
     if (c.hit) continue;
+    const ch = c.kind === "bus" ? BUS_H : CAR_H;
     const cy = screenY(c.d);
-    if (overlaps(pcx, pcy, CAR_W, CAR_H, c.x, cy, CAR_W, CAR_H, 10)) {
-      c.hit = true;
-      playerHit(9, "Fender bender. Breathe.");
+    if (overlaps(pcx, pcy, CAR_W, CAR_H, c.x, cy, CAR_W, ch, 10)) {
+      if (alex) { alexReward(c.kind, c, false); s.speed *= c.kind === "bus" ? 0.7 : 0.88; s.shake = 0.18; SFX.thud(); }
+      else {
+        c.hit = true; c.vx = (c.x < pcx ? -1 : 1) * 30;
+        playerHit(c.kind === "bus" ? 12 : 9, c.kind === "bus" ? "You bumped the 5C. That's a claim." : "Fender bender. That's a claim.");
+      }
     }
   }
   for (const b of s.bikes) {
     if (b.hit) continue;
     const by = screenY(b.d);
     if (overlaps(pcx, pcy, CAR_W, CAR_H, b.x, by, 16, 30, 6)) {
-      b.hit = true;
-      playerHit(12, "Close call with a cyclist.");
+      if (alex) { alexReward("bike", b, false); s.shake = 0.12; }
+      else { b.hit = true; b.vx = 40; playerHit(12, "Close call with a cyclist. That's a claim."); }
     }
   }
   for (const cr of s.crossings) {
@@ -669,20 +1016,40 @@ function update(dt) {
       if (p.hit || p.done || p.delay > 0) continue;
       if (p.x > ROAD_L - 6 && p.x < BIKE_R + 6 &&
           overlaps(pcx, pcy, CAR_W, CAR_H, p.x, cy, 18, 18, 4)) {
-        p.hit = true;
-        playerHit(15, "Way too close to a pedestrian.");
+        if (alex) { alexReward("ped", p, false); s.shake = 0.1; }
+        else { p.hit = true; p.vx = p.dir * 50; playerHit(15, "Way too close to a pedestrian."); }
       }
     }
   }
+  for (const pk of s.parked) {
+    if (pk.hit) continue;
+    const py = screenY(pk.d);
+    // door hitbox
+    if (pk.doorOpen && pk.doorT > 0.5) {
+      const doorX = pk.x + 14 + 8, doorY = py - 18;
+      if (overlaps(pcx, pcy, CAR_W, CAR_H, doorX, doorY, 16, 12, 2)) {
+        pk.doorOpen = false;
+        if (alex) { addHaul(REWARD.door, ALEX_LINES.door[0] + "+" + REWARD.door + " kr", doorX, pk.d); spawnPoof(doorX, pk.d); }
+        else playerHit(7, "Dooring. That's a claim.");
+      }
+    }
+    if (overlaps(pcx, pcy, CAR_W, CAR_H, pk.x, py, 28, 50, 8)) {
+      if (alex) { alexReward("parked", pk, false); s.speed *= 0.85; s.shake = 0.15; SFX.thud(); }
+      else { pk.hit = true; pk.vx = -25; playerHit(9, "Parked car. That's a claim."); }
+    }
+  }
+
+  /* --- effects --- */
+  for (const fx of s.effects) fx.t += dt;
+  s.effects = s.effects.filter((fx) => fx.t < (fx.kind === "float" ? 1.1 : 0.6));
 
   /* --- milestones --- */
   if (s.milestoneIdx < MILESTONES.length - 1 && s.d >= MILESTONES[s.milestoneIdx + 1].d) {
     s.milestoneIdx++;
     const m = MILESTONES[s.milestoneIdx];
-    if (m.d < ROUTE_LEN) showToast(m.name + " — keep it smooth.");
+    if (m.d < ROUTE_LEN) showToast(alex ? m.name + ". Still at large." : m.name + " — keep it smooth.");
   }
 
-  /* --- shake decay --- */
   s.shake = Math.max(0, s.shake - dt);
 
   /* --- finish --- */
@@ -699,23 +1066,18 @@ function seededRand(n) { const x = Math.sin(n * 127.1) * 43758.5453; return x - 
 
 function drawBackground() {
   const s = state;
-  // sidewalks
   ctx.fillStyle = C.sidewalk;
   ctx.fillRect(0, 0, ROAD_L, H);
   ctx.fillRect(BIKE_R, 0, W - BIKE_R, H);
-  // road
   ctx.fillStyle = C.asphalt;
   ctx.fillRect(ROAD_L, 0, ROAD_R - ROAD_L, H);
-  // bike lane
   ctx.fillStyle = C.bikeLane;
   ctx.fillRect(BIKE_L, 0, BIKE_R - BIKE_L, H);
-  // curbs
   ctx.fillStyle = C.curb;
   ctx.fillRect(ROAD_L - 3, 0, 3, H);
   ctx.fillRect(BIKE_R, 0, 3, H);
   ctx.fillRect(BIKE_L - 2, 0, 2, H);
 
-  // beach takes over near the end
   const beachStart = 2080;
   if (s.d > beachStart - 95) {
     const yTop = screenY(ROUTE_LEN + 40);
@@ -725,7 +1087,6 @@ function drawBackground() {
     ctx.fillStyle = C.water;
     const yWater = screenY(beachStart + 55);
     ctx.fillRect(BIKE_R + 34, Math.max(-50, yTop), W - BIKE_R, Math.max(0, yWater - yTop));
-    // swans
     for (let i = 0; i < 3; i++) {
       const sy = screenY(beachStart + 62 + i * 14);
       if (sy > -20 && sy < H + 20) {
@@ -737,46 +1098,40 @@ function drawBackground() {
     }
   }
 
-  // buildings + trees on sidewalks (deterministic per segment)
-  const segLen = 34; // metres per block
+  const segLen = 34;
   const first = Math.floor((s.d - 25) / segLen);
   const bcolors = [C.dirtyPink, "#E7E0D2", "#DDE4E0", "#EAD9CE", "#E4E0EA"];
   for (let i = first; i < first + 5; i++) {
     if (i < 0) continue;
     const dSeg = i * segLen;
-    if (dSeg > 2050) continue; // beach zone: no buildings on right, keep left
+    if (dSeg > 2050) continue;
     const y = screenY(dSeg + segLen);
     const hpx = segLen * PXPM - 10;
-    // left building
     const r1 = seededRand(i * 2 + 1);
     ctx.fillStyle = bcolors[Math.floor(r1 * bcolors.length)];
     ctx.fillRect(0, y, 26 + r1 * 8, hpx);
-    // right building
     if (dSeg < 2020) {
       const r2 = seededRand(i * 2 + 2);
       ctx.fillStyle = bcolors[Math.floor(r2 * bcolors.length)];
       ctx.fillRect(W - (26 + r2 * 8), y, 26 + r2 * 8, hpx);
     }
-    // trees
     const ty = screenY(dSeg + segLen * 0.5);
     ctx.fillStyle = "#9DB79A";
     if (seededRand(i * 3 + 5) > 0.35) { ctx.beginPath(); ctx.arc(36, ty, 7, 0, Math.PI * 2); ctx.fill(); }
     if (seededRand(i * 3 + 6) > 0.35 && dSeg < 2020) { ctx.beginPath(); ctx.arc(BIKE_R + 14, ty + 40, 7, 0, Math.PI * 2); ctx.fill(); }
   }
 
-  // lane dashes
   ctx.strokeStyle = "rgba(255,255,255,.85)";
   ctx.lineWidth = 3;
   ctx.setLineDash([16, 22]);
   const dashOffset = (state.d * PXPM) % 38;
-  ctx.lineDashOffset = -PLAYER_SCREEN_Y - dashOffset; // scroll with world
+  ctx.lineDashOffset = -PLAYER_SCREEN_Y - dashOffset;
   for (const lx of [126, 208]) {
     ctx.beginPath(); ctx.moveTo(lx, -20); ctx.lineTo(lx, H + 20); ctx.stroke();
   }
   ctx.setLineDash([]);
   ctx.lineDashOffset = 0;
 
-  // bike symbols in bike lane
   for (let i = first; i < first + 5; i++) {
     const dSym = i * segLen + 10;
     const y = screenY(dSym);
@@ -800,7 +1155,6 @@ function drawCrossings() {
 }
 
 function drawSigns() {
-  // speed-limit signs at zone boundaries
   const signs = [];
   for (const z of ZONES30) {
     signs.push([z.from, "30"]);
@@ -825,10 +1179,8 @@ function drawLights() {
   for (const l of state.lights) {
     const y = screenY(l.d);
     if (y < -60 || y > H + 60) continue;
-    // stop line
     ctx.fillStyle = "rgba(255,255,255,.9)";
     ctx.fillRect(ROAD_L + 4, y + 4, ROAD_R - ROAD_L - 8, 5);
-    // pole + head on right sidewalk
     const x = BIKE_R + 13;
     ctx.strokeStyle = "#4A4741"; ctx.lineWidth = 4;
     ctx.beginPath(); ctx.moveTo(x, y + 4); ctx.lineTo(x, y - 26); ctx.stroke();
@@ -841,7 +1193,6 @@ function drawLights() {
       ctx.fillStyle = k === col ? cols[k] : "rgba(255,255,255,.16)";
       ctx.beginPath(); ctx.arc(x, ys[k], 3.6, 0, Math.PI * 2); ctx.fill();
     }
-    // small duplicate light drawn over the road for readability
     ctx.fillStyle = "#3A3833";
     ctx.beginPath(); ctx.roundRect(ROAD_L + 8, y - 20, 12, 12, 4); ctx.fill();
     ctx.fillStyle = cols[col];
@@ -853,32 +1204,54 @@ function drawCar(x, y, w, h, body, opts) {
   const o = opts || {};
   ctx.save();
   ctx.globalAlpha = o.alpha != null ? o.alpha : 1;
-  // shadow
+  if (o.spin) { ctx.translate(x, y); ctx.rotate(o.spinAngle || 0); ctx.translate(-x, -y); }
   ctx.fillStyle = "rgba(45,0,17,.14)";
   ctx.beginPath(); ctx.roundRect(x - w / 2 + 2, y - h / 2 + 4, w, h, 12); ctx.fill();
-  // body
   ctx.fillStyle = body;
-  ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, 12); ctx.fill();
-  // windshield / roof
+  ctx.beginPath(); ctx.roundRect(x - w / 2, y - h / 2, w, h, o.bus ? 8 : 12); ctx.fill();
   ctx.fillStyle = o.roof || C.windshield;
-  ctx.beginPath(); ctx.roundRect(x - w / 2 + 5, y - h / 2 + 13, w - 10, h * 0.44, 7); ctx.fill();
+  if (o.bus) {
+    ctx.beginPath(); ctx.roundRect(x - w / 2 + 5, y - h / 2 + 10, w - 10, 14, 5); ctx.fill();
+    ctx.beginPath(); ctx.roundRect(x - w / 2 + 5, y + h / 2 - 24, w - 10, 14, 5); ctx.fill();
+    ctx.fillStyle = "rgba(45,0,17,.55)";
+    ctx.font = "800 9px Inter, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("5C", x, y);
+  } else {
+    ctx.beginPath(); ctx.roundRect(x - w / 2 + 5, y - h / 2 + 13, w - 10, h * 0.44, 7); ctx.fill();
+  }
   if (o.player) {
-    // kidney grille nod + headlights (front = top)
     ctx.fillStyle = "#C9C4BD";
     ctx.beginPath(); ctx.roundRect(x - 7.5, y - h / 2 + 2.5, 6, 4.5, 2); ctx.fill();
     ctx.beginPath(); ctx.roundRect(x + 1.5, y - h / 2 + 2.5, 6, 4.5, 2); ctx.fill();
     ctx.fillStyle = "#FFF3C9";
     ctx.beginPath(); ctx.roundRect(x - w / 2 + 3, y - h / 2 + 1.5, 7, 3.5, 1.5); ctx.fill();
     ctx.beginPath(); ctx.roundRect(x + w / 2 - 10, y - h / 2 + 1.5, 7, 3.5, 1.5); ctx.fill();
-    // pink mirrors
     ctx.fillStyle = C.deepCalm;
     ctx.fillRect(x - w / 2 - 3.6, y - h / 2 + 14, 3.6, 7);
     ctx.fillRect(x + w / 2, y - h / 2 + 14, 3.6, 7);
-    // brake glow
     if (o.braking) {
       ctx.fillStyle = C.deepCalm;
       ctx.beginPath(); ctx.roundRect(x - w / 2 + 4, y + h / 2 - 5, 9, 3.4, 1.6); ctx.fill();
       ctx.beginPath(); ctx.roundRect(x + w / 2 - 13, y + h / 2 - 5, 9, 3.4, 1.6); ctx.fill();
+    }
+    // the pink ribbon mark, roof-mounted (logo only, no text)
+    if (markReady) {
+      const mw = 9, mh = mw * (MARK.height / MARK.width);
+      ctx.drawImage(MARK, x - mw / 2, y - h / 2 + 13 + (h * 0.44 - mh) / 2, mw, mh);
+    }
+    // Alexander, hanging out the window
+    if (o.alex) {
+      const gx = x - w / 2 - 5, gy = y - 4;
+      ctx.fillStyle = "#3A3833";
+      ctx.fillRect(gx - 1.6, gy - 15, 3.2, 9);            // the piece
+      ctx.fillStyle = "#E8C39E";
+      ctx.beginPath(); ctx.arc(gx, gy, 4.2, 0, Math.PI * 2); ctx.fill();  // head
+      ctx.fillStyle = "#2D0011";
+      ctx.beginPath(); ctx.roundRect(gx - 3.5, gy + 3, 7, 10, 3); ctx.fill(); // torso out the window
+      if (o.flash) {
+        ctx.fillStyle = "#FFE9A8";
+        ctx.beginPath(); ctx.arc(gx, gy - 17, 4.5, 0, Math.PI * 2); ctx.fill();
+      }
     }
   }
   ctx.restore();
@@ -889,12 +1262,12 @@ function drawBike(b) {
   if (y < -40 || y > H + 40) return;
   ctx.save();
   ctx.globalAlpha = b.alpha;
+  if (b.hit) { ctx.translate(b.x, y); ctx.rotate(b.spin * (1 - b.alpha)); ctx.translate(-b.x, -y); }
   ctx.strokeStyle = "#4A4741"; ctx.lineWidth = 3; ctx.lineCap = "round";
-  ctx.beginPath(); ctx.moveTo(b.x, y + 11); ctx.lineTo(b.x, y - 11); ctx.stroke(); // frame line
+  ctx.beginPath(); ctx.moveTo(b.x, y + 11); ctx.lineTo(b.x, y - 11); ctx.stroke();
   ctx.fillStyle = "#4A4741";
   ctx.beginPath(); ctx.ellipse(b.x, y + 11, 3, 5, 0, 0, Math.PI * 2); ctx.fill();
   ctx.beginPath(); ctx.ellipse(b.x, y - 11, 3, 5, 0, 0, Math.PI * 2); ctx.fill();
-  // rider
   ctx.fillStyle = b.color;
   ctx.beginPath(); ctx.ellipse(b.x, y + 2, 6.5, 9, 0, 0, Math.PI * 2); ctx.fill();
   ctx.fillStyle = "#E8C39E";
@@ -911,6 +1284,7 @@ function drawPeds() {
       ctx.save();
       ctx.globalAlpha = p.alpha;
       const bob = Math.sin(p.walk) * 1.4;
+      if (p.hit) { ctx.translate(p.x, y); ctx.rotate((1 - p.alpha) * 5); ctx.translate(-p.x, -y); }
       ctx.fillStyle = "rgba(45,0,17,.12)";
       ctx.beginPath(); ctx.ellipse(p.x, y + 8, 7, 3, 0, 0, Math.PI * 2); ctx.fill();
       ctx.fillStyle = C.npc[(Math.abs(Math.round(p.x)) + cr.seed) % C.npc.length];
@@ -918,6 +1292,86 @@ function drawPeds() {
       ctx.fillStyle = "#E8C39E";
       ctx.beginPath(); ctx.arc(p.x, y - 8 + bob, 4.6, 0, Math.PI * 2); ctx.fill();
       ctx.restore();
+    }
+  }
+}
+
+function drawParked() {
+  for (const p of state.parked) {
+    const y = screenY(p.d);
+    if (y < -60 || y > H + 60) continue;
+    ctx.save();
+    ctx.globalAlpha = p.alpha;
+    if (p.hit) { ctx.translate(p.x, y); ctx.rotate(p.spin ? p.spin * (1 - p.alpha) * 0.4 : (1 - p.alpha)); ctx.translate(-p.x, -y); }
+    ctx.fillStyle = "rgba(45,0,17,.10)";
+    ctx.beginPath(); ctx.roundRect(p.x - 14 + 2, y - 25 + 3, 28, 50, 10); ctx.fill();
+    ctx.fillStyle = p.color;
+    ctx.beginPath(); ctx.roundRect(p.x - 14, y - 25, 28, 50, 10); ctx.fill();
+    ctx.fillStyle = "rgba(45,0,17,.18)";
+    ctx.beginPath(); ctx.roundRect(p.x - 10, y - 13, 20, 22, 6); ctx.fill();
+    if (p.doorOpen && p.doorT > 0) {
+      const ext = 14 * p.doorT;
+      ctx.fillStyle = p.color;
+      ctx.beginPath(); ctx.roundRect(p.x + 14, y - 22, ext, 5, 2); ctx.fill();
+      ctx.strokeStyle = "rgba(45,0,17,.3)"; ctx.lineWidth = 1;
+      ctx.strokeRect(p.x + 14, y - 22, ext, 5);
+    }
+    ctx.restore();
+  }
+}
+
+function drawBullets() {
+  for (const b of state.bullets) {
+    const y = screenY(b.d);
+    if (y < -20 || y > H + 20) continue;
+    ctx.fillStyle = C.grounded;
+    ctx.fillRect(b.x - 1.5, y - 5, 3, 8);
+    ctx.fillStyle = "rgba(255,172,202,.5)";
+    ctx.fillRect(b.x - 1.5, y + 3, 3, 6);
+  }
+}
+
+function drawClaims() {
+  for (const cl of state.claims) {
+    const y = screenY(cl.d);
+    if (y < -30 || y > H + 30) continue;
+    ctx.save();
+    ctx.translate(cl.x, y);
+    ctx.rotate(Math.sin(state.time * 6 + cl.x) * 0.12);
+    ctx.fillStyle = "rgba(45,0,17,.15)";
+    ctx.beginPath(); ctx.roundRect(-8 + 1.5, -6 + 2, 16, 12, 2); ctx.fill();
+    ctx.fillStyle = "#FFFFFF";
+    ctx.beginPath(); ctx.roundRect(-8, -6, 16, 12, 2); ctx.fill();
+    ctx.strokeStyle = "rgba(45,0,17,.25)"; ctx.lineWidth = 1;
+    ctx.strokeRect(-8, -6, 16, 12);
+    ctx.fillStyle = "#C2244F";
+    ctx.font = "800 9px Inter, sans-serif"; ctx.textAlign = "center"; ctx.textBaseline = "middle";
+    ctx.fillText("!", 0, 0.5);
+    ctx.restore();
+  }
+}
+
+function drawEffects() {
+  for (const fx of state.effects) {
+    const y = screenY(fx.d);
+    if (y < -40 || y > H + 40) continue;
+    if (fx.kind === "poof") {
+      const p = fx.t / 0.6;
+      ctx.globalAlpha = 0.7 * (1 - p);
+      ctx.fillStyle = "#FFFFFF";
+      ctx.beginPath(); ctx.arc(fx.x, y, 4 + p * 20, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 0.4 * (1 - p);
+      ctx.fillStyle = C.paleCalm;
+      ctx.beginPath(); ctx.arc(fx.x + 6, y - 4, 3 + p * 12, 0, Math.PI * 2); ctx.fill();
+      ctx.globalAlpha = 1;
+    } else {
+      const p = fx.t / 1.1;
+      ctx.globalAlpha = 1 - p;
+      ctx.fillStyle = fx.bad ? "#C2244F" : C.grounded;
+      ctx.font = "800 13px Inter, sans-serif";
+      ctx.textAlign = "center"; ctx.textBaseline = "middle";
+      ctx.fillText(fx.txt, fx.x, y - 14 - p * 26);
+      ctx.globalAlpha = 1;
     }
   }
 }
@@ -943,24 +1397,33 @@ function render() {
   drawCrossings();
   drawSigns();
   drawFinishGate();
+  drawParked();
 
-  // NPC cars
   for (const c of s.cars) {
     const y = screenY(c.d);
-    if (y < -70 || y > H + 70) continue;
-    drawCar(c.x, y, CAR_W, CAR_H, c.color, { alpha: c.alpha });
+    const ch = c.kind === "bus" ? BUS_H : CAR_H;
+    if (y < -ch - 30 || y > H + ch + 30) continue;
+    drawCar(c.x, y, CAR_W, ch, c.color, {
+      alpha: c.alpha, bus: c.kind === "bus",
+      spin: c.hit, spinAngle: c.hit ? c.spin * (1 - c.alpha) * 0.5 : 0,
+    });
   }
-  // bikes & pedestrians
   for (const b of s.bikes) drawBike(b);
   drawPeds();
+  drawBullets();
 
-  // player (front of car sits at PLAYER_SCREEN_Y; centre a bit below)
   const braking = keys["arrowdown"] || keys["s"] || touch.brake;
-  const flash = (s.time - s.lastHitTime) < 1.2 && Math.floor(s.time * 10) % 2 === 0;
+  const flash = s.mode === "nice" && (s.time - s.lastHitTime) < 1.2 && Math.floor(s.time * 10) % 2 === 0;
   if (!flash) {
-    drawCar(s.x, PLAYER_SCREEN_Y + CAR_H / 2, CAR_W, CAR_H, C.grounded, { player: true, braking });
+    drawCar(s.x, PLAYER_SCREEN_Y + CAR_H / 2, CAR_W, CAR_H, C.grounded, {
+      player: true, braking,
+      alex: s.mode === "alex",
+      flash: (s.time - s.lastShotAt) < 0.07,
+    });
   }
 
+  drawClaims();
+  drawEffects();
   drawLights();
   ctx.restore();
 }
@@ -970,16 +1433,21 @@ const startOverlay = document.getElementById("startOverlay");
 const endOverlay = document.getElementById("endOverlay");
 const pauseOverlay = document.getElementById("pauseOverlay");
 
-function startGame() {
-  reset();
+function startGame(mode) {
+  reset(mode);
   pointers.clear();
-  touch.left = touch.right = touch.brake = false;
+  touch.left = touch.right = touch.brake = touch.fire = false;
   startOverlay.classList.add("hidden");
   endOverlay.classList.add("hidden");
   pauseOverlay.classList.add("hidden");
   running = true; paused = false;
   lastT = performance.now();
-  showToast("Drive nicely. Your premium will notice.");
+  initAudio();
+  if (AC && AC.state === "suspended") { try { AC.resume(); } catch (e) {} }
+  startEngine();
+  showToast(mode === "alex"
+    ? "Alexander's Mode. Everything pays. Claims are coming."
+    : "Drive nicely. Your premium will notice.");
 }
 
 function togglePause() {
@@ -987,26 +1455,41 @@ function togglePause() {
   paused = !paused;
   pauseOverlay.classList.toggle("hidden", !paused);
   if (!paused) lastT = performance.now();
+  updateEngine();
 }
 
-function verdictFor(p) {
+function verdictNice(p) {
   if (p <= 55) return "Rock bottom premium. A good life isn't lived carefully — but it can be driven nicely.";
   if (p <= 79) return "Smooth. Amager barely noticed you — in a good way.";
   if (p <= 109) return "You made it. The cyclists have opinions, though.";
   return "The beach is lovely. Your premium took the scenic route. Maybe the metro tomorrow — no judgment.";
 }
+function verdictAlex(h) {
+  if (h >= 900) return "Total mayhem. The claims department has left the building. HR would like several words.";
+  if (h >= 500) return "Solid chaos. Amager will remember the sound of the 5C.";
+  if (h >= 200) return "A modest rampage. Alexander is mildly disappointed.";
+  return "You barely hit anything. Are you sure this is Alexander's Mode?";
+}
 
 function finishGame() {
   running = false;
-  const p = Math.round(state.premium);
-  document.getElementById("endPremium").innerHTML = p + " <small>kr/md</small>";
-  document.getElementById("endVerdict").textContent = verdictFor(p);
-  setTimeout(() => endOverlay.classList.remove("hidden"), 500);
+  stopEngine();
+  saveBest();
+  const alex = state.mode === "alex";
+  document.getElementById("endTitle").textContent = alex ? "The beach. Somehow." : "You made it to the beach";
+  document.getElementById("endPremium").innerHTML = alex
+    ? fmt(state.haul) + " <small>kr</small>"
+    : Math.round(state.premium) + " <small>kr/md</small>";
+  document.getElementById("endVerdict").textContent = alex ? verdictAlex(Math.round(state.haul)) : verdictNice(Math.round(state.premium));
+  setTimeout(() => { endOverlay.classList.remove("hidden"); renderBestLine(); }, 500);
 }
 
-document.getElementById("startBtn").addEventListener("click", startGame);
-document.getElementById("againBtn").addEventListener("click", startGame);
+document.getElementById("startBtn").addEventListener("click", () => startGame("nice"));
+document.getElementById("alexBtn").addEventListener("click", () => startGame("alex"));
+document.getElementById("againBtn").addEventListener("click", () => startGame("nice"));
+document.getElementById("againAlexBtn").addEventListener("click", () => startGame("alex"));
 document.getElementById("resumeBtn").addEventListener("click", togglePause);
+document.getElementById("muteBtn").addEventListener("click", () => { initAudio(); setMuted(!muted); });
 window.addEventListener("blur", () => { if (running && !paused) togglePause(); });
 
 /* ---------- main loop ---------- */
@@ -1017,11 +1500,14 @@ function loop(t) {
     const dt = Math.min((t - lastT) / 1000, 0.033);
     lastT = t;
     update(dt);
+    updateEngine();
   }
   render();
 }
 
-reset();
+reset("nice");
+renderBestLine();
+setMuted(muted);
 requestAnimationFrame(loop);
 </script>
 </body>
