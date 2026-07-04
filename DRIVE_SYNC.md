@@ -5,13 +5,14 @@ Frankly OS work should not remain local-only unless the user explicitly asks for
 ## Current Snapshot
 
 - Date: 2026-07-04
-- Drive folder: https://drive.google.com/drive/folders/1bw9ctr5a9N4IVuFOns675cPVvsLCKaMx
+- Drive folder: https://drive.google.com/drive/folders/1iKPKASH9V12CmlRTXdRdqwoJopaYn6wG
 - Local source: `frankly-os-site/`
-- Scope: machine-focus/claims-lock site surfaces, Mission Control fallback/feed updates, data feed and a clean zip archive.
-- Zip archive: https://drive.google.com/file/d/1HcTWMP-UoBvIk8uvg0HpvqixHcSuzQTn/view?usp=drivesdk
+- Scope: MCQ-011 run-registry overview/progress surfaces and a clean zip archive.
+- Zip archive: https://drive.google.com/file/d/1ZE8Xf1_3PLxYkAvDTci5Bh_7Nta_yXyl/view?usp=drivesdk
 
 Previous snapshot:
 
+- 2026-07-04 machine-focus/claims-lock: https://drive.google.com/drive/folders/1bw9ctr5a9N4IVuFOns675cPVvsLCKaMx
 - 2026-07-04 overview baseline: https://drive.google.com/drive/folders/1EWF0eQqxGBgqQzODH3oNyhpfIJ1F2jlx
 
 ## Future Rule
