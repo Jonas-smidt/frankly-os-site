@@ -474,13 +474,13 @@
       <section class="progress-header" id="progress" aria-label="Current Frankly OS status">
         <div class="progress-title">
           <span class="progress-kicker">Frankly OS progress</span>
-          <h1>The machine works. Now it needs evidence.</h1>
-          <p>We have moved the work from small chat stops into a local machine with Mission Control, Prompt Agent, handoff, guard, source intake and an evidence inbox. The next job is not more structure. It is filling the first source records.</p>
+          <h1>The machine works. Now it needs reps.</h1>
+          <p>We have moved the work from small chat stops into a local machine with Mission Control, Prompt Agent, handoff, guard and local evals. Claims work is locked; the next job is proving the agent/loop/routes system across several task types.</p>
         </div>
         <aside class="progress-current">
           <span class="progress-kicker">Active batch</span>
           <h2>MCQ-010</h2>
-          <p>Product/Legal Evidence Inbox v0.1 is active and validated. It is ready for sources, but no claims or customer-facing copy are approved.</p>
+          <p>MCQ-010 is now locked/passive. The active direction is MCQ-011: run registry, local eval harness and multi-task machine capability.</p>
         </aside>
       </section>
 
@@ -499,7 +499,7 @@
         </div>
         <div class="metric is-active">
           <b>0/9</b>
-          <span>Evidence records</span>
+          <span>Claim records locked</span>
         </div>
         <div class="metric is-clear">
           <b>0</b>
@@ -527,28 +527,28 @@
           </article>
           <article class="road-step done">
             <span class="number">2</span>
-            <strong>Source intake</strong>
-            <p>9 product/legal source requests are defined as SRC-001 through SRC-009.</p>
+            <strong>Claims lock</strong>
+            <p>Product/legal evidence, SRC rows and claim copy are closed until explicitly reopened.</p>
           </article>
           <article class="road-step active">
             <span class="number">3</span>
-            <strong>Evidence inbox</strong>
-            <p>The inbox is ready. It needs the first owner-approved source records.</p>
+            <strong>Run registry</strong>
+            <p>Meaningful machine work needs a traceable run record.</p>
           </article>
           <article class="road-step gated">
             <span class="number">4</span>
-            <strong>SRC approval</strong>
-            <p>An SRC can only move when the validator approves the record.</p>
+            <strong>Local evals</strong>
+            <p>The machine should test focus, gates, route breadth and handoff contract.</p>
           </article>
           <article class="road-step gated">
             <span class="number">5</span>
-            <strong>Internal draft</strong>
-            <p>The first copy output should be an internal support answer draft.</p>
+            <strong>Route reps</strong>
+            <p>Run several non-claim task families through the same operating loop.</p>
           </article>
           <article class="road-step gated">
             <span class="number">6</span>
-            <strong>Customer channel</strong>
-            <p>Only one channel at a time after source and copy review.</p>
+            <strong>Automation later</strong>
+            <p>Thread handoff and connector writes stay gated until the local machine proves itself.</p>
           </article>
         </div>
       </section>
@@ -559,7 +559,7 @@
             <span class="progress-kicker">Timeline</span>
             <h2 id="timeline-title">What we have built</h2>
           </div>
-          <p class="footer-note">All 10 batches are review-ready locally. MCQ-010 is the active direction.</p>
+          <p class="footer-note">All 10 batches are review-ready locally. MCQ-010 is locked/passive; MCQ-011 is the machine-runtime direction.</p>
         </div>
         <div class="timeline-strip" aria-label="Mission Control timeline">
           <article class="timeline-item"><b>MCQ-001</b><span>Parallel workstreams</span></article>
@@ -571,7 +571,7 @@
           <article class="timeline-item"><b>MCQ-007</b><span>Product clarity pack</span></article>
           <article class="timeline-item"><b>MCQ-008</b><span>State guard</span></article>
           <article class="timeline-item"><b>MCQ-009</b><span>Source intake</span></article>
-          <article class="timeline-item active"><b>MCQ-010</b><span>Evidence inbox</span></article>
+          <article class="timeline-item active"><b>MCQ-010</b><span>Locked gate</span></article>
         </div>
       </section>
 
@@ -596,7 +596,7 @@
             <div class="bar-track"><div class="bar-fill active" style="width: 70%"></div></div>
           </article>
           <article class="bar-row">
-            <header><strong>Product/legal evidence</strong><span>0%</span></header>
+            <header><strong>Claims/product/legal lane</strong><span>locked</span></header>
             <div class="bar-track"><div class="bar-fill gated" style="width: 0%"></div></div>
           </article>
           <article class="bar-row">
@@ -630,10 +630,10 @@
           <article class="lane">
             <h3>Active now</h3>
             <ul>
-              <li>Evidence Inbox is ready for source documents and owner confirmations.</li>
-              <li>validate-source-intake.py passes with 9 open source slots.</li>
-              <li>Static QA includes both machineStateGuard and sourceIntake.</li>
-              <li>MCQ-010 browser QA is green on desktop and mobile.</li>
+              <li>Claims/product/legal work is locked until explicit reopen.</li>
+              <li>Frankly OS evals check lock obedience and machine focus.</li>
+              <li>Static QA includes machineStateGuard, passive sourceIntake and franklyOsEvals.</li>
+              <li>MCQ-011 is the next machine-runtime direction.</li>
             </ul>
           </article>
           <article class="lane">
@@ -658,16 +658,16 @@
         <div class="next-grid">
           <div>
             <ol class="next-list">
-              <li>Create the first JSON record in <code>source-intake/product-legal-evidence-inbox/records/</code>.</li>
-              <li>Run <code>python3 os-visualization/scripts/validate-source-intake.py</code>.</li>
-              <li>Fix metadata, owner, excerpt, scope or channels if the validator fails.</li>
-              <li>Move only the matching SRC status when the record passes.</li>
-              <li>Repeat until enough rows can support an internal support answer draft.</li>
+              <li>Create MCQ-011 Run Registry + Local Eval Harness.</li>
+              <li>Run <code>python3 os-visualization/scripts/run-frankly-os-evals.py</code>.</li>
+              <li>Use non-claim tasks to test research, routes, visual/system work and handoff.</li>
+              <li>Record each meaningful run with goal, route, tools, validation and next move.</li>
+              <li>Keep claims work locked until Jonas explicitly reopens it.</li>
             </ol>
           </div>
           <aside class="next-panel">
-            <h3>Start low-risk</h3>
-            <p>The best first records are probably SRC-004, SRC-006 or SRC-009, because they can lead to an internal support draft before we touch public or customer-facing copy.</p>
+            <h3>Start with the machine</h3>
+            <p>The best first reps are non-claim tasks that prove routing, loop execution, validation and handoff without touching product/legal scope.</p>
           </aside>
         </div>
       </section>

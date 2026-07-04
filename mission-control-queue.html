@@ -126,8 +126,8 @@ const SITE_FEED = "data/mission-control-queue.json";
 
 let QUEUE = {
   "generated": "2026-07-01",
-  "status": "implemented-product-legal-evidence-inbox-review-ready",
-  "summary": "Mission Control Queue tracks larger local mission batches with copyable prompts, state, gates, review checkpoints, batch history and returned run output before any automatic thread spawning or connector writes are approved. MCQ-010 adds a Product/Legal Evidence Inbox so source documents and owner confirmations can be recorded before source rows, claims or customer-facing copy move forward.",
+  "status": "implemented-claims-locked-machine-runtime-next",
+  "summary": "Mission Control Queue tracks larger local mission batches with copyable prompts, state, gates, review checkpoints, batch history and returned run output before any automatic thread spawning or connector writes are approved. MCQ-010 remains the latest validated batch, but claims/product/legal work is now locked and the next direction is MCQ-011 machine-runtime capability.",
   "route": "os-visualization/routes/mission-control-queue-route.md",
   "skill": "os-visualization/skills/frankly-mission-control-queue-skill.md",
   "siteSurface": "frankly-os-site/mission-control-queue.html",
@@ -1043,7 +1043,7 @@ let QUEUE = {
       "context": "Started after MCQ-008 installed Machine State Consistency Guard v0.1. MCQ-007 left product/legal source collection as the next business workstream. No approved product terms, IPID, policy wording, legal approvals or support-owner confirmations are present in the local workspace, so this batch structures collection rather than approving claims.",
       "outcome": "A product/legal source intake register with nine claim-level source requests, eight approval checklist requests, accepted/rejected source types, metadata requirements, channel release order and ready conditions.",
       "checkpoint": "Review whether the pack is specific enough to request current product/legal source material without asking Jonas to micromanage the shape of the request.",
-      "nextMove": "Fill SRC-001 through SRC-009 with approved source documents and owner confirmations before updating any product clarity, checkout, email, support or partner copy.",
+      "nextMove": "Locked/passive while Jonas's claims-work lock is active. Do not fill SRC rows or update product clarity, checkout, email, support or partner copy until the scope is explicitly reopened.",
       "run": {
         "id": "MCQ-009-RUN-001",
         "mode": "product-legal-source-intake-local-run",
@@ -1053,7 +1053,7 @@ let QUEUE = {
         "outputFolder": "os-visualization/mission-control/batches/MCQ-009/",
         "reportFile": "os-visualization/reports/mission-control-batch-009-product-legal-source-intake-pack-run-2026-07-01.md",
         "summary": "The ninth Mission Control batch converted the MCQ-007 product clarity source follow-up into a local source-intake register.",
-        "decision": "Use the source-intake pack to collect documents and owner confirmations. Keep all claims awaiting-source and keep customer-facing copy unchanged until approvals land.",
+        "decision": "Keep the source-intake pack as historical/passive structure while claims work is locked. Do not collect documents or owner confirmations as the default next task.",
         "artifacts": [
           {
             "label": "Architect output",
@@ -1150,7 +1150,7 @@ let QUEUE = {
       "context": "Started after MCQ-009 created the Product/Legal Source Intake Pack. The source register names nine source requests, but no approved evidence records exist yet. This batch gives future work a structured place to add source documents and owner confirmations before any source status or copy can change.",
       "outcome": "A local Product/Legal Evidence Inbox with incoming, records and templates folders, a machine-readable inbox artifact, a read-only validator and static QA integration.",
       "checkpoint": "Review whether the inbox and validator prevent source auto-approval while making SRC-001 through SRC-009 easier to fill.",
-      "nextMove": "Add source records or owner confirmations to the Evidence Inbox, run validate-source-intake.py, then update source-intake statuses only where validated evidence exists.",
+      "nextMove": "Locked/passive while Jonas's claims-work lock is active. Preserve the inbox and validator as gates, but do not add records or update source statuses until explicitly reopened.",
       "run": {
         "id": "MCQ-010-RUN-001",
         "mode": "product-legal-evidence-inbox-local-run",
@@ -1160,7 +1160,7 @@ let QUEUE = {
         "outputFolder": "os-visualization/mission-control/batches/MCQ-010/",
         "reportFile": "os-visualization/reports/mission-control-batch-010-product-legal-evidence-inbox-run-2026-07-01.md",
         "summary": "The tenth Mission Control batch installed a local evidence inbox and validator for product/legal source material.",
-        "decision": "Use the inbox as the next source collection target. Keep claims unapproved and customer-facing copy unchanged until validated evidence and separate copy approval exist.",
+        "decision": "Keep the inbox as a passive gate while claims work is locked. The next active direction is MCQ-011 Run Registry + Local Eval Harness.",
         "artifacts": [
           {
             "label": "Architect output",

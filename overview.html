@@ -718,8 +718,8 @@
           </a>
           <a href="progress-map.html">
             <span class="map-index">02</span>
-            <span><b>Machine state</b><small>Current batch, source status, guard checks and handoff state.</small></span>
-            <span class="map-status">MCQ-010</span>
+            <span><b>Machine state</b><small>Claims locked, guard checks, handoff state and machine-runtime focus.</small></span>
+            <span class="map-status">machine focus</span>
           </a>
           <a class="tall" href="mission-control-queue.html">
             <span class="map-index">03</span>
@@ -757,7 +757,7 @@
             <span class="overview-kicker">Snapshot</span>
             <h2>The whole thing in six numbers.</h2>
           </div>
-          <p>This is the fastest read of the workspace right now. It tells us what exists, what is proven locally and what still needs source approval.</p>
+          <p>This is the fastest read of the workspace right now. It tells us what exists, what is proven locally and what the machine can use next.</p>
         </div>
         <div class="snapshot-grid" aria-label="Frankly OS numbers">
           <article class="snapshot"><b>11</b><span>HTML surfaces in the local site</span></article>
@@ -765,7 +765,7 @@
           <article class="snapshot"><b>60</b><span>skills/checklists in the OS library</span></article>
           <article class="snapshot"><b>10</b><span>Mission Control batches</span></article>
           <article class="snapshot"><b>60</b><span>reports that record decisions and proof</span></article>
-          <article class="snapshot"><b>0/9</b><span>approved product/legal evidence records</span></article>
+          <article class="snapshot"><b>locked</b><span>claims/product/legal work until explicitly reopened</span></article>
         </div>
       </div>
     </section>
@@ -780,10 +780,10 @@
           <p>The system is useful when it makes the next run easier. The important movement is simple: capture, route, build, validate and file.</p>
         </div>
         <div class="storyline" aria-label="Frankly OS flow">
-          <article class="story-step"><i>01</i><h3>Capture</h3><p>A loose idea, source, partner need, product question or visual task enters the workspace.</p></article>
-          <article class="story-step"><i>02</i><h3>Route</h3><p>The work is matched to a route: product clarity, partner, SEO, design, legal, website or machine core.</p></article>
+          <article class="story-step"><i>01</i><h3>Capture</h3><p>A loose idea, research task, route check, visual task or system improvement enters the workspace.</p></article>
+          <article class="story-step"><i>02</i><h3>Route</h3><p>The work is matched to a route: machine core, research, design, website, presentation, partner or route QA.</p></article>
           <article class="story-step"><i>03</i><h3>Build</h3><p>Mission Control or a local surface turns the route into a concrete output, draft or tool.</p></article>
-          <article class="story-step"><i>04</i><h3>Validate</h3><p>Static QA, source intake, browser evidence and gates stop the system from overclaiming.</p></article>
+          <article class="story-step"><i>04</i><h3>Validate</h3><p>Static QA, local evals, browser evidence and gates stop the system from drifting.</p></article>
           <article class="story-step"><i>05</i><h3>File</h3><p>The useful learning becomes a report, state file, skill update or next mission.</p></article>
         </div>
       </div>
@@ -811,7 +811,7 @@
           </a>
           <a class="surface-card" href="progress-map.html">
             <span class="state-pill live">local-live</span>
-            <div><h3>Progress Map</h3><p>The current machine state, active batch, source gate and next path.</p></div>
+            <div><h3>Progress Map</h3><p>The current machine state, claims lock, active guard and next path.</p></div>
             <footer><span>Machine</span><span>open</span></footer>
           </a>
           <a class="surface-card" href="mission-control-queue.html">
@@ -855,17 +855,17 @@
             <span class="overview-kicker">Machine core</span>
             <h2>The operating layer underneath the pages.</h2>
           </div>
-          <p>This is the part that keeps future work resumable: handoff state, Mission Control, guards, source intake and evidence.</p>
+          <p>This is the part that keeps future work resumable: handoff state, Mission Control, guards, local evals, routes and loop memory.</p>
         </div>
         <div class="system-split">
           <article class="system-panel">
             <h3>Current thread of work</h3>
-            <p>MCQ-010 is review-ready and points to the next safe chunk: add product/legal evidence records before changing source status or customer-facing copy.</p>
+            <p>MCQ-010 remains the latest validated batch, but claims/product/legal work is locked. The next useful chunk is MCQ-011: run registry, local evals and multi-task machine capability.</p>
             <div class="mission-path">
               <a href="mission-control-queue.html"><span class="mission-id">MCQ-005</span><b>Machine handoff</b><span class="state-pill live">built</span></a>
               <a href="mission-control-queue.html"><span class="mission-id">MCQ-008</span><b>State consistency guard</b><span class="state-pill live">green</span></a>
-              <a href="mission-control-queue.html"><span class="mission-id">MCQ-009</span><b>Product/legal source intake</b><span class="state-pill gated">awaiting evidence</span></a>
-              <a href="mission-control-queue.html"><span class="mission-id">MCQ-010</span><b>Evidence inbox</b><span class="state-pill gated">0 records</span></a>
+              <a href="mission-control-queue.html"><span class="mission-id">Lock</span><b>Claims/product/legal</b><span class="state-pill gated">closed</span></a>
+              <a href="mission-control-queue.html"><span class="mission-id">MCQ-011</span><b>Run registry + evals</b><span class="state-pill live">next</span></a>
             </div>
           </article>
           <article class="inventory-panel">
@@ -873,7 +873,7 @@
             <div class="inventory-row"><span><b>Mission rows</b><small>Architect, Builder, Reviewer and Integrator outputs.</small></span><strong>40</strong></div>
             <div class="inventory-row"><span><b>Evidence folders</b><small>Browser QA and proof screenshots for local surfaces.</small></span><strong>12</strong></div>
             <div class="inventory-row"><span><b>Generated prompt packs</b><small>Reusable mission prompt packs from Prompt Agent v0.1.</small></span><strong>7</strong></div>
-            <div class="inventory-row"><span><b>Source requests</b><small>Rows that need approved product/legal evidence.</small></span><strong>9</strong></div>
+            <div class="inventory-row"><span><b>Local eval cases</b><small>Claims lock, machine focus, routes, gates and handoff.</small></span><strong>6</strong></div>
             <div class="inventory-row"><span><b>Public-ready surfaces</b><small>Everything remains gated until approved.</small></span><strong>0</strong></div>
           </article>
         </div>
@@ -887,12 +887,12 @@
             <span class="overview-kicker">Safety gates</span>
             <h2>What is deliberately not turned on.</h2>
           </div>
-          <p>The system is allowed to be useful locally. It is not allowed to publish, spend, automate or approve claims by itself.</p>
+          <p>The system is allowed to be useful locally. It is not allowed to publish, spend, automate or work on claims unless that scope is explicitly reopened.</p>
         </div>
         <div class="gate-strip">
           <article><span class="map-index">01</span><h3>Public deploy</h3><p>No public publishing without explicit approval.</p></article>
           <article><span class="map-index">02</span><h3>Paid API / Slack</h3><p>Slack and OpenAI runtime stay lab-only and guarded.</p></article>
-          <article><span class="map-index">03</span><h3>Product/legal claims</h3><p>No customer-facing claims move before source evidence and review.</p></article>
+          <article><span class="map-index">03</span><h3>Claims scope</h3><p>Closed by default until Jonas explicitly reopens a named scope.</p></article>
           <article><span class="map-index">04</span><h3>Automation</h3><p>No automatic thread creation or connector writes without approval.</p></article>
         </div>
       </div>
@@ -903,20 +903,20 @@
         <div class="overview-head">
           <div>
             <span class="overview-kicker">Recommended next move</span>
-            <h2>Use the system on the source problem.</h2>
+            <h2>Build the machine, not the claims lane.</h2>
           </div>
-          <p>The workspace is now baselined. The next value is not another overview. It is feeding the evidence inbox.</p>
+          <p>The workspace is now baselined. The next value is a run registry, local evals and proof that the agent/loop/routes system can handle different tasks.</p>
         </div>
         <div class="next-panel">
           <article class="next-callout">
             <span class="state-pill gated">MCQ-011 candidate</span>
-            <h3>Fill the evidence inbox.</h3>
-            <p>Add source records or owner confirmations for SRC-001 through SRC-009, then run the source-intake validator before any claim status changes.</p>
+            <h3>Build run registry + evals.</h3>
+            <p>Track meaningful runs, test the machine focus, keep claims locked and exercise routes across several non-claim task families.</p>
           </article>
           <div class="next-list">
-            <article class="next-item"><span>1</span><div><b>Collect approved source records</b><p>Owner, role, date, document/version, approved excerpt, scope and storage location.</p></div></article>
-            <article class="next-item"><span>2</span><div><b>Validate before status changes</b><p>Run the source-intake validator and keep claimsApproved and customerFacingCopyChanged at zero.</p></div></article>
-            <article class="next-item"><span>3</span><div><b>Draft the lowest-risk internal answer</b><p>Only after the relevant source rows are valid, and only for internal support review.</p></div></article>
+            <article class="next-item"><span>1</span><div><b>Create the run registry</b><p>Every meaningful machine run gets goal, route, tools, validation, gates and next move.</p></div></article>
+            <article class="next-item"><span>2</span><div><b>Run local evals</b><p>Check claims lock, Prompt Agent focus, route breadth, Mission Control gates and handoff contract.</p></div></article>
+            <article class="next-item"><span>3</span><div><b>Test different routes</b><p>Use non-claim tasks to prove research, visual, route QA, presentation and system-maintenance work.</p></div></article>
           </div>
         </div>
       </div>
