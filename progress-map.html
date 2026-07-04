@@ -480,7 +480,7 @@
         <aside class="progress-current">
           <span class="progress-kicker">Active layer</span>
           <h2>MCQ-011</h2>
-          <p>MCQ-010 is the latest fully validated Mission Control batch. MCQ-011 is active locally as run registry, local eval harness and multi-task machine trace.</p>
+          <p>MCQ-010 is the latest fully validated Mission Control batch. MCQ-011 is active locally as run registry, local eval harness and non-claim route-rep trace.</p>
         </aside>
       </section>
 
@@ -490,8 +490,12 @@
           <span>Mission batches</span>
         </div>
         <div class="metric is-active">
-          <b>2</b>
+          <b>3</b>
           <span>Run records</span>
+        </div>
+        <div class="metric is-clear">
+          <b>1/3</b>
+          <span>Route reps</span>
         </div>
         <div class="metric">
           <b>40</b>
@@ -547,7 +551,7 @@
           <article class="road-step active">
             <span class="number">5</span>
             <strong>Route reps</strong>
-            <p>Run several non-claim task families through the same operating loop.</p>
+            <p>Route QA is green; next is a non-claim Presentation Machine rep.</p>
           </article>
           <article class="road-step gated">
             <span class="number">6</span>
@@ -630,14 +634,15 @@
               <li>Prompt Agent creates larger mission packs locally.</li>
               <li>The handoff packet tells new chats where to start.</li>
               <li>Machine State Guard catches drift between state files.</li>
+              <li>Route QA now checks 20 routes with no high-risk active findings.</li>
             </ul>
           </article>
           <article class="lane">
             <h3>Active now</h3>
             <ul>
               <li>Claims/product/legal work is locked until explicit reopen.</li>
-              <li>Frankly OS evals check lock obedience, machine focus and run traceability.</li>
-              <li>Static QA includes machineStateGuard, passive sourceIntake and franklyOsEvals.</li>
+              <li>Frankly OS evals check lock obedience, machine focus, run traceability and route QA.</li>
+              <li>Static QA includes machineStateGuard, passive sourceIntake, franklyOsEvals and routeQa.</li>
               <li>MCQ-011 is active as the local run-registry layer.</li>
             </ul>
           </article>
@@ -663,7 +668,7 @@
         <div class="next-grid">
           <div>
             <ol class="next-list">
-              <li>Record the next meaningful non-claim run in <code>run-registry.json</code>.</li>
+              <li>Run a Presentation Machine rep for a Frankly OS deck spine.</li>
               <li>Run <code>python3 os-visualization/scripts/run-frankly-os-evals.py</code>.</li>
               <li>Use non-claim tasks to test research, routes, visual/system work and handoff.</li>
               <li>Record each meaningful run with goal, route, tools, validation and next move.</li>
@@ -671,8 +676,8 @@
             </ol>
           </div>
           <aside class="next-panel">
-            <h3>Start with the machine</h3>
-            <p>The best first reps are non-claim tasks that prove routing, loop execution, validation and handoff without touching product/legal scope.</p>
+            <h3>Next rep</h3>
+            <p>Presentation Machine is active, non-claim and useful: it can turn the OS into a simple deck spine for internal explanation.</p>
           </aside>
         </div>
       </section>
