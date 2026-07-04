@@ -29,6 +29,18 @@ jobs:
       - name: Hent repoet
         uses: actions/checkout@v4
 
+      - name: Restore bundled Codex site update
+        run: |
+          if ls frankly-os-site-bundle.tar.xz.b64.chunk.* >/dev/null 2>&1; then
+            cat frankly-os-site-bundle.tar.xz.b64.chunk.* | base64 -d > frankly-os-site-bundle.tar.xz
+            tar -xJf frankly-os-site-bundle.tar.xz
+          elif ls frankly-os-site-bundle.tar.xz.b64.part* >/dev/null 2>&1; then
+            cat frankly-os-site-bundle.tar.xz.b64.part* | base64 -d > frankly-os-site-bundle.tar.xz
+            tar -xJf frankly-os-site-bundle.tar.xz
+          elif [ -f frankly-os-site-bundle.tar.xz ]; then
+            tar -xJf frankly-os-site-bundle.tar.xz
+          fi
+
       - name: Opsæt Python
         uses: actions/setup-python@v5
         with:

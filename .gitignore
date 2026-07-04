@@ -1,6 +1,9 @@
 # Bygges automatisk af GitHub Action — skal ikke committes
 site/
 
+# Generated transfer bundles
+*bundle*
+
 # Python
 __pycache__/
 *.pyc

@@ -1,4 +1,5 @@
 User-agent: *
 Disallow: /blog/
+Disallow: /guide/
 
 Sitemap: https://os.franklydesign.dk/sitemap.xml

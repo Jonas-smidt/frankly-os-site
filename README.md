@@ -13,6 +13,7 @@ The site is not only a static mirror of Drive files anymore. It is becoming the 
 - `progress-map.html` is the current machine-state visualization: what is built, active and gated.
 - `onboarding.html` is the internal start surface for first-run orientation.
 - `frankly-daekningsoverblik.html` is the first product clarity surface.
+- `guide/index.html` is an internal Danish store training guide for explaining Frankly, warranty and home contents insurance.
 
 The current build is local and draft-state. Public deployment, paid API automation and Slack automation remain paused until Jonas explicitly approves them.
 
@@ -31,6 +32,7 @@ When Drive sync is available again, the site can be connected to a metadata endp
 - `progress-map.html` - local Frankly OS Progress Map for machine status, active batch and next path.
 - `onboarding.html` - internal start surface and first-run entry gate.
 - `frankly-daekningsoverblik.html` - coverage/product clarity page.
+- `guide/index.html` - internal store training guide for salespeople.
 - `blog/index.html` - local draft blog index, currently noindex.
 - `blog/cykelforsikring.html` - source-updated local draft article for the Blog SEO route pilot, currently noindex.
 - `robots.txt` - blocks draft blog pages.
