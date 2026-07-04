@@ -7,6 +7,7 @@ This folder contains the local website surface for Frankly OS, Frankly Lab and r
 The site is not only a static mirror of Drive files anymore. It is becoming the visual operating layer for the OS:
 
 - `frankly-os.html` is the operating console and system map.
+- `overview.html` is the simple internal "what have we built" overview for the full local OS.
 - `lab-hub.html` is the tools and experiments hub.
 - `agent-brief-builder.html` is the local prompt builder for larger autonomous chat missions.
 - `mission-control-queue.html` is the local queue for larger mission batches before thread handoff.
@@ -21,11 +22,14 @@ The current build is local and draft-state. Public deployment, paid API automati
 
 Google Drive remains the canonical source for Frankly OS system files. Local files in this repo are implementation and preview artifacts used to test the website experience before publishing.
 
+After meaningful site work, archive the current local build in Drive under `Frankly OS / outputs / prototypes` and include the Drive folder or file URL in the handoff. The preferred package is a dated snapshot folder with the key HTML/CSS/data/assets plus a complete zip archive, so the work is both browsable and restorable.
+
 When Drive sync is available again, the site can be connected to a metadata endpoint or GitHub Action. Until then, local manifest updates should be treated as draft evidence, not production data.
 
 ## Key Local Files
 
 - `frankly-os.html` - main OS visualization page.
+- `overview.html` - simple visual overview of the full local OS, surfaces, machine, Slack lab, routes, proof and gates.
 - `lab-hub.html` - Frankly Lab hub page.
 - `agent-brief-builder.html` - local Agent Brief Builder tool for bigger chat mission batches.
 - `mission-control-queue.html` - local Mission Control Queue for manual launch, review and integration of larger mission batches.

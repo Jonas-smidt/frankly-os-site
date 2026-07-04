@@ -1,4 +1,5 @@
 User-agent: *
+Disallow: /overview.html
 Disallow: /blog/
 Disallow: /guide/
 
