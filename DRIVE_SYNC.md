@@ -5,13 +5,16 @@ Frankly OS work should not remain local-only unless the user explicitly asks for
 ## Current Snapshot
 
 - Date: 2026-07-05
-- Drive folder: https://drive.google.com/drive/folders/16dcCPOf1yDU7ZwuWpzD9ers1NzyGdIyQ
+- Drive folder: https://drive.google.com/drive/folders/15-bbb62Sa_SruhH0t66pFaMCwrI4IUOC
 - Local source: `frankly-os-site/`
-- Scope: MCQ-011 Route QA rep 001 overview/progress surfaces and a clean zip archive.
-- Zip archive: https://drive.google.com/file/d/14bbfN1hRBjjIFbcGleMcA2lcyURlB7PS/view?usp=drivesdk
+- Scope: MCQ-011 Presentation Machine rep 001 plus Repository Instructions rep 001 overview/progress surfaces and a clean zip archive.
+- Status: uploaded to Drive.
+- Zip archive: https://drive.google.com/file/d/1V9CBa5oIOiMLtUtJTGtY6sHPsbAjCSX-/view?usp=drivesdk
+- Drive sync file: https://drive.google.com/file/d/1Arvum87gvBFYGj0fAno7WGpruPRjQJs3/view?usp=drivesdk
 
 Previous snapshot:
 
+- 2026-07-05 MCQ-011 Route QA rep 001: https://drive.google.com/drive/folders/16dcCPOf1yDU7ZwuWpzD9ers1NzyGdIyQ
 - 2026-07-04 MCQ-011 run-registry overview: https://drive.google.com/drive/folders/1iKPKASH9V12CmlRTXdRdqwoJopaYn6wG
 - 2026-07-04 machine-focus/claims-lock: https://drive.google.com/drive/folders/1bw9ctr5a9N4IVuFOns675cPVvsLCKaMx
 - 2026-07-04 overview baseline: https://drive.google.com/drive/folders/1EWF0eQqxGBgqQzODH3oNyhpfIJ1F2jlx
