@@ -5,15 +5,16 @@ Frankly OS work should not remain local-only unless the user explicitly asks for
 ## Current Snapshot
 
 - Date: 2026-07-05
-- Drive folder: https://drive.google.com/drive/folders/15-bbb62Sa_SruhH0t66pFaMCwrI4IUOC
+- Drive folder: https://drive.google.com/drive/folders/11NCzyLWZzNF6vrO_27CgAa49kw91paht
 - Local source: `frankly-os-site/`
-- Scope: MCQ-011 Presentation Machine rep 001 plus Repository Instructions rep 001 overview/progress surfaces and a clean zip archive.
+- Scope: Tool/Connector Guard Matrix overview/progress surfaces plus a clean zip archive.
 - Status: uploaded to Drive.
-- Zip archive: https://drive.google.com/file/d/1V9CBa5oIOiMLtUtJTGtY6sHPsbAjCSX-/view?usp=drivesdk
-- Drive sync file: https://drive.google.com/file/d/1Arvum87gvBFYGj0fAno7WGpruPRjQJs3/view?usp=drivesdk
+- Zip archive: https://drive.google.com/file/d/18eecyemJfEyc9cyBdBFoG56aw6bZN-Yk/view?usp=drivesdk
+- Drive sync file: https://drive.google.com/file/d/1L7H-enb8lyLbcVsfmajygCgSboWZ-i8N/view?usp=drivesdk
 
 Previous snapshot:
 
+- 2026-07-05 MCQ-011 Presentation Machine rep 001 plus Repository Instructions rep 001: https://drive.google.com/drive/folders/15-bbb62Sa_SruhH0t66pFaMCwrI4IUOC
 - 2026-07-05 MCQ-011 Route QA rep 001: https://drive.google.com/drive/folders/16dcCPOf1yDU7ZwuWpzD9ers1NzyGdIyQ
 - 2026-07-04 MCQ-011 run-registry overview: https://drive.google.com/drive/folders/1iKPKASH9V12CmlRTXdRdqwoJopaYn6wG
 - 2026-07-04 machine-focus/claims-lock: https://drive.google.com/drive/folders/1bw9ctr5a9N4IVuFOns675cPVvsLCKaMx

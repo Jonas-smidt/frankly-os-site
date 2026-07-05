@@ -474,13 +474,13 @@
       <section class="progress-header" id="progress" aria-label="Current Frankly OS status">
         <div class="progress-title">
           <span class="progress-kicker">Frankly OS progress</span>
-          <h1>The machine works. Now it needs reps.</h1>
-          <p>We have moved the work from small chat stops into a local machine with Mission Control, Prompt Agent, handoff, guard, run registry and local evals. Claims work is locked; the next job is proving the agent/loop/routes system across several task types.</p>
+          <h1>The machine works. Now it has preflight.</h1>
+          <p>We have moved the work from small chat stops into a local machine with Mission Control, Prompt Agent, handoff, guard, run registry, local evals and a tool/connector guard matrix. Claims work is locked; the next job is using the matrix on another non-claim task.</p>
         </div>
         <aside class="progress-current">
           <span class="progress-kicker">Active layer</span>
           <h2>MCQ-011</h2>
-          <p>MCQ-010 is the latest fully validated Mission Control batch. MCQ-011 is active locally as run registry, local eval harness and non-claim route-rep trace.</p>
+          <p>MCQ-010 is the latest fully validated Mission Control batch. MCQ-011 is active locally as run registry, local eval harness, non-claim route-rep trace and tool/connector preflight.</p>
         </aside>
       </section>
 
@@ -490,12 +490,16 @@
           <span>Mission batches</span>
         </div>
         <div class="metric is-active">
-          <b>5</b>
+          <b>6</b>
           <span>Run records</span>
         </div>
         <div class="metric is-clear">
           <b>3/3</b>
           <span>Route reps</span>
+        </div>
+        <div class="metric is-clear">
+          <b>12</b>
+          <span>Eval cases</span>
         </div>
         <div class="metric">
           <b>40</b>
@@ -538,7 +542,7 @@
             <strong>Claims lock</strong>
             <p>Product/legal evidence, SRC rows and claim copy are closed until explicitly reopened.</p>
           </article>
-          <article class="road-step active">
+          <article class="road-step done">
             <span class="number">3</span>
             <strong>Run registry</strong>
             <p>Meaningful machine work now has a traceable run record.</p>
@@ -548,13 +552,18 @@
             <strong>Local evals</strong>
             <p>The machine tests focus, gates, route breadth, handoff contract and run traceability.</p>
           </article>
-          <article class="road-step active">
+          <article class="road-step done">
             <span class="number">5</span>
             <strong>Route reps</strong>
-            <p>Route QA, Presentation Machine and Repository Instructions are drafted locally.</p>
+            <p>Route QA, Presentation Machine and Repository Instructions are recorded locally.</p>
+          </article>
+          <article class="road-step active">
+            <span class="number">6</span>
+            <strong>Tool guard</strong>
+            <p>Filesystem, git, browser, Drive, Slack, API, deploy, plugins and threads now have preflight rules.</p>
           </article>
           <article class="road-step gated">
-            <span class="number">6</span>
+            <span class="number">7</span>
             <strong>Automation later</strong>
             <p>Thread handoff and connector writes stay gated until the local machine proves itself.</p>
           </article>
@@ -567,7 +576,7 @@
             <span class="progress-kicker">Timeline</span>
             <h2 id="timeline-title">What we have built</h2>
           </div>
-          <p class="footer-note">All 10 batches are review-ready locally. MCQ-010 is locked/passive; MCQ-011 is the active local run-registry layer.</p>
+          <p class="footer-note">All 10 batches are review-ready locally. MCQ-010 is locked/passive; MCQ-011 is the active local run-registry and preflight layer.</p>
         </div>
         <div class="timeline-strip" aria-label="Mission Control timeline">
           <article class="timeline-item"><b>MCQ-001</b><span>Parallel workstreams</span></article>
@@ -580,7 +589,7 @@
           <article class="timeline-item"><b>MCQ-008</b><span>State guard</span></article>
           <article class="timeline-item"><b>MCQ-009</b><span>Source intake</span></article>
           <article class="timeline-item"><b>MCQ-010</b><span>Locked gate</span></article>
-          <article class="timeline-item active"><b>MCQ-011</b><span>Run registry</span></article>
+          <article class="timeline-item active"><b>MCQ-011</b><span>Registry + guard</span></article>
         </div>
       </section>
 
@@ -637,15 +646,16 @@
               <li>Route QA now checks 20 routes with no high-risk active findings.</li>
               <li>Presentation Machine can turn OS context into an internal deck spine.</li>
               <li>Repository Instructions tell future agents how to work safely in both repos.</li>
+              <li>Tool/Connector Guard Matrix classifies actions before more autonomy.</li>
             </ul>
           </article>
           <article class="lane">
             <h3>Active now</h3>
             <ul>
               <li>Claims/product/legal work is locked until explicit reopen.</li>
-              <li>Frankly OS evals check lock obedience, machine focus, run traceability and all three MCQ-011 route reps.</li>
+              <li>Frankly OS evals check lock obedience, machine focus, run traceability, all three MCQ-011 route reps and the Tool/Connector Guard Matrix.</li>
               <li>Static QA includes machineStateGuard, passive sourceIntake, franklyOsEvals and routeQa.</li>
-              <li>MCQ-011 is active as the local run-registry layer.</li>
+              <li>MCQ-011 is active as the local run-registry and tool-preflight layer.</li>
             </ul>
           </article>
           <article class="lane">
@@ -654,6 +664,7 @@
               <li>No claims are approved.</li>
               <li>No customer-facing copy has changed.</li>
               <li>No automation or thread spawning is approved.</li>
+              <li>Slack, API, deploy, plugins and thread creation remain approval-required or locked.</li>
               <li>Partner kit is parked until new partner deck learning lands.</li>
             </ul>
           </article>
@@ -670,16 +681,16 @@
         <div class="next-grid">
           <div>
             <ol class="next-list">
-              <li>Upload pending Presentation Machine and Repository Instructions artifacts to Drive.</li>
+              <li>Use the Tool/Connector Guard Matrix before choosing tools or connectors.</li>
               <li>Run <code>python3 os-visualization/scripts/run-frankly-os-evals.py</code>.</li>
-              <li>Commit the root OS workspace and nested site repo separately when git writes are available.</li>
-              <li>Define the tool/connector guard matrix before more automation.</li>
+              <li>Run one more non-claim agent/loop/routes task with the matrix as preflight.</li>
+              <li>Record the run, validate it and sync it to Drive.</li>
               <li>Keep claims work locked until Jonas explicitly reopens it.</li>
             </ol>
           </div>
           <aside class="next-panel">
             <h3>Next layer</h3>
-            <p>Close continuity first, then classify tool and connector gates before increasing autonomy.</p>
+            <p>Continuity is closed. Use the guard matrix before increasing autonomy.</p>
           </aside>
         </div>
       </section>

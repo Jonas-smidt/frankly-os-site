@@ -718,7 +718,7 @@
           </a>
           <a href="progress-map.html">
             <span class="map-index">02</span>
-            <span><b>Machine state</b><small>Claims locked, guard checks, handoff state and machine-runtime focus.</small></span>
+            <span><b>Machine state</b><small>Claims locked, guard checks, handoff state, run registry and tool preflight.</small></span>
             <span class="map-status">machine focus</span>
           </a>
           <a class="tall" href="mission-control-queue.html">
@@ -764,7 +764,7 @@
           <article class="snapshot"><b>20</b><span>route docs for repeatable work</span></article>
           <article class="snapshot"><b>60</b><span>skills/checklists in the OS library</span></article>
           <article class="snapshot"><b>10</b><span>Mission Control batches</span></article>
-          <article class="snapshot"><b>61</b><span>reports that record decisions and proof</span></article>
+          <article class="snapshot"><b>62</b><span>reports that record decisions and proof</span></article>
           <article class="snapshot"><b>locked</b><span>claims/product/legal work until explicitly reopened</span></article>
         </div>
       </div>
@@ -860,12 +860,13 @@
         <div class="system-split">
           <article class="system-panel">
             <h3>Current thread of work</h3>
-            <p>MCQ-010 remains the latest fully validated Mission Control batch, and claims/product/legal work is locked. MCQ-011 is now active locally as the run registry, eval trace and route-rep layer.</p>
+            <p>MCQ-010 remains the latest fully validated Mission Control batch, and claims/product/legal work is locked. MCQ-011 is now active locally as the run registry, eval trace, route-rep layer and tool/connector preflight.</p>
             <div class="mission-path">
               <a href="mission-control-queue.html"><span class="mission-id">MCQ-005</span><b>Machine handoff</b><span class="state-pill live">built</span></a>
               <a href="mission-control-queue.html"><span class="mission-id">MCQ-008</span><b>State consistency guard</b><span class="state-pill live">green</span></a>
               <a href="mission-control-queue.html"><span class="mission-id">Lock</span><b>Claims/product/legal</b><span class="state-pill gated">closed</span></a>
               <a href="mission-control-queue.html"><span class="mission-id">MCQ-011</span><b>Run registry + evals</b><span class="state-pill live">active</span></a>
+              <a href="progress-map.html"><span class="mission-id">Guard</span><b>Tool/connector matrix</b><span class="state-pill live">preflight</span></a>
             </div>
           </article>
           <article class="inventory-panel">
@@ -873,9 +874,10 @@
             <div class="inventory-row"><span><b>Mission rows</b><small>Architect, Builder, Reviewer and Integrator outputs.</small></span><strong>40</strong></div>
             <div class="inventory-row"><span><b>Evidence folders</b><small>Browser QA and proof screenshots for local surfaces.</small></span><strong>12</strong></div>
             <div class="inventory-row"><span><b>Generated prompt packs</b><small>Reusable mission prompt packs from Prompt Agent v0.1.</small></span><strong>7</strong></div>
-            <div class="inventory-row"><span><b>Run registry entries</b><small>Meaningful machine runs with route, validation and gates.</small></span><strong>5</strong></div>
-            <div class="inventory-row"><span><b>Route reps</b><small>Route QA, Presentation Machine and Repository Instructions are drafted locally.</small></span><strong>3/3</strong></div>
-            <div class="inventory-row"><span><b>Local eval cases</b><small>Claims lock, machine focus, gates, handoff, registry and three route reps.</small></span><strong>11</strong></div>
+            <div class="inventory-row"><span><b>Run registry entries</b><small>Meaningful machine runs with route, validation and gates.</small></span><strong>6</strong></div>
+            <div class="inventory-row"><span><b>Route reps</b><small>Route QA, Presentation Machine and Repository Instructions are recorded locally.</small></span><strong>3/3</strong></div>
+            <div class="inventory-row"><span><b>Tool guard</b><small>Filesystem, git, browser, Drive, Slack, API, deploy, plugins and threads classified.</small></span><strong>10</strong></div>
+            <div class="inventory-row"><span><b>Local eval cases</b><small>Claims lock, machine focus, gates, handoff, registry, route reps and tool guard.</small></span><strong>12</strong></div>
             <div class="inventory-row"><span><b>Public-ready surfaces</b><small>Everything remains gated until approved.</small></span><strong>0</strong></div>
           </article>
         </div>
@@ -895,7 +897,7 @@
           <article><span class="map-index">01</span><h3>Public deploy</h3><p>No public publishing without explicit approval.</p></article>
           <article><span class="map-index">02</span><h3>Paid API / Slack</h3><p>Slack and OpenAI runtime stay lab-only and guarded.</p></article>
           <article><span class="map-index">03</span><h3>Claims scope</h3><p>Closed by default until Jonas explicitly reopens a named scope.</p></article>
-          <article><span class="map-index">04</span><h3>Automation</h3><p>No automatic thread creation or connector writes without approval.</p></article>
+          <article><span class="map-index">04</span><h3>Automation</h3><p>No automatic thread creation or connector writes without matrix preflight and approval.</p></article>
         </div>
       </div>
     </section>
@@ -907,18 +909,18 @@
             <span class="overview-kicker">Recommended next move</span>
             <h2>Build the machine, not the claims lane.</h2>
           </div>
-          <p>The workspace is now baselined, the run registry is active, and MCQ-011 has three local non-claim reps. The next move is to close Drive/git continuity before more autonomy.</p>
+          <p>The workspace is now baselined, the run registry is active, and MCQ-011 has three local non-claim reps plus a tool/connector guard matrix. The next move is to use the matrix before more autonomy.</p>
         </div>
         <div class="next-panel">
           <article class="next-callout">
-            <span class="state-pill live">MCQ-011 3/3 local</span>
-            <h3>Close the loop.</h3>
-            <p>Upload pending artifacts and commit both repos when the usage gate clears, then design the tool/connector guard matrix.</p>
+            <span class="state-pill live">MCQ-011 preflight live</span>
+            <h3>Use the guard matrix.</h3>
+            <p>Classify the action first, then run one more non-claim agent/loop/routes task without turning on hidden automation.</p>
           </article>
           <div class="next-list">
-            <article class="next-item"><span>1</span><div><b>Sync pending artifacts</b><p>Upload Presentation Machine and Repository Instructions outputs, then record returned Drive URLs.</p></div></article>
-            <article class="next-item"><span>2</span><div><b>Commit both repos</b><p>Commit the root OS workspace and the nested site repo separately when git writes are available.</p></div></article>
-            <article class="next-item"><span>3</span><div><b>Design guard matrix</b><p>Classify filesystem, git, browser, Drive, Slack, APIs, deploys, plugins and thread creation before more automation.</p></div></article>
+            <article class="next-item"><span>1</span><div><b>Run preflight</b><p>Classify filesystem, git, browser, Drive, Slack, API, deploy, plugins and thread creation before acting.</p></div></article>
+            <article class="next-item"><span>2</span><div><b>Exercise the machine</b><p>Run a small non-claim task through agent, loop and routes with the matrix active.</p></div></article>
+            <article class="next-item"><span>3</span><div><b>Record the proof</b><p>Validate locally, update the run registry and sync the artifacts to Drive.</p></div></article>
           </div>
         </div>
       </div>
