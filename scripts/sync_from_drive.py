@@ -20,11 +20,24 @@ import shutil
 SITE_DIR = pathlib.Path("site")
 ENTRY_FILE = pathlib.Path("index.html")
 UPLOADABLE_HTML = (
+    pathlib.Path("frankly-signature-generator.html"),
+    pathlib.Path("frankly-brand-reference.html"),
+    pathlib.Path("frankly-brand-assistant.html"),
+    pathlib.Path("frankly-business-card.html"),
+    pathlib.Path("frankly-dictionary.html"),
+    pathlib.Path("frankly-qr-link.html"),
+    pathlib.Path("frankly-linkedin-checker.html"),
+    pathlib.Path("frankly-image-resizer.html"),
+    pathlib.Path("frankly-drop-protection.html"),
     pathlib.Path("franklys-bmw.html"),
+    pathlib.Path("the-decision-chicken.html"),
+    pathlib.Path("frankly-quiz.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
     pathlib.Path("sitemap.xml"),
+    pathlib.Path("frankly-lab-tools.css"),
+    pathlib.Path("frankly-lab-tools.js"),
     pathlib.Path("assets/frankly-logo-small.png"),
     pathlib.Path("assets/frankly-wordmark.png"),
 )

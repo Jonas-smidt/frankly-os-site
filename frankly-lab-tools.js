@@ -188,7 +188,7 @@ function renderShell(meta, mainHtml, sideHtml = "") {
         </a>
         <nav class="nav" aria-label="Lab navigation">
           <a href="index.html#registry">Registry</a>
-          <a href="lab-hub.html#tools">Lab Hub</a>
+          <a href="index.html#live">All tools</a>
         </nav>
       </header>
       <section class="hero">
