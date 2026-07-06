@@ -23,6 +23,7 @@
     --ok:#CFE8BF;
     --warn:#F3D187;
     --blue:#CCD8F0;
+    --recover:#E7D7F1;
     --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   }
   *{box-sizing:border-box}
@@ -62,9 +63,15 @@
   .draft small{background:var(--blue)}
   .local small{background:var(--limestone-soft)}
   .locked small{background:var(--warn)}
+  .missing small{background:var(--recover)}
   .item h3{font-size:24px;line-height:1.08;margin:18px 0 10px;color:var(--grounded)}
   .item p{margin:0;color:#604A52}
   .item strong{margin-top:auto;padding-top:18px;font-size:14px;color:var(--grounded)}
+  .ledger{border-top:1px solid var(--edge)}
+  .ledger-row{display:grid;grid-template-columns:150px minmax(190px,.55fr) minmax(0,1fr) 150px;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--edge)}
+  .ledger-row span{font-size:11px;font-weight:900;text-transform:uppercase;color:var(--grey)}
+  .ledger-row b{display:block;color:var(--grounded);font-size:18px;line-height:1.14}
+  .ledger-row p{margin:4px 0 0;color:var(--grey);font-size:14px}
   .tool-row{display:grid;grid-template-columns:180px minmax(0,1fr) 130px;gap:14px;align-items:start;padding:16px 0;border-top:1px solid var(--edge)}
   .tool-row:last-child{border-bottom:1px solid var(--edge)}
   .tool-row span{font-size:12px;font-weight:900;text-transform:uppercase;color:var(--grey)}
@@ -74,6 +81,8 @@
   .state.live{background:var(--ok)}
   .state.locked{background:var(--warn)}
   .state.draft{background:var(--blue)}
+  .state.missing{background:var(--recover)}
+  .source-note{margin-top:16px;color:var(--grey);font-size:13px}
   .note{border-top:1px solid var(--edge);padding:22px 0 40px;color:var(--grey);font-size:14px}
   @media (max-width:860px){
     .topbar{align-items:flex-start;flex-direction:column}
@@ -82,6 +91,7 @@
     .grid{grid-template-columns:1fr}
     .item{min-height:0}
     .section-head{align-items:flex-start;flex-direction:column}
+    .ledger-row{grid-template-columns:1fr;gap:6px}
     .tool-row{grid-template-columns:1fr;gap:6px}
     .state{justify-self:start}
   }
@@ -95,6 +105,7 @@
     </a>
     <nav class="nav" aria-label="Lab pages">
       <a href="#live">Live</a>
+      <a href="#registry">Registry</a>
       <a href="#workbench">Workbench</a>
       <a href="#local-only">Local only</a>
     </nav>
@@ -105,7 +116,7 @@
       <div>
         <p class="kicker">Gated upload bundle</p>
         <h1>Lab is the shelf again.</h1>
-        <p>Frankly Lab online shows the practical test lane, the built local workbench and the gates around work that must stay out of the public bundle. The OS machine itself still stays local.</p>
+        <p>Frankly Lab online shows the practical test lane, the built local workbench, the full tool registry and the gates around work that must stay out of the public bundle. The OS machine itself still stays local.</p>
         <div class="hero-actions">
           <a class="button" href="#live">Open live tools</a>
           <a class="button secondary" href="#local-only">See gated work</a>
@@ -114,11 +125,11 @@
       <aside class="status-panel" aria-label="Bundle boundary">
         <span>Boundary</span>
         <b>Lab visible. OS local.</b>
-        <p>The upload bundle carries safe HTML tests and a visible workbench index. Studio, Mission Control, source feeds and product/legal drafts stay local-only.</p>
+        <p>The upload bundle carries one safe HTML test plus a visible registry of what exists, what is local-only and what needs recovery. Studio, Mission Control, source feeds and product/legal drafts stay local-only.</p>
         <div class="metrics" aria-label="Lab bundle metrics">
-          <div><strong>1</strong><small>live test</small></div>
-          <div><strong>12</strong><small>visible tools</small></div>
-          <div><strong>0</strong><small>OS feeds online</small></div>
+          <div><strong>21</strong><small>registry entries</small></div>
+          <div><strong>10</strong><small>local files</small></div>
+          <div><strong>1</strong><small>online file</small></div>
         </div>
       </aside>
     </section>
@@ -144,16 +155,164 @@
         <article class="item local">
           <small>Visible index</small>
           <h3>Lab workbench</h3>
-          <p>The rest of the built work is no longer hidden. It is shown below with its gate state instead of being silently absent.</p>
-          <strong>Scroll</strong>
+          <p>The full registry is no longer hidden. It is shown below with file state instead of being silently absent.</p>
+          <strong>See registry</strong>
         </article>
       </div>
+    </section>
+
+    <section class="wrap band" id="registry">
+      <div class="section-head">
+        <h2>Tool and game registry</h2>
+        <p>This is the actual Lab shelf from `lab-hub.html` plus the old browser-QA evidence. It separates real files from registry-only ideas so we do not pretend missing pages are live.</p>
+      </div>
+      <div class="ledger" aria-label="Frankly Lab tool and game registry">
+        <div class="ledger-row">
+          <span>Uploaded</span>
+          <div><b>Frankly's BMW</b><p>Play / browser game</p></div>
+          <p>Standalone HTML game and the only tool file copied into the public upload bundle right now.</p>
+          <em class="state live">Online file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Start here</b><p>Daily / onboarding</p></div>
+          <p>Internal first-run surface for brand, products, Lab and OS orientation.</p>
+          <em class="state">Local only</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Agent Brief Builder</b><p>OS / prompt tool</p></div>
+          <p>Turns broad goals into larger mission prompts with context, gates and validation.</p>
+          <em class="state">Local only</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Frankly OS</b><p>OS / system map</p></div>
+          <p>Visual operating-system map for routes, loop, gates, learning and next choices.</p>
+          <em class="state locked">OS local</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Studio</b><p>OS / launch shell</p></div>
+          <p>Command palette, registry-fed run memory, validation, Drive queue and Claude task packets.</p>
+          <em class="state locked">OS local</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Control Cockpit</b><p>OS / control readout</p></div>
+          <p>Current state, gates, Claude lane, run history and Drive continuity.</p>
+          <em class="state locked">OS local</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Observatory</b><p>OS / visual machine</p></div>
+          <p>Flight Recorder, Mission Simulator, Launch Packet, Mission Theatre and Future Mode.</p>
+          <em class="state locked">OS local</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Mission Control Queue</b><p>OS / batch queue</p></div>
+          <p>Manual mission batches, returned outputs, review checkpoints and machine-state alignment.</p>
+          <em class="state locked">OS local</em>
+        </div>
+        <div class="ledger-row">
+          <span>Local file</span>
+          <div><b>Progress Map</b><p>OS / progress view</p></div>
+          <p>Shows what has been built, where the machine is, and what the next move is.</p>
+          <em class="state locked">OS local</em>
+        </div>
+        <div class="ledger-row">
+          <span>Locked file</span>
+          <div><b>Coverage overview</b><p>Daily / product clarity</p></div>
+          <p>Useful internal surface, but public use is product/legal gated while claims work is locked.</p>
+          <em class="state locked">Claims gate</em>
+        </div>
+        <div class="ledger-row">
+          <span>Locked file</span>
+          <div><b>Store guide</b><p>Daily / internal guide</p></div>
+          <p>Training and onboarding guide with product-adjacent material, kept out of the upload bundle.</p>
+          <em class="state locked">Local only</em>
+        </div>
+        <div class="ledger-row">
+          <span>Locked file</span>
+          <div><b>Blog drafts</b><p>SEO / draft content</p></div>
+          <p>Blog index and cykelforsikring draft exist locally, but publishing is blocked by the claims/product gate.</p>
+          <em class="state locked">Claims gate</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Email signature</b><p>Brand / daily tool</p></div>
+          <p>Registered in Lab evidence, but `frankly-signature-generator.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Brand Reference</b><p>Brand / reference</p></div>
+          <p>Registered in Lab evidence, but `frankly-brand-reference.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Brand Assistant</b><p>Brand / answers</p></div>
+          <p>Registered in Lab evidence, but `frankly-brand-assistant.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Business card</b><p>Daily / QR card</p></div>
+          <p>Registered in Lab evidence, but `frankly-business-card.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Dictionary</b><p>Daily / glossary</p></div>
+          <p>Registered in Lab evidence, but `frankly-dictionary.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>QR link</b><p>Daily / generator</p></div>
+          <p>Registered in Lab evidence, but `frankly-qr-link.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>LinkedIn checker</b><p>Daily / text check</p></div>
+          <p>Registered in Lab evidence, but `frankly-linkedin-checker.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Image resizer</b><p>Daily / image tool</p></div>
+          <p>Registered in Lab evidence, but `frankly-image-resizer.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Drop Protection</b><p>Play / game</p></div>
+          <p>Registered in Lab evidence, but `frankly-drop-protection.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Decision Chicken</b><p>Play / decision toy</p></div>
+          <p>Registered in Lab evidence, but `the-decision-chicken.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+        <div class="ledger-row">
+          <span>Recovery</span>
+          <div><b>Do you know Frankly?</b><p>Play / quiz</p></div>
+          <p>Registered in Lab evidence, but `frankly-quiz.html` is not in the current repo tree.</p>
+          <em class="state missing">Missing file</em>
+        </div>
+      </div>
+      <p class="source-note">Recovery note: `lab-hub.html` still carries these registry entries, and `os-visualization/evidence/20260630-213345-site-lab-rerun/site-lab-evidence.json` proves they were visible in an earlier Lab pass. The source HTML files are absent from the current site tree, so the next safe move is to recover them from the old bundle/Drive or rebuild them one by one before linking them online.</p>
     </section>
 
     <section class="wrap band" id="workbench">
       <div class="section-head">
         <h2>Built Lab shelf</h2>
-        <p>The useful part I removed too aggressively: the Lab should show the tools and surfaces we have, even when they are gated from upload.</p>
+        <p>The short shelf view groups the registry into what can be opened online, what remains local, what is locked and what needs source recovery.</p>
       </div>
       <div class="grid">
         <article class="item local">

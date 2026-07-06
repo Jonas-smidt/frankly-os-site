@@ -11,8 +11,6 @@ The uploadable website bundle is generated into ignored `site/` by `scripts/sync
 
 - `index.html`
 - `franklys-bmw.html`
-- `blog/index.html`
-- `blog/cykelforsikring.html`
 - shared logo/robots/sitemap files
 
 Internal operating pages remain useful locally, but they are not website content and are not copied into `site/`:
@@ -35,10 +33,10 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 
 ## Key Local Files
 
-- `index.html` - uploadable test-site entry page.
+- `index.html` - uploadable test-site entry page and visible Lab registry.
 - `franklys-bmw.html` - standalone HTML game/tool test.
-- `blog/index.html` - local draft blog index, currently noindex.
-- `blog/cykelforsikring.html` - source-updated local draft article for the Blog SEO route pilot, currently noindex.
+- `blog/index.html` - local draft blog index, currently noindex and not copied into the upload bundle.
+- `blog/cykelforsikring.html` - source-updated local draft article for the Blog SEO route pilot, currently noindex and not copied into the upload bundle.
 - `robots.txt` - blocks draft blogs and historical/internal operating URLs from crawling.
 - `sitemap.xml` - includes only the uploadable test-site entry and standalone game.
 - `frankly-os.html`, `overview.html`, `progress-map.html`, `studio.html`, `observatory.html`, `control-cockpit.html`, `lab-hub.html`, `agent-brief-builder.html`, `mission-control-queue.html`, `onboarding.html` - local-only operating surfaces.
@@ -46,6 +44,24 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 - `data/README.md` - local data-feed source and regeneration notes.
 - `CNAME` - configured custom domain target.
 - `scripts/sync_from_drive.py` - allowlisted upload-bundle builder.
+
+## Lab Registry Recovery
+
+`lab-hub.html` still contains a registry of 21 tool/game entries. Ten have files in the current repo tree, one is copied to the upload bundle, and eleven registry entries are visible in old browser-QA evidence but do not currently have source HTML files in this repo:
+
+- `frankly-signature-generator.html`
+- `frankly-brand-reference.html`
+- `frankly-brand-assistant.html`
+- `frankly-business-card.html`
+- `frankly-dictionary.html`
+- `frankly-qr-link.html`
+- `frankly-linkedin-checker.html`
+- `frankly-image-resizer.html`
+- `frankly-drop-protection.html`
+- `the-decision-chicken.html`
+- `frankly-quiz.html`
+
+Do not link these as live pages until the files are recovered from an old bundle/Drive snapshot or rebuilt and locally QA'd.
 
 ## Current Run
 
