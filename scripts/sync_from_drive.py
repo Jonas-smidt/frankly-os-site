@@ -2,9 +2,9 @@
 """
 Build the uploadable Frankly test site bundle.
 
-The public website bundle is intentionally small: a test-lab landing page,
-allowlisted HTML/tool experiments and noindex blog drafts. Internal operating
-surfaces stay local and are not copied into ./site.
+The public website bundle is intentionally small: a test-lab landing page and
+allowlisted HTML/tool experiments. Internal operating surfaces and product/legal
+drafts stay local and are not copied into ./site.
 
 Environment variables:
   SITE_DOMAIN  Optional domain; otherwise the committed CNAME is copied.
@@ -21,8 +21,6 @@ SITE_DIR = pathlib.Path("site")
 ENTRY_FILE = pathlib.Path("index.html")
 UPLOADABLE_HTML = (
     pathlib.Path("franklys-bmw.html"),
-    pathlib.Path("blog/index.html"),
-    pathlib.Path("blog/cykelforsikring.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
@@ -117,7 +115,8 @@ def main():
 
     print(
         "Built uploadable test bundle with 1 entry page, "
-        f"{len(UPLOADABLE_HTML)} allowlisted HTML pages and no internal operating surfaces."
+        f"{len(UPLOADABLE_HTML)} allowlisted HTML page(s), no internal operating surfaces "
+        "and no product/legal drafts."
     )
 
 
