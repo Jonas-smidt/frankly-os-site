@@ -4,13 +4,35 @@
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 23,
-    "machineFocusedRuns": 23,
+    "runs": 24,
+    "machineFocusedRuns": 24,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 23
+    "validatedRuns": 24
   },
   "runs": [
+    {
+      "runId": "20260706-frankly-lab-online-safe-split-publish",
+      "date": "2026-07-06",
+      "name": "Publish safe Frankly Lab online split afte",
+      "route": "website-publishing-workflow + system-visualization + tool-connector-guard",
+      "status": "completed-local",
+      "summary": "Updated the online os.franklydesign.dk bundle to the safe Frankly Test Lab boundary: gated landing plus BMW HTML test only; internal OS surfaces and product/legal drafts remain local. GitHub Actions deploy 28821748112 succeeded, then remote deploy workflow was returned to manual-only.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "lock-only",
+      "artifacts": [
+        "index",
+        "sync from drive.py",
+        "deploy.yml"
+      ],
+      "gates": [
+        "no public deploy",
+        "claims locked",
+        "Remote workflow returned to workfl"
+      ],
+      "lesson": "Resolve git divergence between local frankly-os-site main and remote API commits before the next normal push; keep product/legal drafts out of public ."
+    },
     {
       "runId": "20260706-slack-chat-mesh-v0-1",
       "date": "2026-07-06",
