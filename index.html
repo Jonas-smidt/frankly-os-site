@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Frankly Test Lab</title>
 <meta name="description" content="Frankly upload bundle for small HTML tool tests, code prototypes and noindex blog drafts.">
-<link rel="icon" href="assets/frankly-logo-small.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -29,7 +28,7 @@
   .wrap{width:min(1120px,calc(100% - 36px));margin:0 auto}
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0}
   .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:800}
-  .brand img{width:30px;height:30px;border-radius:50%}
+  .brand-mark{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-deep));border:1px solid rgba(45,0,17,.12);box-shadow:inset 0 0 0 7px rgba(255,255,255,.4)}
   .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
   .nav a{min-height:34px;display:inline-flex;align-items:center;border:1px solid var(--edge);border-radius:999px;padding:7px 12px;background:rgba(255,255,255,.5);font-size:13px;font-weight:700;text-decoration:none}
   .hero{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(280px,.55fr);gap:28px;align-items:end;padding:46px 0 34px}
@@ -65,7 +64,7 @@
 <body>
   <header class="wrap topbar">
     <a class="brand" href="index.html" aria-label="Frankly Test Lab">
-      <img src="assets/frankly-logo-small.png" alt="">
+      <span class="brand-mark" aria-hidden="true"></span>
       <span>Frankly Test Lab</span>
     </a>
     <nav class="nav" aria-label="Test pages">
