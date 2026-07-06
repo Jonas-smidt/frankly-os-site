@@ -458,6 +458,9 @@
       </a>
       <nav class="nav-links" aria-label="Local surfaces">
         <a href="overview.html">Overview</a>
+        <a href="studio.html">Studio</a>
+        <a href="control-cockpit.html">Cockpit</a>
+        <a href="observatory.html">Observatory</a>
         <a href="onboarding.html">Start here</a>
         <a href="frankly-os.html">OS</a>
         <a href="lab-hub.html#queue">Lab queue</a>
@@ -474,13 +477,13 @@
       <section class="progress-header" id="progress" aria-label="Current Frankly OS status">
         <div class="progress-title">
           <span class="progress-kicker">Frankly OS progress</span>
-          <h1>The machine works. Now it has preflight.</h1>
-          <p>We have moved the work from small chat stops into a local machine with Mission Control, Prompt Agent, handoff, guard, run registry, local evals and a tool/connector guard matrix. Claims work is locked; the next job is using the matrix on another non-claim task.</p>
+          <h1>The machine works. Now it has a Studio.</h1>
+          <p>We have moved the work from small chat stops into a local machine with Mission Control, Prompt Agent, handoff, guard, run registry, local evals, a tool/connector guard matrix, Control Cockpit, Observatory, Studio, Claude packet prep and Slack Chat Mesh. Claims work is locked; the next job is either the queued Drive pass or one concrete non-claim task.</p>
         </div>
         <aside class="progress-current">
           <span class="progress-kicker">Active layer</span>
           <h2>MCQ-011</h2>
-          <p>MCQ-010 is the latest fully validated Mission Control batch. MCQ-011 is active locally as run registry, local eval harness, non-claim route-rep trace and tool/connector preflight.</p>
+          <p>MCQ-010 is the latest fully validated Mission Control batch. MCQ-011 is active locally as run registry, local eval harness, non-claim route-rep trace, Studio shell, Slack Chat Mesh, tool/connector preflight, cockpit and observatory.</p>
         </aside>
       </section>
 
@@ -490,7 +493,7 @@
           <span>Mission batches</span>
         </div>
         <div class="metric is-active">
-          <b>6</b>
+          <b>23</b>
           <span>Run records</span>
         </div>
         <div class="metric is-clear">
@@ -498,7 +501,7 @@
           <span>Route reps</span>
         </div>
         <div class="metric is-clear">
-          <b>12</b>
+          <b>28</b>
           <span>Eval cases</span>
         </div>
         <div class="metric">
@@ -562,8 +565,18 @@
             <strong>Tool guard</strong>
             <p>Filesystem, git, browser, Drive, Slack, API, deploy, plugins and threads now have preflight rules.</p>
           </article>
-          <article class="road-step gated">
+          <article class="road-step active">
             <span class="number">7</span>
+            <strong>Control cockpit</strong>
+            <p>Current state, gates, Claude Code lane, run history, Drive continuity and next actions now have one internal surface.</p>
+          </article>
+          <article class="road-step active">
+            <span class="number">8</span>
+            <strong>Studio + packets</strong>
+            <p>Studio is the local launch shell with run-to-packet memory and copy-ready Claude task packets.</p>
+          </article>
+          <article class="road-step gated">
+            <span class="number">9</span>
             <strong>Automation later</strong>
             <p>Thread handoff and connector writes stay gated until the local machine proves itself.</p>
           </article>
@@ -647,15 +660,19 @@
               <li>Presentation Machine can turn OS context into an internal deck spine.</li>
               <li>Repository Instructions tell future agents how to work safely in both repos.</li>
               <li>Tool/Connector Guard Matrix classifies actions before more autonomy.</li>
+              <li>Control Cockpit gives Jonas and future agents one current machine launch point.</li>
+              <li>Observatory gives Jonas a playful local machine constellation without crossing gates.</li>
+              <li>Studio gives future code work a software-like shell, registry-fed launcher and copy-ready Claude packet.</li>
+              <li>Slack Chat Mesh adds reusable local multi-agent rooms without enabling live Slack automation.</li>
             </ul>
           </article>
           <article class="lane">
             <h3>Active now</h3>
             <ul>
               <li>Claims/product/legal work is locked until explicit reopen.</li>
-              <li>Frankly OS evals check lock obedience, machine focus, run traceability, all three MCQ-011 route reps and the Tool/Connector Guard Matrix.</li>
+              <li>Frankly OS evals check lock obedience, machine focus, run traceability, all three MCQ-011 route reps, the Tool/Connector Guard Matrix, Control Cockpit, Studio, Drive queue and Observatory.</li>
               <li>Static QA includes machineStateGuard, passive sourceIntake, franklyOsEvals and routeQa.</li>
-              <li>MCQ-011 is active as the local run-registry and tool-preflight layer.</li>
+              <li>MCQ-011 is active as the local run-registry, tool-preflight, Studio, cockpit, observatory and Slack lab room layer.</li>
             </ul>
           </article>
           <article class="lane">
@@ -681,16 +698,20 @@
         <div class="next-grid">
           <div>
             <ol class="next-list">
+              <li>Start from Studio before the next local code task.</li>
+              <li>Use Control Cockpit for a report-style state readout before choosing tools or connectors.</li>
+              <li>Open Observatory when Jonas needs the machine state to be visually legible.</li>
+              <li>Use the Run-to-Packet Launcher and Task Packet Builder before future Claude Code work.</li>
               <li>Use the Tool/Connector Guard Matrix before choosing tools or connectors.</li>
               <li>Run <code>python3 os-visualization/scripts/run-frankly-os-evals.py</code>.</li>
-              <li>Run one more non-claim agent/loop/routes task with the matrix as preflight.</li>
-              <li>Record the run, validate it and sync it to Drive.</li>
+              <li>Run one more non-claim agent/loop/routes task with the matrix as preflight, or approve the queued Drive pass.</li>
+              <li>Record the run, validate it and either queue or sync it to Drive according to approval state.</li>
               <li>Keep claims work locked until Jonas explicitly reopens it.</li>
             </ol>
           </div>
           <aside class="next-panel">
             <h3>Next layer</h3>
-            <p>Continuity is closed. Use the guard matrix before increasing autonomy.</p>
+            <p>Continuity is closed locally. Use Studio and the guard matrix before increasing autonomy.</p>
           </aside>
         </div>
       </section>

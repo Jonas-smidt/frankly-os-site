@@ -684,6 +684,9 @@
       </a>
       <nav class="nav-links" aria-label="Local surfaces">
         <a class="active" href="overview.html">Overview</a>
+        <a href="studio.html">Studio</a>
+        <a href="control-cockpit.html">Cockpit</a>
+        <a href="observatory.html">Observatory</a>
         <a href="onboarding.html">Start</a>
         <a href="frankly-os.html">OS</a>
         <a href="progress-map.html">Progress</a>
@@ -714,35 +717,50 @@
           <a class="wide" href="onboarding.html">
             <span class="map-index">01</span>
             <span><b>Start surfaces</b><small>Onboarding, internal guide, product clarity and draft publishing gates.</small></span>
-            <span class="map-status">9 local surfaces</span>
+            <span class="map-status">12 local surfaces</span>
+          </a>
+          <a href="control-cockpit.html">
+            <span class="map-index">02</span>
+            <span><b>Control cockpit</b><small>One place for system state, gates, Claude Code lane, runs and Drive continuity.</small></span>
+            <span class="map-status">new v0.1</span>
+          </a>
+          <a href="studio.html">
+            <span class="map-index">02B</span>
+            <span><b>Studio</b><small>The software-like launch shell for command palette, run memory, validation and Claude task packets.</small></span>
+            <span class="map-status">new v0.1</span>
           </a>
           <a href="progress-map.html">
-            <span class="map-index">02</span>
+            <span class="map-index">03</span>
             <span><b>Machine state</b><small>Claims locked, guard checks, handoff state, run registry and tool preflight.</small></span>
             <span class="map-status">machine focus</span>
           </a>
+          <a href="observatory.html">
+            <span class="map-index">03B</span>
+            <span><b>Observatory</b><small>Interactive constellation for routes, gates, runs, Drive dock and future task routing.</small></span>
+            <span class="map-status">new v0.1</span>
+          </a>
           <a class="tall" href="mission-control-queue.html">
-            <span class="map-index">03</span>
+            <span class="map-index">04</span>
             <span><b>Mission Control</b><small>Ten batches, forty mission rows and returned outputs before automation.</small></span>
             <span class="map-status">review-ready</span>
           </a>
           <a href="lab-hub.html">
-            <span class="map-index">04</span>
+            <span class="map-index">05</span>
             <span><b>Lab tools</b><small>Browser workbench for daily shortcuts, tools and surface gates.</small></span>
             <span class="map-status">local-live</span>
           </a>
           <article>
-            <span class="map-index">05</span>
-            <span><b>Slack lab</b><small>Read-only Slack bot, specialist loop, dry-run and budget guard.</small></span>
-            <span class="map-status">paused / guarded</span>
+            <span class="map-index">06</span>
+            <span><b>Slack lab</b><small>Read-only Slack bot, specialist loop, chat mesh, dry-run and budget guard.</small></span>
+            <span class="map-status">local-ready / guarded</span>
           </article>
           <article class="wide">
-            <span class="map-index">06</span>
+            <span class="map-index">07</span>
             <span><b>Routes and skills</b><small>Twenty route docs and sixty reusable skills for repeatable work.</small></span>
             <span class="map-status">library layer</span>
           </article>
           <a href="frankly-os.html">
-            <span class="map-index">07</span>
+            <span class="map-index">08</span>
             <span><b>Operating OS</b><small>The visual console for routes, loops, activation and system flow.</small></span>
             <span class="map-status">open</span>
           </a>
@@ -760,11 +778,11 @@
           <p>This is the fastest read of the workspace right now. It tells us what exists, what is proven locally and what the machine can use next.</p>
         </div>
         <div class="snapshot-grid" aria-label="Frankly OS numbers">
-          <article class="snapshot"><b>11</b><span>HTML surfaces in the local site</span></article>
+          <article class="snapshot"><b>13</b><span>root HTML pages in the local site</span></article>
           <article class="snapshot"><b>20</b><span>route docs for repeatable work</span></article>
           <article class="snapshot"><b>60</b><span>skills/checklists in the OS library</span></article>
           <article class="snapshot"><b>10</b><span>Mission Control batches</span></article>
-          <article class="snapshot"><b>62</b><span>reports that record decisions and proof</span></article>
+          <article class="snapshot"><b>85</b><span>reports that record decisions and proof</span></article>
           <article class="snapshot"><b>locked</b><span>claims/product/legal work until explicitly reopened</span></article>
         </div>
       </div>
@@ -799,6 +817,21 @@
           <p>These are the easiest doors into the OS. Some are local-live, some are review-gated, and none should be treated as public-approved by accident.</p>
         </div>
         <div class="surface-grid">
+          <a class="surface-card" href="control-cockpit.html">
+            <span class="state-pill live">local-live</span>
+            <div><h3>Control Cockpit</h3><p>The internal control place for state, gates, Claude Code lane, runs and Drive continuity.</p></div>
+            <footer><span>Machine</span><span>new</span></footer>
+          </a>
+          <a class="surface-card" href="studio.html">
+            <span class="state-pill live">local-live</span>
+            <div><h3>Studio</h3><p>The software-like local shell for command palette, registry-fed run memory, validation, Drive queue and Claude packet prep.</p></div>
+            <footer><span>Machine</span><span>new</span></footer>
+          </a>
+          <a class="surface-card" href="observatory.html">
+            <span class="state-pill live">local-live</span>
+            <div><h3>Observatory</h3><p>Interactive constellation for machine state, route health, gate radar and Drive pending dock.</p></div>
+            <footer><span>Machine</span><span>new</span></footer>
+          </a>
           <a class="surface-card" href="onboarding.html">
             <span class="state-pill live">local-live</span>
             <div><h3>Start / onboarding</h3><p>The first-run entry surface for brand, product, tools and OS orientation.</p></div>
@@ -860,7 +893,7 @@
         <div class="system-split">
           <article class="system-panel">
             <h3>Current thread of work</h3>
-            <p>MCQ-010 remains the latest fully validated Mission Control batch, and claims/product/legal work is locked. MCQ-011 is now active locally as the run registry, eval trace, route-rep layer and tool/connector preflight.</p>
+            <p>MCQ-010 remains the latest fully validated Mission Control batch, and claims/product/legal work is locked. MCQ-011 is now active locally as the run registry, eval trace, route-rep layer, Studio packet lane, Slack Chat Mesh and tool/connector preflight.</p>
             <div class="mission-path">
               <a href="mission-control-queue.html"><span class="mission-id">MCQ-005</span><b>Machine handoff</b><span class="state-pill live">built</span></a>
               <a href="mission-control-queue.html"><span class="mission-id">MCQ-008</span><b>State consistency guard</b><span class="state-pill live">green</span></a>
@@ -872,12 +905,12 @@
           <article class="inventory-panel">
             <h3>Inventory</h3>
             <div class="inventory-row"><span><b>Mission rows</b><small>Architect, Builder, Reviewer and Integrator outputs.</small></span><strong>40</strong></div>
-            <div class="inventory-row"><span><b>Evidence folders</b><small>Browser QA and proof screenshots for local surfaces.</small></span><strong>12</strong></div>
-            <div class="inventory-row"><span><b>Generated prompt packs</b><small>Reusable mission prompt packs from Prompt Agent v0.1.</small></span><strong>7</strong></div>
-            <div class="inventory-row"><span><b>Run registry entries</b><small>Meaningful machine runs with route, validation and gates.</small></span><strong>6</strong></div>
+            <div class="inventory-row"><span><b>Evidence folders</b><small>Browser QA and proof screenshots for local surfaces.</small></span><strong>25</strong></div>
+            <div class="inventory-row"><span><b>Generated prompt packs</b><small>Reusable mission prompt packs from Prompt Agent v0.1.</small></span><strong>13</strong></div>
+            <div class="inventory-row"><span><b>Run registry entries</b><small>Meaningful machine runs with route, validation and gates.</small></span><strong>23</strong></div>
             <div class="inventory-row"><span><b>Route reps</b><small>Route QA, Presentation Machine and Repository Instructions are recorded locally.</small></span><strong>3/3</strong></div>
             <div class="inventory-row"><span><b>Tool guard</b><small>Filesystem, git, browser, Drive, Slack, API, deploy, plugins and threads classified.</small></span><strong>10</strong></div>
-            <div class="inventory-row"><span><b>Local eval cases</b><small>Claims lock, machine focus, gates, handoff, registry, route reps and tool guard.</small></span><strong>12</strong></div>
+            <div class="inventory-row"><span><b>Local eval cases</b><small>Claims lock, machine focus, gates, handoff, registry, route reps, tool guard, Studio, cockpit and observatory.</small></span><strong>28</strong></div>
             <div class="inventory-row"><span><b>Public-ready surfaces</b><small>Everything remains gated until approved.</small></span><strong>0</strong></div>
           </article>
         </div>
@@ -909,17 +942,17 @@
             <span class="overview-kicker">Recommended next move</span>
             <h2>Build the machine, not the claims lane.</h2>
           </div>
-          <p>The workspace is now baselined, the run registry is active, and MCQ-011 has three local non-claim reps plus a tool/connector guard matrix. The next move is to use the matrix before more autonomy.</p>
+          <p>The workspace is now baselined, the run registry is active, and MCQ-011 has route reps, guard matrix, Control Cockpit, Observatory, Studio, Claude packet prep and Slack Chat Mesh. The next move is to approve the queued Drive pass or run one concrete non-claim task through Studio and the matrix.</p>
         </div>
         <div class="next-panel">
           <article class="next-callout">
             <span class="state-pill live">MCQ-011 preflight live</span>
             <h3>Use the guard matrix.</h3>
-            <p>Classify the action first, then run one more non-claim agent/loop/routes task without turning on hidden automation.</p>
+            <p>Classify the action first, then either approve the Drive-pending queue or run one more non-claim agent/loop/routes task without hidden automation.</p>
           </article>
           <div class="next-list">
             <article class="next-item"><span>1</span><div><b>Run preflight</b><p>Classify filesystem, git, browser, Drive, Slack, API, deploy, plugins and thread creation before acting.</p></div></article>
-            <article class="next-item"><span>2</span><div><b>Exercise the machine</b><p>Run a small non-claim task through agent, loop and routes with the matrix active.</p></div></article>
+            <article class="next-item"><span>2</span><div><b>Exercise the machine</b><p>Start in Studio, use the run-to-packet launcher, then run a small non-claim task through routes with the matrix active.</p></div></article>
             <article class="next-item"><span>3</span><div><b>Record the proof</b><p>Validate locally, update the run registry and sync the artifacts to Drive.</p></div></article>
           </div>
         </div>

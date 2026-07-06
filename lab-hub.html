@@ -18,6 +18,9 @@
       </a>
       <nav class="nav-links" aria-label="Local surfaces">
         <a href="overview.html">Overview</a>
+        <a href="studio.html">Studio</a>
+        <a href="control-cockpit.html">Cockpit</a>
+        <a href="observatory.html">Observatory</a>
         <a href="onboarding.html">Start here</a>
         <a href="frankly-os.html">OS</a>
         <a href="frankly-os.html#control">Loop Control</a>
@@ -50,7 +53,7 @@
         <div class="hero-copy-block">
           <p class="eyebrow">Frankly Lab</p>
           <h1>Frankly Lab</h1>
-          <p class="hero-text">An internal workbench for the small things that otherwise steal speed: brand, onboarding, QR, images, terms and OS shortcuts.</p>
+          <p class="hero-text">An internal workbench for OS shortcuts, local tools, surface gates and safe experiments. Studio is now the launch shell; Lab stays the shelf and check bench.</p>
           <div class="actions">
             <a class="surface-button" href="#tools">View tools</a>
             <a class="surface-button secondary" href="#progress-overlap">View progress</a>
@@ -58,7 +61,7 @@
         </div>
         <div class="lab-engine" aria-label="Frankly Lab workbench">
           <div class="lab-node">
-            <strong id="liveCount">14</strong>
+            <strong id="liveCount">10</strong>
             <span><b>Live tools</b><span>Directly in the browser. No setup.</span></span>
             <small>live</small>
           </div>
@@ -68,9 +71,9 @@
             <small>draft</small>
           </div>
           <div class="lab-node">
-            <strong>25</strong>
-            <span><b>Deck slides as reference</b><span>Metadata, calm and stage logic from the investor deck.</span></span>
-            <small>source</small>
+            <strong>23</strong>
+            <span><b>Run records</b><span>Registry-fed memory now powers Studio and Observatory.</span></span>
+            <small>memory</small>
           </div>
         </div>
       </div>
@@ -112,20 +115,22 @@
           <aside class="lab-progress-panel">
             <span>Active layer</span>
             <h3>Claims are locked. The machine is next.</h3>
-            <p>We have the guard, handoff and routes. What is missing now is run registry, local evals and route reps across non-claim tasks.</p>
-            <a class="surface-button" href="progress-map.html">Open progress map</a>
+            <p>Run registry, local evals, Studio, Observatory and Slack Chat Mesh are ready locally. Public deploy, Drive writes, paid API and claims work remain gated.</p>
+            <a class="surface-button" href="studio.html">Open Studio</a>
           </aside>
           <div class="lab-progress-stack">
             <div class="lab-progress-metrics" aria-label="Frankly OS progress metrics">
               <div><b>10</b><span>batches</span></div>
               <div><b>40</b><span>missions</span></div>
+              <div><b>23</b><span>runs</span></div>
               <div><b>11/0/0</b><span>guard</span></div>
               <div><b>locked</b><span>claims</span></div>
             </div>
             <div class="lab-progress-steps" aria-label="Frankly OS next path">
               <article class="done"><span>Built</span><b>Mission Control + Prompt Agent + Handoff</b></article>
               <article class="done"><span>Built</span><b>State Guard + static QA</b></article>
-              <article class="active"><span>Now</span><b>Run registry + local evals</b></article>
+              <article class="done"><span>Built</span><b>Run registry + local evals</b></article>
+              <article class="active"><span>Now</span><b>Studio + Observatory + Slack Chat Mesh</b></article>
               <article class="gated"><span>Later</span><b>Supervised thread handoff</b></article>
               <article class="gated"><span>Locked</span><b>Claims/product/legal work</b></article>
             </div>
@@ -233,6 +238,9 @@ const TOOLS = [
   {name:"Frankly's BMW", mark:"BM", desc:"Drive nicely through Amager, keep the bike lane clear and watch the premium melt.", category:"Play", href:"franklys-bmw.html", status:"live", id:"TOOL_20"},
   {name:"Decision Chicken", mark:"DC", desc:"For small yes/no decisions where the most important thing is moving forward.", category:"Play", href:"the-decision-chicken.html", status:"draft", id:"TOOL_10"},
   {name:"Frankly OS", mark:"OS", desc:"The visual operating system: routes, loop, gates, learning and next choices.", category:"OS", href:"frankly-os.html", status:"live", id:"TOOL_11"},
+  {name:"Studio", mark:"ST", desc:"The software-like OS shell for command palette, run memory, validation, Drive queue and Claude task packets.", category:"OS", href:"studio.html", status:"live", id:"TOOL_21"},
+  {name:"Control Cockpit", mark:"CC", desc:"A report-style launch readout for current state, gates, Claude lane, runs and Drive continuity.", category:"OS", href:"control-cockpit.html", status:"live", id:"TOOL_22"},
+  {name:"Observatory", mark:"OB", desc:"A visual machine constellation with Flight Recorder, Mission Simulator, Launch Packet, Theatre and Future Mode.", category:"OS", href:"observatory.html", status:"live", id:"TOOL_23"},
   {name:"Agent Brief Builder", mark:"AB", desc:"Turn one loose idea into larger chat missions with context, gates, QA and review checkpoints.", category:"OS", href:"agent-brief-builder.html", status:"live", id:"TOOL_17"},
   {name:"Mission Control Queue", mark:"MC", desc:"Track larger mission batches before manual chat launch, review and OS integration.", category:"OS", href:"mission-control-queue.html", status:"live", id:"TOOL_18"},
   {name:"Progress Map", mark:"PM", desc:"See what we have built, where we are now and what the next machine move is.", category:"OS", href:"progress-map.html", status:"live", id:"TOOL_19"},

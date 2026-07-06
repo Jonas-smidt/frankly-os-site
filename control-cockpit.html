@@ -1,0 +1,630 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Frankly OS Control Cockpit v0.1</title>
+<link rel="icon" href="assets/frankly-logo-small.png">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="frankly-surfaces.css?v=control-cockpit">
+<style>
+  :root {
+    --cockpit-bg: #f7f5f0;
+    --cockpit-ink: #2d0011;
+    --cockpit-line: rgba(45, 0, 17, .16);
+    --cockpit-soft: rgba(45, 0, 17, .62);
+    --cockpit-green: #176e48;
+    --cockpit-green-soft: #dcf2e7;
+    --cockpit-amber: #9b690f;
+    --cockpit-amber-soft: #fff0c7;
+    --cockpit-blue: #285f83;
+    --cockpit-blue-soft: #dfedf7;
+    --cockpit-red: #a33b3b;
+    --cockpit-red-soft: #ffe2df;
+  }
+
+  body.cockpit-page {
+    background: var(--cockpit-bg);
+    color: var(--cockpit-ink);
+  }
+
+  .cockpit-shell {
+    padding: 28px 0 64px;
+  }
+
+  .cockpit-top {
+    min-height: calc(100svh - 116px);
+    display: grid;
+    grid-template-columns: minmax(0, .88fr) minmax(520px, 1.12fr);
+    gap: 12px;
+    align-items: stretch;
+  }
+
+  .cockpit-intro,
+  .control-ledger,
+  .cockpit-section {
+    border: 1px solid var(--cockpit-line);
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .cockpit-intro {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: clamp(22px, 3vw, 34px);
+    background: var(--bordeaux);
+    color: var(--limestone);
+  }
+
+  .cockpit-intro img {
+    width: 104px;
+    height: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .cockpit-kicker {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: rgba(255, 246, 250, .66);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .cockpit-kicker::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--calm-pink);
+  }
+
+  .cockpit-intro h1 {
+    margin: 52px 0 18px;
+    max-width: 10ch;
+    font-size: clamp(52px, 7vw, 92px);
+    line-height: .9;
+    font-weight: 650;
+    letter-spacing: 0;
+  }
+
+  .cockpit-intro p {
+    max-width: 560px;
+    color: rgba(255, 246, 250, .78);
+    font-size: 17px;
+    line-height: 1.5;
+    font-weight: 550;
+  }
+
+  .cockpit-links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    margin-top: 26px;
+  }
+
+  .cockpit-links a,
+  .mini-link {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 11px;
+    border: 1px solid rgba(255, 246, 250, .28);
+    border-radius: 999px;
+    color: var(--limestone);
+    font-size: 12px;
+    font-weight: 800;
+    text-decoration: none;
+  }
+
+  .control-ledger {
+    display: grid;
+    grid-template-rows: auto 1fr;
+    overflow: hidden;
+  }
+
+  .ledger-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 14px;
+    align-items: end;
+    padding: 22px;
+    border-bottom: 1px solid var(--cockpit-line);
+    background: #fff;
+  }
+
+  .ledger-head h2,
+  .cockpit-section h2 {
+    margin: 4px 0 0;
+    font-size: clamp(28px, 4vw, 46px);
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .ledger-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 1px;
+    background: var(--cockpit-line);
+  }
+
+  .ledger-cell {
+    min-height: 178px;
+    padding: 18px;
+    background: #fff;
+  }
+
+  .ledger-cell.is-live { background: var(--cockpit-green-soft); }
+  .ledger-cell.is-guarded { background: var(--cockpit-amber-soft); }
+  .ledger-cell.is-locked { background: var(--cockpit-red-soft); }
+  .ledger-cell.is-drive { background: var(--cockpit-blue-soft); }
+
+  .status-pill {
+    position: static;
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: rgba(45, 0, 17, .08);
+    color: rgba(45, 0, 17, .68);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 850;
+  }
+
+  .status-pill.live { background: var(--cockpit-green); color: #fff; }
+  .status-pill.guarded { background: var(--cockpit-amber); color: #fff; }
+  .status-pill.locked { background: var(--cockpit-red); color: #fff; }
+  .status-pill.drive { background: var(--cockpit-blue); color: #fff; }
+
+  .ledger-cell b {
+    display: block;
+    margin: 24px 0 8px;
+    font-family: var(--display);
+    font-size: clamp(26px, 3vw, 38px);
+    line-height: 1;
+    font-weight: 650;
+    letter-spacing: 0;
+  }
+
+  .ledger-cell p,
+  .cockpit-section p,
+  .lane-card p,
+  .run-row p {
+    margin: 0;
+    color: var(--cockpit-soft);
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 600;
+  }
+
+  .cockpit-section {
+    margin-top: 12px;
+    padding: clamp(18px, 3vw, 28px);
+  }
+
+  .section-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(240px, .45fr);
+    gap: 18px;
+    align-items: end;
+    margin-bottom: 18px;
+  }
+
+  .section-kicker {
+    color: rgba(45, 0, 17, .56);
+    font-size: 12px;
+    font-weight: 850;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+  }
+
+  .gate-rail,
+  .lane-grid,
+  .drive-grid,
+  .next-grid {
+    display: grid;
+    gap: 10px;
+  }
+
+  .gate-rail {
+    grid-template-columns: repeat(7, minmax(0, 1fr));
+  }
+
+  .gate-item {
+    min-height: 136px;
+    padding: 14px;
+    border: 1px solid var(--cockpit-line);
+    border-radius: 8px;
+    background: var(--cockpit-red-soft);
+  }
+
+  .gate-item b {
+    display: block;
+    margin: 16px 0 8px;
+    font-size: 15px;
+    line-height: 1.1;
+  }
+
+  .gate-item span {
+    color: rgba(45, 0, 17, .64);
+    font-size: 12px;
+    font-weight: 750;
+    line-height: 1.25;
+  }
+
+  .lane-grid {
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+  }
+
+  .lane-card {
+    min-height: 220px;
+    padding: 16px;
+    border: 1px solid var(--cockpit-line);
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .lane-card h3 {
+    margin: 22px 0 10px;
+    font-size: 24px;
+    line-height: 1;
+    letter-spacing: 0;
+  }
+
+  .lane-card ul,
+  .next-list,
+  .source-list {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    display: grid;
+    gap: 7px;
+  }
+
+  .lane-card li,
+  .next-list li,
+  .source-list li {
+    padding: 9px 10px;
+    border: 1px solid var(--cockpit-line);
+    border-radius: 8px;
+    background: #fbfaf7;
+    color: rgba(45, 0, 17, .74);
+    font-size: 13px;
+    font-weight: 750;
+    line-height: 1.32;
+    overflow-wrap: anywhere;
+  }
+
+  .run-table {
+    border: 1px solid var(--cockpit-line);
+    border-radius: 8px;
+    overflow: hidden;
+  }
+
+  .run-row {
+    display: grid;
+    grid-template-columns: 170px minmax(0, 1fr) 140px;
+    gap: 16px;
+    align-items: center;
+    min-height: 78px;
+    padding: 14px 16px;
+    border-top: 1px solid var(--cockpit-line);
+    background: #fff;
+  }
+
+  .run-row:first-child {
+    border-top: 0;
+  }
+
+  .run-row strong {
+    font-size: 15px;
+    line-height: 1.2;
+  }
+
+  .drive-grid {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .drive-panel {
+    padding: 18px;
+    border: 1px solid var(--cockpit-line);
+    border-radius: 8px;
+    background: var(--cockpit-blue-soft);
+  }
+
+  .drive-panel h3 {
+    margin: 10px 0 8px;
+    font-size: 26px;
+    line-height: 1;
+  }
+
+  .next-grid {
+    grid-template-columns: minmax(0, 1.1fr) minmax(280px, .9fr);
+    align-items: start;
+  }
+
+  .learning-note {
+    padding: 18px;
+    border: 1px solid var(--cockpit-line);
+    border-radius: 8px;
+    background: var(--calm-pink);
+  }
+
+  .learning-note h3 {
+    margin: 6px 0 10px;
+    font-size: 28px;
+    line-height: 1;
+  }
+
+  code {
+    font: 700 12px/1.3 ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace;
+  }
+
+  @media (max-width: 1120px) {
+    .cockpit-top,
+    .section-head,
+    .drive-grid,
+    .next-grid {
+      grid-template-columns: 1fr;
+    }
+
+    .ledger-grid,
+    .lane-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .gate-rail {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 700px) {
+    .cockpit-shell {
+      padding-top: 14px;
+    }
+
+    .ledger-grid,
+    .lane-grid,
+    .gate-rail {
+      grid-template-columns: 1fr;
+    }
+
+    .run-row {
+      grid-template-columns: 1fr;
+      gap: 8px;
+    }
+
+    .cockpit-intro h1 {
+      margin-top: 36px;
+    }
+  }
+</style>
+</head>
+<body class="surface-page cockpit-page no-scroll">
+  <header class="site-nav" aria-label="Frankly navigation">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="control-cockpit.html" aria-label="Frankly OS Control Cockpit">
+        <img class="brand-logo brand-logo-light" src="assets/frankly-logo-small.png" alt="frankly">
+        <span class="nav-surface-label">Control Cockpit</span>
+      </a>
+      <nav class="nav-links" aria-label="Local surfaces">
+        <a href="overview.html">Overview</a>
+        <a href="studio.html">Studio</a>
+        <a class="active" href="control-cockpit.html">Cockpit</a>
+        <a href="observatory.html">Observatory</a>
+        <a href="progress-map.html">Progress</a>
+        <a href="mission-control-queue.html">Mission control</a>
+        <a href="lab-hub.html">Lab</a>
+        <a href="agent-brief-builder.html">Brief builder</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="cockpit-shell" id="cockpit">
+    <div class="wide-wrap">
+      <section class="cockpit-top" aria-label="Frankly OS Control Cockpit">
+        <article class="cockpit-intro">
+          <div>
+            <img src="assets/frankly-logo-small.png" alt="Frankly">
+            <h1>Control Cockpit v0.1</h1>
+            <p>One internal readout for the current machine, active gates, Claude Code execution lane, run history, Drive continuity and next best actions. Local, noindex and not a public product surface.</p>
+            <div class="cockpit-links">
+              <a href="#claude-lane">Claude lane</a>
+              <a href="#run-history">Run history</a>
+              <a href="#drive">Drive continuity</a>
+              <a href="#next-actions">Next actions</a>
+              <a href="studio.html">Studio</a>
+              <a href="observatory.html#future-mode">Future mode</a>
+            </div>
+          </div>
+          <span class="cockpit-kicker">Claims/product/legal locked</span>
+        </article>
+
+        <article class="control-ledger">
+          <div class="ledger-head">
+            <div>
+              <span class="section-kicker">System now</span>
+              <h2>Understand the OS before touching tools.</h2>
+            </div>
+            <span class="status-pill live">MCQ-011 active</span>
+          </div>
+          <div class="ledger-grid" aria-label="Control ledger">
+            <div class="ledger-cell is-live"><span class="status-pill live">Active</span><b>Run registry</b><p>Meaningful machine runs are recorded with route, artifacts, validation, gates and Drive links.</p></div>
+            <div class="ledger-cell is-live"><span class="status-pill live">Green</span><b>Local evals</b><p>Eval harness checks lock obedience, machine focus, handoff, registry, route reps, visual surfaces and tool preflight.</p></div>
+            <div class="ledger-cell is-guarded"><span class="status-pill guarded">Preflight</span><b>Tool guard</b><p>Filesystem, git, browser, Drive, Slack, API, deploy, plugins and threads are classified before action.</p></div>
+            <div class="ledger-cell is-locked"><span class="status-pill locked">Locked</span><b>Claims lane</b><p>No source records, SRC status changes, claim answers or customer-facing product copy.</p></div>
+            <div class="ledger-cell is-drive"><span class="status-pill drive">Drive</span><b>Continuity</b><p>Report, artifact, state bundle and site snapshot are queued or uploaded only after validation and approval.</p></div>
+            <div class="ledger-cell"><span class="status-pill">Next</span><b>Preview first</b><p>Use Future Mode in Observatory to see the likely lane, gates, validation and stop rule before the next local task.</p></div>
+          </div>
+        </article>
+      </section>
+
+      <section class="cockpit-section" id="gates" aria-labelledby="gates-title">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Active gates</span>
+            <h2 id="gates-title">The cockpit starts with what stays closed.</h2>
+          </div>
+          <p>The goal is useful local execution, not hidden automation. These gates are visible before any code, connector or content action.</p>
+        </div>
+        <div class="gate-rail">
+          <article class="gate-item"><span class="status-pill locked">Locked</span><b>Claims scope</b><span>Claims, legal evidence, source records and customer-facing copy.</span></article>
+          <article class="gate-item"><span class="status-pill locked">Locked</span><b>Public deploy</b><span>No production publish or public release.</span></article>
+          <article class="gate-item"><span class="status-pill guarded">Approval</span><b>Paid API</b><span>No paid model calls or key setup.</span></article>
+          <article class="gate-item"><span class="status-pill guarded">Approval</span><b>Slack</b><span>No company-visible Slack action.</span></article>
+          <article class="gate-item"><span class="status-pill guarded">Guarded</span><b>Drive writes</b><span>Only approved continuity uploads with URLs recorded.</span></article>
+          <article class="gate-item"><span class="status-pill guarded">Approval</span><b>Plugins</b><span>No installs without Jonas approval.</span></article>
+          <article class="gate-item"><span class="status-pill guarded">Approval</span><b>Threads</b><span>No automatic thread creation.</span></article>
+        </div>
+      </section>
+
+      <section class="cockpit-section" id="claude-lane" aria-labelledby="claude-title">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Claude Code Execution Lane</span>
+            <h2 id="claude-title">Prepare code tasks as executable packets.</h2>
+          </div>
+          <p>A future code task should tell Claude what to read, what repo it is in, which tools are allowed, what outputs are expected and exactly how to validate.</p>
+        </div>
+        <div class="lane-grid">
+          <article class="lane-card">
+            <span class="status-pill live">1</span>
+            <h3>Read first</h3>
+            <ul>
+              <li><code>AGENTS.md</code></li>
+              <li><code>current-machine-handoff.md</code></li>
+              <li><code>run-registry.json</code></li>
+              <li><code>tool-connector-guard-matrix-2026-07-05.json</code></li>
+            </ul>
+          </article>
+          <article class="lane-card">
+            <span class="status-pill guarded">2</span>
+            <h3>Preflight</h3>
+            <ul>
+              <li>Check root or nested site git status.</li>
+              <li>Classify tools and connectors.</li>
+              <li>Confirm claims scope remains untouched.</li>
+              <li>Record follow-ups, not tiny blockers.</li>
+            </ul>
+          </article>
+          <article class="lane-card">
+            <span class="status-pill drive">3</span>
+            <h3>Validate</h3>
+            <ul>
+              <li><code>py_compile</code> core scripts.</li>
+              <li>Run Frankly OS evals.</li>
+              <li>Run local site QA.</li>
+              <li>Run machine and source-intake guards.</li>
+            </ul>
+          </article>
+          <article class="lane-card">
+            <span class="status-pill live">4</span>
+            <h3>Handoff</h3>
+            <ul>
+              <li>Update run registry.</li>
+              <li>Update handoff and ledger.</li>
+              <li>Queue or Drive-sync meaningful artifacts according to approval state.</li>
+              <li>Return Outcome, Validation and Next move.</li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="cockpit-section" id="run-history" aria-labelledby="run-title">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Run history</span>
+            <h2 id="run-title">Traceable machine work.</h2>
+          </div>
+          <p>The latest run registry entries prove that MCQ-011 can carry non-claim work across route QA, presentation, repository instructions, tool preflight, cockpit activation and visual machine-state surfaces.</p>
+        </div>
+        <div class="run-table">
+          <div class="run-row"><strong>Future Mode v0.1</strong><p>Read-only OS trailer for previewing future machine moves with lane, gates, validation and stop rule.</p><span class="status-pill guarded">Drive pending</span></div>
+          <div class="run-row"><strong>Mission Theatre v0.1</strong><p>Replay stage that turns recent runs into brief, gate, build, validate and learn cues.</p><span class="status-pill guarded">Drive pending</span></div>
+          <div class="run-row"><strong>Launch Packet v0.1</strong><p>Agent-ready local contract with mission, route, lane, validation and stop rule.</p><span class="status-pill guarded">Drive pending</span></div>
+          <div class="run-row"><strong>Observatory v0.1</strong><p>Playful local machine constellation with route forecast, Drive dock, run replay and gate radar.</p><span class="status-pill guarded">Drive pending</span></div>
+          <div class="run-row"><strong>Control Cockpit v0.1</strong><p>One-page control surface, Claude lane, report, artifact and Drive continuity bundle.</p><span class="status-pill live">synced</span></div>
+          <div class="run-row"><strong>Tool/Connector Guard</strong><p>Preflight matrix for filesystem, git, browser, Drive, Slack, API, deploy, plugins, threads and claims scope.</p><span class="status-pill live">synced</span></div>
+        </div>
+      </section>
+
+      <section class="cockpit-section" id="drive" aria-labelledby="drive-title">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Drive continuity</span>
+            <h2 id="drive-title">Local work becomes durable evidence.</h2>
+          </div>
+          <p>The cockpit is local-first, but every meaningful activation output is packaged for Drive after validation.</p>
+        </div>
+        <div class="drive-grid">
+          <article class="drive-panel">
+            <span class="status-pill drive">Pending approval</span>
+            <h3>Observatory bundle</h3>
+            <p>Report, machine-readable artifact, QA evidence, run registry snapshot and handoff snapshot for Observatory, Flight Recorder, Mission Simulator, Launch Packet, Mission Theatre and Future Mode.</p>
+            <ul class="source-list">
+              <li><code>future-mode-v0-1-2026-07-06.md</code></li>
+              <li><code>future-mode-v0-1-2026-07-06.json</code></li>
+              <li><code>20260706-future-mode-browser-qa/</code></li>
+            </ul>
+          </article>
+          <article class="drive-panel">
+            <span class="status-pill drive">Pending snapshot</span>
+            <h3>Site surface snapshot</h3>
+            <p>Clean internal HTML/CSS/data snapshot of the visual surface, including Observatory and the updated surface registry feed.</p>
+            <ul class="source-list">
+              <li><code>observatory.html</code></li>
+              <li><code>overview.html</code></li>
+              <li><code>progress-map.html</code></li>
+              <li><code>data/surface-gate-registry.json</code></li>
+            </ul>
+          </article>
+        </div>
+      </section>
+
+      <section class="cockpit-section" id="next-actions" aria-labelledby="next-title">
+        <div class="section-head">
+          <div>
+            <span class="section-kicker">Next best actions</span>
+            <h2 id="next-title">Use the machine, do not open the claims lane.</h2>
+          </div>
+          <p>The cockpit narrows the next move to a safe local task and keeps the parked work visible.</p>
+        </div>
+        <div class="next-grid">
+          <ol class="next-list">
+            <li>Use the Tool/Connector Guard Matrix before the next non-claim agent/loop/routes task.</li>
+            <li>Use Future Mode in Observatory when the next task needs a preview before action.</li>
+            <li>Keep Frankly OS evals, local site QA, machine-state guard and source-intake guard green.</li>
+            <li>Use Prompt Agent to size future coding tasks into fewer, larger reviewable chunks.</li>
+            <li>Keep partner-kit templating parked until the new partner deck learning lands.</li>
+            <li>Keep claims/product/legal locked until Jonas explicitly reopens a named scope.</li>
+          </ol>
+          <aside class="learning-note" id="learning">
+            <span class="status-pill live">Learning</span>
+            <h3>Make the cockpit the launch point.</h3>
+            <p>The read-first files worked; the missing comfort was a single visual place that told agents what to do, what not to touch and how to validate. Future activations should start here.</p>
+          </aside>
+        </div>
+      </section>
+    </div>
+  </main>
+
+  <footer class="site-footer">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="#cockpit">
+        <img class="brand-logo" src="assets/frankly-logo-small.png" alt="frankly">
+        <span>Control Cockpit</span>
+      </a>
+      <span class="footer-meta">Internal OS surface. Local, noindex and approval-gated.</span>
+    </div>
+  </footer>
+</body>
+</html>

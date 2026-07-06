@@ -1,0 +1,521 @@
+{
+  "generated": "2026-07-06",
+  "status": "registry-fed-flight-recorder-v0.1",
+  "source": "os-visualization/system-intelligence/run-registry.json",
+  "generatedFromRunRegistry": true,
+  "counts": {
+    "runs": 23,
+    "machineFocusedRuns": 23,
+    "claimWorkRuns": 0,
+    "driveSyncedRuns": 7,
+    "validatedRuns": 23
+  },
+  "runs": [
+    {
+      "runId": "20260706-slack-chat-mesh-v0-1",
+      "date": "2026-07-06",
+      "name": "Upgrade the local Frankly OS Slack lab so ",
+      "route": "slack-lab + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Slack Chat Mesh v0.1 adds a first-class chat route, expanded specialist mesh, higher local run capacity and portable room contract while keeping Slack lab work local-only and approval-gated.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "app.js",
+        "agent loop.js",
+        "choice buttons.js"
+      ],
+      "gates": [
+        "claims locked",
+        "no customer copy",
+        "Drive approval"
+      ],
+      "lesson": "Use chat: for local reusable multi-agent Slack lab rooms; keep live Slack/company-visible automation, Drive connector writes, paid APIs, plugin instal."
+    },
+    {
+      "runId": "20260706-claude-run-to-packet-launcher-v0-1",
+      "date": "2026-07-06",
+      "name": "Claude Run-to-Packet Launcher v0.1",
+      "route": "system-visualization + workflow-eval + run-registry",
+      "status": "completed-local",
+      "summary": "Claude Run-to-Packet Launcher v0.1 upgrades Studio with a registry-fed source-run selector that pre-fills the Claude task packet with task shape, target surface, objective, source run and source lesson while preserving local gates.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "studio",
+        "claude run to packet launcher v0 1",
+        "claude run to packet launcher v0 1"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "A packet gets easier to trust when it starts from recorded machine memory instead of a blank prompt."
+    },
+    {
+      "runId": "20260706-claude-task-packet-builder-v0-1",
+      "date": "2026-07-06",
+      "name": "Claude Task Packet Builder v0.1",
+      "route": "system-visualization + workflow-eval + run-registry",
+      "status": "completed-local",
+      "summary": "Claude Task Packet Builder v0.1 upgrades Studio with a local read-only task packet builder for future Claude Code work, including task shape, target surface, objective, read-first files, allowed work, expected outputs, do-not-touch boundaries, validation commands, browser QA target, run trace and strict stop rule.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "studio",
+        "claude task packet builder v0 1 20",
+        "claude task packet builder v0 1 20"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no public deploy"
+      ],
+      "lesson": "A task packet becomes useful when the stop rules are copyable before the agent starts editing."
+    },
+    {
+      "runId": "20260706-studio-v0-1",
+      "date": "2026-07-06",
+      "name": "Studio v0.1",
+      "route": "system-visualization + workflow-eval + run-registry",
+      "status": "completed-local",
+      "summary": "Studio v0.1 adds a local noindex software-like Frankly OS workbench with command palette, mission/gate view, registry-fed run memory, validation console, Drive queue and Claude Code Execution Lane packet preview.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "studio",
+        "control cockpit",
+        "observatory"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no public deploy"
+      ],
+      "lesson": "The OS becomes easier to use when it feels like software, but still stays backed by files, gates and validation."
+    },
+    {
+      "runId": "20260706-future-mode-v0-1",
+      "date": "2026-07-06",
+      "name": "Future Mode v0.1",
+      "route": "system-visualization + workflow-eval + run-registry",
+      "status": "completed-local",
+      "summary": "Future Mode v0.1 previews likely next machine moves with lane, allowed work, blocked gates, validation and stop rule while keeping automation, connector writes and claims/product/legal locked.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "observatory",
+        "control cockpit",
+        "future mode v0 1 2026 07 06"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "A future preview is useful only when it makes the stop rules as visible as the promise."
+    },
+    {
+      "runId": "20260706-mission-theatre-v0-1",
+      "date": "2026-07-06",
+      "name": "Mission Theatre v0.1",
+      "route": "system-visualization + run-registry + workflow-eval",
+      "status": "completed-local",
+      "summary": "Mission Theatre v0.1 turns recent local machine runs into brief, gate, build, validate and learn cues inside Observatory while using the same registry-fed run memory as Flight Recorder.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "observatory",
+        "mission theatre v0 1 2026 07 06",
+        "mission theatre v0 1 2026 07 06"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "Run memory becomes easier to use when the system can replay why it stopped."
+    },
+    {
+      "runId": "20260706-launch-packet-v0-1",
+      "date": "2026-07-06",
+      "name": "Launch Packet v0.1",
+      "route": "prompt-agent + machine-handoff + system-visualization + workflow-eval",
+      "status": "completed-local",
+      "summary": "Launch Packet v0.1 turns Mission Simulator output into a local agent-ready contract with mission, route, lane, do-not-touch boundaries, validation and stop rule while keeping connector writes and claims/product/legal locked.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "observatory",
+        "launch packet v0 1 2026 07 06",
+        "launch packet v0 1 2026 07 06"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "A visual preflight becomes more useful when it produces an agent-ready stop rule."
+    },
+    {
+      "runId": "20260705-mission-simulator-v0-1",
+      "date": "2026-07-05",
+      "name": "Mission Simulator v0.1",
+      "route": "system-visualization + workflow-eval + drive-pending-queue",
+      "status": "completed-local",
+      "summary": "Mission Simulator v0.1 previews future work inside Observatory as route, lane, allowed actions, blocked gates, validation path and output shape while keeping connector writes and claims/product/legal locked.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "observatory",
+        "mission simulator v0 1 2026 07 05",
+        "mission simulator v0 1 2026 07 05"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "Future work gets easier when gates are previewed before tools move."
+    },
+    {
+      "runId": "20260705-drive-ready-bundle-dry-run-v0-1",
+      "date": "2026-07-05",
+      "name": "Drive-Ready Bundle v0.1",
+      "route": "drive-pending-queue + machine-handoff + workflow-eval",
+      "status": "completed-local",
+      "summary": "Drive-Ready Bundle Dry Run v0.1 verifies the six queued Drive continuity runs locally, generates a checksum-backed approval packet, updates continuity state, passes Observatory browser QA and writes a Monday 2026-07-06 decision brief without connector writes.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "drive ready bundle dry run 2026 07",
+        "drive ready bundle dry run 2026 07",
+        "tomorrow decision brief 2026 07 05"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "Decision packets should be generated before connector writes are requested."
+    },
+    {
+      "runId": "20260705-observatory-flight-recorder-feed-v0-1",
+      "date": "2026-07-05",
+      "name": "Registry Feed v0.1",
+      "route": "system-visualization + run-registry + local-site-feed + workflow-eval",
+      "status": "completed-local",
+      "summary": "Registry Feed v0.1 makes Flight Recorder read frankly-os-site/data/flight-recorder.json generated from run-registry.json, with direct-file fallback preserved and all connector, deploy and claims gates closed.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "sync site data feeds.py",
+        "flight recorder"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "Use the registry-fed Flight Recorder as the default recent-run memory surface; pause unless Jonas approves Drive sync or asks for another concrete non."
+    },
+    {
+      "runId": "20260705-observatory-flight-recorder-v0-1",
+      "date": "2026-07-05",
+      "name": "Flight Recorder v0.1",
+      "route": "system-visualization + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Flight Recorder v0.1 makes recent Frankly OS machine runs inspectable inside Observatory with replay controls, route/status panels, artifacts, gates, validation and reusable lessons while preserving all connector, deploy and claims gates.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "observatory",
+        "observatory v0 1 2026 07 05"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "A replay surface should read the registry so memory does not drift."
+    },
+    {
+      "runId": "20260705-observatory-v0-1",
+      "date": "2026-07-05",
+      "name": "Observatory v0.1",
+      "route": "system-visualization + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Observatory v0.1 adds a local noindex machine constellation surface with canvas signal map, route forecast, Drive pending dock, run replay, gate radar and route-health lanes without touching claims/product/legal or connector writes.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "observatory",
+        "overview"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "A vivid surface works best when grounded in real machine state."
+    },
+    {
+      "runId": "20260705-drive-pending-queue-rep-001",
+      "date": "2026-07-05",
+      "name": "Drive Pending Queue",
+      "route": "drive-pending-queue + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Drive Pending Queue rep 001 lists three completed-local Frankly OS runs awaiting explicit Drive connector approval and prepares target folders, artifact lists, shared snapshots, exclusions and validation rules without performing any connector writes.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "drive pending queue rep 001 2026 0",
+        "drive pending queue rep 001 2026 0"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no customer copy"
+      ],
+      "lesson": "Connector-gated continuity should be a visible queue, not a memory burden."
+    },
+    {
+      "runId": "20260705-route-qa-two-lane-reporting-rep-003",
+      "date": "2026-07-05",
+      "name": "Route QA Two-Lane",
+      "route": "route-qa-two-lane-reporting + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Route QA Two-Lane Reporting rep 003 updated run-route-qa.py to preserve legacy Route QA fields while adding structural completeness and promotion readiness lanes; rep 003 shows 20 structurally complete routes, 12 ready-active, 3 gated-ready and 5 needing real pilots.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "run route qa.py",
+        "route qa rep 003 2026 07 05"
+      ],
+      "gates": [
+        "claims locked",
+        "no route promotion without real pi",
+        "no customer copy"
+      ],
+      "lesson": "Use Route QA rep 003 as the route-health baseline; do not promote test-next or gated routes without a real pilot or explicit approval."
+    },
+    {
+      "runId": "20260705-capability-radar-pilot-rep-001",
+      "date": "2026-07-05",
+      "name": "Capability Radar",
+      "route": "capability-radar + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Capability Radar Pilot rep 001 used Control Cockpit, the Tool/Connector Guard Matrix and Route QA rep 002 to produce a local build/test/park/reject decision: pause unless Drive-sync housekeeping is explicitly approved or Jonas asks for a concrete non-claim deliverable.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "capability radar pilot rep 001 202",
+        "capability radar pilot rep 001 202"
+      ],
+      "gates": [
+        "claims locked",
+        "no customer copy",
+        "no public deploy"
+      ],
+      "lesson": "Pause after validation; if continuing, explicitly approve Drive-sync housekeeping for pending local runs or provide a concrete non-claim deliverable."
+    },
+    {
+      "runId": "20260705-route-quality-door-hardening-rep-002",
+      "date": "2026-07-05",
+      "name": "Route Door Hardening",
+      "route": "route-quality-door-hardening + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Route Quality Door Hardening rep 002 added explicit quality doors to seven gated/test-next route docs, produced a fresh route QA artifact with zero missing structural checks, and kept claims/product/legal scope locked.",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "ai marketing labeling compliance r",
+        "blog seo content engine route"
+      ],
+      "gates": [
+        "claims locked",
+        "no customer copy",
+        "no public deploy"
+      ],
+      "lesson": "Use the structurally complete route layer for one small non-claim pilot, starting from Control Cockpit and the Tool/Connector Guard Matrix; Drive-sync."
+    },
+    {
+      "runId": "20260705-control-cockpit-v0-1-activation-test",
+      "date": "2026-07-05",
+      "name": "Control Cockpit v0.1",
+      "route": "system-visualization + mission-control-queue + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Control Cockpit v0.1 gives Jonas and future coding agents one internal launch surface for current state, active gates, Claude Code execution lane, run history, Drive continuity and next actions; artifacts are Drive-synced and claims scope remains locked.",
+      "validation": "passed",
+      "drive": "synced",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "control cockpit v0 1 2026 07 05",
+        "control cockpit v0 1 activation te"
+      ],
+      "gates": [
+        "claims locked",
+        "no public deploy",
+        "no paid API"
+      ],
+      "lesson": "Use Control Cockpit v0."
+    },
+    {
+      "runId": "20260705-tool-connector-guard-matrix-001",
+      "date": "2026-07-05",
+      "name": "Tool Guard Matrix",
+      "route": "tool-connector-guard-matrix + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Tool/Connector Guard Matrix classifies filesystem, git, browser, Drive, Slack, OpenAI API, deploy, plugin install, thread creation and claims/product/legal actions before more automation.",
+      "validation": "passed",
+      "drive": "synced",
+      "claims": "none",
+      "artifacts": [
+        "tool connector guard matrix 2026 0",
+        "tool connector guard matrix 2026 0",
+        "run frankly os evals.py"
+      ],
+      "gates": [
+        "claims locked",
+        "no public deploy",
+        "no Slack"
+      ],
+      "lesson": "Use the matrix as preflight on the next non-claim agent/loop/routes task, then record validation and Drive continuity."
+    },
+    {
+      "runId": "20260705-repository-instructions-rep-001",
+      "date": "2026-07-05",
+      "name": "Repository Instructions",
+      "route": "frankly-repository-instructions + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Repository Instructions rep 001 created root and site AGENTS.md files, a machine-readable artifact, a report, a Drive upload manifest and eval coverage without touching claims/product/legal scope.",
+      "validation": "passed",
+      "drive": "synced",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "AGENTS",
+        "AGENTS"
+      ],
+      "gates": [
+        "claims locked",
+        "no public deploy",
+        "Drive approval"
+      ],
+      "lesson": "Repository Instructions rep is Drive-synced; close root/site git commits, then define a tool/connector guard matrix before more automation."
+    },
+    {
+      "runId": "20260705-presentation-machine-rep-001",
+      "date": "2026-07-05",
+      "name": "Presentation Machine",
+      "route": "presentation-machine + product-marketing-context + frankly-presentation-storytelling + workflow-eval",
+      "status": "completed-local",
+      "summary": "Presentation Machine rep 001 produced a 12-slide internal Frankly OS deck spine with approval gates and no claims/product/legal scope touch.",
+      "validation": "passed",
+      "drive": "synced",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "frankly os internal deck spine 202",
+        "presentation machine rep 001 2026 "
+      ],
+      "gates": [
+        "claims locked",
+        "no public sharing without approval",
+        "Drive approval"
+      ],
+      "lesson": "Presentation Machine rep is Drive-synced; keep the deck spine internal-only until visual QA and Jonas approval, and close root/site git commits before."
+    },
+    {
+      "runId": "20260705-route-qa-rep-001",
+      "date": "2026-07-05",
+      "name": "Route QA rep 001",
+      "route": "frankly-route-qa + agentic-loop-runtime + workflow-eval",
+      "status": "completed-local",
+      "summary": "Route QA rep 001 audited 20 route docs, hardened four active routes and left 0 high-risk active route findings.",
+      "validation": "passed",
+      "drive": "synced",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "run route qa.py",
+        "route qa rep 001 2026 07 05"
+      ],
+      "gates": [
+        "claims locked",
+        "Drive approval",
+        "no public deploy"
+      ],
+      "lesson": "Run Presentation Machine as MCQ-011 route rep 2/3 and create a Frankly OS deck spine without touching claims/product/legal scope."
+    },
+    {
+      "runId": "20260704-mcq011-run-registry-local-eval-harness",
+      "date": "2026-07-04",
+      "name": "Run Registry v0.1",
+      "route": "agentic-loop-runtime + mission-control-queue + workflow-eval",
+      "status": "completed-local",
+      "summary": "Install a local run registry, recorder script and eval coverage so future machine runs become traceable before more automation.",
+      "validation": "passed",
+      "drive": "synced",
+      "claims": "none",
+      "artifacts": [
+        "run registry",
+        "record frankly run.py",
+        "run frankly os evals.py"
+      ],
+      "gates": [
+        "no thread spawn",
+        "Drive approval",
+        "no public deploy"
+      ],
+      "lesson": "The system can only learn from work it records."
+    },
+    {
+      "runId": "20260704-lock-claims-work-refocus-machine-runtime",
+      "date": "2026-07-04",
+      "name": "Claims Lock",
+      "route": "agentic-loop-runtime + mission-control-queue + workflow-eval",
+      "status": "completed-local",
+      "summary": "Recorded Jonas's claims-work lock, redirected the active next move away from evidence/source work and added a local Frankly OS eval harness.",
+      "validation": "passed",
+      "drive": "synced",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly claims work lock 2026 07 0",
+        "machine focus claims lock 2026 07 ",
+        "run frankly os evals.py"
+      ],
+      "gates": [
+        "claims locked",
+        "no thread spawn",
+        "Drive approval"
+      ],
+      "lesson": "A good machine must remember what not to work on."
+    }
+  ]
+}

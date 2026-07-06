@@ -1,52 +1,51 @@
-# Frankly OS Site
+# Frankly Test Site And Local OS Surfaces
 
-This folder contains the local website surface for Frankly OS, Frankly Lab and related product clarity pages.
+This folder now has two separate roles:
+
+- The uploadable website lane is a small test site for standalone HTML tools, code prototypes and gated/noindex blog draft previews.
+- Frankly OS operating surfaces stay local: OS map, Studio, Observatory, Mission Control, run memory, local state feeds, onboarding, progress and internal product clarity.
 
 ## Current Role
 
-The site is not only a static mirror of Drive files anymore. It is becoming the visual operating layer for the OS:
+The uploadable website bundle is generated into ignored `site/` by `scripts/sync_from_drive.py`. Despite the historical script name, it no longer syncs Drive and no longer copies every HTML file. It copies only the allowlist:
 
-- `frankly-os.html` is the operating console and system map.
-- `overview.html` is the simple internal "what have we built" overview for the full local OS.
-- `lab-hub.html` is the tools and experiments hub.
-- `agent-brief-builder.html` is the local prompt builder for larger autonomous chat missions.
-- `mission-control-queue.html` is the local queue for larger mission batches before thread handoff.
-- `progress-map.html` is the current machine-state visualization: what is built, active and gated.
-- `onboarding.html` is the internal start surface for first-run orientation.
-- `frankly-daekningsoverblik.html` is the first product clarity surface.
-- `guide/index.html` is an internal Danish store training guide for explaining Frankly, warranty and home contents insurance.
+- `index.html`
+- `franklys-bmw.html`
+- `blog/index.html`
+- `blog/cykelforsikring.html`
+- shared logo/robots/sitemap files
 
-The current build is local and draft-state. Public deployment, paid API automation and Slack automation remain paused until Jonas explicitly approves them.
+Internal operating pages remain useful locally, but they are not website content and are not copied into `site/`:
+
+- `frankly-os.html`, `overview.html`, `progress-map.html`
+- `studio.html`, `observatory.html`, `control-cockpit.html`
+- `lab-hub.html`, `agent-brief-builder.html`, `mission-control-queue.html`
+- `onboarding.html`, `frankly-daekningsoverblik.html`, `guide/index.html`
+- `data/*.json` machine feeds
+
+GitHub Pages deployment is manual-only. There is no scheduled or push-triggered deploy, and no Drive sync in the website build.
 
 ## Source Of Truth
 
-Google Drive remains the canonical source for Frankly OS system files. Local files in this repo are implementation and preview artifacts used to test the website experience before publishing.
+Google Drive remains a durable artifact home for approved snapshots. It is not the public website source for Frankly OS operating state.
 
-After meaningful site work, archive the current local build in Drive under `Frankly OS / outputs / prototypes` and include the Drive folder or file URL in the handoff. The preferred package is a dated snapshot folder with the key HTML/CSS/data/assets plus a complete zip archive, so the work is both browsable and restorable.
+After meaningful local OS work, keep the local handoff and pending Drive queue current. Upload only after explicit connector-write approval. After meaningful website test-lane work, build `site/` locally and keep it out of OS state unless Jonas approves a publish or Drive pass.
 
-When Drive sync is available again, the site can be connected to a metadata endpoint or GitHub Action. Until then, local manifest updates should be treated as draft evidence, not production data.
+Do not reconnect the website deploy to Drive metadata or machine feeds unless Jonas explicitly reopens that deployment scope.
 
 ## Key Local Files
 
-- `frankly-os.html` - main OS visualization page.
-- `overview.html` - simple visual overview of the full local OS, surfaces, machine, Slack lab, routes, proof and gates.
-- `lab-hub.html` - Frankly Lab hub page.
-- `agent-brief-builder.html` - local Agent Brief Builder tool for bigger chat mission batches.
-- `mission-control-queue.html` - local Mission Control Queue for manual launch, review and integration of larger mission batches.
-- `progress-map.html` - local Frankly OS Progress Map for machine status, active batch and next path.
-- `onboarding.html` - internal start surface and first-run entry gate.
-- `frankly-daekningsoverblik.html` - coverage/product clarity page.
-- `guide/index.html` - internal store training guide for salespeople.
+- `index.html` - uploadable test-site entry page.
+- `franklys-bmw.html` - standalone HTML game/tool test.
 - `blog/index.html` - local draft blog index, currently noindex.
 - `blog/cykelforsikring.html` - source-updated local draft article for the Blog SEO route pilot, currently noindex.
-- `robots.txt` - blocks draft blog pages.
-- `sitemap.xml` - local sitemap shell; draft blog pages are excluded until approval.
-- `data/activation-queue-data.json` - local same-origin activation queue feed for HTTP previews.
-- `data/surface-gate-registry.json` - local same-origin surface gate feed for HTTP previews.
-- `data/mission-control-queue.json` - local same-origin Mission Control feed for HTTP previews.
+- `robots.txt` - blocks draft blogs and historical/internal operating URLs from crawling.
+- `sitemap.xml` - includes only the uploadable test-site entry and standalone game.
+- `frankly-os.html`, `overview.html`, `progress-map.html`, `studio.html`, `observatory.html`, `control-cockpit.html`, `lab-hub.html`, `agent-brief-builder.html`, `mission-control-queue.html`, `onboarding.html` - local-only operating surfaces.
+- `data/*.json` - local-only same-origin feeds for OS previews.
 - `data/README.md` - local data-feed source and regeneration notes.
 - `CNAME` - configured custom domain target.
-- `scripts/sync_from_drive.py` - optional Drive sync helper.
+- `scripts/sync_from_drive.py` - allowlisted upload-bundle builder.
 
 ## Current Run
 
@@ -130,6 +129,10 @@ The latest Frankly OS Progress Map update is documented in:
 
 `../os-visualization/reports/frankly-os-progress-map-2026-07-01.md`
 
+The latest Control Cockpit activation test is documented in:
+
+`../os-visualization/reports/control-cockpit-v0-1-activation-test-2026-07-05.md`
+
 The latest website machine-surface integration is documented in:
 
 `../os-visualization/reports/website-machine-surface-integration-2026-07-02.md`
@@ -176,20 +179,15 @@ Earlier whole-site evidence screenshots are stored in:
 
 ## Build Direction
 
-The current priority is the Frankly OS machine, not more site surfaces. Existing pages should be maintained and QA'd, but new pages should only be built when they expose or validate machine state.
+The current website direction is separation:
 
-1. Keep Frankly OS, Lab and Mission Control healthy as operating surfaces.
-2. Use Mission Control and the loop runner to make work resumable.
-3. Build new surfaces only when they make machine state clearer.
-4. Keep all durable system files in English.
-5. Run browser and screenshot QA before any publish step.
-6. Run `python3 os-visualization/scripts/run-local-site-qa.py` before browser QA when local data, links, CSS or inline scripts change.
-7. Use `agent-brief-builder.html` or `python3 os-visualization/scripts/generate-mission-brief.py` to turn broad goals into fewer, larger local chat missions.
-8. Use `mission-control-queue.html` to track those batches manually before any supervised thread handoff is approved.
-9. Use `progress-map.html` to see current machine progress before starting new work.
-10. Start future machine workstreams from `../os-visualization/mission-control/handoff-packets/current-machine-handoff.md`.
-11. Run `python3 os-visualization/scripts/validate-machine-state.py` after future active Mission Control batch updates.
-12. Use MCQ-009 to fill `SRC-001` through `SRC-009` with approved source documents and owner confirmations before changing customer-facing copy.
+1. Keep Frankly OS, Lab, Mission Control, Studio, Observatory and run memory local.
+2. Keep the uploadable website bundle limited to test tools, standalone HTML/code prototypes and noindex blog drafts.
+3. Add a file to `scripts/sync_from_drive.py`'s allowlist only when it is safe website content.
+4. Keep product/legal/claims surfaces out of the upload bundle unless Jonas explicitly reopens and approves that scope.
+5. Keep all durable system files in English.
+6. Run `python3 scripts/sync_from_drive.py` from this folder to rebuild `site/` before checking the upload bundle.
+7. Run `python3 ../os-visualization/scripts/run-local-site-qa.py` from this folder's parent workspace after local OS/site changes.
 
 ## Guardrails
 
@@ -197,4 +195,5 @@ The current priority is the Frankly OS machine, not more site surfaces. Existing
 - Do not enable paid API runtime without approval.
 - Do not connect Slack automation without approval.
 - Do not expose sensitive source material.
+- Do not copy local operating surfaces or machine feeds into the uploadable website bundle.
 - Prefer local evidence and reversible changes before deployment.

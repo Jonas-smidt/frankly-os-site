@@ -1,0 +1,1623 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Frankly OS Studio v0.1</title>
+<link rel="icon" href="assets/frankly-logo-small.png">
+<link rel="preconnect" href="https://api.fontshare.com">
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="frankly-surfaces.css?v=studio">
+<style>
+  :root {
+    --studio-bg: #f6f3ee;
+    --studio-panel: #fffdf9;
+    --studio-panel-strong: #ffffff;
+    --studio-ink: #2d0011;
+    --studio-soft: rgba(45, 0, 17, .68);
+    --studio-faint: rgba(45, 0, 17, .46);
+    --studio-line: rgba(45, 0, 17, .14);
+    --studio-line-strong: rgba(45, 0, 17, .22);
+    --studio-green: #176e48;
+    --studio-green-soft: #dcf2e7;
+    --studio-amber: #9b690f;
+    --studio-amber-soft: #fff0c7;
+    --studio-red: #a33b3b;
+    --studio-red-soft: #ffe2df;
+    --studio-blue: #285f83;
+    --studio-blue-soft: #dfedf7;
+    --studio-violet-soft: #eee8fa;
+  }
+
+  body.studio-page {
+    min-width: 320px;
+    background: var(--studio-bg);
+    color: var(--studio-ink);
+  }
+
+  .studio-shell {
+    min-height: calc(100svh - 64px);
+    display: grid;
+    grid-template-columns: 270px minmax(0, 1fr);
+    border-bottom: 1px solid var(--studio-line);
+  }
+
+  .studio-sidebar {
+    min-height: calc(100svh - 64px);
+    display: grid;
+    grid-template-rows: auto auto 1fr auto;
+    gap: 18px;
+    padding: 18px;
+    border-right: 1px solid var(--studio-line);
+    background: var(--bordeaux);
+    color: var(--limestone);
+  }
+
+  .studio-sidebar-logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    min-height: 42px;
+  }
+
+  .studio-sidebar-logo img {
+    width: 84px;
+    height: auto;
+    filter: brightness(0) invert(1);
+  }
+
+  .studio-sidebar-logo span,
+  .studio-kicker,
+  .studio-label,
+  .studio-micro,
+  .studio-row-label,
+  .studio-status-bar span,
+  .studio-command small,
+  .studio-tab,
+  .studio-footer-item span {
+    font-size: 11px;
+    line-height: 1.15;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .studio-sidebar-logo span {
+    color: rgba(255, 246, 250, .66);
+  }
+
+  .studio-side-status {
+    display: grid;
+    gap: 8px;
+  }
+
+  .studio-side-pill {
+    min-height: 34px;
+    display: grid;
+    grid-template-columns: 10px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 246, 250, .2);
+    border-radius: 8px;
+    color: rgba(255, 246, 250, .82);
+    font-size: 12px;
+    font-weight: 800;
+  }
+
+  .studio-side-pill::before {
+    content: "";
+    width: 9px;
+    height: 9px;
+    border-radius: 999px;
+    background: var(--calm-pink);
+  }
+
+  .studio-side-pill.is-green::before { background: #6ee3a5; }
+  .studio-side-pill.is-amber::before { background: #ffd36b; }
+  .studio-side-pill.is-red::before { background: #ff9a95; }
+  .studio-side-pill.is-blue::before { background: #9cd6ff; }
+
+  .studio-side-nav {
+    display: grid;
+    align-content: start;
+    gap: 8px;
+  }
+
+  .studio-side-nav a {
+    min-height: 38px;
+    display: grid;
+    grid-template-columns: 22px minmax(0, 1fr);
+    gap: 10px;
+    align-items: center;
+    padding: 8px 10px;
+    border: 1px solid rgba(255, 246, 250, .16);
+    border-radius: 8px;
+    color: rgba(255, 246, 250, .76);
+    font-size: 13px;
+    font-weight: 850;
+    text-decoration: none;
+  }
+
+  .studio-side-nav a:hover,
+  .studio-side-nav a.is-active {
+    border-color: var(--calm-pink);
+    background: rgba(255, 211, 227, .14);
+    color: var(--limestone);
+  }
+
+  .studio-side-nav i {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 22px;
+    height: 22px;
+    border-radius: 6px;
+    background: rgba(255, 246, 250, .1);
+    color: var(--calm-pink);
+    font-style: normal;
+    font-size: 12px;
+    font-weight: 900;
+  }
+
+  .studio-side-note {
+    padding: 14px;
+    border: 1px solid rgba(255, 246, 250, .18);
+    border-radius: 8px;
+    background: rgba(255, 246, 250, .08);
+  }
+
+  .studio-side-note b {
+    display: block;
+    margin-bottom: 8px;
+    color: var(--limestone);
+    font-size: 14px;
+    line-height: 1.2;
+  }
+
+  .studio-side-note p {
+    margin: 0;
+    color: rgba(255, 246, 250, .68);
+    font-size: 12px;
+    line-height: 1.45;
+    font-weight: 650;
+  }
+
+  .studio-workbench {
+    min-width: 0;
+    padding: 16px;
+  }
+
+  .studio-titlebar,
+  .command-palette,
+  .studio-panel,
+  .studio-status-bar {
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    background: var(--studio-panel);
+  }
+
+  .studio-titlebar {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(280px, .46fr);
+    gap: 14px;
+    align-items: stretch;
+    padding: 14px;
+  }
+
+  .studio-title-main {
+    display: grid;
+    align-content: center;
+    gap: 8px;
+    min-height: 104px;
+    padding: 16px;
+    border-radius: 8px;
+    background: var(--bordeaux);
+    color: var(--limestone);
+  }
+
+  .studio-kicker,
+  .studio-label,
+  .studio-row-label,
+  .studio-micro {
+    color: var(--studio-faint);
+  }
+
+  .studio-title-main .studio-kicker {
+    color: rgba(255, 246, 250, .64);
+  }
+
+  .studio-title-main h1 {
+    margin: 0;
+    color: var(--limestone);
+    font-size: clamp(30px, 4vw, 54px);
+    line-height: .96;
+    font-weight: 650;
+  }
+
+  .studio-title-main p {
+    max-width: 860px;
+    margin: 0;
+    color: rgba(255, 246, 250, .76);
+    font-size: 14px;
+    line-height: 1.45;
+    font-weight: 650;
+  }
+
+  .studio-status-stack {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .studio-status-card {
+    min-height: 94px;
+    display: grid;
+    align-content: space-between;
+    padding: 12px;
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .studio-status-card b {
+    display: block;
+    color: var(--studio-ink);
+    font-family: var(--display);
+    font-size: 30px;
+    line-height: 1;
+    font-weight: 650;
+  }
+
+  .studio-status-card span {
+    color: var(--studio-faint);
+    font-size: 11px;
+    line-height: 1.2;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .studio-status-card.is-green { background: var(--studio-green-soft); }
+  .studio-status-card.is-amber { background: var(--studio-amber-soft); }
+  .studio-status-card.is-red { background: var(--studio-red-soft); }
+  .studio-status-card.is-blue { background: var(--studio-blue-soft); }
+
+  .command-palette {
+    margin-top: 10px;
+    padding: 12px;
+  }
+
+  .command-palette-head {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 12px;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .command-palette input {
+    min-height: 46px;
+    width: 100%;
+    padding: 10px 12px;
+    border: 1px solid var(--studio-line-strong);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--studio-ink);
+    font-size: 15px;
+    font-weight: 750;
+    outline: none;
+  }
+
+  .command-palette input:focus-visible {
+    border-color: var(--bordeaux);
+    box-shadow: 0 0 0 3px rgba(255, 211, 227, .75);
+  }
+
+  .studio-hotkey {
+    min-height: 34px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 7px 10px;
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    background: var(--studio-violet-soft);
+    color: var(--studio-soft);
+    font-size: 12px;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .studio-command-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .studio-command {
+    min-height: 78px;
+    display: grid;
+    align-content: space-between;
+    gap: 8px;
+    padding: 11px;
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--studio-ink);
+    text-align: left;
+  }
+
+  .studio-command:hover,
+  .studio-command:focus-visible,
+  .studio-command.is-selected {
+    border-color: var(--bordeaux);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 211, 227, .52);
+  }
+
+  .studio-command b {
+    font-size: 13px;
+    line-height: 1.12;
+  }
+
+  .studio-command small {
+    color: var(--studio-faint);
+    overflow-wrap: anywhere;
+  }
+
+  .studio-grid {
+    display: grid;
+    grid-template-columns: minmax(300px, .8fr) minmax(380px, 1.1fr) minmax(340px, .9fr);
+    gap: 10px;
+    margin-top: 10px;
+    align-items: start;
+  }
+
+  .studio-panel {
+    min-width: 0;
+    overflow: hidden;
+  }
+
+  .studio-panel-header {
+    min-height: 62px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: center;
+    padding: 14px;
+    border-bottom: 1px solid var(--studio-line);
+    background: var(--studio-panel-strong);
+  }
+
+  .studio-panel-header h2 {
+    margin: 2px 0 0;
+    color: var(--studio-ink);
+    font-size: 22px;
+    line-height: 1.02;
+    font-weight: 700;
+  }
+
+  .studio-panel-body {
+    padding: 12px;
+  }
+
+  .studio-pill {
+    min-height: 28px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 6px 9px;
+    border: 1px solid var(--studio-line);
+    border-radius: 999px;
+    color: var(--studio-soft);
+    font-size: 11px;
+    line-height: 1;
+    font-weight: 900;
+    white-space: nowrap;
+  }
+
+  .studio-pill.is-green { border-color: rgba(23, 110, 72, .24); background: var(--studio-green-soft); color: var(--studio-green); }
+  .studio-pill.is-amber { border-color: rgba(155, 105, 15, .24); background: var(--studio-amber-soft); color: var(--studio-amber); }
+  .studio-pill.is-red { border-color: rgba(163, 59, 59, .24); background: var(--studio-red-soft); color: var(--studio-red); }
+  .studio-pill.is-blue { border-color: rgba(40, 95, 131, .24); background: var(--studio-blue-soft); color: var(--studio-blue); }
+
+  .studio-stack {
+    display: grid;
+    gap: 8px;
+  }
+
+  .studio-mission-card,
+  .studio-gate-row,
+  .studio-run-row,
+  .studio-log-row,
+  .studio-claude-row,
+  .studio-launcher,
+  .studio-builder,
+  .studio-drive-row,
+  .studio-action-row {
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    background: #fff;
+  }
+
+  .studio-mission-card {
+    display: grid;
+    gap: 12px;
+    padding: 13px;
+  }
+
+  .studio-mission-card h3 {
+    margin: 0;
+    font-size: 28px;
+    line-height: 1;
+    font-weight: 650;
+  }
+
+  .studio-mission-card p,
+  .studio-run-row p,
+  .studio-log-row p,
+  .studio-claude-row p,
+  .studio-drive-row p,
+  .studio-action-row p,
+  .studio-command-preview p {
+    margin: 0;
+    color: var(--studio-soft);
+    font-size: 13px;
+    line-height: 1.45;
+    font-weight: 650;
+  }
+
+  .studio-mission-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .studio-gate-row,
+  .studio-run-row,
+  .studio-log-row,
+  .studio-claude-row,
+  .studio-launcher,
+  .studio-builder,
+  .studio-drive-row,
+  .studio-action-row {
+    display: grid;
+    gap: 8px;
+    padding: 11px;
+  }
+
+  .studio-gate-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+  }
+
+  .studio-gate-row b,
+  .studio-run-row b,
+  .studio-log-row b,
+  .studio-claude-row b,
+  .studio-drive-row b,
+  .studio-action-row b {
+    display: block;
+    color: var(--studio-ink);
+    font-size: 14px;
+    line-height: 1.18;
+  }
+
+  .studio-run-row {
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: start;
+  }
+
+  .studio-run-row p {
+    margin-top: 4px;
+  }
+
+  .studio-log-row {
+    grid-template-columns: 92px minmax(0, 1fr);
+    align-items: center;
+  }
+
+  .studio-row-label {
+    color: var(--studio-faint);
+  }
+
+  .studio-tabs {
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 6px;
+    padding: 8px;
+    border-bottom: 1px solid var(--studio-line);
+    background: #fff;
+  }
+
+  .studio-tab {
+    min-height: 34px;
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    background: var(--studio-bg);
+    color: var(--studio-soft);
+  }
+
+  .studio-tab:hover,
+  .studio-tab:focus-visible,
+  .studio-tab.is-active {
+    border-color: var(--bordeaux);
+    background: var(--calm-pink);
+    color: var(--bordeaux);
+    outline: none;
+  }
+
+  .studio-pane {
+    display: none;
+    padding: 12px;
+  }
+
+  .studio-pane.is-active {
+    display: grid;
+    gap: 8px;
+  }
+
+  .studio-command-preview {
+    margin-top: 8px;
+    padding: 12px;
+    border: 1px dashed var(--studio-line-strong);
+    border-radius: 8px;
+    background: var(--studio-bg);
+  }
+
+  .studio-command-preview b {
+    display: block;
+    margin-bottom: 4px;
+    color: var(--studio-ink);
+    font-size: 14px;
+  }
+
+  .studio-builder {
+    gap: 10px;
+    background: linear-gradient(180deg, #fff 0%, #fffaf5 100%);
+  }
+
+  .studio-launcher {
+    gap: 10px;
+    background: #fff;
+  }
+
+  .studio-launcher-grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 8px;
+    align-items: end;
+  }
+
+  .studio-launcher-preview {
+    display: grid;
+    gap: 7px;
+    padding: 10px;
+    border: 1px dashed var(--studio-line-strong);
+    border-radius: 8px;
+    background: var(--studio-bg);
+  }
+
+  .studio-launcher-preview b {
+    color: var(--studio-ink);
+    font-size: 14px;
+    line-height: 1.18;
+  }
+
+  .studio-launcher-preview p {
+    margin: 0;
+    color: var(--studio-soft);
+    font-size: 12px;
+    line-height: 1.42;
+    font-weight: 700;
+  }
+
+  .studio-launcher-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+
+  .studio-builder-header {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 10px;
+    align-items: start;
+  }
+
+  .studio-builder-header h3 {
+    margin: 2px 0 0;
+    color: var(--studio-ink);
+    font-size: 24px;
+    line-height: 1;
+    font-weight: 700;
+  }
+
+  .studio-builder-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 8px;
+  }
+
+  .studio-field {
+    display: grid;
+    gap: 5px;
+  }
+
+  .studio-field span,
+  .studio-copy-state {
+    color: var(--studio-faint);
+    font-size: 10px;
+    line-height: 1.15;
+    font-weight: 900;
+    text-transform: uppercase;
+  }
+
+  .studio-field input,
+  .studio-field select,
+  .studio-field textarea {
+    width: 100%;
+    min-height: 38px;
+    border: 1px solid var(--studio-line-strong);
+    border-radius: 8px;
+    background: #fff;
+    color: var(--studio-ink);
+    font: inherit;
+    font-size: 13px;
+    line-height: 1.35;
+    font-weight: 750;
+  }
+
+  .studio-field input,
+  .studio-field select {
+    padding: 8px 10px;
+  }
+
+  .studio-field textarea {
+    min-height: 76px;
+    resize: vertical;
+    padding: 10px;
+  }
+
+  .studio-field input:focus-visible,
+  .studio-field select:focus-visible,
+  .studio-field textarea:focus-visible {
+    border-color: var(--bordeaux);
+    box-shadow: 0 0 0 3px rgba(255, 211, 227, .62);
+    outline: none;
+  }
+
+  .studio-field.is-full {
+    grid-column: 1 / -1;
+  }
+
+  .studio-builder-checks {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 6px;
+  }
+
+  .studio-builder-check {
+    min-height: 34px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 7px 9px;
+    border: 1px solid var(--studio-line);
+    border-radius: 8px;
+    background: var(--studio-bg);
+    color: var(--studio-soft);
+    font-size: 12px;
+    line-height: 1.2;
+    font-weight: 800;
+  }
+
+  .studio-builder-check input {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--bordeaux);
+  }
+
+  .studio-packet-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    align-items: center;
+  }
+
+  .studio-mini-button {
+    min-height: 36px;
+    border: 1px solid var(--studio-line-strong);
+    border-radius: 8px;
+    background: var(--bordeaux);
+    color: var(--limestone);
+    padding: 8px 11px;
+    font-size: 12px;
+    line-height: 1;
+    font-weight: 900;
+  }
+
+  .studio-mini-button.is-secondary {
+    background: #fff;
+    color: var(--studio-ink);
+  }
+
+  .studio-mini-button:hover,
+  .studio-mini-button:focus-visible {
+    border-color: var(--bordeaux);
+    box-shadow: 0 0 0 3px rgba(255, 211, 227, .52);
+    outline: none;
+  }
+
+  .studio-packet-preview {
+    max-height: 360px;
+    overflow: auto;
+    margin: 0;
+    padding: 12px;
+    border: 1px solid rgba(45, 0, 17, .18);
+    border-radius: 8px;
+    background: #23000e;
+    color: #fff7fb;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+    font-size: 12px;
+    line-height: 1.5;
+    white-space: pre-wrap;
+  }
+
+  .studio-footer {
+    margin-top: 10px;
+  }
+
+  .studio-status-bar {
+    min-height: 42px;
+    display: grid;
+    grid-template-columns: repeat(6, minmax(0, 1fr));
+    gap: 1px;
+    overflow: hidden;
+    background: var(--studio-line);
+  }
+
+  .studio-footer-item {
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+    padding: 9px 12px;
+    background: var(--studio-panel);
+  }
+
+  .studio-footer-item b {
+    color: var(--studio-ink);
+    font-size: 12px;
+    line-height: 1.1;
+    white-space: nowrap;
+  }
+
+  .studio-footer-item span {
+    color: var(--studio-faint);
+    text-align: right;
+  }
+
+  @media (max-width: 1180px) {
+    .studio-shell {
+      grid-template-columns: 1fr;
+    }
+
+    .studio-sidebar {
+      min-height: auto;
+      grid-template-columns: minmax(160px, .35fr) minmax(0, 1fr);
+      grid-template-rows: auto auto;
+      align-items: start;
+    }
+
+    .studio-side-status,
+    .studio-side-nav {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .studio-side-note {
+      grid-column: 1 / -1;
+    }
+
+    .studio-grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+
+    .studio-panel.is-wide {
+      grid-column: 1 / -1;
+    }
+
+    .studio-command-grid {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+    .studio-status-bar {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+  }
+
+  @media (max-width: 760px) {
+    .studio-workbench {
+      padding: 10px;
+    }
+
+    .studio-sidebar,
+    .studio-titlebar,
+    .studio-grid,
+    .studio-status-stack,
+    .studio-side-status,
+    .studio-side-nav,
+    .studio-command-grid,
+    .studio-launcher-grid,
+    .studio-builder-grid,
+    .studio-builder-checks,
+    .studio-tabs,
+    .studio-status-bar {
+      grid-template-columns: 1fr;
+    }
+
+    .studio-title-main {
+      min-height: 0;
+    }
+
+    .studio-title-main h1 {
+      font-size: 34px;
+    }
+
+    .command-palette-head,
+    .studio-builder-header,
+    .studio-panel-header,
+    .studio-gate-row,
+    .studio-run-row,
+    .studio-log-row {
+      grid-template-columns: 1fr;
+    }
+
+    .studio-hotkey,
+    .studio-pill {
+      justify-content: flex-start;
+      width: 100%;
+    }
+
+    .studio-footer-item {
+      align-items: flex-start;
+      flex-direction: column;
+    }
+  }
+</style>
+</head>
+<body class="surface-page studio-page no-scroll">
+  <header class="site-nav" aria-label="Frankly navigation">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="studio.html" aria-label="Frankly OS Studio">
+        <img class="brand-logo brand-logo-light" src="assets/frankly-logo-small.png" alt="frankly">
+        <span class="nav-surface-label">Studio</span>
+      </a>
+      <nav class="nav-links" aria-label="Local surfaces">
+        <a href="overview.html">Overview</a>
+        <a href="studio.html" class="active">Studio</a>
+        <a href="control-cockpit.html">Cockpit</a>
+        <a href="observatory.html">Observatory</a>
+        <a href="progress-map.html">Progress</a>
+        <a href="mission-control-queue.html">Mission control</a>
+        <a href="lab-hub.html">Lab</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="studio-shell" id="studio">
+    <aside class="studio-sidebar" aria-label="Studio navigation">
+      <div class="studio-sidebar-logo">
+        <img src="assets/frankly-logo-small.png" alt="Frankly">
+        <span>OS Studio v0.1</span>
+      </div>
+
+      <div class="studio-side-status" aria-label="Current gates">
+        <div class="studio-side-pill is-green">Local machine active</div>
+        <div class="studio-side-pill is-red">Claims/product/legal locked</div>
+        <div class="studio-side-pill is-amber">Drive writes approval-required</div>
+        <div class="studio-side-pill is-blue">Claude packet builder ready</div>
+      </div>
+
+      <nav class="studio-side-nav" aria-label="Studio sections">
+        <a class="is-active" href="#mission"><i>1</i><span>Mission</span></a>
+        <a href="#command-palette"><i>2</i><span>Commands</span></a>
+        <a href="#registry"><i>3</i><span>Registry</span></a>
+        <a href="#studioClaudePacket"><i>4</i><span>Claude lane</span></a>
+        <a href="#drive"><i>5</i><span>Drive queue</span></a>
+        <a href="#validation"><i>6</i><span>Validation</span></a>
+      </nav>
+
+      <div class="studio-side-note">
+        <b>Read-only operating shell</b>
+        <p>No connector writes, no thread creation, no deploys, no paid APIs and no customer-facing product or claim copy changes.</p>
+      </div>
+    </aside>
+
+    <section class="studio-workbench" aria-label="Frankly OS Studio v0.1 workbench">
+      <section class="studio-titlebar" aria-labelledby="studio-title">
+        <div class="studio-title-main">
+          <span class="studio-kicker">Internal local software shell</span>
+          <h1 id="studio-title">Frankly OS Studio v0.1</h1>
+          <p>One dense workbench for the current mission, active gates, run memory, validation state, Drive continuity and Claude Code task packet preparation.</p>
+        </div>
+        <div class="studio-status-stack" aria-label="Machine counters">
+          <div class="studio-status-card is-green"><span>Registry runs</span><b id="studioRunCount">22</b></div>
+          <div class="studio-status-card is-green"><span>Eval cases</span><b>28</b></div>
+          <div class="studio-status-card is-amber"><span>Drive pending</span><b>14</b></div>
+          <div class="studio-status-card is-red"><span>Claims records touched</span><b>0</b></div>
+        </div>
+      </section>
+
+      <section class="command-palette" id="command-palette" aria-labelledby="command-title">
+        <div class="command-palette-head">
+          <div>
+            <span class="studio-label">Command palette</span>
+            <input id="studioCommandSearch" type="search" value="" autocomplete="off" aria-label="Search local Studio commands" placeholder="Search safe local commands, gates or packets">
+          </div>
+          <span class="studio-hotkey" id="studioFeedStatus">Feed fallback ready</span>
+        </div>
+        <div class="studio-command-grid" id="studioCommandList">
+          <button class="studio-command is-selected" type="button" data-command="claude" data-keywords="claude packet builder code task future agent">
+            <b>Build Claude packet</b><small>copy-ready</small>
+          </button>
+          <button class="studio-command" type="button" data-command="launcher" data-keywords="launcher run to packet registry feed selected run">
+            <b>Launch from run</b><small>prefill packet</small>
+          </button>
+          <button class="studio-command" type="button" data-command="validate" data-keywords="validation eval qa guard py compile">
+            <b>Inspect validation lane</b><small>local checks</small>
+          </button>
+          <button class="studio-command" type="button" data-command="drive" data-keywords="drive queue continuity pending upload approval">
+            <b>Review Drive queue</b><small>approval gate</small>
+          </button>
+          <button class="studio-command" type="button" data-command="run" data-keywords="run registry history recorder memory">
+            <b>Replay recent runs</b><small>registry-fed</small>
+          </button>
+          <button class="studio-command" type="button" data-command="scope" data-keywords="claims product legal source records customer copy locked">
+            <b>Check locked scope</b><small>do-not-touch</small>
+          </button>
+        </div>
+        <div class="studio-command-preview" id="studioCommandPreview" aria-live="polite">
+          <b>Build Claude packet</b>
+          <p>Assemble a copy-ready code task with route, allowed edits, blocked gates, validation commands and stop rule. No automatic thread creation.</p>
+        </div>
+      </section>
+
+      <div class="studio-grid">
+        <section class="studio-panel" id="mission" aria-labelledby="mission-title">
+          <div class="studio-panel-header">
+            <div>
+              <span class="studio-label">Mission control</span>
+              <h2 id="mission-title">Current system</h2>
+            </div>
+            <span class="studio-pill is-green">MCQ-011</span>
+          </div>
+          <div class="studio-panel-body studio-stack">
+            <article class="studio-mission-card">
+              <div>
+                <span class="studio-row-label">Active layer</span>
+                <h3>Machine runtime and visual OS</h3>
+              </div>
+              <p>Studio turns Cockpit, Observatory, Run Registry, Drive queue and validation into one app-like control surface for Jonas and future agents.</p>
+              <div class="studio-mission-meta">
+                <span class="studio-pill is-green">Local only</span>
+                <span class="studio-pill is-blue">Registry-fed</span>
+                <span class="studio-pill is-amber">Connector gated</span>
+              </div>
+            </article>
+            <div class="studio-gate-row">
+              <div><b>Claims/product/legal/source records</b><p>Locked until Jonas explicitly reopens a named scope.</p></div>
+              <span class="studio-pill is-red">Locked</span>
+            </div>
+            <div class="studio-gate-row">
+              <div><b>Drive continuity</b><p>Queued as local manifest; connector writes require explicit approval.</p></div>
+              <span class="studio-pill is-amber">Pending</span>
+            </div>
+            <div class="studio-gate-row">
+              <div><b>Public deploy and Slack</b><p>Blocked from publication, company-visible posting and live automation.</p></div>
+              <span class="studio-pill is-red">Blocked</span>
+            </div>
+          </div>
+        </section>
+
+        <section class="studio-panel is-wide" id="registry" aria-labelledby="registry-title">
+          <div class="studio-panel-header">
+            <div>
+              <span class="studio-label">Run registry</span>
+              <h2 id="registry-title">Recent machine memory</h2>
+            </div>
+            <span class="studio-pill is-blue" id="studioRegistryMode">static fallback</span>
+          </div>
+          <div class="studio-panel-body studio-stack" id="studioRunList">
+            <article class="studio-run-row">
+              <div><b>Studio v0.1</b><p>Software-like local shell for command palette, gates, registry, validation, Claude packet and Drive queue.</p></div>
+              <span class="studio-pill is-amber">Drive pending</span>
+            </article>
+            <article class="studio-run-row">
+              <div><b>Future Mode v0.1</b><p>Previewed likely next machine moves with lane, gates, validation and stop rule.</p></div>
+              <span class="studio-pill is-green">validated</span>
+            </article>
+            <article class="studio-run-row">
+              <div><b>Mission Theatre v0.1</b><p>Replayed recent local runs as brief, gate, build, validate and learn cues.</p></div>
+              <span class="studio-pill is-green">validated</span>
+            </article>
+          </div>
+        </section>
+
+        <section class="studio-panel" aria-labelledby="right-pane-title">
+          <div class="studio-panel-header">
+            <div>
+              <span class="studio-label">Execution lanes</span>
+              <h2 id="right-pane-title">Next best action</h2>
+            </div>
+            <span class="studio-pill is-green">read-only</span>
+          </div>
+          <div class="studio-tabs" role="tablist" aria-label="Studio panes">
+            <button class="studio-tab is-active" type="button" role="tab" aria-selected="true" data-studio-tab="studioPaneClaude">Claude</button>
+            <button class="studio-tab" type="button" role="tab" aria-selected="false" data-studio-tab="studioPaneValidation">Validate</button>
+            <button class="studio-tab" type="button" role="tab" aria-selected="false" data-studio-tab="studioPaneDrive">Drive</button>
+            <button class="studio-tab" type="button" role="tab" aria-selected="false" data-studio-tab="studioPaneRun">Run</button>
+          </div>
+
+          <div class="studio-pane is-active" id="studioPaneClaude" role="tabpanel">
+            <article class="studio-claude-row" id="studioClaudePacket">
+              <span class="studio-row-label">Claude Code Execution Lane</span>
+              <b>Build a local task packet before code work</b>
+              <p>Generate objective, route, files likely in scope, do-not-touch list, validation commands, browser QA target and stop rule. Claims/product/legal and connector writes stay closed.</p>
+            </article>
+            <section class="studio-launcher" id="studioPacketLauncher" aria-labelledby="studio-packet-launcher-title">
+              <div class="studio-builder-header">
+                <div>
+                  <span class="studio-row-label">Run-to-packet launcher</span>
+                  <h3 id="studio-packet-launcher-title">Start from machine memory</h3>
+                </div>
+                <span class="studio-pill is-green">registry-fed</span>
+              </div>
+              <div class="studio-launcher-grid">
+                <label class="studio-field">
+                  <span>Source run</span>
+                  <select id="studioLauncherRun" aria-label="Choose a source run for packet prefill">
+                    <option>Loading recent runs</option>
+                  </select>
+                </label>
+                <button class="studio-mini-button" type="button" id="studioUseRunPacket">Use selected run</button>
+              </div>
+              <div class="studio-launcher-preview" id="studioLauncherPreview" aria-live="polite">
+                <b>Feed memory ready</b>
+                <p>Select a recent run to prefill the Claude packet with a route, target surface and objective.</p>
+                <div class="studio-launcher-meta">
+                  <span class="studio-pill is-blue">route aware</span>
+                  <span class="studio-pill is-red">gates preserved</span>
+                </div>
+              </div>
+              <span class="studio-copy-state" id="studioLauncherState" aria-live="polite">Launcher ready</span>
+            </section>
+            <section class="studio-builder" id="studioPacketBuilder" aria-labelledby="studio-packet-builder-title">
+              <div class="studio-builder-header">
+                <div>
+                  <span class="studio-row-label">Task Packet Builder</span>
+                  <h3 id="studio-packet-builder-title">Copy-ready Claude prep</h3>
+                </div>
+                <span class="studio-pill is-blue">read-only</span>
+              </div>
+              <div class="studio-builder-grid">
+                <label class="studio-field">
+                  <span>Task shape</span>
+                  <select id="studioTaskShape">
+                    <option value="ui">Studio/UI upgrade</option>
+                    <option value="validation">Validation or eval hardening</option>
+                    <option value="drive">Drive continuity prep</option>
+                    <option value="route">Route/runtime pilot</option>
+                  </select>
+                </label>
+                <label class="studio-field">
+                  <span>Target surface</span>
+                  <select id="studioTaskSurface">
+                    <option value="studio.html">Studio</option>
+                    <option value="observatory.html">Observatory</option>
+                    <option value="control-cockpit.html">Control Cockpit</option>
+                    <option value="os-visualization">OS state files</option>
+                  </select>
+                </label>
+                <label class="studio-field is-full">
+                  <span>Objective</span>
+                  <textarea id="studioTaskObjective">Build the next local non-claim Frankly OS improvement, keep it file-backed, gate-aware and validated before reporting completion.</textarea>
+                </label>
+              </div>
+              <div class="studio-builder-checks" aria-label="Packet guardrails">
+                <label class="studio-builder-check"><input type="checkbox" checked disabled> Claims/product/legal locked</label>
+                <label class="studio-builder-check"><input type="checkbox" checked disabled> Connector writes approval-required</label>
+                <label class="studio-builder-check"><input type="checkbox" checked disabled> No customer-facing copy changes</label>
+                <label class="studio-builder-check"><input type="checkbox" checked disabled> Validate locally before final</label>
+              </div>
+              <div class="studio-packet-actions">
+                <button class="studio-mini-button" type="button" id="studioGeneratePacket">Refresh packet</button>
+                <button class="studio-mini-button is-secondary" type="button" id="studioCopyPacket">Copy packet</button>
+                <span class="studio-copy-state" id="studioCopyState" aria-live="polite">Packet ready</span>
+              </div>
+              <pre class="studio-packet-preview" id="studioPacketOutput" tabindex="0"></pre>
+            </section>
+          </div>
+
+          <div class="studio-pane" id="studioPaneValidation" role="tabpanel">
+            <article class="studio-log-row" id="validation">
+              <span class="studio-row-label">py_compile</span>
+              <p>Compile eval, site QA, run recorder, route QA and feed sync scripts.</p>
+            </article>
+            <article class="studio-log-row">
+              <span class="studio-row-label">evals</span>
+              <p>Run Frankly OS evals, local site QA, strict machine guard, source-intake guard and route QA.</p>
+            </article>
+            <article class="studio-log-row">
+              <span class="studio-row-label">browser QA</span>
+              <p>Desktop and mobile screenshots for Studio under local HTTP; no deploy.</p>
+            </article>
+          </div>
+
+          <div class="studio-pane" id="studioPaneDrive" role="tabpanel">
+            <article class="studio-drive-row" id="drive">
+              <span class="studio-row-label">Drive continuity</span>
+              <b>Queued as item 14 after approval</b>
+              <p>Report, machine artifact, Studio page, changed state bundle, generated feed and QA snapshot are queued locally. Connector writes performed: 0.</p>
+            </article>
+            <article class="studio-drive-row">
+              <span class="studio-row-label">Approval state</span>
+              <p>Drive upload remains pending explicit Jonas approval; no secrets, dependency folders or obsolete bundles are included.</p>
+            </article>
+          </div>
+
+          <div class="studio-pane" id="studioPaneRun" role="tabpanel">
+            <article class="studio-action-row">
+              <span class="studio-row-label">Run record</span>
+              <b>20260706-claude-run-to-packet-launcher-v0-1</b>
+              <p>Status: local-ready-browser-qa-passed-drive-pending after validation. Machine-focused, claims scope touched: none.</p>
+            </article>
+            <article class="studio-action-row">
+              <span class="studio-row-label">Reusable lesson</span>
+              <p>A packet gets easier to trust when it starts from recorded machine memory instead of a blank prompt.</p>
+            </article>
+          </div>
+        </section>
+      </div>
+
+      <footer class="studio-footer" aria-label="Studio status bar">
+        <div class="studio-status-bar">
+          <div class="studio-footer-item"><b>Mode</b><span>local</span></div>
+          <div class="studio-footer-item"><b>Surface</b><span>noindex,nofollow</span></div>
+          <div class="studio-footer-item"><b>Claims</b><span>locked</span></div>
+          <div class="studio-footer-item"><b>Connectors</b><span>0 writes</span></div>
+          <div class="studio-footer-item"><b>Threads</b><span>0 spawned</span></div>
+          <div class="studio-footer-item"><b>Deploy</b><span>blocked</span></div>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+<script>
+  const studioCommandCopy = {
+    claude: {
+      title: "Build Claude packet",
+      body: "Assemble a copy-ready local code task with route, allowed edits, blocked gates, validation commands and stop rule. No automatic thread creation."
+    },
+    launcher: {
+      title: "Launch from run",
+      body: "Choose a recent registry-fed run and prefill the Claude packet with source memory, route, target surface and a practical objective."
+    },
+    validate: {
+      title: "Inspect validation lane",
+      body: "Review py_compile, Frankly OS evals, local site QA, strict machine-state guard, source-intake guard, route QA and browser evidence."
+    },
+    drive: {
+      title: "Review Drive queue",
+      body: "Check what is queued for the next approved Drive continuity pass. Connector writes remain approval-required and performed count stays 0."
+    },
+    run: {
+      title: "Replay recent runs",
+      body: "Use the registry-fed Flight Recorder feed when local HTTP is available; keep static fallback ready for direct file opening."
+    },
+    scope: {
+      title: "Check locked scope",
+      body: "Confirm claims/product/legal/source-record work and customer-facing product copy remain untouched unless Jonas reopens a named scope."
+    }
+  };
+
+  const studioTaskProfiles = {
+    ui: {
+      route: "system-visualization + workflow-eval + run-registry",
+      lane: "Claude Code Execution Lane",
+      allowed: [
+        "local internal HTML/CSS/JS surfaces",
+        "machine-readable OS artifacts",
+        "run registry, handoff and follow-up ledger",
+        "local eval and QA coverage"
+      ],
+      expected: [
+        "polished local UI behavior",
+        "machine-readable artifact",
+        "report or learning note",
+        "browser QA evidence"
+      ]
+    },
+    validation: {
+      route: "workflow-eval + machine-state-guard + run-registry",
+      lane: "Validation hardening lane",
+      allowed: [
+        "local eval cases",
+        "local QA scripts",
+        "machine-state guard expectations",
+        "validation reports and registry traces"
+      ],
+      expected: [
+        "new or stricter local check",
+        "green eval run",
+        "clear failure mode",
+        "run registry entry"
+      ]
+    },
+    drive: {
+      route: "drive-pending-queue + run-registry",
+      lane: "Drive continuity prep lane",
+      allowed: [
+        "pending queue manifests",
+        "checksum or artifact lists",
+        "handoff and registry references",
+        "local Drive-ready reports"
+      ],
+      expected: [
+        "approval-ready manifest",
+        "connector writes kept at 0",
+        "no secrets or dependency folders",
+        "clear upload stop rule"
+      ]
+    },
+    route: {
+      route: "agentic-loop-runtime + route-qa + workflow-eval",
+      lane: "Route/runtime pilot lane",
+      allowed: [
+        "non-claim route reps",
+        "local pilots with bounded output",
+        "route QA artifacts",
+        "handoff lessons"
+      ],
+      expected: [
+        "bounded build/test/park decision",
+        "no silent route promotion",
+        "route QA still green",
+        "one reusable lesson"
+      ]
+    }
+  };
+
+  const studioPacketBase = {
+    readFirst: [
+      "AGENTS.md",
+      "os-visualization/mission-control/handoff-packets/current-machine-handoff.md",
+      "os-visualization/system-intelligence/run-registry.json",
+      "os-visualization/system-intelligence/follow-up-ledger.md",
+      "os-visualization/system-intelligence/frankly-claims-work-lock-2026-07-04.json",
+      "os-visualization/system-intelligence/tool-connector-guard-matrix-2026-07-05.json"
+    ],
+    doNotTouch: [
+      "claims/product/legal/source-record work",
+      "customer-facing product or claim copy",
+      "Slack/company-visible actions",
+      "paid APIs",
+      "plugin installs",
+      "public deploys",
+      "automatic thread creation",
+      "Drive connector writes without explicit approval"
+    ],
+    validation: [
+      "env PYTHONPYCACHEPREFIX=/private/tmp/frankly-pycache python3 -m py_compile os-visualization/scripts/run-frankly-os-evals.py os-visualization/scripts/run-local-site-qa.py os-visualization/scripts/record-frankly-run.py os-visualization/scripts/run-route-qa.py os-visualization/scripts/sync-site-data-feeds.py",
+      "python3 os-visualization/scripts/sync-site-data-feeds.py",
+      "python3 os-visualization/scripts/run-frankly-os-evals.py",
+      "python3 os-visualization/scripts/run-local-site-qa.py",
+      "python3 os-visualization/scripts/validate-machine-state.py --strict-loop",
+      "python3 os-visualization/scripts/validate-source-intake.py",
+      "python3 os-visualization/scripts/run-route-qa.py --output os-visualization/system-intelligence/route-qa-rep-001-2026-07-05.json"
+    ]
+  };
+
+  const fallbackStudioRuns = [
+    {
+      runId: "20260706-claude-run-to-packet-launcher-v0-1",
+      name: "Claude Run-to-Packet Launcher v0.1",
+      route: "system-visualization + workflow-eval + run-registry",
+      summary: "Registry-fed Studio launcher that pre-fills Claude task packets from selected run memory.",
+      validation: "passed",
+      drive: "pending approval",
+      lesson: "A packet gets easier to trust when it starts from recorded machine memory instead of a blank prompt."
+    },
+    {
+      runId: "20260706-claude-task-packet-builder-v0-1",
+      name: "Claude Task Packet Builder v0.1",
+      route: "system-visualization + workflow-eval + run-registry",
+      summary: "Copy-ready local task packet builder for Claude code work with gates, scope, validation and stop rules.",
+      validation: "passed",
+      drive: "pending approval",
+      lesson: "A task packet becomes useful when the stop rules are copyable before the agent starts editing."
+    },
+    {
+      runId: "20260706-studio-v0-1",
+      name: "Studio v0.1",
+      route: "system-visualization + workflow-eval + run-registry",
+      summary: "Software-like local shell for command palette, gates, registry, validation, Claude packet and Drive queue.",
+      validation: "passed",
+      drive: "pending approval",
+      lesson: "The OS becomes easier to use when it feels like software, but still stays backed by files, gates and validation."
+    },
+    {
+      runId: "20260706-future-mode-v0-1",
+      name: "Future Mode v0.1",
+      route: "system-visualization + workflow-eval + run-registry",
+      summary: "Previewed likely next machine moves with lane, gates, validation and stop rule.",
+      validation: "passed",
+      drive: "pending approval",
+      lesson: "A future preview is useful only when it makes the stop rules as visible as the promise."
+    },
+    {
+      runId: "20260706-mission-theatre-v0-1",
+      name: "Mission Theatre v0.1",
+      route: "system-visualization + workflow-eval + run-registry",
+      summary: "Replayed recent local runs as brief, gate, build, validate and learn cues.",
+      validation: "passed",
+      drive: "pending approval",
+      lesson: "Run memory becomes easier to use when the system can replay why it stopped."
+    }
+  ];
+
+  const commandSearch = document.getElementById("studioCommandSearch");
+  const commandPreview = document.getElementById("studioCommandPreview");
+  const commandButtons = Array.from(document.querySelectorAll(".studio-command"));
+  const tabButtons = Array.from(document.querySelectorAll(".studio-tab"));
+  const paneNodes = Array.from(document.querySelectorAll(".studio-pane"));
+  const runList = document.getElementById("studioRunList");
+  const runCount = document.getElementById("studioRunCount");
+  const feedStatus = document.getElementById("studioFeedStatus");
+  const registryMode = document.getElementById("studioRegistryMode");
+  const taskShape = document.getElementById("studioTaskShape");
+  const taskSurface = document.getElementById("studioTaskSurface");
+  const taskObjective = document.getElementById("studioTaskObjective");
+  const packetOutput = document.getElementById("studioPacketOutput");
+  const generatePacketButton = document.getElementById("studioGeneratePacket");
+  const copyPacketButton = document.getElementById("studioCopyPacket");
+  const copyState = document.getElementById("studioCopyState");
+  const launcherRun = document.getElementById("studioLauncherRun");
+  const launcherPreview = document.getElementById("studioLauncherPreview");
+  const launcherState = document.getElementById("studioLauncherState");
+  const useRunPacketButton = document.getElementById("studioUseRunPacket");
+  let studioAvailableRuns = fallbackStudioRuns.slice();
+  let packetSourceRun = null;
+
+  function setCommand(command) {
+    const copy = studioCommandCopy[command] || studioCommandCopy.claude;
+    commandPreview.innerHTML = `<b>${copy.title}</b><p>${copy.body}</p>`;
+    commandButtons.forEach((button) => {
+      button.classList.toggle("is-selected", button.dataset.command === command);
+    });
+    if (command === "claude") activateStudioPane("studioPaneClaude");
+    if (command === "launcher") activateStudioPane("studioPaneClaude");
+    if (command === "validate") activateStudioPane("studioPaneValidation");
+    if (command === "drive") activateStudioPane("studioPaneDrive");
+    if (command === "run") activateStudioPane("studioPaneRun");
+  }
+
+  function filterCommands() {
+    const query = commandSearch.value.trim().toLowerCase();
+    commandButtons.forEach((button) => {
+      const haystack = `${button.textContent} ${button.dataset.keywords}`.toLowerCase();
+      button.hidden = query.length > 0 && !haystack.includes(query);
+    });
+  }
+
+  function activateStudioPane(paneId) {
+    tabButtons.forEach((button) => {
+      const isActive = button.dataset.studioTab === paneId;
+      button.classList.toggle("is-active", isActive);
+      button.setAttribute("aria-selected", String(isActive));
+    });
+    paneNodes.forEach((pane) => {
+      pane.classList.toggle("is-active", pane.id === paneId);
+    });
+  }
+
+  function driveClass(label) {
+    const lower = String(label || "").toLowerCase();
+    if (lower.includes("synced")) return "is-green";
+    if (lower.includes("pending")) return "is-amber";
+    return "is-blue";
+  }
+
+  function bulletList(items) {
+    return items.map((item) => `- ${item}`).join("\n");
+  }
+
+  function normalizeRunText(run) {
+    return `${run.name || ""} ${run.summary || ""} ${run.route || ""}`.toLowerCase();
+  }
+
+  function taskShapeForRun(run) {
+    const text = normalizeRunText(run);
+    if (text.includes("drive")) return "drive";
+    if (text.includes("route") || text.includes("pilot") || text.includes("runtime")) return "route";
+    if (text.includes("eval") || text.includes("qa") || text.includes("guard") || text.includes("validation")) return "validation";
+    return "ui";
+  }
+
+  function surfaceForRun(run) {
+    const text = normalizeRunText(run);
+    if (text.includes("studio") || text.includes("packet")) return "studio.html";
+    if (text.includes("observatory") || text.includes("flight recorder") || text.includes("mission") || text.includes("future")) return "observatory.html";
+    if (text.includes("cockpit")) return "control-cockpit.html";
+    return "os-visualization";
+  }
+
+  function selectedLauncherRun() {
+    return studioAvailableRuns.find((run) => run.runId === launcherRun.value) || studioAvailableRuns[0] || null;
+  }
+
+  function packetObjectiveForRun(run) {
+    const name = run.name || run.runId || "selected run";
+    const summary = run.summary || "continue the next local non-claim improvement from this recorded machine state";
+    return `Use ${name} as source memory and build the next local non-claim Frankly OS improvement from it: ${summary}`;
+  }
+
+  function renderLauncherOptions(runs) {
+    studioAvailableRuns = runs.slice(0, 8);
+    launcherRun.innerHTML = "";
+    studioAvailableRuns.forEach((run) => {
+      const option = document.createElement("option");
+      option.value = run.runId || run.name || "recorded-run";
+      option.textContent = run.name || run.runId || "Recorded run";
+      launcherRun.append(option);
+    });
+    updateLauncherPreview();
+  }
+
+  function updateLauncherPreview() {
+    const run = selectedLauncherRun();
+    if (!run) return;
+    launcherPreview.innerHTML = `
+      <b>${run.name || run.runId || "Recorded run"}</b>
+      <p>${run.summary || "Run recorded in the local registry."}</p>
+      <div class="studio-launcher-meta">
+        <span class="studio-pill is-blue">${taskShapeForRun(run)}</span>
+        <span class="studio-pill ${driveClass(run.drive)}">${run.drive || "local"}</span>
+        <span class="studio-pill is-green">${run.validation || "validation ready"}</span>
+      </div>
+    `;
+  }
+
+  function applyLauncherRunToPacket() {
+    const run = selectedLauncherRun();
+    if (!run) return;
+    packetSourceRun = run;
+    taskShape.value = taskShapeForRun(run);
+    taskSurface.value = surfaceForRun(run);
+    taskObjective.value = packetObjectiveForRun(run);
+    refreshClaudeTaskPacket();
+    launcherState.textContent = "Packet filled from run memory";
+    copyState.textContent = "Packet filled from run memory";
+  }
+
+  function buildClaudeTaskPacket() {
+    const profile = studioTaskProfiles[taskShape.value] || studioTaskProfiles.ui;
+    const objective = taskObjective.value.trim() || "Build the next local non-claim Frankly OS improvement.";
+    const surface = taskSurface.value;
+    const sourceLines = packetSourceRun ? [
+      `Source run: ${packetSourceRun.name || packetSourceRun.runId || "Recorded run"} (${packetSourceRun.runId || "local registry"})`,
+      `Source lesson: ${packetSourceRun.lesson || "Use the recorded run memory without widening scope."}`
+    ] : [];
+    return [
+      "# Claude Code Task Packet",
+      "",
+      `Objective: ${objective}`,
+      ...sourceLines,
+      `Route: ${profile.route}`,
+      `Execution lane: ${profile.lane}`,
+      `Target surface/state: ${surface}`,
+      "",
+      "Read first:",
+      bulletList(studioPacketBase.readFirst),
+      "",
+      "Allowed work:",
+      bulletList(profile.allowed),
+      "",
+      "Expected outputs:",
+      bulletList(profile.expected),
+      "",
+      "Do not touch:",
+      bulletList(studioPacketBase.doNotTouch),
+      "",
+      "Validation before final:",
+      bulletList(studioPacketBase.validation),
+      "",
+      "Browser QA target:",
+      "- Serve frankly-os-site over local HTTP and verify desktop/mobile if rendered behavior changed.",
+      "- Keep file:// fallback usable for static reading.",
+      "",
+      "Run trace:",
+      "- Record the run in run-registry.json.",
+      "- Update current-machine-handoff.md and follow-up-ledger.md.",
+      "- Add Drive-pending manifest entry if connector writes are not approved.",
+      "",
+      "Stop rule:",
+      "Stop before connector writes, public deploy, Slack/company-visible actions, paid APIs, plugin installs, automatic thread creation, claims/product/legal/source-record work or customer-facing product copy changes unless Jonas explicitly approves that named scope."
+    ].join("\n");
+  }
+
+  function refreshClaudeTaskPacket() {
+    packetOutput.textContent = buildClaudeTaskPacket();
+    copyState.textContent = "Packet ready";
+  }
+
+  async function copyClaudeTaskPacket() {
+    refreshClaudeTaskPacket();
+    try {
+      await navigator.clipboard.writeText(packetOutput.textContent);
+      copyState.textContent = "Copied locally";
+    } catch (error) {
+      packetOutput.focus();
+      copyState.textContent = "Select text to copy";
+    }
+  }
+
+  function renderStudioRuns(runs) {
+    const renderedRuns = runs.slice(0, 5);
+    runList.innerHTML = renderedRuns.map((run) => {
+      const name = run.name || run.runId || "Recorded run";
+      const summary = run.summary || "Run recorded in the local registry.";
+      const drive = run.drive || "local";
+      return `
+        <article class="studio-run-row">
+          <div><b>${name}</b><p>${summary}</p></div>
+          <span class="studio-pill ${driveClass(drive)}">${drive}</span>
+        </article>
+      `;
+    }).join("");
+  }
+
+  async function loadStudioFeed() {
+    renderStudioRuns(fallbackStudioRuns);
+    renderLauncherOptions(fallbackStudioRuns);
+    try {
+      const response = await fetch("data/flight-recorder.json", { cache: "no-store" });
+      if (!response.ok) throw new Error(`feed ${response.status}`);
+      const feed = await response.json();
+      if (!Array.isArray(feed.runs) || feed.runs.length === 0) throw new Error("feed has no runs");
+      renderStudioRuns(feed.runs);
+      renderLauncherOptions(feed.runs);
+      const count = feed.counts && Number.isFinite(feed.counts.runs) ? feed.counts.runs : feed.runs.length;
+      runCount.textContent = String(count);
+      feedStatus.textContent = "Registry feed loaded";
+      registryMode.textContent = "registry-fed";
+      registryMode.classList.add("is-green");
+    } catch (error) {
+      feedStatus.textContent = "Static fallback active";
+      registryMode.textContent = "static fallback";
+      runCount.textContent = "21";
+    }
+  }
+
+  commandButtons.forEach((button) => {
+    button.addEventListener("click", () => setCommand(button.dataset.command));
+  });
+  commandSearch.addEventListener("input", filterCommands);
+  tabButtons.forEach((button) => {
+    button.addEventListener("click", () => activateStudioPane(button.dataset.studioTab));
+  });
+  launcherRun.addEventListener("change", updateLauncherPreview);
+  useRunPacketButton.addEventListener("click", applyLauncherRunToPacket);
+  [taskShape, taskSurface, taskObjective].forEach((node) => {
+    node.addEventListener("input", refreshClaudeTaskPacket);
+    node.addEventListener("change", refreshClaudeTaskPacket);
+  });
+  generatePacketButton.addEventListener("click", refreshClaudeTaskPacket);
+  copyPacketButton.addEventListener("click", copyClaudeTaskPacket);
+
+  refreshClaudeTaskPacket();
+  loadStudioFeed();
+</script>
+</body>
+</html>

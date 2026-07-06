@@ -1,13 +1,13 @@
 {
-  "generated": "2026-07-02",
+  "generated": "2026-07-06",
   "status": "local-registry-active",
   "source": "os-visualization/system-intelligence/surface-gate-registry.json",
-  "summary": "Canonical local registry for Frankly site surfaces, gate state, QA evidence and remaining approvals.",
+  "summary": "Canonical local registry for Frankly local OS and Lab surfaces, gate state, QA evidence, Studio/Observatory/Cockpit additions and remaining approvals. Uploadable website bundles stay allowlisted and separate.",
   "counts": {
-    "surfaces": 9,
-    "browserQaPassed": 9,
+    "surfaces": 12,
+    "browserQaPassed": 12,
     "publicReady": 0,
-    "approvalGated": 9
+    "approvalGated": 12
   },
   "surfaces": [
     {
@@ -87,6 +87,45 @@
       "evidenceFolder": "os-visualization/evidence/20260701-progress-map-browser-qa/",
       "nextApproval": "Keep as an internal progress surface until public deploy and product/legal source status changes are approved.",
       "anchor": "progress"
+    },
+    {
+      "id": "control-cockpit",
+      "name": "Frankly OS Control Cockpit",
+      "page": "control-cockpit.html",
+      "state": "local-live",
+      "gate": "internal-machine-activation-surface",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/control-cockpit-v0-1-activation-test-2026-07-05.md",
+      "evidenceFolder": "os-visualization/evidence/20260705-control-cockpit-browser-qa/",
+      "nextApproval": "Keep as an internal machine cockpit until Drive sync and Jonas approval for any public use.",
+      "anchor": "cockpit"
+    },
+    {
+      "id": "observatory",
+      "name": "Frankly OS Observatory",
+      "page": "observatory.html",
+      "state": "local-live",
+      "gate": "internal-machine-visualization-surface",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/observatory-v0-1-2026-07-05.md",
+      "evidenceFolder": "os-visualization/evidence/20260705-observatory-browser-qa/",
+      "nextApproval": "Keep as an internal machine observatory until Drive sync and Jonas approval for any public use.",
+      "anchor": "observatory"
+    },
+    {
+      "id": "studio",
+      "name": "Frankly OS Studio",
+      "page": "studio.html",
+      "state": "local-live",
+      "gate": "internal-machine-software-shell",
+      "browserQa": "passed",
+      "publicUse": "gated",
+      "reportFile": "os-visualization/reports/studio-v0-1-2026-07-06.md",
+      "evidenceFolder": "os-visualization/evidence/20260706-studio-browser-qa/",
+      "nextApproval": "Keep as an internal local software shell until Drive sync and Jonas approval for any public use.",
+      "anchor": "studio"
     },
     {
       "id": "product-clarity-review",
