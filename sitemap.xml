@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <url>
+    <loc>https://os.franklydesign.dk/</loc>
+  </url>
+  <url>
+    <loc>https://os.franklydesign.dk/franklys-bmw.html</loc>
+  </url>
+  <!-- Blog drafts stay noindex and are intentionally excluded. -->
+  <!-- Internal operating pages stay local and are intentionally excluded. -->
+</urlset>
