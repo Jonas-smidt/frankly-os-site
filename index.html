@@ -82,6 +82,7 @@
   .state.locked{background:var(--warn)}
   .state.draft{background:var(--blue)}
   .state.missing{background:var(--recover)}
+  .state.recovered{background:var(--blue)}
   .source-note{margin-top:16px;color:var(--grey);font-size:13px}
   .note{border-top:1px solid var(--edge);padding:22px 0 40px;color:var(--grey);font-size:14px}
   @media (max-width:860px){
@@ -94,6 +95,15 @@
     .ledger-row{grid-template-columns:1fr;gap:6px}
     .tool-row{grid-template-columns:1fr;gap:6px}
     .state{justify-self:start}
+  }
+  @media (max-width:520px){
+    .wrap{width:min(100% - 28px,1180px)}
+    h1{font-size:44px;max-width:10ch}
+    .hero p{font-size:16px}
+    .hero-actions .button{flex:1 1 150px}
+    .status-panel{max-width:100%;overflow:hidden}
+    .metrics{grid-template-columns:1fr}
+    .section-head h2{font-size:27px}
   }
 </style>
 </head>
@@ -125,10 +135,10 @@
       <aside class="status-panel" aria-label="Bundle boundary">
         <span>Boundary</span>
         <b>Lab visible. OS local.</b>
-        <p>The upload bundle carries one safe HTML test plus a visible registry of what exists, what is local-only and what needs recovery. Studio, Mission Control, source feeds and product/legal drafts stay local-only.</p>
+        <p>The upload bundle carries one safe HTML test plus a visible registry of what exists, what is local-only and what has been rebuilt. Studio, Mission Control, source feeds and product/legal drafts stay local-only.</p>
         <div class="metrics" aria-label="Lab bundle metrics">
           <div><strong>21</strong><small>registry entries</small></div>
-          <div><strong>10</strong><small>local files</small></div>
+          <div><strong>21</strong><small>local files</small></div>
           <div><strong>1</strong><small>online file</small></div>
         </div>
       </aside>
@@ -164,7 +174,7 @@
     <section class="wrap band" id="registry">
       <div class="section-head">
         <h2>Tool and game registry</h2>
-        <p>This is the actual Lab shelf from `lab-hub.html` plus the old browser-QA evidence. It separates real files from registry-only ideas so we do not pretend missing pages are live.</p>
+        <p>This is the actual Lab shelf from `lab-hub.html`. All 21 entries now have local files again; only the safe standalone BMW test is copied into the upload bundle.</p>
       </div>
       <div class="ledger" aria-label="Frankly Lab tool and game registry">
         <div class="ledger-row">
@@ -228,91 +238,79 @@
           <em class="state locked">Claims gate</em>
         </div>
         <div class="ledger-row">
-          <span>Locked file</span>
-          <div><b>Store guide</b><p>Daily / internal guide</p></div>
-          <p>Training and onboarding guide with product-adjacent material, kept out of the upload bundle.</p>
-          <em class="state locked">Local only</em>
-        </div>
-        <div class="ledger-row">
-          <span>Locked file</span>
-          <div><b>Blog drafts</b><p>SEO / draft content</p></div>
-          <p>Blog index and cykelforsikring draft exist locally, but publishing is blocked by the claims/product gate.</p>
-          <em class="state locked">Claims gate</em>
-        </div>
-        <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Email signature</b><p>Brand / daily tool</p></div>
-          <p>Registered in Lab evidence, but `frankly-signature-generator.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local signature generator at `frankly-signature-generator.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Brand Reference</b><p>Brand / reference</p></div>
-          <p>Registered in Lab evidence, but `frankly-brand-reference.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local color, token and tone reference at `frankly-brand-reference.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Brand Assistant</b><p>Brand / answers</p></div>
-          <p>Registered in Lab evidence, but `frankly-brand-assistant.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local answer surface at `frankly-brand-assistant.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Business card</b><p>Daily / QR card</p></div>
-          <p>Registered in Lab evidence, but `frankly-business-card.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local contact card with QR and vCard output at `frankly-business-card.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Dictionary</b><p>Daily / glossary</p></div>
-          <p>Registered in Lab evidence, but `frankly-dictionary.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local plain-language glossary at `frankly-dictionary.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>QR link</b><p>Daily / generator</p></div>
-          <p>Registered in Lab evidence, but `frankly-qr-link.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local SVG QR generator at `frankly-qr-link.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>LinkedIn checker</b><p>Daily / text check</p></div>
-          <p>Registered in Lab evidence, but `frankly-linkedin-checker.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local post preview and length checker at `frankly-linkedin-checker.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Image resizer</b><p>Daily / image tool</p></div>
-          <p>Registered in Lab evidence, but `frankly-image-resizer.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local canvas resizer at `frankly-image-resizer.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Drop Protection</b><p>Play / game</p></div>
-          <p>Registered in Lab evidence, but `frankly-drop-protection.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local canvas game at `frankly-drop-protection.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Decision Chicken</b><p>Play / decision toy</p></div>
-          <p>Registered in Lab evidence, but `the-decision-chicken.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local decision picker at `the-decision-chicken.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
         <div class="ledger-row">
-          <span>Recovery</span>
+          <span>Rebuilt file</span>
           <div><b>Do you know Frankly?</b><p>Play / quiz</p></div>
-          <p>Registered in Lab evidence, but `frankly-quiz.html` is not in the current repo tree.</p>
-          <em class="state missing">Missing file</em>
+          <p>Rebuilt as a noindex local brand quiz at `frankly-quiz.html`.</p>
+          <em class="state recovered">Local file</em>
         </div>
       </div>
-      <p class="source-note">Recovery note: `lab-hub.html` still carries these registry entries, and `os-visualization/evidence/20260630-213345-site-lab-rerun/site-lab-evidence.json` proves they were visible in an earlier Lab pass. The source HTML files are absent from the current site tree, so the next safe move is to recover them from the old bundle/Drive or rebuild them one by one before linking them online.</p>
+      <p class="source-note">Recovery note: the old source files were absent from the current tree, so these eleven entries were rebuilt locally from the Lab registry and old browser-QA evidence. They remain noindex and are not in the upload allowlist.</p>
     </section>
 
     <section class="wrap band" id="workbench">
       <div class="section-head">
         <h2>Built Lab shelf</h2>
-        <p>The short shelf view groups the registry into what can be opened online, what remains local, what is locked and what needs source recovery.</p>
+        <p>The short shelf view groups the registry into what can be opened online, what remains local, what is locked and what has been rebuilt.</p>
       </div>
       <div class="grid">
         <article class="item local">
@@ -345,10 +343,10 @@
           <p>Draft content remains outside the online bundle while claims/product/legal work is locked.</p>
           <strong>Claims gate</strong>
         </article>
-        <article class="item draft">
-          <small>Draft shelf</small>
+        <article class="item local">
+          <small>Recovered local</small>
           <h3>Brand and daily tools</h3>
-          <p>Signature, QR, image, dictionary, LinkedIn and brand helpers are visible as planned Lab lanes.</p>
+          <p>Signature, QR, image, dictionary, LinkedIn, brand helpers, quiz and small games are rebuilt as local noindex pages.</p>
           <strong>Not uploaded yet</strong>
         </article>
       </div>

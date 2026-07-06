@@ -61,14 +61,14 @@
         </div>
         <div class="lab-engine" aria-label="Frankly Lab workbench">
           <div class="lab-node">
-            <strong id="liveCount">10</strong>
+            <strong id="liveCount">21</strong>
             <span><b>Live tools</b><span>Directly in the browser. No setup.</span></span>
             <small>live</small>
           </div>
           <div class="lab-node">
-            <strong id="draftCount">11</strong>
-            <span><b>Drafts / missing pages</b><span>Visible in the registry, but not live yet.</span></span>
-            <small>draft</small>
+            <strong id="draftCount">0</strong>
+            <span><b>Missing pages</b><span>Recovered as noindex local Lab pages.</span></span>
+            <small>local</small>
           </div>
           <div class="lab-node">
             <strong>23</strong>
@@ -226,17 +226,17 @@
 const TOOLS = [
   {name:"Start here", mark:"ST", desc:"New teammates land here: brand, products, tools and quiz.", category:"Daily", href:"onboarding.html", status:"live", id:"TOOL_15"},
   {name:"Coverage overview", mark:"CO", desc:"Who covers what when something happens: Frankly, warranty or home contents insurance.", category:"Daily", href:"frankly-daekningsoverblik.html", status:"live", id:"TOOL_16"},
-  {name:"Email signature", mark:"ES", desc:"Add your details. Copy. Paste into Gmail. Brand and disclaimer stay locked.", category:"Brand", href:"frankly-signature-generator.html", status:"draft", id:"TOOL_01"},
-  {name:"Brand Reference", mark:"BR", desc:"Colors, type, logo, tone, AI prompts and hard rules gathered in one place.", category:"Brand", href:"frankly-brand-reference.html", status:"draft", id:"TOOL_02"},
-  {name:"Brand Assistant", mark:"BA", desc:"Quick answers to brand questions. Searchable and without AI runtime.", category:"Brand", href:"frankly-brand-assistant.html", status:"draft", id:"TOOL_03"},
-  {name:"Business card", mark:"BC", desc:"A personal QR card surface for meetings, fairs and partner days.", category:"Daily", href:"frankly-business-card.html", status:"draft", id:"TOOL_04"},
-  {name:"Dictionary", mark:"DI", desc:"Insurance and business terms rewritten in plain language.", category:"Daily", href:"frankly-dictionary.html", status:"draft", id:"TOOL_05"},
-  {name:"QR link", mark:"QR", desc:"A link becomes a clean QR code for decks, print, signage and campaigns.", category:"Daily", href:"frankly-qr-link.html", status:"draft", id:"TOOL_06"},
-  {name:"LinkedIn checker", mark:"LI", desc:"See what appears before \"see more\", check length and keep the text sharp.", category:"Daily", href:"frankly-linkedin-checker.html", status:"draft", id:"TOOL_07"},
-  {name:"Image resizer", mark:"IR", desc:"Image in. LinkedIn, Instagram, story and hero formats out. All local.", category:"Daily", href:"frankly-image-resizer.html", status:"draft", id:"TOOL_08"},
-  {name:"Drop Protection", mark:"DP", desc:"Products fall. You are the coverage. The business model as a game.", category:"Play", href:"frankly-drop-protection.html", status:"draft", id:"TOOL_09"},
+  {name:"Email signature", mark:"ES", desc:"Add your details, copy the footer and keep the Frankly shape consistent.", category:"Brand", href:"frankly-signature-generator.html", status:"live", id:"TOOL_01"},
+  {name:"Brand Reference", mark:"BR", desc:"Colors, type, tone and hard rules gathered in one place.", category:"Brand", href:"frankly-brand-reference.html", status:"live", id:"TOOL_02"},
+  {name:"Brand Assistant", mark:"BA", desc:"Quick answers to brand questions. Searchable and without AI runtime.", category:"Brand", href:"frankly-brand-assistant.html", status:"live", id:"TOOL_03"},
+  {name:"Business card", mark:"BC", desc:"A personal QR card surface for meetings, fairs and partner days.", category:"Daily", href:"frankly-business-card.html", status:"live", id:"TOOL_04"},
+  {name:"Dictionary", mark:"DI", desc:"Insurance, retail and OS terms rewritten in plain language.", category:"Daily", href:"frankly-dictionary.html", status:"live", id:"TOOL_05"},
+  {name:"QR link", mark:"QR", desc:"A link becomes a clean QR code for decks, print, signage and campaigns.", category:"Daily", href:"frankly-qr-link.html", status:"live", id:"TOOL_06"},
+  {name:"LinkedIn checker", mark:"LI", desc:"See what appears before \"see more\", check length and keep the text sharp.", category:"Daily", href:"frankly-linkedin-checker.html", status:"live", id:"TOOL_07"},
+  {name:"Image resizer", mark:"IR", desc:"Image in. LinkedIn, Instagram, story and hero formats out. All local.", category:"Daily", href:"frankly-image-resizer.html", status:"live", id:"TOOL_08"},
+  {name:"Drop Protection", mark:"DP", desc:"Objects fall. Catch them with the coverage bar and keep the score alive.", category:"Play", href:"frankly-drop-protection.html", status:"live", id:"TOOL_09"},
   {name:"Frankly's BMW", mark:"BM", desc:"Drive nicely through Amager, keep the bike lane clear and watch the premium melt.", category:"Play", href:"franklys-bmw.html", status:"live", id:"TOOL_20"},
-  {name:"Decision Chicken", mark:"DC", desc:"For small yes/no decisions where the most important thing is moving forward.", category:"Play", href:"the-decision-chicken.html", status:"draft", id:"TOOL_10"},
+  {name:"Decision Chicken", mark:"DC", desc:"For small yes/no decisions where the most important thing is moving forward.", category:"Play", href:"the-decision-chicken.html", status:"live", id:"TOOL_10"},
   {name:"Frankly OS", mark:"OS", desc:"The visual operating system: routes, loop, gates, learning and next choices.", category:"OS", href:"frankly-os.html", status:"live", id:"TOOL_11"},
   {name:"Studio", mark:"ST", desc:"The software-like OS shell for command palette, run memory, validation, Drive queue and Claude task packets.", category:"OS", href:"studio.html", status:"live", id:"TOOL_21"},
   {name:"Control Cockpit", mark:"CC", desc:"A report-style launch readout for current state, gates, Claude lane, runs and Drive continuity.", category:"OS", href:"control-cockpit.html", status:"live", id:"TOOL_22"},
@@ -244,7 +244,7 @@ const TOOLS = [
   {name:"Agent Brief Builder", mark:"AB", desc:"Turn one loose idea into larger chat missions with context, gates, QA and review checkpoints.", category:"OS", href:"agent-brief-builder.html", status:"live", id:"TOOL_17"},
   {name:"Mission Control Queue", mark:"MC", desc:"Track larger mission batches before manual chat launch, review and OS integration.", category:"OS", href:"mission-control-queue.html", status:"live", id:"TOOL_18"},
   {name:"Progress Map", mark:"PM", desc:"See what we have built, where we are now and what the next machine move is.", category:"OS", href:"progress-map.html", status:"live", id:"TOOL_19"},
-  {name:"Do you know Frankly?", mark:"QZ", desc:"A short brand quiz for tone, colors, wording and new teammates.", category:"Play", href:"frankly-quiz.html", status:"draft", id:"TOOL_14"}
+  {name:"Do you know Frankly?", mark:"QZ", desc:"A short brand quiz for tone, colors, wording and new teammates.", category:"Play", href:"frankly-quiz.html", status:"live", id:"TOOL_14"}
 ];
 
 const STATUS = {live:"Live", beta:"Beta", draft:"Draft", soon:"Soon", claude:"Claude"};

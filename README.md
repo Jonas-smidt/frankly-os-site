@@ -47,7 +47,7 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 
 ## Lab Registry Recovery
 
-`lab-hub.html` still contains a registry of 21 tool/game entries. Ten have files in the current repo tree, one is copied to the upload bundle, and eleven registry entries are visible in old browser-QA evidence but do not currently have source HTML files in this repo:
+`lab-hub.html` contains a registry of 21 tool/game entries. All 21 now have local files in the current repo tree again. One file is copied to the upload bundle, and eleven formerly missing entries were rebuilt locally from the Lab registry and old browser-QA evidence:
 
 - `frankly-signature-generator.html`
 - `frankly-brand-reference.html`
@@ -61,7 +61,7 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 - `the-decision-chicken.html`
 - `frankly-quiz.html`
 
-Do not link these as live pages until the files are recovered from an old bundle/Drive snapshot or rebuilt and locally QA'd.
+These rebuilt pages are noindex local Lab tools. They are intentionally not in `scripts/sync_from_drive.py`'s upload allowlist. Do not add them to the upload bundle or treat them as public pages until Jonas explicitly approves that scope.
 
 ## Current Run
 
