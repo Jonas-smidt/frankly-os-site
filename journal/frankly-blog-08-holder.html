@@ -1,0 +1,1061 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Det er lavet til at holde. — Frankly Blog</title>
+<meta name="description" content="Den første ridse føles som en lille katastrofe. Det er den ikke. Om at bruge sine ting og reparere dem — i stedet for at skifte dem ud.">
+<meta property="og:title" content="Det er lavet til at holde.">
+<meta property="og:description" content="Gode ting er lavet til at bruges og repareres, ikke skiftes ud. Om ro ved den første ridse.">
+<meta property="og:type" content="article">
+<meta name="theme-color" content="#F5F4F1">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=League+Spartan:wght@500;600&display=swap" rel="stylesheet">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"Det er lavet til at holde.","inLanguage":"da","datePublished":"2026-07-07","publisher":{"@type":"Organization","name":"Frankly"}}
+</script>
+<style>
+/* ---------- Brand fonts (self-hosted) ---------- */
+@font-face{font-family:"Almarena Neue Display";font-style:normal;font-weight:600;font-display:swap;src:url("fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:400;font-display:swap;src:url("fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:500;font-display:swap;src:url("fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:600;font-display:swap;src:url("fonts/Switzer-Semibold.otf") format("opentype")}
+
+:root{
+  --calm-pink:#FFD3E3; --calm-deep:#FFACCA; --limestone:#F5F4F1; --blush:#FFF6FA;
+  --stone:#ECE9E4; --stone-2:#F0EEE9; --stone-4:#E3DDD5; --bordeaux:#2D0011;
+  --white:#FFFFFF; --grey-1:#585C60; --grey-2:#838383; --grey-4:#D9D9D9;
+  /* Ink scale derived from Bordeaux (deck) */
+  --ink-70:rgba(45,0,17,.70); --ink-55:rgba(45,0,17,.55); --ink-40:rgba(45,0,17,.40);
+  /* Eyebrow ink — deck spec is ~55%; nudged to 62% so 12px bold clears WCAG-AA (4.5:1) on limestone */
+  --ink-eyebrow:rgba(45,0,17,.62);
+  --font-display:"Almarena Neue Display","League Spartan",Georgia,serif;
+  --font-sans:"Switzer","Inter",system-ui,sans-serif;
+  --radius-xs:6px; --radius-sm:8px; --radius-md:12px; --radius-card:16px; --radius-xl:24px; --radius-2xl:32px; --radius-pill:999px;
+  /* Spacing — 4px base scale (deck) */
+  --space-1:4px; --space-2:8px; --space-3:12px; --space-4:16px; --space-5:24px; --space-6:32px; --space-7:48px; --space-8:64px; --space-9:96px;
+  /* Shadows — stacked & very soft (deck) */
+  --shadow-rest:0 4px 16px rgba(45,0,17,.06); --shadow-lift:0 3px 7px rgba(45,0,17,.085);
+  --shadow-soft:0 18px 48px rgba(45,0,17,.12); --shadow-pink:0 16px 40px rgba(255,172,202,.45);
+  /* Flowing gradient edge-border (deck signature) */
+  --card-edge:linear-gradient(90deg,#FFACCA,#2D0011,#FFACCA);
+  --ease:cubic-bezier(.22,.61,.36,1); --ease-out:cubic-bezier(.16,1,.3,1); --hover-ease:cubic-bezier(.22,.61,.36,1);
+  --dur-hover:320ms; --dur-ui:300ms; --dur-micro:220ms;
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--limestone);
+  color:var(--grey-1);
+  font-family:var(--font-sans);
+  font-size:1.125rem;
+  line-height:1.7;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  transition:background-color 1.4s var(--ease);
+}
+body.is-calm{background:var(--blush)}
+::selection{background:var(--calm-deep);color:var(--bordeaux)}
+[hidden]{display:none !important}
+
+.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+a{color:var(--bordeaux)}
+:focus-visible{outline:2px solid var(--bordeaux);outline-offset:3px}
+
+/* ---------- Reading progress ---------- */
+.progress{position:fixed;top:0;left:0;right:0;height:3px;z-index:60;pointer-events:none;background:transparent}
+.progress__fill{width:100%;height:100%;background:var(--calm-deep);transform:scaleX(0);transform-origin:0 50%}
+
+/* ---------- Page frame ---------- */
+.page{max-width:1120px;margin:0 auto;padding:clamp(14px,2.5vw,28px)}
+
+.site-head{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  padding:clamp(6px,1vw,12px) clamp(4px,1vw,10px) clamp(18px,2.5vw,26px);
+  animation:fadeIn .6s var(--ease-out) both;
+}
+.logo{display:block;color:var(--bordeaux)}
+.logo svg{display:block;width:118px;height:auto}
+.site-head__right{display:flex;align-items:baseline;gap:18px}
+.site-head__meta{margin:0;font-size:13px;letter-spacing:.02em;color:var(--grey-1)}
+.site-head__back{font-size:13px;font-weight:500;text-decoration:underline;text-underline-offset:3px;text-decoration-thickness:1.25px}
+
+/* ---------- Hero (editorial: headline in the image's calm negative space) ---------- */
+.hero{
+  position:relative;overflow:hidden;
+  background:var(--calm-pink);
+  border-radius:var(--radius-xl);
+  min-height:clamp(440px,62vw,660px);
+  display:flex;align-items:flex-start;
+  isolation:isolate;
+}
+.hero__art{
+  position:absolute;inset:-6% 0 -6%;z-index:0;
+  animation:heroFade 1s var(--ease-out) both;
+  will-change:transform;
+}
+.hero__photo{display:block;width:100%;height:100%;object-fit:cover;object-position:64% center}
+/* Soft limestone scrim behind the text only — top-left → clears to the sofa on the right */
+.hero::after{
+  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:
+    linear-gradient(102deg,rgba(245,244,241,.94) 0%,rgba(245,244,241,.86) 26%,rgba(245,244,241,.42) 50%,rgba(245,244,241,0) 72%),
+    linear-gradient(180deg,rgba(245,244,241,.55) 0%,rgba(245,244,241,0) 34%);
+}
+.hero__inner{
+  position:relative;z-index:2;
+  padding:clamp(1.8rem,5vw,4rem) clamp(1.6rem,5vw,4.2rem);
+  max-width:min(620px,66%);
+}
+.hero__kicker{
+  margin:0 0 clamp(14px,2vw,20px);
+  font-size:12.5px;font-weight:600;letter-spacing:.04em;color:var(--ink-eyebrow);
+  animation:fadeUp .55s var(--ease-out) both;animation-delay:.35s;
+}
+.hero__kicker::before{content:"";display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--calm-deep);margin-right:9px;vertical-align:middle;position:relative;top:-2px}
+.hero__title{
+  margin:0;max-width:13ch;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(2.5rem,6.6vw,4.5rem);line-height:1.0;letter-spacing:-.02em;
+  color:var(--bordeaux);text-wrap:balance;
+}
+.w{display:inline-block;overflow:hidden;vertical-align:top;padding:.1em .05em .2em;margin:-.1em -.05em -.2em}
+.wi{
+  display:inline-block;opacity:0;transform:translateY(.65em);
+  animation:rise .62s var(--ease-out) forwards;
+  animation-delay:calc(.42s + var(--i)*.07s);
+}
+.hero__manchet{
+  margin:clamp(18px,2.6vw,26px) 0 0;
+  font-size:clamp(1.0625rem,1.6vw,1.25rem);line-height:1.55;color:var(--ink-70);max-width:40ch;
+  animation:fadeUp .6s var(--ease-out) both;animation-delay:1.0s;
+}
+@media (max-width:720px){
+  .hero{min-height:0;flex-direction:column;background:var(--limestone)}
+  .hero::after{background:none}
+  .hero__art{position:relative;order:2;aspect-ratio:16/11;border-bottom-left-radius:var(--radius-xl);border-bottom-right-radius:var(--radius-xl);overflow:hidden}
+  .hero__inner{order:1;max-width:none;padding-bottom:clamp(1.4rem,4vw,2rem)}
+}
+
+/* ---------- Article ---------- */
+.post{max-width:680px;margin:0 auto;padding:0 clamp(2px,1vw,8px)}
+.post>*{margin-top:clamp(64px,9vw,96px)}
+.post .wide{max-width:none}
+
+.kicker{
+  display:inline-flex;align-items:center;gap:8px;margin:0 0 13px;
+  font-size:12.5px;font-weight:600;letter-spacing:.04em;color:var(--ink-eyebrow);
+}
+/* Numbered chip — upgrades the bare pink dot to a tasteful counter (deck: expressive heading system) */
+.kicker__num{
+  order:2;color:var(--bordeaux);
+  font-size:12px;font-weight:600;letter-spacing:.02em;line-height:1;
+  font-variant-numeric:tabular-nums;
+}
+.kicker__num::after{content:"·";margin-left:7px;color:var(--ink-eyebrow)}
+/* Section icon in a soft pink chip — cohesive with the study & vignette icons */
+.kicker__icon{order:1;flex:0 0 auto;width:auto;height:16px;color:var(--bordeaux);fill:currentColor;stroke:none;display:block}
+.kicker__label{order:3;display:inline-block}
+.dropcap:first-letter{
+  float:left;font-family:var(--font-display);font-weight:600;
+  font-size:3.1em;line-height:.82;padding:.06em .12em 0 0;color:var(--bordeaux);
+}
+h2{
+  margin:0 0 1.15rem;max-width:20ch;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.75rem,4vw,2.3rem);line-height:1.07;letter-spacing:-.02em;
+  color:var(--bordeaux);text-wrap:balance;
+}
+/* Widow guard — keep the trailing dot married to the last word */
+h2 .nowrap{white-space:nowrap}
+/* ---- Section headline word-rise (progressive enhancement over the block reveal) ---- */
+.h2w{display:inline-block;overflow:hidden;vertical-align:top;padding:.06em .04em .16em;margin:-.06em -.04em -.16em}
+.js .h2-split .h2wi{display:inline-block;opacity:0;transform:translateY(.5em);will-change:transform,opacity}
+.js .h2-split.is-words .h2wi{
+  opacity:1;transform:none;
+  transition:opacity .68s cubic-bezier(.2,.8,.2,1),transform .68s cubic-bezier(.2,.8,.2,1);
+  transition-delay:calc(.12s + var(--wi,0)*.07s);
+}
+.post p{margin:0 0 1.25rem}
+.post p:last-child{margin-bottom:0}
+.post em{font-style:italic}
+/* Lede — sits between headline and body in the type hierarchy */
+.lede{font-size:clamp(1.15rem,2vw,1.3125rem);line-height:1.5;color:var(--ink-70)}
+.module-intro{margin-bottom:1.4rem}
+.outro-line{font-family:var(--font-display);font-weight:600;font-size:1.35rem;color:var(--bordeaux)}
+.note{font-size:.9375rem;color:var(--grey-1)}
+
+/* Scroll reveals — fade-up family (deck: body/sublines 20px / 550ms / +150ms) */
+.js .reveal{opacity:0;transform:translateY(20px);transition:opacity .55s var(--ease-out) .15s,transform .55s var(--ease-out) .15s}
+.js .reveal.is-in{opacity:1;transform:none}
+
+/* ---------- Photo slots ---------- */
+.photo{margin:0}
+.photo__frame{
+  position:relative;overflow:hidden;
+  aspect-ratio:16/9;
+  background:var(--calm-pink);
+  border-radius:var(--radius-card);
+}
+.photo__frame img{display:block;width:100%;height:100%;object-fit:cover}
+.photo__fallback{display:none}
+.photo.is-missing .photo__frame img{display:none}
+.photo.is-missing .photo__fallback{
+  position:absolute;inset:0;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+  text-align:center;padding:24px;
+}
+.photo__fallback img{width:min(200px,50%);height:auto}
+.photo__fallback-label{font-size:13px;font-weight:500;letter-spacing:.04em;color:var(--bordeaux)}
+.photo__fallback-sub{font-size:12.5px;color:var(--grey-1);max-width:44ch;margin:0}
+.photo figcaption{
+  margin-top:12px;
+  font-size:.875rem;color:var(--grey-1);
+}
+/* Inner-media parallax on scroll-in (deck: media breathes) */
+.photo__frame img{transition:transform .9s var(--ease-out)}
+.js .photo:not(.is-missing) .photo__frame img{transform:scale(1.05)}
+.js .photo.is-in .photo__frame img{transform:scale(1)}
+
+/* ---- Editorial rhythm: vary scale & crop for pacing ---- */
+/* Still-life as one unified horizontal media card — image fills one half, text the other */
+.photo--inset{
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.02fr);align-items:stretch;
+  min-height:clamp(258px,31vw,338px);
+  background:var(--white);border-radius:var(--radius-xl);overflow:hidden;
+  box-shadow:0 14px 40px rgba(45,0,17,.07);
+}
+.photo--inset .photo__side{
+  grid-column:1;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(1.5rem,3.4vw,2.7rem);
+}
+.photo--inset .photo__side .kicker{margin-bottom:14px}
+.photo--inset .photo__frame{grid-column:2;aspect-ratio:auto;height:100%;border-radius:0;background:var(--calm-pink)}
+.photo--inset .photo__frame img{height:100%;width:100%;object-fit:cover}
+.photo--inset .photo__lead{
+  margin:0;font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.4rem,2.7vw,1.95rem);line-height:1.12;letter-spacing:-.012em;color:var(--bordeaux);text-wrap:balance;
+}
+@media (max-width:640px){
+  .photo--inset{grid-template-columns:1fr;min-height:0}
+  .photo--inset .photo__frame{grid-column:1;grid-row:1;aspect-ratio:4/5;height:auto}
+  .photo--inset .photo__side{grid-column:1;grid-row:2}
+}
+/* Full-bleed wider — one image breaks the text column for rhythm */
+.photo--bleed{width:min(94vw,940px);margin-inline:calc(50% - min(47vw,470px))}
+.photo--bleed .photo__frame{aspect-ratio:2/1;border-radius:var(--radius-xl)}
+.photo--bleed figcaption{max-width:680px;margin-left:auto;margin-right:auto}
+@media (max-width:760px){
+  .photo--bleed{width:auto;margin-inline:0}
+  .photo--bleed .photo__frame{aspect-ratio:16/10}
+}
+
+/* ---------- Vignette cards ---------- */
+.vignettes{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;
+  margin-top:1.6rem;
+}
+.vig{
+  background:var(--white);border-radius:var(--radius-card);
+  box-shadow:var(--shadow-rest);
+  padding:22px 20px 20px;
+  transition:transform var(--dur-hover) var(--hover-ease),box-shadow var(--dur-hover) var(--hover-ease);
+}
+.vig:hover{transform:translateY(-4px) scale(1.03);box-shadow:var(--shadow-lift)}
+.vig svg{display:block;width:32px;height:32px;margin-bottom:14px}
+.vig h3{
+  margin:0 0 6px;
+  font-family:var(--font-display);font-weight:600;font-size:1.1875rem;color:var(--bordeaux);
+}
+.vig p{margin:0;font-size:.925rem;line-height:1.55;color:var(--grey-1)}
+.vig .stroke{stroke:#2D0011;stroke-width:1.75;fill:none;stroke-linecap:round;stroke-linejoin:round}
+
+/* ---------- Checklist module ---------- */
+.module{
+  position:relative;overflow:hidden;
+  background:var(--white);
+  border-radius:var(--radius-card);
+  box-shadow:var(--shadow-rest);
+  padding:clamp(1.1rem,3vw,1.75rem);
+  transition:
+    background-color .55s var(--ease),
+    height .46s var(--ease-out),
+    transform var(--dur-hover) var(--hover-ease),
+    box-shadow var(--dur-hover) var(--hover-ease);
+}
+.module:hover{transform:translateY(-4px) scale(1.03);box-shadow:var(--shadow-lift)}
+.module.is-clear{background:var(--calm-pink)}
+.module.is-clear:hover{transform:none}
+.module.is-clear:hover::after{opacity:0;animation:none}
+
+.module__head{
+  display:flex;justify-content:space-between;align-items:center;gap:14px;
+  padding:2px 10px 14px;border-bottom:1px solid var(--stone-2);
+}
+.module__label{font-size:13px;font-weight:600;letter-spacing:.06em;color:var(--grey-1);font-variant-numeric:tabular-nums}
+.module__label b{color:var(--bordeaux);font-weight:600}
+.module__track{
+  flex:0 0 clamp(84px,24vw,150px);height:6px;
+  border-radius:var(--radius-pill);background:var(--stone-2);overflow:hidden;
+}
+.module__fill{width:100%;height:100%;background:var(--calm-deep);border-radius:inherit;transition:width .45s var(--ease)}
+
+.list{list-style:none;margin:0;padding:0}
+.item{
+  overflow:hidden;
+  transition:height .4s var(--ease),opacity .34s var(--ease),transform .4s var(--ease),border-color .3s var(--ease);
+}
+.item + .item{border-top:1px solid var(--stone-2)}
+.item.is-gone{opacity:0;transform:translateX(26px) rotate(1.2deg);border-top-color:transparent}
+
+.item__btn{
+  display:flex;align-items:flex-start;gap:14px;width:100%;
+  padding:15px 10px;background:none;border:0;border-radius:10px;
+  font:inherit;font-size:1.0625rem;line-height:1.55;text-align:left;
+  color:var(--bordeaux);cursor:pointer;
+  transition:background-color var(--dur-micro) var(--ease);
+}
+.item__btn:hover{background:var(--blush)}
+.item__btn:focus-visible{outline:2px solid var(--bordeaux);outline-offset:-2px}
+.item.is-done .item__btn{cursor:default}
+.item.is-done .item__btn:hover{background:none}
+
+.item__check{
+  flex:0 0 auto;width:22px;height:22px;margin-top:3px;
+  display:grid;place-items:center;
+  border:1.75px solid var(--bordeaux);border-radius:var(--radius-pill);
+  background:var(--white);
+  transition:background-color var(--dur-micro) var(--ease);
+}
+.item__check svg{width:12px;height:12px;overflow:visible}
+.item__check path{
+  stroke:var(--bordeaux);stroke-width:2.4;fill:none;stroke-linecap:round;stroke-linejoin:round;
+  stroke-dasharray:20;stroke-dashoffset:20;
+  transition:stroke-dashoffset .3s var(--ease) .05s;
+}
+.item.is-done .item__check{background:var(--calm-deep);animation:pop .34s var(--ease)}
+.item.is-done .item__check path{stroke-dashoffset:0}
+
+.item__text{
+  text-decoration:line-through;text-decoration-color:transparent;text-decoration-thickness:1.75px;
+  transition:color .3s var(--ease),text-decoration-color .3s var(--ease);
+}
+.item.is-done .item__text{color:var(--grey-2);text-decoration-color:var(--grey-2)}
+
+.item.is-back{animation:itemIn .4s var(--ease-out) both;animation-delay:var(--d,0ms)}
+
+/* Cleared state */
+.module__done{
+  padding:clamp(2.4rem,7vw,3.8rem) clamp(1rem,4vw,2rem);
+  text-align:center;outline:none;
+  opacity:0;transform:translateY(10px);
+  transition:opacity .5s var(--ease-out) .12s,transform .5s var(--ease-out) .12s;
+}
+.module__done.is-in{opacity:1;transform:none}
+.done__display{
+  margin:0;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.9rem,5vw,2.6rem);line-height:1.08;letter-spacing:-.01em;
+  color:var(--bordeaux);text-wrap:balance;
+}
+.done__sub{margin:.9rem 0 0;font-size:1.0625rem;line-height:1.6;color:rgba(45,0,17,.78)}
+.done__ribbon{display:block;width:min(210px,62%);height:auto;margin:1.7rem auto 0}
+.done__reset{
+  margin-top:1.4rem;padding:8px 12px;background:none;border:0;border-radius:var(--radius-sm);
+  font:inherit;font-size:.9375rem;font-weight:500;color:var(--bordeaux);cursor:pointer;
+  text-decoration:underline;text-decoration-thickness:1.5px;text-underline-offset:4px;
+  transition:text-decoration-thickness var(--dur-micro) var(--ease);
+}
+.done__reset:hover{text-decoration-thickness:2.5px}
+.done__reset:focus-visible{outline:2px solid var(--bordeaux);outline-offset:2px}
+
+/* ---------- Pull quote ---------- */
+.pullquote{
+  margin-inline:0;margin-bottom:0;
+  background:var(--calm-pink);border-radius:var(--radius-card);
+  padding:clamp(2.4rem,6.5vw,3.6rem) clamp(1.4rem,5vw,3rem);
+  text-align:center;
+}
+.pullquote blockquote{margin:0}
+.pullquote p{
+  margin:0;
+  font-family:var(--font-display);font-weight:600;
+  font-size:clamp(1.9rem,4.8vw,2.5rem);line-height:1.12;letter-spacing:-.01em;
+  color:var(--bordeaux);text-wrap:balance;
+}
+.pullquote img{display:block;width:min(180px,52%);height:auto;margin:1.3rem auto 0}
+
+/* ---------- Sources ---------- */
+.sources{
+  border-top:1px solid var(--stone-4);
+  padding-top:1.6rem;
+}
+.sources h2{font-size:1.15rem;margin-bottom:.9rem}
+.sources ol{margin:0;padding-left:1.2rem}
+.sources li{font-size:.875rem;line-height:1.6;color:var(--grey-1);margin-bottom:.55rem}
+.sources a{text-underline-offset:3px;text-decoration-thickness:1px}
+
+/* ---------- CTA ---------- */
+.cta{
+  display:inline-flex;align-items:center;gap:9px;margin-top:.6rem;padding:16px 28px;
+  background:var(--bordeaux);color:var(--white);
+  border-radius:var(--radius-pill);
+  font-weight:600;font-size:1.0625rem;letter-spacing:.01em;text-decoration:none;
+  box-shadow:0 10px 24px rgba(45,0,17,.14);
+  transition:transform var(--dur-hover) var(--hover-ease),box-shadow var(--dur-hover) var(--hover-ease);
+}
+.cta:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 18px 34px rgba(45,0,17,.22)}
+.cta:active{transform:translateY(-1px)}
+.cta:focus-visible{outline:2px solid var(--bordeaux);outline-offset:3px}
+.cta svg,.foot-cta__btn svg{width:18px;height:18px;stroke:currentColor;stroke-width:1.75;fill:none;stroke-linecap:round;stroke-linejoin:round;transition:transform var(--dur-hover) var(--hover-ease)}
+.cta:hover svg,.foot-cta__btn:hover svg{transform:translateX(3px)}
+
+/* ---------- Polish: signature edge-flow, study cards, quote mark ---------- */
+.edge{position:relative}
+.edge::after{
+  content:"";position:absolute;inset:0;border-radius:inherit;padding:1.5px;
+  background:linear-gradient(90deg,#FFACCA,#2D0011,#FFACCA);background-size:200% 100%;
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);mask-composite:exclude;
+  opacity:0;transition:opacity .3s var(--ease);pointer-events:none;
+}
+.edge:hover::after{opacity:1;animation:edgeflow 1.8s linear infinite}
+@keyframes edgeflow{to{background-position:200% 0}}
+.vignettes .vig,.studies .study{transition:transform var(--dur-hover) var(--ease),box-shadow var(--dur-hover) var(--ease),opacity var(--dur-ui) var(--ease)}
+.vignettes:has(.vig:hover) .vig:not(:hover),
+.studies:has(.study:hover) .study:not(:hover){opacity:.55}
+
+/* Research/study cards */
+.studies{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:16px;margin-top:1.6rem}
+.study{position:relative;background:var(--white);border-radius:var(--radius-card);box-shadow:var(--shadow-rest);padding:24px 22px}
+.study:hover{transform:translateY(-4px) scale(1.03);box-shadow:var(--shadow-lift)}
+.study__icon{width:34px;height:34px;display:grid;place-items:center;border-radius:var(--radius-pill);background:var(--calm-pink);margin-bottom:16px}
+.study__icon svg{width:19px;height:19px;stroke:var(--bordeaux);stroke-width:1.75;fill:none;stroke-linecap:round;stroke-linejoin:round}
+.study__year{font-family:var(--font-display);font-weight:600;font-size:1.9rem;line-height:1;color:var(--bordeaux)}
+.study__who{margin:6px 0 10px;font-size:12px;font-weight:600;letter-spacing:.03em;color:var(--grey-1)}
+.study__what{margin:0;font-size:.95rem;line-height:1.5;color:var(--grey-1)}
+.studies__note{margin:1rem 0 0;font-size:12.5px;color:var(--grey-1)}
+/* Research module — a distinct Pale Calm panel so the white cards pop */
+.section--research{background:var(--calm-pink);border-radius:var(--radius-xl);padding:clamp(1.9rem,4vw,3rem) clamp(1.4rem,3.5vw,2.4rem)}
+.section--research .studies{margin-top:1.4rem}
+.section--research .studies__note{color:var(--ink-70)}
+
+/* Pull-quote mark (replaces the literal ribbon) */
+.pullquote__mark{display:block;font-family:var(--font-display);font-weight:600;font-size:4rem;line-height:.5;color:var(--calm-deep)}
+
+/* =========================================================
+   MOTION LAYER — progressive enhancement (deck spec)
+   Sequenced by reading order. All loops/entrances killed under reduced-motion.
+   ========================================================= */
+
+/* ---- Card entrances: subtle flip-in for study + vignette cards ----
+   Deck spec is rotateY 90→0; capped tasteful at 12deg + lift + fade. */
+.js .study,.js .vig{
+  opacity:0;transform:perspective(900px) rotateY(12deg) translateY(30px);
+  transform-origin:50% 100%;
+  transition:opacity .7s var(--ease-out),transform .7s var(--ease-out);
+  transition-delay:calc(var(--ci,0)*.11s);
+  will-change:transform,opacity;
+}
+.js .study.is-in,.js .vig.is-in{opacity:1;transform:none}
+/* Preserve the existing hover lift once the card has landed */
+.js .study.is-in:hover{transform:translateY(-4px) scale(1.03)}
+.js .vig.is-in:hover{transform:translateY(-4px) scale(1.03)}
+
+/* ---- Study-card year: one-shot number-pop + soft pink halo bloom on land ---- */
+.study__year{position:relative;display:inline-block;isolation:isolate}
+.study__year::before{
+  content:"";position:absolute;z-index:-1;left:50%;top:50%;
+  width:2.4em;height:2.4em;border-radius:50%;
+  transform:translate(-50%,-50%) scale(.4);
+  background:radial-gradient(circle,rgba(255,172,202,.55) 0%,rgba(255,172,202,0) 70%);
+  opacity:0;pointer-events:none;
+}
+.js .study.is-in .study__year{animation:yearPop .6s var(--ease-out) both;animation-delay:calc(.18s + var(--ci,0)*.11s)}
+.js .study.is-in .study__year::before{animation:halo .9s var(--ease-out) both;animation-delay:calc(.18s + var(--ci,0)*.11s)}
+
+/* ---- Quiet ambient loops (paused under reduced-motion) ---- */
+/* Gentle Ken Burns on the hero image — subtle so the headline stays readable */
+.js .hero__photo{animation:kenburns 12s var(--ease) 1.2s infinite alternate}
+/* Soft float on decorative accents only (never behind body copy) */
+.js .pullquote__mark{animation:floaty 4s var(--ease) infinite alternate;will-change:transform}
+.js .foot-cta__eyebrow{animation:floaty 4.4s var(--ease) .3s infinite alternate;will-change:transform}
+
+/* ---- Micro-interactions: underline-grow / arrow-nudge on text links ---- */
+.post p a:not(.cta){
+  text-decoration:underline;text-underline-offset:3px;
+  text-decoration-thickness:1.25px;text-decoration-color:var(--calm-deep);
+  transition:text-decoration-thickness var(--dur-micro) var(--ease),text-decoration-color var(--dur-micro) var(--ease);
+}
+.post p a:not(.cta):hover{text-decoration-thickness:2.5px;text-decoration-color:var(--bordeaux)}
+.site-head__back{transition:text-decoration-thickness var(--dur-micro) var(--ease)}
+.site-head__back:hover{text-decoration-thickness:2.5px}
+
+@media (prefers-reduced-motion:reduce){.edge:hover::after{animation:none}.study:hover{transform:none}}
+
+/* ---------- Closing CTA band ---------- */
+.foot-cta{
+  position:relative;overflow:hidden;
+  border-radius:var(--radius-xl);
+  background:var(--calm-pink);
+  min-height:clamp(360px,52vw,520px);
+  display:flex;align-items:center;
+  margin-top:clamp(64px,9vw,96px);
+}
+.foot-cta__img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:78% center}
+.foot-cta::after{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(245,244,241,.95) 0%,rgba(245,244,241,.82) 34%,rgba(245,244,241,.18) 60%,rgba(245,244,241,0) 80%)}
+.foot-cta__inner{position:relative;z-index:1;padding:clamp(1.8rem,5vw,4rem);max-width:min(560px,60%)}
+.foot-cta__eyebrow{display:inline-block;margin:0 0 14px;font-size:12px;font-weight:600;letter-spacing:.08em;color:var(--bordeaux);background:var(--calm-pink);border-radius:var(--radius-pill);padding:5px 13px}
+.foot-cta__title{margin:0;font-family:var(--font-display);font-weight:600;font-size:clamp(2rem,4.6vw,3rem);line-height:1.04;letter-spacing:-.015em;color:var(--bordeaux);text-wrap:balance}
+.foot-cta__sub{margin:1rem 0 0;font-size:1.0625rem;line-height:1.55;color:var(--bordeaux);max-width:34ch}
+.foot-cta__btn{
+  display:inline-flex;align-items:center;gap:9px;margin-top:1.6rem;padding:16px 28px;
+  background:var(--bordeaux);color:var(--white);border-radius:var(--radius-pill);
+  font-weight:600;font-size:1.0625rem;text-decoration:none;
+  box-shadow:0 10px 24px rgba(45,0,17,.18),var(--shadow-pink);
+  transition:transform var(--dur-hover) var(--hover-ease),box-shadow var(--dur-hover) var(--hover-ease);
+}
+.foot-cta__btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 18px 34px rgba(45,0,17,.26),0 20px 48px rgba(255,172,202,.55)}
+.foot-cta__btn:focus-visible{outline:2px solid var(--bordeaux);outline-offset:3px}
+@media (max-width:640px){
+  .foot-cta{min-height:0;flex-direction:column;align-items:stretch;background:var(--limestone)}
+  .foot-cta::after{display:none}
+  .foot-cta__img{position:relative;inset:auto;height:210px;object-position:70% center}
+  .foot-cta__inner{max-width:none}
+}
+
+/* ---------- Footer ---------- */
+.site-foot{
+  margin-top:clamp(72px,11vw,112px);
+  background:var(--bordeaux);color:var(--calm-pink);
+  border-radius:var(--radius-xl);
+  padding:clamp(2.2rem,5.5vw,3.8rem);
+}
+.site-foot .logo{color:var(--calm-pink)}
+.site-foot .logo svg{width:132px}
+.site-foot__tagline{margin:1.4rem 0 0;max-width:46ch;font-size:1.0625rem;line-height:1.65;color:var(--calm-pink)}
+.site-foot__more{margin:1.9rem 0 0}
+.site-foot__more-label{margin:0 0 .6rem;font-size:12px;font-weight:500;letter-spacing:.08em;color:rgba(255,211,227,.72)}
+.site-foot__links{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:10px 22px}
+.site-foot__links a{
+  color:var(--calm-pink);font-size:.9375rem;font-weight:500;
+  text-decoration:underline;text-underline-offset:4px;text-decoration-thickness:1.25px;
+  transition:text-decoration-thickness var(--dur-micro) var(--ease);
+}
+.site-foot__links a:hover{text-decoration-thickness:2.5px}
+.site-foot__links a:focus-visible{outline:2px solid var(--calm-pink);outline-offset:3px}
+.site-foot__rule{border:0;border-top:1px solid rgba(255,211,227,.28);margin:1.8rem 0 1rem}
+.site-foot__legal{margin:0;font-size:13px;color:rgba(255,211,227,.72)}
+
+/* ---------- Keyframes ---------- */
+@keyframes rise{to{opacity:1;transform:none}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+@keyframes heroFade{from{opacity:0;transform:scale(1.04)}to{opacity:1;transform:none}}
+@keyframes pop{50%{transform:scale(1.18)}}
+@keyframes itemIn{from{opacity:0;transform:translateY(10px)}}
+/* Motion-layer keyframes */
+@keyframes kenburns{from{transform:scale(1)}to{transform:scale(1.06)}}
+@keyframes floaty{from{transform:translateY(-3px)}to{transform:translateY(3px)}}
+@keyframes yearPop{0%{transform:scale(1)}45%{transform:scale(1.10)}100%{transform:scale(1)}}
+@keyframes halo{0%{opacity:0;transform:translate(-50%,-50%) scale(.4)}35%{opacity:1}100%{opacity:0;transform:translate(-50%,-50%) scale(1.15)}}
+
+/* ---------- Reduced motion ---------- */
+@media (prefers-reduced-motion: reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{animation:none !important;transition:none !important}
+  .wi{opacity:1 !important;transform:none !important}
+  .hero__kicker,.hero__manchet,.hero__art,.site-head{opacity:1 !important;transform:none !important}
+  .js .reveal{opacity:1;transform:none}
+  .js .photo__frame img,.js .photo:not(.is-missing) .photo__frame img{transform:none !important}
+  .module:hover,.cta:hover,.vig:hover,.study:hover,.foot-cta__btn:hover{transform:none}
+  .cta:hover svg,.foot-cta__btn:hover svg{transform:none}
+  /* Motion layer: snap all entrances to final state, no loops */
+  .js .h2-split .h2wi,.js .study,.js .vig{opacity:1 !important;transform:none !important}
+  .js .hero__photo{transform:none !important}
+  .study__year::before{opacity:0 !important;transform:translate(-50%,-50%) scale(.4) !important}
+}
+
+@media (max-width:560px){
+  .site-head{align-items:center}
+  .item__btn{padding:14px 6px;font-size:1rem}
+  .module__head{padding-inline:6px}
+}
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="frankly-logo" viewBox="0 0 147.16 36.63">
+    <path d="M139.652 17.19V13.63H138.352V12.71H142.082V13.63H140.782V17.19H139.652Z" fill="currentColor"></path>
+    <path d="M142.555 17.19V12.71H143.935L144.855 15.57H144.865L145.785 12.71H147.165V17.19H146.095V14.4H146.085L145.255 17.19H144.465L143.635 14.4H143.625V17.19H142.555Z" fill="currentColor"></path>
+    <path d="M39.8391 9.93012C40.3091 9.93012 40.7191 9.62012 40.7191 9.15012V6.15012C40.7191 5.78012 40.4691 5.47012 40.1091 5.38012C39.4291 5.20012 38.6091 5.12012 37.6491 5.12012C35.4291 5.12012 33.7391 5.75012 32.5791 7.01012C31.4191 8.27012 30.8291 10.0201 30.8291 12.2601V12.7201H28.5791C28.1491 12.7201 27.7891 13.0701 27.7891 13.5101V16.2801C27.7891 16.7101 28.1391 17.0701 28.5791 17.0701H30.0391C30.4691 17.0701 30.8291 17.4201 30.8291 17.8601V28.5201C30.8291 28.9501 31.1791 29.3101 31.6191 29.3101H35.9491C36.3791 29.3101 36.7391 28.9601 36.7391 28.5201V17.8601C36.7391 17.4301 37.0891 17.0701 37.5291 17.0701H40.9091C41.4191 17.0701 41.6991 17.4501 41.6991 17.8601V28.5101C41.6991 28.9401 42.0491 29.3001 42.4891 29.3001H46.8191C47.2491 29.3001 47.6091 28.9501 47.6091 28.5101V20.9801C47.6091 18.6101 48.8491 17.4201 51.3291 17.4201C51.3591 17.4201 51.3891 17.4201 51.4191 17.4201C52.8391 17.4401 54.0391 16.3601 54.0391 14.9401V13.2301C54.0391 12.8801 53.8191 12.5601 53.4891 12.4801C53.1291 12.3801 52.6891 12.3401 52.1791 12.3401C51.0891 12.3401 50.1091 12.6101 49.2391 13.1601C48.3691 13.7001 48.0091 14.4901 47.6191 15.5101V13.4201C47.5691 13.0301 47.2391 12.7301 46.8391 12.7301H36.7491V12.3401C36.7491 12.3401 36.7091 9.95012 39.8491 9.95012L39.8391 9.93012Z" fill="currentColor"></path>
+    <path d="M66.0619 14.83C65.5619 14.05 64.8619 13.42 63.9619 12.95C63.0619 12.48 62.0619 12.25 60.9819 12.25C59.5919 12.25 58.3419 12.62 57.2319 13.36C56.1219 14.1 55.2519 15.13 54.6219 16.46C53.9919 17.79 53.6719 19.31 53.6719 21.03C53.6719 22.75 53.9819 24.22 54.6019 25.51C55.2219 26.8 56.0819 27.8 57.1919 28.49C58.3019 29.19 59.5619 29.53 60.9719 29.53C62.0619 29.53 63.0619 29.31 63.9719 28.86C64.8819 28.41 65.5819 27.8 66.0619 27.02V28.48C66.0619 28.91 66.4119 29.27 66.8519 29.27H71.0819C71.5119 29.27 71.8719 28.92 71.8719 28.48V13.48C71.8719 13.05 71.5219 12.69 71.0819 12.69H66.8519C66.4219 12.69 66.0619 13.04 66.0619 13.48V14.81V14.83ZM65.2119 24.06C64.6419 24.78 63.8419 25.14 62.8019 25.14C61.7619 25.14 60.9219 24.79 60.3519 24.08C59.7819 23.37 59.5019 22.36 59.5019 21.03C59.5019 19.7 59.7919 18.6 60.3819 17.85C60.9719 17.1 61.7719 16.72 62.7919 16.72C63.8119 16.72 64.6419 17.08 65.2019 17.81C65.7619 18.54 66.0519 19.59 66.0519 20.96C66.0519 22.33 65.7719 23.34 65.2019 24.06H65.2119Z" fill="currentColor"></path>
+    <path d="M73.3984 28.49C73.3984 28.92 73.7484 29.28 74.1884 29.28H78.5184C78.9484 29.28 79.3084 28.93 79.3084 28.49V20.05C79.3084 19.07 79.5784 18.28 80.1284 17.69C80.6784 17.1 81.3884 16.79 82.2784 16.79C83.0184 16.79 83.5584 17.01 83.9084 17.46C84.2584 17.91 84.4284 18.64 84.4284 19.66V28.5C84.4284 28.93 84.7784 29.29 85.2184 29.29H89.5484C89.9784 29.29 90.3384 28.94 90.3384 28.5V19.4C90.3384 17.01 89.8584 15.22 88.8884 14.03C87.9184 12.85 86.4584 12.25 84.4984 12.25C83.3284 12.25 82.2684 12.5 81.3384 13C80.8884 13.24 80.4684 13.54 80.0884 13.88C79.6084 14.31 78.8584 14.04 78.7784 13.4C78.7284 13 78.3984 12.71 77.9984 12.71H74.2084C73.7484 12.71 73.3684 13.11 73.4184 13.57V28.49H73.3984Z" fill="currentColor"></path>
+    <path d="M108.896 27.2901L104.076 21.1701C103.846 20.8801 103.856 20.4701 104.086 20.1801L109.146 14.0301C109.566 13.5201 109.206 12.7401 108.536 12.7401H103.596C103.356 12.7401 103.136 12.8501 102.986 13.0301L99.0756 17.8801C98.6056 18.4601 97.6756 18.1301 97.6756 17.3901V5.90011C97.6756 5.47011 97.3256 5.11011 96.8856 5.11011H92.5556C92.1256 5.11011 91.7656 5.46011 91.7656 5.90011V28.5001C91.7656 28.9301 92.1156 29.2901 92.5556 29.2901H96.8856C97.3156 29.2901 97.6756 28.9401 97.6756 28.5001V24.4101C97.6756 23.6601 98.6156 23.3401 99.0756 23.9201L103.076 28.9901C103.226 29.1801 103.456 29.2901 103.696 29.2901H115.416C115.846 29.2901 116.206 28.9401 116.206 28.5001V5.90011C116.206 5.47011 115.856 5.11011 115.416 5.11011H111.086C110.656 5.11011 110.296 5.46011 110.296 5.90011V26.8101C110.296 27.5601 109.356 27.8801 108.896 27.3001V27.2901Z" fill="currentColor"></path>
+    <path d="M129.867 13.2002L126.957 20.4202C126.687 21.0802 125.757 21.0802 125.497 20.4202L122.697 13.2202C122.577 12.9202 122.287 12.7202 121.967 12.7202H117.577C117.007 12.7202 116.627 13.3002 116.857 13.8202C117.897 16.1402 120.367 21.5902 122.137 25.5002C124.017 28.8702 121.637 30.8402 118.357 32.0402C117.927 32.1502 117.667 32.6002 117.797 33.0302L118.727 36.0702C118.837 36.4402 119.217 36.6902 119.597 36.6202C121.517 36.3102 123.157 35.7002 124.517 34.7702C126.027 33.7402 127.287 32.1002 128.287 29.8602L135.397 13.8102C135.627 13.2902 135.247 12.7102 134.677 12.7102H130.607C130.287 12.7102 129.997 12.9002 129.877 13.2002H129.867Z" fill="currentColor"></path>
+    <path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z" fill="currentColor"></path>
+    <path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z" fill="currentColor"></path>
+    <path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z" fill="currentColor"></path>
+    <path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z" fill="currentColor"></path>
+  </symbol>
+  <symbol id="frankly-mark" viewBox="0 0 18 37">
+    <path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z" fill="currentColor"></path>
+    <path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z" fill="currentColor"></path>
+    <path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z" fill="currentColor"></path>
+    <path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z" fill="currentColor"></path>
+  </symbol>
+</svg>
+
+<div class="progress" aria-hidden="true"><div class="progress__fill" id="progressFill"></div></div>
+
+<div class="page">
+
+  <header class="site-head">
+    <a class="logo" href="frankly-blog-index.html" aria-label="Frankly — til oversigten">
+      <svg role="img" aria-hidden="true" focusable="false" viewBox="0 0 147.16 36.63"><use href="#frankly-logo"/></svg>
+    </a>
+    <div class="site-head__right">
+      <a class="site-head__back" href="frankly-blog-index.html">Til oversigten</a>
+      <p class="site-head__meta">Blog · 7. juli 2026 · 6 min</p>
+    </div>
+  </header>
+
+  <main>
+    <article>
+
+      <!-- ================= HERO ================= -->
+      <section class="hero" aria-labelledby="postTitle">
+        <div class="hero__art" id="heroArt" style="background:linear-gradient(135deg,#F5F4F1 0%,#FFE4EF 55%,#FFD3E3 100%)">
+          <img class="hero__photo" src="images/blog-08-hero.jpg" alt="Nærbillede af en velbrugt lædertaske og en telefon med et lille hak, på et arbejdsbord i varmt morgenlys — slidt, men helt i orden." width="1376" height="768" fetchpriority="high" onerror="this.style.display='none'">
+        </div>
+        <div class="hero__inner">
+          <p class="hero__kicker">Frankly Care · det holder</p>
+          <h1 class="hero__title" id="postTitle"><span class="w"><span class="wi" style="--i:0">Det</span></span> <span class="w"><span class="wi" style="--i:1">er</span></span> <span class="w"><span class="wi" style="--i:2">lavet</span></span> <span class="w"><span class="wi" style="--i:3">til</span></span> <span class="w"><span class="wi" style="--i:4">at</span></span> <span class="w"><span class="wi" style="--i:5">holde.</span></span></h1>
+          <p class="hero__manchet">Første ridse føles som en lille katastrofe. Det er den ikke. Gode ting er lavet til at bruges — og til at blive repareret, ikke skiftet ud.</p>
+        </div>
+      </section>
+
+      <!-- ================= BODY ================= -->
+      <div class="post">
+
+        <section class="reveal" aria-labelledby="h-1">
+          <span class="kicker"><span class="kicker__num">01</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Den første ridse</span></span>
+          <h2 id="h-1">Den første ridse.</h2>
+          <p class="dropcap lede">Den kommer altid. En ny ting, et par dage, og så er der pludselig et mærke. Et lille hak i hjørnet, en ridse på skærmen, en plet på stoffet. Og med det samme får tingen et lille stempel: nu er den ikke perfekt længere.</p>
+          <p>Men perfekt var aldrig meningen. En ting, du bruger, kommer til at se brugt ud. Det er ikke et tegn på, at du ikke passer på den. Det er et tegn på, at den er i brug — præcis som den skal være.</p>
+        </section>
+
+        <figure class="photo photo--inset reveal">
+          <div class="photo__side">
+            <span class="kicker"><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Stadig helt fin</span></span>
+            <p class="photo__lead">En slidt lædertaske. En telefon med et hak. Stadig helt fin.</p>
+          </div>
+          <div class="photo__frame">
+            <img src="images/blog-08-still.jpg" alt="Et arbejdsbord i morgenlys med en slidt lædertaske, en kaffekop med et lille skår og en velbrugt notesbog." loading="lazy" onerror="this.closest('.photo').classList.add('is-missing')">
+            <div class="photo__fallback" aria-hidden="true">
+              <img src="images/ribbon-accent.png" alt="" aria-hidden="true">
+              <span class="photo__fallback-label">Billede på vej</span>
+              <p class="photo__fallback-sub">Billedet kunne ikke indlæses.</p>
+            </div>
+          </div>
+        </figure>
+
+        <section class="reveal" aria-labelledby="h-2">
+          <span class="kicker"><span class="kicker__num">02</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Holdbarhed</span></span>
+          <h2 id="h-2">Godt er noget, der kan repareres.</h2>
+          <p>Der var engang, hvor kvalitet betød, at man kunne få tingene lavet. Sko blev sålet om, cykler fik nye dele, jakker fik en ny lynlås. En god ting var ikke en, der aldrig gik i stykker — det var en, der var værd at reparere.</p>
+          <p>Den tanke er ikke gammeldags. Den er bare rolig. Når noget kan laves, behøver en skade ikke være en afslutning. Den er bare et mellemled — en tur på værksted, og så er tingen tilbage i brug.</p>
+        </section>
+
+        <section class="reveal" aria-labelledby="h-3">
+          <span class="kicker"><span class="kicker__num">03</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Reparér</span></span>
+          <h2 id="h-3">Reparér frem for at skifte ud.</h2>
+          <p>Det nemme er at skifte ud. Ny ting, blank overflade, ingen historie. Men det, der er lavet godt, holder ofte længere end det nye — og det bliver kun bedre af at blive brugt. En taske, der har været med i årevis, er ikke slidt op. Den er blødt op.</p>
+          <p>At reparere er ikke at gå på kompromis. Det er at beholde noget, der virker, i stedet for at begynde forfra. Og det er tit den roligste beslutning i rummet.</p>
+          <p>          <figure class="photo photo--bleed reveal">
+            <div class="photo__frame">
+              <img src="images/blog-08-scene.jpg" alt="Hænder smører en kæde på en velbrugt cykel i værkstedslys; delene er slidte, men rene og i orden." loading="lazy" onerror="this.closest('.photo').classList.add('is-missing')">
+              <div class="photo__fallback" aria-hidden="true">
+                <img src="images/ribbon-accent.png" alt="" aria-hidden="true">
+                <span class="photo__fallback-label">Billede på vej</span>
+                <p class="photo__fallback-sub">Billedet kunne ikke indlæses.</p>
+              </div>
+            </div>
+            <figcaption>Ikke slidt op. Bare brugt — og til at bygge videre på.</figcaption>
+          </figure></p>
+        </section>
+
+        <section class="reveal wide" aria-labelledby="h-4">
+          <div style="max-width:680px;margin:0 auto">
+            <span class="kicker"><span class="kicker__num">04</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Det, der holder</span></span>
+            <h2 id="h-4">Det gode bliver bedre af brug.</h2>
+            <p>Det får patina, ikke skader. Tre ting, tiden er god ved:</p>
+          </div>
+          <div class="vignettes">
+            <div class="vig edge">
+              <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <g class="stroke"><path d="M22 6.5a5 5 0 0 1-6.4 6.4L7.5 21l3.5 3.5 8.1-8.1A5 5 0 0 0 25.5 10l-3 3-2.5-2.5 3-3a5 5 0 0 0-1-1z"/></g><circle cx="9.5" cy="22.5" r="1.4" fill="#FFACCA"/>
+              </svg>
+              <h3>Cyklen.</h3>
+              <p>En ny kæde, en justering, og den kører som ny. Bedre endda — den er kørt til.</p>
+            </div>
+            <div class="vig edge">
+              <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <g class="stroke"><path d="M25 6C13 6 6.5 12.5 6.5 22.5 16.5 22.5 23 16 25 6z"/><path d="M7 22C11 16 16.5 12 22.5 10"/></g><circle cx="22.5" cy="8" r="1.4" fill="#FFACCA"/>
+              </svg>
+              <h3>Jakken.</h3>
+              <p>En lynlås skiftet, en knap syet i. Så holder den en sæson mere. Og en til.</p>
+            </div>
+            <div class="vig edge">
+              <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <g class="stroke"><circle cx="16" cy="16" r="10.5"/><path d="M16 10v6.3l4 2.7"/></g><circle cx="16" cy="16" r="1.2" fill="#FFACCA"/>
+              </svg>
+              <h3>Tasken.</h3>
+              <p>Læder bliver kun smukkere med årene. Et par mærker er ikke skader. Det er historie.</p>
+            </div>
+          </div>
+        </section>
+
+        <section class="reveal" aria-labelledby="h-5">
+          <span class="kicker"><span class="kicker__num">05</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Beslutningen</span></span>
+          <h2 id="h-5">Du skal ikke være bange for den. Du skal bruge den.</h2>
+          <p>Her er den rolige del: du behøver ikke behandle dine ting som udstillingsgenstande. Du skal bare bruge dem — og vide, at hvis noget går i stykker, er det til at ordne. En skade er ikke enden. Den er en opgave, der er til at løse.</p>
+          <p>Så tør at bruge den nye ting fra dag ét. Tag den med, sæt den i brug, lad den få sin første ridse i fred. Den er lavet til det.</p>
+        </section>
+
+        <section class="reveal" aria-labelledby="h-mod">
+          <span class="kicker"><span class="kicker__num">06</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Prøv det</span></span>
+          <h2 id="h-mod">Ordn listen.</h2>
+          <p class="module-intro">Fem skader, der føltes som en katastrofe. Klik dem væk — de fleste er bare en tur på værksted.</p>
+
+          <div class="module edge" id="huskModule">
+            <div id="huskInner">
+              <div class="module__head">
+                <span class="module__label"><b id="huskCount">5</b> på listen</span>
+                <div class="module__track" aria-hidden="true"><div class="module__fill" id="huskFill"></div></div>
+              </div>
+              <ul class="list">
+                <li class="item">
+                  <button type="button" class="item__btn" aria-pressed="false">
+                    <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
+                    <span class="item__text">Hak i hjørnet af telefonen — nu er den ødelagt.</span>
+                  </button>
+                </li>
+                <li class="item">
+                  <button type="button" class="item__btn" aria-pressed="false">
+                    <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
+                    <span class="item__text">Ridse på skærmen — den bliver aldrig god igen.</span>
+                  </button>
+                </li>
+                <li class="item">
+                  <button type="button" class="item__btn" aria-pressed="false">
+                    <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
+                    <span class="item__text">Lynlåsen i jakken gik — så er den vist færdig.</span>
+                  </button>
+                </li>
+                <li class="item">
+                  <button type="button" class="item__btn" aria-pressed="false">
+                    <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
+                    <span class="item__text">Sålen på skoen slipper — dem må jeg smide ud.</span>
+                  </button>
+                </li>
+                <li class="item">
+                  <button type="button" class="item__btn" aria-pressed="false">
+                    <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
+                    <span class="item__text">Plet på sofaen — den kommer aldrig af.</span>
+                  </button>
+                </li>
+              </ul>
+            </div>
+
+            <div class="module__done" id="huskDone" tabindex="-1" hidden>
+              <p class="done__display">De var alle til at ordne.</p>
+              <p class="done__sub">Reparér frem for at skifte ud.</p>
+              <img class="done__ribbon" src="images/ribbon-accent.png" alt="" aria-hidden="true">
+              <button type="button" class="done__reset" id="huskReset">Start forfra</button>
+            </div>
+          </div>
+
+          <div class="sr-only" role="status" id="huskLive"></div>
+          <p class="note" style="margin-top:1rem">Det, du lige gjorde, er hele idéen: de fleste skader er et mellemled, ikke en afslutning.</p>
+        </section>
+
+        <figure class="pullquote reveal">
+          <span class="pullquote__mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>
+            <p>Det er lavet til at holde.</p>
+          </blockquote>
+        </figure>
+
+        <section class="reveal" aria-labelledby="h-pointen">
+          <span class="kicker"><span class="kicker__num">07</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Pointen</span></span>
+          <h2 id="h-pointen">Derfor sælger vi ikke rigtig dækning.</h2>
+          <p class="lede">Frankly™ sælger sådan set ikke dækning. Vi sælger ro ved den første ridse — dækningen er bare måden.</p>
+          <p>Frankly Care™ er til de ting, du bruger hver dag. Ikke så du er ligeglad med dem, men så en skade ikke behøver at fylde. Går noget i stykker, er det til at ordne. Så kan tingen komme tilbage i brug — og du kan holde op med at tænke på det.</p>
+          <p class="outro-line">Det er ikke sløseri. Det er bare at bruge det, der holder.</p>
+          <p><a class="cta" href="#">Se Frankly Care™<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></p>
+        </section>
+
+      </div>
+    </article>
+  </main>
+
+  <!-- ================= CLOSING CTA ================= -->
+  <section class="foot-cta reveal" aria-labelledby="cta-title" style="background:linear-gradient(120deg,#F5F4F1 0%,#FFE4EF 58%,#FFD3E3 100%)">
+    <img class="foot-cta__img" src="images/blog-08-cta.jpg" alt="Ung mand går afslappet gennem byen med en velbrugt lædertaske over skulderen i varmt eftermiddagslys." loading="lazy" onerror="this.style.display='none'">
+    <div class="foot-cta__inner">
+      <span class="foot-cta__eyebrow">Frankly Care™</span>
+      <h2 class="foot-cta__title" id="cta-title">Giv den lov til at blive brugt.</h2>
+      <p class="foot-cta__sub">Dækning til de ting, du bruger hver dag. Tilføjet på få sekunder — så den første ridse ikke fylder mere end den skal.</p>
+      <a class="foot-cta__btn" href="#">Se Frankly Care™<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
+    </div>
+  </section>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="site-foot reveal">
+    <a class="logo" href="frankly-blog-index.html" aria-label="Frankly — til oversigten">
+      <svg role="img" aria-hidden="true" focusable="false" viewBox="0 0 147.16 36.63"><use href="#frankly-logo"/></svg>
+    </a>
+    <p class="site-foot__tagline">Frankly™ er dækning til de ting, du bruger hver dag. Så du kan leve dit liv frit — uden at tænke for meget over det, der kan gå galt.</p>
+    <nav class="site-foot__more" aria-label="Flere indlæg">
+      <p class="site-foot__more-label">Læs også</p>
+      <ul class="site-foot__links">
+        <li><a href="frankly-blog-01-brug-det.html">Du købte det ikke for at passe på det.</a></li>
+        <li><a href="frankly-blog-04-tirsdag.html">Ting går i stykker. Og det er helt ok.</a></li>
+        <li><a href="frankly-blog-06-hjem.html">Dit hjem er ikke et museum.</a></li>
+      </ul>
+    </nav>
+    <hr class="site-foot__rule">
+    <p class="site-foot__legal">© 2026 Frankly · Demo-artikel — links til produktsider er pladsholdere</p>
+  </footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var doc=document.documentElement;
+  doc.classList.add('js');
+  var mq=window.matchMedia('(prefers-reduced-motion: reduce)');
+  function reduced(){return mq.matches;}
+
+  /* ---------- Reading progress + hero parallax ---------- */
+  var pfill=document.getElementById('progressFill');
+  var heroArt=document.getElementById('heroArt');
+  var ticking=false;
+  function updateProgress(){
+    var max=doc.scrollHeight-window.innerHeight;
+    var p=max>0?Math.min(1,Math.max(0,window.scrollY/max)):0;
+    pfill.style.transform='scaleX('+p+')';
+    /* Gentle hero parallax — desktop only; leaves the entrance animation untouched near the top */
+    if(!reduced()&&heroArt&&window.innerWidth>720){
+      var y=Math.min(window.scrollY,700);
+      heroArt.style.transform=y>2?'translate3d(0,'+(y*-0.045)+'px,0)':'';
+    }else if(heroArt){
+      heroArt.style.transform='';
+    }
+    ticking=false;
+  }
+  function requestProgress(){ if(!ticking){ticking=true;requestAnimationFrame(updateProgress);} }
+  window.addEventListener('scroll',requestProgress,{passive:true});
+  window.addEventListener('resize',requestProgress,{passive:true});
+  updateProgress();
+
+  /* ---------- Scroll reveals ---------- */
+  var reveals=[].slice.call(document.querySelectorAll('.reveal'));
+  if(!('IntersectionObserver' in window)||reduced()){
+    reveals.forEach(function(el){el.classList.add('is-in');});
+  }else{
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){en.target.classList.add('is-in');io.unobserve(en.target);}
+      });
+    },{threshold:.12,rootMargin:'0px 0px -8% 0px'});
+    reveals.forEach(function(el){io.observe(el);});
+  }
+
+  /* ---------- Headline word-rise on every section h2 (progressive enhancement) ----------
+     Splits in-place so textContent is unchanged for screen readers. */
+  var heads=[].slice.call(document.querySelectorAll('.post h2'));
+  function splitWords(el){
+    var kids=[].slice.call(el.childNodes);
+    var idx=0;
+    kids.forEach(function(node){
+      if(node.nodeType!==3){return;} /* only split text nodes; leave elements intact */
+      var frag=document.createDocumentFragment();
+      /* keep whitespace as real text nodes so spacing + reading text are byte-identical */
+      var parts=node.nodeValue.split(/(\s+)/);
+      parts.forEach(function(part){
+        if(part===''){return;}
+        if(/^\s+$/.test(part)){frag.appendChild(document.createTextNode(part));return;}
+        var wrap=document.createElement('span');
+        wrap.className='h2w';
+        var inner=document.createElement('span');
+        inner.className='h2wi';
+        inner.style.setProperty('--wi',idx++);
+        inner.textContent=part;
+        wrap.appendChild(inner);
+        frag.appendChild(wrap);
+      });
+      el.replaceChild(frag,node);
+    });
+    el.classList.add('h2-split');
+  }
+  if(heads.length){
+    if(reduced()||!('IntersectionObserver' in window)){
+      /* No split needed — leave headings as plain, fully-visible text */
+    }else{
+      heads.forEach(splitWords);
+      var hio=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){en.target.classList.add('is-words');hio.unobserve(en.target);}
+        });
+      },{threshold:.35,rootMargin:'0px 0px -6% 0px'});
+      heads.forEach(function(h){hio.observe(h);});
+    }
+  }
+
+  /* ---------- Card entrances: staggered flip-in for study + vignette cards ---------- */
+  var cardGroups=[].slice.call(document.querySelectorAll('.studies,.vignettes'));
+  function landCards(group){
+    var cards=[].slice.call(group.querySelectorAll('.study,.vig'));
+    cards.forEach(function(card,i){card.style.setProperty('--ci',i);});
+    if(reduced()){cards.forEach(function(c){c.classList.add('is-in');});return;}
+    cards.forEach(function(c){c.classList.add('is-in');});
+  }
+  if(cardGroups.length){
+    if(reduced()||!('IntersectionObserver' in window)){
+      cardGroups.forEach(landCards);
+    }else{
+      var cio=new IntersectionObserver(function(entries){
+        entries.forEach(function(en){
+          if(en.isIntersecting){landCards(en.target);cio.unobserve(en.target);}
+        });
+      },{threshold:.2,rootMargin:'0px 0px -8% 0px'});
+      cardGroups.forEach(function(g){cio.observe(g);});
+    }
+  }
+
+  /* ---------- Checklist module ---------- */
+  var mod=document.getElementById('huskModule');
+  var inner=document.getElementById('huskInner');
+  var done=document.getElementById('huskDone');
+  var fill=document.getElementById('huskFill');
+  var countEl=document.getElementById('huskCount');
+  var resetBtn=document.getElementById('huskReset');
+  var live=document.getElementById('huskLive');
+  var items=[].slice.call(mod.querySelectorAll('.item'));
+  var total=items.length;
+  var remaining=total;
+
+  function announce(t){live.textContent=t;}
+  function setFill(){
+    fill.style.width=(remaining/total*100)+'%';
+    countEl.textContent=remaining;
+  }
+
+  function flip(change){
+    if(reduced()){change();return;}
+    var h0=mod.offsetHeight;
+    change();
+    var h1=mod.offsetHeight;
+    if(h0===h1)return;
+    mod.style.height=h0+'px';
+    requestAnimationFrame(function(){
+      mod.style.height=h1+'px';
+    });
+    var clear=function(e){
+      if(e.propertyName==='height'){mod.style.height='';mod.removeEventListener('transitionend',clear);}
+    };
+    mod.addEventListener('transitionend',clear);
+  }
+
+  function showDone(){
+    flip(function(){
+      mod.classList.add('is-clear');
+      inner.setAttribute('hidden','');
+      done.hidden=false;
+    });
+    document.body.classList.add('is-calm');
+    requestAnimationFrame(function(){requestAnimationFrame(function(){
+      done.classList.add('is-in');
+    });});
+    setTimeout(function(){done.focus({preventScroll:true});},reduced()?0:140);
+  }
+
+  items.forEach(function(li){
+    var btn=li.querySelector('.item__btn');
+    btn.addEventListener('click',function(){
+      if(li.classList.contains('is-done'))return;
+      li.classList.add('is-done');
+      btn.setAttribute('aria-pressed','true');
+      remaining--;
+      setFill();
+      announce(remaining>0?'Klaret. '+remaining+' tilbage på listen.':'Alt klaret.');
+      var wait=reduced()?0:520;
+      setTimeout(function(){
+        var next=null;
+        for(var i=0;i<items.length;i++){
+          if(!items[i].classList.contains('is-done')){next=items[i];break;}
+        }
+        if(next&&document.activeElement===btn){
+          next.querySelector('.item__btn').focus({preventScroll:true});
+        }
+        li.setAttribute('aria-hidden','true');
+        btn.tabIndex=-1;
+        if(reduced()){
+          li.classList.add('is-gone');
+          li.style.height='0px';
+        }else{
+          li.style.height=li.offsetHeight+'px';
+          requestAnimationFrame(function(){requestAnimationFrame(function(){
+            li.classList.add('is-gone');
+            li.style.height='0px';
+          });});
+        }
+        if(remaining===0){setTimeout(showDone,reduced()?0:460);}
+      },wait);
+    });
+  });
+
+  resetBtn.addEventListener('click',function(){
+    document.body.classList.remove('is-calm');
+    flip(function(){
+      mod.classList.remove('is-clear');
+      done.classList.remove('is-in');
+      done.hidden=true;
+      inner.removeAttribute('hidden');
+      items.forEach(function(li,i){
+        li.classList.remove('is-done','is-gone');
+        li.removeAttribute('aria-hidden');
+        li.style.height='';
+        var b=li.querySelector('.item__btn');
+        b.tabIndex=0;
+        b.setAttribute('aria-pressed','false');
+        if(!reduced()){
+          li.style.setProperty('--d',(80+i*55)+'ms');
+          li.classList.add('is-back');
+        }
+      });
+    });
+    remaining=total;
+    setFill();
+    announce('Listen er tilbage.');
+    setTimeout(function(){
+      items.forEach(function(li){li.classList.remove('is-back');});
+    },1000);
+    setTimeout(function(){
+      items[0].querySelector('.item__btn').focus({preventScroll:true});
+    },reduced()?0:80);
+  });
+})();
+</script>
+
+</body>
+</html>
