@@ -31,6 +31,7 @@
   html,body{margin:0;overflow-x:hidden}
   body{background:var(--limestone);color:var(--ink);font-family:var(--font);line-height:1.5}
   a{color:inherit}
+  .visually-hidden{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
   .wrap{width:min(1180px,calc(100% - 36px));margin:0 auto}
   .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0}
   .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;color:var(--grounded)}
@@ -58,6 +59,16 @@
   .section-head p{max-width:520px;margin:0;color:var(--grey)}
   .tag-strip{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
   .tag-strip span{display:inline-flex;align-items:center;min-height:34px;border-radius:999px;padding:7px 11px;background:#fff;border:1px solid var(--edge);font-size:12px;font-weight:900;text-transform:uppercase;color:var(--grounded)}
+  .registry-tools{display:grid;grid-template-columns:minmax(220px,1fr) auto;gap:12px;align-items:center;margin:0 0 18px}
+  .search-field{position:relative}
+  .search-field input{width:100%;min-height:44px;border:1px solid var(--edge);border-radius:8px;background:#fff;color:var(--grounded);font:700 14px/1 var(--font);padding:0 14px}
+  .search-field input::placeholder{color:rgba(98,91,94,.72)}
+  .filters{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  .filter-button{min-height:36px;border:1px solid var(--edge);border-radius:999px;background:#fff;color:var(--grounded);font:900 12px/1 var(--font);text-transform:uppercase;padding:7px 11px;cursor:pointer}
+  .filter-button[aria-pressed="true"]{background:var(--grounded);border-color:var(--grounded);color:#fff}
+  .registry-count{margin:0 0 12px;color:var(--grey);font-size:13px;font-weight:800}
+  .empty-state{display:none;border-top:1px solid var(--edge);border-bottom:1px solid var(--edge);padding:28px 0;color:var(--grey);font-weight:800}
+  .empty-state.is-visible{display:block}
   .ledger{border-top:1px solid var(--edge)}
   .ledger-row{display:grid;grid-template-columns:70px 118px minmax(170px,.44fr) minmax(0,1fr) 136px;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--edge)}
   .ledger-row::before{content:attr(data-mark);display:flex;align-items:flex-end;justify-content:flex-start;width:58px;height:58px;border:1px solid var(--edge);border-radius:8px;padding:8px;background:var(--thumb);color:rgba(45,0,17,.82);font-size:19px;font-weight:900;line-height:1}
@@ -89,6 +100,8 @@
     .nav{justify-content:flex-start}
     .hero{grid-template-columns:1fr;padding-top:28px}
     .section-head{align-items:flex-start;flex-direction:column}
+    .registry-tools{grid-template-columns:1fr}
+    .filters{justify-content:flex-start}
     .ledger-row{grid-template-columns:1fr;gap:6px}
     .ledger-row::before{width:100%;height:92px}
     .state{justify-self:start}
@@ -129,12 +142,12 @@
       </div>
       <aside class="registry-card" aria-label="Registry summary">
         <span>Online Lab shelf</span>
-        <b>15 entries.</b>
+        <b><span id="entry-count">14</span> entries.</b>
         <p>Every listed item is copied into the upload bundle and can be opened from this registry.</p>
         <div class="metrics" aria-label="Registry metrics">
-          <div><strong>7</strong><small>tools</small></div>
-          <div><strong>4</strong><small>games / toys</small></div>
-          <div><strong>4</strong><small>pages / previews</small></div>
+          <div><strong id="tool-count">7</strong><small>tools</small></div>
+          <div><strong id="play-count">4</strong><small>games / toys</small></div>
+          <div><strong id="page-count">3</strong><small>pages / public</small></div>
           <div><strong>1</strong><small>separate registry</small></div>
         </div>
       </aside>
@@ -149,94 +162,110 @@
         <span>Daily tools</span>
         <span>Brand helpers</span>
         <span>Games and toys</span>
-        <span>Gated previews</span>
+        <span>Public pages</span>
       </div>
+      <div class="registry-tools" aria-label="Registry filters">
+        <label class="search-field">
+          <span class="visually-hidden">Search registry</span>
+          <input id="registry-search" type="search" placeholder="Search registry" autocomplete="off">
+        </label>
+        <div class="filters" role="group" aria-label="Registry type">
+          <button class="filter-button" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="filter-button" type="button" data-filter="tool" aria-pressed="false">Tools</button>
+          <button class="filter-button" type="button" data-filter="play" aria-pressed="false">Play</button>
+          <button class="filter-button" type="button" data-filter="page" aria-pressed="false">Pages</button>
+          <button class="filter-button" type="button" data-filter="preview" aria-pressed="false">Previews</button>
+          <button class="filter-button" type="button" data-filter="public" aria-pressed="false">Public</button>
+        </div>
+      </div>
+      <p class="registry-count" id="registry-count" aria-live="polite">Showing 14 of 14 entries</p>
       <div class="ledger" aria-label="Frankly Lab tool, game and preview registry">
-        <div class="ledger-row" data-art="signature" data-mark="ES">
+        <div class="ledger-row" data-art="signature" data-mark="ES" data-groups="tool brand daily" data-search="email signature brand daily tool footer html plain text">
           <span>Uploaded</span>
           <div><b>Email signature</b><p>Brand / daily tool</p></div>
           <p>Add details, preview the footer and copy HTML or plain text.</p>
           <a class="state live" href="frankly-signature-generator.html">Open tool</a>
         </div>
-        <div class="ledger-row" data-art="brand-reference" data-mark="BR">
+        <div class="ledger-row" data-art="brand-reference" data-mark="BR" data-groups="tool brand reference" data-search="brand reference colors css tokens tone rules">
           <span>Uploaded</span>
           <div><b>Brand Reference</b><p>Brand / reference</p></div>
           <p>Colors, CSS tokens and tone rules for quick Frankly checks.</p>
           <a class="state live" href="frankly-brand-reference.html">Open tool</a>
         </div>
-        <div class="ledger-row" data-art="brand-assistant" data-mark="BA">
+        <div class="ledger-row" data-art="brand-assistant" data-mark="BA" data-groups="tool brand answers" data-search="brand assistant answers search recurring brand answers browser">
           <span>Uploaded</span>
           <div><b>Brand Assistant</b><p>Brand / answers</p></div>
           <p>Search recurring brand answers locally in the browser without any AI runtime.</p>
           <a class="state live" href="frankly-brand-assistant.html">Open tool</a>
         </div>
-        <div class="ledger-row" data-art="business-card" data-mark="BC">
+        <div class="ledger-row" data-art="business-card" data-mark="BC" data-groups="tool daily qr" data-search="business card daily qr vcard contact details meeting card">
           <span>Uploaded</span>
           <div><b>Business card</b><p>Daily / QR card</p></div>
           <p>Build a meeting card with contact details, QR and vCard output.</p>
           <a class="state live" href="frankly-business-card.html">Open tool</a>
         </div>
-        <div class="ledger-row" data-art="dictionary" data-mark="DI">
+        <div class="ledger-row" data-art="dictionary" data-mark="DI" data-groups="tool daily glossary" data-search="dictionary daily glossary definitions internal terms plain language">
           <span>Uploaded</span>
           <div><b>Dictionary</b><p>Daily / glossary</p></div>
           <p>Plain-language working definitions for common internal terms.</p>
           <a class="state live" href="frankly-dictionary.html">Open tool</a>
         </div>
-        <div class="ledger-row" data-art="qr" data-mark="QR">
+        <div class="ledger-row" data-art="qr" data-mark="QR" data-groups="tool daily qr" data-search="qr link daily generator url local svg code decks signs">
           <span>Uploaded</span>
           <div><b>QR link</b><p>Daily / generator</p></div>
           <p>Turn a URL into a local SVG QR code for decks and signs.</p>
           <a class="state live" href="frankly-qr-link.html">Open tool</a>
         </div>
-        <div class="ledger-row" data-art="image" data-mark="IR">
+        <div class="ledger-row" data-art="image" data-mark="IR" data-groups="tool daily image" data-search="image resizer daily image tool resize social presentation formats">
           <span>Uploaded</span>
           <div><b>Image resizer</b><p>Daily / image tool</p></div>
           <p>Resize local images to useful social and presentation formats.</p>
           <a class="state live" href="frankly-image-resizer.html">Open tool</a>
         </div>
-        <div class="ledger-row" data-art="drop" data-mark="DP">
+        <div class="ledger-row" data-art="drop" data-mark="DP" data-groups="play game" data-search="drop protection play game catch falling objects browser coverage bar">
           <span>Uploaded</span>
           <div><b>Drop Protection</b><p>Play / game</p></div>
           <p>Catch the falling objects with a lightweight browser-game coverage bar.</p>
           <a class="state live" href="frankly-drop-protection.html">Play</a>
         </div>
-        <div class="ledger-row" data-art="bmw" data-mark="BM">
+        <div class="ledger-row" data-art="bmw" data-mark="BM" data-groups="play game" data-search="franklys bmw play browser game interactive html responsive canvas">
           <span>Uploaded</span>
           <div><b>Frankly's BMW</b><p>Play / browser game</p></div>
           <p>A browser game prototype for interactive HTML and responsive canvas behavior.</p>
           <a class="state live" href="franklys-bmw.html">Play</a>
         </div>
-        <div class="ledger-row" data-art="decision" data-mark="DC">
+        <div class="ledger-row" data-art="decision" data-mark="DC" data-groups="play toy" data-search="decision chicken play toy options moving forward">
           <span>Uploaded</span>
           <div><b>Decision Chicken</b><p>Play / decision toy</p></div>
           <p>Pick from small options when the main job is moving forward.</p>
           <a class="state live" href="the-decision-chicken.html">Open toy</a>
         </div>
-        <div class="ledger-row" data-art="quiz" data-mark="QZ">
+        <div class="ledger-row" data-art="quiz" data-mark="QZ" data-groups="play quiz" data-search="do you know frankly play quiz brand tone gates internal basics">
           <span>Uploaded</span>
           <div><b>Do you know Frankly?</b><p>Play / quiz</p></div>
           <p>A short brand quiz for tone, gates and internal basics.</p>
           <a class="state live" href="frankly-quiz.html">Take quiz</a>
         </div>
-        <div class="ledger-row" data-art="onboarding" data-mark="ST">
+        <div class="ledger-row" data-art="onboarding" data-mark="ST" data-groups="preview page daily onboarding" data-search="start here daily onboarding gated noindex preview">
           <span>Uploaded</span>
           <div><b>Start here</b><p>Daily / onboarding</p></div>
           <p>Approved for the gated upload bundle as a noindex onboarding preview.</p>
           <a class="state draft" href="onboarding.html">Open preview</a>
         </div>
-        <div class="ledger-row" data-art="coverage" data-mark="CO">
+        <div class="ledger-row" data-art="coverage" data-mark="CO" data-groups="page public daily coverage" data-search="coverage overview daily product clarity online page sitemap not legal source">
           <span>Uploaded</span>
           <div><b>Coverage overview</b><p>Daily / product clarity</p></div>
           <p>Approved for the online Lab bundle and sitemap; not a legal source.</p>
           <a class="state live" href="frankly-daekningsoverblik.html">Open page</a>
         </div>
-        <div class="ledger-row" data-art="blog" data-mark="JO">
+        <div class="ledger-row" data-art="blog" data-mark="JO" data-groups="page public journal blog" data-search="frankly journal public six post blog danish suite search open surface">
           <span>Published</span>
-          <div><b>Frankly Journal</b><p>Public / six-post blog</p></div>
+          <div><b>Frankly Journal</b><p>Public / ten-post blog</p></div>
           <p>The Danish blog suite is published as the Lab's one public, search-open surface.</p>
           <a class="state live" href="journal/frankly-blog-index.html">Open journal</a>
         </div>
       </div>
+      <p class="empty-state" id="registry-empty">No registry matches.</p>
       <p class="source-note">Recovery note: ten historical Lab tools remain in the upload allowlist after LinkedIn checker was removed from the online shelf. Coverage overview and the Frankly Journal are allowlisted as public pages; Start here stays a noindex preview.</p>
     </section>
   </main>
@@ -244,5 +273,56 @@
   <footer class="wrap note">
     This online Lab is gated but not treated as security. Jonas reopened Coverage overview as an online page and reopened Start here plus blog drafts as preview pages; source records, customer-facing claims and all other product/legal work stay out of the upload bundle.
   </footer>
+  <script>
+    (() => {
+      const rows = [...document.querySelectorAll(".ledger-row")];
+      const search = document.querySelector("#registry-search");
+      const buttons = [...document.querySelectorAll(".filter-button")];
+      const count = document.querySelector("#registry-count");
+      const empty = document.querySelector("#registry-empty");
+      const total = rows.length;
+      let active = "all";
+
+      const setText = (id, value) => {
+        const node = document.querySelector(id);
+        if (node) node.textContent = String(value);
+      };
+      const groupCount = (group) => rows.filter((row) => (row.dataset.groups || "").split(" ").includes(group)).length;
+
+      setText("#entry-count", total);
+      setText("#tool-count", groupCount("tool"));
+      setText("#play-count", groupCount("play"));
+      setText("#page-count", groupCount("page"));
+
+      function update() {
+        const query = (search?.value || "").trim().toLowerCase();
+        let shown = 0;
+
+        rows.forEach((row) => {
+          const groups = (row.dataset.groups || "").split(" ");
+          const haystack = `${row.textContent || ""} ${row.dataset.search || ""}`.toLowerCase();
+          const groupMatch = active === "all" || groups.includes(active);
+          const searchMatch = !query || haystack.includes(query);
+          const visible = groupMatch && searchMatch;
+          row.hidden = !visible;
+          if (visible) shown += 1;
+        });
+
+        if (count) count.textContent = `Showing ${shown} of ${total} entries`;
+        empty?.classList.toggle("is-visible", shown === 0);
+      }
+
+      buttons.forEach((button) => {
+        button.addEventListener("click", () => {
+          active = button.dataset.filter || "all";
+          buttons.forEach((item) => item.setAttribute("aria-pressed", String(item === button)));
+          update();
+        });
+      });
+
+      search?.addEventListener("input", update);
+      update();
+    })();
+  </script>
 </body>
 </html>
