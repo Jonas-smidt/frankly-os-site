@@ -129,6 +129,21 @@ def main():
         if static_file.exists():
             copy_file(static_file, SITE_DIR / static_file)
 
+    # Journal (Frankly blog suite) — copy the whole directory tree.
+    # HTML pages get the same preview gate as the rest of the Lab; images and
+    # fonts copy verbatim.
+    journal_dir = pathlib.Path("journal")
+    if journal_dir.exists():
+        journal_pages = 0
+        for src in sorted(journal_dir.rglob("*")):
+            if src.is_dir():
+                continue
+            is_html = src.suffix.lower() in {".html", ".htm"}
+            copy_file(src, SITE_DIR / src, gated=is_html)
+            if is_html:
+                journal_pages += 1
+        print(f"journal/ -> {journal_pages} gated page(s) + assets")
+
     (SITE_DIR / ".nojekyll").write_text("", encoding="utf-8")
     domain = os.environ.get("SITE_DOMAIN", "").strip()
     if not domain and pathlib.Path("CNAME").exists():
