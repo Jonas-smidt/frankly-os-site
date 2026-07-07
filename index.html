@@ -57,6 +57,14 @@
   .section-head h2{font-size:31px;line-height:1.02;margin:0;color:var(--grounded)}
   .section-head p{max-width:520px;margin:0;color:var(--grey)}
   .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px}
+  .shelf-block{margin-top:22px}
+  .shelf-block:first-of-type{margin-top:0}
+  .shelf-block-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.52fr);gap:18px;align-items:end;padding:18px 0;border-top:1px solid var(--edge)}
+  .shelf-block:first-of-type .shelf-block-head{border-top:0;padding-top:0}
+  .shelf-block-head span{display:block;font-size:11px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin:0 0 6px}
+  .shelf-block-head h3{margin:0;color:var(--grounded);font-size:26px;line-height:1.02}
+  .shelf-block-head p{margin:0;color:var(--grey);font-size:14px}
+  .play-shelf .shelf-block-head{padding:22px 18px;background:#fff;border:1px solid var(--edge);border-radius:8px}
   .item{display:flex;flex-direction:column;min-height:238px;background:var(--white);border:1px solid var(--edge);border-radius:8px;padding:18px;text-decoration:none}
   a.item:hover{border-color:var(--pink-deep)}
   .item small{display:inline-flex;width:max-content;align-items:center;border-radius:999px;padding:6px 10px;font-size:11px;font-weight:900;text-transform:uppercase;color:var(--grounded)}
@@ -121,6 +129,7 @@
     .nav{justify-content:flex-start}
     .hero{grid-template-columns:1fr;padding-top:28px}
     .grid{grid-template-columns:1fr}
+    .shelf-block-head{grid-template-columns:1fr}
     .item{min-height:0}
     .item[data-art]{min-height:292px}
     .section-head{align-items:flex-start;flex-direction:column}
@@ -148,7 +157,9 @@
       <span>Frankly Lab</span>
     </a>
     <nav class="nav" aria-label="Lab pages">
-      <a href="#live">Live</a>
+      <a href="#live">Tools</a>
+      <a href="#play">Play</a>
+      <a href="#pages">Pages</a>
       <a href="lab-registry.html">Registry</a>
       <a href="#workbench">Workbench</a>
     </nav>
@@ -159,16 +170,17 @@
       <div>
         <p class="kicker">Gated upload bundle</p>
         <h1>Lab is the shelf again.</h1>
-        <p>Frankly Lab online shows practical tools, games and approved preview pages. Nothing more complicated than the shelf people can open and use.</p>
+        <p>Frankly Lab online shows practical tools, approved preview pages and a separate play corner for games and small experiments.</p>
         <div class="hero-actions">
-          <a class="button" href="#live">Open live tools</a>
+          <a class="button" href="#live">Open tools</a>
+          <a class="button secondary" href="#play">Open play</a>
           <a class="button secondary" href="lab-registry.html">Open registry</a>
         </div>
       </div>
       <aside class="status-panel" aria-label="Bundle boundary">
         <span>Boundary</span>
-        <b>Tools, games, previews.</b>
-        <p>The upload bundle carries Lab tools, games, the online coverage overview, Start here preview and gated/noindex blog drafts.</p>
+        <b>Tools, pages, play.</b>
+        <p>The upload bundle carries Lab tools, the online coverage overview, Start here preview, Journal and a separate play corner.</p>
         <div class="metrics" aria-label="Lab bundle metrics">
           <div><strong>16</strong><small>Lab pages</small></div>
           <div><strong>1</strong><small>coverage page</small></div>
@@ -179,113 +191,150 @@
 
     <section class="wrap band" id="live">
       <div class="section-head">
-        <h2>Live in the online Lab</h2>
-        <p>These tool, game and approved preview pages are copied into the upload bundle.</p>
+        <h2>Tools in the online Lab</h2>
+        <p>Practical generators, guides and brand helpers only. Games, toys and quizzes are not part of this overview.</p>
       </div>
-      <div class="grid">
-        <a class="item live" href="frankly-instore-onepager.html" data-art="instore" data-mark="IN">
-          <small>Online guide</small>
-          <h3>Instore salgsguide</h3>
-          <p>Overblik og fuld guide til Frankly Instore-salget: flow, betaling, dækning og quiz.</p>
-          <strong>Open guide</strong>
-        </a>
-        <a class="item live" href="frankly-signature-generator.html" data-art="signature" data-mark="ES">
-          <small>Online tool</small>
-          <h3>Email signature</h3>
-          <p>Add details, preview the footer and copy HTML or plain text.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-brand-reference.html" data-art="brand-reference" data-mark="BR">
-          <small>Online tool</small>
-          <h3>Brand Reference</h3>
-          <p>Colors, CSS tokens and tone rules for quick Frankly checks.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-brand-assistant.html" data-art="brand-assistant" data-mark="BA">
-          <small>Online tool</small>
-          <h3>Brand Assistant</h3>
-          <p>Search recurring brand answers locally without any AI runtime.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-business-card.html" data-art="business-card" data-mark="BC">
-          <small>Online tool</small>
-          <h3>Business card</h3>
-          <p>Build a meeting card with contact details, QR and vCard output.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-dictionary.html" data-art="dictionary" data-mark="DI">
-          <small>Online tool</small>
-          <h3>Dictionary</h3>
-          <p>Plain-language working definitions for common internal terms.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-qr-link.html" data-art="qr" data-mark="QR">
-          <small>Online tool</small>
-          <h3>QR link</h3>
-          <p>Turn a URL into a local SVG QR code for decks and signs.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-image-resizer.html" data-art="image" data-mark="IR">
-          <small>Online tool</small>
-          <h3>Image resizer</h3>
-          <p>Resize local images to useful social and presentation formats.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-drop-protection.html" data-art="drop" data-mark="DP">
-          <small>Online game</small>
-          <h3>Drop Protection</h3>
-          <p>Catch the falling objects with a little browser-game coverage bar.</p>
-          <strong>Play</strong>
-        </a>
-        <a class="item live" href="franklys-bmw.html" data-art="bmw" data-mark="BM">
-          <small>Online game</small>
-          <h3>Frankly's BMW</h3>
-          <p>A browser game prototype for testing interactive HTML, responsive canvas behavior and Frankly tone.</p>
-          <strong>Play</strong>
-        </a>
-        <a class="item live" href="the-decision-chicken.html" data-art="decision" data-mark="DC">
-          <small>Online toy</small>
-          <h3>Decision Chicken</h3>
-          <p>Pick from small options when the main job is moving forward.</p>
-          <strong>Open toy</strong>
-        </a>
-        <a class="item live" href="frankly-quiz.html" data-art="quiz" data-mark="QZ">
-          <small>Online quiz</small>
-          <h3>Do you know Frankly?</h3>
-          <p>A short brand quiz for tone, gates and internal basics.</p>
-          <strong>Take quiz</strong>
-        </a>
-        <a class="item draft" href="onboarding.html" data-art="onboarding" data-mark="ST">
-          <small>Gated preview</small>
-          <h3>Start here</h3>
-          <p>The onboarding surface is copied online as a gated/noindex preview.</p>
-          <strong>Open preview</strong>
-        </a>
-        <a class="item live" href="frankly-daekningsoverblik.html" data-art="coverage" data-mark="CO">
-          <small>Online page</small>
-          <h3>Coverage overview</h3>
-          <p>Approved for the online Lab bundle; still not a legal source.</p>
-          <strong>Open page</strong>
-        </a>
-        <a class="item live" href="journal/frankly-blog-index.html" data-art="blog" data-mark="JO">
-          <small>Public · Journal</small>
-          <h3>Frankly Journal</h3>
-          <p>Ten calm stories from everyday life — the Danish blog suite, public and open to search.</p>
-          <strong>Open the journal</strong>
-        </a>
+      <div class="shelf-block tool-shelf">
+        <div class="shelf-block-head">
+          <div>
+            <span>Practical shelf</span>
+            <h3>Tools</h3>
+          </div>
+          <p>Generators, guides and brand helpers live here. No games mixed into the work tools.</p>
+        </div>
+        <div class="grid">
+          <a class="item live" href="frankly-instore-onepager.html" data-art="instore" data-mark="IN">
+            <small>Online guide</small>
+            <h3>Instore salgsguide</h3>
+            <p>Overblik og fuld guide til Frankly Instore-salget: flow, betaling, dækning og quiz.</p>
+            <strong>Open guide</strong>
+          </a>
+          <a class="item live" href="frankly-signature-generator.html" data-art="signature" data-mark="ES">
+            <small>Online tool</small>
+            <h3>Email signature</h3>
+            <p>Add details, preview the footer and copy HTML or plain text.</p>
+            <strong>Open tool</strong>
+          </a>
+          <a class="item live" href="frankly-brand-reference.html" data-art="brand-reference" data-mark="BR">
+            <small>Online tool</small>
+            <h3>Brand Reference</h3>
+            <p>Colors, CSS tokens and tone rules for quick Frankly checks.</p>
+            <strong>Open tool</strong>
+          </a>
+          <a class="item live" href="frankly-brand-assistant.html" data-art="brand-assistant" data-mark="BA">
+            <small>Online tool</small>
+            <h3>Brand Assistant</h3>
+            <p>Search recurring brand answers locally without any AI runtime.</p>
+            <strong>Open tool</strong>
+          </a>
+          <a class="item live" href="frankly-business-card.html" data-art="business-card" data-mark="BC">
+            <small>Online tool</small>
+            <h3>Business card</h3>
+            <p>Build a meeting card with contact details, QR and vCard output.</p>
+            <strong>Open tool</strong>
+          </a>
+          <a class="item live" href="frankly-dictionary.html" data-art="dictionary" data-mark="DI">
+            <small>Online tool</small>
+            <h3>Dictionary</h3>
+            <p>Plain-language working definitions for common internal terms.</p>
+            <strong>Open tool</strong>
+          </a>
+          <a class="item live" href="frankly-qr-link.html" data-art="qr" data-mark="QR">
+            <small>Online tool</small>
+            <h3>QR link</h3>
+            <p>Turn a URL into a local SVG QR code for decks and signs.</p>
+            <strong>Open tool</strong>
+          </a>
+          <a class="item live" href="frankly-image-resizer.html" data-art="image" data-mark="IR">
+            <small>Online tool</small>
+            <h3>Image resizer</h3>
+            <p>Resize local images to useful social and presentation formats.</p>
+            <strong>Open tool</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap band" id="play">
+      <div class="shelf-block play-shelf">
+        <div class="shelf-block-head">
+          <div>
+            <span>For fun</span>
+            <h3>Play shelf</h3>
+          </div>
+          <p>Games, toys and quizzes sit in their own spot as lightweight Lab experiments.</p>
+        </div>
+        <div class="grid">
+          <a class="item live" href="frankly-drop-protection.html" data-art="drop" data-mark="DP">
+            <small>Online game</small>
+            <h3>Drop Protection</h3>
+            <p>Catch the falling objects with a little browser-game coverage bar.</p>
+            <strong>Play</strong>
+          </a>
+          <a class="item live" href="franklys-bmw.html" data-art="bmw" data-mark="BM">
+            <small>Online game</small>
+            <h3>Frankly's BMW</h3>
+            <p>A browser game prototype for testing interactive HTML, responsive canvas behavior and Frankly tone.</p>
+            <strong>Play</strong>
+          </a>
+          <a class="item live" href="the-decision-chicken.html" data-art="decision" data-mark="DC">
+            <small>Online toy</small>
+            <h3>Decision Chicken</h3>
+            <p>Pick from small options when the main job is moving forward.</p>
+            <strong>Open toy</strong>
+          </a>
+          <a class="item live" href="frankly-quiz.html" data-art="quiz" data-mark="QZ">
+            <small>Online quiz</small>
+            <h3>Do you know Frankly?</h3>
+            <p>A short brand quiz for tone, gates and internal basics.</p>
+            <strong>Take quiz</strong>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section class="wrap band" id="pages">
+      <div class="shelf-block page-shelf">
+        <div class="shelf-block-head">
+          <div>
+            <span>Pages and previews</span>
+            <h3>Approved pages</h3>
+          </div>
+          <p>Coverage, Start here and Journal stay visible as pages, not tools.</p>
+        </div>
+        <div class="grid">
+          <a class="item draft" href="onboarding.html" data-art="onboarding" data-mark="ST">
+            <small>Gated preview</small>
+            <h3>Start here</h3>
+            <p>The onboarding surface is copied online as a gated/noindex preview.</p>
+            <strong>Open preview</strong>
+          </a>
+          <a class="item live" href="frankly-daekningsoverblik.html" data-art="coverage" data-mark="CO">
+            <small>Online page</small>
+            <h3>Coverage overview</h3>
+            <p>Approved for the online Lab bundle; still not a legal source.</p>
+            <strong>Open page</strong>
+          </a>
+          <a class="item live" href="journal/frankly-blog-index.html" data-art="blog" data-mark="JO">
+            <small>Public · Journal</small>
+            <h3>Frankly Journal</h3>
+            <p>Ten calm stories from everyday life — the Danish blog suite, public and open to search.</p>
+            <strong>Open the journal</strong>
+          </a>
+        </div>
       </div>
     </section>
 
     <section class="wrap band" id="workbench">
       <div class="section-head">
         <h2>Built Lab shelf</h2>
-        <p>The short shelf view groups the registry into the things visitors can actually open in the online Lab.</p>
+        <p>The short shelf view groups the non-game things visitors can open in the online Lab.</p>
       </div>
       <div class="grid">
         <a class="item live" href="lab-registry.html" data-art="brand-reference" data-mark="RG">
           <small>Registry</small>
-          <h3>Tool, game and preview registry</h3>
-          <p>The full online Lab ledger now lives on its own page, with every tool, game and approved preview listed once.</p>
+          <h3>Lab registry</h3>
+          <p>The full online Lab ledger now lives on its own page, with tools, play and approved previews separated.</p>
           <strong>Open registry</strong>
         </a>
         <article class="item draft" data-art="onboarding" data-mark="ST">
@@ -309,13 +358,7 @@
         <article class="item live" data-art="brand-reference" data-mark="TO">
           <small>Online tools</small>
           <h3>Brand and daily tools</h3>
-          <p>Signature, QR, image, dictionary, brand helpers, quiz and small games are restored and copied into the upload bundle.</p>
-          <strong>Online in Lab</strong>
-        </article>
-        <article class="item live" data-art="decision" data-mark="PL">
-          <small>Online games</small>
-          <h3>Play shelf</h3>
-          <p>Drop Protection, Frankly's BMW, Decision Chicken and the Frankly quiz stay visible as lightweight Lab experiments.</p>
+          <p>Signature, QR, image, dictionary, brand helpers and Instore are restored and copied into the upload bundle.</p>
           <strong>Online in Lab</strong>
         </article>
       </div>
