@@ -2,8 +2,8 @@
 
 This folder now has two separate roles:
 
-- The uploadable website lane is a small test site for standalone HTML tools, code prototypes and gated/noindex blog draft previews.
-- Frankly OS operating surfaces stay local: OS map, Studio, Observatory, Mission Control, run memory, local state feeds, onboarding, progress and internal product clarity.
+- The uploadable website lane is a small test site for standalone HTML tools, code prototypes, the approved online coverage overview, the approved Start here preview and gated/noindex blog draft previews.
+- Frankly OS operating surfaces stay local: OS map, Studio, Observatory, Mission Control, run memory, local state feeds and progress.
 
 ## Current Role
 
@@ -18,11 +18,17 @@ The uploadable website bundle is generated into ignored `site/` by `scripts/sync
   - `frankly-business-card.html`
   - `frankly-dictionary.html`
   - `frankly-qr-link.html`
-  - `frankly-linkedin-checker.html`
   - `frankly-image-resizer.html`
   - `frankly-drop-protection.html`
   - `the-decision-chicken.html`
   - `frankly-quiz.html`
+- approved online page:
+  - `frankly-daekningsoverblik.html`
+- approved preview pages:
+  - `onboarding.html`
+  - `blog/index.html`
+  - `blog/cykelforsikring.html`
+- `frankly-surfaces.css`
 - `frankly-lab-tools.css`
 - `frankly-lab-tools.js`
 - shared logo/robots/sitemap files
@@ -32,7 +38,7 @@ Internal operating pages remain useful locally, but they are not website content
 - `frankly-os.html`, `overview.html`, `progress-map.html`
 - `studio.html`, `observatory.html`, `control-cockpit.html`
 - `lab-hub.html`, `agent-brief-builder.html`, `mission-control-queue.html`
-- `onboarding.html`, `frankly-daekningsoverblik.html`, `guide/index.html`
+- `guide/index.html`
 - `data/*.json` machine feeds
 
 GitHub Pages deployment is manual-only. There is no scheduled or push-triggered deploy, and no Drive sync in the website build.
@@ -50,11 +56,13 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 - `index.html` - uploadable test-site entry page, live Lab tool links and visible Lab registry.
 - `franklys-bmw.html` - standalone HTML game/tool test.
 - `frankly-lab-tools.css`, `frankly-lab-tools.js` - shared runtime for the rebuilt Lab tools.
-- `blog/index.html` - local draft blog index, currently noindex and not copied into the upload bundle.
-- `blog/cykelforsikring.html` - source-updated local draft article for the Blog SEO route pilot, currently noindex and not copied into the upload bundle.
-- `robots.txt` - blocks draft blogs and historical/internal operating URLs from crawling.
-- `sitemap.xml` - includes only the uploadable test-site entry and standalone game.
-- `frankly-os.html`, `overview.html`, `progress-map.html`, `studio.html`, `observatory.html`, `control-cockpit.html`, `lab-hub.html`, `agent-brief-builder.html`, `mission-control-queue.html`, `onboarding.html` - local-only operating surfaces.
+- `onboarding.html` - approved Start here preview, copied into the upload bundle behind the Lab gate and kept noindex.
+- `frankly-daekningsoverblik.html` - approved online coverage overview, copied into the upload bundle behind the Lab gate and included in the sitemap.
+- `blog/index.html` - draft blog index, copied into the upload bundle as a gated/noindex preview.
+- `blog/cykelforsikring.html` - source-updated draft article for the Blog SEO route pilot, copied into the upload bundle as a gated/noindex preview.
+- `robots.txt` - blocks draft blogs, noindex previews, Lab tools and historical/internal operating URLs from crawling.
+- `sitemap.xml` - includes the uploadable test-site entry, standalone game and coverage overview.
+- `frankly-os.html`, `overview.html`, `progress-map.html`, `studio.html`, `observatory.html`, `control-cockpit.html`, `lab-hub.html`, `agent-brief-builder.html`, `mission-control-queue.html` - local-only operating surfaces.
 - `data/*.json` - local-only same-origin feeds for OS previews.
 - `data/README.md` - local data-feed source and regeneration notes.
 - `CNAME` - configured custom domain target.
@@ -62,7 +70,7 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 
 ## Lab Registry Recovery
 
-`lab-hub.html` contains a registry of 21 tool/game entries. All 21 now have local files in the current repo tree again. Twelve Lab tools/games are copied to the upload bundle: `franklys-bmw.html` plus eleven formerly missing entries rebuilt from the Lab registry and old browser-QA evidence:
+`lab-hub.html` contains an active registry of 20 tool/game entries after LinkedIn checker was removed. The old `frankly-linkedin-checker.html` source remains local for now, but it is not linked from the active registry and is not copied to the upload bundle. Eleven Lab tools/games are copied to the upload bundle: `franklys-bmw.html` plus ten formerly missing entries restored from the Lab registry and old browser-QA evidence:
 
 - `frankly-signature-generator.html`
 - `frankly-brand-reference.html`
@@ -70,13 +78,12 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 - `frankly-business-card.html`
 - `frankly-dictionary.html`
 - `frankly-qr-link.html`
-- `frankly-linkedin-checker.html`
 - `frankly-image-resizer.html`
 - `frankly-drop-protection.html`
 - `the-decision-chicken.html`
 - `frankly-quiz.html`
 
-These rebuilt pages are gated/noindex Lab tools in the upload allowlist. Keep Frankly OS, Mission Control, Studio, Observatory, run memory, machine feeds, product/legal drafts and claim-adjacent surfaces out of the upload bundle unless Jonas explicitly approves that named scope.
+These restored pages are gated/noindex Lab tools in the upload allowlist. Coverage overview is allowlisted under Jonas's named approval as an online page. Start here and blog drafts are allowlisted as noindex previews. Keep Frankly OS, Mission Control, Studio, Observatory, run memory, machine feeds, source records, customer-facing claims and all other product/legal surfaces out of the upload bundle unless Jonas explicitly approves that named scope.
 
 ## Current Run
 
@@ -213,7 +220,7 @@ Earlier whole-site evidence screenshots are stored in:
 The current website direction is separation:
 
 1. Keep Frankly OS, Mission Control, Studio, Observatory and run memory local.
-2. Keep the uploadable website bundle limited to Lab tools, standalone HTML/code prototypes and noindex blog drafts.
+2. Keep the uploadable website bundle limited to Lab tools, standalone HTML/code prototypes, the approved online coverage overview, the approved Start here preview and noindex blog drafts.
 3. Add a file to `scripts/sync_from_drive.py`'s allowlist only when it is safe website content.
 4. Keep product/legal/claims surfaces out of the upload bundle unless Jonas explicitly reopens and approves that scope.
 5. Keep all durable system files in English.

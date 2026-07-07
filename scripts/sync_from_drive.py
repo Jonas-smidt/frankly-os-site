@@ -2,9 +2,11 @@
 """
 Build the uploadable Frankly test site bundle.
 
-The public website bundle is intentionally small: a test-lab landing page and
-allowlisted HTML/tool experiments. Internal operating surfaces and product/legal
-drafts stay local and are not copied into ./site.
+The public website bundle is intentionally small: a test-lab landing page,
+allowlisted HTML/tool experiments, the approved Start here preview, the approved
+online coverage overview and gated/noindex blog draft previews. Internal
+operating surfaces and all other product/legal drafts stay local and are not
+copied into ./site.
 
 Environment variables:
   SITE_DOMAIN  Optional domain; otherwise the committed CNAME is copied.
@@ -26,16 +28,20 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-business-card.html"),
     pathlib.Path("frankly-dictionary.html"),
     pathlib.Path("frankly-qr-link.html"),
-    pathlib.Path("frankly-linkedin-checker.html"),
     pathlib.Path("frankly-image-resizer.html"),
     pathlib.Path("frankly-drop-protection.html"),
     pathlib.Path("franklys-bmw.html"),
     pathlib.Path("the-decision-chicken.html"),
     pathlib.Path("frankly-quiz.html"),
+    pathlib.Path("onboarding.html"),
+    pathlib.Path("frankly-daekningsoverblik.html"),
+    pathlib.Path("blog/index.html"),
+    pathlib.Path("blog/cykelforsikring.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
     pathlib.Path("sitemap.xml"),
+    pathlib.Path("frankly-surfaces.css"),
     pathlib.Path("frankly-lab-tools.css"),
     pathlib.Path("frankly-lab-tools.js"),
     pathlib.Path("assets/frankly-logo-small.png"),
@@ -132,7 +138,7 @@ def main():
     print(
         "Built uploadable test bundle with 1 entry page, "
         f"{len(UPLOADABLE_HTML)} allowlisted HTML page(s), no internal operating surfaces "
-        "and no product/legal drafts."
+        "and only Jonas-approved preview scopes beyond Lab tools."
     )
 
 

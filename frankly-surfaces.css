@@ -30,6 +30,11 @@
   box-sizing: border-box;
 }
 
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 html {
   scroll-behavior: smooth;
   -webkit-text-size-adjust: 100%;
@@ -845,6 +850,255 @@ h3 {
   font-weight: 850;
   text-decoration: underline;
   text-underline-offset: 4px;
+}
+
+.tool-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 18px;
+  border-top: 0;
+}
+
+.tool-card {
+  min-height: 360px;
+  grid-template-columns: 1fr;
+  border: 1px solid var(--line-dark);
+  border-radius: 8px;
+}
+
+.tool-card[href]:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 18px 44px rgba(45, 0, 17, .08);
+  background: var(--white);
+}
+
+.tool-body {
+  grid-template-columns: 1fr;
+  gap: 12px;
+  align-items: start;
+}
+
+.tool-visual {
+  min-height: 172px;
+  overflow: hidden;
+  isolation: isolate;
+  border-bottom: 1px solid var(--line-dark);
+}
+
+.tool-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  background: var(--tool-thumb, linear-gradient(135deg, rgba(255, 211, 227, .88), rgba(255, 246, 250, .72)), var(--blush));
+}
+
+.tool-visual::after {
+  content: "";
+  position: absolute;
+  inset: auto 0 0;
+  z-index: 1;
+  height: 48%;
+  background: linear-gradient(0deg, rgba(255, 246, 250, .58), transparent);
+  pointer-events: none;
+}
+
+.tool-code,
+.status-pill,
+.tool-mark {
+  z-index: 2;
+}
+
+.tool-mark {
+  color: rgba(45, 0, 17, .84);
+  text-shadow: 0 1px 0 rgba(255, 255, 255, .48);
+}
+
+.tool-visual[data-visual="signature"] {
+  --tool-thumb:
+    linear-gradient(rgba(45, 0, 17, .18) 0 0) 34px 44px/126px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .12) 0 0) 34px 64px/96px 2px no-repeat,
+    linear-gradient(90deg, var(--calm-deep), var(--calm-pink)) 34px 98px/128px 8px no-repeat,
+    linear-gradient(135deg, #fff, var(--blush));
+}
+
+.tool-visual[data-visual="brand-reference"] {
+  --tool-thumb:
+    linear-gradient(var(--bordeaux) 0 0) 28px 30px/48px 48px no-repeat,
+    linear-gradient(var(--calm-deep) 0 0) 88px 30px/48px 48px no-repeat,
+    linear-gradient(var(--stone-2) 0 0) 148px 30px/48px 48px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .16) 0 0) 30px 108px/166px 2px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="brand-assistant"] {
+  --tool-thumb:
+    linear-gradient(135deg, var(--calm-pink), #fff) 30px 28px/142px 38px no-repeat,
+    linear-gradient(135deg, #fff, var(--stone-2)) 66px 84px/142px 38px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .22) 0 0) 48px 48px/72px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .16) 0 0) 84px 104px/84px 2px no-repeat,
+    var(--blush);
+}
+
+.tool-visual[data-visual="business-card"] {
+  --tool-thumb:
+    linear-gradient(135deg, #fff, var(--calm-pink)) 30px 30px/180px 98px no-repeat,
+    repeating-linear-gradient(90deg, var(--bordeaux) 0 8px, transparent 8px 14px) 150px 56px/44px 44px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .22) 0 0) 52px 58px/70px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .14) 0 0) 52px 78px/50px 2px no-repeat,
+    var(--stone-2);
+}
+
+.tool-visual[data-visual="dictionary"] {
+  --tool-thumb:
+    linear-gradient(#fff 0 0) 42px 24px/130px 104px no-repeat,
+    linear-gradient(var(--calm-pink) 0 0) 62px 44px/48px 12px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .18) 0 0) 62px 72px/82px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .14) 0 0) 62px 90px/64px 2px no-repeat,
+    linear-gradient(90deg, var(--calm-deep) 0 9px, transparent 9px 100%) 172px 36px/20px 72px no-repeat,
+    var(--stone-2);
+}
+
+.tool-visual[data-visual="qr"] {
+  --tool-thumb:
+    repeating-linear-gradient(90deg, var(--bordeaux) 0 10px, transparent 10px 20px) 54px 36px/96px 96px no-repeat,
+    repeating-linear-gradient(0deg, rgba(45, 0, 17, .82) 0 10px, transparent 10px 20px) 54px 36px/96px 96px no-repeat,
+    linear-gradient(#fff 0 0) 42px 24px/120px 120px no-repeat,
+    linear-gradient(135deg, var(--calm-pink), #fff);
+}
+
+.tool-visual[data-visual="image"] {
+  --tool-thumb:
+    linear-gradient(135deg, var(--sky), var(--calm-pink)) 28px 28px/158px 98px no-repeat,
+    linear-gradient(90deg, transparent 18px, rgba(255, 255, 255, .74) 18px 20px, transparent 20px) 48px 46px/104px 60px no-repeat,
+    linear-gradient(0deg, transparent 18px, rgba(255, 255, 255, .74) 18px 20px, transparent 20px) 48px 46px/104px 60px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .64) 0 0) 48px 106px/104px 3px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="drop"] {
+  --tool-thumb:
+    linear-gradient(var(--calm-deep) 0 0) 48px 30px/22px 22px no-repeat,
+    linear-gradient(var(--sky) 0 0) 112px 58px/20px 20px no-repeat,
+    linear-gradient(#F3D187 0 0) 166px 34px/24px 24px no-repeat,
+    linear-gradient(var(--bordeaux) 0 0) 62px 122px/132px 8px no-repeat,
+    linear-gradient(135deg, #fff, var(--blush));
+}
+
+.tool-visual[data-visual="bmw"] {
+  --tool-thumb:
+    linear-gradient(90deg, transparent 48%, rgba(255, 255, 255, .92) 48% 52%, transparent 52%) 0 0/100% 100%,
+    linear-gradient(135deg, var(--bordeaux), rgba(45, 0, 17, .72)) 38px 24px/150px 112px no-repeat,
+    linear-gradient(var(--calm-deep) 0 0) 96px 82px/40px 20px no-repeat,
+    linear-gradient(135deg, #CFE8BF, #fff);
+}
+
+.tool-visual[data-visual="decision"] {
+  --tool-thumb:
+    conic-gradient(from -20deg, var(--calm-pink) 0 28%, #fff 28% 54%, var(--sky) 54% 76%, #F3D187 76% 100%) 62px 28px/100px 100px no-repeat,
+    linear-gradient(var(--bordeaux) 0 0) 112px 32px/4px 94px no-repeat,
+    linear-gradient(135deg, #fff, var(--stone-2));
+}
+
+.tool-visual[data-visual="quiz"] {
+  --tool-thumb:
+    linear-gradient(#fff 0 0) 34px 32px/156px 88px no-repeat,
+    linear-gradient(#CFE8BF 0 0) 54px 88px/50px 14px no-repeat,
+    linear-gradient(var(--calm-pink) 0 0) 114px 88px/50px 14px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .18) 0 0) 56px 58px/110px 2px no-repeat,
+    var(--stone-2);
+}
+
+.tool-visual[data-visual="onboarding"] {
+  --tool-thumb:
+    linear-gradient(#CFE8BF 0 0) 44px 38px/18px 18px no-repeat,
+    linear-gradient(#CFE8BF 0 0) 44px 74px/18px 18px no-repeat,
+    linear-gradient(var(--calm-pink) 0 0) 44px 110px/18px 18px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .18) 0 0) 78px 48px/112px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .14) 0 0) 78px 84px/86px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .12) 0 0) 78px 120px/104px 2px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="coverage"] {
+  --tool-thumb:
+    linear-gradient(var(--calm-pink) 0 0) 40px 38px/44px 88px no-repeat,
+    linear-gradient(#CFE8BF 0 0) 98px 62px/44px 64px no-repeat,
+    linear-gradient(var(--sky) 0 0) 156px 48px/44px 78px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .2) 0 0) 36px 130px/170px 2px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="os"] {
+  --tool-thumb:
+    linear-gradient(var(--bordeaux) 0 0) 44px 40px/30px 30px no-repeat,
+    linear-gradient(var(--calm-deep) 0 0) 108px 82px/30px 30px no-repeat,
+    linear-gradient(var(--sky) 0 0) 172px 40px/30px 30px no-repeat,
+    linear-gradient(35deg, transparent 49%, rgba(45, 0, 17, .24) 49% 51%, transparent 51%) 58px 56px/130px 60px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="studio"] {
+  --tool-thumb:
+    linear-gradient(var(--bordeaux) 0 0) 34px 32px/164px 96px no-repeat,
+    linear-gradient(var(--calm-pink) 0 0) 56px 56px/86px 6px no-repeat,
+    linear-gradient(rgba(245, 244, 241, .38) 0 0) 56px 80px/112px 4px no-repeat,
+    linear-gradient(rgba(245, 244, 241, .28) 0 0) 56px 100px/64px 4px no-repeat,
+    var(--blush);
+}
+
+.tool-visual[data-visual="cockpit"] {
+  --tool-thumb:
+    radial-gradient(circle at 86px 82px, transparent 0 28px, var(--bordeaux) 29px 31px, transparent 32px),
+    radial-gradient(circle at 152px 82px, transparent 0 28px, var(--calm-deep) 29px 31px, transparent 32px),
+    linear-gradient(var(--bordeaux) 0 0) 52px 126px/136px 4px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="observatory"] {
+  --tool-thumb:
+    radial-gradient(circle at 58px 50px, var(--bordeaux) 0 6px, transparent 7px),
+    radial-gradient(circle at 122px 88px, var(--calm-deep) 0 7px, transparent 8px),
+    radial-gradient(circle at 184px 50px, var(--sky) 0 6px, transparent 7px),
+    linear-gradient(28deg, transparent 49%, rgba(45, 0, 17, .22) 49% 51%, transparent 51%) 58px 50px/128px 40px no-repeat,
+    linear-gradient(150deg, transparent 49%, rgba(45, 0, 17, .18) 49% 51%, transparent 51%) 122px 50px/64px 40px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="brief"] {
+  --tool-thumb:
+    linear-gradient(#fff 0 0) 42px 36px/132px 34px no-repeat,
+    linear-gradient(var(--calm-pink) 0 0) 64px 88px/132px 34px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .2) 0 0) 64px 50px/72px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .18) 0 0) 86px 102px/84px 2px no-repeat,
+    var(--stone-2);
+}
+
+.tool-visual[data-visual="mission"] {
+  --tool-thumb:
+    linear-gradient(#CFE8BF 0 0) 42px 42px/30px 14px no-repeat,
+    linear-gradient(var(--calm-pink) 0 0) 42px 76px/30px 14px no-repeat,
+    linear-gradient(var(--sky) 0 0) 42px 110px/30px 14px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .18) 0 0) 88px 48px/112px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .14) 0 0) 88px 82px/96px 2px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .12) 0 0) 88px 116px/120px 2px no-repeat,
+    #fff;
+}
+
+.tool-visual[data-visual="progress"] {
+  --tool-thumb:
+    linear-gradient(var(--calm-deep) 0 0) 44px 48px/146px 10px no-repeat,
+    linear-gradient(#CFE8BF 0 0) 44px 80px/104px 10px no-repeat,
+    linear-gradient(var(--sky) 0 0) 44px 112px/128px 10px no-repeat,
+    linear-gradient(rgba(45, 0, 17, .16) 0 0) 44px 136px/162px 2px no-repeat,
+    var(--stone-2);
+}
+
+.tool-visual[data-visual="lab"] {
+  --tool-thumb:
+    linear-gradient(var(--calm-pink) 0 0) 42px 42px/44px 44px no-repeat,
+    linear-gradient(var(--stone-2) 0 0) 98px 42px/44px 44px no-repeat,
+    linear-gradient(var(--sky) 0 0) 154px 42px/44px 44px no-repeat,
+    #fff;
 }
 
 .no-result {
@@ -3953,7 +4207,7 @@ h3 {
   }
 
   .tool-card {
-    grid-template-columns: 112px minmax(0, 1fr);
+    grid-template-columns: 1fr;
   }
 
   .tool-body {

@@ -1,11 +1,232 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Dictionary | Frankly Lab</title>
-<link rel="stylesheet" href="frankly-lab-tools.css">
+<title>Frankly — Dictionary</title>
+<style>
+  :root{
+    --limestone:#F5F4F1; --paper:#FFFFFF; --ink:#111111; --grounded:#2D0011;
+    --pink:#FFD3E3; --pink-deep:#FFACCA; --muted:#7C7A77; --line:#E7E6E2;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+  body{
+    margin:0; background:var(--limestone); color:var(--ink);
+    font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    line-height:1.5; -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:880px; margin:0 auto; padding:0 24px}
+  header.top{padding:48px 0 28px}
+  .crumb{font-size:13px; margin:0 0 16px}
+  .crumb a{color:var(--muted); text-decoration:none}
+  .crumb a:hover{color:var(--grounded); text-decoration:underline}
+  .eyebrow{font-size:12px; letter-spacing:.16em; text-transform:uppercase; color:var(--muted); margin:0 0 12px; font-weight:600}
+  h1{font-size:clamp(30px,5vw,44px); line-height:1.04; margin:0 0 10px; color:var(--grounded); font-weight:800; letter-spacing:-.025em}
+  .lede{font-size:15.5px; color:#4a4a4a; margin:0 0 18px; max-width:60ch}
+
+  .draftbanner{
+    display:flex; gap:10px; align-items:flex-start; background:var(--pink); border:1px solid var(--pink-deep);
+    border-radius:12px; padding:12px 16px; font-size:13.5px; color:var(--grounded); margin-bottom:26px;
+  }
+  .draftbanner strong{font-weight:800}
+
+  .controls{position:sticky; top:0; z-index:10; background:var(--limestone); padding:10px 0 14px; border-bottom:1px solid var(--line); margin-bottom:22px}
+  .searchbox{position:relative}
+  .searchbox input{
+    width:100%; padding:13px 16px 13px 42px; font-size:16px; color:var(--ink);
+    border:1px solid #DDD; border-radius:12px; background:var(--paper); font-family:inherit;
+  }
+  .searchbox input:focus{outline:none; border-color:var(--pink-deep); box-shadow:0 0 0 3px rgba(255,172,202,.45)}
+  .searchbox .mag{position:absolute; left:14px; top:50%; transform:translateY(-50%); color:var(--muted); font-size:16px; pointer-events:none}
+  .cats{display:flex; gap:8px; flex-wrap:wrap; margin-top:12px}
+  .cat{
+    font-family:inherit; font-size:13px; font-weight:600; cursor:pointer; color:#3c3c3c;
+    background:var(--paper); border:1px solid var(--line); border-radius:999px; padding:7px 15px;
+    transition:background .12s ease;
+  }
+  .cat:hover{background:#faf7f5}
+  .cat.active{background:var(--pink); border-color:var(--pink-deep); color:var(--grounded); font-weight:700}
+  .resultcount{font-size:12.5px; color:var(--muted); margin-top:10px}
+
+  .letterhead{font-size:13px; letter-spacing:.12em; font-weight:800; color:var(--pink-deep); margin:26px 0 10px; text-transform:uppercase}
+  .entry{
+    background:var(--paper); border:1px solid var(--line); border-radius:14px;
+    padding:18px 20px; margin-bottom:10px;
+  }
+  .entry .head{display:flex; align-items:baseline; gap:10px; flex-wrap:wrap}
+  .entry h3{font-size:17px; margin:0; color:var(--ink); font-weight:800; letter-spacing:-.01em}
+  .entry .da{font-size:12.5px; color:var(--muted); font-style:italic}
+  .entry .tag{font-size:10px; font-weight:700; letter-spacing:.07em; text-transform:uppercase; padding:3px 9px; border-radius:999px; margin-left:auto}
+  .tag.insurance{background:var(--pink); color:var(--grounded)}
+  .tag.commercial{background:#EFEEEA; color:#555}
+  .tag.frankly{background:var(--grounded); color:#fff}
+  .entry p{font-size:14px; color:#4a4a4a; margin:9px 0 0; max-width:66ch}
+  .empty{padding:36px 0; text-align:center; color:var(--muted); font-size:14.5px; display:none}
+
+  footer{border-top:1px solid var(--line); padding:24px 0 60px; margin-top:36px; font-size:12.5px; color:var(--muted)}
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
 </head>
-<body data-tool="dictionary"><div id="app"></div><script src="frankly-lab-tools.js"></script></body>
+<body>
+
+<header class="top">
+  <div class="wrap">
+    <p class="crumb"><a href="index.html">← Frankly Lab</a></p>
+    <p class="eyebrow">Internal · Everyone</p>
+    <h1>Frankly Dictionary</h1>
+    <p class="lede">Insurance and business terms in plain language — what they actually mean and why they matter at Frankly. No jargon explained with more jargon.</p>
+    <div class="draftbanner">
+      <span>⚠️</span>
+      <span><strong>Draft content — pending review by Albert (Head of Insurance).</strong> Definitions are written for understanding, not as legal or policy wording. Spotted something off? Send it to Jonas.</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="controls">
+    <div class="searchbox">
+      <span class="mag">⌕</span>
+      <input id="q" type="search" placeholder="Search a term… (e.g. MGA, premium, churn, selvrisiko)" autocomplete="off">
+    </div>
+    <div class="cats" id="cats"></div>
+    <div class="resultcount" id="count"></div>
+  </div>
+
+  <div id="list"></div>
+  <div class="empty" id="empty">No terms match — try a shorter search.</div>
+</div>
+
+<footer>
+  <div class="wrap">frankly™ Lab · Dictionary · canonical insurance wording lives in the policy documents and Albert’s governance playbook in Notion.</div>
+</footer>
+
+<script>
+  // category: insurance | commercial | frankly
+  const TERMS = [
+    // ---- Frankly-specific (factual, no numbers) ----
+    {t:"MGA (Managing General Agent)", da:"", c:"frankly",
+     d:"An insurance company that designs, prices, sells and manages insurance products — but doesn’t carry the financial risk itself. The risk sits with a carrier. This is Frankly’s operating model: we build and run the product; a carrier underwrites it."},
+    {t:"Wakam", da:"", c:"frankly",
+     d:"The French insurance carrier that underwrites Frankly’s products. Wakam is authorised by the French regulator ACPR. When a customer buys protection through Frankly, Wakam is the company legally carrying the risk."},
+    {t:"Finanstilsynet", da:"", c:"frankly",
+     d:"The Danish Financial Supervisory Authority — the regulator that licenses and supervises financial companies in Denmark, including Frankly’s distribution of insurance."},
+    {t:"Embedded insurance", da:"", c:"frankly",
+     d:"Insurance sold inside another purchase, at the moment it’s relevant — like product protection offered in a webshop checkout. The customer never has to go looking for it. This is Frankly’s core category."},
+    {t:"Product protection", da:"produktforsikring", c:"frankly",
+     d:"Insurance covering a specific product the customer bought — typically against accidental damage, breakdown or theft, depending on the policy. The thing Frankly protects."},
+    {t:"Partner", da:"", c:"frankly",
+     d:"At Frankly: a retailer or webshop that offers Frankly protection to its customers, embedded in their purchase flow. Partners are our distribution."},
+
+    // ---- Insurance (industry-standard) ----
+    {t:"Policy", da:"police", c:"insurance",
+     d:"The contract between the customer and the insurer. It defines what’s covered, what’s not, for how long, and on what conditions."},
+    {t:"Policy wording", da:"forsikringsbetingelser", c:"insurance",
+     d:"The full legal text of the policy — the document that decides everything in a dispute. Marketing explains; wording governs."},
+    {t:"Premium", da:"præmie", c:"insurance",
+     d:"The price the customer pays for the insurance, usually per month or per year, or once for the whole coverage period."},
+    {t:"Claim", da:"skade / anmeldelse", c:"insurance",
+     d:"When a customer asks the insurer to pay for a covered loss — e.g. “my phone screen broke, please fix it.” Handling claims well is where insurance earns trust."},
+    {t:"Underwriter / underwriting", da:"", c:"insurance",
+     d:"The party that takes on the financial risk of the policies, and the craft of assessing and pricing that risk. If claims exceed premiums, the underwriter pays the difference."},
+    {t:"Carrier", da:"forsikringsselskab", c:"insurance",
+     d:"The licensed insurance company that legally carries the risk behind a policy. An MGA like Frankly works on top of a carrier."},
+    {t:"Delegated authority", da:"", c:"insurance",
+     d:"When a carrier formally hands an MGA the power to make decisions on its behalf — pricing, issuing policies, sometimes settling claims — within agreed limits. More authority means more control over the product and economics."},
+    {t:"Loss ratio", da:"skadesprocent", c:"insurance",
+     d:"Claims paid divided by premiums earned. A loss ratio of 40% means 40 øre of every premium krone went to claims. The single most-watched health metric of an insurance book."},
+    {t:"Excess / deductible", da:"selvrisiko", c:"insurance",
+     d:"The part of a claim the customer pays themselves before the insurance covers the rest. A 0 kr. excess means the insurance pays from the first krone."},
+    {t:"Cooling-off period", da:"fortrydelsesret", c:"insurance",
+     d:"The legal window (in Denmark typically 14 days) where a customer can cancel a newly bought insurance and get their money back, no questions asked."},
+    {t:"Reinsurance", da:"genforsikring", c:"insurance",
+     d:"Insurance for insurers. A carrier passes part of its risk to a reinsurer so a very bad year doesn’t sink it."},
+    {t:"IPID", da:"", c:"insurance",
+     d:"Insurance Product Information Document — the standardised EU one-pager every insurance product must have, summarising cover, exclusions and obligations in plain terms."},
+    {t:"IDD", da:"", c:"insurance",
+     d:"The EU Insurance Distribution Directive — the rulebook for how insurance may be sold and advised on in the EU, including online and embedded sales. The reason “how you sell” is regulated, not just “what you sell.”"},
+    {t:"ACPR", da:"", c:"insurance",
+     d:"Autorité de Contrôle Prudentiel et de Résolution — the French regulator supervising banks and insurers, including Wakam."},
+
+    // ---- Commercial ----
+    {t:"ARR", da:"", c:"commercial",
+     d:"Annual Recurring Revenue — the yearly value of the recurring revenue currently running. The standard size measure for subscription businesses."},
+    {t:"MoM growth", da:"", c:"commercial",
+     d:"Month-over-month growth — how much a number grew compared to last month, in percent. Small monthly percentages compound into large yearly ones."},
+    {t:"CAC", da:"", c:"commercial",
+     d:"Customer Acquisition Cost — what it costs on average to win one new customer, all sales and marketing included."},
+    {t:"LTV", da:"", c:"commercial",
+     d:"Lifetime Value — the total value a customer generates over their entire time as a customer, not just the first purchase."},
+    {t:"LTV:CAC ratio", da:"", c:"commercial",
+     d:"Lifetime value divided by acquisition cost. It answers: for every krone spent winning a customer, how many do we get back? Above 3:1 is generally considered healthy."},
+    {t:"CAC payback", da:"", c:"commercial",
+     d:"How many months it takes before a customer has generated enough to cover what it cost to acquire them. Shorter payback = capital works faster."},
+    {t:"Churn", da:"", c:"commercial",
+     d:"The share of customers (or partners) that leave over a period. The quiet killer of recurring revenue — and why 0% partner churn is worth bragging about."},
+    {t:"Net economics", da:"", c:"commercial",
+     d:"The share of the premium that actually stays with the company after claims, carrier fees and other direct costs. The “what’s left for us” number."},
+    {t:"Take rate / attach rate", da:"", c:"commercial",
+     d:"The share of eligible purchases where the customer actually adds the insurance. If 10 of 100 checkout customers add protection, the attach rate is 10%."},
+    {t:"Upsell", da:"", c:"commercial",
+     d:"Getting an existing customer to buy more — e.g. extending coverage or adding protection for another product. “Organic upsell” means it happens without paid marketing."},
+    {t:"Unit economics", da:"", c:"commercial",
+     d:"The profit math of a single customer or policy: what one unit earns versus what it costs. If the unit works, scale multiplies profit; if it doesn’t, scale multiplies loss."},
+    {t:"TAM / SAM / SOM", da:"", c:"commercial",
+     d:"Three sizes of market: TAM (Total Addressable Market) is everyone who could theoretically buy; SAM (Serviceable) is the part you can realistically reach; SOM (Obtainable) is what you can plausibly win in the near term."},
+    {t:"Seed round", da:"", c:"commercial",
+     d:"An early funding round where investors buy a stake to fuel growth — typically used to prove the model works at scale before larger rounds (Series A, B…)."},
+    {t:"Burn rate / runway", da:"", c:"commercial",
+     d:"Burn is how much money the company spends net per month; runway is how many months the bank account lasts at that pace."}
+  ];
+
+  const CATS = [
+    {id:"all", label:"All"},
+    {id:"frankly", label:"Frankly"},
+    {id:"insurance", label:"Insurance"},
+    {id:"commercial", label:"Commercial"}
+  ];
+  const TAGLABEL = {insurance:"Insurance", commercial:"Commercial", frankly:"Frankly"};
+
+  let activeCat="all", query="";
+
+  function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+  function norm(s){return (s||'').toLowerCase();}
+
+  function renderCats(){
+    document.getElementById('cats').innerHTML = CATS.map(c=>
+      '<button class="cat'+(c.id===activeCat?' active':'')+'" data-cat="'+c.id+'" type="button">'+c.label+'</button>'
+    ).join('');
+  }
+
+  function renderList(){
+    const q=norm(query);
+    const items=TERMS
+      .filter(x=>activeCat==="all"||x.c===activeCat)
+      .filter(x=>!q || norm(x.t).includes(q) || norm(x.d).includes(q) || norm(x.da).includes(q))
+      .sort((a,b)=>a.t.localeCompare(b.t));
+    let html='', lastLetter='';
+    for(const x of items){
+      const L=x.t[0].toUpperCase();
+      if(L!==lastLetter && !q){ html+='<div class="letterhead">'+L+'</div>'; lastLetter=L; }
+      html+='<div class="entry">'
+        +'<div class="head"><h3>'+esc(x.t)+'</h3>'
+        +(x.da?'<span class="da">da: '+esc(x.da)+'</span>':'')
+        +'<span class="tag '+x.c+'">'+TAGLABEL[x.c]+'</span></div>'
+        +'<p>'+esc(x.d)+'</p>'
+        +'</div>';
+    }
+    document.getElementById('list').innerHTML=html;
+    document.getElementById('empty').style.display=items.length?'none':'block';
+    document.getElementById('count').textContent=items.length+' of '+TERMS.length+' terms';
+  }
+
+  document.getElementById('cats').addEventListener('click',e=>{
+    const b=e.target.closest('[data-cat]'); if(!b) return;
+    activeCat=b.getAttribute('data-cat'); renderCats(); renderList();
+  });
+  document.getElementById('q').addEventListener('input',e=>{ query=e.target.value; renderList(); });
+
+  renderCats(); renderList();
+</script>
+</body>
 </html>

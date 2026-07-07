@@ -6,6 +6,9 @@
   <url>
     <loc>https://os.franklydesign.dk/franklys-bmw.html</loc>
   </url>
-  <!-- Blog drafts stay noindex and are intentionally excluded. -->
+  <url>
+    <loc>https://os.franklydesign.dk/frankly-daekningsoverblik.html</loc>
+  </url>
+  <!-- Start here and blog drafts stay noindex/robots-blocked and are intentionally excluded. -->
   <!-- Internal operating pages stay local and are intentionally excluded. -->
 </urlset>

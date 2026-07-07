@@ -1,11 +1,142 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>LinkedIn checker | Frankly Lab</title>
-<link rel="stylesheet" href="frankly-lab-tools.css">
+<title>Frankly — LinkedIn post checker</title>
+<style>
+  :root{--limestone:#F5F4F1;--paper:#FFF;--ink:#111;--grounded:#2D0011;--pink:#FFD3E3;--pink-deep:#FFACCA;--muted:#7C7A77;--line:#E7E6E2;--warn:#9a2c4e}
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--limestone);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased}
+  .wrap{max-width:980px;margin:0 auto;padding:0 24px}
+  header.top{padding:48px 0 30px;border-bottom:1px solid var(--line);margin-bottom:32px}
+  .crumb{font-size:13px;margin:0 0 16px}.crumb a{color:var(--muted);text-decoration:none}.crumb a:hover{color:var(--grounded);text-decoration:underline}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);margin:0 0 12px;font-weight:600}
+  h1{font-size:clamp(30px,5vw,44px);line-height:1.04;margin:0 0 10px;color:var(--grounded);font-weight:800;letter-spacing:-.025em}
+  .lede{font-size:15.5px;color:#4a4a4a;margin:0;max-width:62ch}
+  .grid{display:grid;grid-template-columns:1.1fr .9fr;gap:28px;align-items:start;padding-bottom:72px}
+  @media(max-width:820px){.grid{grid-template-columns:1fr}}
+  .card{background:var(--paper);border:1px solid var(--line);border-radius:16px;padding:24px}
+  .card h2{font-size:13px;letter-spacing:.12em;text-transform:uppercase;color:var(--muted);margin:0 0 14px;font-weight:700}
+  textarea{width:100%;min-height:320px;padding:14px;font-size:15px;line-height:1.55;color:var(--ink);border:1px solid #DDD;border-radius:12px;background:#FCFCFB;font-family:inherit;resize:vertical}
+  textarea:focus{outline:none;border-color:var(--pink-deep);box-shadow:0 0 0 3px rgba(255,172,202,.45)}
+  .stats{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:14px}
+  .stat{background:var(--limestone);border-radius:12px;padding:12px 14px}
+  .stat .v{font-size:22px;font-weight:800;letter-spacing:-.01em}
+  .stat .l{font-size:11.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.07em;font-weight:700;margin-top:2px}
+  .stat.bad .v{color:var(--warn)}
+  .checklist{margin-top:16px}
+  .check{display:flex;gap:9px;align-items:flex-start;font-size:13.5px;color:#444;padding:7px 0;border-top:1px dashed var(--line)}
+  .check:first-child{border-top:0}
+  .check .ic{flex-shrink:0;font-weight:800}
+  .check.ok .ic{color:#2e7d4f}.check.warn .ic{color:var(--warn)}
+  /* preview */
+  .liCard{border:1px solid var(--line);border-radius:12px;background:#fff;padding:16px;font-size:14px;line-height:1.45}
+  .liHead{display:flex;gap:10px;align-items:center;margin-bottom:10px}
+  .liAvatar{width:44px;height:44px;border-radius:50%;background:var(--pink);display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--grounded)}
+  .liName{font-weight:700;font-size:13.5px}
+  .liSub{font-size:11.5px;color:var(--muted)}
+  .liText{white-space:pre-wrap;word-wrap:break-word;color:#1c1c1c}
+  .liText .cut{color:#999}
+  .liMore{color:var(--muted);font-weight:600;cursor:default}
+  .previewNote{font-size:12px;color:var(--muted);margin-top:10px}
+  .toast{position:fixed;left:50%;bottom:28px;transform:translateX(-50%) translateY(20px);background:var(--grounded);color:#fff;padding:12px 18px;border-radius:10px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s ease,transform .2s ease;z-index:50}
+  .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
 </head>
-<body data-tool="linkedin-checker"><div id="app"></div><script src="frankly-lab-tools.js"></script></body>
+<body>
+<header class="top"><div class="wrap">
+  <p class="crumb"><a href="index.html">← Frankly Lab</a></p>
+  <p class="eyebrow">Internal · Everyone</p>
+  <h1>LinkedIn post checker</h1>
+  <p class="lede">Paste your draft and see exactly what shows before the “…see more” fold, plus quick brand checks. Remember: Frankly posts on LinkedIn are always in English.</p>
+</div></header>
+
+<div class="wrap"><div class="grid">
+  <section class="card">
+    <h2>Your draft</h2>
+    <textarea id="txt" placeholder="Paste or write your LinkedIn post here…"></textarea>
+    <div class="stats">
+      <div class="stat" id="stChars"><div class="v">0</div><div class="l">Characters (max 3,000)</div></div>
+      <div class="stat" id="stHook"><div class="v">0</div><div class="l">Hook chars (≈210 before fold)</div></div>
+    </div>
+    <div class="checklist" id="checks"></div>
+  </section>
+
+  <section class="card">
+    <h2>Feed preview</h2>
+    <div class="liCard">
+      <div class="liHead">
+        <div class="liAvatar">f</div>
+        <div><div class="liName">Frankly</div><div class="liSub">Product protection · now</div></div>
+      </div>
+      <div class="liText" id="preview"></div>
+    </div>
+    <p class="previewNote">The grey part is what readers only see after tapping “see more”. The fold (~210 characters or 3 lines) is approximate — LinkedIn varies it by device.</p>
+  </section>
+</div></div>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+<script>
+  const FOLD=210, MAX=3000;
+  const txt=document.getElementById('txt');
+
+  function esc(s){return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');}
+
+  function analyze(){
+    const v=txt.value;
+    const chars=[...v].length;
+    // hook = up to fold or first 3 newline-separated lines, whichever comes first
+    let hookEnd=Math.min(chars,FOLD);
+    const nl3=nthIndex(v,'\n',3);
+    if(nl3>-1 && nl3<hookEnd) hookEnd=nl3;
+    const hook=[...v].slice(0,hookEnd).join('');
+    const rest=[...v].slice(hookEnd).join('');
+
+    // stats
+    const stC=document.getElementById('stChars');
+    stC.querySelector('.v').textContent=chars.toLocaleString('en');
+    stC.classList.toggle('bad',chars>MAX);
+    const stH=document.getElementById('stHook');
+    stH.querySelector('.v').textContent=[...hook].length;
+
+    // preview
+    document.getElementById('preview').innerHTML =
+      esc(hook) + (rest ? '<span class="liMore"> …see more</span><span class="cut">'+esc(rest)+'</span>' : '');
+
+    // checks
+    const checks=[];
+    checks.push(chars<=MAX
+      ? {ok:1,m:'Within LinkedIn’s 3,000-character limit.'}
+      : {ok:0,m:'Over the 3,000-character limit by '+(chars-MAX).toLocaleString('en')+' — LinkedIn will reject it.'});
+    const danish=/[æøåÆØÅ]/.test(v);
+    checks.push(!danish
+      ? {ok:1,m:'No Danish characters — consistent with the English-only LinkedIn rule.'}
+      : {ok:0,m:'Contains æ/ø/å — Frankly LinkedIn posts are always in English. Double-check the language.'});
+    const fearWords=/(afraid|fear|scared|worry|worried|anxiet|risk losing|don.t lose|nightmare|disaster)/i.test(v);
+    checks.push(!fearWords
+      ? {ok:1,m:'No fear-leaning words spotted — empowerment over anxiety.'}
+      : {ok:0,m:'Possible fear-framing detected (e.g. “fear”, “worried”, “disaster”). Frankly’s voice is empowerment, never fear — consider reframing.'});
+    const hookHasPoint=hook.trim().length>=40;
+    checks.push(hookHasPoint
+      ? {ok:1,m:'Hook has substance before the fold.'}
+      : {ok:0,m:'Very short hook — the first ~210 characters decide whether anyone taps “see more”.'});
+    const emojiCount=(v.match(/\p{Extended_Pictographic}/gu)||[]).length;
+    checks.push(emojiCount<=5
+      ? {ok:1,m:'Emoji use is restrained ('+emojiCount+').'}
+      : {ok:0,m:emojiCount+' emojis — plain language carries the Frankly tone better than emoji walls.'});
+
+    document.getElementById('checks').innerHTML=checks.map(c=>
+      '<div class="check '+(c.ok?'ok':'warn')+'"><span class="ic">'+(c.ok?'✓':'!')+'</span><span>'+c.m+'</span></div>'
+    ).join('');
+  }
+
+  function nthIndex(s,ch,n){let i=-1;while(n-->0){i=s.indexOf(ch,i+1);if(i<0)return -1;}return i;}
+
+  txt.addEventListener('input',analyze);
+  analyze();
+</script>
+</body>
 </html>

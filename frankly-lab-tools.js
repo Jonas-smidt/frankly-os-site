@@ -38,12 +38,6 @@ const TOOL_META = {
     description: "Turn a URL into a local SVG QR code for decks, signs and tests.",
     mark: "QR"
   },
-  linkedin: {
-    title: "LinkedIn checker",
-    kicker: "Daily tool",
-    description: "Preview the first lines, length and rhythm of a LinkedIn post.",
-    mark: "LI"
-  },
   "image-resizer": {
     title: "Image resizer",
     kicker: "Daily tool",
@@ -102,7 +96,7 @@ const BRAND_ANSWERS = [
   },
   {
     topic: "Lab tools",
-    tags: "tools games qr signature image linkedin quiz",
+    tags: "tools games qr signature image quiz",
     answer: "Lab tools can be playful or practical, but each one should produce a useful output without setup or paid runtime."
   }
 ];
@@ -485,41 +479,6 @@ function renderQrLink() {
   $all("input").forEach((input) => input.addEventListener("input", update));
   $("#copyQrLink").addEventListener("click", () => copyText(fieldValue("qrUrl"), "#qrToast"));
   $("#downloadQrSvg").addEventListener("click", () => downloadText("frankly-qr-link.svg", currentSvg, "image/svg+xml"));
-  update();
-}
-
-function renderLinkedIn() {
-  renderShell(TOOL_META.linkedin, `
-    <div class="panel">
-      <div class="field"><label for="linkedText">Post text</label><textarea id="linkedText">Frankly Lab is back as a practical shelf: small tools, local games and a visible registry of what exists, what is gated and what should not be published by accident.</textarea></div>
-      <div class="actions">
-        <button class="button" type="button" id="copyLinkedPreview">Copy preview</button>
-        <button class="button secondary" type="button" id="clearLinked">Clear</button>
-      </div>
-      <div class="copy-toast" id="linkedToast"></div>
-    </div>
-  `, `
-    <div class="panel">
-      <h2>Preview</h2>
-      <div class="meter"><span id="linkedMeter"></span></div>
-      <p class="muted" id="linkedStats"></p>
-      <pre class="result" id="linkedPreview"></pre>
-    </div>
-  `);
-  const update = () => {
-    const value = $("#linkedText").value;
-    const firstBreak = value.split(/\n+/).find(Boolean) || "";
-    const preview = value.length > 280 ? `${value.slice(0, 280).trim()}... see more` : value;
-    $("#linkedPreview").textContent = preview;
-    $("#linkedStats").textContent = `${value.length} characters. First line: ${firstBreak.length} characters.`;
-    $("#linkedMeter").style.width = `${Math.min(100, Math.round((value.length / 1300) * 100))}%`;
-  };
-  $("#linkedText").addEventListener("input", update);
-  $("#copyLinkedPreview").addEventListener("click", () => copyText($("#linkedPreview").textContent, "#linkedToast"));
-  $("#clearLinked").addEventListener("click", () => {
-    $("#linkedText").value = "";
-    update();
-  });
   update();
 }
 
@@ -1041,8 +1000,6 @@ const RENDERERS = {
   "business-card": renderBusinessCard,
   dictionary: renderDictionary,
   "qr-link": renderQrLink,
-  linkedin: renderLinkedIn,
-  "linkedin-checker": renderLinkedIn,
   "image-resizer": renderImageResizer,
   "drop-protection": renderDropProtection,
   "decision-chicken": renderDecisionChicken,

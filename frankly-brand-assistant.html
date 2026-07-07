@@ -3,9 +3,94 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Brand Assistant | Frankly Lab</title>
-<link rel="stylesheet" href="frankly-lab-tools.css">
+<title>Frankly — Brand Assistant</title>
+<link rel="preconnect" href="https://api.fontshare.com" crossorigin>
+<link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;font-family:'Switzer',-apple-system,'Segoe UI',sans-serif;color:#111111;
+    background:radial-gradient(1200px 600px at 75% -10%,#FFE4EF,#F5F4F1 45%)}
+  .wrap{max-width:760px;margin:0 auto;padding:40px 24px 80px}
+  .back{display:inline-block;color:#7a5563;text-decoration:none;font-size:14px;margin-bottom:22px}
+  .back:hover{color:#2D0011}
+  .eyebrow{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:#b06;font-weight:600}
+  h1{font-size:34px;margin:6px 0 0;letter-spacing:-.6px}
+  .lede{color:#7a5563;font-size:16px;margin:8px 0 22px;max-width:60ch}
+  .search{width:100%;padding:15px 18px;border:1.5px solid #f0d6e0;border-radius:14px;font-size:16px;
+    font-family:inherit;background:#fff;margin-bottom:14px}
+  .search:focus{outline:none;border-color:#FFACCA}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:8px}
+  .chip{border:1px solid #f0d6e0;background:#fff;color:#7a5563;border-radius:999px;padding:7px 14px;
+    font-size:13px;font-family:inherit;cursor:pointer}
+  .chip.on{background:#2D0011;color:#fff;border-color:#2D0011}
+  .count{font-size:12px;color:#b3a7ac;margin:14px 2px}
+  .rule{background:#fff;border-radius:16px;padding:18px 20px;margin-bottom:12px;box-shadow:0 6px 20px rgba(45,0,17,.05)}
+  .rcat{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:#b06;font-weight:600;margin-bottom:6px}
+  .rq{font-weight:700;font-size:16px;margin:0 0 6px;letter-spacing:-.2px}
+  .ra{color:#4a3a40;font-size:15px;line-height:1.5;margin:0}
+  .ra code{background:#F3DEE4;border-radius:5px;padding:1px 6px;font-size:13px}
+  .empty{background:#fff;border-radius:16px;padding:26px;color:#7a5563;text-align:center}
+  .note{margin-top:22px;font-size:12px;color:#b3a7ac;text-align:center;line-height:1.5}
+</style>
 </head>
-<body data-tool="brand-assistant"><div id="app"></div><script src="frankly-lab-tools.js"></script></body>
+<body>
+<div class="wrap">
+  <a class="back" href="index.html">← Frankly Lab</a>
+  <div class="eyebrow">Internal · Brand</div>
+  <h1>Brand Assistant</h1>
+  <p class="lede">Ask what you can and can't do — logo, colours, type, voice and the hard rules. Answers come straight from the rules, no guessing.</p>
+  <input class="search" id="search" type="text" placeholder="Search… e.g. “logo green”, “pink hex”, “fonts”, “fear”">
+  <div class="chips" id="chips"></div>
+  <div class="count" id="count"></div>
+  <div id="list"></div>
+  <p class="note">Source: Frankly Brand Reference (the fast lane). Canonical wording lives in Notion + the official Brand Guide. Not sure if something's approved? Ask Jonas.</p>
+</div>
+<script>
+const RULES=[
+ {cat:"Logo",q:"What colour is the Frankly wordmark / logo?",a:"Off Black, hex <code>#111111</code>. The wordmark is always Off Black on a transparent background and works on white, limestone and pink."},
+ {cat:"Logo",q:"Can I use the logo in green, blue, red or any other colour?",a:"No. The wordmark is only ever Off Black <code>#111111</code>. The documented palette is the complete approved set. For a white / negative version on dark backgrounds, ask Jonas."},
+ {cat:"Logo",q:"Can the logo be recoloured, distorted or given effects?",a:"No. The off-black wordmark is never recoloured, distorted or given effects."},
+ {cat:"Logo",q:"What size and format is the logo file?",a:"PNG at 865×220, off-black wordmark on a transparent background. White / negative and SVG versions don't exist yet — request them from Jonas."},
+ {cat:"Colours",q:"What are the official pink colours and hex codes?",a:"Pale Calm <code>#FFD3E3</code> (primary), Deep Calm <code>#FFACCA</code> (secondary), Dirty Pink <code>#F3DEE4</code> (tertiary, UI / graphic only)."},
+ {cat:"Colours",q:"What are the base / neutral colours?",a:"Limestone <code>#F5F4F1</code> (primary), Soft Limestone <code>#F0EEE9</code>, Aged Limestone <code>#ECE9E4</code>, and Frankly White <code>#FFFFFF</code>."},
+ {cat:"Colours",q:"What are the ink / contrast colours?",a:"Off Black <code>#111111</code> (primary ink) and Grounded <code>#2D0011</code> (contrast / Bordeaux)."},
+ {cat:"Colours",q:"Can I use a muted or dusty pink in imagery?",a:"No. In imagery pink is always clear, warm and sweet-leaning — never dusty, muted or desaturated. Dirty Pink <code>#F3DEE4</code> is a UI / graphic tertiary only, never for imagery."},
+ {cat:"Colours",q:"What does pink signify, and how should it appear in a photo?",a:"Pink is a de-escalation colour — care, calm, reassurance. In scenes it appears as substantial anchor objects (a full wall, a cargo bike), not scattered small props. Limestone is the stable neutral foundation."},
+ {cat:"Type",q:"Which fonts does Frankly use?",a:"Almarena Neue Display for headlines and hero copy; Switzer Variable (Light–Black) for body copy and UI."},
+ {cat:"Type",q:"Can I use Almarena for body text?",a:"No. Almarena Neue Display is headlines / hero only. Body copy and UI run Switzer."},
+ {cat:"Type",q:"What are the font fallbacks?",a:"Almarena → Spartan (programmatic; swap manually after), Arial (email). Switzer → Inter (programmatic; swap after), Arial (email). Neither loads via the Figma API."},
+ {cat:"Voice",q:"What's the brand voice?",a:"Empowerment and confidence, never fear or anxiety. Plain language. Core line: “Et godt liv skal ikke leves forsigtigt.” Tagline: “Everyday life, empowered.” / “Confidence that follows you home.”"},
+ {cat:"Voice",q:"Can I use fear-framing like “don't risk losing…”?",a:"Never. The voice is empowerment. Reframe to what the customer gains: living freely, fully covered."},
+ {cat:"Voice",q:"What language are LinkedIn posts and pitch decks written in?",a:"Always English, regardless of partner or market. (Hard rule.)"},
+ {cat:"Visuals",q:"Can the ribbon form a figure-eight or infinity shape?",a:"No — hard rule. A figure-eight reads as the breast-cancer awareness symbol. The ribbon flows in from one frame edge and exits beyond another, no visible ends inside the frame, orbiting products without wrapping tightly."},
+ {cat:"Visuals",q:"Can I put a ribbon in a lifestyle photo?",a:"No. Ribbons belong to the 3D / sculptural route only — never in real-life lifestyle scenes."},
+ {cat:"Prompts",q:"Can I write “Frankly pink” or “the ribbon” in an external AI prompt?",a:"No. External tools (Flow, Veo, Nano Banana) don't know our internal language. Use physical descriptions + hex, e.g. “soft warm pink, hex #FFD3E3, never dusty.”"},
+ {cat:"Prompts",q:"Can I use “golden hour” in an image prompt?",a:"Avoid it — it produces a fake orange glow. Describe the sky concretely: structured cumulus, pink-peach lower edges, sun fully out of frame."},
+ {cat:"Prompts",q:"What film look should image prompts specify?",a:"Kodak Portra 400 grain, warm amber tones, brown shadows — never cool or blue."},
+ {cat:"Prompts",q:"What's the six-block image-prompt structure?",a:"Subject → Composition → Action → Location → Style & Mood → Tech Specs. Aspect ratio goes in Tech Specs, never mid-prompt. A minimal prompt + one targeted nudge beats over-specification."},
+ {cat:"Numbers",q:"Can I quote our pitch numbers in a post or deck?",a:"Only locked, approved numbers — never invent or extrapolate. If unsure whether a number is approved, ask Jonas (who routes to Alexander / Nicolai)."},
+ {cat:"Numbers",q:"Where does the canonical brand source live?",a:"In Notion (Rules & Brand Context) and the official Brand Guide. The Brand Reference is the fast lane, not the source of truth."}
+];
+let cats=["All"]; RULES.forEach(r=>{if(cats.indexOf(r.cat)<0)cats.push(r.cat);});
+let activeCat="All", q="";
+const list=document.getElementById('list'), countEl=document.getElementById('count');
+const chipsEl=document.getElementById('chips'), search=document.getElementById('search');
+
+chipsEl.innerHTML=cats.map(c=>'<button class="chip'+(c==="All"?' on':'')+'" data-c="'+c+'">'+c+'</button>').join('');
+chipsEl.querySelectorAll('.chip').forEach(b=>b.addEventListener('click',()=>{
+  activeCat=b.dataset.c; chipsEl.querySelectorAll('.chip').forEach(x=>x.classList.toggle('on',x===b)); draw();
+}));
+search.addEventListener('input',()=>{q=search.value.toLowerCase().trim();draw();});
+
+function draw(){
+  const items=RULES.filter(r=>(activeCat==="All"||r.cat===activeCat)
+    &&(!q||(r.q+' '+r.a+' '+r.cat).toLowerCase().includes(q)));
+  countEl.textContent=items.length+(items.length===1?' rule':' rules');
+  if(!items.length){list.innerHTML='<div class="empty">Nothing matches — try another word, or ask Jonas.</div>';return;}
+  list.innerHTML=items.map(r=>'<div class="rule"><div class="rcat">'+r.cat+'</div>'
+    +'<p class="rq">'+r.q+'</p><p class="ra">'+r.a+'</p></div>').join('');
+}
+draw();
+</script>
+</body>
 </html>

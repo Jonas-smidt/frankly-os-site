@@ -11,14 +11,12 @@ Disallow: /control-cockpit.html
 Disallow: /observatory.html
 Disallow: /studio.html
 Disallow: /onboarding.html
-Disallow: /frankly-daekningsoverblik.html
 Disallow: /frankly-signature-generator.html
 Disallow: /frankly-brand-reference.html
 Disallow: /frankly-brand-assistant.html
 Disallow: /frankly-business-card.html
 Disallow: /frankly-dictionary.html
 Disallow: /frankly-qr-link.html
-Disallow: /frankly-linkedin-checker.html
 Disallow: /frankly-image-resizer.html
 Disallow: /frankly-drop-protection.html
 Disallow: /the-decision-chicken.html

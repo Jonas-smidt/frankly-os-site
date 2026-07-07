@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Frankly Lab</title>
-<meta name="description" content="Frankly Lab upload bundle for gated HTML tests, prototypes and a visible local-only workbench index.">
+<meta name="description" content="Frankly Lab upload bundle for gated HTML tests, prototypes, the online coverage overview, approved Start here preview and noindex blog draft previews.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
@@ -27,7 +27,8 @@
     --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
   }
   *{box-sizing:border-box}
-  html,body{margin:0}
+  *::before,*::after{box-sizing:border-box}
+  html,body{margin:0;overflow-x:hidden}
   body{background:var(--limestone);color:var(--ink);font-family:var(--font);line-height:1.5}
   a{color:inherit}
   .wrap{width:min(1180px,calc(100% - 36px));margin:0 auto}
@@ -67,8 +68,38 @@
   .item h3{font-size:24px;line-height:1.08;margin:18px 0 10px;color:var(--grounded)}
   .item p{margin:0;color:#604A52}
   .item strong{margin-top:auto;padding-top:18px;font-size:14px;color:var(--grounded)}
+  .item[data-art]{position:relative;overflow:hidden;min-height:318px;padding:0;--thumb:linear-gradient(135deg,rgba(255,211,227,.86),rgba(255,255,255,.72)),var(--pink-wash)}
+  .item[data-art]::before{content:"";display:block;height:128px;border-bottom:1px solid var(--edge);background:var(--thumb)}
+  .item[data-art]::after{content:attr(data-mark);position:absolute;top:74px;left:18px;color:rgba(45,0,17,.82);font-size:40px;font-weight:900;line-height:.9;letter-spacing:0}
+  .item[data-art] small{margin:16px 18px 0}
+  .item[data-art] h3{margin:16px 18px 10px}
+  .item[data-art] p{margin:0 18px}
+  .item[data-art] strong{margin:0 18px 18px;padding-top:18px}
+  .item[data-art="signature"],.ledger-row[data-art="signature"]{--thumb:linear-gradient(rgba(45,0,17,.18) 0 0) 34px 40px/118px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 34px 58px/88px 2px no-repeat,linear-gradient(90deg,var(--pink-deep),var(--pink)) 34px 84px/112px 7px no-repeat,linear-gradient(135deg,#fff,var(--pink-wash))}
+  .item[data-art="brand-reference"],.ledger-row[data-art="brand-reference"]{--thumb:linear-gradient(var(--grounded) 0 0) 26px 28px/42px 42px no-repeat,linear-gradient(var(--pink-deep) 0 0) 76px 28px/42px 42px no-repeat,linear-gradient(var(--limestone-soft) 0 0) 126px 28px/42px 42px no-repeat,linear-gradient(rgba(45,0,17,.16) 0 0) 28px 88px/138px 2px no-repeat,#fff}
+  .item[data-art="brand-assistant"],.ledger-row[data-art="brand-assistant"]{--thumb:linear-gradient(135deg,var(--pink),#fff) 28px 26px/120px 34px no-repeat,linear-gradient(135deg,#fff,var(--limestone-soft)) 54px 72px/126px 34px no-repeat,linear-gradient(rgba(45,0,17,.22) 0 0) 42px 42px/58px 2px no-repeat,linear-gradient(rgba(45,0,17,.16) 0 0) 68px 88px/72px 2px no-repeat,var(--pink-wash)}
+  .item[data-art="business-card"],.ledger-row[data-art="business-card"]{--thumb:linear-gradient(135deg,#fff,var(--pink)) 28px 26px/154px 82px no-repeat,repeating-linear-gradient(90deg,var(--grounded) 0 8px,transparent 8px 14px) 124px 46px/40px 40px no-repeat,linear-gradient(rgba(45,0,17,.22) 0 0) 44px 50px/56px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 44px 66px/40px 2px no-repeat,var(--limestone-soft)}
+  .item[data-art="dictionary"],.ledger-row[data-art="dictionary"]{--thumb:linear-gradient(#fff 0 0) 36px 22px/112px 88px no-repeat,linear-gradient(var(--pink) 0 0) 52px 38px/42px 10px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 52px 62px/74px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 52px 78px/58px 2px no-repeat,linear-gradient(90deg,var(--pink-deep) 0 8px,transparent 8px 100%) 148px 32px/18px 62px no-repeat,var(--limestone-soft)}
+  .item[data-art="qr"],.ledger-row[data-art="qr"]{--thumb:repeating-linear-gradient(90deg,var(--grounded) 0 10px,transparent 10px 20px) 44px 34px/84px 84px no-repeat,repeating-linear-gradient(0deg,rgba(45,0,17,.8) 0 10px,transparent 10px 20px) 44px 34px/84px 84px no-repeat,linear-gradient(#fff 0 0) 34px 24px/104px 104px no-repeat,linear-gradient(135deg,var(--pink),#fff)}
+  .item[data-art="image"],.ledger-row[data-art="image"]{--thumb:linear-gradient(135deg,#CCD8F0,var(--pink)) 26px 24px/132px 82px no-repeat,linear-gradient(90deg,transparent 16px,rgba(255,255,255,.7) 16px 18px,transparent 18px) 42px 38px/86px 52px no-repeat,linear-gradient(0deg,transparent 16px,rgba(255,255,255,.7) 16px 18px,transparent 18px) 42px 38px/86px 52px no-repeat,linear-gradient(rgba(45,0,17,.64) 0 0) 42px 90px/86px 3px no-repeat,#fff}
+  .item[data-art="drop"],.ledger-row[data-art="drop"]{--thumb:linear-gradient(var(--pink-deep) 0 0) 42px 28px/20px 20px no-repeat,linear-gradient(var(--blue) 0 0) 96px 48px/18px 18px no-repeat,linear-gradient(var(--warn) 0 0) 140px 30px/22px 22px no-repeat,linear-gradient(var(--grounded) 0 0) 54px 100px/112px 8px no-repeat,linear-gradient(135deg,#fff,var(--pink-wash))}
+  .item[data-art="bmw"],.ledger-row[data-art="bmw"]{--thumb:linear-gradient(90deg,transparent 48%,rgba(255,255,255,.92) 48% 52%,transparent 52%) 0 0/100% 100%,linear-gradient(135deg,var(--grounded),#604A52) 32px 20px/126px 96px no-repeat,linear-gradient(var(--pink-deep) 0 0) 82px 70px/34px 18px no-repeat,linear-gradient(135deg,var(--ok),#fff)}
+  .item[data-art="decision"],.ledger-row[data-art="decision"]{--thumb:conic-gradient(from -20deg,var(--pink) 0 28%,#fff 28% 54%,var(--blue) 54% 76%,var(--warn) 76% 100%) 52px 24px/86px 86px no-repeat,linear-gradient(var(--grounded) 0 0) 94px 28px/4px 80px no-repeat,linear-gradient(135deg,#fff,var(--limestone-soft))}
+  .item[data-art="quiz"],.ledger-row[data-art="quiz"]{--thumb:linear-gradient(#fff 0 0) 30px 28px/132px 74px no-repeat,linear-gradient(var(--ok) 0 0) 46px 74px/42px 12px no-repeat,linear-gradient(var(--pink) 0 0) 96px 74px/42px 12px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 48px 48px/94px 2px no-repeat,var(--limestone-soft)}
+  .item[data-art="onboarding"],.ledger-row[data-art="onboarding"]{--thumb:linear-gradient(var(--ok) 0 0) 38px 34px/16px 16px no-repeat,linear-gradient(var(--ok) 0 0) 38px 64px/16px 16px no-repeat,linear-gradient(var(--pink) 0 0) 38px 94px/16px 16px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 66px 42px/96px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 66px 72px/76px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 66px 102px/88px 2px no-repeat,#fff}
+  .item[data-art="coverage"],.ledger-row[data-art="coverage"]{--thumb:linear-gradient(var(--pink) 0 0) 34px 32px/38px 76px no-repeat,linear-gradient(var(--ok) 0 0) 82px 52px/38px 56px no-repeat,linear-gradient(var(--blue) 0 0) 130px 42px/38px 66px no-repeat,linear-gradient(rgba(45,0,17,.2) 0 0) 30px 110px/142px 2px no-repeat,#fff}
+  .item[data-art="blog"],.ledger-row[data-art="blog"]{--thumb:linear-gradient(#fff 0 0) 46px 22px/110px 92px no-repeat,linear-gradient(var(--pink) 0 0) 62px 40px/70px 10px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 62px 66px/76px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 62px 80px/56px 2px no-repeat,linear-gradient(135deg,var(--limestone-soft),var(--pink-wash))}
+  .item[data-art="os"],.ledger-row[data-art="os"]{--thumb:linear-gradient(var(--grounded) 0 0) 40px 34px/26px 26px no-repeat,linear-gradient(var(--pink-deep) 0 0) 92px 70px/26px 26px no-repeat,linear-gradient(var(--blue) 0 0) 146px 34px/26px 26px no-repeat,linear-gradient(35deg,transparent 49%,rgba(45,0,17,.24) 49% 51%,transparent 51%) 50px 48px/112px 52px no-repeat,#fff}
+  .item[data-art="studio"],.ledger-row[data-art="studio"]{--thumb:linear-gradient(var(--grounded) 0 0) 28px 26px/138px 82px no-repeat,linear-gradient(var(--pink) 0 0) 46px 46px/72px 6px no-repeat,linear-gradient(rgba(245,244,241,.38) 0 0) 46px 66px/96px 4px no-repeat,linear-gradient(rgba(245,244,241,.28) 0 0) 46px 82px/54px 4px no-repeat,var(--pink-wash)}
+  .item[data-art="cockpit"],.ledger-row[data-art="cockpit"]{--thumb:radial-gradient(circle at 72px 70px,transparent 0 23px,var(--grounded) 24px 26px,transparent 27px),radial-gradient(circle at 128px 70px,transparent 0 23px,var(--pink-deep) 24px 26px,transparent 27px),linear-gradient(var(--grounded) 0 0) 42px 108px/116px 4px no-repeat,#fff}
+  .item[data-art="observatory"],.ledger-row[data-art="observatory"]{--thumb:radial-gradient(circle at 48px 42px,var(--grounded) 0 6px,transparent 7px),radial-gradient(circle at 104px 72px,var(--pink-deep) 0 7px,transparent 8px),radial-gradient(circle at 154px 42px,var(--blue) 0 6px,transparent 7px),linear-gradient(28deg,transparent 49%,rgba(45,0,17,.22) 49% 51%,transparent 51%) 48px 42px/108px 34px no-repeat,linear-gradient(150deg,transparent 49%,rgba(45,0,17,.18) 49% 51%,transparent 51%) 104px 42px/54px 34px no-repeat,#fff}
+  .item[data-art="brief"],.ledger-row[data-art="brief"]{--thumb:linear-gradient(#fff 0 0) 36px 30px/112px 30px no-repeat,linear-gradient(var(--pink) 0 0) 54px 72px/112px 30px no-repeat,linear-gradient(rgba(45,0,17,.2) 0 0) 54px 42px/62px 2px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 72px 84px/72px 2px no-repeat,var(--limestone-soft)}
+  .item[data-art="mission"],.ledger-row[data-art="mission"]{--thumb:linear-gradient(var(--ok) 0 0) 34px 34px/26px 12px no-repeat,linear-gradient(var(--pink) 0 0) 34px 62px/26px 12px no-repeat,linear-gradient(var(--blue) 0 0) 34px 90px/26px 12px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 72px 38px/96px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 72px 66px/84px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 72px 94px/104px 2px no-repeat,#fff}
+  .item[data-art="progress"],.ledger-row[data-art="progress"]{--thumb:linear-gradient(var(--pink-deep) 0 0) 38px 40px/122px 9px no-repeat,linear-gradient(var(--ok) 0 0) 38px 66px/86px 9px no-repeat,linear-gradient(var(--blue) 0 0) 38px 92px/108px 9px no-repeat,linear-gradient(rgba(45,0,17,.16) 0 0) 38px 112px/136px 2px no-repeat,var(--limestone-soft)}
   .ledger{border-top:1px solid var(--edge)}
   .ledger-row{display:grid;grid-template-columns:150px minmax(190px,.55fr) minmax(0,1fr) 150px;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--edge)}
+  .ledger-row[data-art]{grid-template-columns:70px 118px minmax(190px,.55fr) minmax(0,1fr) 150px}
+  .ledger-row[data-art]::before{content:attr(data-mark);display:flex;align-items:flex-end;justify-content:flex-start;width:58px;height:58px;border:1px solid var(--edge);border-radius:8px;padding:8px;background:var(--thumb);color:rgba(45,0,17,.82);font-size:19px;font-weight:900;line-height:1}
   .ledger-row span{font-size:11px;font-weight:900;text-transform:uppercase;color:var(--grey)}
   .ledger-row b{display:block;color:var(--grounded);font-size:18px;line-height:1.14}
   .ledger-row p{margin:4px 0 0;color:var(--grey);font-size:14px}
@@ -91,8 +122,11 @@
     .hero{grid-template-columns:1fr;padding-top:28px}
     .grid{grid-template-columns:1fr}
     .item{min-height:0}
+    .item[data-art]{min-height:292px}
     .section-head{align-items:flex-start;flex-direction:column}
     .ledger-row{grid-template-columns:1fr;gap:6px}
+    .ledger-row[data-art]{grid-template-columns:1fr}
+    .ledger-row[data-art]::before{width:100%;height:92px}
     .tool-row{grid-template-columns:1fr;gap:6px}
     .state{justify-self:start}
   }
@@ -126,7 +160,7 @@
       <div>
         <p class="kicker">Gated upload bundle</p>
         <h1>Lab is the shelf again.</h1>
-        <p>Frankly Lab online shows the practical tools, games and safe test lane. The OS machine itself still stays local.</p>
+        <p>Frankly Lab online shows the practical tools, games and approved preview lane. The OS machine itself still stays local.</p>
         <div class="hero-actions">
           <a class="button" href="#live">Open live tools</a>
           <a class="button secondary" href="#local-only">See gated work</a>
@@ -135,11 +169,11 @@
       <aside class="status-panel" aria-label="Bundle boundary">
         <span>Boundary</span>
         <b>Lab visible. OS local.</b>
-        <p>The upload bundle carries the Lab tools and games. Studio, Mission Control, source feeds, OS machine pages and product/legal drafts stay local-only.</p>
+        <p>The upload bundle carries Lab tools, games, the online coverage overview, Start here preview and gated/noindex blog drafts. Studio, Mission Control, source feeds and OS machine pages stay local-only.</p>
         <div class="metrics" aria-label="Lab bundle metrics">
-          <div><strong>21</strong><small>registry entries</small></div>
-          <div><strong>21</strong><small>local files</small></div>
-          <div><strong>12</strong><small>online tools</small></div>
+          <div><strong>22</strong><small>visible rows</small></div>
+          <div><strong>1</strong><small>coverage page</small></div>
+          <div><strong>3</strong><small>noindex previews</small></div>
         </div>
       </aside>
     </section>
@@ -147,218 +181,236 @@
     <section class="wrap band" id="live">
       <div class="section-head">
         <h2>Live in the online Lab</h2>
-        <p>These tool and game pages are copied into the upload bundle. OS machine surfaces remain local-only.</p>
+        <p>These tool, game and approved preview pages are copied into the upload bundle. OS machine surfaces remain local-only.</p>
       </div>
       <div class="grid">
-        <a class="item live" href="frankly-signature-generator.html">
+        <a class="item live" href="frankly-signature-generator.html" data-art="signature" data-mark="ES">
           <small>Online tool</small>
           <h3>Email signature</h3>
           <p>Add details, preview the footer and copy HTML or plain text.</p>
           <strong>Open tool</strong>
         </a>
-        <a class="item live" href="frankly-brand-reference.html">
+        <a class="item live" href="frankly-brand-reference.html" data-art="brand-reference" data-mark="BR">
           <small>Online tool</small>
           <h3>Brand Reference</h3>
           <p>Colors, CSS tokens and tone rules for quick Frankly checks.</p>
           <strong>Open tool</strong>
         </a>
-        <a class="item live" href="frankly-brand-assistant.html">
+        <a class="item live" href="frankly-brand-assistant.html" data-art="brand-assistant" data-mark="BA">
           <small>Online tool</small>
           <h3>Brand Assistant</h3>
           <p>Search recurring brand answers locally without any AI runtime.</p>
           <strong>Open tool</strong>
         </a>
-        <a class="item live" href="frankly-business-card.html">
+        <a class="item live" href="frankly-business-card.html" data-art="business-card" data-mark="BC">
           <small>Online tool</small>
           <h3>Business card</h3>
           <p>Build a meeting card with contact details, QR and vCard output.</p>
           <strong>Open tool</strong>
         </a>
-        <a class="item live" href="frankly-dictionary.html">
+        <a class="item live" href="frankly-dictionary.html" data-art="dictionary" data-mark="DI">
           <small>Online tool</small>
           <h3>Dictionary</h3>
           <p>Plain-language working definitions for common internal terms.</p>
           <strong>Open tool</strong>
         </a>
-        <a class="item live" href="frankly-qr-link.html">
+        <a class="item live" href="frankly-qr-link.html" data-art="qr" data-mark="QR">
           <small>Online tool</small>
           <h3>QR link</h3>
           <p>Turn a URL into a local SVG QR code for decks and signs.</p>
           <strong>Open tool</strong>
         </a>
-        <a class="item live" href="frankly-linkedin-checker.html">
-          <small>Online tool</small>
-          <h3>LinkedIn checker</h3>
-          <p>Preview the first lines and rhythm of a LinkedIn post.</p>
-          <strong>Open tool</strong>
-        </a>
-        <a class="item live" href="frankly-image-resizer.html">
+        <a class="item live" href="frankly-image-resizer.html" data-art="image" data-mark="IR">
           <small>Online tool</small>
           <h3>Image resizer</h3>
           <p>Resize local images to useful social and presentation formats.</p>
           <strong>Open tool</strong>
         </a>
-        <a class="item live" href="frankly-drop-protection.html">
+        <a class="item live" href="frankly-drop-protection.html" data-art="drop" data-mark="DP">
           <small>Online game</small>
           <h3>Drop Protection</h3>
           <p>Catch the falling objects with a little browser-game coverage bar.</p>
           <strong>Play</strong>
         </a>
-        <a class="item live" href="franklys-bmw.html">
+        <a class="item live" href="franklys-bmw.html" data-art="bmw" data-mark="BM">
           <small>Online game</small>
           <h3>Frankly's BMW</h3>
           <p>A browser game prototype for testing interactive HTML, responsive canvas behavior and Frankly tone.</p>
           <strong>Play</strong>
         </a>
-        <a class="item live" href="the-decision-chicken.html">
+        <a class="item live" href="the-decision-chicken.html" data-art="decision" data-mark="DC">
           <small>Online toy</small>
           <h3>Decision Chicken</h3>
           <p>Pick from small options when the main job is moving forward.</p>
           <strong>Open toy</strong>
         </a>
-        <a class="item live" href="frankly-quiz.html">
+        <a class="item live" href="frankly-quiz.html" data-art="quiz" data-mark="QZ">
           <small>Online quiz</small>
           <h3>Do you know Frankly?</h3>
           <p>A short brand quiz for tone, gates and internal basics.</p>
           <strong>Take quiz</strong>
+        </a>
+        <a class="item draft" href="onboarding.html" data-art="onboarding" data-mark="ST">
+          <small>Gated preview</small>
+          <h3>Start here</h3>
+          <p>The onboarding surface is copied online as a gated/noindex preview.</p>
+          <strong>Open preview</strong>
+        </a>
+        <a class="item live" href="frankly-daekningsoverblik.html" data-art="coverage" data-mark="CO">
+          <small>Online page</small>
+          <h3>Coverage overview</h3>
+          <p>Approved for the online Lab bundle; still not a legal source.</p>
+          <strong>Open page</strong>
+        </a>
+        <a class="item draft" href="blog/index.html" data-art="blog" data-mark="BL">
+          <small>Noindex draft</small>
+          <h3>Blog drafts</h3>
+          <p>The draft shelf is copied online for gated review and kept out of search indexing.</p>
+          <strong>Open drafts</strong>
+        </a>
+        <a class="item draft" href="blog/cykelforsikring.html" data-art="blog" data-mark="CY">
+          <small>Noindex draft</small>
+          <h3>Cykelforsikring draft</h3>
+          <p>Source-checked draft article copied online as a noindex preview.</p>
+          <strong>Open draft</strong>
         </a>
       </div>
     </section>
 
     <section class="wrap band" id="registry">
       <div class="section-head">
-        <h2>Tool and game registry</h2>
-        <p>This is the actual Lab shelf. The tools and games are online; the OS machine and product/legal surfaces stay local or locked.</p>
+        <h2>Tool, game and preview registry</h2>
+        <p>This is the actual Lab shelf. The tools, games, coverage page and approved preview pages are online; the OS machine and unapproved product/legal surfaces stay local or locked.</p>
       </div>
       <div class="ledger" aria-label="Frankly Lab tool and game registry">
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="bmw" data-mark="BM">
           <span>Uploaded</span>
           <div><b>Frankly's BMW</b><p>Play / browser game</p></div>
           <p>Standalone HTML game copied into the upload bundle.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
-          <span>Local file</span>
+        <div class="ledger-row" data-art="onboarding" data-mark="ST">
+          <span>Uploaded</span>
           <div><b>Start here</b><p>Daily / onboarding</p></div>
-          <p>Internal first-run surface for brand, products, Lab and OS orientation.</p>
-          <em class="state">Local only</em>
+          <p>Approved for the gated upload bundle as a noindex onboarding preview.</p>
+          <em class="state draft">Gated preview</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="brief" data-mark="AB">
           <span>Local file</span>
           <div><b>Agent Brief Builder</b><p>OS / prompt tool</p></div>
           <p>Turns broad goals into larger mission prompts with context, gates and validation.</p>
           <em class="state">Local only</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="os" data-mark="OS">
           <span>Local file</span>
           <div><b>Frankly OS</b><p>OS / system map</p></div>
           <p>Visual operating-system map for routes, loop, gates, learning and next choices.</p>
           <em class="state locked">OS local</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="studio" data-mark="ST">
           <span>Local file</span>
           <div><b>Studio</b><p>OS / launch shell</p></div>
           <p>Command palette, registry-fed run memory, validation, Drive queue and Claude task packets.</p>
           <em class="state locked">OS local</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="cockpit" data-mark="CC">
           <span>Local file</span>
           <div><b>Control Cockpit</b><p>OS / control readout</p></div>
           <p>Current state, gates, Claude lane, run history and Drive continuity.</p>
           <em class="state locked">OS local</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="observatory" data-mark="OB">
           <span>Local file</span>
           <div><b>Observatory</b><p>OS / visual machine</p></div>
           <p>Flight Recorder, Mission Simulator, Launch Packet, Mission Theatre and Future Mode.</p>
           <em class="state locked">OS local</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="mission" data-mark="MC">
           <span>Local file</span>
           <div><b>Mission Control Queue</b><p>OS / batch queue</p></div>
           <p>Manual mission batches, returned outputs, review checkpoints and machine-state alignment.</p>
           <em class="state locked">OS local</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="progress" data-mark="PM">
           <span>Local file</span>
           <div><b>Progress Map</b><p>OS / progress view</p></div>
           <p>Shows what has been built, where the machine is, and what the next move is.</p>
           <em class="state locked">OS local</em>
         </div>
-        <div class="ledger-row">
-          <span>Locked file</span>
+        <div class="ledger-row" data-art="coverage" data-mark="CO">
+          <span>Uploaded</span>
           <div><b>Coverage overview</b><p>Daily / product clarity</p></div>
-          <p>Useful internal surface, but public use is product/legal gated while claims work is locked.</p>
-          <em class="state locked">Claims gate</em>
+          <p>Approved for the online Lab bundle and sitemap; not a legal source.</p>
+          <em class="state live">Online page</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="blog" data-mark="BL">
+          <span>Uploaded</span>
+          <div><b>Blog drafts</b><p>Draft / noindex preview</p></div>
+          <p>Approved for the upload bundle as gated/noindex previews, while source-record and claims work remains locked.</p>
+          <em class="state draft">Noindex preview</em>
+        </div>
+        <div class="ledger-row" data-art="signature" data-mark="ES">
           <span>Uploaded</span>
           <div><b>Email signature</b><p>Brand / daily tool</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-signature-generator.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="brand-reference" data-mark="BR">
           <span>Uploaded</span>
           <div><b>Brand Reference</b><p>Brand / reference</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-brand-reference.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="brand-assistant" data-mark="BA">
           <span>Uploaded</span>
           <div><b>Brand Assistant</b><p>Brand / answers</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-brand-assistant.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="business-card" data-mark="BC">
           <span>Uploaded</span>
           <div><b>Business card</b><p>Daily / QR card</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-business-card.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="dictionary" data-mark="DI">
           <span>Uploaded</span>
           <div><b>Dictionary</b><p>Daily / glossary</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-dictionary.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="qr" data-mark="QR">
           <span>Uploaded</span>
           <div><b>QR link</b><p>Daily / generator</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-qr-link.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
-          <span>Uploaded</span>
-          <div><b>LinkedIn checker</b><p>Daily / text check</p></div>
-          <p>Rebuilt and copied into the upload bundle at `frankly-linkedin-checker.html`.</p>
-          <em class="state live">Online file</em>
-        </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="image" data-mark="IR">
           <span>Uploaded</span>
           <div><b>Image resizer</b><p>Daily / image tool</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-image-resizer.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="drop" data-mark="DP">
           <span>Uploaded</span>
           <div><b>Drop Protection</b><p>Play / game</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-drop-protection.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="decision" data-mark="DC">
           <span>Uploaded</span>
           <div><b>Decision Chicken</b><p>Play / decision toy</p></div>
           <p>Rebuilt and copied into the upload bundle at `the-decision-chicken.html`.</p>
           <em class="state live">Online file</em>
         </div>
-        <div class="ledger-row">
+        <div class="ledger-row" data-art="quiz" data-mark="QZ">
           <span>Uploaded</span>
           <div><b>Do you know Frankly?</b><p>Play / quiz</p></div>
           <p>Rebuilt and copied into the upload bundle at `frankly-quiz.html`.</p>
           <em class="state live">Online file</em>
         </div>
       </div>
-      <p class="source-note">Recovery note: the old source files were absent from the current tree, so these eleven entries were rebuilt from the Lab registry and old browser-QA evidence. They are now in the upload allowlist as gated Lab tools, while OS machine surfaces remain excluded.</p>
+      <p class="source-note">Recovery note: ten historical Lab tools remain in the upload allowlist as gated Lab tools after LinkedIn checker was removed from the online shelf. Coverage overview is allowlisted as an online page; Start here and blog drafts are allowlisted as noindex previews, while OS machine surfaces remain excluded.</p>
     </section>
 
     <section class="wrap band" id="workbench">
@@ -367,40 +419,40 @@
         <p>The short shelf view groups the registry into what can be opened online, what remains local, what is locked and what has been rebuilt.</p>
       </div>
       <div class="grid">
-        <article class="item local">
-          <small>Local only</small>
+        <article class="item draft" data-art="onboarding" data-mark="ST">
+          <small>Gated preview</small>
           <h3>Start here</h3>
-          <p>Internal onboarding into brand, product, Lab and OS. Useful, but not a public handbook.</p>
-          <strong>Kept local</strong>
+          <p>Approved for the upload bundle as a noindex onboarding preview. The OS machine itself still stays local.</p>
+          <strong>Online preview</strong>
         </article>
-        <article class="item local">
+        <article class="item local" data-art="brief" data-mark="AB">
           <small>Local only</small>
           <h3>Agent Brief Builder</h3>
           <p>Turns one messy idea into larger chat missions with guardrails, roles and review checkpoints.</p>
           <strong>Kept local</strong>
         </article>
-        <article class="item local">
+        <article class="item local" data-art="dictionary" data-mark="BG">
           <small>Local only</small>
           <h3>Butiksguide</h3>
           <p>Store and onboarding guide assets for internal review. Product-adjacent, so it stays out of upload.</p>
           <strong>Kept local</strong>
         </article>
-        <article class="item locked">
-          <small>Locked</small>
+        <article class="item live" data-art="coverage" data-mark="CO">
+          <small>Online page</small>
           <h3>Coverage overview</h3>
-          <p>Useful internal product clarity surface, but public use needs product/legal approval.</p>
-          <strong>Claims gate</strong>
+          <p>Approved for the upload bundle and sitemap. Product/legal still has the final say before customer-facing reuse.</p>
+          <strong>Online page</strong>
         </article>
-        <article class="item locked">
-          <small>Locked</small>
+        <article class="item draft" data-art="blog" data-mark="BL">
+          <small>Noindex draft</small>
           <h3>Blog drafts</h3>
-          <p>Draft content remains outside the online bundle while claims/product/legal work is locked.</p>
-          <strong>Claims gate</strong>
+          <p>Draft content is copied online behind the Lab gate and kept noindex while publishing review stays separate.</p>
+          <strong>Online preview</strong>
         </article>
-        <article class="item local">
+        <article class="item local" data-art="brand-reference" data-mark="TO">
           <small>Online tools</small>
           <h3>Brand and daily tools</h3>
-          <p>Signature, QR, image, dictionary, LinkedIn, brand helpers, quiz and small games are rebuilt and copied into the upload bundle.</p>
+          <p>Signature, QR, image, dictionary, brand helpers, quiz and small games are restored and copied into the upload bundle.</p>
           <strong>Online in Lab</strong>
         </article>
       </div>
@@ -442,7 +494,7 @@
   </main>
 
   <footer class="wrap note">
-    This online Lab is gated but not treated as security. Keep product/legal drafts, source records, Mission Control, Studio, Observatory, run feeds and customer-facing claims out of the upload bundle until Jonas explicitly reopens that scope.
+    This online Lab is gated but not treated as security. Jonas reopened Coverage overview as an online page and reopened Start here plus blog drafts as preview pages; source records, Mission Control, Studio, Observatory, run feeds, customer-facing claims and all other product/legal work stay out of the upload bundle.
   </footer>
 </body>
 </html>

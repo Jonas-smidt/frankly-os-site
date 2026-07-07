@@ -61,7 +61,7 @@
         </div>
         <div class="lab-engine" aria-label="Frankly Lab workbench">
           <div class="lab-node">
-            <strong id="liveCount">21</strong>
+            <strong id="liveCount">20</strong>
             <span><b>Live tools</b><span>Directly in the browser. No setup.</span></span>
             <small>live</small>
           </div>
@@ -232,7 +232,6 @@ const TOOLS = [
   {name:"Business card", mark:"BC", desc:"A personal QR card surface for meetings, fairs and partner days.", category:"Daily", href:"frankly-business-card.html", status:"live", id:"TOOL_04"},
   {name:"Dictionary", mark:"DI", desc:"Insurance, retail and OS terms rewritten in plain language.", category:"Daily", href:"frankly-dictionary.html", status:"live", id:"TOOL_05"},
   {name:"QR link", mark:"QR", desc:"A link becomes a clean QR code for decks, print, signage and campaigns.", category:"Daily", href:"frankly-qr-link.html", status:"live", id:"TOOL_06"},
-  {name:"LinkedIn checker", mark:"LI", desc:"See what appears before \"see more\", check length and keep the text sharp.", category:"Daily", href:"frankly-linkedin-checker.html", status:"live", id:"TOOL_07"},
   {name:"Image resizer", mark:"IR", desc:"Image in. LinkedIn, Instagram, story and hero formats out. All local.", category:"Daily", href:"frankly-image-resizer.html", status:"live", id:"TOOL_08"},
   {name:"Drop Protection", mark:"DP", desc:"Objects fall. Catch them with the coverage bar and keep the score alive.", category:"Play", href:"frankly-drop-protection.html", status:"live", id:"TOOL_09"},
   {name:"Frankly's BMW", mark:"BM", desc:"Drive nicely through Amager, keep the bike lane clear and watch the premium melt.", category:"Play", href:"franklys-bmw.html", status:"live", id:"TOOL_20"},
@@ -249,6 +248,28 @@ const TOOLS = [
 
 const STATUS = {live:"Live", beta:"Beta", draft:"Draft", soon:"Soon", claude:"Claude"};
 const CATEGORY_ORDER = ["All", "Daily", "Brand", "OS", "Play"];
+const TOOL_VISUALS = {
+  TOOL_01: "signature",
+  TOOL_02: "brand-reference",
+  TOOL_03: "brand-assistant",
+  TOOL_04: "business-card",
+  TOOL_05: "dictionary",
+  TOOL_06: "qr",
+  TOOL_08: "image",
+  TOOL_09: "drop",
+  TOOL_10: "decision",
+  TOOL_11: "os",
+  TOOL_14: "quiz",
+  TOOL_15: "onboarding",
+  TOOL_16: "coverage",
+  TOOL_17: "brief",
+  TOOL_18: "mission",
+  TOOL_19: "progress",
+  TOOL_20: "bmw",
+  TOOL_21: "studio",
+  TOOL_22: "cockpit",
+  TOOL_23: "observatory"
+};
 let activeCategory = "All";
 let query = "";
 
@@ -510,12 +531,13 @@ function renderFilters() {
 
 function toolCard(tool) {
   const status = tool.status || "soon";
+  const visual = TOOL_VISUALS[tool.id] || "lab";
   const canOpen = tool.href && ["live", "beta", "claude"].includes(status);
   const tag = canOpen ? "a" : "article";
   const href = canOpen ? ` href="${esc(tool.href)}"` : "";
   return `
     <${tag} class="tool-card"${href}>
-      <div class="tool-visual">
+      <div class="tool-visual" data-visual="${esc(visual)}">
         <span class="tool-code">${esc(tool.id)}</span>
         <span class="status-pill ${esc(status)}">${esc(STATUS[status] || status)}</span>
         <span class="tool-mark">${esc(tool.mark)}</span>

@@ -1,11 +1,405 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<meta name="robots" content="noindex,nofollow">
-<title>Decision Chicken | Frankly Lab</title>
-<link rel="stylesheet" href="frankly-lab-tools.css">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Decision Chicken — Frankly™</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    /* Frankly canon palette */
+    --pink:#FFD3E3;        /* Pale Calm (primary) */
+    --pink-deep:#FFACCA;   /* Deep Calm (accent) */
+    --pink-dirty:#F3DEE4;  /* Dirty Pink (support) */
+    --limestone:#F5F4F1;   /* Limestone foundation */
+    --grounded:#2D0011;    /* Grounded (dark contrast) */
+    --ink:#2D0011;
+    --beak:#F7B267;        /* warm calm orange */
+    --comb:#FF8FB8;        /* pink comb (no alarm-red) */
+    --shadow:rgba(45,0,17,.14);
+    --disp:"League Spartan","Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+    --body:"Inter",system-ui,-apple-system,"Segoe UI",sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:var(--body);
+    color:var(--ink);
+    background:
+      radial-gradient(1100px 560px at 50% -8%, #FFE6F0 0%, transparent 62%),
+      linear-gradient(180deg,#FAF8F5 0%,var(--limestone) 100%);
+    min-height:100%;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px 16px 40px;
+    overflow-x:hidden;
+  }
+  .game{width:100%;max-width:480px;text-align:center;position:relative}
+
+  /* ---------- brand marks ---------- */
+  .brand{
+    position:absolute;top:-2px;left:2px;
+    font-family:var(--disp);font-weight:700;font-size:15px;letter-spacing:.5px;
+    color:var(--grounded);opacity:.85;
+  }
+  .sound{
+    position:absolute;top:-6px;right:0;
+    background:#fff;border:1.5px solid var(--pink-dirty);border-radius:50%;
+    width:40px;height:40px;font-size:17px;cursor:pointer;color:var(--grounded);
+    box-shadow:0 4px 12px var(--shadow);transition:transform .15s;
+  }
+  .sound:hover{transform:scale(1.08)}
+
+  /* ---------- Header ---------- */
+  header{margin:26px 0 14px}
+  h1{
+    font-family:var(--disp);
+    font-size:clamp(32px,8.5vw,50px);
+    font-weight:800;letter-spacing:-.5px;line-height:.95;
+    color:var(--grounded);
+  }
+  h1 .pink{color:var(--pink-deep)}
+  .tagline{margin-top:10px;font-size:clamp(14px,3.6vw,16px);font-weight:500;color:var(--grounded);opacity:.72}
+
+  /* ---------- Question box ---------- */
+  .ask{margin:20px auto 18px;max-width:420px}
+  .ask label{display:block;font-weight:600;font-size:13.5px;margin-bottom:8px;color:var(--grounded);opacity:.8}
+  #q{
+    width:100%;font-family:var(--body);font-size:16px;font-weight:500;color:var(--ink);
+    padding:14px 18px;border:2px solid #fff;border-radius:16px;
+    background:#fff;box-shadow:0 6px 18px var(--shadow);outline:none;
+    transition:border-color .2s, box-shadow .2s, transform .2s;
+  }
+  #q::placeholder{color:#b9a7af;font-weight:400}
+  #q:focus{border-color:var(--pink-deep);box-shadow:0 8px 22px rgba(255,172,202,.4);transform:translateY(-1px)}
+
+  /* ---------- Cabinet ---------- */
+  .cabinet{
+    position:relative;margin:8px auto 6px;width:min(420px,94%);
+    border-radius:26px;padding:52px 18px 22px;
+    background:linear-gradient(180deg,#FFFFFF 0%,var(--limestone) 100%);
+    box-shadow:0 22px 44px var(--shadow),inset 0 1px 0 #fff,inset 0 0 0 1px rgba(45,0,17,.05);
+  }
+  .cabinet::before{content:"";position:absolute;left:10%;right:10%;bottom:-14px;height:22px;
+    background:radial-gradient(closest-side,var(--shadow),transparent 75%);z-index:-1}
+
+  .drawer{position:relative;border-radius:16px;overflow:hidden;background:#EDE9E3;
+    box-shadow:inset 0 0 0 2px rgba(45,0,17,.06)}
+
+  /* top-down scene */
+  .inside{position:relative;height:230px;display:flex;
+    transform-origin:center top;transform:scaleY(.78);opacity:0;
+    transition:transform .55s cubic-bezier(.2,.9,.3,1.2), opacity .4s ease}
+  .drawer.open .inside{transform:scaleY(1);opacity:1}
+
+  .zone{flex:1;position:relative;display:flex;align-items:flex-start;justify-content:center;
+    padding-top:16px;font-family:var(--disp);font-weight:700;
+    font-size:clamp(30px,9.5vw,48px);letter-spacing:1px;transition:filter .35s, transform .35s}
+  .zone span{opacity:.4;color:var(--grounded)}
+  .zone.no{background:linear-gradient(160deg,#F6F4F0 0%,#EFE9E6 100%)}      /* limestone — calm neutral */
+  .zone.yes{background:linear-gradient(160deg,var(--pink) 0%,#FFC4DC 100%)} /* deep/pale calm pink — warm yes */
+  .zone.yes span{opacity:.55}
+
+  .divider{position:absolute;top:10px;bottom:10px;left:50%;width:0;transform:translateX(-50%);
+    border-left:3px solid rgba(45,0,17,.16);border-radius:3px;z-index:3;pointer-events:none}
+
+  .inside.win-yes .zone.yes{filter:saturate(1.18) brightness(1.03);animation:zonePulse .6s ease both}
+  .inside.win-no  .zone.no{background:linear-gradient(160deg,#FBEAF0 0%,#F3DEE4 100%);animation:zonePulse .6s ease both}
+  .inside.win-yes .zone.no{filter:grayscale(.2) brightness(.99);opacity:.92}
+  .inside.win-no  .zone.yes{filter:saturate(.7) brightness(1.01);opacity:.9}
+  @keyframes zonePulse{0%{transform:scale(1)}40%{transform:scale(1.03)}100%{transform:scale(1)}}
+
+  /* ---------- Chicken (cute, top-down-ish) ---------- */
+  .chicken{position:absolute;top:54%;left:50%;width:122px;height:108px;
+    margin-left:-61px;margin-top:-54px;z-index:4;transform:translateX(0);
+    transition:transform 1.05s cubic-bezier(.45,.05,.25,1)}
+  .facing{width:100%;height:100%;transition:transform .18s ease}
+  .facing.left{transform:scaleX(-1)}
+  .anim{width:100%;height:100%;transform-origin:50% 62%;animation:idle 2.6s ease-in-out infinite}
+  .anim.thinking{animation:think .16s linear infinite}
+  .anim.running{animation:waddle .22s ease-in-out infinite}
+  .anim.cheer{animation:cheer .6s cubic-bezier(.3,1.4,.5,1) both}
+  .chicken svg{width:100%;height:100%;display:block;filter:drop-shadow(0 7px 6px rgba(45,0,17,.16))}
+  @keyframes idle{0%,100%{transform:translateY(0)}50%{transform:translateY(-3px)}}
+  @keyframes think{0%{transform:translateX(-2px) rotate(-4deg)}50%{transform:translateX(2px) rotate(4deg)}100%{transform:translateX(-2px) rotate(-4deg)}}
+  @keyframes waddle{0%,100%{transform:rotate(-9deg) translateY(0)}50%{transform:rotate(9deg) translateY(-6px)}}
+  @keyframes cheer{0%{transform:translateY(0) scale(1)}35%{transform:translateY(-24px) scale(1.07)}65%{transform:translateY(0) scale(1)}82%{transform:translateY(-9px)}100%{transform:translateY(0)}}
+
+  /* ---------- Drawer front (lid) ---------- */
+  .front{position:absolute;inset:0;z-index:6;border-radius:16px;
+    background:linear-gradient(180deg,#FFE2EC 0%,var(--pink) 60%,#FFC8DD 100%);
+    box-shadow:inset 0 2px 0 #fff,inset 0 -8px 18px rgba(45,0,17,.08);
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;
+    transition:transform .55s cubic-bezier(.5,0,.6,1), opacity .5s ease}
+  .drawer.open .front{transform:translateY(118%);opacity:0;pointer-events:none}
+  .handle{width:92px;height:14px;border-radius:10px;
+    background:linear-gradient(180deg,#fff,var(--pink-deep));box-shadow:0 3px 0 rgba(45,0,17,.12),inset 0 1px 1px #fff}
+  .front .plate{font-family:var(--disp);font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--grounded);opacity:.7}
+  .front .hint{font-size:12px;font-weight:500;color:var(--grounded);opacity:.5}
+
+  /* ---------- Frankly Ribbon (draped over the unit) ---------- */
+  .ribbon{position:absolute;top:-12px;left:50%;transform:translateX(-50%);
+    width:50px;height:96px;z-index:7;pointer-events:none}
+
+  /* ---------- Verdict ---------- */
+  .verdict{min-height:78px;margin:18px auto 4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px}
+  .verdict .big{font-family:var(--disp);font-size:clamp(40px,12vw,62px);font-weight:800;line-height:1;letter-spacing:1px;
+    opacity:0;transform:scale(.4) rotate(-6deg)}
+  .verdict.show .big{animation:stamp .5s cubic-bezier(.2,1.5,.4,1) forwards}
+  .verdict .big.yes{color:var(--pink-deep)}
+  .verdict .big.no{color:var(--grounded)}
+  @keyframes stamp{0%{opacity:0;transform:scale(.4) rotate(-6deg)}60%{opacity:1;transform:scale(1.1) rotate(2deg)}100%{opacity:1;transform:scale(1) rotate(0)}}
+  .verdict .q{font-size:14.5px;font-weight:500;font-style:italic;opacity:0;color:var(--grounded);max-width:390px}
+  .verdict.show .q{animation:fadeUp .4s .25s ease forwards}
+  @keyframes fadeUp{from{opacity:0;transform:translateY(6px)}to{opacity:.78;transform:none}}
+
+  /* ---------- Button ---------- */
+  .btn{font-family:var(--disp);font-weight:700;font-size:18px;letter-spacing:.5px;
+    color:var(--grounded);border:none;cursor:pointer;padding:15px 36px;border-radius:50px;margin-top:8px;
+    background:linear-gradient(180deg,#FFC2D9 0%,var(--pink-deep) 100%);
+    box-shadow:0 8px 20px rgba(255,172,202,.55),0 2px 0 rgba(45,0,17,.06);
+    transition:transform .08s, box-shadow .12s, filter .2s}
+  .btn:hover{filter:brightness(1.03)}
+  .btn:active{transform:translateY(3px);box-shadow:0 4px 12px rgba(255,172,202,.5)}
+  .btn:disabled{filter:saturate(.6) brightness(.99);cursor:default;opacity:.85}
+
+  footer{margin-top:20px;font-size:12px;font-weight:500;color:var(--grounded);opacity:.5;line-height:1.5}
+
+  .confetti{position:absolute;width:11px;height:14px;border-radius:2px;top:0;will-change:transform,opacity;pointer-events:none;z-index:5}
+</style>
 </head>
-<body data-tool="decision-chicken"><div id="app"></div><script src="frankly-lab-tools.js"></script></body>
+<body>
+  <main class="game">
+    <div class="brand">Frankly™</div>
+    <button class="sound" id="soundBtn" title="Sound on/off" aria-label="Sound on or off">🔊</button>
+
+    <header>
+      <h1>The Decision <span class="pink">Chicken</span></h1>
+      <p class="tagline">Overthinking it? Let the chicken decide.</p>
+    </header>
+
+    <section class="ask">
+      <label for="q">What are you deciding?</label>
+      <input id="q" type="text" maxlength="120" autocomplete="off" placeholder="Should I order pizza tonight?">
+    </section>
+
+    <div class="cabinet">
+      <!-- Frankly Ribbon draped over the top of the unit -->
+      <div class="ribbon" aria-hidden="true">
+        <svg viewBox="0 0 50 96" xmlns="http://www.w3.org/2000/svg" style="overflow:visible">
+          <defs>
+            <linearGradient id="satinV" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#FFD9E7"/>
+              <stop offset="1" stop-color="#FF9FC2"/>
+            </linearGradient>
+            <filter id="rs" x="-40%" y="-30%" width="180%" height="170%">
+              <feDropShadow dx="0" dy="4" stdDeviation="4" flood-color="#2D0011" flood-opacity="0.16"/>
+            </filter>
+          </defs>
+          <!-- translucent fold turning over the back of the top edge (signals transparency) -->
+          <path d="M6 12 Q25 -8 44 12 L40 22 Q25 6 10 22 Z" fill="#FFE7F0" opacity="0.55"/>
+          <!-- front band of the ribbon, down the lid, with a notched tail -->
+          <path d="M9 16 L41 16 L41 86 L25 76 L9 86 Z" fill="url(#satinV)" filter="url(#rs)"/>
+          <!-- satin sheen highlight -->
+          <path d="M14 17 L20 17 L20 80 L14 84 Z" fill="#fff" opacity="0.45"/>
+        </svg>
+      </div>
+
+      <div class="drawer" id="drawer">
+        <div class="inside" id="inside">
+          <div class="zone no"><span>NO</span></div>
+          <div class="zone yes"><span>YES</span></div>
+          <div class="divider"></div>
+
+          <div class="chicken" id="chicken">
+            <div class="facing" id="facing">
+              <div class="anim" id="anim">
+                <svg viewBox="0 0 122 108" xmlns="http://www.w3.org/2000/svg">
+                  <!-- tail: cute upturned tuft (back/left) -->
+                  <g fill="#FFFEFB" stroke="#ECDFCF" stroke-width="2.4" stroke-linejoin="round">
+                    <path d="M32 64 Q9 62 11 47 Q22 51 33 57 Z"/>
+                    <path d="M32 57 Q11 46 22 33 Q29 41 35 50 Z"/>
+                  </g>
+                  <!-- plump round body -->
+                  <ellipse cx="56" cy="70" rx="41" ry="32" fill="#FFFEFB" stroke="#ECDFCF" stroke-width="2.6"/>
+                  <!-- soft belly shine -->
+                  <ellipse cx="47" cy="76" rx="23" ry="13" fill="#fff" opacity=".5"/>
+                  <!-- little wing -->
+                  <path d="M52 68 Q73 65 81 78 Q66 89 49 82 Q49 73 52 68 Z" fill="#FCE9EF" stroke="#F2D3DF" stroke-width="2.2" stroke-linejoin="round"/>
+                  <path d="M60 72 Q69 73 74 79" fill="none" stroke="#F2D3DF" stroke-width="1.8" stroke-linecap="round"/>
+                  <!-- big round head -->
+                  <circle cx="86" cy="46" r="28" fill="#FFFEFB" stroke="#ECDFCF" stroke-width="2.6"/>
+                  <!-- cute head tuft -->
+                  <path d="M85 17 Q79 4 89 5 Q95 6 90 14" fill="none" stroke="#FFB0CF" stroke-width="3.4" stroke-linecap="round"/>
+                  <circle cx="90.5" cy="5.6" r="2.4" fill="#FFB0CF"/>
+                  <!-- soft pink comb -->
+                  <g fill="#FF8FB8">
+                    <circle cx="75" cy="24" r="5.2"/>
+                    <circle cx="84" cy="21" r="5.8"/>
+                    <circle cx="93" cy="24" r="5.2"/>
+                  </g>
+                  <!-- rosy cheeks -->
+                  <circle cx="75" cy="55" r="7" fill="#FFB3CF" opacity=".85"/>
+                  <circle cx="103" cy="55" r="7" fill="#FFB3CF" opacity=".85"/>
+                  <!-- big sparkly eyes -->
+                  <circle cx="81" cy="45" r="7.6" fill="#2D0011"/>
+                  <circle cx="100" cy="45" r="7.6" fill="#2D0011"/>
+                  <circle cx="83.8" cy="41.6" r="3" fill="#fff"/>
+                  <circle cx="102.8" cy="41.6" r="3" fill="#fff"/>
+                  <circle cx="78.4" cy="48" r="1.5" fill="#fff"/>
+                  <circle cx="97.4" cy="48" r="1.5" fill="#fff"/>
+                  <!-- tiny cute beak -->
+                  <path d="M108 49 Q119 52 108 56 Q105 52 108 49 Z" fill="#F7B267" stroke="#E59A45" stroke-width="1.4" stroke-linejoin="round"/>
+                  <!-- little feet -->
+                  <g stroke="#F7B267" stroke-width="3" stroke-linecap="round" fill="none">
+                    <path d="M49 90 L49 99 M49 99 l-4 5 M49 99 l4 5 M49 99 l0 6"/>
+                    <path d="M65 90 L65 99 M65 99 l-4 5 M65 99 l4 5 M65 99 l0 6"/>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="front" id="front">
+          <div class="plate">The Decision Drawer</div>
+          <div class="handle"></div>
+          <div class="hint">press the button to open</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="verdict" id="verdict" aria-live="polite"></div>
+
+    <button class="btn" id="goBtn">Open the drawer</button>
+
+    <footer>A good life isn't lived carefully. &nbsp;&bull;&nbsp; 50/50 &nbsp;&bull;&nbsp; the chicken's word is final</footer>
+  </main>
+
+<script>
+(function(){
+  "use strict";
+  const $ = id => document.getElementById(id);
+  const drawer=$("drawer"), inside=$("inside"), chicken=$("chicken");
+  const facing=$("facing"), anim=$("anim"), verdict=$("verdict");
+  const goBtn=$("goBtn"), qInput=$("q"), soundBtn=$("soundBtn");
+
+  let busy=false, opened=false, soundOn=true;
+  const sleep = ms => new Promise(r => setTimeout(r, ms));
+
+  /* ---- procedural chicken voice (Web Audio, no external files) ---- */
+  let actx=null, noiseBuf=null;
+  function ac(){ if(!actx){ try{ actx=new (window.AudioContext||window.webkitAudioContext)(); }catch(e){ actx=null; } } if(actx&&actx.state==="suspended"){ actx.resume(); } return actx; }
+  function noise(){ if(!noiseBuf&&ac()){ const c=actx, b=c.createBuffer(1,Math.floor(c.sampleRate*0.3),c.sampleRate), d=b.getChannelData(0); for(let i=0;i<d.length;i++) d[i]=Math.random()*2-1; noiseBuf=b; } return noiseBuf; }
+  // pitched, formant-filtered chirp with glide + optional vibrato (the throaty part of a cluck)
+  function chirp(t0,f0,f1,dur,vol,o){ const c=ac(); if(!c) return; o=o||{};
+    const osc=c.createOscillator(); osc.type=o.type||"sawtooth";
+    const bp=c.createBiquadFilter(); bp.type="bandpass"; bp.frequency.value=o.center||1500; bp.Q.value=o.q||7;
+    const g=c.createGain(); osc.connect(bp); bp.connect(g); g.connect(c.destination);
+    osc.frequency.setValueAtTime(Math.max(60,f0),t0);
+    osc.frequency.exponentialRampToValueAtTime(Math.max(60,f1),t0+dur);
+    if(o.vibDepth){ const lfo=c.createOscillator(), lg=c.createGain(); lfo.frequency.value=o.vibRate||28; lg.gain.value=o.vibDepth; lfo.connect(lg); lg.connect(osc.frequency); lfo.start(t0); lfo.stop(t0+dur+0.02); }
+    g.gain.setValueAtTime(0.0001,t0); g.gain.linearRampToValueAtTime(vol,t0+0.008); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    osc.start(t0); osc.stop(t0+dur+0.03);
+  }
+  // noisy attack / peck transient (the "k" / "tk")
+  function tick(t0,dur,vol,hp){ const c=ac(); if(!c) return; const b=noise(); if(!b) return;
+    const s=c.createBufferSource(); s.buffer=b;
+    const f=c.createBiquadFilter(); f.type="highpass"; f.frequency.value=hp||1200;
+    const g=c.createGain(); s.connect(f); f.connect(g); g.connect(c.destination);
+    g.gain.setValueAtTime(vol,t0); g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+    s.start(t0); s.stop(t0+dur+0.02);
+  }
+  // a single cluck "bok"
+  function bok(t0,p,v){ p=p||1; v=(v==null)?0.5:v; tick(t0,0.03,0.07*v,1700); chirp(t0,1000*p,300*p,0.10,0.10*v,{center:1600,q:6}); }
+  function cluck(){ if(!soundOn||!ac()) return; const t=actx.currentTime; bok(t,1,0.55); bok(t+0.15,0.95,0.5); }     // "bok-bok"
+  function peck(){ if(!soundOn||!ac()) return; const t=actx.currentTime; tick(t,0.022,0.045,2300); chirp(t,520,300,0.05,0.035,{center:1200,q:4}); }
+  function pecks(n,gap){ for(let i=0;i<n;i++) setTimeout(peck,i*gap); }
+  // big excited call on the result — "ba-gawk!"
+  function squawk(yes){ if(!soundOn||!ac()) return; const t=actx.currentTime;
+    bok(t,1,0.5); bok(t+0.13,1.06,0.55); tick(t+0.27,0.04,0.05,1500);
+    if(yes){ chirp(t+0.27,540,1150,0.16,0.11,{center:1700,q:6,vibRate:30,vibDepth:55});
+             chirp(t+0.43,1150,360,0.30,0.12,{center:1550,q:6,vibRate:26,vibDepth:60}); }
+    else   { chirp(t+0.27,720,920,0.12,0.10,{center:1400,q:6,vibRate:24,vibDepth:40});
+             chirp(t+0.39,920,240,0.34,0.12,{center:1200,q:6,vibRate:22,vibDepth:55}); }
+  }
+
+  /* ---- confetti (Frankly palette) ---- */
+  const cols=["#FFD3E3","#FFACCA","#F3DEE4","#F2A65A","#9DBEF0","#7FD1C4","#FFE08A"];
+  function burst(side){
+    const host=document.querySelector(".game");
+    for(let i=0;i<26;i++){
+      const p=document.createElement("div"); p.className="confetti";
+      p.style.background=cols[i%cols.length]; p.style.left="50%"; p.style.top="-10px";
+      host.appendChild(p);
+      const dx=(Math.random()*2-1)*180 + (side==="yes"?70:-70);
+      const dy=120+Math.random()*200; const rot=(Math.random()*2-1)*720;
+      p.animate(
+        [{transform:"translate(-50%,0) rotate(0)",opacity:1},
+         {transform:`translate(calc(-50% + ${dx}px),${dy}px) rotate(${rot}deg)`,opacity:0}],
+        {duration:900+Math.random()*500, easing:"cubic-bezier(.2,.7,.3,1)"}
+      ).onfinish=()=>p.remove();
+    }
+  }
+
+  /* ---- chicken movement ---- */
+  function setAnim(name){ anim.className="anim"+(name?" "+name:""); }
+  function face(dir){ facing.className="facing"+(dir==="left"?" left":""); }
+  function moveTo(frac){ const w=inside.clientWidth; chicken.style.transform=`translateX(${(w*0.30)*frac}px)`; }
+
+  function resetScene(){
+    verdict.classList.remove("show"); verdict.innerHTML="";
+    inside.classList.remove("win-yes","win-no");
+    setAnim(""); face("right");
+    chicken.style.transition="transform .4s ease"; moveTo(0);
+  }
+
+  async function run(){
+    if(busy) return; busy=true; goBtn.disabled=true; ac();
+
+    if(!opened){ if(soundOn&&ac()) bok(actx.currentTime,0.9,0.45); drawer.classList.add("open"); opened=true; await sleep(620); }
+    else { resetScene(); await sleep(450); }
+
+    setAnim("thinking"); cluck(); await sleep(950);
+
+    const yes = Math.random() < 0.5;  // a true 50/50
+
+    chicken.style.transition="transform .55s cubic-bezier(.45,.05,.25,1)";
+    if(Math.random() < 0.4){               // playful fake-out
+      const wrongLeft = yes;
+      face(wrongLeft?"left":"right"); setAnim("running"); pecks(4,90);
+      moveTo(wrongLeft?-0.55:0.55); await sleep(560);
+      setAnim("thinking"); await sleep(380);
+    }
+
+    face(yes?"right":"left"); setAnim("running");
+    chicken.style.transition="transform 1.0s cubic-bezier(.4,.05,.2,1)";
+    pecks(9,95); moveTo(yes?1:-1); await sleep(1000);
+
+    setAnim("cheer"); inside.classList.add(yes?"win-yes":"win-no");
+    squawk(yes); burst(yes?"yes":"no");
+    showVerdict(yes);
+
+    await sleep(650); setAnim("");
+    goBtn.textContent="Ask again"; goBtn.disabled=false; busy=false;
+  }
+
+  function showVerdict(yes){
+    const q=qInput.value.trim();
+    const word=yes?"YES":"NO"; const cls=yes?"yes":"no"; let sub;
+    if(q){ const clean=q.replace(/[?.!]+$/,"");
+      sub = "“ "+clean+(yes?" ”  —  yes, go for it." : " ”  —  no, leave it."); }
+    else { sub = yes?"The chicken says yes. Go for it." : "The chicken says no. Maybe another time."; }
+    verdict.innerHTML='<div class="big '+cls+'">'+word+'</div><div class="q">'+escapeHtml(sub)+'</div>';
+    verdict.classList.add("show");
+  }
+  function escapeHtml(s){ return s.replace(/[&<>"']/g, c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c])); }
+
+  goBtn.addEventListener("click", run);
+  qInput.addEventListener("keydown", e=>{ if(e.key==="Enter") run(); });
+  soundBtn.addEventListener("click", ()=>{ soundOn=!soundOn; soundBtn.textContent=soundOn?"🔊":"🔇"; if(soundOn) cluck(); });
+})();
+</script>
+</body>
 </html>
