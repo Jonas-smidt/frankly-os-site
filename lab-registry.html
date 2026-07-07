@@ -1,0 +1,254 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Frankly Lab Registry</title>
+<meta name="description" content="Gated Frankly Lab registry for online tools, games and approved preview pages.">
+<meta name="robots" content="noindex,nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --pink:#FFD3E3;
+    --pink-deep:#FFACCA;
+    --pink-wash:#FCEAF1;
+    --grounded:#2D0011;
+    --limestone:#F5F4F1;
+    --limestone-soft:#F0EEE9;
+    --edge:#E3DDD5;
+    --grey:#625B5E;
+    --ink:#111;
+    --white:#fff;
+    --ok:#CFE8BF;
+    --warn:#F3D187;
+    --blue:#CCD8F0;
+    --font:'Inter',-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;
+  }
+  *{box-sizing:border-box}
+  *::before,*::after{box-sizing:border-box}
+  html,body{margin:0;overflow-x:hidden}
+  body{background:var(--limestone);color:var(--ink);font-family:var(--font);line-height:1.5}
+  a{color:inherit}
+  .wrap{width:min(1180px,calc(100% - 36px));margin:0 auto}
+  .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:22px 0}
+  .brand{display:flex;align-items:center;gap:10px;text-decoration:none;font-weight:900;color:var(--grounded)}
+  .brand-mark{width:30px;height:30px;border-radius:50%;background:linear-gradient(135deg,var(--pink),var(--pink-deep));border:1px solid rgba(45,0,17,.12);box-shadow:inset 0 0 0 7px rgba(255,255,255,.42)}
+  .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
+  .nav a{min-height:34px;display:inline-flex;align-items:center;border:1px solid var(--edge);border-radius:999px;padding:7px 12px;background:rgba(255,255,255,.56);font-size:13px;font-weight:800;text-decoration:none}
+  .hero{display:grid;grid-template-columns:minmax(0,1fr) minmax(320px,.48fr);gap:28px;align-items:end;padding:48px 0 34px}
+  .kicker{font-size:12px;font-weight:900;letter-spacing:.08em;text-transform:uppercase;color:var(--grey);margin:0 0 12px}
+  h1{font-size:clamp(48px,7vw,96px);line-height:.92;letter-spacing:0;margin:0;max-width:12ch;color:var(--grounded)}
+  .hero p{font-size:18px;max-width:720px;color:#573744;margin:20px 0 0}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+  .button{min-height:42px;display:inline-flex;align-items:center;justify-content:center;border-radius:8px;padding:10px 14px;background:var(--grounded);color:#fff;font-size:14px;font-weight:900;text-decoration:none;border:1px solid var(--grounded)}
+  .button.secondary{background:transparent;color:var(--grounded);border-color:rgba(45,0,17,.2)}
+  .registry-card{background:var(--grounded);color:var(--limestone);border-radius:8px;padding:22px;overflow:hidden}
+  .registry-card span{display:block;font-size:11px;font-weight:900;text-transform:uppercase;letter-spacing:.08em;color:rgba(245,244,241,.58)}
+  .registry-card b{display:block;font-size:34px;line-height:1.02;margin:10px 0;color:#fff}
+  .registry-card p{margin:0;color:rgba(245,244,241,.72);font-size:14px}
+  .metrics{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:1px;margin-top:18px;background:rgba(245,244,241,.16)}
+  .metrics div{padding:13px;background:rgba(255,255,255,.06)}
+  .metrics strong{display:block;color:#fff;font-size:24px;line-height:1}
+  .metrics small{display:block;margin-top:8px;color:rgba(245,244,241,.58);font-size:10px;font-weight:900;text-transform:uppercase;line-height:1.15}
+  .band{padding:26px 0 54px}
+  .section-head{display:flex;align-items:end;justify-content:space-between;gap:22px;margin-bottom:18px}
+  .section-head h2{font-size:31px;line-height:1.02;margin:0;color:var(--grounded)}
+  .section-head p{max-width:520px;margin:0;color:var(--grey)}
+  .tag-strip{display:flex;gap:8px;flex-wrap:wrap;margin:0 0 20px}
+  .tag-strip span{display:inline-flex;align-items:center;min-height:34px;border-radius:999px;padding:7px 11px;background:#fff;border:1px solid var(--edge);font-size:12px;font-weight:900;text-transform:uppercase;color:var(--grounded)}
+  .ledger{border-top:1px solid var(--edge)}
+  .ledger-row{display:grid;grid-template-columns:70px 118px minmax(170px,.44fr) minmax(0,1fr) 136px;gap:14px;align-items:start;padding:14px 0;border-bottom:1px solid var(--edge)}
+  .ledger-row::before{content:attr(data-mark);display:flex;align-items:flex-end;justify-content:flex-start;width:58px;height:58px;border:1px solid var(--edge);border-radius:8px;padding:8px;background:var(--thumb);color:rgba(45,0,17,.82);font-size:19px;font-weight:900;line-height:1}
+  .ledger-row span{font-size:11px;font-weight:900;text-transform:uppercase;color:var(--grey)}
+  .ledger-row b{display:block;color:var(--grounded);font-size:18px;line-height:1.14}
+  .ledger-row p{margin:4px 0 0;color:var(--grey);font-size:14px}
+  .state{justify-self:end;display:inline-flex;align-items:center;justify-content:center;min-height:30px;border-radius:999px;padding:6px 10px;background:var(--limestone-soft);font-size:11px;font-weight:900;text-transform:uppercase;color:var(--grounded);text-decoration:none;white-space:nowrap}
+  .state:hover{box-shadow:inset 0 0 0 1px rgba(45,0,17,.2)}
+  .state.live{background:var(--ok)}
+  .state.draft{background:var(--blue)}
+  .source-note{margin-top:16px;color:var(--grey);font-size:13px}
+  .note{border-top:1px solid var(--edge);padding:22px 0 40px;color:var(--grey);font-size:14px}
+  .ledger-row[data-art="signature"]{--thumb:linear-gradient(rgba(45,0,17,.18) 0 0) 34px 40px/118px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 34px 58px/88px 2px no-repeat,linear-gradient(90deg,var(--pink-deep),var(--pink)) 34px 84px/112px 7px no-repeat,linear-gradient(135deg,#fff,var(--pink-wash))}
+  .ledger-row[data-art="brand-reference"]{--thumb:linear-gradient(var(--grounded) 0 0) 26px 28px/42px 42px no-repeat,linear-gradient(var(--pink-deep) 0 0) 76px 28px/42px 42px no-repeat,linear-gradient(var(--limestone-soft) 0 0) 126px 28px/42px 42px no-repeat,linear-gradient(rgba(45,0,17,.16) 0 0) 28px 88px/138px 2px no-repeat,#fff}
+  .ledger-row[data-art="brand-assistant"]{--thumb:linear-gradient(135deg,var(--pink),#fff) 28px 26px/120px 34px no-repeat,linear-gradient(135deg,#fff,var(--limestone-soft)) 54px 72px/126px 34px no-repeat,linear-gradient(rgba(45,0,17,.22) 0 0) 42px 42px/58px 2px no-repeat,linear-gradient(rgba(45,0,17,.16) 0 0) 68px 88px/72px 2px no-repeat,var(--pink-wash)}
+  .ledger-row[data-art="business-card"]{--thumb:linear-gradient(135deg,#fff,var(--pink)) 28px 26px/154px 82px no-repeat,repeating-linear-gradient(90deg,var(--grounded) 0 8px,transparent 8px 14px) 124px 46px/40px 40px no-repeat,linear-gradient(rgba(45,0,17,.22) 0 0) 44px 50px/56px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 44px 66px/40px 2px no-repeat,var(--limestone-soft)}
+  .ledger-row[data-art="dictionary"]{--thumb:linear-gradient(#fff 0 0) 36px 22px/112px 88px no-repeat,linear-gradient(var(--pink) 0 0) 52px 38px/42px 10px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 52px 62px/74px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 52px 78px/58px 2px no-repeat,linear-gradient(90deg,var(--pink-deep) 0 8px,transparent 8px 100%) 148px 32px/18px 62px no-repeat,var(--limestone-soft)}
+  .ledger-row[data-art="qr"]{--thumb:repeating-linear-gradient(90deg,var(--grounded) 0 10px,transparent 10px 20px) 44px 34px/84px 84px no-repeat,repeating-linear-gradient(0deg,rgba(45,0,17,.8) 0 10px,transparent 10px 20px) 44px 34px/84px 84px no-repeat,linear-gradient(#fff 0 0) 34px 24px/104px 104px no-repeat,linear-gradient(135deg,var(--pink),#fff)}
+  .ledger-row[data-art="image"]{--thumb:linear-gradient(135deg,#CCD8F0,var(--pink)) 26px 24px/132px 82px no-repeat,linear-gradient(90deg,transparent 16px,rgba(255,255,255,.7) 16px 18px,transparent 18px) 42px 38px/86px 52px no-repeat,linear-gradient(0deg,transparent 16px,rgba(255,255,255,.7) 16px 18px,transparent 18px) 42px 38px/86px 52px no-repeat,linear-gradient(rgba(45,0,17,.64) 0 0) 42px 90px/86px 3px no-repeat,#fff}
+  .ledger-row[data-art="drop"]{--thumb:linear-gradient(var(--pink-deep) 0 0) 42px 28px/20px 20px no-repeat,linear-gradient(var(--blue) 0 0) 96px 48px/18px 18px no-repeat,linear-gradient(var(--warn) 0 0) 140px 30px/22px 22px no-repeat,linear-gradient(var(--grounded) 0 0) 54px 100px/112px 8px no-repeat,linear-gradient(135deg,#fff,var(--pink-wash))}
+  .ledger-row[data-art="bmw"]{--thumb:linear-gradient(90deg,transparent 48%,rgba(255,255,255,.92) 48% 52%,transparent 52%) 0 0/100% 100%,linear-gradient(135deg,var(--grounded),#604A52) 32px 20px/126px 96px no-repeat,linear-gradient(var(--pink-deep) 0 0) 82px 70px/34px 18px no-repeat,linear-gradient(135deg,var(--ok),#fff)}
+  .ledger-row[data-art="decision"]{--thumb:conic-gradient(from -20deg,var(--pink) 0 28%,#fff 28% 54%,var(--blue) 54% 76%,var(--warn) 76% 100%) 52px 24px/86px 86px no-repeat,linear-gradient(var(--grounded) 0 0) 94px 28px/4px 80px no-repeat,linear-gradient(135deg,#fff,var(--limestone-soft))}
+  .ledger-row[data-art="quiz"]{--thumb:linear-gradient(#fff 0 0) 30px 28px/132px 74px no-repeat,linear-gradient(var(--ok) 0 0) 46px 74px/42px 12px no-repeat,linear-gradient(var(--pink) 0 0) 96px 74px/42px 12px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 48px 48px/94px 2px no-repeat,var(--limestone-soft)}
+  .ledger-row[data-art="onboarding"]{--thumb:linear-gradient(var(--ok) 0 0) 38px 34px/16px 16px no-repeat,linear-gradient(var(--ok) 0 0) 38px 64px/16px 16px no-repeat,linear-gradient(var(--pink) 0 0) 38px 94px/16px 16px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 66px 42px/96px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 66px 72px/76px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 66px 102px/88px 2px no-repeat,#fff}
+  .ledger-row[data-art="coverage"]{--thumb:linear-gradient(var(--pink) 0 0) 34px 32px/38px 76px no-repeat,linear-gradient(var(--ok) 0 0) 82px 52px/38px 56px no-repeat,linear-gradient(var(--blue) 0 0) 130px 42px/38px 66px no-repeat,linear-gradient(rgba(45,0,17,.2) 0 0) 30px 110px/142px 2px no-repeat,#fff}
+  .ledger-row[data-art="blog"]{--thumb:linear-gradient(#fff 0 0) 46px 22px/110px 92px no-repeat,linear-gradient(var(--pink) 0 0) 62px 40px/70px 10px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 62px 66px/76px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 62px 80px/56px 2px no-repeat,linear-gradient(135deg,var(--limestone-soft),var(--pink-wash))}
+  @media (max-width:860px){
+    .topbar{align-items:flex-start;flex-direction:column}
+    .nav{justify-content:flex-start}
+    .hero{grid-template-columns:1fr;padding-top:28px}
+    .section-head{align-items:flex-start;flex-direction:column}
+    .ledger-row{grid-template-columns:1fr;gap:6px}
+    .ledger-row::before{width:100%;height:92px}
+    .state{justify-self:start}
+  }
+  @media (max-width:520px){
+    .wrap{width:min(100% - 28px,1180px)}
+    h1{font-size:44px;max-width:10ch}
+    .hero p{font-size:16px}
+    .hero-actions .button{flex:1 1 150px}
+    .metrics{grid-template-columns:1fr}
+    .section-head h2{font-size:27px}
+  }
+</style>
+</head>
+<body>
+  <header class="wrap topbar">
+    <a class="brand" href="index.html" aria-label="Frankly Lab">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span>Frankly Lab</span>
+    </a>
+    <nav class="nav" aria-label="Lab pages">
+      <a href="index.html">Lab</a>
+      <a href="index.html#live">Live</a>
+      <a href="index.html#workbench">Workbench</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="wrap hero">
+      <div>
+        <p class="kicker">Gated Lab ledger</p>
+        <h1>Tool, game and preview registry.</h1>
+        <p>The online Lab registry is now its own page: one place for every uploaded tool, game, coverage page and approved preview.</p>
+        <div class="hero-actions">
+          <a class="button" href="index.html">Back to Lab</a>
+          <a class="button secondary" href="index.html#live">Open live shelf</a>
+        </div>
+      </div>
+      <aside class="registry-card" aria-label="Registry summary">
+        <span>Online Lab shelf</span>
+        <b>15 entries.</b>
+        <p>Every listed item is copied into the upload bundle and can be opened from this registry.</p>
+        <div class="metrics" aria-label="Registry metrics">
+          <div><strong>7</strong><small>tools</small></div>
+          <div><strong>4</strong><small>games / toys</small></div>
+          <div><strong>4</strong><small>pages / previews</small></div>
+          <div><strong>1</strong><small>separate registry</small></div>
+        </div>
+      </aside>
+    </section>
+
+    <section class="wrap band" id="registry">
+      <div class="section-head">
+        <h2>Uploaded Lab pages</h2>
+        <p>The full online shelf, split out from the landing page so the front page can stay simple.</p>
+      </div>
+      <div class="tag-strip" aria-label="Registry groups">
+        <span>Daily tools</span>
+        <span>Brand helpers</span>
+        <span>Games and toys</span>
+        <span>Gated previews</span>
+      </div>
+      <div class="ledger" aria-label="Frankly Lab tool, game and preview registry">
+        <div class="ledger-row" data-art="signature" data-mark="ES">
+          <span>Uploaded</span>
+          <div><b>Email signature</b><p>Brand / daily tool</p></div>
+          <p>Add details, preview the footer and copy HTML or plain text.</p>
+          <a class="state live" href="frankly-signature-generator.html">Open tool</a>
+        </div>
+        <div class="ledger-row" data-art="brand-reference" data-mark="BR">
+          <span>Uploaded</span>
+          <div><b>Brand Reference</b><p>Brand / reference</p></div>
+          <p>Colors, CSS tokens and tone rules for quick Frankly checks.</p>
+          <a class="state live" href="frankly-brand-reference.html">Open tool</a>
+        </div>
+        <div class="ledger-row" data-art="brand-assistant" data-mark="BA">
+          <span>Uploaded</span>
+          <div><b>Brand Assistant</b><p>Brand / answers</p></div>
+          <p>Search recurring brand answers locally in the browser without any AI runtime.</p>
+          <a class="state live" href="frankly-brand-assistant.html">Open tool</a>
+        </div>
+        <div class="ledger-row" data-art="business-card" data-mark="BC">
+          <span>Uploaded</span>
+          <div><b>Business card</b><p>Daily / QR card</p></div>
+          <p>Build a meeting card with contact details, QR and vCard output.</p>
+          <a class="state live" href="frankly-business-card.html">Open tool</a>
+        </div>
+        <div class="ledger-row" data-art="dictionary" data-mark="DI">
+          <span>Uploaded</span>
+          <div><b>Dictionary</b><p>Daily / glossary</p></div>
+          <p>Plain-language working definitions for common internal terms.</p>
+          <a class="state live" href="frankly-dictionary.html">Open tool</a>
+        </div>
+        <div class="ledger-row" data-art="qr" data-mark="QR">
+          <span>Uploaded</span>
+          <div><b>QR link</b><p>Daily / generator</p></div>
+          <p>Turn a URL into a local SVG QR code for decks and signs.</p>
+          <a class="state live" href="frankly-qr-link.html">Open tool</a>
+        </div>
+        <div class="ledger-row" data-art="image" data-mark="IR">
+          <span>Uploaded</span>
+          <div><b>Image resizer</b><p>Daily / image tool</p></div>
+          <p>Resize local images to useful social and presentation formats.</p>
+          <a class="state live" href="frankly-image-resizer.html">Open tool</a>
+        </div>
+        <div class="ledger-row" data-art="drop" data-mark="DP">
+          <span>Uploaded</span>
+          <div><b>Drop Protection</b><p>Play / game</p></div>
+          <p>Catch the falling objects with a lightweight browser-game coverage bar.</p>
+          <a class="state live" href="frankly-drop-protection.html">Play</a>
+        </div>
+        <div class="ledger-row" data-art="bmw" data-mark="BM">
+          <span>Uploaded</span>
+          <div><b>Frankly's BMW</b><p>Play / browser game</p></div>
+          <p>A browser game prototype for interactive HTML and responsive canvas behavior.</p>
+          <a class="state live" href="franklys-bmw.html">Play</a>
+        </div>
+        <div class="ledger-row" data-art="decision" data-mark="DC">
+          <span>Uploaded</span>
+          <div><b>Decision Chicken</b><p>Play / decision toy</p></div>
+          <p>Pick from small options when the main job is moving forward.</p>
+          <a class="state live" href="the-decision-chicken.html">Open toy</a>
+        </div>
+        <div class="ledger-row" data-art="quiz" data-mark="QZ">
+          <span>Uploaded</span>
+          <div><b>Do you know Frankly?</b><p>Play / quiz</p></div>
+          <p>A short brand quiz for tone, gates and internal basics.</p>
+          <a class="state live" href="frankly-quiz.html">Take quiz</a>
+        </div>
+        <div class="ledger-row" data-art="onboarding" data-mark="ST">
+          <span>Uploaded</span>
+          <div><b>Start here</b><p>Daily / onboarding</p></div>
+          <p>Approved for the gated upload bundle as a noindex onboarding preview.</p>
+          <a class="state draft" href="onboarding.html">Open preview</a>
+        </div>
+        <div class="ledger-row" data-art="coverage" data-mark="CO">
+          <span>Uploaded</span>
+          <div><b>Coverage overview</b><p>Daily / product clarity</p></div>
+          <p>Approved for the online Lab bundle and sitemap; not a legal source.</p>
+          <a class="state live" href="frankly-daekningsoverblik.html">Open page</a>
+        </div>
+        <div class="ledger-row" data-art="blog" data-mark="BL">
+          <span>Uploaded</span>
+          <div><b>Blog drafts</b><p>Draft / noindex preview</p></div>
+          <p>The draft shelf is copied online for gated review and kept out of search indexing.</p>
+          <a class="state draft" href="blog/index.html">Open drafts</a>
+        </div>
+        <div class="ledger-row" data-art="blog" data-mark="CY">
+          <span>Uploaded</span>
+          <div><b>Cykelforsikring draft</b><p>Draft / noindex preview</p></div>
+          <p>Source-checked draft article copied online as a noindex preview.</p>
+          <a class="state draft" href="blog/cykelforsikring.html">Open draft</a>
+        </div>
+      </div>
+      <p class="source-note">Recovery note: ten historical Lab tools remain in the upload allowlist after LinkedIn checker was removed from the online shelf. Coverage overview is allowlisted as an online page; Start here and blog drafts are allowlisted as noindex previews.</p>
+    </section>
+  </main>
+
+  <footer class="wrap note">
+    This online Lab is gated but not treated as security. Jonas reopened Coverage overview as an online page and reopened Start here plus blog drafts as preview pages; source records, customer-facing claims and all other product/legal work stay out of the upload bundle.
+  </footer>
+</body>
+</html>

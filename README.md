@@ -10,6 +10,7 @@ This folder now has two separate roles:
 The uploadable website bundle is generated into ignored `site/` by `scripts/sync_from_drive.py`. Despite the historical script name, it no longer syncs Drive and no longer copies every HTML file. It copies only the allowlist:
 
 - `index.html`
+- `lab-registry.html`
 - `franklys-bmw.html`
 - rebuilt Lab tools:
   - `frankly-signature-generator.html`
@@ -53,7 +54,8 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 
 ## Key Local Files
 
-- `index.html` - uploadable test-site entry page, live Lab tool links and visible Lab registry.
+- `index.html` - uploadable test-site entry page, live Lab tool links and a link to the separate Lab registry.
+- `lab-registry.html` - uploadable noindex registry page for online tools, games and approved previews.
 - `franklys-bmw.html` - standalone HTML game/tool test.
 - `frankly-lab-tools.css`, `frankly-lab-tools.js` - shared runtime for the rebuilt Lab tools.
 - `onboarding.html` - approved Start here preview, copied into the upload bundle behind the Lab gate and kept noindex.
@@ -70,7 +72,7 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 
 ## Lab Registry Recovery
 
-`lab-hub.html` contains an active registry of 20 tool/game entries after LinkedIn checker was removed. The old `frankly-linkedin-checker.html` source remains local for now, but it is not linked from the active registry and is not copied to the upload bundle. Eleven Lab tools/games are copied to the upload bundle: `franklys-bmw.html` plus ten formerly missing entries restored from the Lab registry and old browser-QA evidence:
+`lab-registry.html` contains the online registry of 15 tool, game and approved preview entries. `lab-hub.html` remains local and contains the older 20-entry Lab registry after LinkedIn checker was removed. The old `frankly-linkedin-checker.html` source remains local for now, but it is not linked from the active online registry and is not copied to the upload bundle. Eleven Lab tools/games are copied to the upload bundle: `franklys-bmw.html` plus ten formerly missing entries restored from the Lab registry and old browser-QA evidence:
 
 - `frankly-signature-generator.html`
 - `frankly-brand-reference.html`

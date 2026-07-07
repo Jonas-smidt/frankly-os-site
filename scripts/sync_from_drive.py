@@ -22,6 +22,7 @@ import shutil
 SITE_DIR = pathlib.Path("site")
 ENTRY_FILE = pathlib.Path("index.html")
 UPLOADABLE_HTML = (
+    pathlib.Path("lab-registry.html"),
     pathlib.Path("frankly-signature-generator.html"),
     pathlib.Path("frankly-brand-reference.html"),
     pathlib.Path("frankly-brand-assistant.html"),

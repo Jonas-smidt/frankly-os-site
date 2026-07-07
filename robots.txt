@@ -2,6 +2,7 @@ User-agent: *
 Disallow: /blog/
 Disallow: /guide/
 Disallow: /data/
+Disallow: /lab-registry.html
 Disallow: /frankly-os.html
 Disallow: /overview.html
 Disallow: /progress-map.html
