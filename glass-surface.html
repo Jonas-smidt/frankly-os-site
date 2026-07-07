@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frankly Lab · Glass Surface</title>
+<style>
+  :root{
+    --burgundy: 45,0,17;
+    --pink: 255,211,227;
+    /* the scene behind the glass — reused for the in-glass copy so it lines up */
+    --scene:
+      repeating-linear-gradient(0deg, rgba(255,255,255,.26) 0 1.4px, transparent 1.4px 46px),
+      repeating-linear-gradient(90deg, rgba(255,255,255,.26) 0 1.4px, transparent 1.4px 46px),
+      radial-gradient(50vmax 50vmax at 16% 20%, #ff5fa2, transparent 55%),
+      radial-gradient(48vmax 48vmax at 84% 16%, #7b5bff, transparent 55%),
+      radial-gradient(54vmax 54vmax at 82% 84%, #17c3d6, transparent 55%),
+      radial-gradient(48vmax 48vmax at 18% 86%, #ffb020, transparent 55%),
+      radial-gradient(42vmax 42vmax at 50% 50%, #ff3d7f, transparent 62%),
+      #180a2b;
+  }
+  *{margin:0;box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"SF Pro Text","Inter",system-ui,sans-serif;
+    -webkit-font-smoothing:antialiased; color:#fff; overflow-x:hidden;
+    min-height:100vh; display:flex; flex-direction:column; align-items:center; justify-content:center; gap:40px;
+  }
+  .bg{position:fixed; inset:0; z-index:0; background:var(--scene); background-size:100vw 100vh;}
+
+  .head{position:relative; z-index:2; text-align:center; padding:0 24px}
+  .head .eyebrow{font-size:12px; letter-spacing:3px; text-transform:uppercase; color:rgba(255,255,255,.6)}
+  .head h1{font-size:30px; font-weight:600; letter-spacing:.2px; margin-top:8px}
+  .head p{font-size:14px; color:rgba(255,255,255,.7); margin-top:8px}
+
+  .row{position:relative; z-index:2; display:flex; gap:34px; flex-wrap:wrap; justify-content:center; padding:0 24px 20px}
+
+  .glass-wrap{ position:relative; width:300px; height:320px; border-radius:26px;
+    transition:transform .45s cubic-bezier(.2,.9,.3,1.2); }
+  .glass-wrap:hover{ transform:translateY(-6px); }
+
+  .glass-card{
+    position:absolute; inset:0; border-radius:26px; overflow:hidden;
+    padding:26px; display:flex; flex-direction:column; justify-content:flex-end;
+    background:transparent;
+    box-shadow:
+      0 30px 70px rgba(0,0,0,.5),
+      0 8px 22px rgba(0,0,0,.35),
+      0 0 8px rgba(255,255,255,.06),
+      inset 0 0 0 1px rgba(255,255,255,.9),          /* crisp bright edge line */
+      inset 0 0 0 2px rgba(0,0,0,.22),               /* thin dark bevel gap */
+      inset 0 0 0 4px rgba(255,255,255,.22),         /* inner bright band */
+      inset 0 0 12px 3px rgba(255,255,255,.08);      /* soft inner falloff */
+  }
+  .glass-card .refract{
+    position:absolute; inset:0; z-index:0; pointer-events:none;
+    background:var(--scene); background-size:100vw 100vh; background-repeat:no-repeat;
+    filter:url(#glassDisplace) blur(5px) saturate(1.35) brightness(1.05);
+  }
+  .glass-card .tint{
+    position:absolute; inset:0; z-index:1; pointer-events:none;
+    background:
+      linear-gradient(150deg, rgba(var(--pink),.12), rgba(var(--burgundy),.32) 46%, rgba(var(--burgundy),.48)),
+      linear-gradient(rgba(255,255,255,.07), rgba(255,255,255,.07));
+  }
+  /* iridescent wash — direction set by where the cursor enters */
+  .glass-card .flow{
+    position:absolute; inset:-80%; z-index:2; pointer-events:none; opacity:0; mix-blend-mode:screen;
+    background:linear-gradient(var(--beam-angle,100deg),
+      transparent 42%, rgba(255,70,60,.55) 46%, rgba(255,220,80,.60) 48%,
+      rgba(120,255,150,.80) 50%, rgba(40,200,255,.90) 52%, rgba(150,90,255,.55) 55%, transparent 60%);
+    filter:blur(9px) saturate(1.6) brightness(1.1);
+  }
+  .glass-card .kicker{ position:absolute; top:24px; left:26px; z-index:3;
+    font-size:12px; letter-spacing:2px; text-transform:uppercase; color:rgba(var(--pink),.85); }
+  .glass-card h3{ position:relative; z-index:3; font-size:21px; font-weight:600; }
+  .glass-card p{ position:relative; z-index:3; font-size:13.5px; line-height:1.5; color:rgba(255,255,255,.72); margin-top:7px; }
+  /* crisp, glossy directional edge light on top of the structured bevel */
+  .glass-card::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:4;
+    padding:2.5px;
+    background:linear-gradient(135deg,
+      rgba(255,255,255,1) 0%, rgba(255,255,255,.35) 22%,
+      transparent 46%, rgba(var(--pink),.3) 66%,
+      rgba(255,255,255,.55) 88%, rgba(255,255,255,1) 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    filter:blur(.6px) drop-shadow(0 0 3px rgba(255,255,255,.35));
+  }
+  .glass-card::after{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:2;
+    background:linear-gradient(120deg, transparent 40%, rgba(255,255,255,.14) 50%, transparent 60%);
+    mix-blend-mode:screen;
+  }
+</style>
+</head>
+<body>
+  <div class="bg"></div>
+
+  <div class="head">
+    <div class="eyebrow">Frankly Lab</div>
+    <h1>Glass Surface</h1>
+    <p>Liquid-glass overflade — refraktion, matt frost, crisp kant og iriserende hover-wash.</p>
+  </div>
+
+  <div class="row">
+    <div class="glass-wrap"><div class="glass-card">
+      <div class="refract"></div><div class="tint"></div><div class="flow"></div>
+      <span class="kicker">Surface</span>
+      <h3>Dækningsoverblik</h3>
+      <p>Se kunderne, policerne og dækningen ét sted — gennem glasset.</p>
+    </div></div>
+
+    <div class="glass-wrap"><div class="glass-card">
+      <div class="refract"></div><div class="tint"></div><div class="flow"></div>
+      <span class="kicker">Surface</span>
+      <h3>Skadesflow</h3>
+      <p>Anmeldelse til afgørelse i ét roligt, gennemsigtigt forløb.</p>
+    </div></div>
+
+    <div class="glass-wrap"><div class="glass-card">
+      <div class="refract"></div><div class="tint"></div><div class="flow"></div>
+      <span class="kicker">Surface</span>
+      <h3>Partnerbro</h3>
+      <p>Bindeleddet mellem Frankly og partnerne — klart og levende.</p>
+    </div></div>
+  </div>
+
+  <svg width="0" height="0" style="position:absolute">
+    <filter id="glassDisplace" x="-20%" y="-20%" width="140%" height="140%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.008 0.009" numOctaves="2" seed="7" result="turb"/>
+      <feDisplacementMap in="SourceGraphic" in2="turb" scale="34"
+        xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+<script>
+  function setupGlass(card){
+    const wrap = card.closest('.glass-wrap');
+    const refract = card.querySelector('.refract');
+    const flow = card.querySelector('.flow');
+
+    // keep the in-card scene copy aligned with the real background behind the card
+    const align = () => {
+      const r = card.getBoundingClientRect();
+      refract.style.backgroundPosition = (-r.left) + 'px ' + (-r.top) + 'px';
+    };
+    align();
+    addEventListener('resize', align);
+    addEventListener('scroll', align, {passive:true});
+
+    // on entry: sweep the iridescent wash FROM where the cursor came in
+    wrap.addEventListener('pointerenter', (e) => {
+      const r = card.getBoundingClientRect();
+      let dx = (r.left + r.width/2) - e.clientX;
+      let dy = (r.top + r.height/2) - e.clientY;
+      const len = Math.hypot(dx,dy) || 1; dx/=len; dy/=len;
+      flow.style.setProperty('--beam-angle', (Math.atan2(dx,-dy)*180/Math.PI).toFixed(1) + 'deg');
+      const span = Math.hypot(r.width, r.height) * 1.1;
+      flow.animate([
+        { transform:`translate(${-dx*span}px, ${-dy*span}px)`, opacity:0 },
+        { opacity:1, offset:0.2 },
+        { opacity:1, offset:0.8 },
+        { transform:`translate(${dx*span}px, ${dy*span}px)`, opacity:0 }
+      ], { duration:1050, easing:'cubic-bezier(.4,0,.2,1)' });
+    });
+  }
+  document.querySelectorAll('.glass-card').forEach(setupGlass);
+</script>
+</body>
+</html>

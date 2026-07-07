@@ -38,6 +38,8 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-daekningsoverblik.html"),
     pathlib.Path("frankly-instore-onepager.html"),
     pathlib.Path("frankly-instore-salgsguide.html"),
+    pathlib.Path("glass-lab.html"),
+    pathlib.Path("glass-surface.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
