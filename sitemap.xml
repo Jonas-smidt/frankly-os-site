@@ -9,6 +9,27 @@
   <url>
     <loc>https://os.franklydesign.dk/frankly-daekningsoverblik.html</loc>
   </url>
-  <!-- Lab registry, Start here and blog drafts stay noindex/robots-blocked and are intentionally excluded. -->
+  <url>
+    <loc>https://os.franklydesign.dk/journal/frankly-blog-index.html</loc>
+  </url>
+  <url>
+    <loc>https://os.franklydesign.dk/journal/frankly-blog-01-brug-det.html</loc>
+  </url>
+  <url>
+    <loc>https://os.franklydesign.dk/journal/frankly-blog-02-checkout.html</loc>
+  </url>
+  <url>
+    <loc>https://os.franklydesign.dk/journal/frankly-blog-03-mental-load-cd.html</loc>
+  </url>
+  <url>
+    <loc>https://os.franklydesign.dk/journal/frankly-blog-04-tirsdag.html</loc>
+  </url>
+  <url>
+    <loc>https://os.franklydesign.dk/journal/frankly-blog-05-cyklen.html</loc>
+  </url>
+  <url>
+    <loc>https://os.franklydesign.dk/journal/frankly-blog-06-hjem.html</loc>
+  </url>
+  <!-- Lab registry and Start here stay noindex/robots-blocked and are intentionally excluded. -->
   <!-- Internal operating pages stay local and are intentionally excluded. -->
 </urlset>
