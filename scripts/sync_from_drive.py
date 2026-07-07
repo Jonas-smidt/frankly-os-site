@@ -36,6 +36,8 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-quiz.html"),
     pathlib.Path("onboarding.html"),
     pathlib.Path("frankly-daekningsoverblik.html"),
+    pathlib.Path("frankly-instore-onepager.html"),
+    pathlib.Path("frankly-instore-salgsguide.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
