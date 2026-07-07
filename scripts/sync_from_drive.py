@@ -26,6 +26,7 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-signature-generator.html"),
     pathlib.Path("frankly-brand-reference.html"),
     pathlib.Path("frankly-brand-assistant.html"),
+    pathlib.Path("frankly-ribbon-lab.html"),
     pathlib.Path("frankly-business-card.html"),
     pathlib.Path("frankly-dictionary.html"),
     pathlib.Path("frankly-qr-link.html"),
@@ -44,11 +45,15 @@ UPLOADABLE_HTML = (
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
     pathlib.Path("sitemap.xml"),
+    pathlib.Path("frankly-lab-brand.css"),
     pathlib.Path("frankly-surfaces.css"),
     pathlib.Path("frankly-lab-tools.css"),
     pathlib.Path("frankly-lab-tools.js"),
+    pathlib.Path("frankly-ribbon-lab.css"),
+    pathlib.Path("frankly-ribbon-lab.js"),
     pathlib.Path("assets/frankly-logo-small.png"),
     pathlib.Path("assets/frankly-wordmark.png"),
+    pathlib.Path("assets/three.module.min.js"),
 )
 
 # Simple preview curtain. This is not security; it only prevents casual browsing.
@@ -130,6 +135,12 @@ def main():
     for static_file in STATIC_FILES:
         if static_file.exists():
             copy_file(static_file, SITE_DIR / static_file)
+
+    # Tool object renders (Frankly 3D objects used as card thumbnails).
+    tools_dir = pathlib.Path("assets/tools")
+    if tools_dir.exists():
+        for src in sorted(tools_dir.glob("*.png")):
+            copy_file(src, SITE_DIR / src)
 
     # Journal (Frankly blog suite) — copy the whole directory tree.
     # The Journal is the one PUBLIC surface of the Lab: pages are NOT gated and

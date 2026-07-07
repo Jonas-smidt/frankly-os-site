@@ -1,0 +1,179 @@
+/* ============================================================
+   Frankly Lab — brand canon
+   One source of truth for the Lab's look: real brand fonts
+   (Almarena Neue Display + Switzer), the canonical Frankly
+   palette, radii, easing and a small set of primitives.
+
+   Fonts are the ones already in journal/fonts/, referenced with
+   a root-relative path so every Lab page at the repo root can use
+   them. Journal pages keep their own local @font-face.
+
+   Usage on a page:
+     <link rel="stylesheet" href="frankly-lab-brand.css">
+     <body class="fl"> …            (opts headings into the brand type)
+   Token aliases below cover the older names pages already use
+   (--grounded/--bordeaux, --pink/--calm-pink, --edge/--stone-4 …)
+   so linking this sheet corrects drift without renaming everything.
+   ============================================================ */
+
+@font-face{font-family:"Almarena Neue Display";font-style:normal;font-weight:600;font-display:swap;src:url("journal/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+/* alias: frankly-surfaces.css and some tool pages call the family "Almarena Neue" */
+@font-face{font-family:"Almarena Neue";font-style:normal;font-weight:600;font-display:swap;src:url("journal/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Almarena Neue";font-style:normal;font-weight:700;font-display:swap;src:url("journal/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:400;font-display:swap;src:url("journal/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:500;font-display:swap;src:url("journal/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-style:normal;font-weight:600;font-display:swap;src:url("journal/fonts/Switzer-Semibold.otf") format("opentype")}
+
+:root{
+  /* — neutrals / paper — */
+  --limestone:#F5F4F1;
+  --limestone-soft:#F0EEE9;
+  --blush:#FFF6FA;
+  --paper:#FFFFFF;
+  --white:#FFFFFF;
+  --stone:#ECE9E4;
+  --stone-2:#F0EEE9;
+  --stone-4:#E3DDD5;
+  --stone-deep:#D9D1C8;
+  --pink-stone:#F3DEE4;
+
+  /* — ink / brand core — */
+  --bordeaux:#2D0011;
+  --ink:#111111;
+  --grey-1:#585C60;
+  --grey-2:#7C7A77;
+
+  /* — pink family — */
+  --calm-pink:#FFD3E3;
+  --calm-deep:#FFACCA;
+  --pink-wash:#FFF6FA;
+
+  /* — lines — */
+  --line:#E9E6E1;
+  --line-dark:rgba(45,0,17,.14);
+
+  /* — status / chips — */
+  --ok:#CFE8BF;
+  --warn:#F3D187;
+  --blue:#CCD8F0;
+  --recover:#E7D7F1;
+  --success:#057642;
+  --success-live:#27C966;
+  --sky:#CEEBFF;
+  --lavender:#F0EEFC;
+
+  /* — type — */
+  --fl-display:"Almarena Neue Display","Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --fl-sans:"Switzer",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+
+  /* — shape / motion — */
+  --r-sm:10px;
+  --r-card:16px;
+  --r-lg:24px;
+  --r-pill:999px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --dur-ui:300ms;
+  --dur-hover:320ms;
+  --shadow-card:0 1px 2px rgba(45,0,17,.05),0 10px 28px rgba(45,0,17,.07);
+  --shadow-lift:0 2px 6px rgba(45,0,17,.07),0 22px 50px rgba(45,0,17,.12);
+
+  /* — compatibility aliases (older per-page token names) — */
+  --grounded:#2D0011;
+  --pink:#FFD3E3;
+  --pink-deep:#FFACCA;
+  --pink-soft:#FFF6FA;
+  --edge:#E3DDD5;
+  --grey:#585C60;
+  --muted:#585C60;
+  --font:var(--fl-sans);
+}
+
+/* ---- opt-in base: put class="fl" on <body> ---- */
+.fl{
+  font-family:var(--fl-sans);
+  color:var(--grey-1);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+.fl h1,.fl h2,.fl h3,.fl h4,.fl .fl-display{
+  font-family:var(--fl-display);
+  font-weight:600;
+  letter-spacing:-.012em;
+  color:var(--bordeaux);
+  text-wrap:balance;
+}
+.fl p{text-wrap:pretty}
+
+/* ---- premium global layer (applies wherever this sheet is linked) ---- */
+::selection{background:var(--calm-pink);color:var(--bordeaux)}
+:where(a,button,input,select,textarea,[tabindex]):focus-visible{
+  outline:2px solid var(--calm-deep);
+  outline-offset:2px;
+  border-radius:6px;
+}
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+}
+
+/* opt-in Almarena headings without touching body colour (for bespoke tool pages) */
+.fl-head h1,.fl-head h2,.fl-head h3,.fl-head .display,.fl-head [data-display]{
+  font-family:var(--fl-display);
+  letter-spacing:-.012em;
+  text-wrap:balance;
+}
+/* tabular figures for any live/aligned numbers */
+.fl-num,.fl .metrics strong,.fl .metrics small{font-variant-numeric:tabular-nums}
+
+/* ---- brand mark (real inline wordmark lives in the page's SVG defs) ---- */
+.fl-logo{display:inline-flex;align-items:center;color:var(--bordeaux);text-decoration:none}
+.fl-logo svg{height:26px;width:auto;display:block}
+
+/* ---- pill nav ---- */
+.fl-pill{
+  min-height:34px;display:inline-flex;align-items:center;gap:6px;
+  border:1px solid var(--stone-4);border-radius:var(--r-pill);
+  padding:7px 14px;background:rgba(255,255,255,.6);
+  font-family:var(--fl-sans);font-size:13px;font-weight:500;
+  color:var(--bordeaux);text-decoration:none;
+  transition:background var(--dur-ui) var(--ease),border-color var(--dur-ui) var(--ease);
+}
+.fl-pill:hover{background:var(--white);border-color:var(--calm-deep)}
+.fl-pill:active{transform:scale(.97)}
+
+/* ---- buttons ---- */
+.fl-btn{
+  min-height:44px;display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  border-radius:var(--r-pill);padding:11px 20px;
+  background:var(--bordeaux);color:var(--white);border:1px solid var(--bordeaux);
+  font-family:var(--fl-sans);font-size:15px;font-weight:600;text-decoration:none;cursor:pointer;
+  transition:transform 140ms var(--ease),box-shadow var(--dur-hover) var(--ease),background var(--dur-ui) var(--ease);
+}
+.fl-btn:hover{transform:translateY(-1px);box-shadow:var(--shadow-card)}
+.fl-btn:active{transform:translateY(0) scale(.97)}
+.fl-btn--ghost{background:transparent;color:var(--bordeaux);border-color:var(--line-dark)}
+.fl-btn--ghost:hover{background:var(--white);border-color:var(--calm-deep)}
+
+/* ---- eyebrow / kicker ---- */
+.fl-kicker{
+  font-family:var(--fl-sans);font-size:12px;font-weight:600;
+  letter-spacing:.12em;text-transform:uppercase;color:rgba(45,0,17,.62);
+}
+
+/* ---- status chip ---- */
+.fl-chip{
+  display:inline-flex;align-items:center;gap:6px;width:max-content;
+  border-radius:var(--r-pill);padding:5px 11px;
+  font-family:var(--fl-sans);font-size:11px;font-weight:600;
+  letter-spacing:.02em;text-transform:uppercase;color:var(--bordeaux);
+  background:var(--stone-2);
+}
+.fl-chip.is-live{background:var(--ok)}
+.fl-chip.is-draft{background:var(--blue)}
+.fl-chip.is-locked{background:var(--warn)}
+.fl-chip.is-public{background:var(--sky)}
+
+@media (prefers-reduced-motion:reduce){
+  .fl-btn,.fl-pill{transition:none}
+  .fl-btn:hover,.fl-btn:active,.fl-pill:active{transform:none}
+}
