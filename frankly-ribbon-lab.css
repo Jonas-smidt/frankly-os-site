@@ -400,3 +400,260 @@ input[type="range"]{
 @media (prefers-reduced-motion:reduce){
   *{scroll-behavior:auto!important;transition:none!important}
 }
+
+@media (min-width:901px){
+  html,body{
+    height:100%;
+    overflow:hidden;
+  }
+  .ribbon-lab{
+    height:100dvh;
+    min-height:0;
+    grid-template-columns:minmax(0,1fr) minmax(360px,410px);
+  }
+  .stage{
+    min-height:0;
+    height:100dvh;
+  }
+  .controls{
+    height:100dvh;
+    min-height:0;
+    overflow:hidden;
+    padding:14px 18px;
+  }
+  .control-head{
+    display:flex;
+    align-items:flex-end;
+    justify-content:space-between;
+    gap:14px;
+    padding:0 0 10px;
+    margin-bottom:10px;
+  }
+  .kicker{
+    margin:0 0 3px;
+    font-size:10px;
+    line-height:1.1;
+  }
+  h1{
+    font-size:36px;
+    line-height:.96;
+  }
+  .field{
+    margin-bottom:9px;
+  }
+  label{
+    margin-bottom:5px;
+    font-size:10px;
+    line-height:1.05;
+  }
+  .segmented{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+  }
+  .segmented button,
+  .button{
+    min-height:31px;
+    padding:6px 8px;
+    font-size:11px;
+    line-height:1.1;
+  }
+  textarea{
+    min-height:50px;
+    height:50px;
+    margin-bottom:6px;
+    padding:8px 10px;
+    resize:none;
+    font-size:13px;
+    line-height:1.28;
+  }
+  .actions,
+  .actions.compact{
+    gap:6px;
+  }
+  .actions.compact{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+  }
+  .actions.compact .button{
+    min-height:30px;
+    padding:6px 7px;
+    font-size:11px;
+  }
+  .sliders{
+    grid-template-columns:repeat(2,minmax(0,1fr));
+    gap:7px 12px;
+    margin:6px 0 10px;
+  }
+  .slider{
+    grid-template-columns:58px minmax(0,1fr) 28px;
+    gap:6px;
+    min-height:18px;
+  }
+  .slider label{
+    font-size:9.5px;
+    line-height:1;
+  }
+  .slider output{
+    font-size:10px;
+  }
+  input[type="range"]{
+    height:18px;
+  }
+  .swatches{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:6px;
+  }
+  .swatches button{
+    min-height:46px;
+    padding:22px 8px 6px;
+    font-size:11px;
+  }
+  .swatches button::before{
+    height:18px;
+  }
+  .file-input{
+    min-height:31px;
+    margin-bottom:6px;
+    padding:6px 8px;
+    font-size:11px;
+  }
+  .slider.single{
+    margin-bottom:6px;
+  }
+  .controls > .actions{
+    display:grid;
+    grid-template-columns:repeat(4,minmax(0,1fr));
+    margin-top:2px;
+  }
+  .spec{
+    min-height:40px;
+    height:40px;
+    max-height:40px;
+    margin-top:7px;
+    padding:8px;
+    font-size:9.5px;
+    line-height:1.2;
+  }
+  .toast{
+    min-height:14px;
+    margin-top:4px;
+    font-size:11px;
+    line-height:1.2;
+  }
+}
+
+@media (min-width:901px) and (max-height:820px){
+  .controls{
+    padding:9px 14px;
+  }
+  .control-head{
+    padding-bottom:6px;
+    margin-bottom:6px;
+  }
+  .kicker{
+    font-size:9px;
+  }
+  h1{
+    font-size:28px;
+  }
+  .field{
+    margin-bottom:6px;
+  }
+  label{
+    margin-bottom:3px;
+    font-size:9px;
+  }
+  .segmented{
+    gap:4px;
+  }
+  .segmented button,
+  .button{
+    min-height:26px;
+    padding:4px 6px;
+    font-size:10px;
+  }
+  textarea{
+    min-height:34px;
+    height:34px;
+    margin-bottom:4px;
+    padding:5px 7px;
+    font-size:11px;
+    line-height:1.2;
+  }
+  .actions,
+  .actions.compact{
+    gap:4px;
+  }
+  .actions.compact .button{
+    min-height:26px;
+    padding:4px 5px;
+    font-size:10px;
+  }
+  .sliders{
+    gap:5px 10px;
+    margin:4px 0 6px;
+  }
+  .slider{
+    grid-template-columns:48px minmax(0,1fr);
+    min-height:15px;
+    gap:5px;
+  }
+  .slider label{
+    font-size:8.5px;
+  }
+  .slider output{
+    display:none;
+  }
+  .slider.single{
+    grid-template-columns:42px minmax(0,1fr) 26px;
+  }
+  .slider.single output{
+    display:block;
+    font-size:9px;
+  }
+  input[type="range"]{
+    height:15px;
+  }
+  .swatches{
+    gap:4px;
+  }
+  .swatches button{
+    min-height:34px;
+    padding:16px 6px 4px;
+    font-size:10px;
+  }
+  .swatches button::before{
+    height:13px;
+  }
+  .file-input{
+    min-height:26px;
+    margin-bottom:4px;
+    padding:4px 6px;
+    font-size:10px;
+  }
+  .slider.single{
+    margin-bottom:4px;
+  }
+  .controls > .actions{
+    gap:4px;
+  }
+  .controls > .actions .button{
+    min-height:26px;
+    padding:4px 5px;
+    font-size:10px;
+  }
+  .spec{
+    min-height:22px;
+    height:22px;
+    max-height:22px;
+    margin-top:4px;
+    padding:4px 6px;
+    font-size:8px;
+    line-height:1.1;
+  }
+  .toast{
+    display:none;
+  }
+}
