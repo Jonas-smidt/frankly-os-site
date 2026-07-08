@@ -120,6 +120,41 @@ def copy_file(src, dst, gated=False):
     print(f"{src} -> {dst}")
 
 
+def build_manifest(root=pathlib.Path(".")):
+    """Pure function: return the exact destination relpaths (POSIX, relative to the built
+    `site/` root) the build would produce, mapped to their source Path — or None for
+    build-generated files (.nojekyll, CNAME). Mirrors main()'s copy steps and writes
+    nothing. Used by run-local-site-qa's boundary check to diff intended vs actual output.
+
+    Keep this in lockstep with main(): if main()'s copy set changes, update this too.
+    """
+    manifest = {}
+    manifest["index.html"] = root / ENTRY_FILE
+    for page in UPLOADABLE_HTML:
+        manifest[page.as_posix()] = root / page
+    for static_file in STATIC_FILES:
+        src = root / static_file
+        if src.exists():
+            manifest[static_file.as_posix()] = src
+    tools_dir = root / "assets" / "tools"
+    if tools_dir.exists():
+        for src in sorted(tools_dir.glob("*.png")):
+            manifest[src.relative_to(root).as_posix()] = src
+    journal_dir = root / "journal"
+    if journal_dir.exists():
+        for src in sorted(journal_dir.rglob("*")):
+            if src.is_dir():
+                continue
+            manifest[src.relative_to(root).as_posix()] = src
+    manifest[".nojekyll"] = None
+    domain = os.environ.get("SITE_DOMAIN", "").strip()
+    if not domain and (root / "CNAME").exists():
+        domain = (root / "CNAME").read_text(encoding="utf-8").strip()
+    if domain:
+        manifest["CNAME"] = None
+    return manifest
+
+
 def main():
     if not ENTRY_FILE.exists():
         raise SystemExit("index.html is required as the uploadable test-site entry.")
