@@ -9,7 +9,7 @@ Frankly OS operating work is local-only by default. Website uploads are a separa
   - Scope: Claude Run-to-Packet Launcher v0.1, Claude Task Packet Builder v0.1, Studio v0.1, Observatory v0.1, Flight Recorder v0.1, registry feed, Drive-Ready Bundle Dry Run v0.1, Mission Simulator v0.1, Launch Packet v0.1, Mission Theatre v0.1, Future Mode v0.1, navigation updates, site data feed refresh, browser QA evidence and a fresh site snapshot.
   - Status: pending explicit Drive connector-write approval.
   - Local page: `frankly-os-site/studio.html`
-  - Pending queue count: 14 local items
+  - Pending queue count: 15 local items
   - Queue: `os-visualization/system-intelligence/drive-pending-queue-rep-001-2026-07-05.json`
 
 - Website split:
