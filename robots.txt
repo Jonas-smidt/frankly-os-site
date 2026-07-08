@@ -21,5 +21,11 @@ Disallow: /frankly-image-resizer.html
 Disallow: /frankly-drop-protection.html
 Disallow: /the-decision-chicken.html
 Disallow: /frankly-quiz.html
+Disallow: /frankly-instore-onepager.html
+Disallow: /frankly-instore-salgsguide.html
+Disallow: /glass-lab.html
+Disallow: /glass-surface.html
+Disallow: /frankly-ribbon-lab.html
+Disallow: /liquid-glass-hover.html
 
 Sitemap: https://os.franklydesign.dk/sitemap.xml
