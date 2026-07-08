@@ -58,6 +58,8 @@
     <p class="lede">Genskabelser af design/animationer i Frankly-universet — logo, farver og former. Klik en effekt for at åbne den i fuldskærm; den kører live.</p>
     <div class="sec"><h2>11 effekter</h2><span class="rule"></span></div>
     <div class="grid" id="grid"></div>
+    <div class="sec"><h2>Glas &amp; værktøjer</h2><span class="rule"></span></div>
+    <div class="grid" id="grid2"></div>
     <footer>Frankly · Effekt-lab</footer>
   </div>
 
@@ -81,14 +83,21 @@
       {slug:'folders-lens',da:'Mappe-linse',d:'Mappeliste set gennem en glaslinse.'},
     ];
     const arrow='<span>→</span>';
-    document.getElementById('grid').innerHTML=FX.map((fx,i)=>`
-      <div class="card" data-i="${i}">
-        <div class="prev"><img src="thumbs/${fx.slug}.png" alt="" loading="lazy"></div>
-        <div class="body"><h3>${fx.da}</h3><p>${fx.d}</p><div class="go">Åbn ${arrow}</div></div>
-      </div>`).join('');
-    document.getElementById('grid').addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openFull(+c.dataset.i);});
-    function openFull(i){const fx=FX[i];document.getElementById('fullTitle').textContent=fx.da;
-      document.getElementById('fullFrame').src='effects/'+fx.slug+'.html';document.getElementById('full').hidden=false;}
+    const TOOLS=[
+      {t:'Glass Lab',d:'Grafisk legeplads for Frankly glas-overflader — distortion, frost, kant-lys.',thumb:'thumbs/glass-lab.png',src:'/glass-lab.html'},
+      {t:'Ribbon Lab',d:'Design Frankly-ribbon-former i 3D med prompt og draw-kontroller.',thumb:'thumbs/frankly-ribbon-lab.png',src:'/frankly-ribbon-lab.html'},
+      {t:'Glass Folders',d:'Frostede glas-mapper på farvet bokeh — glasmorfisme.',thumb:'thumbs/glass-folders.png',src:'/glass-folders.html'},
+      {t:'Glass Environment',d:'Rolig glasflade oven på et miljø, der får liv af musens lys.',thumb:'thumbs/liquid-glass-hover.png',src:'/liquid-glass-hover.html'},
+    ];
+    const card=(title,desc,thumb,src)=>`<div class="card" data-src="${src}" data-title="${title}">
+      <div class="prev"><img src="${thumb}" alt="" loading="lazy"></div>
+      <div class="body"><h3>${title}</h3><p>${desc}</p><div class="go">Åbn ${arrow}</div></div></div>`;
+    document.getElementById('grid').innerHTML=FX.map(fx=>card(fx.da,fx.d,'thumbs/'+fx.slug+'.png','effects/'+fx.slug+'.html')).join('');
+    document.getElementById('grid2').innerHTML=TOOLS.map(t=>card(t.t,t.d,t.thumb,t.src)).join('');
+    function onClick(e){const c=e.target.closest('.card');if(c)openFull(c.dataset.src,c.dataset.title);}
+    document.getElementById('grid').addEventListener('click',onClick);
+    document.getElementById('grid2').addEventListener('click',onClick);
+    function openFull(src,title){document.getElementById('fullTitle').textContent=title;document.getElementById('fullFrame').src=src;document.getElementById('full').hidden=false;}
     function closeFull(){document.getElementById('full').hidden=true;document.getElementById('fullFrame').src='about:blank';}
     document.getElementById('fullBack').addEventListener('click',closeFull);
     document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('full').hidden)closeFull();});
