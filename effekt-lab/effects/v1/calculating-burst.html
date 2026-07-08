@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beregner-burst — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  html,body{height:100%;margin:0}
+  body.fl{
+    background:
+      radial-gradient(120% 120% at 30% 55%, #2D0011 0%, #200009 45%, #1a0009 100%);
+    color:var(--grey-1);
+    overflow:hidden;
+    min-height:100vh;
+  }
+
+  /* full-viewport centered dark stage */
+  .stage{
+    position:fixed; inset:0;
+    display:flex; align-items:center; justify-content:center;
+  }
+
+  /* the composition: burst on the left, word to the right of it */
+  .composition{
+    position:relative;
+    display:flex; align-items:center;
+    gap:clamp(18px, 4vw, 60px);
+    transform:translateX(-2vw);
+  }
+
+  .burst-wrap{
+    position:relative;
+    width:clamp(220px, 30vw, 380px);
+    height:clamp(220px, 30vw, 380px);
+    flex:0 0 auto;
+  }
+  canvas#burst{
+    position:absolute; inset:0;
+    width:100%; height:100%;
+    display:block;
+  }
+  /* soft radial bloom behind the core */
+  .bloom{
+    position:absolute; left:50%; top:50%;
+    width:150%; height:150%;
+    transform:translate(-50%,-50%);
+    background:
+      radial-gradient(circle at 50% 50%,
+        rgba(255,240,246,.22) 0%,
+        rgba(255,172,202,.12) 14%,
+        rgba(255,111,165,.06) 30%,
+        rgba(45,0,17,0) 62%);
+    pointer-events:none;
+    z-index:0;
+    will-change:transform,opacity;
+  }
+
+  .word{
+    font-family:var(--display);
+    font-weight:600;
+    letter-spacing:-.02em;
+    font-size:clamp(34px, 6.4vw, 92px);
+    line-height:1;
+    /* subtle low-contrast grey, like the original */
+    color:#4a4448;
+    text-shadow:0 1px 30px rgba(0,0,0,.4);
+    white-space:nowrap;
+    user-select:none;
+  }
+  .word .dots{ display:inline-block; }
+  .word .dots i{
+    font-style:normal;
+    opacity:0;
+    animation:dot 1.6s var(--ease) infinite;
+  }
+  .word .dots i:nth-child(1){animation-delay:0s}
+  .word .dots i:nth-child(2){animation-delay:.24s}
+  .word .dots i:nth-child(3){animation-delay:.48s}
+  @keyframes dot{
+    0%,72%,100%{opacity:.12}
+    18%,54%{opacity:.9}
+  }
+
+  /* back-link pill top-left */
+  .back{
+    position:fixed; top:20px; left:20px; z-index:10;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 15px;
+    font-family:var(--sans); font-size:13px; font-weight:500;
+    letter-spacing:.01em;
+    color:var(--calm-pink);
+    text-decoration:none;
+    background:rgba(255,255,255,.045);
+    border:1px solid rgba(255,211,227,.16);
+    border-radius:var(--r-pill);
+    backdrop-filter:blur(8px);
+    transition:background var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease), transform var(--dur-hover) var(--ease);
+  }
+  .back:hover{
+    background:rgba(255,255,255,.08);
+    border-color:rgba(255,211,227,.34);
+    transform:translateY(-1px);
+  }
+
+  /* caption bottom-center */
+  .caption{
+    position:fixed; left:50%; bottom:26px; z-index:10;
+    transform:translateX(-50%);
+    text-align:center;
+    font-family:var(--sans);
+    user-select:none;
+  }
+  .caption .t{
+    display:block;
+    font-size:13px; font-weight:600; letter-spacing:.02em;
+    color:rgba(255,211,227,.62);
+  }
+  .caption .s{
+    display:block; margin-top:3px;
+    font-size:11px; letter-spacing:.06em;
+    color:rgba(255,255,255,.22);
+  }
+
+  @media (max-width:560px){
+    .composition{flex-direction:column; gap:8px; transform:none;}
+    .word{font-size:clamp(30px,9vw,48px)}
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+  <a class="back" href="../../index.html">← Effekt-lab</a>
+
+  <div class="stage">
+    <div class="composition">
+      <div class="burst-wrap">
+        <div class="bloom" id="bloom"></div>
+        <canvas id="burst"></canvas>
+      </div>
+      <div class="word" aria-label="Beregner">Beregner<span class="dots"><i>.</i><i>.</i><i>.</i></span></div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <span class="t">Beregner-burst</span>
+    <span class="s">efter Calculating Burst</span>
+  </div>
+
+<script>
+(function(){
+  const canvas = document.getElementById('burst');
+  const bloom  = document.getElementById('bloom');
+  const ctx = canvas.getContext('2d');
+  const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let W=0, H=0, cx=0, cy=0, DPR=1, R=0;
+
+  function resize(){
+    DPR = Math.min(window.devicePixelRatio||1, 2);
+    const r = canvas.getBoundingClientRect();
+    W = Math.max(1, Math.round(r.width));
+    H = Math.max(1, Math.round(r.height));
+    canvas.width  = Math.round(W*DPR);
+    canvas.height = Math.round(H*DPR);
+    ctx.setTransform(DPR,0,0,DPR,0,0);
+    cx = W/2; cy = H/2;
+    R  = Math.min(W,H)*0.46;   // max radius of the burst
+  }
+
+  // ---- particle model ----------------------------------------------------
+  // Each filament is a fine radiating spark: angle + normalized reach + width.
+  const N = 320;
+  let sparks = [];
+  function seed(){
+    sparks = [];
+    for(let i=0;i<N;i++){
+      const ang = Math.random()*Math.PI*2;
+      // bias reach so most sparks are mid-length, a few long, giving the
+      // irregular firework silhouette
+      const r = Math.pow(Math.random(), 0.62);
+      sparks.push({
+        ang,
+        reach: 0.30 + r*0.70,          // how far out (fraction of R)
+        w: 0.5 + Math.random()*1.3,     // line width
+        speed: 0.85 + Math.random()*0.5,// per-spark timing jitter
+        seg: 0.55 + Math.random()*0.4,  // where the bright segment starts
+        flick: Math.random()*Math.PI*2, // phase for shimmer
+        tint: Math.random()             // 0..1 -> warm white to pink fringe
+      });
+    }
+  }
+
+  // warm-white core -> calm-pink / calm-deep at the fringe
+  function sparkColor(t, alpha){
+    // t: distance fraction along spark (0 core .. 1 tip)
+    // near core = warm white, tips pick up pink
+    let r,g,b;
+    if(t < 0.5){
+      r=255; g=248; b=250;
+    }else{
+      const k=(t-0.5)/0.5;
+      r=255;
+      g=248 - k*76;   // -> ~172  (calm-deep g)
+      b=250 - k*48;   // -> ~202  (calm-deep b)
+    }
+    return 'rgba('+ (r|0) +','+ (g|0) +','+ (b|0) +','+ alpha +')';
+  }
+
+  // ---- burst loop --------------------------------------------------------
+  const PERIOD = 3400;           // ms per burst cycle
+  let t0 = performance.now();
+
+  // eased burst envelope: quick expand, slow fade, brief dark, re-form
+  function envelope(p){
+    // p in 0..1
+    // radius scale
+    const rise = 1 - Math.pow(1-Math.min(p/0.34,1), 3);      // ease-out expand
+    const scale = 0.12 + rise*0.88;
+    // opacity: bloom in fast, fade over the tail
+    let op;
+    if(p < 0.10){ op = p/0.10; }
+    else { op = Math.max(0, 1 - (p-0.10)/0.80); op = Math.pow(op,1.15); }
+    return {scale, op};
+  }
+
+  function drawFrame(now){
+    let p = ((now - t0) % PERIOD) / PERIOD;
+    const env = envelope(p);
+
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation = 'lighter';
+
+    const curR = R*env.scale;
+
+    for(let i=0;i<N;i++){
+      const s = sparks[i];
+      // per-spark shimmer + slight staggered emergence
+      const local = Math.min(1, env.scale*s.speed*1.06);
+      const shimmer = 0.72 + 0.28*Math.sin(now*0.006*s.speed + s.flick);
+      const len = curR*s.reach*local;
+      if(len < 0.5) continue;
+
+      const cosA=Math.cos(s.ang), sinA=Math.sin(s.ang);
+      // bright outer segment of the filament (leaves a hollow-ish center)
+      const x0 = cx + cosA*len*s.seg;
+      const y0 = cy + sinA*len*s.seg;
+      const x1 = cx + cosA*len;
+      const y1 = cy + sinA*len;
+
+      const a = env.op*shimmer*0.9;
+      const grad = ctx.createLinearGradient(x0,y0,x1,y1);
+      grad.addColorStop(0, sparkColor(s.seg, a*0.85));
+      grad.addColorStop(0.5, sparkColor((s.seg+1)/2, a));
+      grad.addColorStop(1, sparkColor(1, 0));
+      ctx.strokeStyle = grad;
+      ctx.lineWidth = s.w;
+      ctx.lineCap = 'round';
+      ctx.beginPath();
+      ctx.moveTo(x0,y0);
+      ctx.lineTo(x1,y1);
+      ctx.stroke();
+    }
+
+    // hot core
+    const coreR = Math.max(2, curR*0.16);
+    const cg = ctx.createRadialGradient(cx,cy,0, cx,cy,coreR*3.2);
+    cg.addColorStop(0,   'rgba(255,255,255,'+(env.op*0.95)+')');
+    cg.addColorStop(0.28,'rgba(255,246,250,'+(env.op*0.7)+')');
+    cg.addColorStop(0.6, 'rgba(255,172,202,'+(env.op*0.22)+')');
+    cg.addColorStop(1,   'rgba(255,111,165,0)');
+    ctx.fillStyle = cg;
+    ctx.beginPath();
+    ctx.arc(cx,cy,coreR*3.2,0,Math.PI*2);
+    ctx.fill();
+
+    ctx.globalCompositeOperation = 'source-over';
+
+    // drive the CSS bloom
+    bloom.style.opacity = (0.35 + env.op*0.65).toFixed(3);
+    bloom.style.transform = 'translate(-50%,-50%) scale('+(0.6+env.scale*0.55).toFixed(3)+')';
+
+    raf = requestAnimationFrame(drawFrame);
+  }
+
+  // static render for reduced motion
+  function drawStatic(){
+    const env = {scale:0.92, op:0.9};
+    const curR = R*env.scale;
+    ctx.clearRect(0,0,W,H);
+    ctx.globalCompositeOperation = 'lighter';
+    for(let i=0;i<N;i++){
+      const s=sparks[i];
+      const len=curR*s.reach;
+      const cosA=Math.cos(s.ang), sinA=Math.sin(s.ang);
+      const x0=cx+cosA*len*s.seg, y0=cy+sinA*len*s.seg;
+      const x1=cx+cosA*len, y1=cy+sinA*len;
+      const a=env.op*0.8;
+      const grad=ctx.createLinearGradient(x0,y0,x1,y1);
+      grad.addColorStop(0,sparkColor(s.seg,a*0.85));
+      grad.addColorStop(0.5,sparkColor((s.seg+1)/2,a));
+      grad.addColorStop(1,sparkColor(1,0));
+      ctx.strokeStyle=grad; ctx.lineWidth=s.w; ctx.lineCap='round';
+      ctx.beginPath(); ctx.moveTo(x0,y0); ctx.lineTo(x1,y1); ctx.stroke();
+    }
+    const coreR=Math.max(2,curR*0.16);
+    const cg=ctx.createRadialGradient(cx,cy,0,cx,cy,coreR*3.2);
+    cg.addColorStop(0,'rgba(255,255,255,.95)');
+    cg.addColorStop(0.28,'rgba(255,246,250,.7)');
+    cg.addColorStop(0.6,'rgba(255,172,202,.22)');
+    cg.addColorStop(1,'rgba(255,111,165,0)');
+    ctx.fillStyle=cg; ctx.beginPath(); ctx.arc(cx,cy,coreR*3.2,0,Math.PI*2); ctx.fill();
+    ctx.globalCompositeOperation='source-over';
+    bloom.style.opacity='0.9';
+    bloom.style.transform='translate(-50%,-50%) scale(1.05)';
+  }
+
+  let raf=0;
+  function start(){
+    cancelAnimationFrame(raf);
+    resize(); seed();
+    if(reduced){ drawStatic(); }
+    else { t0=performance.now(); raf=requestAnimationFrame(drawFrame); }
+  }
+
+  let rt;
+  window.addEventListener('resize', function(){
+    clearTimeout(rt);
+    rt=setTimeout(start, 120);
+  });
+  start();
+})();
+</script>
+</body>
+</html>

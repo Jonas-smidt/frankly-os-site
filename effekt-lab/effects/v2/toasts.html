@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifikations-toasts — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+
+  body.fl{
+    background:
+      radial-gradient(70vmax 52vmax at 50% 30%, rgba(74,16,48,.42), transparent 60%),
+      radial-gradient(60vmax 60vmax at 50% 84%, rgba(45,0,17,.55), transparent 66%),
+      #0a0207;
+    color:#fff;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+    min-height:100vh;
+  }
+
+  /* film grain — kills gradient banding on the bordeaux stage */
+  .grain{
+    position:fixed; inset:0; z-index:1; pointer-events:none;
+    opacity:.045; mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* soft bordeaux bloom sitting behind the front card, for depth */
+  .glow{
+    position:fixed; z-index:1; top:50%; left:50%;
+    width:520px; height:340px; margin:-190px 0 0 -260px;
+    pointer-events:none;
+    background:radial-gradient(closest-side, rgba(255,111,165,.10), rgba(138,31,74,.08) 55%, transparent 72%);
+    filter:blur(8px);
+    animation:bloom 9s ease-in-out infinite alternate;
+  }
+  @keyframes bloom{0%{opacity:.75;transform:scale(.98)}100%{opacity:1;transform:scale(1.04)}}
+
+  .stage{position:relative; z-index:2; width:472px; height:360px}
+  .stack{
+    position:absolute; left:50%; top:96px;
+    width:100%; transform:translateX(-50%);
+  }
+
+  /* ============ a single toast ============ */
+  .toast{
+    position:absolute; left:50%; top:0; width:448px;
+    transform-origin:50% 50%;
+    will-change:transform,opacity,filter;
+    display:flex; align-items:center; gap:14px;
+    padding:15px 18px;
+    border-radius:22px;
+    background:
+      linear-gradient(158deg, rgba(83,22,54,.72), rgba(30,7,17,.82) 54%, rgba(16,4,9,.9));
+    box-shadow:
+      0 1px 2px rgba(45,0,17,.5),
+      0 14px 30px rgba(20,4,11,.5),
+      0 34px 66px rgba(45,0,17,.42),
+      inset 0 0 0 1px rgba(255,255,255,.06),
+      inset 0 1px 0 rgba(255,255,255,.12),
+      inset 0 -2px 12px rgba(0,0,0,.4);
+    -webkit-backdrop-filter:blur(3px); backdrop-filter:blur(3px);
+  }
+  /* crisp directional rim light */
+  .toast::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    padding:1px;
+    background:linear-gradient(150deg, rgba(255,255,255,.4), rgba(255,255,255,.05) 30%, transparent 55%, rgba(255,172,202,.14) 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+  }
+
+  /* ---- avatar ---- */
+  .avatar{
+    position:relative; flex:none;
+    width:50px; height:50px; border-radius:50%;
+    display:grid; place-items:center;
+    background:linear-gradient(150deg, var(--a1), var(--a2));
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.28),
+      inset 0 0 0 1px rgba(255,255,255,.1),
+      0 3px 8px rgba(0,0,0,.35);
+  }
+  .avatar .mono{
+    font-family:var(--display); font-weight:600; font-size:20px; letter-spacing:-.01em;
+    color:#fff; line-height:1; text-shadow:0 1px 2px rgba(0,0,0,.28);
+  }
+  .avatar .leaf{width:15px; height:auto; display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.35))}
+
+  /* ---- status badge, bottom-right of avatar ---- */
+  .badge{
+    position:absolute; right:-3px; bottom:-3px;
+    width:23px; height:23px; border-radius:50%;
+    display:grid; place-items:center;
+    box-shadow:0 0 0 3px #180510, 0 2px 5px rgba(0,0,0,.4), inset 0 1px 0 rgba(255,255,255,.35);
+  }
+  .badge svg{display:block}
+  .badge.repost{background:linear-gradient(160deg,#3ee07d,var(--success-live))}
+  .badge.like{background:linear-gradient(160deg,#FFACCA,#FF6FA5)}
+  .badge.follow{background:linear-gradient(160deg,#FFE1EC,var(--calm-pink))}
+  .badge.message{background:linear-gradient(160deg,#79b9f5,#4a90e2)}
+
+  /* ---- text body ---- */
+  .body{flex:1; min-width:0}
+  .line{
+    font-family:var(--sans); font-size:16px; line-height:1.28; letter-spacing:-.005em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .line .handle{font-weight:600; color:#fff}
+  .line .act{font-weight:400; color:rgba(255,255,255,.9)}
+  .sub{
+    margin-top:2px;
+    font-family:var(--sans); font-weight:400; font-size:14.5px; line-height:1.3;
+    color:rgba(255,255,255,.52);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .ts{
+    flex:none; align-self:flex-start; margin-top:1px;
+    font-family:var(--sans); font-weight:500; font-size:13px;
+    font-variant-numeric:tabular-nums; font-feature-settings:"tnum" 1;
+    color:rgba(255,255,255,.4);
+  }
+
+  /* ---- back-pill ---- */
+  .back{
+    position:fixed; top:22px; left:22px; z-index:20;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 16px 9px 13px; border-radius:var(--r-pill);
+    font-family:var(--sans); font-weight:500; font-size:13.5px;
+    color:rgba(255,255,255,.82); text-decoration:none;
+    background:rgba(255,255,255,.05);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.13), inset 0 1px 0 rgba(255,255,255,.2), 0 6px 18px rgba(0,0,0,.35);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    transition:color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease-spring);
+  }
+  .back:hover{color:#fff; background:rgba(255,211,227,.1); transform:translateY(-1px)}
+
+  /* ---- caption ---- */
+  .caption{position:fixed; bottom:26px; left:0; right:0; z-index:20; text-align:center; pointer-events:none}
+  .caption .title{font-family:var(--display); font-weight:600; font-size:15px; letter-spacing:.01em; color:rgba(255,255,255,.78)}
+  .caption .sub{display:block; margin-top:4px; font-family:var(--sans); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase; color:rgba(255,255,255,.32)}
+
+  @media (prefers-reduced-motion:reduce){
+    .glow{animation:none}
+    .toast{transition:none!important}
+  }
+  @media (max-width:520px){
+    .stage{width:calc(100vw - 36px)}
+    .toast{width:calc(100vw - 36px)}
+    .line{font-size:15px} .sub{font-size:13.5px}
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+
+  <div class="grain"></div>
+  <div class="glow"></div>
+
+  <a class="back" href="../../index.html">← Effekt-lab</a>
+
+  <div class="stage">
+    <div class="stack" id="stack"></div>
+  </div>
+
+  <div class="caption">
+    <span class="title">Notifikations-toasts</span>
+    <span class="sub">efter X Toasts</span>
+  </div>
+
+<script>
+(function(){
+  var stack = document.getElementById('stack');
+  var reduced = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  var LEAF = '<svg class="leaf" viewBox="0 0 18 37" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+    +'<path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z" fill="#fff"/>'
+    +'<path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z" fill="#fff"/>'
+    +'<path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z" fill="#fff"/>'
+    +'<path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z" fill="#fff"/></svg>';
+
+  var GLYPH = {
+    repost:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#0c3d1f" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M4 8h11a3 3 0 0 1 3 3M4 8l3-3M4 8l3 3"/><path d="M20 16H9a3 3 0 0 1-3-3M20 16l-3 3M20 16l-3-3"/></svg>',
+    like:'<svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M12 20s-7-4.35-9.33-8.2C1.1 9.08 2 6 5 6c1.9 0 3 1.2 3.6 2.1C9.2 7.2 10.3 6 12.2 6 15.2 6 16 9.08 14.4 11.8 12.1 15.65 12 20 12 20z"/></svg>',
+    follow:'<svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#2D0011" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="8.5" r="3.2"/><path d="M3.6 19c.4-3 2.6-4.6 5.4-4.6 1 0 1.9.2 2.6.6"/><path d="M17 12v6M14 15h6"/></svg>',
+    message:'<svg width="12" height="12" viewBox="0 0 24 24" fill="#fff"><path d="M4 5h16a1 1 0 0 1 1 1v10a1 1 0 0 1-1 1H9l-4 3v-3H4a1 1 0 0 1-1-1V6a1 1 0 0 1 1-1z"/></svg>'
+  };
+
+  var DATA = [
+    {handle:'@mette',   act:'delte dit opslag',       sub:'De nye toasts i Frankly er så rene',          type:'repost',  a1:'#8A1F4A', a2:'#4A1030', mono:'M'},
+    {handle:'@jonas',   act:'kunne lide dit opslag',  sub:'Endelig et ordentligt notifikations-design',  type:'like',    a1:'#FF8FB4', a2:'#E85C90', mono:'J'},
+    {handle:'@frankly', act:'følger dig nu',          sub:'I følger nu hinanden',                         type:'follow',  a1:'#2D0011', a2:'#4A1030', leaf:true},
+    {handle:'@laura',   act:'sendte dig en besked',   sub:'Kan vi bruge den her?',                        type:'message', a1:'#5A78C2', a2:'#3B4E8A', mono:'L'},
+    {handle:'@sofie',   act:'delte dit opslag',       sub:'Det her er ren notifikations-poesi',           type:'repost',  a1:'#B85C8A', a2:'#7A2E52', mono:'S'},
+    {handle:'@anders',  act:'kunne lide dit opslag',  sub:'Så rolige toasts har jeg aldrig set',          type:'like',    a1:'#6E7B8C', a2:'#454F5E', mono:'A'}
+  ];
+
+  // per-depth presentation: y offset, scale, blur, opacity, timestamp label
+  var LV = {
+    '-1':{y:-18, s:.975, b:2.4, o:0,   ts:'nu'},
+      0 :{y:0,   s:1,    b:0,   o:1,   ts:'nu'},
+      1 :{y:60,  s:.902, b:1.4, o:.62, ts:'1m'},
+      2 :{y:107, s:.822, b:3.1, o:.34, ts:'2m'},
+      3 :{y:143, s:.772, b:5.6, o:.13, ts:'4m'},
+      4 :{y:174, s:.74,  b:8.4, o:0,   ts:'7m'}
+  };
+
+  var ENTER  = 'transform .8s cubic-bezier(.34,1.42,.5,1), opacity .5s cubic-bezier(.2,.7,.3,1), filter .58s cubic-bezier(.16,1,.3,1)';
+  var RECEDE = 'transform .66s cubic-bezier(.16,1,.3,1), opacity .66s cubic-bezier(.16,1,.3,1), filter .66s cubic-bezier(.16,1,.3,1)';
+
+  function build(d){
+    var el = document.createElement('article');
+    el.className = 'toast';
+    var inner = d.leaf ? LEAF : '<span class="mono">'+d.mono+'</span>';
+    el.innerHTML =
+      '<div class="avatar" style="--a1:'+d.a1+';--a2:'+d.a2+'">'+inner+
+        '<span class="badge '+d.type+'">'+GLYPH[d.type]+'</span>'+
+      '</div>'+
+      '<div class="body">'+
+        '<div class="line"><span class="handle">'+d.handle+'</span> <span class="act">'+d.act+'</span></div>'+
+        '<div class="sub">'+d.sub+'</div>'+
+      '</div>'+
+      '<time class="ts">nu</time>';
+    return el;
+  }
+
+  function place(el, lvl, instant){
+    var L = LV[lvl];
+    if(instant){ el.style.transition = 'none'; }
+    el.style.transform = 'translate(-50%,'+L.y+'px) scale('+L.s+')';
+    el.style.opacity = L.o;
+    el.style.filter = 'blur('+L.b+'px)';
+    el.style.zIndex = 100 - lvl;
+    var ts = el.querySelector('.ts'); if(ts) ts.textContent = L.ts;
+    el._lvl = lvl;
+  }
+
+  var live = [];
+  var idx = 0;
+
+  function seed(n){
+    for(var k=0;k<n;k++){
+      var el = build(DATA[k % DATA.length]);
+      stack.appendChild(el);
+      place(el, k, true);
+      live.push(el);
+    }
+    idx = n % DATA.length;
+    // flush the instant transitions so subsequent moves animate
+    void stack.offsetWidth;
+    for(var j=0;j<live.length;j++){ live[j].style.transition = RECEDE; }
+  }
+
+  function tick(){
+    // age the existing stack one step back
+    for(var i=0;i<live.length;i++){
+      var t = live[i];
+      t.style.transition = RECEDE;
+      place(t, t._lvl + 1);
+    }
+    // retire anything that has left the visible depth range
+    live = live.filter(function(t){
+      if(t._lvl >= 4){ setTimeout(function(){ if(t.parentNode) t.parentNode.removeChild(t); }, 760); return false; }
+      return true;
+    });
+    // spring a fresh toast in on top
+    var el = build(DATA[idx]);
+    idx = (idx + 1) % DATA.length;
+    stack.appendChild(el);
+    place(el, -1, true);
+    void el.offsetWidth;
+    requestAnimationFrame(function(){
+      requestAnimationFrame(function(){
+        el.style.transition = ENTER;
+        place(el, 0);
+      });
+    });
+    live.push(el);
+  }
+
+  seed(4);
+  if(!reduced){ setInterval(tick, 2150); }
+})();
+</script>
+</body>
+</html>

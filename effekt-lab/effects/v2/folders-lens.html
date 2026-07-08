@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Mappe-linse — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+
+  body.fl{
+    background:
+      radial-gradient(120vmax 80vmax at 50% 44%, rgba(30,6,18,.55), transparent 62%),
+      radial-gradient(80vmax 80vmax at 50% 120%, rgba(10,2,7,.9), transparent 60%),
+      #040103;
+    color:#fff;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+    min-height:100vh;
+  }
+
+  /* ================= the stage ================= */
+  .stage{ position:relative; width:100%; height:100%; }
+
+  /* ---------- the folder list (stays put; only fully readable through the lens) ---------- */
+  .list{
+    position:absolute; top:50%; left:50%;
+    transform:translate(-50%,-50%);
+    width:224px;
+    user-select:none;
+    -webkit-font-smoothing:antialiased;
+  }
+  /* the base copy sits behind the glass — a faint ghost outside the lens */
+  .list.base{ z-index:1; opacity:.1; }
+
+  .heading{
+    font-family:var(--display); font-weight:600; font-size:18px;
+    letter-spacing:-.01em; color:rgba(255,255,255,.94);
+    padding:2px 8px 15px;
+  }
+
+  .row{
+    position:relative;
+    display:flex; align-items:center; gap:9px;
+    padding:9px 12px;
+    border-radius:12px;
+    font-family:var(--sans); font-weight:500; font-size:15px;
+    letter-spacing:.005em;
+    color:rgba(255,255,255,.5);
+  }
+  .row + .row{ margin-top:2px; }
+  .row .chev{ width:8px; height:14px; flex:none; opacity:.55; }
+  .row .folder{ width:19px; height:19px; flex:none; opacity:.72; }
+  .row .label{ line-height:1; }
+
+  .row.selected{
+    color:#fff;
+    border:1px solid rgba(255,211,227,.4);
+    background:linear-gradient(180deg, rgba(255,211,227,.07), rgba(255,172,202,.015));
+    box-shadow:
+      0 0 20px rgba(255,172,202,.2),
+      inset 0 1px 0 rgba(255,255,255,.09),
+      inset 0 0 0 1px rgba(255,255,255,.04);
+  }
+  .row.selected .folder{ opacity:1; color:var(--calm-deep); }
+  .row.selected .chev{ opacity:.85; color:var(--calm-pink); }
+
+  /* ================= the liquid-glass lens ================= */
+  .lens{
+    position:absolute; top:50%; left:50%;
+    width:300px; height:300px;
+    border-radius:50%;
+    overflow:hidden;
+    z-index:2;
+    transform:translate(-50%,-50%);
+    will-change:transform;
+    animation:lensBreathe 13s cubic-bezier(.37,0,.32,1) infinite;
+    box-shadow:
+      0 34px 90px rgba(0,0,0,.72),
+      0 12px 34px rgba(0,0,0,.6),
+      0 0 70px rgba(255,111,165,.05);
+  }
+
+  /* solid near-black interior so the ghost list is hidden inside the glass */
+  .lens .bg{
+    position:absolute; inset:0; border-radius:50%; z-index:0;
+    background:
+      radial-gradient(120% 120% at 40% 33%, #0a0509, #050206 58%, #020102 100%);
+  }
+
+  /* layer 1 — the magnified + refracted copy of the list */
+  .lens .refract{
+    position:absolute; inset:0; z-index:1;
+    filter:url(#lensBulge);
+    will-change:filter;
+  }
+  .lens .refract .list.mag{
+    opacity:1;
+    transform:translate(-50%,-50%) scale(1.28);
+  }
+  .lens .refract .heading{ color:#fff; }
+  .lens .refract .row{ color:rgba(255,255,255,.66); }
+  .lens .refract .row.selected{ color:#fff; }
+
+  /* layer 2 — spherical glass shading: specular top-left, inner falloff, bevel */
+  .lens .shade{
+    position:absolute; inset:0; border-radius:50%; z-index:2; pointer-events:none;
+    background:
+      radial-gradient(115% 115% at 32% 25%, rgba(255,255,255,.11), transparent 44%),
+      radial-gradient(130% 130% at 72% 86%, rgba(255,255,255,.045), transparent 54%);
+    box-shadow:
+      inset 0 1px 1px rgba(255,255,255,.24),
+      inset 0 0 30px rgba(0,0,0,.5),
+      inset 0 0 0 1px rgba(255,255,255,.05);
+  }
+
+  /* layer 3 — fine filamented caustic ripples near the rim (the "alive" refraction) */
+  .lens .ripple{
+    position:absolute; inset:0; border-radius:50%; z-index:3; pointer-events:none;
+    background:repeating-conic-gradient(from 0deg,
+      transparent 0deg 3.4deg, rgba(255,255,255,.07) 3.4deg 4.2deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 78%, #000 89%, #000 98%, transparent 100%);
+            mask:radial-gradient(closest-side, transparent 78%, #000 89%, #000 98%, transparent 100%);
+    mix-blend-mode:screen;
+    filter:blur(.5px);
+    animation:spin 46s linear infinite reverse;
+  }
+
+  /* layer 4 — the bright travelling caustics (two lobes, top + bottom, rotating) */
+  .lens .caustic{
+    position:absolute; inset:0; border-radius:50%; z-index:4; pointer-events:none;
+    background:conic-gradient(from 0deg,
+      transparent 0deg, rgba(255,255,255,.92) 28deg, transparent 78deg,
+      transparent 168deg, rgba(255,255,255,.82) 208deg, transparent 262deg,
+      transparent 360deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 85%, #000 92%, #000 98.5%, transparent 100%);
+            mask:radial-gradient(closest-side, transparent 85%, #000 92%, #000 98.5%, transparent 100%);
+    mix-blend-mode:screen;
+    filter:blur(1px);
+    animation:spin 15s linear infinite;
+  }
+  .lens .caustic.two{
+    background:conic-gradient(from 40deg,
+      transparent 0deg, rgba(255,255,255,.55) 16deg, transparent 52deg,
+      transparent 120deg, rgba(255,255,255,.4) 138deg, transparent 176deg,
+      transparent 240deg, rgba(255,255,255,.5) 260deg, transparent 300deg,
+      transparent 360deg);
+    filter:blur(.5px);
+    animation:spin 9.5s linear infinite reverse;
+    opacity:.8;
+  }
+
+  /* layer 5 — faint Frankly-prism chromatic fringe hugging the very rim */
+  .lens .prism{
+    position:absolute; inset:0; border-radius:50%; z-index:5; pointer-events:none;
+    background:var(--prism-conic);
+    -webkit-mask:radial-gradient(closest-side, transparent 93.5%, #000 97%, transparent 100%);
+            mask:radial-gradient(closest-side, transparent 93.5%, #000 97%, transparent 100%);
+    mix-blend-mode:screen;
+    filter:blur(.7px);
+    opacity:.32;
+    animation:spin 30s linear infinite;
+  }
+
+  /* layer 6 — crisp bright edge line */
+  .lens .edge{
+    position:absolute; inset:0; border-radius:50%; z-index:6; pointer-events:none;
+    background:radial-gradient(closest-side,
+      transparent 95%, rgba(255,255,255,.55) 97.2%, rgba(255,255,255,.12) 99%, transparent 100%);
+    mix-blend-mode:screen;
+  }
+
+  /* layer 7 — grain / dither to kill banding across the glass */
+  .lens .grain{
+    position:absolute; inset:-20%; z-index:7; pointer-events:none;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:.05;
+    mix-blend-mode:overlay;
+  }
+
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  @keyframes lensBreathe{
+    0%   { transform:translate(-50%,-50%) translate(0px,0px)  scale(1); }
+    25%  { transform:translate(-50%,-50%) translate(5px,-3px) scale(1.011); }
+    50%  { transform:translate(-50%,-50%) translate(1px,-6px) scale(1.02); }
+    75%  { transform:translate(-50%,-50%) translate(-4px,-2px) scale(1.011); }
+    100% { transform:translate(-50%,-50%) translate(0px,0px)  scale(1); }
+  }
+
+  /* reduced motion: hold a single composed frame — static lens over "Ikoner" */
+  @media (prefers-reduced-motion:reduce){
+    .lens{ animation:none; transform:translate(-50%,-50%); }
+    .lens .ripple,.lens .caustic,.lens .prism{ animation:none; }
+  }
+
+  /* ---------- shared furniture ---------- */
+  .back{
+    position:fixed; top:22px; left:22px; z-index:20;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 16px 9px 13px; border-radius:var(--r-pill);
+    font-family:var(--sans); font-weight:500; font-size:13.5px;
+    color:rgba(255,255,255,.82); text-decoration:none;
+    background:rgba(255,255,255,.05);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.13),
+      inset 0 1px 0 rgba(255,255,255,.2),
+      0 6px 18px rgba(0,0,0,.35);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    transition:color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease-spring);
+  }
+  .back:hover{ color:#fff; background:rgba(255,211,227,.1); transform:translateY(-1px); }
+
+  .caption{
+    position:fixed; bottom:26px; left:0; right:0; z-index:20; text-align:center;
+    pointer-events:none;
+  }
+  .caption .title{
+    font-family:var(--display); font-weight:600; font-size:15px; letter-spacing:.01em;
+    color:rgba(255,255,255,.78);
+  }
+  .caption .sub{
+    display:block; margin-top:4px;
+    font-family:var(--sans); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:rgba(255,255,255,.32);
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+
+  <a class="back" href="../../index.html">← Effekt-lab</a>
+
+  <div class="stage">
+
+    <!-- the folder list template, reused for the base ghost and the magnified copy -->
+    <template id="listTpl">
+      <div class="list">
+        <div class="heading">Design</div>
+
+        <div class="row">
+          <svg class="chev" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1l5 6-5 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="folder" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7.5a2 2 0 0 1 2-2h3.4a2 2 0 0 1 1.4.6l1 1a2 2 0 0 0 1.4.6H19a2 2 0 0 1 2 2v7.3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="label">Elementer</span>
+        </div>
+
+        <div class="row selected">
+          <svg class="chev" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1l5 6-5 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="folder" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7.5a2 2 0 0 1 2-2h3.4a2 2 0 0 1 1.4.6l1 1a2 2 0 0 0 1.4.6H19a2 2 0 0 1 2 2v7.3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5"/><path d="M8 9.6h5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <span class="label">Ikoner</span>
+        </div>
+
+        <div class="row">
+          <svg class="chev" viewBox="0 0 8 14" fill="none" aria-hidden="true"><path d="M1 1l5 6-5 6" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          <svg class="folder" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M3 7.5a2 2 0 0 1 2-2h3.4a2 2 0 0 1 1.4.6l1 1a2 2 0 0 0 1.4.6H19a2 2 0 0 1 2 2v7.3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z" stroke="currentColor" stroke-width="1.5"/></svg>
+          <span class="label">Shader</span>
+        </div>
+      </div>
+    </template>
+
+    <!-- base ghost list (stays put) -->
+    <div id="baseSlot"></div>
+
+    <!-- the lens -->
+    <div class="lens">
+      <div class="bg"></div>
+      <div class="refract"><div id="magSlot"></div></div>
+      <div class="shade"></div>
+      <div class="ripple"></div>
+      <div class="caustic"></div>
+      <div class="caustic two"></div>
+      <div class="prism"></div>
+      <div class="edge"></div>
+      <div class="grain"></div>
+    </div>
+
+  </div>
+
+  <div class="caption">
+    <span class="title">Mappe-linse</span>
+    <span class="sub">efter Framer Folders</span>
+  </div>
+
+  <!-- SVG lens-bulge filter: flat centre, strong outward refraction toward the rim -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <filter id="lensBulge" x="-15%" y="-15%" width="130%" height="130%" color-interpolation-filters="sRGB">
+      <feImage id="lensMap" result="map" preserveAspectRatio="none"/>
+      <feDisplacementMap in="SourceGraphic" in2="map" scale="76"
+        xChannelSelector="R" yChannelSelector="G" result="disp"/>
+      <feGaussianBlur in="disp" stdDeviation="0.3"/>
+    </filter>
+  </svg>
+
+<script>
+  const D = 300;
+
+  // clone the list template into the base ghost and the magnified copy
+  const tpl = document.getElementById('listTpl').content;
+  const base = tpl.cloneNode(true); base.querySelector('.list').classList.add('base');
+  document.getElementById('baseSlot').replaceWith(base);
+  const mag  = tpl.cloneNode(true); mag.querySelector('.list').classList.add('mag');
+  document.getElementById('magSlot').replaceWith(mag);
+
+  // spherical normal map: no push in the middle, hard outward push at the edge
+  function buildLensMap(size){
+    const cv = document.createElement('canvas');
+    cv.width = cv.height = size;
+    const ctx = cv.getContext('2d');
+    const img = ctx.createImageData(size, size);
+    const R = size/2;
+    for(let y=0; y<size; y++){
+      for(let x=0; x<size; x++){
+        const dx=(x-R)/R, dy=(y-R)/R;
+        const r=Math.hypot(dx,dy);
+        let nx=0, ny=0;
+        if(r<1){
+          const strength=Math.pow(r,2.6);
+          const inv=r>0.0001?1/r:0;
+          nx=dx*inv*strength; ny=dy*inv*strength;
+        }
+        const i=(y*size+x)*4;
+        img.data[i]   = Math.max(0,Math.min(255, 128 + nx*127));
+        img.data[i+1] = Math.max(0,Math.min(255, 128 + ny*127));
+        img.data[i+2] = 128;
+        img.data[i+3] = 255;
+      }
+    }
+    ctx.putImageData(img,0,0);
+    return cv.toDataURL();
+  }
+
+  const lensMap = document.getElementById('lensMap');
+  lensMap.setAttribute('href', buildLensMap(D));
+  lensMap.setAttribute('x', 0); lensMap.setAttribute('y', 0);
+  lensMap.setAttribute('width', D); lensMap.setAttribute('height', D);
+</script>
+</body>
+</html>

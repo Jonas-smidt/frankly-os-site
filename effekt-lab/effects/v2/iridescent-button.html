@@ -1,0 +1,284 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iriserende knap — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  html,body{height:100%}
+  body{margin:0}
+
+  /* =========================================================
+     STAGE — near-black bordeaux so the prism reads as light
+     ========================================================= */
+  .stage{
+    position:fixed; inset:0; overflow:hidden;
+    display:grid; place-items:center;
+    background:
+      radial-gradient(120% 92% at 50% 44%, #1b020e 0%, #12010a 44%, #0a0006 78%, #050003 100%);
+  }
+  /* faint prism ambience left (warm bordeaux) & right (magenta) like the ref halos */
+  .stage::before,.stage::after{
+    content:""; position:absolute; top:50%; width:52vmin; height:52vmin;
+    transform:translateY(-50%); border-radius:50%;
+    filter:blur(72px); opacity:.42; pointer-events:none; z-index:0;
+  }
+  .stage::before{ left:2vmin;  background:radial-gradient(circle,#6a0f2e 0%,transparent 66%); }
+  .stage::after { right:2vmin; background:radial-gradient(circle,#8A1F4A 0%,transparent 66%); }
+
+  /* =========================================================
+     BUTTON geometry
+     ========================================================= */
+  .btn{
+    position:relative; z-index:1;
+    width:min(74vw,560px);
+    aspect-ratio:560/212;
+    border-radius:999px;
+    isolation:isolate;
+    --bloom:.72;                 /* driven by hover */
+    transition:transform .4s var(--ease-spring);
+    cursor:pointer;
+  }
+  .btn:active{ transform:scale(.985); }
+
+  /* ---- Outer bloom: heavily blurred prism copy spilling OUTSIDE the glass ---- */
+  .bloom{
+    position:absolute; inset:-16% -7%;
+    border-radius:999px; z-index:0;
+    filter:blur(34px) saturate(1.55);
+    mix-blend-mode:screen;
+    opacity:var(--bloom);
+    pointer-events:none;
+    transition:opacity .5s var(--ease-out), filter .5s var(--ease-out);
+    overflow:hidden;
+  }
+
+  /* ---- The glass body (clips the flowing wave) ---- */
+  .glass{
+    position:absolute; inset:0; z-index:1;
+    border-radius:999px; overflow:hidden;
+    background:
+      linear-gradient(180deg, rgba(255,255,255,.085), rgba(255,255,255,.015) 42%, rgba(255,255,255,0) 64%),
+      radial-gradient(120% 160% at 22% 8%, rgba(255,255,255,.10), transparent 46%),
+      rgba(255,255,255,.012);
+    -webkit-backdrop-filter:blur(2px); backdrop-filter:blur(2px);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.16),
+      inset 0 0 0 1px rgba(255,255,255,.045),
+      inset 0 -20px 40px rgba(0,0,0,.35),
+      0 34px 90px rgba(0,0,0,.6),
+      0 8px 24px rgba(0,0,0,.4);
+  }
+
+  /* =========================================================
+     THE IRIDESCENT WAVE — Frankly prism, hot near-white core
+     One layer per direction; each owns half the loop timeline.
+     ========================================================= */
+  .wave{
+    position:absolute; top:-34%; bottom:-34%; left:-60%; width:220%;
+    /* fine oil-slick striations (thin) + broad prism envelope + hot white core */
+    background:
+      repeating-linear-gradient(96deg,
+        rgba(255,255,255,0)     0px,
+        rgba(74,16,48,.42)      2.5px,
+        rgba(138,31,74,.62)     4px,
+        rgba(255,111,165,.72)   6px,
+        rgba(255,255,255,.92)   7.5px,
+        rgba(255,172,202,.66)   9.5px,
+        rgba(255,211,227,.5)    12px,
+        rgba(255,255,255,0)     16px),
+      linear-gradient(100deg,
+        #2D0011 0%, #4A1030 11%, #8A1F4A 26%, #FF6FA5 42%,
+        #ffffff 51%, #FFE7F0 55%, #FFACCA 64%, #FFD3E3 78%, #FFF6FA 90%, #2D0011 100%);
+    background-blend-mode:screen, normal;
+    mix-blend-mode:screen;
+    /* shape it into a liquid light-river: soft top/bottom + soft edges */
+    -webkit-mask:radial-gradient(135% 78% at 50% 60%, #000 0%, #000 42%, rgba(0,0,0,.35) 66%, transparent 82%);
+            mask:radial-gradient(135% 78% at 50% 60%, #000 0%, #000 42%, rgba(0,0,0,.35) 66%, transparent 82%);
+    filter:blur(1px) saturate(1.18);          /* baked micro motion-blur */
+    opacity:0;
+    will-change:transform,opacity;
+  }
+  /* trailing motion-smear ghost — a wider, softer copy behind the crisp wave */
+  .wave.smear{ filter:blur(9px) saturate(1.35); }
+
+  /* =========================================================
+     GRAIN — kills banding across the whole glow (over the glass)
+     ========================================================= */
+  .grain{
+    position:absolute; inset:0; z-index:2; border-radius:999px;
+    pointer-events:none; opacity:.06; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* =========================================================
+     GLASS RIM — crisp bright top-left edge line (padding-mask)
+     ========================================================= */
+  .rim{
+    position:absolute; inset:0; z-index:3; border-radius:999px;
+    pointer-events:none; padding:1.4px;
+    background:linear-gradient(135deg,
+      rgba(255,255,255,1) 0%, rgba(255,255,255,.34) 20%,
+      rgba(255,255,255,.05) 44%, rgba(255,172,202,.34) 66%,
+      rgba(255,255,255,.5) 86%, rgba(255,255,255,.95) 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+    filter:drop-shadow(0 0 3px rgba(255,255,255,.22));
+  }
+  /* glossy specular streak across the top of the glass */
+  .rim::after{
+    content:""; position:absolute; inset:0; border-radius:inherit;
+    background:linear-gradient(120deg, transparent 38%, rgba(255,255,255,.14) 50%, transparent 62%);
+    mix-blend-mode:screen;
+  }
+
+  /* =========================================================
+     LABEL
+     ========================================================= */
+  .label{
+    position:absolute; inset:0; z-index:4;
+    display:flex; align-items:center; justify-content:center; gap:.42em;
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(24px,5.4vw,42px); letter-spacing:-.012em;
+    color:#fff; text-shadow:0 1px 10px rgba(0,0,0,.45), 0 0 1px rgba(0,0,0,.4);
+    pointer-events:none; user-select:none;
+  }
+  .label .plus{
+    display:inline-block; width:.62em; height:.62em; position:relative;
+    transform:translateY(-.02em);
+  }
+  .label .plus::before,.label .plus::after{
+    content:""; position:absolute; inset:0; margin:auto; background:#fff; border-radius:2px;
+    box-shadow:0 0 8px rgba(0,0,0,.35);
+  }
+  .label .plus::before{ width:100%; height:2.4px; }
+  .label .plus::after { width:2.4px; height:100%; }
+
+  /* =========================================================
+     CURSOR arrow — sits near the pill, gentle idle drift
+     ========================================================= */
+  .cursor{
+    position:absolute; z-index:5; width:34px; height:34px;
+    right:15%; bottom:-8%;
+    filter:drop-shadow(0 3px 6px rgba(0,0,0,.55));
+    animation:cursorDrift 5s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes cursorDrift{
+    0%,100%{ transform:translate(0,0); }
+    30%    { transform:translate(-6px,-3px); }
+    55%    { transform:translate(2px,4px); }
+    80%    { transform:translate(-3px,-1px); }
+  }
+
+  /* =========================================================
+     THE LOOP — enter-left→fill→EMPTY→enter-right→fill→EMPTY
+     ~5s, seamless (both ends = empty, opacity 0)
+     ========================================================= */
+  /* left-entering pass owns 0%→~47% (fill by ~17%, empty by ~47%) */
+  @keyframes sweepL{
+    0%   { transform:translateX(-52%) skewX(-2deg);  opacity:0; }
+    9%   { opacity:.55; }
+    17%  { transform:translateX(-8%) skewX(0deg);    opacity:1; }
+    30%  { transform:translateX(6%);                 opacity:1; }
+    40%  { transform:translateX(20%);                opacity:.5; }
+    47%,100% { transform:translateX(34%);            opacity:0; }
+  }
+  /* right-entering pass owns 52%→100% (mirrored via negative X) */
+  @keyframes sweepR{
+    0%,52% { transform:scaleX(-1) translateX(-52%) skewX(-2deg); opacity:0; }
+    61%    { opacity:.55; }
+    69%    { transform:scaleX(-1) translateX(-8%) skewX(0deg);   opacity:1; }
+    82%    { transform:scaleX(-1) translateX(6%);                opacity:1; }
+    92%    { transform:scaleX(-1) translateX(20%);               opacity:.5; }
+    99%,100%{ transform:scaleX(-1) translateX(34%);              opacity:0; }
+  }
+  .btn .wave.l{ animation:sweepL 5s cubic-bezier(.5,.02,.3,1) infinite; }
+  .btn .wave.r{ animation:sweepR 5s cubic-bezier(.5,.02,.3,1) infinite; }
+
+  /* hover intensifies the bloom */
+  .btn:hover{ --bloom:1; }
+  .btn:hover .bloom{ filter:blur(30px) saturate(1.85); }
+
+  /* =========================================================
+     SHARED FURNITURE
+     ========================================================= */
+  .back{
+    position:fixed; top:20px; left:20px; z-index:20;
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:9px 15px 9px 12px; border-radius:999px;
+    font-family:var(--sans); font-size:13px; font-weight:500; letter-spacing:.005em;
+    color:rgba(255,255,255,.82); text-decoration:none;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.10);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    transition:background .25s var(--ease-out), color .25s var(--ease-out), transform .25s var(--ease-out);
+  }
+  .back:hover{ background:rgba(255,255,255,.09); color:#fff; transform:translateX(-1px); }
+  .back .arw{ transition:transform .25s var(--ease-out); }
+  .back:hover .arw{ transform:translateX(-2px); }
+
+  .caption{
+    position:fixed; left:0; right:0; bottom:20px; z-index:20; text-align:center;
+    font-family:var(--sans); font-size:12.5px; letter-spacing:.02em;
+    color:rgba(255,255,255,.4);
+  }
+  .caption b{ font-weight:600; color:rgba(255,255,255,.62); }
+
+  /* =========================================================
+     REDUCED MOTION — hold one composed, filled frame
+     ========================================================= */
+  @media (prefers-reduced-motion:reduce){
+    .wave.l{ opacity:1 !important; transform:translateX(-2%) !important; animation:none !important; }
+    .wave.smear.l{ opacity:.7 !important; }
+    .wave.r{ opacity:0 !important; animation:none !important; }
+    .cursor{ animation:none !important; }
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+
+  <a class="back" href="../../index.html">
+    <span class="arw">←</span> Effekt-lab
+  </a>
+
+  <div class="stage">
+    <div class="btn" aria-label="Tilføj ny">
+
+      <!-- outer bloom: prism copies that spill beyond the glass -->
+      <div class="bloom">
+        <div class="wave smear l"></div>
+        <div class="wave smear r"></div>
+      </div>
+
+      <!-- glass body clips the wave -->
+      <div class="glass">
+        <div class="wave l"></div>
+        <div class="wave r"></div>
+        <div class="grain"></div>
+      </div>
+
+      <div class="rim"></div>
+
+      <div class="label"><span class="plus"></span>Tilføj ny</div>
+
+      <!-- cursor -->
+      <svg class="cursor" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M4 2.5 L4 18 L8.4 13.8 L11.4 20.6 L14 19.4 L11 12.7 L17 12.7 Z"
+              fill="#fff" stroke="rgba(0,0,0,.45)" stroke-width="1" stroke-linejoin="round"/>
+      </svg>
+
+    </div>
+  </div>
+
+  <div class="caption">Iriserende knap · efter <b>Iridescent Button Motion</b></div>
+
+</body>
+</html>
