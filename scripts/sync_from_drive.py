@@ -42,6 +42,7 @@ UPLOADABLE_HTML = (
     pathlib.Path("glass-lab.html"),
     pathlib.Path("glass-surface.html"),
     pathlib.Path("glass-folders.html"),
+    pathlib.Path("liquid-glass-hover.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
