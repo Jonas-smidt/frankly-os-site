@@ -6,7 +6,7 @@
 <meta name="robots" content="noindex,nofollow">
 <title>Frankly — Ribbon Lab</title>
 <link rel="icon" href="assets/frankly-logo-small.png">
-<link rel="stylesheet" href="frankly-ribbon-lab.css">
+<link rel="stylesheet" href="frankly-ribbon-lab.css?v=ribbon-ui-11">
 <link rel="stylesheet" href="frankly-lab-brand.css">
 </head>
 <body class="fl-head">
@@ -18,6 +18,7 @@
       <div class="shape-stage-actions" id="shape-stage-actions" hidden>
         <button class="button secondary" type="button" id="stage-use-shape">Use shape</button>
         <button class="button secondary" type="button" id="stage-edit-shape">Edit line</button>
+        <button class="button secondary" type="button" id="stage-polish-shape">Polish</button>
         <button class="button secondary" type="button" id="stage-clear-shape">Clear</button>
       </div>
       <div class="stage-top">
@@ -36,64 +37,138 @@
 
     <aside class="controls" aria-label="Ribbon controls">
       <div class="control-head">
-        <p class="kicker">Brand prototype</p>
-        <h1>Ribbon Lab</h1>
-      </div>
-
-      <div class="field">
-        <label>Form</label>
-        <div class="segmented" id="preset-controls" role="group" aria-label="Ribbon form"></div>
-      </div>
-
-      <div class="field">
-        <label for="brief">Brief</label>
-        <textarea id="brief" rows="3" spellcheck="false">S-form med rolig rosa front og hvid transparent hale</textarea>
-        <button class="button secondary full" type="button" id="apply-brief">Apply brief</button>
-      </div>
-
-      <div class="field">
-        <label>Shape</label>
-        <div class="actions compact">
-          <button class="button secondary" type="button" id="draw-shape">Draw</button>
-          <button class="button secondary" type="button" id="edit-shape">Edit line</button>
-          <button class="button secondary" type="button" id="use-shape">Use shape</button>
-          <button class="button secondary" type="button" id="clear-shape">Clear</button>
+        <div class="control-title">
+          <p class="kicker">Brand prototype</p>
+          <h1>Ribbon Lab</h1>
         </div>
+        <button class="mode-toggle" type="button" id="advanced-toggle" aria-pressed="false">Advanced</button>
       </div>
 
-      <div class="sliders" id="slider-controls"></div>
-
-      <div class="field">
-        <label>Materiale</label>
-        <div class="swatches" id="material-controls" role="group" aria-label="Ribbon material"></div>
+      <div class="control-tabs" id="control-tabs" role="tablist" aria-label="Ribbon tool sections">
+        <button type="button" role="tab" id="tab-design" aria-controls="panel-design" aria-selected="true" data-control-tab="design">
+          <span class="tab-icon tab-icon-design" aria-hidden="true"></span>
+          <span>Design</span>
+        </button>
+        <button type="button" role="tab" id="tab-shape" aria-controls="panel-shape" aria-selected="false" data-control-tab="shape">
+          <span class="tab-icon tab-icon-shape" aria-hidden="true"></span>
+          <span>Shape</span>
+        </button>
+        <button type="button" role="tab" id="tab-farve" aria-controls="panel-farve" aria-selected="false" data-control-tab="farve">
+          <span class="tab-icon tab-icon-farve" aria-hidden="true"></span>
+          <span>Farve</span>
+        </button>
+        <button type="button" role="tab" id="tab-motion" aria-controls="panel-motion" aria-selected="false" data-control-tab="motion">
+          <span class="tab-icon tab-icon-motion" aria-hidden="true"></span>
+          <span>Motion</span>
+        </button>
+        <button type="button" role="tab" id="tab-output" aria-controls="panel-output" aria-selected="false" data-control-tab="output">
+          <span class="tab-icon tab-icon-output" aria-hidden="true"></span>
+          <span>Output</span>
+        </button>
       </div>
 
-      <div class="field">
-        <label for="placeholder-file">Placeholder</label>
-        <input class="file-input" id="placeholder-file" type="file" accept="image/*">
-        <div class="slider single">
-          <label for="placeholder-opacity">Guide</label>
-          <input id="placeholder-opacity" type="range" min="0.08" max="0.78" step="0.01" value="0.38">
-          <output id="placeholder-opacity-out">0.38</output>
+      <section class="control-panel is-active" id="panel-design" role="tabpanel" aria-labelledby="tab-design" data-control-panel="design">
+        <div class="field">
+          <label>Form</label>
+          <div class="segmented" id="preset-controls" role="group" aria-label="Ribbon form"></div>
         </div>
-        <div class="actions compact">
-          <button class="button secondary" type="button" id="placeholder-fit" aria-pressed="false">Cover</button>
-          <button class="button secondary" type="button" id="clear-placeholder">Clear image</button>
+
+        <div class="field">
+          <label for="brief">Brief</label>
+          <textarea id="brief" rows="3" spellcheck="false">S-form med rolig rosa front og hvid transparent hale</textarea>
+          <button class="button secondary full" type="button" id="apply-brief">Apply brief</button>
         </div>
-      </div>
 
-      <div class="actions">
-        <button class="button" type="button" id="export-png">PNG</button>
-        <button class="button secondary" type="button" id="copy-spec">Copy spec</button>
-        <button class="button secondary" type="button" id="randomize">Random</button>
-        <button class="button secondary" type="button" id="reset">Reset</button>
-      </div>
+        <div class="sliders" id="slider-form-controls"></div>
+      </section>
 
-      <pre class="spec" id="spec-output" aria-label="Ribbon spec"></pre>
+      <section class="control-panel" id="panel-shape" role="tabpanel" aria-labelledby="tab-shape" data-control-panel="shape" hidden>
+        <div class="field">
+          <label>Shape</label>
+          <div class="actions compact shape-actions">
+            <button class="button secondary" type="button" id="draw-shape">Draw</button>
+            <button class="button secondary" type="button" id="edit-shape">Edit line</button>
+            <button class="button secondary" type="button" id="polish-shape">Polish</button>
+            <button class="button secondary" type="button" id="use-shape">Use shape</button>
+            <button class="button secondary" type="button" id="clear-shape">Clear</button>
+          </div>
+          <div class="actions compact shape-sculpt-actions">
+            <button class="button secondary" type="button" id="shape-anchor-mode" aria-pressed="false">Anchors</button>
+            <button class="button secondary" type="button" id="shape-smooth">Smooth</button>
+            <button class="button secondary" type="button" id="shape-separate">Separate</button>
+            <button class="button secondary" type="button" id="shape-air">Air</button>
+            <button class="button secondary" type="button" id="shape-tighten">Calm</button>
+          </div>
+        </div>
+
+        <div class="sliders" id="slider-draw-controls"></div>
+      </section>
+
+      <section class="control-panel" id="panel-farve" role="tabpanel" aria-labelledby="tab-farve" data-control-panel="farve" hidden>
+        <div class="field">
+          <label>Materiale</label>
+          <div class="swatches" id="material-controls" role="group" aria-label="Ribbon material"></div>
+        </div>
+
+        <div class="sliders" id="slider-farve-controls"></div>
+      </section>
+
+      <section class="control-panel" id="panel-motion" role="tabpanel" aria-labelledby="tab-motion" data-control-panel="motion" hidden>
+        <div class="field">
+          <label>Motion</label>
+          <div class="actions compact motion-actions">
+            <button class="button secondary" type="button" id="motion-toggle" aria-pressed="true">Pause</button>
+            <button class="button secondary" type="button" id="motion-calm">Calm</button>
+            <button class="button secondary" type="button" id="motion-studio">Studio</button>
+            <button class="button secondary" type="button" id="motion-cinematic">Cinematic</button>
+          </div>
+        </div>
+
+        <div class="sliders" id="slider-motion-controls"></div>
+      </section>
+
+      <section class="control-panel" id="panel-output" role="tabpanel" aria-labelledby="tab-output" data-control-panel="output" hidden>
+        <div class="field">
+          <label for="placeholder-file">Placeholder</label>
+          <input class="file-input" id="placeholder-file" type="file" accept="image/*">
+          <div class="slider single">
+            <label for="placeholder-opacity">Guide</label>
+            <input id="placeholder-opacity" type="range" min="0.08" max="0.78" step="0.01" value="0.38">
+            <output id="placeholder-opacity-out">0.38</output>
+          </div>
+          <div class="actions compact">
+            <button class="button secondary" type="button" id="placeholder-fit" aria-pressed="false">Cover</button>
+            <button class="button secondary" type="button" id="clear-placeholder">Clear image</button>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Snapshots</label>
+          <div class="actions compact snapshot-actions">
+            <button class="button secondary" type="button" id="snapshot-capture">Capture</button>
+            <button class="button secondary" type="button" data-snapshot-slot="0">1 empty</button>
+            <button class="button secondary" type="button" data-snapshot-slot="1">2 empty</button>
+            <button class="button secondary" type="button" data-snapshot-slot="2">3 empty</button>
+            <button class="button secondary" type="button" id="snapshot-clear">Clear</button>
+          </div>
+          <p class="snapshot-readout" id="snapshot-readout">No snapshots yet</p>
+        </div>
+
+        <div class="actions output-actions">
+          <button class="button" type="button" id="export-png">PNG</button>
+          <button class="button secondary" type="button" id="copy-spec">Copy spec</button>
+          <button class="button secondary" type="button" id="copy-prompt">Copy prompt</button>
+          <button class="button secondary" type="button" id="copy-link">Copy link</button>
+          <button class="button secondary" type="button" id="randomize">Random</button>
+          <button class="button secondary" type="button" id="reset">Reset</button>
+        </div>
+
+        <pre class="spec" id="spec-output" aria-label="Ribbon spec"></pre>
+      </section>
       <p class="toast" id="toast" role="status" aria-live="polite"></p>
     </aside>
   </main>
 
-  <script src="frankly-ribbon-lab.js"></script>
+  <script src="frankly-ribbon-lab.js?v=ribbon-ui-11"></script>
 </body>
 </html>

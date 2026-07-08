@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Frankly Lab · Glass Folders</title>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  :root {
+    --radius: 26px;
+  }
+
+  html, body {
+    height: 100%;
+    font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", "Segoe UI", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  body {
+    display: grid;
+    place-items: center;
+    overflow: hidden;
+    background: #0b0d12;
+  }
+
+  /* ---- Colourful living background so the glass has something to refract ---- */
+  .backdrop {
+    position: fixed;
+    inset: -20vmax;
+    z-index: 0;
+    filter: saturate(1.15);
+    background:
+      radial-gradient(38vmax 38vmax at 22% 28%, #ff4d8d, transparent 60%),
+      radial-gradient(42vmax 42vmax at 78% 22%, #7b5bff, transparent 60%),
+      radial-gradient(46vmax 46vmax at 68% 82%, #16d1c8, transparent 60%),
+      radial-gradient(40vmax 40vmax at 25% 78%, #ffb020, transparent 60%),
+      #12131a;
+    animation: drift 22s ease-in-out infinite alternate;
+  }
+  @keyframes drift {
+    0%   { transform: scale(1)   translate3d(0,0,0)      rotate(0deg); }
+    50%  { transform: scale(1.15) translate3d(3%, -2%, 0) rotate(6deg); }
+    100% { transform: scale(1.08) translate3d(-3%, 2%, 0) rotate(-5deg); }
+  }
+  /* fine grain to make the blur feel organic */
+  .grain {
+    position: fixed; inset: 0; z-index: 1; pointer-events: none; opacity: .05;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---- Stage ---- */
+  .stage {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    gap: 46px;
+    flex-wrap: wrap;
+    justify-content: center;
+    perspective: 1400px;
+  }
+
+  /* ---- The glass folder ---- */
+  .folder {
+    position: relative;
+    width: 230px;
+    height: 176px;
+    cursor: pointer;
+    transition: transform .5s cubic-bezier(.2,.9,.25,1.4);
+    transform-style: preserve-3d;
+  }
+  .folder:hover { transform: translateY(-14px) rotateX(8deg); }
+
+  /* the back tab of the folder */
+  .folder .tab {
+    position: absolute;
+    top: -14px;
+    left: 16px;
+    width: 108px;
+    height: 40px;
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(180deg, rgba(255,255,255,.28), rgba(255,255,255,.10));
+    backdrop-filter: blur(14px) saturate(1.6);
+    -webkit-backdrop-filter: blur(14px) saturate(1.6);
+    border: 1px solid rgba(255,255,255,.35);
+    border-bottom: none;
+    box-shadow: inset 0 1px 0 rgba(255,255,255,.6);
+  }
+
+  /* the files that peek out from inside the folder */
+  .sheet {
+    position: absolute;
+    left: 50%;
+    bottom: 34px;
+    width: 78%;
+    height: 74%;
+    border-radius: 14px;
+    transform: translateX(-50%);
+    transition: transform .5s cubic-bezier(.2,.9,.25,1.4), opacity .4s;
+    box-shadow: 0 8px 24px rgba(0,0,0,.28);
+  }
+  .sheet.s1 { background: linear-gradient(160deg,#fff,#ffe0ec); z-index: 1; }
+  .sheet.s2 { background: linear-gradient(160deg,#eaf6ff,#cfe4ff); z-index: 1; height: 70%; }
+  .sheet.s3 { background: linear-gradient(160deg,#fff7e0,#ffe9b8); z-index: 1; height: 66%; }
+
+  .folder:hover .sheet.s1 { transform: translateX(-64%) translateY(-30px) rotate(-9deg); }
+  .folder:hover .sheet.s2 { transform: translateX(-36%) translateY(-40px) rotate(8deg); }
+  .folder:hover .sheet.s3 { transform: translateX(-50%) translateY(-22px); }
+
+  /* the front body of the folder — the hero glass panel */
+  .folder .body {
+    position: absolute;
+    inset: 0;
+    z-index: 3;
+    border-radius: var(--radius);
+    background: linear-gradient(150deg, rgba(255,255,255,.30), rgba(255,255,255,.08) 55%, rgba(255,255,255,.16));
+    backdrop-filter: blur(9px) saturate(1.7) brightness(1.06);
+    -webkit-backdrop-filter: blur(9px) saturate(1.7) brightness(1.06);
+    border: 1px solid rgba(255,255,255,.28);
+    box-shadow:
+      /* outer depth */
+      0 18px 40px rgba(0,0,0,.30),
+      0 3px 10px rgba(0,0,0,.20),
+      /* top specular highlight */
+      inset 0 1.5px 0 rgba(255,255,255,.75),
+      /* left edge light */
+      inset 1.5px 0 0 rgba(255,255,255,.25),
+      /* bottom inner shadow for thickness */
+      inset 0 -14px 24px rgba(255,255,255,.10),
+      inset 0 -1px 0 rgba(255,255,255,.15);
+    overflow: hidden;
+  }
+
+  /* moving specular sweep across the glass */
+  .folder .body::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(115deg, transparent 30%, rgba(255,255,255,.45) 47%, rgba(255,255,255,0) 60%);
+    transform: translateX(-120%);
+    transition: transform .8s ease;
+  }
+  .folder:hover .body::before { transform: translateX(120%); }
+
+  /* soft coloured glow bleeding through from behind */
+  .folder .body::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(120% 80% at 20% 0%, rgba(255,255,255,.35), transparent 55%);
+    mix-blend-mode: screen;
+    pointer-events: none;
+  }
+
+  .folder .label {
+    position: absolute;
+    z-index: 4;
+    left: 0; right: 0; bottom: 16px;
+    text-align: center;
+    color: #fff;
+    font-size: 15px;
+    font-weight: 600;
+    letter-spacing: .2px;
+    text-shadow: 0 1px 3px rgba(0,0,0,.35);
+    pointer-events: none;
+  }
+  .folder .count {
+    display: block;
+    font-size: 12px;
+    font-weight: 500;
+    opacity: .7;
+    margin-top: 2px;
+  }
+
+  .title {
+    position: fixed;
+    top: 34px; left: 0; right: 0;
+    z-index: 5;
+    text-align: center;
+    color: rgba(255,255,255,.85);
+    font-size: 13px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    font-weight: 500;
+  }
+</style>
+</head>
+<body>
+  <div class="backdrop"></div>
+  <div class="grain"></div>
+
+  <div class="title">Glass Folders</div>
+
+  <div class="stage">
+    <div class="folder">
+      <span class="tab"></span>
+      <div class="sheet s3"></div>
+      <div class="sheet s2"></div>
+      <div class="sheet s1"></div>
+      <div class="body"></div>
+      <div class="label">Design<span class="count">128 filer</span></div>
+    </div>
+
+    <div class="folder">
+      <span class="tab"></span>
+      <div class="sheet s3"></div>
+      <div class="sheet s2"></div>
+      <div class="sheet s1"></div>
+      <div class="body"></div>
+      <div class="label">Fotos<span class="count">2.410 filer</span></div>
+    </div>
+
+    <div class="folder">
+      <span class="tab"></span>
+      <div class="sheet s3"></div>
+      <div class="sheet s2"></div>
+      <div class="sheet s1"></div>
+      <div class="body"></div>
+      <div class="label">Arbejde<span class="count">64 filer</span></div>
+    </div>
+  </div>
+</body>
+</html>

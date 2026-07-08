@@ -9,6 +9,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="frankly-surfaces.css?v=mcq010">
+<link rel="stylesheet" href="frankly-lab-brand.css">
 </head>
 <body class="surface-page no-scroll">
   <header class="site-nav" aria-label="Frankly navigation">
@@ -126,20 +127,20 @@
 const SITE_FEED = "data/mission-control-queue.json";
 
 let QUEUE = {
-  "generated": "2026-07-01",
-  "status": "implemented-claims-locked-machine-runtime-next",
-  "summary": "Mission Control Queue tracks larger local mission batches with copyable prompts, state, gates, review checkpoints, batch history and returned run output before any automatic thread spawning or connector writes are approved. MCQ-010 remains the latest validated batch, but claims/product/legal work is now locked and the next direction is MCQ-011 machine-runtime capability.",
+  "generated": "2026-07-07",
+  "status": "mcq011-machine-runtime-active-claims-locked",
+  "summary": "Mission Control Queue tracks local mission batches with copyable prompts, state, gates, review checkpoints and returned run output. MCQ-011 (Run Registry + Local Eval Harness) is now the active machine-runtime batch; MCQ-010 and the earlier claims/product-legal batches remain locked/passive.",
   "route": "os-visualization/routes/mission-control-queue-route.md",
   "skill": "os-visualization/skills/frankly-mission-control-queue-skill.md",
   "siteSurface": "frankly-os-site/mission-control-queue.html",
-  "currentBatchId": "MCQ-010",
+  "currentBatchId": "MCQ-011",
   "counts": {
-    "batches": 10,
+    "batches": 11,
     "missions": 40,
-    "activeBatches": 10,
+    "activeBatches": 11,
     "automatedSpawns": 0,
-    "reviewCheckpoints": 10,
-    "reviewReadyBatches": 10,
+    "reviewCheckpoints": 11,
+    "reviewReadyBatches": 11,
     "completedMissionOutputs": 40,
     "agentReviews": 1
   },
@@ -1251,6 +1252,35 @@ let QUEUE = {
           "outputFile": "os-visualization/mission-control/batches/MCQ-010/integrator.md"
         }
       ]
+    },
+    {
+      "id": "MCQ-011",
+      "title": "Run Registry + Local Eval Harness v0.1",
+      "state": "review-ready",
+      "evidenceType": "report",
+      "routeName": "mission-control-queue + workflow-eval + run-registry",
+      "autonomy": "productive local",
+      "goal": "Give Frankly OS a local run registry and eval harness so machine-runtime work is traceable and testable without claims, connectors, deploy or paid APIs.",
+      "context": "Opened when Jonas locked claims/product-legal work on 2026-07-04 and refocused on the operating machine. This is the machine-runtime trace layer: a run registry, a local eval harness and non-claim route reps. Non-UI batch — its evidence is the run report + eval results, not browser screenshots.",
+      "outcome": "A machine-readable run-registry.json, a local eval harness (28 cases) and recorded machine-runtime runs, all validated locally with no external calls.",
+      "missions": [],
+      "run": {
+        "reportFile": "os-visualization/reports/mission-control-batch-011-run-registry-eval-harness-run-2026-07-04.md",
+        "artifacts": [
+          {
+            "label": "Run Registry v0.1",
+            "file": "os-visualization/system-intelligence/run-registry.json"
+          },
+          {
+            "label": "Local eval harness",
+            "file": "os-visualization/scripts/run-frankly-os-evals.py"
+          },
+          {
+            "label": "Prompt Agent pack",
+            "file": "os-visualization/mission-control/generated-prompts/machine-handoff-resume-packet-v01.md"
+          }
+        ]
+      }
     }
   ]
 };

@@ -1093,6 +1093,22 @@ h3 {
     var(--stone-2);
 }
 
+.tool-visual[data-visual="glass"] {
+  --tool-thumb:
+    radial-gradient(ellipse at 132px 84px, rgba(255, 255, 255, .82) 0 18px, rgba(255, 211, 227, .34) 19px 46px, transparent 47px),
+    linear-gradient(110deg, transparent 0 34%, rgba(255, 255, 255, .78) 35% 40%, transparent 41%) 42px 38px/154px 96px no-repeat,
+    linear-gradient(135deg, rgba(255, 255, 255, .72), rgba(255, 211, 227, .42)),
+    var(--blush);
+}
+
+.tool-visual[data-visual="ribbon"] {
+  --tool-thumb:
+    radial-gradient(ellipse at 142px 86px, rgba(255, 255, 255, .72) 0 16px, transparent 17px),
+    linear-gradient(118deg, transparent 0 24%, rgba(195, 82, 105, .82) 25% 33%, rgba(255, 183, 201, .92) 34% 48%, rgba(255, 255, 255, .6) 49% 56%, transparent 57%) 34px 24px/172px 126px no-repeat,
+    linear-gradient(22deg, transparent 0 29%, rgba(255, 211, 227, .42) 30% 37%, rgba(255, 255, 255, .72) 38% 45%, transparent 46%) 42px 62px/156px 82px no-repeat,
+    linear-gradient(135deg, #fff, var(--blush));
+}
+
 .tool-visual[data-visual="lab"] {
   --tool-thumb:
     linear-gradient(var(--calm-pink) 0 0) 42px 42px/44px 44px no-repeat,

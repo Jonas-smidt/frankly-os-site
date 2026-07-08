@@ -8,6 +8,7 @@
 <link rel="preconnect" href="https://api.fontshare.com">
 <link href="https://api.fontshare.com/v2/css?f[]=switzer@400,500,600,700,800,900&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="frankly-surfaces.css">
+<link rel="stylesheet" href="frankly-lab-brand.css">
 </head>
 <body class="surface-page no-scroll">
   <header class="site-nav" aria-label="Frankly navigation">
@@ -30,7 +31,7 @@
         <a href="#surface-gates">Surface gates</a>
         <a class="active" href="lab-hub.html">Lab</a>
         <a href="frankly-daekningsoverblik.html">Product clarity</a>
-        <a class="gated" href="blog/index.html">Blog drafts</a>
+        <a class="gated" href="journal/frankly-blog-index.html">Blog drafts</a>
       </nav>
     </div>
   </header>
@@ -61,7 +62,7 @@
         </div>
         <div class="lab-engine" aria-label="Frankly Lab workbench">
           <div class="lab-node">
-            <strong id="liveCount">20</strong>
+            <strong id="liveCount">22</strong>
             <span><b>Live tools</b><span>Directly in the browser. No setup.</span></span>
             <small>live</small>
           </div>
@@ -229,6 +230,7 @@ const TOOLS = [
   {name:"Email signature", mark:"ES", desc:"Add your details, copy the footer and keep the Frankly shape consistent.", category:"Brand", href:"frankly-signature-generator.html", status:"live", id:"TOOL_01"},
   {name:"Brand Reference", mark:"BR", desc:"Colors, type, tone and hard rules gathered in one place.", category:"Brand", href:"frankly-brand-reference.html", status:"live", id:"TOOL_02"},
   {name:"Brand Assistant", mark:"BA", desc:"Quick answers to brand questions. Searchable and without AI runtime.", category:"Brand", href:"frankly-brand-assistant.html", status:"live", id:"TOOL_03"},
+  {name:"Ribbon Lab", mark:"RB", desc:"Design Frankly ribbon shapes with prompt, draw/edit controls and a satin-to-matte-glass material blend.", category:"Brand", href:"frankly-ribbon-lab.html", status:"live", id:"TOOL_25"},
   {name:"Business card", mark:"BC", desc:"A personal QR card surface for meetings, fairs and partner days.", category:"Daily", href:"frankly-business-card.html", status:"live", id:"TOOL_04"},
   {name:"Dictionary", mark:"DI", desc:"Insurance, retail and OS terms rewritten in plain language.", category:"Daily", href:"frankly-dictionary.html", status:"live", id:"TOOL_05"},
   {name:"QR link", mark:"QR", desc:"A link becomes a clean QR code for decks, print, signage and campaigns.", category:"Daily", href:"frankly-qr-link.html", status:"live", id:"TOOL_06"},
@@ -269,7 +271,9 @@ const TOOL_VISUALS = {
   TOOL_20: "bmw",
   TOOL_21: "studio",
   TOOL_22: "cockpit",
-  TOOL_23: "observatory"
+  TOOL_23: "observatory",
+  TOOL_24: "glass",
+  TOOL_25: "ribbon"
 };
 let activeCategory = "All";
 let query = "";
