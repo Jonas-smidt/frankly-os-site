@@ -159,6 +159,21 @@ def main():
                 journal_pages += 1
         print(f"journal/ -> {journal_pages} public page(s) + assets")
 
+    # Effekt-lab (motion/effect showcase) — copy the whole tree; HTML is gated
+    # like the other Lab tools (the gate no-ops inside iframes, so the gallery's
+    # embedded effects still play once the gallery itself is unlocked).
+    lab_dir = pathlib.Path("effekt-lab")
+    if lab_dir.exists():
+        lab_pages = 0
+        for src in sorted(lab_dir.rglob("*")):
+            if src.is_dir():
+                continue
+            is_html = src.suffix.lower() in {".html", ".htm"}
+            copy_file(src, SITE_DIR / src, gated=is_html)
+            if is_html:
+                lab_pages += 1
+        print(f"effekt-lab/ -> {lab_pages} page(s) + assets")
+
     (SITE_DIR / ".nojekyll").write_text("", encoding="utf-8")
     domain = os.environ.get("SITE_DOMAIN", "").strip()
     if not domain and pathlib.Path("CNAME").exists():

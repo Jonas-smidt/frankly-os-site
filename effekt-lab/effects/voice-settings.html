@@ -1,0 +1,82 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Stemme-indstillinger · frankly</title>
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{overflow:hidden;font-family:"Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;display:grid;place-items:center;
+    background:radial-gradient(60% 50% at 50% 30%, #FFEBF3, transparent 60%), #F3EFEF}
+  .phone{width:300px;height:610px;border-radius:46px;padding:11px;background:linear-gradient(160deg,#2a2226,#151013);
+    box-shadow:0 40px 90px rgba(45,0,17,.35),inset 0 1px 0 rgba(255,255,255,.15)}
+  .screen{width:100%;height:100%;border-radius:36px;overflow:hidden;position:relative;
+    background:linear-gradient(180deg,#1c1116,#140b0f);color:#fff}
+  .notch{position:absolute;top:9px;left:50%;transform:translateX(-50%);width:86px;height:20px;border-radius:999px;background:#000;z-index:5}
+  .sheet{position:absolute;inset:0;padding:40px 18px 0;overflow:hidden}
+  .hd{display:flex;align-items:center;justify-content:center;position:relative;margin-bottom:18px}
+  .hd .x{position:absolute;left:0;width:30px;height:30px;border-radius:50%;background:rgba(255,255,255,.08);display:grid;place-items:center;color:#e6d3db}
+  .hd h1{font-size:16px;font-weight:600}
+  .lbl{font-size:12px;color:#a98d9a;margin:14px 2px 8px;font-weight:600}
+  .cards{display:flex;gap:9px}
+  .vc{flex:1;border-radius:15px;padding:12px;background:rgba(255,255,255,.05);box-shadow:inset 0 0 0 1px rgba(255,255,255,.05);position:relative}
+  .vc.on{background:linear-gradient(160deg,#8A1F4A,#FF6FA5);box-shadow:0 8px 20px rgba(255,110,170,.35)}
+  .vc .n{font-size:15px;font-weight:700}
+  .vc .r{font-size:11px;color:#c8aab7;margin-top:1px}.vc.on .r{color:rgba(255,255,255,.85)}
+  .vc .ck{position:absolute;top:9px;right:9px;width:16px;height:16px;border-radius:50%;background:#fff;display:grid;place-items:center}
+  .vc .ck svg{width:9px;height:9px}
+  .rowpill{margin-top:12px;border-radius:14px;padding:13px 14px;background:rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;font-size:14px;font-weight:600}
+  .rowpill .mut{color:#a98d9a;font-weight:500}
+  .pers{display:flex;justify-content:space-between;margin-top:6px}
+  .pers .p{text-align:center;width:56px}
+  .pers .c{width:46px;height:46px;border-radius:50%;background:rgba(255,255,255,.06);display:grid;place-items:center;margin:0 auto 6px;color:#f0d7e2}
+  .pers .p.on .c{background:linear-gradient(160deg,#8A1F4A,#FF6FA5);color:#fff}
+  .pers .c svg{width:20px;height:20px}
+  .pers .t{font-size:10.5px;color:#c8aab7}
+  .speed{margin-top:12px;border-radius:14px;padding:13px 14px;background:rgba(255,255,255,.05);display:flex;align-items:center;gap:12px}
+  .speed .v{font-size:13px;font-weight:700;font-variant-numeric:tabular-nums;background:rgba(255,255,255,.08);padding:3px 8px;border-radius:8px}
+  .track{flex:1;height:5px;border-radius:3px;background:rgba(255,255,255,.12);position:relative}
+  .track .fill{position:absolute;left:0;top:0;bottom:0;border-radius:3px;background:linear-gradient(90deg,#FF6FA5,#FFACCA);width:55%;animation:sp 5s ease-in-out infinite}
+  .track .kn{position:absolute;top:50%;width:15px;height:15px;border-radius:50%;background:#fff;transform:translate(-50%,-50%);left:55%;box-shadow:0 2px 6px rgba(0,0,0,.4);animation:spk 5s ease-in-out infinite}
+  @keyframes sp{0%,100%{width:40%}50%{width:72%}}
+  @keyframes spk{0%,100%{left:40%}50%{left:72%}}
+  .toggle{margin-top:10px;border-radius:14px;padding:13px 14px;background:rgba(255,255,255,.05);display:flex;justify-content:space-between;align-items:center;font-size:14px}
+  .sw{width:40px;height:23px;border-radius:999px;background:rgba(255,255,255,.15);position:relative}
+  .sw::after{content:"";position:absolute;top:3px;left:3px;width:17px;height:17px;border-radius:50%;background:#fff}
+
+  .back{position:fixed;top:20px;left:20px;z-index:9;color:#2D0011;text-decoration:none;font-size:13px;font-weight:600;
+    padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid #E3DDD5}
+  .cap{position:fixed;left:0;right:0;bottom:18px;text-align:center;color:#7a5b68;font-size:12px}
+  .cap b{color:#2D0011;font-weight:600}
+</style><style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← Oversigt</a>
+  <div class="phone"><div class="screen">
+    <div class="notch"></div>
+    <div class="sheet">
+      <div class="hd"><div class="x">✕</div><h1>Stemme-indstillinger</h1></div>
+      <div class="lbl">STEMME</div>
+      <div class="cards">
+        <div class="vc on"><div class="ck"><svg viewBox="0 0 24 24" fill="none" stroke="#8A1F4A" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12l5 5L20 6"/></svg></div><div class="n">Ara</div><div class="r">Livlig</div></div>
+        <div class="vc"><div class="n">Eve</div><div class="r">Rolig</div></div>
+        <div class="vc"><div class="n">Leo</div><div class="r">Britisk</div></div>
+      </div>
+      <div class="rowpill">Stemme-aktivering <span class="mut">Standard ›</span></div>
+      <div class="lbl">PERSONLIGHED</div>
+      <div class="pers">
+        <div class="p on"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M8 14s1.5 2 4 2 4-2 4-2M9 9h.01M15 9h.01"/></svg></div><div class="t">Assistent</div></div>
+        <div class="p"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M8 8l8 8M14 4l6 6-3 3-6-6z"/></svg></div><div class="t">Terapeut</div></div>
+        <div class="p"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 5h16v14H4zM12 5v14"/></svg></div><div class="t">Fortæller</div></div>
+        <div class="p"><div class="c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="7" r="3"/><path d="M6 21v-2a6 6 0 0112 0v2"/></svg></div><div class="t">Godnat</div></div>
+      </div>
+      <div class="lbl">HASTIGHED</div>
+      <div class="speed"><span class="v">1,2×</span><div class="track"><div class="fill"></div><div class="kn"></div></div></div>
+      <div class="toggle">Åbn app i stemme-tilstand <div class="sw"></div></div>
+    </div>
+  </div></div>
+  <div class="cap">Stemme-indstillinger · efter <b>Voice Settings UI</b></div>
+</body></html>

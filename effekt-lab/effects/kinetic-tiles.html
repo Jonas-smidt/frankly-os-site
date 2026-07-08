@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Kinetiske felter · frankly</title>
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{background:#f5f4f1;overflow:hidden;font-family:"Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;
+    display:grid;place-items:center}
+  .stage{position:fixed;inset:0;display:grid;place-items:center;
+    background:radial-gradient(60% 55% at 50% 42%, #FFF6FA 0%, #F5F1EE 60%, #EFEAE6 100%)}
+  .scene{position:relative;width:min(440px,80vw);height:min(440px,80vw)}
+  .t,.s{position:absolute;top:50%;left:50%}
+  /* rounded tiles */
+  .t{width:150px;height:150px;border-radius:34px;margin:-75px;box-shadow:0 18px 40px rgba(45,0,17,.14),inset 0 1px 0 rgba(255,255,255,.4)}
+  .t1{background:linear-gradient(150deg,#2D0011,#4A1030)}
+  .t2{background:linear-gradient(150deg,#FFD3E3,#FFACCA)}
+  .t3{background:linear-gradient(120deg,#FF6FA5,#8A1F4A)}
+  .t1{animation:m1 9s cubic-bezier(.6,0,.3,1) infinite}
+  .t2{animation:m2 9s cubic-bezier(.6,0,.3,1) infinite}
+  .t3{animation:m3 9s cubic-bezier(.6,0,.3,1) infinite}
+  @keyframes m1{0%,100%{transform:translate(-92px,-70px) rotate(-6deg)}33%{transform:translate(60px,-40px) rotate(8deg) scale(.9)}66%{transform:translate(-30px,70px) rotate(-3deg)}}
+  @keyframes m2{0%,100%{transform:translate(70px,60px) rotate(6deg)}33%{transform:translate(-70px,40px) rotate(-8deg) scale(1.08)}66%{transform:translate(50px,-60px) rotate(4deg)}}
+  @keyframes m3{0%,100%{transform:translate(10px,-90px) rotate(3deg) scale(.85)}33%{transform:translate(80px,70px) rotate(-6deg)}66%{transform:translate(-80px,-20px) rotate(9deg) scale(1)}}
+  /* glossy 3D spheres */
+  .s{width:96px;height:96px;border-radius:50%;margin:-48px}
+  .sph{width:100%;height:100%;border-radius:50%}
+  .s1 .sph{background:radial-gradient(circle at 34% 30%,#fff 2%,#FF6FA5 30%,#8A1F4A 78%,#2D0011)}
+  .s2 .sph{background:radial-gradient(circle at 36% 32%,#fff 3%,#FFD3E3 26%,#FF6FA5 70%,#B03A6A)}
+  .s{filter:drop-shadow(0 20px 22px rgba(45,0,17,.22))}
+  .s1{animation:s1 9s ease-in-out infinite}.s2{animation:s2 9s ease-in-out infinite}
+  @keyframes s1{0%,100%{transform:translate(90px,-70px) scale(.7)}50%{transform:translate(-60px,80px) scale(1)}}
+  @keyframes s2{0%,100%{transform:translate(-100px,50px) scale(1)}50%{transform:translate(80px,-30px) scale(.66)}}
+
+  .back{position:fixed;top:20px;left:20px;z-index:9;color:#2D0011;text-decoration:none;font-size:13px;font-weight:600;
+    padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.7);border:1px solid #E3DDD5}
+  .cap{position:fixed;left:0;right:0;bottom:22px;text-align:center;color:#7a5b68;font-size:12px}
+  .cap b{color:#2D0011;font-weight:600}
+</style><style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← Oversigt</a>
+  <div class="stage"><div class="scene">
+    <div class="t t1"></div><div class="t t2"></div><div class="t t3"></div>
+    <div class="s s1"><div class="sph"></div></div><div class="s s2"><div class="sph"></div></div>
+  </div></div>
+  <div class="cap">Kinetiske felter · efter <b>Kinetic Tile Study</b></div>
+</body></html>

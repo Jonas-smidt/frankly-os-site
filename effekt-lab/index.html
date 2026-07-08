@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Frankly — Effekt-lab</title>
+<style>
+  @font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+  @font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("fonts/Switzer-Regular.otf") format("opentype")}
+  @font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("fonts/Switzer-Medium.otf") format("opentype")}
+  @font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("fonts/Switzer-Semibold.otf") format("opentype")}
+  :root{
+    --bordeaux:#2D0011; --rose:#FF6FA5; --calm:#FFD3E3; --limestone:#F5F4F1; --line:#E9E6E1;
+    --display:"Almarena Neue Display","Switzer",system-ui,sans-serif;
+    --sans:"Switzer",system-ui,-apple-system,"Segoe UI",sans-serif; --ease:cubic-bezier(.16,1,.3,1);
+  }
+  *{box-sizing:border-box;margin:0}
+  body{font-family:var(--sans);color:#3a2730;min-height:100vh;-webkit-font-smoothing:antialiased;
+    background:radial-gradient(60vmax 50vmax at 88% -10%, #FFEBF3, transparent 60%),
+               radial-gradient(48vmax 48vmax at -8% 108%, #FBEFF4, transparent 60%), var(--limestone)}
+  a,button{font-family:inherit} button{cursor:pointer;border:none;background:none;color:inherit}
+  [hidden]{display:none!important}
+  .wrap{max-width:1160px;margin:0 auto;padding:52px 26px 90px}
+  .logo{font-family:var(--display);font-weight:700;font-size:22px;letter-spacing:-.02em;color:var(--bordeaux);display:inline-flex;align-items:center}
+  .logo::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--rose);margin-left:3px;margin-top:9px}
+  .kick{margin-top:14px;font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(45,0,17,.5)}
+  h1{font-family:var(--display);font-size:clamp(30px,4.6vw,46px);line-height:1.03;color:var(--bordeaux);letter-spacing:-.02em;margin:4px 0 12px;font-weight:600}
+  .lede{font-size:16px;line-height:1.55;color:#5c4551;max-width:62ch}
+  .sec{margin:34px 0 16px;display:flex;align-items:baseline;gap:12px}
+  .sec h2{font-family:var(--display);font-size:14px;color:var(--bordeaux);letter-spacing:.02em;font-weight:600}
+  .sec .rule{flex:1;height:1px;background:var(--line)}
+  .grid{display:grid;gap:18px;grid-template-columns:repeat(auto-fill,minmax(250px,1fr))}
+  .card{position:relative;display:flex;flex-direction:column;background:#fff;border:1px solid var(--line);
+    border-radius:20px;overflow:hidden;box-shadow:0 1px 2px rgba(45,0,17,.05),0 10px 26px rgba(45,0,17,.06);cursor:pointer;
+    transition:transform .38s var(--ease),box-shadow .38s var(--ease),border-color .38s var(--ease)}
+  .card:hover{transform:translateY(-4px);box-shadow:0 3px 8px rgba(45,0,17,.08),0 22px 48px rgba(45,0,17,.13);border-color:var(--rose)}
+  .prev{height:150px;position:relative;overflow:hidden;background:#120009}
+  .prev img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .5s var(--ease)}
+  .card:hover .prev img{transform:scale(1.04)}
+  .body{padding:15px 16px 17px}
+  .body h3{font-family:var(--display);font-size:16px;color:var(--bordeaux);letter-spacing:-.01em;margin-bottom:4px;font-weight:600}
+  .body p{font-size:12.5px;line-height:1.45;color:#6b5560}
+  .go{margin-top:11px;font-size:12.5px;font-weight:600;color:var(--bordeaux);display:inline-flex;gap:5px;align-items:center}
+  .card:hover .go span{transform:translateX(3px);transition:transform .3s var(--ease)}
+  footer{margin-top:46px;padding-top:20px;border-top:1px solid var(--line);font-size:12px;color:#8a7480}
+
+  /* fullscreen */
+  #full{position:fixed;inset:0;z-index:100;background:#0a0409;display:flex;flex-direction:column}
+  .fbar{display:flex;align-items:center;gap:14px;padding:12px 16px;background:rgba(20,8,16,.9);border-bottom:1px solid rgba(255,255,255,.08)}
+  .fbar .fbtn{color:#f4d9e4;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.14);border-radius:999px;padding:9px 15px;font-size:13px;font-weight:600;transition:background .2s}
+  .fbar .fbtn:hover{background:rgba(255,255,255,.16)}
+  .fbar .ftitle{font-size:14px;font-weight:600;color:#fbeef3;font-family:var(--display)}
+  .frame{flex:1;position:relative;background:#0a0409}
+  .frame iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+</style></head>
+<body>
+  <div class="wrap">
+    <span class="logo">frankly</span>
+    <div class="kick">Effekt-lab</div>
+    <h1>Effekter &amp; motion</h1>
+    <p class="lede">Genskabelser af design/animationer i Frankly-universet — logo, farver og former. Klik en effekt for at åbne den i fuldskærm; den kører live.</p>
+    <div class="sec"><h2>11 effekter</h2><span class="rule"></span></div>
+    <div class="grid" id="grid"></div>
+    <footer>Frankly · Effekt-lab</footer>
+  </div>
+
+  <div id="full" hidden>
+    <div class="fbar"><button class="fbtn" id="fullBack">← Tilbage</button><span class="ftitle" id="fullTitle"></span></div>
+    <div class="frame"><iframe id="fullFrame" title="effekt"></iframe></div>
+  </div>
+
+  <script>
+    const FX=[
+      {slug:'logo-reveal',da:'Logo-reveal',d:'Wordmark der toner ind med et prisme-lys.'},
+      {slug:'iridescent-button',da:'Iriserende knap',d:'Spektral olie-hinde-lys gennem klart glas.'},
+      {slug:'liquid-glass-ui',da:'Liquid glass UI',d:'Skarp glas-værktøjslinje i 3D.'},
+      {slug:'home-button',da:'Iriserende hjem-knap',d:'Glasknap med lys prisme-ring.'},
+      {slug:'space-sphere',da:'Glas-sfære',d:'Glasklode med kosmisk tåge.'},
+      {slug:'toasts',da:'Notifikations-toasts',d:'Bordeaux-glas i en dybde-stak.'},
+      {slug:'kinetic-tiles',da:'Kinetiske felter',d:'Felter og 3D-kugler på lyst limestone.'},
+      {slug:'thinking-states',da:'Tænke-tilstande',d:'Fire “Frankly tænker…”-indikatorer.'},
+      {slug:'calculating-burst',da:'Beregner-burst',d:'Partikel-burst ved siden af “Beregner…”.'},
+      {slug:'voice-settings',da:'Stemme-indstillinger',d:'Mobil stemme-panel.'},
+      {slug:'folders-lens',da:'Mappe-linse',d:'Mappeliste set gennem en glaslinse.'},
+    ];
+    const arrow='<span>→</span>';
+    document.getElementById('grid').innerHTML=FX.map((fx,i)=>`
+      <div class="card" data-i="${i}">
+        <div class="prev"><img src="thumbs/${fx.slug}.png" alt="" loading="lazy"></div>
+        <div class="body"><h3>${fx.da}</h3><p>${fx.d}</p><div class="go">Åbn ${arrow}</div></div>
+      </div>`).join('');
+    document.getElementById('grid').addEventListener('click',e=>{const c=e.target.closest('.card');if(c)openFull(+c.dataset.i);});
+    function openFull(i){const fx=FX[i];document.getElementById('fullTitle').textContent=fx.da;
+      document.getElementById('fullFrame').src='effects/'+fx.slug+'.html';document.getElementById('full').hidden=false;}
+    function closeFull(){document.getElementById('full').hidden=true;document.getElementById('fullFrame').src='about:blank';}
+    document.getElementById('fullBack').addEventListener('click',closeFull);
+    document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!document.getElementById('full').hidden)closeFull();});
+  </script>
+</body></html>
