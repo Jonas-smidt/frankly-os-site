@@ -155,6 +155,74 @@ def build_manifest(root=pathlib.Path(".")):
     return manifest
 
 
+def _robots_disallow_paths(site_dir):
+    robots = site_dir / "robots.txt"
+    paths = set()
+    if robots.exists():
+        for line in robots.read_text(encoding="utf-8").splitlines():
+            if line.strip().lower().startswith("disallow:"):
+                value = line.split(":", 1)[1].strip()
+                if value:
+                    paths.add(value)
+    return paths
+
+
+def _sitemap_paths(site_dir):
+    sitemap = site_dir / "sitemap.xml"
+    paths = set()
+    if sitemap.exists():
+        for loc in re.findall(r"<loc>\s*(.*?)\s*</loc>", sitemap.read_text(encoding="utf-8"), re.I | re.S):
+            path = re.sub(r"^[a-z]+://[^/]+", "", loc.strip())
+            path = path.split("?", 1)[0].split("#", 1)[0].lstrip("/")
+            paths.add(path or "index.html")
+    return paths
+
+
+def _has_noindex(text):
+    return bool(re.search(r'<meta\s+name=["\']robots["\']\s+content=["\'][^"\']*noindex', text, re.I))
+
+
+def _is_disallowed(rel, disallow_paths):
+    candidate = "/" + rel
+    for directive in disallow_paths:
+        if directive.endswith("/"):
+            if candidate.startswith(directive):
+                return True
+        elif candidate == directive:
+            return True
+    return False
+
+
+def assert_gate_posture(site_dir, gated_rel):
+    """Fail-closed post-build check on the built ./site tree:
+      (a) every gated output carries the preview curtain (__flab_gate + GATE_CODE_B64);
+      (b) every gated non-sitemap page is robots-Disallowed OR carries a noindex meta;
+      and the public journal/ stays un-gated and indexable.
+    Raises SystemExit on any violation so a malformed build never ships.
+    """
+    disallow = _robots_disallow_paths(site_dir)
+    sitemap = _sitemap_paths(site_dir)
+    for rel in sorted(gated_rel):
+        page = site_dir / rel
+        if not page.exists():
+            raise SystemExit(f"Gate assertion FAILED: gated page {rel} missing from built site/")
+        text = page.read_text(encoding="utf-8", errors="ignore")
+        if "__flab_gate" not in text or GATE_CODE_B64 not in text:
+            raise SystemExit(f"Gate assertion FAILED: {rel} is missing the preview curtain (__flab_gate / GATE_CODE_B64)")
+        if rel not in sitemap and not (_is_disallowed(rel, disallow) or _has_noindex(text)):
+            raise SystemExit(f"Gate assertion FAILED: gated page {rel} is neither robots-Disallowed nor noindex — it would be crawlable")
+    journal_dir = site_dir / "journal"
+    if journal_dir.exists():
+        for jp in sorted(journal_dir.rglob("*.html")):
+            jtext = jp.read_text(encoding="utf-8", errors="ignore")
+            rel = jp.relative_to(site_dir).as_posix()
+            if "__flab_gate" in jtext:
+                raise SystemExit(f"Gate assertion FAILED: journal page {rel} carries the gate curtain (must stay public)")
+            if _has_noindex(jtext):
+                raise SystemExit(f"Gate assertion FAILED: journal page {rel} is noindex (must stay indexable)")
+    print(f"Gate assertion OK: {len(gated_rel)} gated pages curtained + index-blocked; journal public/indexable.")
+
+
 def main():
     if not ENTRY_FILE.exists():
         raise SystemExit("index.html is required as the uploadable test-site entry.")
@@ -199,6 +267,9 @@ def main():
         domain = pathlib.Path("CNAME").read_text(encoding="utf-8").strip()
     if domain:
         (SITE_DIR / "CNAME").write_text(domain + "\n", encoding="utf-8")
+
+    gated_rel = {ENTRY_FILE.as_posix()} | {p.as_posix() for p in UPLOADABLE_HTML}
+    assert_gate_posture(SITE_DIR, gated_rel)
 
     print(
         "Built uploadable test bundle with 1 entry page, "
