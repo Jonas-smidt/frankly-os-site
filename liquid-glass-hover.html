@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="da">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="robots" content="noindex,nofollow" />
+  <meta name="description" content="Gated Frankly Lab prototype for 1:1 backdrop glass, mouse light, flare and responsive glass cards." />
+  <title>Frankly Lab · Liquid Glass Hover</title>
+  <style>
+    @font-face {
+      font-family: "Almarena Neue Display";
+      font-style: normal;
+      font-weight: 600;
+      font-display: swap;
+      src: url("journal/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2");
+    }
+    @font-face {
+      font-family: "Switzer";
+      font-style: normal;
+      font-weight: 500;
+      font-display: swap;
+      src: url("journal/fonts/Switzer-Medium.otf") format("opentype");
+    }
+
+    :root {
+      --calm-pink: #FFD3E3;
+      --calm-deep: #FFACCA;
+      --limestone: #F5F4F1;
+      --blush: #FFF6FA;
+      --bordeaux: #2D0011;
+      --success-live: #27C966;
+      --font-display: "Almarena Neue Display", "Spartan", "Inter", system-ui, sans-serif;
+      --font-sans: "Switzer", "Inter", system-ui, -apple-system, sans-serif;
+      --ease-out: cubic-bezier(.16,1,.3,1);
+      --hover-ease: cubic-bezier(.22,.61,.36,1);
+      --env-image: url("journal/images/blog-01-hero.jpg");
+      --env-accent: 255,211,227;
+      --env-hot: 255,95,162;
+      --env-cool: 23,195,214;
+      --env-dark: 45,0,17;
+      --env-backdrop:
+        repeating-linear-gradient(0deg, rgba(255,255,255,.17) 0 1.2px, transparent 1.2px 46px),
+        repeating-linear-gradient(90deg, rgba(255,255,255,.13) 0 1.2px, transparent 1.2px 46px),
+        radial-gradient(48vmax 48vmax at 16% 18%, rgba(var(--env-hot),.34), transparent 58%),
+        radial-gradient(46vmax 46vmax at 84% 16%, rgba(123,91,255,.22), transparent 58%),
+        radial-gradient(52vmax 52vmax at 82% 84%, rgba(var(--env-cool),.20), transparent 62%),
+        linear-gradient(135deg, rgba(45,0,17,.84), rgba(16,0,8,.66)),
+        var(--env-image);
+      --env-backdrop-size: 100vw 100vh, 100vw 100vh, 100vw 100vh, 100vw 100vh, 100vw 100vh, 100vw 100vh, 100vw 100vh;
+      --env-backdrop-position: 0 0, 0 0, 0 0, 0 0, 0 0, 0 0, 0 0;
+    }
+
+    * { box-sizing: border-box; }
+    html { min-height: 100%; -webkit-text-size-adjust: 100%; }
+    body {
+      min-height: 100vh;
+      margin: 0;
+      color: var(--limestone);
+      font-family: var(--font-sans);
+      font-size: 16px;
+      line-height: 1.45;
+      overflow-x: hidden;
+      background: #130008;
+    }
+
+    .environment {
+      position: relative;
+      min-height: 100vh;
+      padding: clamp(18px, 3vw, 34px);
+      overflow: hidden;
+    }
+    .environment::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -3;
+      background-image: var(--env-backdrop);
+      background-size: var(--env-backdrop-size);
+      background-position: var(--env-backdrop-position);
+      background-repeat: no-repeat;
+      transform: scale(1.01);
+      transition: opacity 360ms var(--hover-ease), filter 360ms var(--hover-ease);
+    }
+    .environment::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      z-index: -2;
+      pointer-events: none;
+      background:
+        linear-gradient(90deg, rgba(11,0,5,.78), rgba(11,0,5,.22) 44%, rgba(11,0,5,.58)),
+        linear-gradient(180deg, rgba(11,0,5,.14), rgba(11,0,5,.76));
+    }
+
+    .shell {
+      width: min(1180px, 100%);
+      min-height: calc(100vh - clamp(36px, 6vw, 68px));
+      margin: 0 auto;
+      display: grid;
+      grid-template-rows: auto 1fr;
+      gap: clamp(18px, 3vw, 34px);
+    }
+
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 18px;
+      min-height: 42px;
+    }
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      min-width: 0;
+      color: inherit;
+      text-decoration: none;
+    }
+    .brand img {
+      width: 112px;
+      height: auto;
+      display: block;
+      filter: brightness(0) invert(1) drop-shadow(0 12px 32px rgba(0,0,0,.35));
+    }
+    .brand span {
+      color: rgba(255,246,250,.62);
+      font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      white-space: nowrap;
+    }
+
+    .scene-switcher {
+      display: inline-grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 6px;
+      width: min(390px, 100%);
+      padding: 5px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      background: rgba(12,0,6,.30);
+      -webkit-backdrop-filter: blur(18px) saturate(1.18);
+      backdrop-filter: blur(18px) saturate(1.18);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.10),
+        0 18px 48px rgba(0,0,0,.25);
+    }
+    .scene-button {
+      min-height: 34px;
+      border: 0;
+      border-radius: 999px;
+      background: transparent;
+      color: rgba(255,246,250,.62);
+      cursor: pointer;
+      font: inherit;
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      transition: background 220ms var(--hover-ease), color 220ms var(--hover-ease), box-shadow 220ms var(--hover-ease);
+    }
+    .scene-button[aria-pressed="true"] {
+      color: #fff;
+      background: rgba(255,255,255,.14);
+      box-shadow:
+        inset 0 0 0 1px rgba(255,255,255,.26),
+        0 10px 24px rgba(0,0,0,.20);
+    }
+
+    .workspace {
+      display: grid;
+      grid-template-columns: minmax(0, 1.05fr) minmax(300px, .95fr);
+      gap: clamp(16px, 2.5vw, 28px);
+      align-items: stretch;
+    }
+
+    .hero-copy {
+      align-self: end;
+      min-height: min(650px, calc(100vh - 160px));
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      gap: 28px;
+      padding: clamp(8px, 1.5vw, 18px) 0;
+    }
+    .kicker {
+      display: block;
+      margin-bottom: 14px;
+      color: rgba(var(--env-accent),.92);
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .14em;
+      text-transform: uppercase;
+      text-shadow: 0 14px 34px rgba(0,0,0,.34);
+    }
+    h1 {
+      margin: 0;
+      max-width: 9.4ch;
+      color: var(--limestone);
+      font-family: var(--font-display);
+      font-size: clamp(54px, 9vw, 126px);
+      line-height: .9;
+      letter-spacing: 0;
+      text-shadow:
+        var(--text-light-x, 0px) var(--text-light-y, -8px) 22px rgba(var(--env-accent),.18),
+        var(--text-shadow-x, 0px) var(--text-shadow-y, 14px) 40px rgba(0,0,0,.38);
+    }
+    .lead {
+      max-width: 36ch;
+      margin: 18px 0 0;
+      color: rgba(255,246,250,.74);
+      font-size: clamp(17px, 2vw, 22px);
+      text-shadow: 0 14px 34px rgba(0,0,0,.34);
+    }
+
+    .meta-row {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      width: min(620px, 100%);
+    }
+
+    .glass-surface {
+      --tilt-x: 0deg;
+      --tilt-y: 0deg;
+      --lift: 0px;
+      --light-x: -14px;
+      --light-y: -10px;
+      --shadow-x: 16px;
+      --shadow-y: 18px;
+      --drop-x: 0px;
+      --drop-y: 30px;
+      --glow: rgba(var(--env-accent),.10);
+      position: relative;
+      isolation: isolate;
+      overflow: hidden;
+      border: 1px solid rgba(255,255,255,.18);
+      background: rgba(255,255,255,.026);
+      -webkit-backdrop-filter: blur(9px) saturate(1.16) contrast(1.02);
+      backdrop-filter: blur(9px) saturate(1.16) contrast(1.02);
+      box-shadow:
+        var(--drop-x) var(--drop-y) 92px rgba(0,0,0,.38),
+        0 8px 22px rgba(0,0,0,.28),
+        0 0 8px rgba(255,255,255,.06),
+        inset 0 0 0 1px rgba(255,255,255,.84),
+        inset 0 0 0 2px rgba(0,0,0,.20),
+        inset 0 0 0 4px rgba(255,255,255,.18),
+        inset 0 0 12px 3px rgba(255,255,255,.08),
+        inset var(--light-x) var(--light-y) 54px rgba(255,255,255,.15),
+        inset var(--shadow-x) var(--shadow-y) 70px rgba(0,0,0,.18),
+        inset 0 0 80px var(--glow);
+      transform: perspective(1200px) rotateX(var(--tilt-y)) rotateY(var(--tilt-x)) translate3d(0, var(--lift), 0);
+      transform-style: preserve-3d;
+      transition: border-color 160ms var(--hover-ease);
+      will-change: transform, box-shadow;
+    }
+    .glass-surface::before,
+    .glass-surface::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      pointer-events: none;
+    }
+    .glass-surface::before {
+      z-index: 0;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.075), rgba(255,255,255,.025) 42%, rgba(var(--env-dark),.045)),
+        linear-gradient(135deg, rgba(255,255,255,.028), rgba(var(--env-accent),.025) 52%, rgba(0,0,0,.035));
+      opacity: 1;
+      transform: translateZ(0);
+    }
+    .glass-surface::after {
+      z-index: 1;
+      background:
+        linear-gradient(150deg, rgba(var(--env-accent),.07), rgba(var(--env-dark),.10) 46%, rgba(var(--env-dark),.16)),
+        linear-gradient(rgba(255,255,255,.035), rgba(255,255,255,.035)),
+        linear-gradient(120deg, transparent 40%, rgba(255,255,255,.10) 50%, transparent 60%);
+    }
+    .glass-surface > * {
+      position: relative;
+      z-index: 2;
+    }
+
+    .hero-card {
+      --flare-x: 54%;
+      --flare-y: 18%;
+      --flare-core: .08;
+      --flare-soft: .026;
+      --flare-line: .075;
+      --flare-prism: .035;
+      --flare-angle: 116deg;
+      min-height: min(650px, calc(100vh - 160px));
+      display: grid;
+      grid-template-rows: auto 1fr auto;
+      gap: 22px;
+      padding: clamp(20px, 3vw, 32px);
+      border-radius: 28px;
+    }
+    .hero-card::after {
+      background:
+        radial-gradient(420px 260px at var(--flare-x) var(--flare-y), rgba(255,255,255,var(--flare-core)), rgba(255,255,255,var(--flare-soft)) 24%, transparent 64%),
+        linear-gradient(var(--flare-angle), transparent 28%, rgba(255,255,255,var(--flare-line)) 43%, rgba(var(--env-cool),var(--flare-prism)) 48%, rgba(var(--env-accent),var(--flare-line)) 53%, transparent 68%),
+        radial-gradient(520px 380px at calc(var(--flare-x) - 12%) calc(var(--flare-y) + 8%), rgba(var(--env-accent),var(--flare-soft)), transparent 70%),
+        linear-gradient(150deg, rgba(var(--env-accent),.07), rgba(var(--env-dark),.10) 46%, rgba(var(--env-dark),.16)),
+        linear-gradient(rgba(255,255,255,.035), rgba(255,255,255,.035)),
+        linear-gradient(120deg, transparent 40%, rgba(255,255,255,.10) 50%, transparent 60%);
+      filter: saturate(1.08);
+      transform: translateZ(1px);
+      will-change: background;
+    }
+    .hero-card.is-active {
+      border-color: rgba(255,255,255,.28);
+      box-shadow:
+        var(--drop-x) calc(var(--drop-y) + 14px) 116px rgba(0,0,0,.44),
+        0 8px 22px rgba(0,0,0,.34),
+        0 0 8px rgba(255,255,255,.08),
+        inset 0 0 0 1px rgba(255,255,255,.96),
+        inset 0 0 0 2px rgba(0,0,0,.20),
+        inset 0 0 0 4px rgba(255,255,255,.23),
+        inset 0 0 12px 3px rgba(255,255,255,.10),
+        inset var(--light-x) var(--light-y) 64px rgba(255,255,255,.20),
+        inset var(--shadow-x) var(--shadow-y) 82px rgba(0,0,0,.20),
+        inset 0 0 112px var(--glow);
+    }
+    .card-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 14px;
+      color: rgba(255,246,250,.70);
+      font-size: 12px;
+      font-weight: 800;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+    .status-dot {
+      width: 9px;
+      height: 9px;
+      margin-top: 4px;
+      border-radius: 999px;
+      background: var(--success-live);
+      box-shadow: 0 0 18px rgba(39,201,102,.72);
+      flex: 0 0 auto;
+    }
+    .card-main {
+      display: flex;
+      flex-direction: column;
+      justify-content: end;
+      gap: 20px;
+      min-width: 0;
+    }
+    .card-main h2 {
+      max-width: 8.5ch;
+      margin: 0;
+      color: var(--limestone);
+      font-family: var(--font-display);
+      font-size: clamp(42px, 6vw, 82px);
+      line-height: .9;
+      letter-spacing: 0;
+      text-shadow:
+        var(--text-light-x, 0px) var(--text-light-y, -8px) 18px rgba(var(--env-accent),.18),
+        var(--text-shadow-x, 0px) var(--text-shadow-y, 14px) 34px rgba(0,0,0,.32);
+    }
+    .card-main p {
+      max-width: 34ch;
+      margin: 0;
+      color: rgba(255,246,250,.70);
+      font-size: clamp(15px, 1.6vw, 18px);
+    }
+
+    .signal-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .signal,
+    .mini-card {
+      min-height: 94px;
+      padding: 14px;
+      border-radius: 14px;
+    }
+    .signal {
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+    .signal span,
+    .mini-card span {
+      display: block;
+      color: rgba(255,246,250,.58);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .10em;
+      text-transform: uppercase;
+    }
+    .signal strong {
+      display: block;
+      color: var(--limestone);
+      font-family: var(--font-display);
+      font-size: 24px;
+      font-weight: 600;
+    }
+    .mini-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+    }
+    .mini-card {
+      display: grid;
+      align-content: space-between;
+      gap: 12px;
+    }
+    .mini-card b {
+      color: var(--limestone);
+      font-family: var(--font-display);
+      font-size: 19px;
+      font-weight: 600;
+      line-height: 1.05;
+    }
+
+    .feed {
+      display: grid;
+      gap: 10px;
+    }
+    .feed-row {
+      display: grid;
+      grid-template-columns: 36px minmax(0, 1fr) auto;
+      gap: 12px;
+      align-items: center;
+      min-height: 62px;
+      padding: 10px 12px;
+      border-radius: 14px;
+    }
+    .mark {
+      width: 28px;
+      height: 28px;
+      border-radius: 9px;
+      background: linear-gradient(135deg, rgba(255,255,255,.72), rgba(var(--env-accent),.28) 48%, rgba(var(--env-hot),.24));
+      box-shadow:
+        inset var(--light-x) var(--light-y) 12px rgba(255,255,255,.42),
+        inset var(--shadow-x) var(--shadow-y) 16px rgba(45,0,17,.20),
+        var(--drop-x) 10px 24px rgba(var(--env-accent),.14);
+    }
+    .feed-row b {
+      display: block;
+      overflow: hidden;
+      color: var(--limestone);
+      font-family: var(--font-display);
+      font-size: 16px;
+      font-weight: 600;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .feed-row small {
+      display: block;
+      margin-top: 2px;
+      overflow: hidden;
+      color: rgba(255,246,250,.54);
+      font-size: 11px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .pill {
+      min-width: 56px;
+      padding: 5px 8px;
+      border: 1px solid rgba(255,255,255,.16);
+      border-radius: 999px;
+      color: rgba(255,246,250,.74);
+      font-size: 10px;
+      font-weight: 800;
+      letter-spacing: .08em;
+      text-align: center;
+      text-transform: uppercase;
+    }
+
+    @media (max-width: 900px) {
+      .environment { padding: 18px; }
+      .topbar { align-items: flex-start; flex-direction: column; }
+      .scene-switcher { width: 100%; }
+      .workspace { grid-template-columns: 1fr; }
+      .hero-copy { min-height: auto; }
+      .hero-card { min-height: 580px; }
+      .meta-row,
+      .signal-grid,
+      .mini-grid { grid-template-columns: 1fr; }
+    }
+
+    @media (max-width: 560px) {
+      .brand { width: 100%; justify-content: space-between; }
+      .brand span { white-space: normal; text-align: right; }
+      .scene-button { font-size: 10px; }
+      h1 { font-size: clamp(48px, 17vw, 78px); }
+      .hero-card { min-height: auto; border-radius: 22px; }
+      .feed-row { grid-template-columns: 32px minmax(0, 1fr); }
+      .pill { grid-column: 2; justify-self: start; }
+    }
+
+    @media (hover: none), (prefers-reduced-motion: reduce) {
+      .glass-surface {
+        --tilt-x: 0deg;
+        --tilt-y: 0deg;
+        --lift: 0px;
+        transform: none;
+        will-change: auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="environment">
+    <section class="shell" aria-labelledby="page-title">
+      <header class="topbar">
+        <a class="brand" href="index.html#play" aria-label="Frankly Lab">
+          <img src="assets/frankly-wordmark.png" alt="Frankly" />
+          <span>Glass environment lab</span>
+        </a>
+        <div class="scene-switcher" aria-label="Miljø">
+          <button class="scene-button" type="button" data-scene="home" aria-pressed="true">Hjem</button>
+          <button class="scene-button" type="button" data-scene="service" aria-pressed="false">Service</button>
+          <button class="scene-button" type="button" data-scene="studio" aria-pressed="false">Studio</button>
+        </div>
+      </header>
+
+      <div class="workspace">
+        <div class="hero-copy mouse-copy">
+          <div>
+            <span class="kicker" id="scene-kicker">Frankly home</span>
+            <h1 id="page-title">Rolig glass flade</h1>
+            <p class="lead" id="scene-lead">En varm Frankly-side, hvor glasset ligger oven på et rigtigt miljø og får liv af musens lysretning.</p>
+          </div>
+          <div class="meta-row">
+            <div class="mini-card glass-surface mouse-glass">
+              <span>Miljø</span>
+              <b id="meta-one">Hjem</b>
+            </div>
+            <div class="mini-card glass-surface mouse-glass">
+              <span>Materiale</span>
+              <b>Glass</b>
+            </div>
+            <div class="mini-card glass-surface mouse-glass">
+              <span>State</span>
+              <b>Live</b>
+            </div>
+          </div>
+        </div>
+
+        <article class="hero-card glass-surface mouse-glass" aria-label="Glass preview">
+          <div class="card-head">
+            <span id="card-label">Frankly surface</span>
+            <span class="status-dot" aria-hidden="true"></span>
+          </div>
+          <div class="card-main">
+            <h2 id="card-title">Hjemme-overblik</h2>
+            <p id="card-copy">Glass-kassen er transparent nok til at miljøet lever bagved, men har stadig kant, frost og dybde.</p>
+          </div>
+          <div class="signal-grid">
+            <div class="signal glass-surface mouse-glass">
+              <span id="signal-a-label">Tempo</span>
+              <strong id="signal-a">roligt</strong>
+            </div>
+            <div class="signal glass-surface mouse-glass">
+              <span id="signal-b-label">Lys</span>
+              <strong id="signal-b">varmt</strong>
+            </div>
+            <div class="signal glass-surface mouse-glass">
+              <span id="signal-c-label">Flade</span>
+              <strong id="signal-c">klar</strong>
+            </div>
+          </div>
+        </article>
+      </div>
+
+      <section class="feed" aria-label="Frankly modules">
+        <div class="feed-row glass-surface mouse-glass">
+          <span class="mark" aria-hidden="true"></span>
+          <span><b id="feed-a-title">Dagens flade</b><small id="feed-a-copy">Billede, glas og tekst arbejder i samme rolige miljø.</small></span>
+          <span class="pill" id="feed-a-state">klar</span>
+        </div>
+        <div class="feed-row glass-surface mouse-glass">
+          <span class="mark" aria-hidden="true"></span>
+          <span><b id="feed-b-title">Glass modul</b><small id="feed-b-copy">Reflektionerne ligger fast, mens kasserne får lys og skygge.</small></span>
+          <span class="pill" id="feed-b-state">glass</span>
+        </div>
+        <div class="feed-row glass-surface mouse-glass">
+          <span class="mark" aria-hidden="true"></span>
+          <span><b id="feed-c-title">Muselys</b><small id="feed-c-copy">Kun respons i materialet, ikke omkring markøren.</small></span>
+          <span class="pill" id="feed-c-state">live</span>
+        </div>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    (function () {
+      "use strict";
+      const root = document.documentElement;
+      const reduced = matchMedia("(prefers-reduced-motion: reduce)").matches;
+      const finePointer = matchMedia("(hover: hover) and (pointer: fine)").matches;
+      const sceneButtons = Array.from(document.querySelectorAll(".scene-button"));
+      const mouseSurfaces = Array.from(document.querySelectorAll(".mouse-glass"));
+      const mouseCopy = document.querySelector(".mouse-copy");
+      const assetBase = "";
+      const brandImage = document.querySelector(".brand img");
+      if (brandImage) brandImage.src = assetBase + "assets/frankly-wordmark.png";
+
+      const scenes = {
+        home: {
+          image: assetBase + "journal/images/blog-01-hero.jpg",
+          accent: "255,211,227",
+          hot: "255,95,162",
+          cool: "23,195,214",
+          dark: "45,0,17",
+          kicker: "Frankly home",
+          title: "Rolig glass flade",
+          lead: "En varm Frankly-side, hvor glasset ligger oven på et rigtigt miljø og får liv af musens lysretning.",
+          meta: "Hjem",
+          label: "Frankly surface",
+          cardTitle: "Hjemme-overblik",
+          cardCopy: "Glass-kassen er transparent nok til at miljøet lever bagved, men har stadig kant, frost og dybde.",
+          signals: [["Tempo", "roligt"], ["Lys", "varmt"], ["Flade", "klar"]],
+          feed: [
+            ["Dagens flade", "Billede, glas og tekst arbejder i samme rolige miljø.", "klar"],
+            ["Glass modul", "Reflektionerne ligger fast, mens kasserne får lys og skygge.", "glass"],
+            ["Muselys", "Kun respons i materialet, ikke omkring markøren.", "live"]
+          ]
+        },
+        service: {
+          image: assetBase + "journal/images/blog-08-scene.jpg",
+          accent: "255,176,32",
+          hot: "255,132,70",
+          cool: "39,201,102",
+          dark: "35,12,4",
+          kicker: "Frankly service",
+          title: "Serviceflow i glas",
+          lead: "Et mere taktisk miljø med varme træflader, metal og tydeligere kontrast under glasset.",
+          meta: "Service",
+          label: "Workshop surface",
+          cardTitle: "Værkstedsflow",
+          cardCopy: "Kanterne fanger lyset, mens baggrunden står samme sted bag materialet.",
+          signals: [["Fokus", "skarpt"], ["Lys", "varmt"], ["Dybde", "tung"]],
+          feed: [
+            ["Servicekort", "Et modul oven på et mere fysisk og tekstureret Frankly miljø.", "aktiv"],
+            ["Materialetest", "Frost, kant og lys ligger oven på metal og træflader.", "test"],
+            ["Muse-respons", "Kasserne får retning uden synlig lyskilde.", "live"]
+          ]
+        },
+        studio: {
+          image: assetBase + "journal/images/mental-load-hero.jpg",
+          accent: "255,211,227",
+          hot: "255,61,127",
+          cool: "123,91,255",
+          dark: "34,0,22",
+          kicker: "Frankly studio",
+          title: "Studio glass system",
+          lead: "Et mere redaktionelt Frankly miljø, hvor glasset kan bære moduler, status og fornemmelsen af software.",
+          meta: "Studio",
+          label: "Lab surface",
+          cardTitle: "Glass cockpit",
+          cardCopy: "Samme materialelag, men med en roligere, mere software-agtig stemning.",
+          signals: [["Mode", "studio"], ["Lys", "soft"], ["Signal", "klart"]],
+          feed: [
+            ["Lab preview", "Glass-modulerne kan sidde oven på billeder uden at blive tunge.", "preview"],
+            ["Scene state", "Miljø, tint og kantlys skifter samlet.", "scene"],
+            ["Surface feel", "Mouse-light bliver i materialet, ikke rundt om cursoren.", "hold"]
+          ]
+        }
+      };
+
+      const text = {
+        kicker: document.getElementById("scene-kicker"),
+        title: document.getElementById("page-title"),
+        lead: document.getElementById("scene-lead"),
+        meta: document.getElementById("meta-one"),
+        label: document.getElementById("card-label"),
+        cardTitle: document.getElementById("card-title"),
+        cardCopy: document.getElementById("card-copy"),
+        signalALabel: document.getElementById("signal-a-label"),
+        signalA: document.getElementById("signal-a"),
+        signalBLabel: document.getElementById("signal-b-label"),
+        signalB: document.getElementById("signal-b"),
+        signalCLabel: document.getElementById("signal-c-label"),
+        signalC: document.getElementById("signal-c"),
+        feedATitle: document.getElementById("feed-a-title"),
+        feedACopy: document.getElementById("feed-a-copy"),
+        feedAState: document.getElementById("feed-a-state"),
+        feedBTitle: document.getElementById("feed-b-title"),
+        feedBCopy: document.getElementById("feed-b-copy"),
+        feedBState: document.getElementById("feed-b-state"),
+        feedCTitle: document.getElementById("feed-c-title"),
+        feedCCopy: document.getElementById("feed-c-copy"),
+        feedCState: document.getElementById("feed-c-state")
+      };
+
+      const clamp = (value, min, max) => Math.max(min, Math.min(max, value));
+
+      const setScene = (key) => {
+        const scene = scenes[key] || scenes.home;
+        root.style.setProperty("--env-image", 'url("' + scene.image + '")');
+        root.style.setProperty("--env-accent", scene.accent);
+        root.style.setProperty("--env-hot", scene.hot);
+        root.style.setProperty("--env-cool", scene.cool);
+        root.style.setProperty("--env-dark", scene.dark);
+        text.kicker.textContent = scene.kicker;
+        text.title.textContent = scene.title;
+        text.lead.textContent = scene.lead;
+        text.meta.textContent = scene.meta;
+        text.label.textContent = scene.label;
+        text.cardTitle.textContent = scene.cardTitle;
+        text.cardCopy.textContent = scene.cardCopy;
+        [[text.signalALabel, text.signalA], [text.signalBLabel, text.signalB], [text.signalCLabel, text.signalC]].forEach((pair, index) => {
+          pair[0].textContent = scene.signals[index][0];
+          pair[1].textContent = scene.signals[index][1];
+        });
+        [[text.feedATitle, text.feedACopy, text.feedAState], [text.feedBTitle, text.feedBCopy, text.feedBState], [text.feedCTitle, text.feedCCopy, text.feedCState]].forEach((group, index) => {
+          group[0].textContent = scene.feed[index][0];
+          group[1].textContent = scene.feed[index][1];
+          group[2].textContent = scene.feed[index][2];
+        });
+        sceneButtons.forEach((button) => {
+          button.setAttribute("aria-pressed", String(button.dataset.scene === key));
+        });
+      };
+
+      const updateSurfaceLight = (surface, pointerX, pointerY, active) => {
+        const rect = surface.getBoundingClientRect();
+        const localX = clamp((pointerX - rect.left) / rect.width, 0, 1);
+        const localY = clamp((pointerY - rect.top) / rect.height, 0, 1);
+        const dx = localX - 0.5;
+        const dy = localY - 0.5;
+        const edgeDistance = Math.min(1, Math.hypot(dx, dy) * 1.8);
+        const isHero = surface.classList.contains("hero-card");
+        const tiltScale = isHero ? 1 : 0.45;
+        surface.style.setProperty("--tilt-x", (dx * 6.2 * tiltScale).toFixed(2) + "deg");
+        surface.style.setProperty("--tilt-y", ((0.5 - localY) * 4.1 * tiltScale).toFixed(2) + "deg");
+        surface.style.setProperty("--lift", active ? (isHero ? "-4px" : "-2px") : "0px");
+        surface.style.setProperty("--glow", "rgba(var(--env-accent)," + (0.08 + edgeDistance * 0.12).toFixed(2) + ")");
+        surface.style.setProperty("--light-x", (dx * 56).toFixed(2) + "px");
+        surface.style.setProperty("--light-y", (dy * 46).toFixed(2) + "px");
+        surface.style.setProperty("--shadow-x", (-dx * 68).toFixed(2) + "px");
+        surface.style.setProperty("--shadow-y", (24 - dy * 40).toFixed(2) + "px");
+        surface.style.setProperty("--drop-x", (-dx * 34).toFixed(2) + "px");
+        surface.style.setProperty("--drop-y", (30 - dy * 20).toFixed(2) + "px");
+        if (isHero) {
+          const flareStrength = active ? 0.20 + (1 - edgeDistance) * 0.16 : 0.08;
+          surface.style.setProperty("--flare-x", (localX * 100).toFixed(1) + "%");
+          surface.style.setProperty("--flare-y", (localY * 100).toFixed(1) + "%");
+          surface.style.setProperty("--flare-core", flareStrength.toFixed(3));
+          surface.style.setProperty("--flare-soft", (flareStrength * 0.32).toFixed(3));
+          surface.style.setProperty("--flare-line", (flareStrength * 0.45).toFixed(3));
+          surface.style.setProperty("--flare-prism", (flareStrength * 0.22).toFixed(3));
+          surface.style.setProperty("--flare-angle", (116 + dx * 22 - dy * 12).toFixed(1) + "deg");
+        }
+        surface.classList.toggle("is-active", active);
+      };
+
+      const updateCopyLight = (pointerX, pointerY) => {
+        if (!mouseCopy) return;
+        const rect = mouseCopy.getBoundingClientRect();
+        const localX = clamp((pointerX - rect.left) / rect.width, 0, 1);
+        const localY = clamp((pointerY - rect.top) / rect.height, 0, 1);
+        const dx = localX - 0.5;
+        const dy = localY - 0.5;
+        mouseCopy.style.setProperty("--text-light-x", (dx * 12).toFixed(2) + "px");
+        mouseCopy.style.setProperty("--text-light-y", (-9 + dy * 7).toFixed(2) + "px");
+        mouseCopy.style.setProperty("--text-shadow-x", (-dx * 18).toFixed(2) + "px");
+        mouseCopy.style.setProperty("--text-shadow-y", (18 - dy * 14).toFixed(2) + "px");
+      };
+
+      let pointerX = window.innerWidth * 0.55;
+      let pointerY = window.innerHeight * 0.45;
+      let pointerActive = false;
+      let pointerFrame = 0;
+
+      const flushPointer = () => {
+        pointerFrame = 0;
+        mouseSurfaces.forEach((surface) => updateSurfaceLight(surface, pointerX, pointerY, pointerActive));
+        updateCopyLight(pointerX, pointerY);
+      };
+
+      const requestPointerFrame = () => {
+        if (!pointerFrame) {
+          pointerFrame = requestAnimationFrame(flushPointer);
+        }
+      };
+
+      const updateMouse = (event, active) => {
+        pointerX = event.clientX;
+        pointerY = event.clientY;
+        pointerActive = active;
+        requestPointerFrame();
+      };
+
+      sceneButtons.forEach((button) => {
+        button.addEventListener("click", () => setScene(button.dataset.scene));
+      });
+
+      setScene("home");
+      requestPointerFrame();
+
+      if (!reduced && finePointer) {
+        window.addEventListener("pointermove", (event) => updateMouse(event, true), { passive: true });
+        window.addEventListener("pointerleave", (event) => updateMouse(event, false), { passive: true });
+      }
+      window.addEventListener("resize", requestPointerFrame, { passive: true });
+      window.addEventListener("scroll", requestPointerFrame, { passive: true });
+    }());
+  </script>
+</body>
+</html>
