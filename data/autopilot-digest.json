@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-09T07:28:44+00:00",
+  "generated": "2026-07-09T07:31:06+00:00",
   "day": "2026-07-09",
   "status": "healthy",
-  "healthLine": "[self-check] 2026-07-09 09:28 — PASS — report: os-visualization/reports/self-check-2026-07-09.md",
+  "healthLine": "[self-check] 2026-07-09 09:31 — PASS — report: os-visualization/reports/self-check-2026-07-09.md",
   "didAutonomously": [
     {
       "job": "regenerate lessons memory (compounding)",
@@ -36,6 +36,20 @@
       "classified": "locked",
       "gate": "locked",
       "why": "Public deploy — your call, and only you run the deploy workflow."
+    },
+    {
+      "id": "enable-autopilot",
+      "title": "Enable the daily autopilot schedule",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "Installing a standing scheduler is persistence — you run the one enable command."
+    },
+    {
+      "id": "drive-snapshot",
+      "title": "Sync the latest snapshot to Google Drive",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "Connector write — needs your approval."
     }
   ],
   "note": "Fully local + reversible. Deploy/connector/paid/claims never auto-run — they are the only decisions here."
