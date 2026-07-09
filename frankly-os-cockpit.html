@@ -94,6 +94,17 @@
   .chip--lock{background:#FBE4EC;color:var(--lock)}
   .chip--ok{background:#E3F3EC;color:var(--ok)}
   .row__side{flex:0 0 auto;align-self:center}
+  .decide{display:flex;gap:6px}
+  .dbtn{font-size:12px;font-weight:600;border-radius:var(--r-pill);padding:6px 12px;border:1px solid var(--line);background:var(--white);color:var(--ink);
+    transition:transform .2s var(--ease),background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
+  .dbtn:hover{transform:translateY(-1px);border-color:var(--calm-deep)}
+  .dbtn--ok{background:var(--bordeaux);color:#fff;border-color:var(--bordeaux)}
+  .dbtn--ok:hover{background:#420019}
+  .dbtn--no:hover{background:#FBE4EC;border-color:var(--lock);color:var(--lock)}
+  .dwait{font-size:12px;color:var(--ink-3)}
+  .decided{margin-top:8px;font-size:12px;color:var(--ink-2);background:var(--limestone);border-radius:var(--r-sm);padding:9px 11px}
+  .decided code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--bordeaux);word-break:break-all}
+  .decided b{color:var(--bordeaux)}
 
   /* runs list */
   .run{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:var(--r-md)}
@@ -275,7 +286,7 @@
     }
     var items;
     if(ap && ap.waitingForJonas){
-      items=ap.waitingForJonas.map(function(w){return {t:w.title,d:w.why||"",chip:(w.gate==="locked")?"lock":"wait",icon:(w.gate==="locked")?"🔒":"⏳"};});
+      items=ap.waitingForJonas.map(function(w){return {id:w.id,t:w.title,d:w.why||"",chip:(w.gate==="locked")?"lock":"wait",icon:(w.gate==="locked")?"🔒":"⏳"};});
     }else{
       var gates=(d.queue.gates||[]);
       items=gates.map(function(g){return {t:plainGate(g),d:g,chip:g.toLowerCase().indexOf('claim')>=0?"lock":"wait",icon:"🔒"};});
@@ -283,9 +294,20 @@
     }
     items.forEach(function(it){
       var r=document.createElement('div');r.className="row";
-      r.innerHTML='<div class="row__icon">'+it.icon+'</div><div class="row__main"><div class="row__t">'+esc(it.t)+'</div><div class="row__d">'+esc(it.d)+'</div></div>'+
-        '<div class="row__side"><span class="chip chip--'+it.chip+'">'+(it.chip==="lock"?"Låst":"Din godkendelse")+'</span></div>';
+      var side = it.id
+        ? '<div class="row__side"><div class="decide" data-id="'+esc(it.id)+'">'+
+            '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
+            '<button class="dbtn" data-d="deferred">Udskyd</button>'+
+            '<button class="dbtn dbtn--no" data-d="declined">Afvis</button></div></div>'
+        : '<div class="row__side"><span class="chip chip--'+it.chip+'">'+(it.chip==="lock"?"Låst":"Din godkendelse")+'</span></div>';
+      r.innerHTML='<div class="row__icon">'+it.icon+'</div><div class="row__main"><div class="row__t">'+esc(it.t)+'</div><div class="row__d">'+esc(it.d)+'</div><div class="decided" hidden></div></div>'+side;
       attn.appendChild(r);
+    });
+    [].forEach.call(attn.querySelectorAll('.decide'),function(box){
+      var id=box.getAttribute('data-id');
+      [].forEach.call(box.querySelectorAll('.dbtn'),function(b){
+        b.addEventListener('click',function(){decide(id,b.getAttribute('data-d'),box);});
+      });
     });
     document.getElementById('attnCount').textContent=items.length+" ting";
 
@@ -333,6 +355,23 @@
     var c=document.getElementById('cCopied');c.classList.add('show');setTimeout(function(){c.classList.remove('show');},1600);
   });
   refreshOut();
+
+  // record a decision back to the backlog (needs cockpit-server.py; degrades gracefully on plain http.server)
+  function decide(id,decision,box){
+    var row=box.parentNode.parentNode; // .row
+    box.innerHTML='<span class="dwait">…</span>';
+    fetch('/api/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskId:id,decision:decision})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(!res||!res.ok){box.innerHTML='<span class="chip chip--wait">Prøv igen</span>';return;}
+        var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
+        box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'wait')+'">'+label+'</span>';
+        var dc=row.querySelector('.decided');
+        if(res.nextCommand){dc.hidden=false;dc.innerHTML='<b>Kør så, når du er klar:</b><br><code>'+esc(res.nextCommand)+'</code>';}
+        else if(decision!=='approved'){dc.hidden=false;dc.textContent=decision==='deferred'?'Gemt til senere.':'Fjernet fra listen.';}
+      })
+      .catch(function(){box.innerHTML='<span class="chip chip--wait">Kør cockpit-server.py for at beslutte her</span>';});
+  }
 
   // load live feeds; fall back to snapshot
   var feeds={flight:"data/flight-recorder.json",queue:"data/mission-control-queue.json",activation:"data/activation-queue-data.json",surfaces:"data/surface-gate-registry.json",autopilot:"data/autopilot-digest.json"};
