@@ -1,16 +1,74 @@
 {
-  "generated": "2026-07-07",
+  "generated": "2026-07-10",
   "status": "registry-fed-flight-recorder-v0.1",
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 30,
-    "machineFocusedRuns": 30,
+    "runs": 33,
+    "machineFocusedRuns": 33,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 29
+    "validatedRuns": 32
   },
   "runs": [
+    {
+      "runId": "20260709-formidler-opgradering",
+      "date": "2026-07-10",
+      "name": "Opgradér Frankly OS til målmodellen: formi",
+      "route": "machine-runtime",
+      "status": "completed-local",
+      "summary": "Masterprompt udført af 22-agent workflow: gap-analyse (7 MANGLER/5 DELVIST), 3 byggespor med adversarial kontrol, pilot green (QA 2 runder), metode-roundtrip v0-3 til v0-4, 2 bugs fundet og rettet undervejs",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "formidler contract v0 1",
+        " v0 4",
+        "agent smeden.py"
+      ],
+      "gates": [
+        "ingen gated handlinger; alt safe-l"
+      ],
+      "lesson": "Nye chats booter og er automatisk formidler; agent-smeden og metode-fladen er live."
+    },
+    {
+      "runId": "20260709-pilot-formidler-flow",
+      "date": "2026-07-09",
+      "name": "Pilot: diagram-styleguide gennem det nye f",
+      "route": "machine-runtime",
+      "status": "completed-local",
+      "summary": "Formidler-packet, agent-smeden (R4.1), parallelle specialister, QA-gate med ret-runde, metode-roundtrip via cockpit",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "diagram styleguide pilot 2026 07 0",
+        "v0 4"
+      ],
+      "gates": [
+        "ingen gated handlinger; alt safe-l"
+      ],
+      "lesson": "Formidler-flowet er valideret — brug det som standard for nye chats."
+    },
+    {
+      "runId": "20260709-masterprompt-formidler",
+      "date": "2026-07-09",
+      "name": "Måldiagram (v2 + drawio) og verificeret ma",
+      "route": "machine-runtime",
+      "status": "completed-local",
+      "summary": "Jonas' systemskitse oversat til godkendt målmodel; flowchart v2 + drawio bygget; masterprompt bygget af 15-agent workflow (69 fakta, 3 udkast, dommerpanel, 3 verifikatorer), 1 high-issue auto-rettet + 2 manuelle rettelser; gemt i generated-prompts og committet",
+      "validation": "passed",
+      "drive": "pending approval",
+      "claims": "none",
+      "artifacts": [
+        "masterprompt formidler opgradering",
+        "frankly os flow jonas model 2026 0"
+      ],
+      "gates": [
+        "Drive approval"
+      ],
+      "lesson": "Giv masterprompten til den chat der kender systemet bedst: masterprompt-formidler-opgradering-v01."
+    },
     {
       "runId": "20260707-v2-glass-box-design-trial",
       "date": "2026-07-07",

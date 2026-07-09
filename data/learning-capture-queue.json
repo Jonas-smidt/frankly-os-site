@@ -1,0 +1,123 @@
+{
+  "id": "learning-capture-queue",
+  "purpose": "Durable learnings extracted from work sessions, awaiting deterministic filing into routes' Lessons From Use — the extraction leg of the build→learn→compound loop. Nothing is lost: clearly-safe candidates auto-file; judgment calls wait for Jonas's OK in the Cockpit; claims/product/legal is locked.",
+  "generated": "2026-07-09T19:22:09+00:00",
+  "schema": {
+    "required": [
+      "id",
+      "date",
+      "text",
+      "scope",
+      "kind",
+      "confidence",
+      "sourceSession",
+      "disposition",
+      "status"
+    ],
+    "kinds": [
+      "use",
+      "source"
+    ],
+    "confidences": [
+      "high",
+      "medium",
+      "low"
+    ],
+    "dispositions": [
+      "auto",
+      "review"
+    ],
+    "statuses": [
+      "pending",
+      "filed",
+      "declined"
+    ],
+    "lockedBoundary": "claims/product/legal (frankly-claims-work-lock-2026-07-04.json) is never auto-filed or cockpit-filed — it requires a named reopen. Enforced fail-closed by file-learning.py via classify_action."
+  },
+  "counts": {
+    "candidates": 4,
+    "pending": 0,
+    "filed": 4,
+    "declined": 0,
+    "byDisposition": {
+      "auto": 2,
+      "review": 2
+    },
+    "pendingReview": 0
+  },
+  "candidates": [
+    {
+      "id": "LC-20260709-01",
+      "date": "2026-07-09",
+      "text": "The Frankly OS runtime (scripts, system-intelligence state, and the frankly-os-site surface) all resolve paths from one workspace root, so a surface plus its live data feed must live in that same tree to be exercised end-to-end; an isolated checkout missing the untracked site folder can build the data files but cannot render or serve the surface loop. When a build spans both, target the workspace root, not the isolated checkout.",
+      "scope": "system-visualization",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "2026-07-09-session-learning-capture-build",
+      "disposition": "auto",
+      "status": "filed",
+      "why": "Hit directly this session — the isolated checkout lacked the untracked frankly-os-site/ folder, so cockpit + feed work could only be exercised against the one workspace root.",
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-07-09T12:12:29+00:00",
+      "filedTo": {
+        "route": "routes/system-visualization-route.md",
+        "bullet": "- 2026-07-09: The Frankly OS runtime (scripts, system-intelligence state, and the frankly-os-site surface) all resolve paths from one workspace root, so a surface plus its live data feed must live in that same tree to be exercised end-to-end; an isolated checkout missing the untracked site folder can build the data files but cannot render or serve the surface loop. When a build spans both, target the workspace root, not the isolated checkout."
+      }
+    },
+    {
+      "id": "LC-20260709-02",
+      "date": "2026-07-09",
+      "text": "When a cockpit action's real effect is a safe-local memory write (append a dated bullet, rebuild an index) rather than a deploy or a connector write, the write-back server can perform it deterministically on approval instead of only handing back a command to run later; extend the endpoint to do the work while keeping the never-run-a-gated-action rule intact by construction.",
+      "scope": "system-visualization",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "2026-07-09-session-learning-capture-build",
+      "disposition": "review",
+      "status": "filed",
+      "why": "The learning-capture cockpit action differs from the deploy/connector decisions the same surface already gates.",
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-07-09T13:21:01+00:00",
+      "filedTo": {
+        "route": "routes/system-visualization-route.md",
+        "bullet": "- 2026-07-09: When a cockpit action's real effect is a safe-local memory write (append a dated bullet, rebuild an index) rather than a deploy or a connector write, the write-back server can perform it deterministically on approval instead of only handing back a command to run later; extend the endpoint to do the work while keeping the never-run-a-gated-action rule intact by construction."
+      }
+    },
+    {
+      "id": "LC-20260709-03",
+      "date": "2026-07-09",
+      "text": "Route any candidate learning that names a gated topic (deploy, connector, paid, plugin, thread) to human approval instead of auto-filing it, even at high confidence; the presence of the gate keyword is the signal a human should look, independent of how sure the extractor is that the lesson is durable.",
+      "scope": "system-visualization",
+      "kind": "use",
+      "confidence": "medium",
+      "sourceSession": "2026-07-09-session-learning-capture-build",
+      "disposition": "review",
+      "status": "filed",
+      "why": "A high-confidence extractor could otherwise auto-file a lesson that names a gate; the gate keyword itself should force a human look.",
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-07-09T13:21:03+00:00",
+      "filedTo": {
+        "route": "routes/system-visualization-route.md",
+        "bullet": "- 2026-07-09: Route any candidate learning that names a gated topic (deploy, connector, paid, plugin, thread) to human approval instead of auto-filing it, even at high confidence; the presence of the gate keyword is the signal a human should look, independent of how sure the extractor is that the lesson is durable."
+      }
+    },
+    {
+      "id": "LC-20260709-04",
+      "date": "2026-07-09",
+      "text": "R4.1 Diagram-designer: metode justeret mellem kørsler via cockpittets metode-flade — ny kontraktversion frankly-crew-contract-v0-4.md (frankly-crew-contract-v0-3.md bevaret som historik). Hvorfor: pilot-roundtrip 2026-07-09",
+      "scope": "mission-runtime",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "cockpit-agent-method",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-07-09T19:22:09+00:00",
+      "filedTo": {
+        "route": "routes/mission-runtime-route.md",
+        "bullet": "- 2026-07-09: R4.1 Diagram-designer: metode justeret mellem kørsler via cockpittets metode-flade — ny kontraktversion frankly-crew-contract-v0-4.md (frankly-crew-contract-v0-3.md bevaret som historik). Hvorfor: pilot-roundtrip 2026-07-09"
+      },
+      "note": "cockpit /api/agent-method"
+    }
+  ]
+}
