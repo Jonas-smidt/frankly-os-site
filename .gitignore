@@ -8,6 +8,19 @@ site/
 __pycache__/
 *.pyc
 
+# Frankly OS operating surfaces — bor lokalt i denne mappe (OS'et bruger dem),
+# men må ALDRIG committes til det offentlige repo. Deploy holder dem allerede ude
+# af site/ (allowlist + check_upload_boundary.py); dette holder kilden ude af repoet.
+control-cockpit.html
+frankly-os-cockpit.html
+frankly-os.html
+lab-hub.html
+mission-control-queue.html
+observatory.html
+overview.html
+progress-map.html
+studio.html
+
 # Diverse
 .DS_Store
 *.local

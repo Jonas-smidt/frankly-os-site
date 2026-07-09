@@ -30,6 +30,8 @@ OS_ONLY_PAGES = [
     "progress-map.html",
     "overview.html",
     "frankly-os.html",
+    "frankly-os-cockpit.html",
+    "lab-hub.html",
 ]
 
 
