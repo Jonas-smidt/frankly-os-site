@@ -78,6 +78,8 @@
   /* attention panel (venter på dig) */
   .attention{background:linear-gradient(180deg,#fff, #fff),var(--calm);border:1px solid var(--calm-deep)}
   .attention .panel__head{background:linear-gradient(100deg,var(--calm) 0%,var(--blush) 90%);border-bottom-color:var(--calm-deep)}
+  .ap-note{margin:6px 8px 4px;padding:11px 13px;border-radius:var(--r-md);background:var(--blush);border:1px solid var(--stone);font-size:12.5px;color:var(--ink-2)}
+  .ap-note b{color:var(--bordeaux)}
 
   /* rows */
   .row{display:flex;gap:13px;align-items:flex-start;padding:13px 14px;border-radius:var(--r-md);transition:background .2s var(--ease)}
@@ -262,11 +264,23 @@
       th.appendChild(el);num(el.querySelector('.v'),t.v);
     });
 
-    // attention = gates + approval-gated installs
-    var gates=(d.queue.gates||[]);
+    // attention = the autopilot's batched decisions (preferred), else the queue gates
+    var ap=d.autopilot;
     var attn=document.getElementById('attention');attn.innerHTML="";
-    var items=gates.map(function(g){return {t:plainGate(g),d:g,chip:g.toLowerCase().indexOf('claim')>=0?"lock":"wait",icon:"🔒"};});
-    if((ac.approvalGatedInstalls||0)>0) items.unshift({t:ac.approvalGatedInstalls+" plugin-installationer afventer",d:"Kan forbedre workflows, men kræver din godkendelse før installation.",chip:"wait",icon:"⏳"});
+    if(ap && ap.day){
+      var note=document.createElement('div');note.className="ap-note";
+      var didN=(ap.didAutonomously||[]).length;
+      note.innerHTML='🤖 Autopiloten kørte '+esc(ap.day)+' · gjorde <b>'+didN+' ting selv</b> — her er kun det, der kræver dig:';
+      attn.appendChild(note);
+    }
+    var items;
+    if(ap && ap.waitingForJonas){
+      items=ap.waitingForJonas.map(function(w){return {t:w.title,d:w.why||"",chip:(w.gate==="locked")?"lock":"wait",icon:(w.gate==="locked")?"🔒":"⏳"};});
+    }else{
+      var gates=(d.queue.gates||[]);
+      items=gates.map(function(g){return {t:plainGate(g),d:g,chip:g.toLowerCase().indexOf('claim')>=0?"lock":"wait",icon:"🔒"};});
+      if((ac.approvalGatedInstalls||0)>0) items.unshift({t:ac.approvalGatedInstalls+" plugin-installationer afventer",d:"Kan forbedre workflows, men kræver din godkendelse før installation.",chip:"wait",icon:"⏳"});
+    }
     items.forEach(function(it){
       var r=document.createElement('div');r.className="row";
       r.innerHTML='<div class="row__icon">'+it.icon+'</div><div class="row__main"><div class="row__t">'+esc(it.t)+'</div><div class="row__d">'+esc(it.d)+'</div></div>'+
@@ -321,8 +335,8 @@
   refreshOut();
 
   // load live feeds; fall back to snapshot
-  var feeds={flight:"data/flight-recorder.json",queue:"data/mission-control-queue.json",activation:"data/activation-queue-data.json",surfaces:"data/surface-gate-registry.json"};
-  var data={flight:SNAP.flight,queue:SNAP.queue,activation:SNAP.activation,surfaces:SNAP.surfaces};
+  var feeds={flight:"data/flight-recorder.json",queue:"data/mission-control-queue.json",activation:"data/activation-queue-data.json",surfaces:"data/surface-gate-registry.json",autopilot:"data/autopilot-digest.json"};
+  var data={flight:SNAP.flight,queue:SNAP.queue,activation:SNAP.activation,surfaces:SNAP.surfaces,autopilot:null};
   Promise.all(Object.keys(feeds).map(function(k){
     return fetch(feeds[k],{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){data[k]=j;}).catch(function(){});
   })).then(function(){
