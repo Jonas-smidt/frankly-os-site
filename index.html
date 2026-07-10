@@ -4,128 +4,76 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Frankly Lab</title>
-<meta name="description" content="Frankly Lab upload bundle for gated HTML tests, prototypes, the online coverage overview, approved Start here preview and noindex blog draft previews.">
+<meta name="description" content="Frankly Lab is a gated shelf of small Frankly tools, guides and games — brand helpers, approved pages, the public Frankly Journal and a few glass experiments. Everything runs locally in your browser.">
 <link rel="stylesheet" href="frankly-lab-brand.css">
 <style>
   *{box-sizing:border-box}
   *::before,*::after{box-sizing:border-box}
   html,body{margin:0;overflow-x:hidden}
-  body{background:var(--limestone);color:var(--grey-1);line-height:1.6;font-size:16px}
   a{color:inherit}
-  .wrap{width:min(1180px,calc(100% - 40px));margin:0 auto}
-
-  /* ---- top bar ---- */
-  .topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:26px 0}
-  .brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--bordeaux)}
-  .brand svg{height:24px;width:auto;display:block;color:var(--bordeaux)}
-  .brand .lab{font-family:var(--fl-sans);font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--bordeaux);padding-left:11px;border-left:1px solid var(--line-dark)}
-  .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 
   /* ---- hero ---- */
-  .hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(320px,.6fr);gap:34px;align-items:stretch;padding:44px 0 52px}
-  h1{font-size:clamp(52px,8.4vw,104px);line-height:.94;letter-spacing:-.02em;margin:16px 0 0;max-width:9ch}
-  .hero p.lede{font-family:var(--fl-sans);font-size:19px;line-height:1.55;max-width:660px;color:var(--grey-1);margin:22px 0 0}
-  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-
-  /* ---- status panel ---- */
-  .status-panel{position:relative;isolation:isolate;overflow:hidden;min-height:420px;background:var(--bordeaux);color:var(--limestone);border-radius:var(--r-lg);padding:214px 26px 26px}
-  .status-panel::before{content:"";position:absolute;top:22px;left:22px;right:22px;height:166px;border:1px solid rgba(245,244,241,.18);border-radius:var(--r-card);background:linear-gradient(rgba(255,255,255,.22) 0 0) 24px 28px/112px 9px no-repeat,linear-gradient(rgba(255,211,227,.9) 0 0) 24px 54px/82px 38px no-repeat,linear-gradient(rgba(204,216,240,.9) 0 0) 116px 54px/58px 38px no-repeat,linear-gradient(rgba(207,232,191,.9) 0 0) 184px 54px/68px 38px no-repeat,linear-gradient(rgba(243,209,135,.9) 0 0) 24px 114px/228px 12px no-repeat,linear-gradient(rgba(255,255,255,.12) 0 0) 24px 144px/188px 8px no-repeat,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:auto,auto,auto,auto,auto,auto,28px 28px,28px 28px}
-  .status-panel::after{content:"LAB";position:absolute;right:30px;top:40px;color:rgba(255,255,255,.16);font-family:var(--fl-display);font-size:60px;line-height:1;letter-spacing:-.01em}
-  .status-panel > *{position:relative;z-index:1}
-  .status-panel .eyebrow{display:block;font-family:var(--fl-sans);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(245,244,241,.6)}
-  .status-panel b{display:block;font-family:var(--fl-display);font-weight:600;font-size:34px;line-height:1.04;letter-spacing:-.01em;margin:12px 0;color:var(--white)}
-  .status-panel p{margin:0;color:rgba(245,244,241,.74);font-family:var(--fl-sans);font-size:14px;line-height:1.5}
-  .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:20px;background:rgba(245,244,241,.16);border:1px solid rgba(245,244,241,.14);border-radius:var(--r-sm);overflow:hidden}
-  .metrics div{padding:14px 13px;background:rgba(255,255,255,.05)}
-  .metrics strong{display:block;color:var(--white);font-family:var(--fl-display);font-weight:600;font-size:26px;line-height:1}
-  .metrics small{display:block;margin-top:8px;color:rgba(245,244,241,.6);font-family:var(--fl-sans);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;line-height:1.2}
-
-  /* ---- bands ---- */
-  .band{padding:34px 0 60px;border-top:1px solid var(--line)}
-  .hero + .band{border-top:0}
-  .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
-  .section-head h2{font-size:32px;line-height:1.04;margin:0}
-  .section-head p{max-width:520px;margin:0;font-family:var(--fl-sans);color:var(--grey-1)}
-  .grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
-
-  .shelf-block{margin-top:24px}
-  .shelf-block:first-of-type{margin-top:0}
-  .shelf-block-head{display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,.52fr);gap:18px;align-items:end;padding:22px 0;border-top:1px solid var(--line)}
-  .shelf-block:first-of-type .shelf-block-head{border-top:0;padding-top:0}
-  .shelf-block-head .eyebrow{display:block;font-family:var(--fl-sans);font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(45,0,17,.62);margin:0 0 8px}
-  .shelf-block-head h3{margin:0;font-size:26px;line-height:1.06}
-  .shelf-block-head p{margin:0;font-family:var(--fl-sans);color:var(--grey-1);font-size:14px}
-  .play-shelf .shelf-block-head{padding:24px 22px;background:var(--blush);border:1px solid var(--stone-4);border-radius:var(--r-card)}
-  .page-shelf .shelf-block-head{padding:24px 22px;background:var(--limestone-soft);border:1px solid var(--stone-4);border-radius:var(--r-card)}
-
-  /* ---- cards ---- */
-  .item{display:flex;flex-direction:column;min-height:238px;background:var(--white);border:1px solid var(--stone-4);border-radius:var(--r-card);padding:20px;text-decoration:none;transition:border-color var(--dur-hover) var(--ease),box-shadow var(--dur-hover) var(--ease),transform var(--dur-hover) var(--ease)}
-  a.item:hover{border-color:var(--calm-deep);box-shadow:var(--shadow-card);transform:translateY(-3px)}
-  .item .chip{display:inline-flex;width:max-content;align-items:center;border-radius:var(--r-pill);padding:6px 11px;font-family:var(--fl-sans);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.02em;color:var(--bordeaux)}
-  .live .chip{background:var(--ok)}
-  .draft .chip{background:var(--blue)}
-  .local .chip{background:var(--limestone-soft)}
-  .locked .chip{background:var(--warn)}
-  .public .chip{background:var(--sky)}
-  .missing .chip{background:var(--recover)}
-  .item h3{font-size:23px;line-height:1.1;margin:18px 0 10px}
-  .item p{margin:0;font-family:var(--fl-sans);color:var(--grey-1);font-size:14.5px;line-height:1.5}
-  .item .go{margin-top:auto;padding-top:20px;font-family:var(--fl-sans);font-size:14px;font-weight:600;color:var(--bordeaux)}
-  .item .go::after{content:" \2192";opacity:.55}
-
-  /* ---- illustrated cards (CSS-art thumbnails) ---- */
-  .item[data-art]{position:relative;overflow:hidden;min-height:360px;padding:0;--accent:var(--calm-deep);--accent-2:var(--blue);--thumb:linear-gradient(135deg,rgba(255,211,227,.86),rgba(255,255,255,.72)),var(--blush)}
-  .item[data-art]::before{content:"";display:block;height:160px;border-bottom:1px solid var(--stone-4);background:radial-gradient(circle at calc(100% - 32px) 32px,var(--accent) 0 8px,transparent 9px),linear-gradient(rgba(255,255,255,.52) 0 0) 18px 18px/calc(100% - 36px) calc(100% - 36px) no-repeat,var(--thumb);background-color:var(--limestone-soft)}
-  .item[data-art]::after{content:attr(data-mark);position:absolute;top:46px;left:24px;display:flex;align-items:flex-end;width:76px;height:76px;border:1px solid rgba(45,0,17,.12);border-radius:20px;padding:11px;background:rgba(255,255,255,.82);box-shadow:0 12px 28px rgba(45,0,17,.1);color:var(--bordeaux);font-family:var(--fl-display);font-size:26px;font-weight:600;line-height:.9;letter-spacing:-.01em}
-  .item[data-art] .chip{margin:20px 20px 0}
-  .item[data-art] h3{margin:16px 20px 10px}
-  .item[data-art] p{margin:0 20px}
-  .item[data-art] .go{margin:0 20px 20px;padding-top:20px}
-  .item[data-art="instore"]{--accent:var(--warn);--accent-2:var(--ok);--thumb:linear-gradient(var(--bordeaux) 0 0) 118px 42px/48px 14px no-repeat,linear-gradient(var(--calm-pink) 0 0) 44px 64px/128px 42px no-repeat,linear-gradient(var(--ok) 0 0) 44px 112px/92px 12px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 58px 82px/82px 2px no-repeat,linear-gradient(135deg,#fff,var(--limestone-soft))}
-  .item[data-art="signature"]{--accent:var(--calm-deep);--accent-2:var(--calm-pink);--thumb:linear-gradient(rgba(45,0,17,.18) 0 0) 124px 48px/118px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 124px 68px/88px 2px no-repeat,linear-gradient(90deg,var(--calm-deep),var(--calm-pink)) 124px 98px/112px 8px no-repeat,linear-gradient(#fff 0 0) 104px 30px/156px 98px no-repeat,linear-gradient(135deg,#fff,var(--blush))}
-  .item[data-art="brand-reference"]{--accent:var(--bordeaux);--accent-2:var(--calm-deep);--thumb:linear-gradient(var(--bordeaux) 0 0) 118px 36px/48px 48px no-repeat,linear-gradient(var(--calm-deep) 0 0) 176px 36px/48px 48px no-repeat,linear-gradient(var(--limestone-soft) 0 0) 234px 36px/48px 48px no-repeat,linear-gradient(rgba(45,0,17,.16) 0 0) 118px 108px/160px 2px no-repeat,#fff}
-  .item[data-art="brand-assistant"]{--accent:var(--blue);--accent-2:var(--calm-pink);--thumb:linear-gradient(135deg,var(--calm-pink),#fff) 112px 32px/136px 38px no-repeat,linear-gradient(135deg,#fff,var(--limestone-soft)) 142px 82px/134px 38px no-repeat,linear-gradient(rgba(45,0,17,.22) 0 0) 130px 50px/64px 2px no-repeat,linear-gradient(rgba(45,0,17,.16) 0 0) 158px 100px/80px 2px no-repeat,var(--blush)}
-  .item[data-art="ribbon"]{--accent:var(--calm-deep);--accent-2:var(--calm-pink);--thumb:radial-gradient(ellipse at 204px 74px,rgba(255,255,255,.78) 0 18px,transparent 19px),linear-gradient(118deg,transparent 0 24%,rgba(195,82,105,.82) 25% 33%,rgba(255,183,201,.92) 34% 48%,rgba(255,255,255,.62) 49% 56%,transparent 57%) 78px 24px/178px 126px no-repeat,linear-gradient(22deg,transparent 0 29%,rgba(255,211,227,.44) 30% 37%,rgba(255,255,255,.74) 38% 45%,transparent 46%) 86px 62px/162px 82px no-repeat,linear-gradient(135deg,#fff,var(--blush))}
-  .item[data-art="business-card"]{--accent:var(--ok);--accent-2:var(--calm-deep);--thumb:linear-gradient(135deg,#fff,var(--calm-pink)) 108px 34px/170px 88px no-repeat,repeating-linear-gradient(90deg,var(--bordeaux) 0 8px,transparent 8px 14px) 210px 58px/42px 42px no-repeat,linear-gradient(rgba(45,0,17,.22) 0 0) 130px 62px/58px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 130px 78px/42px 2px no-repeat,var(--limestone-soft)}
-  .item[data-art="dictionary"]{--accent:var(--calm-deep);--accent-2:var(--warn);--thumb:linear-gradient(#fff 0 0) 118px 28px/126px 98px no-repeat,linear-gradient(var(--calm-pink) 0 0) 136px 46px/48px 10px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 136px 72px/80px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 136px 90px/62px 2px no-repeat,linear-gradient(90deg,var(--calm-deep) 0 8px,transparent 8px 100%) 244px 38px/18px 74px no-repeat,var(--limestone-soft)}
-  .item[data-art="qr"]{--accent:var(--bordeaux);--accent-2:var(--calm-pink);--thumb:repeating-linear-gradient(90deg,var(--bordeaux) 0 10px,transparent 10px 20px) 132px 36px/88px 88px no-repeat,repeating-linear-gradient(0deg,rgba(45,0,17,.8) 0 10px,transparent 10px 20px) 132px 36px/88px 88px no-repeat,linear-gradient(#fff 0 0) 120px 24px/112px 112px no-repeat,linear-gradient(135deg,var(--calm-pink),#fff)}
-  .item[data-art="image"]{--accent:var(--blue);--accent-2:var(--calm-pink);--thumb:linear-gradient(135deg,#CCD8F0,var(--calm-pink)) 108px 30px/148px 92px no-repeat,linear-gradient(90deg,transparent 16px,rgba(255,255,255,.7) 16px 18px,transparent 18px) 126px 46px/100px 60px no-repeat,linear-gradient(0deg,transparent 16px,rgba(255,255,255,.7) 16px 18px,transparent 18px) 126px 46px/100px 60px no-repeat,linear-gradient(rgba(45,0,17,.64) 0 0) 126px 106px/100px 3px no-repeat,#fff}
-  .item[data-art="drop"]{--accent:var(--warn);--accent-2:var(--blue);--thumb:linear-gradient(var(--calm-deep) 0 0) 124px 34px/20px 20px no-repeat,linear-gradient(var(--blue) 0 0) 184px 58px/18px 18px no-repeat,linear-gradient(var(--warn) 0 0) 236px 36px/22px 22px no-repeat,linear-gradient(var(--bordeaux) 0 0) 120px 120px/150px 9px no-repeat,linear-gradient(135deg,#fff,var(--blush))}
-  .item[data-art="bmw"]{--accent:var(--bordeaux);--accent-2:var(--ok);--thumb:linear-gradient(90deg,transparent 48%,rgba(255,255,255,.92) 48% 52%,transparent 52%) 0 0/100% 100%,linear-gradient(135deg,var(--bordeaux),#604A52) 112px 28px/146px 102px no-repeat,linear-gradient(var(--calm-deep) 0 0) 170px 82px/38px 20px no-repeat,linear-gradient(135deg,var(--ok),#fff)}
-  .item[data-art="decision"]{--accent:var(--warn);--accent-2:var(--blue);--thumb:conic-gradient(from -20deg,var(--calm-pink) 0 28%,#fff 28% 54%,var(--blue) 54% 76%,var(--warn) 76% 100%) 132px 28px/98px 98px no-repeat,linear-gradient(var(--bordeaux) 0 0) 180px 32px/4px 92px no-repeat,linear-gradient(135deg,#fff,var(--limestone-soft))}
-  .item[data-art="quiz"]{--accent:var(--ok);--accent-2:var(--calm-pink);--thumb:linear-gradient(#fff 0 0) 108px 32px/150px 82px no-repeat,linear-gradient(var(--ok) 0 0) 128px 84px/46px 12px no-repeat,linear-gradient(var(--calm-pink) 0 0) 184px 84px/46px 12px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 128px 56px/104px 2px no-repeat,var(--limestone-soft)}
-  .item[data-art="onboarding"]{--accent:var(--ok);--accent-2:var(--calm-pink);--thumb:linear-gradient(var(--ok) 0 0) 120px 40px/16px 16px no-repeat,linear-gradient(var(--ok) 0 0) 120px 72px/16px 16px no-repeat,linear-gradient(var(--calm-pink) 0 0) 120px 104px/16px 16px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 152px 48px/104px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 152px 80px/82px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 152px 112px/94px 2px no-repeat,#fff}
-  .item[data-art="coverage"]{--accent:var(--blue);--accent-2:var(--ok);--thumb:linear-gradient(var(--calm-pink) 0 0) 118px 42px/42px 84px no-repeat,linear-gradient(var(--ok) 0 0) 172px 66px/42px 60px no-repeat,linear-gradient(var(--blue) 0 0) 226px 54px/42px 72px no-repeat,linear-gradient(rgba(45,0,17,.2) 0 0) 112px 128px/170px 2px no-repeat,#fff}
-  .item[data-art="blog"]{--accent:var(--calm-deep);--accent-2:var(--limestone-soft);--thumb:linear-gradient(#fff 0 0) 132px 26px/122px 100px no-repeat,linear-gradient(var(--calm-pink) 0 0) 150px 46px/78px 10px no-repeat,linear-gradient(rgba(45,0,17,.18) 0 0) 150px 74px/84px 2px no-repeat,linear-gradient(rgba(45,0,17,.14) 0 0) 150px 92px/62px 2px no-repeat,linear-gradient(135deg,var(--limestone-soft),var(--blush))}
-
-  /* ---- real Frankly 3D object renders on cards ---- */
-  .item[data-art]::before{background:var(--obj,none) center/contain no-repeat,linear-gradient(160deg,#fff,var(--blush) 60%,#EFE0E4);background-color:transparent}
-  .item[data-art="instore"]{--obj:url(assets/tools/instore.png)}
-  .item[data-art="signature"]{--obj:url(assets/tools/signature.png)}
-  .item[data-art="brand-reference"]{--obj:url(assets/tools/brand-reference.png)}
-  .item[data-art="brand-assistant"]{--obj:url(assets/tools/brand-assistant.png)}
-  .item[data-art="business-card"]{--obj:url(assets/tools/business-card.png)}
-  .item[data-art="dictionary"]{--obj:url(assets/tools/dictionary.png)}
-  .item[data-art="qr"]{--obj:url(assets/tools/qr.png)}
-  .item[data-art="image"]{--obj:url(assets/tools/image.png)}
-  .item[data-art="drop"]{--obj:url(assets/tools/drop.png)}
-  .item[data-art="bmw"]{--obj:url(assets/tools/bmw.png)}
-  .item[data-art="decision"]{--obj:url(assets/tools/decision.png)}
-  .item[data-art="quiz"]{--obj:url(assets/tools/quiz.png)}
-  .item[data-art="onboarding"]{--obj:url(assets/tools/onboarding.png)}
-  .item[data-art="coverage"]{--obj:url(assets/tools/coverage.png)}
-  .item[data-art="blog"]{--obj:url(assets/tools/blog.png)}
-  .item[data-art="bmw"]::before,.item[data-art="onboarding"]::before{background-size:cover;background-position:center}
-  .item[data-art="ribbon"]::before{background:var(--thumb);background-color:var(--limestone-soft)}
-
-  .note{border-top:1px solid var(--line);padding:26px 0 48px;font-family:var(--fl-sans);color:var(--grey-1);font-size:14px;line-height:1.6}
-
-  /* ---- ribbon accent (real brand asset) ---- */
-  .hero{position:relative;overflow:visible}
+  .hero{position:relative;overflow:visible;display:grid;grid-template-columns:minmax(0,1.06fr) minmax(320px,.6fr);gap:34px;align-items:stretch;padding:44px 0 52px}
   .hero > div,.hero > aside{position:relative;z-index:1}
+  .hero h1{font-size:clamp(52px,8.4vw,104px);line-height:.94;letter-spacing:-.02em;margin:16px 0 0;max-width:9ch}
+  .hero p.lede{font-size:19px;line-height:1.55;max-width:660px;color:var(--grey-1);margin:22px 0 0}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
   .hero-ribbon{position:absolute;top:8px;right:-64px;width:min(600px,52%);height:auto;z-index:0;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 46px rgba(45,0,17,.12))}
   .ribbon-divider{display:block;width:min(460px,58%);height:auto;margin:6px auto -8px;pointer-events:none;user-select:none;opacity:.95}
   @media (max-width:860px){.hero-ribbon{position:static;width:min(360px,80%);margin:4px auto -6px;display:block;right:auto;top:auto}}
+
+  /* ---- status panel (the one dark surface) ---- */
+  .status-panel{position:relative;isolation:isolate;overflow:hidden;min-height:420px;background:var(--bordeaux);color:var(--limestone);border-radius:var(--r-lg);padding:214px 26px 26px;box-shadow:var(--shadow-lift)}
+  .status-panel::before{content:"";position:absolute;top:22px;left:22px;right:22px;height:166px;border:1px solid rgba(245,244,241,.18);border-radius:var(--r-card);background:linear-gradient(rgba(255,255,255,.22) 0 0) 24px 28px/112px 9px no-repeat,linear-gradient(rgba(255,211,227,.9) 0 0) 24px 54px/82px 38px no-repeat,linear-gradient(rgba(204,216,240,.9) 0 0) 116px 54px/58px 38px no-repeat,linear-gradient(rgba(255,172,202,.85) 0 0) 184px 54px/68px 38px no-repeat,linear-gradient(rgba(243,209,135,.9) 0 0) 24px 114px/228px 12px no-repeat,linear-gradient(rgba(255,255,255,.12) 0 0) 24px 144px/188px 8px no-repeat,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:auto,auto,auto,auto,auto,auto,28px 28px,28px 28px}
+  .status-panel::after{content:"LAB";position:absolute;right:30px;top:40px;color:rgba(255,255,255,.16);font-family:var(--fl-display);font-size:60px;line-height:1;letter-spacing:-.01em}
+  .status-panel > *{position:relative;z-index:1}
+  .status-panel .eyebrow{display:block;font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(245,244,241,.6)}
+  .status-panel b{display:block;font-family:var(--fl-display);font-weight:600;font-size:34px;line-height:1.04;letter-spacing:-.01em;margin:12px 0;color:var(--white)}
+  .status-panel p{margin:0;color:rgba(245,244,241,.74);font-size:14px;line-height:1.5}
+  .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:20px;background:rgba(245,244,241,.16);border:1px solid rgba(245,244,241,.14);border-radius:var(--r-sm);overflow:hidden}
+  .metrics div{padding:14px 13px;background:rgba(255,255,255,.05)}
+  .metrics strong{display:block;color:var(--white);font-family:var(--fl-display);font-weight:600;font-size:26px;line-height:1;font-variant-numeric:tabular-nums}
+  .metrics small{display:block;margin-top:8px;color:rgba(245,244,241,.6);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;line-height:1.2}
+
+  /* ---- search + filter controls ---- */
+  .lab-controls{display:grid;grid-template-columns:minmax(220px,.5fr) minmax(0,1fr);gap:14px;align-items:center;padding:20px 0 6px;border-top:1px solid var(--line)}
+  .lab-controls .fl-input{max-width:420px}
+  .filter-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:flex-end}
+  button.fl-pill{cursor:pointer;font-family:var(--fl-sans)}
+  .result-count{grid-column:1 / -1;margin:0;font-size:13px;color:var(--grey-1)}
+  .no-result{border:1px dashed var(--stone-4);border-radius:var(--r-card);padding:34px 22px;margin:26px 0 8px;text-align:center;color:var(--grey-1);font-size:15px}
+  .no-result[hidden]{display:none}
+
+  /* ---- shelves ---- */
+  [data-shelf][hidden]{display:none}
+  .fl-card[hidden]{display:none}
+  .fl-card[data-card]{min-height:238px}
+  .shelf-lede{margin:8px 0 0;max-width:60ch;font-size:14.5px;color:var(--grey-1)}
+
+  /* ---- illustrated card thumbnails (real Frankly 3D renders + monogram fallback) ---- */
+  .fl-card[data-art]{position:relative;overflow:hidden;min-height:348px;padding:0}
+  .fl-card[data-art]::before{content:"";display:block;height:152px;border-bottom:1px solid var(--stone-4);background:var(--obj,none) center/contain no-repeat,linear-gradient(160deg,#fff,var(--blush) 60%,#EFE0E4)}
+  .fl-card[data-art]::after{content:attr(data-mark);position:absolute;top:44px;left:22px;display:flex;align-items:flex-end;width:72px;height:72px;border:1px solid rgba(45,0,17,.12);border-radius:20px;padding:10px;background:rgba(255,255,255,.85);box-shadow:0 12px 28px rgba(45,0,17,.1);color:var(--bordeaux);font-family:var(--fl-display);font-size:24px;font-weight:600;line-height:.9;letter-spacing:-.01em}
+  .fl-card[data-art] .fl-chip{margin:18px 20px 0}
+  .fl-card[data-art] h3{margin:0 20px}
+  .fl-card[data-art] p{margin:0 20px}
+  .fl-card[data-art] .fl-go{margin:auto 20px 20px;padding-top:14px}
+  .fl-card[data-art="instore"]{--obj:url(assets/tools/instore.png)}
+  .fl-card[data-art="signature"]{--obj:url(assets/tools/signature.png)}
+  .fl-card[data-art="brand-reference"]{--obj:url(assets/tools/brand-reference.png)}
+  .fl-card[data-art="brand-assistant"]{--obj:url(assets/tools/brand-assistant.png)}
+  .fl-card[data-art="business-card"]{--obj:url(assets/tools/business-card.png)}
+  .fl-card[data-art="dictionary"]{--obj:url(assets/tools/dictionary.png)}
+  .fl-card[data-art="qr"]{--obj:url(assets/tools/qr.png)}
+  .fl-card[data-art="image"]{--obj:url(assets/tools/image.png)}
+  .fl-card[data-art="drop"]{--obj:url(assets/tools/drop.png)}
+  .fl-card[data-art="bmw"]{--obj:url(assets/tools/bmw.png)}
+  .fl-card[data-art="decision"]{--obj:url(assets/tools/decision.png)}
+  .fl-card[data-art="quiz"]{--obj:url(assets/tools/quiz.png)}
+  .fl-card[data-art="onboarding"]{--obj:url(assets/tools/onboarding.png)}
+  .fl-card[data-art="coverage"]{--obj:url(assets/tools/coverage.png)}
+  .fl-card[data-art="blog"]{--obj:url(assets/tools/blog.png)}
+  .fl-card[data-art="bmw"]::before,.fl-card[data-art="onboarding"]::before{background-size:cover;background-position:center}
 
   /* ---- motion ---- */
   @media (prefers-reduced-motion:no-preference){
@@ -137,40 +85,43 @@
     .js .reveal-hero > *:nth-child(3){animation-delay:.22s}
     .js .reveal-hero > *:nth-child(4){animation-delay:.30s}
     @keyframes riseIn{to{opacity:1;transform:none}}
-    .js .grid .item{opacity:0;animation:cardIn .6s var(--ease-out) forwards}
-    .js .grid .item:nth-child(1){animation-delay:.04s}
-    .js .grid .item:nth-child(2){animation-delay:.10s}
-    .js .grid .item:nth-child(3){animation-delay:.16s}
-    .js .grid .item:nth-child(4){animation-delay:.22s}
-    .js .grid .item:nth-child(5){animation-delay:.28s}
-    .js .grid .item:nth-child(6){animation-delay:.34s}
-    .js .grid .item:nth-child(7){animation-delay:.40s}
-    .js .grid .item:nth-child(8){animation-delay:.46s}
+    .js .fl-grid .fl-card{opacity:0;animation:cardIn .6s var(--ease-out) forwards}
+    .js .fl-grid .fl-card:nth-child(1){animation-delay:.04s}
+    .js .fl-grid .fl-card:nth-child(2){animation-delay:.10s}
+    .js .fl-grid .fl-card:nth-child(3){animation-delay:.16s}
+    .js .fl-grid .fl-card:nth-child(4){animation-delay:.22s}
+    .js .fl-grid .fl-card:nth-child(5){animation-delay:.28s}
+    .js .fl-grid .fl-card:nth-child(6){animation-delay:.34s}
+    .js .fl-grid .fl-card:nth-child(7){animation-delay:.40s}
+    .js .fl-grid .fl-card:nth-child(8){animation-delay:.46s}
     @keyframes cardIn{from{opacity:0}to{opacity:1}}
   }
 
+  /* ---- responsive ---- */
   @media (max-width:860px){
-    .topbar{align-items:flex-start;flex-direction:column;gap:14px}
-    .nav{justify-content:flex-start}
     .hero{grid-template-columns:1fr;padding-top:28px;gap:26px}
-    .grid{grid-template-columns:1fr}
-    .shelf-block-head{grid-template-columns:1fr}
-    .item{min-height:0}
-    .item[data-art]{min-height:300px}
-    .section-head{align-items:flex-start;flex-direction:column}
+    .lab-controls{grid-template-columns:1fr}
+    .lab-controls .fl-input{max-width:none}
+    .filter-row{justify-content:flex-start}
+    .fl-card[data-card]{min-height:0}
+    .fl-card[data-art]{min-height:300px}
   }
   @media (max-width:520px){
-    .wrap{width:min(100% - 30px,1180px)}
     .hero{gap:18px;padding:14px 0 28px}
-    h1{font-size:46px;max-width:10ch}
+    .hero h1{font-size:46px;max-width:10ch}
     .hero p.lede{font-size:16.5px}
     .hero-actions .fl-btn{flex:1 1 150px}
     .status-panel{min-height:236px;padding:96px 20px 20px}
-    .status-panel::before{top:16px;left:16px;right:16px;height:64px;background:linear-gradient(rgba(255,255,255,.22) 0 0) 18px 15px/86px 7px no-repeat,linear-gradient(rgba(255,211,227,.9) 0 0) 18px 34px/72px 20px no-repeat,linear-gradient(rgba(204,216,240,.9) 0 0) 96px 34px/46px 20px no-repeat,linear-gradient(rgba(207,232,191,.9) 0 0) 150px 34px/54px 20px no-repeat,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:auto,auto,auto,auto,22px 22px,22px 22px}
+    .status-panel::before{top:16px;left:16px;right:16px;height:64px;background:linear-gradient(rgba(255,255,255,.22) 0 0) 18px 15px/86px 7px no-repeat,linear-gradient(rgba(255,211,227,.9) 0 0) 18px 34px/72px 20px no-repeat,linear-gradient(rgba(204,216,240,.9) 0 0) 96px 34px/46px 20px no-repeat,linear-gradient(rgba(255,172,202,.85) 0 0) 150px 34px/54px 20px no-repeat,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:auto,auto,auto,auto,22px 22px,22px 22px}
     .status-panel::after{top:30px;right:26px;font-size:34px}
     .status-panel b{font-size:26px}
     .metrics{display:none}
-    .section-head h2{font-size:27px}
+    .fl-card[data-art]{min-height:0}
+    .fl-card[data-art]::before{height:74px}
+    .fl-card[data-art]::after{top:14px;left:16px;width:46px;height:46px;padding:7px;border-radius:13px;font-size:17px}
+    .fl-card[data-art] .fl-chip{margin:10px 16px 0}
+    .fl-card[data-art] h3,.fl-card[data-art] p{margin-left:16px;margin-right:16px}
+    .fl-card[data-art] .fl-go{margin:6px 16px 14px;padding-top:4px}
   }
 </style>
 </head>
@@ -191,243 +142,629 @@
     </symbol>
   </svg>
 
-  <header class="wrap topbar">
-    <a class="brand" href="index.html" aria-label="Frankly Lab">
+  <header class="fl-wrap fl-topbar">
+    <a class="fl-brand" href="index.html" aria-label="Frankly Lab">
       <svg role="img" aria-hidden="true" focusable="false" viewBox="0 0 147.16 36.63"><use href="#frankly-logo"/></svg>
       <span class="lab">Lab</span>
     </a>
-    <nav class="nav" aria-label="Lab pages">
-      <a class="fl-pill" href="#live">Tools</a>
+    <nav class="fl-nav" aria-label="Lab pages">
+      <a class="fl-pill" href="#tools">Tools</a>
+      <a class="fl-pill" href="#pages">Pages &amp; journal</a>
       <a class="fl-pill" href="#play">Play</a>
-      <a class="fl-pill" href="#pages">Pages</a>
-      <a class="fl-pill" href="lab-registry.html">Registry</a>
-      <a class="fl-pill" href="#workbench">Workbench</a>
+      <a class="fl-pill" href="#experiments">Experiments</a>
     </nav>
   </header>
 
   <main>
-    <section class="wrap hero">
+    <section class="fl-wrap hero">
       <img class="hero-ribbon" src="journal/images/ribbon-hero.png" alt="" aria-hidden="true">
       <div class="reveal-hero">
-        <p class="fl-kicker">Gated upload bundle</p>
+        <p class="fl-kicker">Frankly Lab</p>
         <h1>Frankly Lab.</h1>
-        <p class="lede">Frankly Lab online shows practical tools, approved preview pages and a separate play corner for games and small experiments.</p>
+        <p class="lede">A gated shelf of small Frankly tools, guides and games — plus the public Journal and a corner of glass experiments. Everything runs locally in your browser.</p>
         <div class="hero-actions">
-          <a class="fl-btn" href="#live">Open tools</a>
-          <a class="fl-btn fl-btn--ghost" href="#play">Open play</a>
-          <a class="fl-btn fl-btn--ghost" href="lab-registry.html">Open registry</a>
+          <a class="fl-btn" href="#tools">Browse tools</a>
+          <a class="fl-btn fl-btn--ghost" href="journal/frankly-blog-index.html">Read the journal</a>
         </div>
       </div>
-      <aside class="status-panel" aria-label="Bundle boundary">
+      <aside class="status-panel" aria-label="Lab boundary">
         <span class="eyebrow">Boundary</span>
         <b>Tools, pages, play.</b>
-        <p>The upload bundle carries Lab tools, the online coverage overview, Start here preview, Journal and a separate play corner.</p>
-        <div class="metrics" aria-label="Lab bundle metrics">
-          <div><strong>17</strong><small>Lab pages</small></div>
-          <div><strong>1</strong><small>coverage page</small></div>
-          <div><strong>3</strong><small>noindex previews</small></div>
+        <p>The Lab carries brand tools, approved pages, the public Journal and a play corner. Nothing here is customer-facing product, claims or legal material.</p>
+        <div class="metrics" aria-label="Lab metrics">
+          <div><strong id="labCardCount">20</strong><small>Lab cards</small></div>
+          <div><strong>4</strong><small>shelves</small></div>
+          <div><strong>1</strong><small>public journal</small></div>
         </div>
       </aside>
     </section>
 
-    <section class="wrap band" id="live">
-      <div class="section-head">
-        <h2>Tools in the online Lab</h2>
-        <p>Practical generators, guides and brand helpers only. Games, toys and quizzes are not part of this overview.</p>
-      </div>
-      <div class="shelf-block tool-shelf">
-        <div class="shelf-block-head">
-          <div>
-            <span class="eyebrow">Practical shelf</span>
-            <h3>Tools</h3>
-          </div>
-          <p>Generators, guides and brand helpers live here. No games mixed into the work tools.</p>
+    <section class="fl-wrap" id="live" aria-label="Search and filter">
+      <div class="lab-controls">
+        <input class="fl-input" id="labSearch" type="search" placeholder="Search the Lab" autocomplete="off" aria-label="Search Lab cards">
+        <div class="filter-row" id="labFilters" role="group" aria-label="Filter by shelf">
+          <button class="fl-pill is-active" type="button" data-filter="all" aria-pressed="true">All</button>
+          <button class="fl-pill" type="button" data-filter="tools" aria-pressed="false">Tools</button>
+          <button class="fl-pill" type="button" data-filter="pages" aria-pressed="false">Pages &amp; journal</button>
+          <button class="fl-pill" type="button" data-filter="play" aria-pressed="false">Play</button>
+          <button class="fl-pill" type="button" data-filter="experiments" aria-pressed="false">Experiments</button>
         </div>
-        <div class="grid">
-          <a class="item live" href="frankly-instore-onepager.html" data-art="instore" data-mark="IN">
-            <span class="chip">Online guide</span>
-            <h3>Instore salgsguide</h3>
-            <p>Overblik og fuld guide til Frankly Instore-salget: flow, betaling, dækning og quiz.</p>
-            <span class="go">Open guide</span>
-          </a>
-          <a class="item live" href="frankly-signature-generator.html" data-art="signature" data-mark="ES">
-            <span class="chip">Online tool</span>
-            <h3>Email signature</h3>
-            <p>Add details, preview the footer and copy HTML or plain text.</p>
-            <span class="go">Open tool</span>
-          </a>
-          <a class="item live" href="frankly-brand-reference.html" data-art="brand-reference" data-mark="BR">
-            <span class="chip">Online tool</span>
-            <h3>Brand Reference</h3>
-            <p>Colors, CSS tokens and tone rules for quick Frankly checks.</p>
-            <span class="go">Open tool</span>
-          </a>
-          <a class="item live" href="frankly-brand-assistant.html" data-art="brand-assistant" data-mark="BA">
-            <span class="chip">Online tool</span>
-            <h3>Brand Assistant</h3>
-            <p>Search recurring brand answers locally without any AI runtime.</p>
-            <span class="go">Open tool</span>
-          </a>
-          <a class="item live" href="frankly-ribbon-lab.html" data-art="ribbon" data-mark="RB">
-            <span class="chip">Prototype tool</span>
-            <h3>Ribbon Lab</h3>
-            <p>Design Frankly ribbon shapes with prompt, draw/edit controls and the satin-to-matte-glass material blend.</p>
-            <span class="go">Open tool</span>
-          </a>
-          <a class="item live" href="frankly-business-card.html" data-art="business-card" data-mark="BC">
-            <span class="chip">Online tool</span>
-            <h3>Business card</h3>
-            <p>Build a meeting card with contact details, QR and vCard output.</p>
-            <span class="go">Open tool</span>
-          </a>
-          <a class="item live" href="frankly-dictionary.html" data-art="dictionary" data-mark="DI">
-            <span class="chip">Online tool</span>
-            <h3>Dictionary</h3>
-            <p>Plain-language working definitions for common internal terms.</p>
-            <span class="go">Open tool</span>
-          </a>
-          <a class="item live" href="frankly-qr-link.html" data-art="qr" data-mark="QR">
-            <span class="chip">Online tool</span>
-            <h3>QR link</h3>
-            <p>Turn a URL into a local SVG QR code for decks and signs.</p>
-            <span class="go">Open tool</span>
-          </a>
-          <a class="item live" href="frankly-image-resizer.html" data-art="image" data-mark="IR">
-            <span class="chip">Online tool</span>
-            <h3>Image resizer</h3>
-            <p>Resize local images to useful social and presentation formats.</p>
-            <span class="go">Open tool</span>
-          </a>
-        </div>
+        <p class="result-count" id="resultCount" aria-live="polite"></p>
       </div>
+      <div class="no-result" id="noResult" hidden>No match. Try another word or shelf.</div>
     </section>
 
-    <section class="wrap band" id="play">
-      <div class="shelf-block play-shelf">
-        <div class="shelf-block-head">
-          <div>
-            <span class="eyebrow">For fun</span>
-            <h3>Play shelf</h3>
-          </div>
-          <p>Games, toys and quizzes sit in their own spot as lightweight Lab experiments.</p>
-        </div>
-        <div class="grid">
-          <a class="item live" href="frankly-drop-protection.html" data-art="drop" data-mark="DP">
-            <span class="chip">Online game</span>
-            <h3>Drop Protection</h3>
-            <p>Catch the falling objects with a little browser-game coverage bar.</p>
-            <span class="go">Play</span>
-          </a>
-          <a class="item live" href="franklys-bmw.html" data-art="bmw" data-mark="BM">
-            <span class="chip">Online game</span>
-            <h3>Frankly's BMW</h3>
-            <p>A browser game prototype for testing interactive HTML, responsive canvas behavior and Frankly tone.</p>
-            <span class="go">Play</span>
-          </a>
-          <a class="item live" href="the-decision-chicken.html" data-art="decision" data-mark="DC">
-            <span class="chip">Online toy</span>
-            <h3>Decision Chicken</h3>
-            <p>Pick from small options when the main job is moving forward.</p>
-            <span class="go">Open toy</span>
-          </a>
-          <a class="item live" href="frankly-quiz.html" data-art="quiz" data-mark="QZ">
-            <span class="chip">Online quiz</span>
-            <h3>Do you know Frankly?</h3>
-            <p>A short brand quiz for tone, gates and internal basics.</p>
-            <span class="go">Take quiz</span>
-          </a>
-          <a class="item live" href="glass-lab.html" data-art="quiz" data-mark="GL">
-            <small>Online playground</small>
-            <h3>Glass Lab</h3>
-            <p>A graphical playground for Frankly liquid-glass surfaces: refraction, frost, edge light and iridescent hover-wash.</p>
-            <strong>Open playground</strong>
-          </a>
-          <a class="item live" href="liquid-glass-hover.html" data-art="glass" data-mark="LG">
-            <small>Online prototype</small>
-            <h3>Liquid Glass Hover</h3>
-            <p>A Frankly environment prototype for 1:1 backdrop glass, mouse-light shadows and hero-card flare.</p>
-            <strong>Open prototype</strong>
-          </a>
+    <section class="fl-wrap fl-band" id="tools" data-shelf="tools">
+      <div class="fl-section-head">
+        <div>
+          <p class="fl-kicker">Tools</p>
+          <h2>Tools and guides</h2>
+          <p class="shelf-lede">Generators, guides and brand helpers. No games mixed into the work tools.</p>
         </div>
       </div>
+      <div class="fl-grid" data-shelf-grid="tools"></div>
     </section>
 
-    <section class="wrap band" id="pages">
-      <div class="shelf-block page-shelf">
-        <div class="shelf-block-head">
-          <div>
-            <span class="eyebrow">Pages and previews</span>
-            <h3>Approved pages</h3>
-          </div>
-          <p>Coverage, Start here and Journal stay visible as pages, not tools.</p>
-        </div>
-        <div class="grid">
-          <a class="item draft" href="onboarding.html" data-art="onboarding" data-mark="ST">
-            <span class="chip">Gated preview</span>
-            <h3>Start here</h3>
-            <p>The onboarding surface is copied online as a gated/noindex preview.</p>
-            <span class="go">Open preview</span>
-          </a>
-          <a class="item live" href="frankly-daekningsoverblik.html" data-art="coverage" data-mark="CO">
-            <span class="chip">Online page</span>
-            <h3>Coverage overview</h3>
-            <p>Approved for the online Lab bundle; still not a legal source.</p>
-            <span class="go">Open page</span>
-          </a>
-          <a class="item public" href="journal/frankly-blog-index.html" data-art="blog" data-mark="JO">
-            <span class="chip">Public · Journal</span>
-            <h3>Frankly Journal</h3>
-            <p>Ten calm stories from everyday life — the Danish blog suite, public and open to search.</p>
-            <span class="go">Open the journal</span>
-          </a>
+    <section class="fl-wrap fl-band" id="pages" data-shelf="pages">
+      <div class="fl-section-head">
+        <div>
+          <p class="fl-kicker">Pages and journal</p>
+          <h2>Approved pages and the Journal</h2>
+          <p class="shelf-lede">Start here, the coverage overview and the public Frankly Journal — pages, not tools.</p>
         </div>
       </div>
+      <div class="fl-grid" data-shelf-grid="pages"></div>
     </section>
 
-    <section class="wrap band" id="workbench">
-      <div class="section-head">
-        <h2>Built Lab shelf</h2>
-        <p>The short shelf view groups the non-game things visitors can open in the online Lab.</p>
+    <section class="fl-wrap fl-band" id="play" data-shelf="play">
+      <div class="fl-section-head">
+        <div>
+          <p class="fl-kicker">Play</p>
+          <h2>Play shelf</h2>
+          <p class="shelf-lede">Games, a toy and a quiz — the Lab's lighter corner.</p>
+        </div>
       </div>
-      <div class="grid">
-        <a class="item live" href="lab-registry.html" data-art="brand-reference" data-mark="RG">
-          <span class="chip">Registry</span>
-          <h3>Lab registry</h3>
-          <p>The full online Lab ledger now lives on its own page, with tools, play and approved previews separated.</p>
-          <span class="go">Open registry</span>
-        </a>
-        <article class="item draft" data-art="onboarding" data-mark="ST">
-          <span class="chip">Gated preview</span>
-          <h3>Start here</h3>
-          <p>Approved for the upload bundle as a noindex onboarding preview.</p>
-          <span class="go">Online preview</span>
-        </article>
-        <article class="item live" data-art="coverage" data-mark="CO">
-          <span class="chip">Online page</span>
-          <h3>Coverage overview</h3>
-          <p>Approved for the upload bundle and sitemap. Product/legal still has the final say before customer-facing reuse.</p>
-          <span class="go">Online page</span>
-        </article>
-        <article class="item public" data-art="blog" data-mark="JO">
-          <span class="chip">Public · Journal</span>
-          <h3>Frankly Journal</h3>
-          <p>Ten calm everyday stories, published as the Lab's one public, search-open surface.</p>
-          <span class="go">Online in Lab</span>
-        </article>
-        <article class="item live" data-art="brand-reference" data-mark="TO">
-          <span class="chip">Online tools</span>
-          <h3>Brand and daily tools</h3>
-          <p>Signature, QR, image, dictionary, brand helpers, Ribbon Lab and Instore are restored and copied into the upload bundle.</p>
-          <span class="go">Online in Lab</span>
-        </article>
+      <div class="fl-grid" data-shelf-grid="play"></div>
+    </section>
+
+    <section class="fl-wrap fl-band" id="experiments" data-shelf="experiments">
+      <div class="fl-section-head">
+        <div>
+          <p class="fl-kicker">Experiments</p>
+          <h2>Glass experiments</h2>
+          <p class="shelf-lede">Visual prototypes that keep their own look — the glass is the content, so these pages are deliberately not reskinned.</p>
+        </div>
       </div>
+      <div class="fl-grid" data-shelf-grid="experiments"></div>
     </section>
   </main>
 
-  <img class="wrap ribbon-divider" src="journal/images/ribbon-accent.png" alt="" aria-hidden="true">
-  <footer class="wrap note">
-    This online Lab is gated but not treated as security. Jonas reopened Coverage overview as an online page and reopened Start here plus blog drafts as preview pages; source records, customer-facing claims and all other product/legal work stay out of the upload bundle.
+  <img class="fl-wrap ribbon-divider" src="journal/images/ribbon-accent.png" alt="" aria-hidden="true">
+  <footer class="fl-wrap fl-footer">
+    <p>Frankly Lab is a gated preview space. Tools run locally in your browser; nothing here is customer-facing product, claims or legal material.</p>
   </footer>
-  <script>document.documentElement.classList.add('js');</script>
+
+  <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-genereret 2026-07-10T16:38:53+00:00; må ikke håndredigeres) -->
+  <script id="toolsShelfSnapshot" type="application/json">{
+  "schemaVersion": "1.0",
+  "generated": "2026-07-10T16:38:53+00:00",
+  "source": "os-visualization/system-intelligence/tools-shelf.json",
+  "tools": [
+    {
+      "id": "signature",
+      "href": "frankly-signature-generator.html",
+      "labelEn": "Email signature",
+      "labelDa": "E-mail-signatur",
+      "descriptionEn": "Add details, preview the footer and copy HTML or plain text.",
+      "descDa": "Udfyld dine oplysninger og kopiér en konsistent Frankly-footer.",
+      "category": "Brand",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Email signature",
+      "mark": "ES",
+      "art": "signature",
+      "retired": false
+    },
+    {
+      "id": "brand-reference",
+      "href": "frankly-brand-reference.html",
+      "labelEn": "Brand reference",
+      "labelDa": "Brand Reference",
+      "descriptionEn": "Colors, CSS tokens and tone rules for quick Frankly checks.",
+      "descDa": "Farver, typografi, tone og hårde regler samlet ét sted.",
+      "category": "Brand",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Brand reference",
+      "mark": "BR",
+      "art": "brand-reference",
+      "retired": false
+    },
+    {
+      "id": "brand-assistant",
+      "href": "frankly-brand-assistant.html",
+      "labelEn": "Brand assistant",
+      "labelDa": "Brand-assistent",
+      "descriptionEn": "Search recurring brand answers locally without any AI runtime.",
+      "descDa": "Hurtige svar på brandspørgsmål — søgbar og uden AI-runtime.",
+      "category": "Brand",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Brand assistant",
+      "mark": "BA",
+      "art": "brand-assistant",
+      "retired": false
+    },
+    {
+      "id": "ribbon-lab",
+      "href": "frankly-ribbon-lab.html",
+      "labelEn": "Ribbon lab",
+      "labelDa": "Ribbon Lab",
+      "descriptionEn": "Design Frankly ribbon shapes with draw and edit controls and a satin-to-glass material blend.",
+      "descDa": "Design Frankly-ribbonformer med tegnekontroller og materialeblanding.",
+      "category": "Brand",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "prototype",
+      "statusLabelEn": "Prototype",
+      "statusLabelDa": "Prototype",
+      "actionLabelEn": "Open Ribbon lab",
+      "mark": "RB",
+      "art": "ribbon",
+      "retired": false
+    },
+    {
+      "id": "business-card",
+      "href": "frankly-business-card.html",
+      "labelEn": "Business card",
+      "labelDa": "Visitkort",
+      "descriptionEn": "Build a meeting card with contact details, QR and vCard output.",
+      "descDa": "Personligt QR-kort til møder, messer og partnerdage.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Business card",
+      "mark": "BC",
+      "art": "business-card",
+      "retired": false
+    },
+    {
+      "id": "dictionary",
+      "href": "frankly-dictionary.html",
+      "labelEn": "Dictionary",
+      "labelDa": "Ordbog",
+      "descriptionEn": "Plain-language working definitions for common internal terms.",
+      "descDa": "Forsikrings-, butiks- og OS-ord omskrevet til almindeligt sprog.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Dictionary",
+      "mark": "DI",
+      "art": "dictionary",
+      "retired": false
+    },
+    {
+      "id": "qr-link",
+      "href": "frankly-qr-link.html",
+      "labelEn": "QR link",
+      "labelDa": "QR-link",
+      "descriptionEn": "Turn a URL into a local SVG QR code for decks and signs.",
+      "descDa": "Et link bliver til en ren QR-kode til print, skilte og kampagner.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open QR link",
+      "mark": "QR",
+      "art": "qr",
+      "retired": false
+    },
+    {
+      "id": "image-resizer",
+      "href": "frankly-image-resizer.html",
+      "labelEn": "Image resizer",
+      "labelDa": "Billed-tilpasser",
+      "descriptionEn": "Resize local images to useful social and presentation formats.",
+      "descDa": "Billede ind — LinkedIn-, Instagram- og hero-formater ud. Alt lokalt.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Image resizer",
+      "mark": "IR",
+      "art": "image",
+      "retired": false
+    },
+    {
+      "id": "instore-onepager",
+      "href": "frankly-instore-onepager.html",
+      "labelEn": "Instore onepager",
+      "labelDa": "Instore onepager",
+      "descriptionEn": "The Frankly instore sale on one page: flow, payment and coverage. In Danish.",
+      "descDa": "Overblik over Frankly Instore-salget på én side.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "guide",
+      "statusLabelEn": "Guide",
+      "statusLabelDa": "Guide",
+      "actionLabelEn": "Open Instore onepager",
+      "mark": "IN",
+      "art": "instore",
+      "retired": false
+    },
+    {
+      "id": "instore-salgsguide",
+      "href": "frankly-instore-salgsguide.html",
+      "labelEn": "Instore salgsguide",
+      "labelDa": "Instore salgsguide",
+      "descriptionEn": "The full instore sales guide, step by step. In Danish.",
+      "descDa": "Den fulde butiksguide, trin for trin.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "guide",
+      "statusLabelEn": "Guide",
+      "statusLabelDa": "Guide",
+      "actionLabelEn": "Open Instore salgsguide",
+      "mark": "SG",
+      "art": "salgsguide",
+      "retired": false
+    },
+    {
+      "id": "onboarding",
+      "href": "onboarding.html",
+      "labelEn": "Start here",
+      "labelDa": "Start her (onboarding)",
+      "descriptionEn": "The onboarding surface, online as a gated, noindex preview.",
+      "descDa": "Nye kolleger lander her: brand, produkter, værktøjer og quiz.",
+      "category": "Hverdag",
+      "shelf": "pages",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "preview",
+      "statusLabelEn": "Gated preview",
+      "statusLabelDa": "Preview",
+      "actionLabelEn": "Open Start here preview",
+      "mark": "ST",
+      "art": "onboarding",
+      "retired": false
+    },
+    {
+      "id": "coverage-overview",
+      "href": "frankly-daekningsoverblik.html",
+      "labelEn": "Coverage overview",
+      "labelDa": "Dækningsoverblik",
+      "descriptionEn": "Who covers what when something happens. In Danish; not a legal source.",
+      "descDa": "Hvem dækker hvad, når noget sker: Frankly, garanti eller indbo.",
+      "category": "Hverdag",
+      "shelf": "pages",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Coverage overview",
+      "mark": "CO",
+      "art": "coverage",
+      "retired": false
+    },
+    {
+      "id": "journal",
+      "href": "journal/frankly-blog-index.html",
+      "labelEn": "Frankly Journal",
+      "labelDa": "Frankly Journal",
+      "descriptionEn": "Calm stories from everyday life — the Danish journal, public and open to search.",
+      "descDa": "Bloggen: mental load, delt opmærksomhed og livet med ting der går i stykker.",
+      "category": "Brand",
+      "shelf": "pages",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Public",
+      "gateLabelDa": "Offentlig",
+      "status": "public",
+      "statusLabelEn": "Public",
+      "statusLabelDa": "Offentlig",
+      "actionLabelEn": "Open Frankly Journal",
+      "mark": "JO",
+      "art": "blog",
+      "retired": false
+    },
+    {
+      "id": "drop-protection",
+      "href": "frankly-drop-protection.html",
+      "labelEn": "Drop Protection",
+      "labelDa": "Drop Protection",
+      "descriptionEn": "Catch the falling objects with a little browser-game coverage bar.",
+      "descDa": "Ting falder. Grib dem med dækningsbjælken og hold scoren i live.",
+      "category": "Leg",
+      "shelf": "play",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Play Drop Protection",
+      "mark": "DP",
+      "art": "drop",
+      "retired": false
+    },
+    {
+      "id": "franklys-bmw",
+      "href": "franklys-bmw.html",
+      "labelEn": "Frankly's BMW",
+      "labelDa": "Franklys BMW",
+      "descriptionEn": "Drive nicely through Amager, keep the bike lane clear and watch the premium melt.",
+      "descDa": "Kør pænt gennem Amager, hold cykelstien fri og se præmien smelte.",
+      "category": "Leg",
+      "shelf": "play",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Play Frankly's BMW",
+      "mark": "BM",
+      "art": "bmw",
+      "retired": false
+    },
+    {
+      "id": "decision-chicken",
+      "href": "the-decision-chicken.html",
+      "labelEn": "Decision Chicken",
+      "labelDa": "Decision Chicken",
+      "descriptionEn": "Pick from small options when the main job is moving forward.",
+      "descDa": "Til små ja/nej-beslutninger, hvor det vigtigste er at komme videre.",
+      "category": "Leg",
+      "shelf": "play",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Decision Chicken",
+      "mark": "DC",
+      "art": "decision",
+      "retired": false
+    },
+    {
+      "id": "quiz",
+      "href": "frankly-quiz.html",
+      "labelEn": "Do you know Frankly?",
+      "labelDa": "Kender du Frankly?",
+      "descriptionEn": "A short brand quiz for tone, gates and internal basics.",
+      "descDa": "Kort brandquiz om tone, farver og formuleringer.",
+      "category": "Leg",
+      "shelf": "play",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Frankly quiz",
+      "mark": "QZ",
+      "art": "quiz",
+      "retired": false
+    },
+    {
+      "id": "glass-lab",
+      "href": "glass-lab.html",
+      "labelEn": "Glass Lab",
+      "labelDa": "Glass Lab",
+      "descriptionEn": "A playground for liquid-glass surfaces: refraction, frost, edge light and hover-wash.",
+      "descDa": "Legeplads for Franklys liquid-glass-flader med live-kontroller.",
+      "category": "Leg",
+      "shelf": "experiments",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "experiment",
+      "statusLabelEn": "Experiment",
+      "statusLabelDa": "Eksperiment",
+      "actionLabelEn": "Open Glass Lab",
+      "mark": "GL",
+      "art": "glass-lab",
+      "retired": false
+    },
+    {
+      "id": "glass-surface",
+      "href": "glass-surface.html",
+      "labelEn": "Glass Surface",
+      "labelDa": "Glass Surface",
+      "descriptionEn": "A focused study of a single glass surface: material, light and edge.",
+      "descDa": "Materialestudie af én glasflade: lys, dybde og kant.",
+      "category": "Leg",
+      "shelf": "experiments",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "experiment",
+      "statusLabelEn": "Experiment",
+      "statusLabelDa": "Eksperiment",
+      "actionLabelEn": "Open Glass Surface",
+      "mark": "GS",
+      "art": "glass-surface",
+      "retired": false
+    },
+    {
+      "id": "liquid-glass-hover",
+      "href": "liquid-glass-hover.html",
+      "labelEn": "Liquid Glass Hover",
+      "labelDa": "Liquid Glass Hover",
+      "descriptionEn": "1:1 backdrop glass, mouse-light shadows and hero-card flare.",
+      "descDa": "Backdrop-glas, muse-lys og flare i et afgrænset hover-studie.",
+      "category": "Leg",
+      "shelf": "experiments",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "experiment",
+      "statusLabelEn": "Experiment",
+      "statusLabelDa": "Eksperiment",
+      "actionLabelEn": "Open Liquid Glass Hover",
+      "mark": "LH",
+      "art": "glass-hover",
+      "retired": false
+    }
+  ]
+}</script>
+  <!-- TOOLS-SHELF-SNAPSHOT:END -->
+  <script>
+  document.documentElement.classList.add('js');
+  (function(){
+    var snapshot = document.getElementById('toolsShelfSnapshot');
+    var feed = {tools:[]};
+    try{feed=JSON.parse(snapshot.textContent||'{"tools":[]}');}catch(e){}
+    var input = document.getElementById('labSearch');
+    var filterWrap = document.getElementById('labFilters');
+    var buttons = [].slice.call(filterWrap.querySelectorAll('[data-filter]'));
+    var noResult = document.getElementById('noResult');
+    var resultCount = document.getElementById('resultCount');
+    var activeFilter = 'all';
+    var publicTools = [];
+
+    function esc(value){
+      return String(value == null ? '' : value)
+        .replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    function chipClass(status){
+      if(status==='live')return ' is-live';
+      if(status==='preview')return ' is-draft';
+      if(status==='public')return ' is-public';
+      if(status==='experiment')return ' is-experiment';
+      if(status==='locked')return ' is-locked';
+      return '';
+    }
+
+    function render(source){
+      publicTools=(source.tools||[]).filter(function(tool){
+        return tool.lane==='public-lab'&&!tool.retired;
+      });
+      [].forEach.call(document.querySelectorAll('[data-shelf-grid]'),function(grid){grid.innerHTML='';});
+      publicTools.forEach(function(tool){
+        var grid=document.querySelector('[data-shelf-grid="'+tool.shelf+'"]');
+        if(!grid)return;
+        var card=document.createElement('a');
+        card.className='fl-card';card.setAttribute('data-card','');
+        card.href=tool.href;card.dataset.art=tool.art;card.dataset.mark=tool.mark;
+        card.setAttribute('aria-label',tool.actionLabelEn+' — '+tool.statusLabelEn);
+        card.innerHTML='<span class="fl-chip'+chipClass(tool.status)+'">'+esc(tool.statusLabelEn)+'</span>'+
+          '<h3>'+esc(tool.labelEn)+'</h3><p>'+esc(tool.descriptionEn||'')+'</p>'+
+          '<span class="fl-go">'+esc(tool.actionLabelEn)+'</span>';
+        grid.appendChild(card);
+      });
+      document.getElementById('labCardCount').textContent=String(publicTools.length);
+      apply();
+    }
+
+    function apply(){
+      var q = (input.value || '').trim().toLowerCase();
+      var shown = 0;
+      var cards = [].slice.call(document.querySelectorAll('.fl-card[data-card]'));
+      var shelves = [].slice.call(document.querySelectorAll('[data-shelf]'));
+      cards.forEach(function(card){
+        var shelf = card.closest('[data-shelf]');
+        var inShelf = activeFilter === 'all' || (shelf && shelf.getAttribute('data-shelf') === activeFilter);
+        var hay = (card.textContent || '').toLowerCase();
+        var hit = inShelf && (!q || hay.indexOf(q) !== -1);
+        card.hidden = !hit;
+        if (hit) shown++;
+      });
+      shelves.forEach(function(shelf){
+        shelf.hidden = !shelf.querySelector('.fl-card[data-card]:not([hidden])');
+      });
+      noResult.hidden = shown !== 0;
+      resultCount.textContent = (q || activeFilter !== 'all')
+        ? 'Showing ' + shown + ' of ' + cards.length + ' cards'
+        : '';
+    }
+
+    buttons.forEach(function(button){
+      button.addEventListener('click', function(){
+        activeFilter = button.getAttribute('data-filter');
+        buttons.forEach(function(other){
+          var on = other === button;
+          other.classList.toggle('is-active', on);
+          other.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        apply();
+      });
+    });
+    input.addEventListener('input', apply);
+    render(feed);
+    var loopback=location.hostname==='127.0.0.1'||location.hostname==='localhost'||location.hostname==='[::1]';
+    if(loopback){
+      fetch('data/tools-shelf.json',{cache:'no-store'})
+        .then(function(response){if(!response.ok)throw 0;return response.json();})
+        .then(render)
+        .catch(function(){});
+    }
+  })();
+  </script>
 </body>
 </html>

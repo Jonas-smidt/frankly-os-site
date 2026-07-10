@@ -4,22 +4,647 @@
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 33,
-    "machineFocusedRuns": 33,
+    "runs": 51,
+    "machineFocusedRuns": 50,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 32
+    "validatedRuns": 44
   },
   "runs": [
+    {
+      "runId": "20260710-frankly-40-opgradering",
+      "date": "2026-07-10",
+      "name": "Frankly OS 4.0: revision af alle flader + ",
+      "nameDa": "Frankly OS 4.0: revision af alle flader + ",
+      "route": "machine-runtime",
+      "routeDa": "Maskin-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "11 flader pensioneret, ét 4.0-cockpit bygget (8 paneler inkl. agent-træ og hylde), feeds på dansk + next-best-action/health-feeds, version stemplet 4.0",
+      "summaryDa": "11 flader pensioneret, ét 4.0-cockpit bygget (8 paneler inkl. agent-træ og hylde), feeds på dansk + next-best-action/health-feeds, version stemplet 4.0",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly os cockpit",
+        "sync site data feeds.py",
+        "frankly 40 revision 2026 07 10"
+      ],
+      "gates": [
+        "ingen gated handlinger; alt lokalt"
+      ],
+      "gatesDa": [
+        "ingen gated handlinger; alt lokalt"
+      ],
+      "lesson": "Jonas åbner 4.",
+      "lessonDa": "Jonas åbner 4.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-blog-quality-lift-v1-rollout-01-10",
+      "date": "2026-07-10",
+      "name": "Roll the pilot 3-axis blog upgrade (copy l",
+      "nameDa": "Blog-kvalitetsløft v1 — udrulning (post 01–10)",
+      "route": "blog-seo-content-engine",
+      "routeDa": "Blog/SEO-indholdsmotor",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Roll the pilot 3-axis blog upgrade (copy lift + conditional 3->4 + 4 graphic treatments) to the remaining 10 posts (01-10) as v2 drafts",
+      "summaryDa": "Udrullede pilotens 3-akse-opgradering (tekstløft + betinget 3→4 kilder + 4 grafik-behandlinger) til de resterende 10 indlæg (01–10) som v2-udkast.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly blog 01 brug det v2",
+        "frankly blog 02 checkout v2",
+        "frankly blog 03 mental load cd v2"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "drafts-in-journal-drafts-outside-a"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Udkast kun i journal/drafts (uden for allowlisten)"
+      ],
+      "lesson": "Jonas eyeballs all 12 v2 drafts; optional polish (ease Fire-heading repetition, harmonize post01 summary grid); on approval promote v2 -> live journal.",
+      "lessonDa": "Jonas gennemser alle 12 v2-udkast; valgfri polering (blødere Fire-overskrifts-gentagelse, harmonisér post01's resumé-grid); ved godkendelse promoveres v2 → live journal.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-blog-quality-lift-v1-pilot",
+      "date": "2026-07-10",
+      "name": "Blog quality lift v1 pilot: copy lift + 3-",
+      "nameDa": "Blog-kvalitetsløft v1 — pilot (post 11–12)",
+      "route": "blog-seo-content-engine",
+      "routeDa": "Blog/SEO-indholdsmotor",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Blog quality lift v1 pilot: copy lift + 3->4 (real verified 4th citation) + 4 graphic treatments on posts 11 & 12, side-by-side v2 drafts for review",
+      "summaryDa": "Pilot på blog-kvalitetsløft v1: tekstløft + 3→4 (reel verificeret 4. kilde) + 4 grafik-behandlinger på post 11 & 12 som side-om-side v2-udkast til gennemsyn.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly blog 11 glippet v2",
+        "frankly blog 12 revnen v2"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "drafts-in-journal-drafts-outside-a"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Udkast kun i journal/drafts (uden for allowlisten)"
+      ],
+      "lesson": "Jonas eyeballs both v2 drafts (local server); on approval, standardize one grid/diagram convention then roll the 3-axis template to the other 10 posts.",
+      "lessonDa": "Jonas gennemser begge v2-udkast (lokal server); ved godkendelse standardiseres én grid/diagram-konvention, hvorefter 3-akse-skabelonen rulles til de øvrige 10 indlæg.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-design-reference-page-v01",
+      "date": "2026-07-10",
+      "name": "Replace the incomplete Brand Reference",
+      "nameDa": "Design-reference-side v0.1",
+      "route": "website-publishing-workflow-route + system-visualization-route + presentation-machine-route",
+      "routeDa": "Website-udgivelse · System-visualisering · Præsentationsmaskine",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Completed the bounded source implementation at the existing internal noindex URL and fixed all source-confirmed page defects. Static QA passes; terminal visual quality remains explicitly not passing at 9/15 because rendered comparisons are unavailable and the unchanged shared Switzer-Regular font has a known decode failure.",
+      "summaryDa": "Gennemførte den afgrænsede kilde-implementering på den eksisterende interne noindex-URL og rettede alle kildebekræftede sidefejl. Statisk QA består; terminal visuel kvalitet består eksplicit IKKE endnu (9/15), fordi renderede sammenligninger mangler og den delte Switzer-Regular-font har en kendt decode-fejl.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly brand reference",
+        "frankly design reference page v0 1",
+        "run static qa.mjs"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "In a separate scoped run, repair or replace the shared Switzer Regular font; when browser access is restored capture 1440/1024/390 renders, verify int.",
+      "lessonDa": "Reparér eller udskift den delte Switzer Regular-font i en separat afgrænset kørsel; når browseradgang er tilbage, tag 1440/1024/390-renders og verificér.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-instore-frankly-fold-icon-local",
+      "date": "2026-07-10",
+      "name": "Implementér Frankly Fold som den brugerpla",
+      "nameDa": "Implementér Frankly Fold som den brugerpla",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "parked-local",
+      "statusDa": "Parkeret (lokalt)",
+      "summary": "Frankly Fold er implementeret lokalt som helper-only ikon: fast 48×48 nederst til højre, 72px end-reserve, desktop-tooltip og eksakt fire-path mark; statisk scope-QA er grøn, mens rendered visuel certificering mangler.",
+      "summaryDa": "Frankly Fold er implementeret lokalt som helper-only ikon: fast 48×48 nederst til højre, 72px end-reserve, desktop-tooltip og eksakt fire-path mark; statisk scope-QA er grøn, mens rendered visuel certificering mangler.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore salgsguide",
+        "partner activation route",
+        "lessons index"
+      ],
+      "gates": [
+        "local-only",
+        "no-partner-activation",
+        "no public deploy"
+      ],
+      "gatesDa": [
+        "Kun lokal",
+        "Ingen partner-aktivering",
+        "Offentlig deploy"
+      ],
+      "lesson": "Efter usage-limit-reset, kør én bounded browser-QA for farve/gråskala, underlay og desktop-tooltip ved relevante viewports; behold det separate AI-run.",
+      "lessonDa": "Efter usage-limit-reset, kør én bounded browser-QA for farve/gråskala, underlay og desktop-tooltip ved relevante viewports; behold det separate AI-run.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-franklyinsure-source-reuse-audit",
+      "date": "2026-07-10",
+      "name": "Audit franklyinsure-main.zip statically fo",
+      "nameDa": "Kilde-genbrugs-audit (franklyinsure)",
+      "route": "system-visualization-route + website-publishing-workflow-route",
+      "routeDa": "System-visualisering · Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Read-only archive audit classified source evidence into adopt now, extract and normalize, reference only, and reject; delivered a contract-first smallest safe extraction set and implementation order.",
+      "summaryDa": "Read-only arkiv-audit klassificerede kildematerialet i overtag nu, udtræk og normalisér, kun reference, og afvis; leverede et kontrakt-først mindste-sikre udtrækssæt og en implementeringsrækkefølge.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "franklyinsure source reuse audit 2",
+        "system visualization route",
+        "lessons index"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Approve the contract-first extraction lane: foundations, clean shell, Section, safe rich text, typed Action, Output Contract, then one rendered editor.",
+      "lessonDa": "Godkend det kontrakt-første udtræksspor: fundamenter, ren shell, Section, sikker rich text, typet Action, Output Contract og til sidst én renderet editor.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-instore-helper-visual-reset-local",
+      "date": "2026-07-10",
+      "name": "Nulstil Frankly Instore-hjælperens visuell",
+      "nameDa": "Nulstil Frankly Instore-hjælperens visuell",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Porcelain Lens-reset er færdig lokalt for det visuelle scope: fantasy-canvas, partikler og kontinuerlig RAF er fjernet; den eksakte fire-path Frankly-mark og redaktionelle UI er valideret med før/efter-evidens og lukkede målte P2'er.",
+      "summaryDa": "Porcelain Lens-reset er færdig lokalt for det visuelle scope: fantasy-canvas, partikler og kontinuerlig RAF er fjernet; den eksakte fire-path Frankly-mark og redaktionelle UI er valideret med før/efter-evidens og lukkede målte P2'er.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore salgsguide",
+        "visual qa",
+        "ux critique"
+      ],
+      "gates": [
+        "local-only",
+        "no-partner-activation",
+        "visual scope only; separate AI/mod"
+      ],
+      "gatesDa": [
+        "Kun lokal",
+        "Ingen partner-aktivering",
+        "Kun visuelt scope; separat AI/model-kørsel er parkeret (0/1)"
+      ],
+      "lesson": "Gennemgå Porcelain Lens lokalt; hvis rigtig AI skal prøves, genoptag det separate parkerede AI-run først når dets gates er grønne og brug højst det en.",
+      "lessonDa": "Gennemgå Porcelain Lens lokalt; hvis rigtig AI skal prøves, genoptag det separate parkerede AI-run først når dets gates er grønne og brug højst det en.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-design-canon-ground-truth-correction",
+      "date": "2026-07-10",
+      "name": "Correct the Frankly design-system quality ",
+      "nameDa": "Design-kanon: ground-truth-korrektion",
+      "route": "system-visualization-route",
+      "routeDa": "System-visualisering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Re-grounded visual canon in four approved references, reclassified all internal OS/Lab/prototypes as test or anti-reference, and revised the Output Contract, maturity scorecard, architecture, acceptance gate and pilot.",
+      "summaryDa": "Genforankrede den visuelle kanon i fire godkendte referencer, omklassificerede alle interne OS/Lab/prototyper som test eller anti-reference, og reviderede Output Contract, modenheds-scorecard, arkitektur, acceptance-gate og pilot.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly design system quality audi",
+        "system visualization route",
+        "lessons index"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Build the Ground Truth Registry and run the isolated two-format ground-truth transfer pilot; do not promote any new golden without Jonas.",
+      "lessonDa": "Byg Ground Truth-registret og kør den isolerede to-formats ground-truth-overførselspilot; promover ingen ny golden uden Jonas.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-design-system-quality-audit",
+      "date": "2026-07-10",
+      "name": "Audit Franklys current design system, expl",
+      "nameDa": "Designsystem-kvalitetsaudit",
+      "route": "system-visualization-route",
+      "routeDa": "System-visualisering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Evidence-based audit across 14 outputs and five visual families; recommends a mandatory Frankly Output Contract, composition archetypes, stronger terminal visual QA, and a bounded cockpit web-plus-slide pilot.",
+      "summaryDa": "Evidensbaseret audit på tværs af 14 outputs og fem visuelle familier; anbefaler en obligatorisk Frankly Output Contract, kompositions-arketyper, stærkere terminal visuel QA og en afgrænset cockpit web-plus-slide-pilot.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly design system quality audi",
+        "system visualization route",
+        "lessons index"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas decides whether to approve the safe-local Frankly Output Contract consolidation spec and isolated cockpit web-plus-slide pilot; fix the pre-exis.",
+      "lessonDa": "Jonas afgør om den safe-lokale Frankly Output Contract-konsolideringsspec og den isolerede cockpit web-plus-slide-pilot godkendes; ret de forud-eksisterende røde punkter.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-lab-40-consolidation",
+      "date": "2026-07-10",
+      "name": "Consolidate Frankly Lab 4.0 around one can",
+      "nameDa": "Frankly Lab 4.0-konsolidering",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "One canonical 26-item shelf now generates a 20-item public Lab fallback and full local cockpit feed; Registry is local archive only, upload boundary is fail-closed, and scoped terminal/browser QA passed.",
+      "summaryDa": "Én kanonisk 26-punkts hylde genererer nu et 20-punkts offentligt Lab-fallback og det fulde lokale cockpit-feed; Registry er kun lokalt arkiv, upload-grænsen er fail-closed, og afgrænset terminal/browser-QA bestod.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "tools shelf",
+        "sync site data feeds.py",
+        "run local site qa.py"
+      ],
+      "gates": [
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "Repair the inherited retired-v3 link and legacy Observatory eval baseline in a separate maintenance run; keep deploy and Drive connector writes Jonas-.",
+      "lessonDa": "Reparér den nedarvede pensioneret-v3-link- og legacy Observatory-eval-baseline i en separat vedligeholdelseskørsel; hold deploy og Drive-connector-skrivninger Jonas-gated.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-instore-ai-sphere-local",
+      "date": "2026-07-10",
+      "name": "Implementér og afgræns Glas-sfære v1 med e",
+      "nameDa": "Implementér og afgræns Glas-sfære v1 med e",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "parked-local",
+      "statusDa": "Parkeret (lokalt)",
+      "summary": "Glas-sfære v1 og den lokale OpenAI-guidehjælper er implementeret og statisk/fake-provider-valideret, inklusive UI↔server-svarkontrakten; der findes intet rigtigt modelkald eller komplet browserinteraktions-evidens.",
+      "summaryDa": "Glas-sfære v1 og den lokale OpenAI-guidehjælper er implementeret og statisk/fake-provider-valideret, inklusive UI↔server-svarkontrakten; der findes intet rigtigt modelkald eller komplet browserinteraktions-evidens.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore salgsguide",
+        "guide assistant core.js",
+        "guide assistant server.js"
+      ],
+      "gates": [
+        "local-only",
+        "no-partner-activation",
+        "no public deploy"
+      ],
+      "gatesDa": [
+        "Kun lokal",
+        "Ingen partner-aktivering",
+        "Offentlig deploy"
+      ],
+      "lesson": "Når de uvedkommende root eval/site-QA-gates er grønne, kør præcis ét godkendt gpt-5.",
+      "lessonDa": "Når de uvedkommende root eval/site-QA-gates er grønne, kør præcis ét godkendt gpt-5.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-ribbon-lab-canonical-spec",
+      "date": "2026-07-10",
+      "name": "Producér Ribbon Lab canonical rebuild-spec",
+      "nameDa": "Producér Ribbon Lab canonical rebuild-spec",
+      "route": "website-publishing-workflow-route",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Producér Ribbon Lab canonical rebuild-spec (svar på reviewets P0'er) via crew — første rigtige kørsel der bruger de nye pladser (M3.1/R9.1)",
+      "summaryDa": "Producér Ribbon Lab canonical rebuild-spec (svar på reviewets P0'er) via crew — første rigtige kørsel der bruger de nye pladser (M3.1/R9.1)",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly ribbon lab canonical spec "
+      ],
+      "gates": [
+        "no public deploy",
+        "no-code-changed-spec-only",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen kodeændring (kun spec)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Fase 1 når Jonas vil starte rebuild: lås Frame A (signal/Signal S) som frankly.",
+      "lessonDa": "Fase 1 når Jonas vil starte rebuild: lås Frame A (signal/Signal S) som frankly.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-lab-domain-rename-prep",
+      "date": "2026-07-10",
+      "name": "Skift Frankly Lab-adresse fra os.franklyde",
+      "nameDa": "Skift Frankly Lab-adresse fra os.franklyde",
+      "route": "website-publishing-workflow-route",
+      "routeDa": "Website-udgivelse",
+      "status": "blocked-gated",
+      "statusDa": "Blokeret (gated)",
+      "summary": "Skift Frankly Lab-adresse fra os.franklydesign.dk til lab.franklydesign.dk (repo-prep; DNS+deploy er Jonas-gates)",
+      "summaryDa": "Skift Frankly Lab-adresse fra os.franklydesign.dk til lab.franklydesign.dk (repo-prep; DNS+deploy er Jonas-gates)",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "none",
+      "artifacts": [
+        "CNAME",
+        "robots.txt",
+        "sitemap.xml"
+      ],
+      "gates": [
+        "no public deploy",
+        "dns-change-jonas-side",
+        "Drive approval"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "DNS-ændring er Jonas' gate",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "Jonas: opret DNS for lab.",
+      "lessonDa": "Jonas: opret DNS for lab.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-instore-ribbon-sidekick-local",
+      "date": "2026-07-10",
+      "name": "Redesign the local Frankly guide helper",
+      "nameDa": "Ribbon Sidekick (butiksguide)",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "parked-local",
+      "statusDa": "Parkeret (lokalt)",
+      "summary": "Lite Ribbon Sidekick implementation and static validation complete; real-browser terminal gate awaits a browser-capable QA lane.",
+      "summaryDa": "Lite Ribbon Sidekick er implementeret og statisk valideret; den afsluttende rigtig-browser-QA venter på en browser-egnet QA-lane.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore salgsguide",
+        "run browser qa.mjs",
+        "partner activation route"
+      ],
+      "gates": [
+        "local-only",
+        "no public deploy",
+        "no-partner-activation"
+      ],
+      "gatesDa": [
+        "Kun lokal",
+        "Offentlig deploy",
+        "Ingen partner-aktivering"
+      ],
+      "lesson": "Run the prepared browser QA on the live local page; promote to completed-local only if the full desktop/mobile/state/focus suite passes.",
+      "lessonDa": "Kør den forberedte browser-QA på den levende lokale side; promover kun til færdig-lokalt hvis hele desktop/mobil/tilstands/fokus-suiten består.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-roster-expansion-9-seats-autopilot-wire",
+      "date": "2026-07-10",
+      "name": "Udvid rosteret med flere agenter (10 under",
+      "nameDa": "Roster-udvidelse + autopilot-wire",
+      "route": "mission-runtime-route",
+      "routeDa": "Missions-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Udvid rosteret med flere agenter (10 under-specialister i alt) + wire hul-finderen ind i autopiloten som refleksiv auto-pass",
+      "summaryDa": "Udvid rosteret med flere agenter (10 under-specialister i alt) + wire hul-finderen ind i autopiloten som refleksiv auto-pass",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly crew contract v0 13",
+        "autopilot.py",
+        "gap finder.py"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Afklar hvor 'OS Frankly Lab' står (omdøbning); overvej M2 skepsis-berigelse via cockpittens metode-flade.",
+      "lessonDa": "Afklar hvor 'OS Frankly Lab' står (omdøbning); overvej M2 skepsis-berigelse via cockpittens metode-flade.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-gap-finder-plus-4-seats",
+      "date": "2026-07-10",
+      "name": "Byg refleksiv hul-finder (foreslår nye age",
+      "nameDa": "Hul-finder + 4 nye specialister",
+      "route": "mission-runtime-route",
+      "routeDa": "Missions-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Byg refleksiv hul-finder (foreslår nye agenter fra seneste kørsler) + wire de 4 klare huller ind via agent-smeden",
+      "summaryDa": "Byg refleksiv hul-finder (foreslår nye agenter fra seneste kørsler) + wire de 4 klare huller ind via agent-smeden",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "gap finder.py",
+        "frankly crew contract v0 5",
+        "frankly crew contract v0 6"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Beslut de 3 resterende hul-forslag (tilgængelighed/teknisk-SEO/positionering) + M2 skepsis-berigelse via cockpittens metode-flade; afklar hvor 'OS Fra.",
+      "lessonDa": "Beslut de 3 resterende hul-forslag (tilgængelighed/teknisk-SEO/positionering) + M2 skepsis-berigelse via cockpittens metode-flade; afklar hvor 'OS Fra.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-instore-clippy-local",
+      "date": "2026-07-10",
+      "name": "Build and validate a local-only Frankly Cl",
+      "nameDa": "Butiksguide-hjælper (lokal)",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Local-only embedded guide helper with typed questions, suggested prompts, source jumps, claims boundaries, accessibility and responsive behavior.",
+      "summaryDa": "Kun-lokal indlejret guide-hjælper med indtastede spørgsmål, foreslåede prompts, kildehop, claims-grænser, tilgængelighed og responsiv adfærd.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore salgsguide",
+        "frankly instore guide assistant lo",
+        "run registry"
+      ],
+      "gates": [
+        "claims locked",
+        "helper is runtime-gated to file an",
+        "no product, coverage, price, payme"
+      ],
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Hjælperen kører kun på file:// og loopback",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Local review only; keep the helper internal until separate approval is granted for public deploy or real partner activation.",
+      "lessonDa": "Kun lokal gennemgang; hold hjælperen intern indtil der gives separat godkendelse til offentlig deploy eller reel partner-aktivering.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-frankly-ribbon-lab-audit-001",
+      "date": "2026-07-10",
+      "name": "Audit the current Ribbon Lab and define th",
+      "nameDa": "Ribbon Lab-audit 001",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Corrected the audit against durable desktop/mobile evidence; clarified that calmCustomGeometry applies to prompt-created, drawn, and polished custom shapes while preset conversion loses 3D through projection, switch-to-custom, and generic reconstruction; Ribbon Lab app files remained untouched. Exact current/post-audit SHA-256: HTML 7eeb214a8d3604c201a5c19d625dc0d7fcc142ababeefb6808742ebe0f3ecf82; CSS f945402968c297a07fce71c928fdced10f1a497207bc3275e1bc04b9d542dc7c; JS 61d7364082933720c86778cdf3807ad608f54359e8f75522bcd00591169d6c18.",
+      "summaryDa": "Auditten er rettet mod holdbar desktop/mobil-evidens; præciseret at calmCustomGeometry gælder prompt-skabte, tegnede og polerede custom-former, mens preset-konvertering mister 3D gennem projektion, switch-to-custom og generisk rekonstruktion; Ribbon Lab-appens filer er urørte (SHA-256-checksummer dokumenteret i registret).",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly ribbon lab review 2026 07 ",
+        "website publishing workflow route",
+        "lessons index"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "First lock one canonical reference pose/material A/B target; then build the bounded geometry-core spike with canonical spec types, golden C/S fixtures.",
+      "lessonDa": "Lås først ét kanonisk reference-mål for pose/materiale-A/B; byg derefter den afgrænsede geometri-kerne-spike med kanoniske spec-typer, golden-fixtures og preset-konverteringstests, før controls eller rendering ændres.",
+      "fanOut": []
+    },
     {
       "runId": "20260709-formidler-opgradering",
       "date": "2026-07-10",
       "name": "Opgradér Frankly OS til målmodellen: formi",
+      "nameDa": "Formidler-opgradering",
       "route": "machine-runtime",
+      "routeDa": "Maskin-drift",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Masterprompt udført af 22-agent workflow: gap-analyse (7 MANGLER/5 DELVIST), 3 byggespor med adversarial kontrol, pilot green (QA 2 runder), metode-roundtrip v0-3 til v0-4, 2 bugs fundet og rettet undervejs",
+      "summaryDa": "Masterprompt udført af 22-agent workflow: gap-analyse (7 MANGLER/5 DELVIST), 3 byggespor med adversarial kontrol, pilot green (QA 2 runder), metode-roundtrip v0-3 til v0-4, 2 bugs fundet og rettet undervejs",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "formidler contract v0 1",
@@ -29,17 +654,28 @@
       "gates": [
         "ingen gated handlinger; alt safe-l"
       ],
-      "lesson": "Nye chats booter og er automatisk formidler; agent-smeden og metode-fladen er live."
+      "gatesDa": [
+        "Ingen gated handlinger; alt safe-local; nye specialister arver alle gates"
+      ],
+      "lesson": "Nye chats booter og er automatisk formidler; agent-smeden og metode-fladen er live.",
+      "lessonDa": "Nye chats booter og er automatisk formidler; agent-smeden og metode-fladen er live.",
+      "fanOut": []
     },
     {
       "runId": "20260709-pilot-formidler-flow",
       "date": "2026-07-09",
       "name": "Pilot: diagram-styleguide gennem det nye f",
+      "nameDa": "Pilot: formidler-flow",
       "route": "machine-runtime",
+      "routeDa": "Maskin-drift",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Formidler-packet, agent-smeden (R4.1), parallelle specialister, QA-gate med ret-runde, metode-roundtrip via cockpit",
+      "summaryDa": "Formidler-packet, agent-smeden (R4.1), parallelle specialister, QA-gate med ret-runde, metode-roundtrip via cockpit",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "diagram styleguide pilot 2026 07 0",
@@ -48,17 +684,28 @@
       "gates": [
         "ingen gated handlinger; alt safe-l"
       ],
-      "lesson": "Formidler-flowet er valideret — brug det som standard for nye chats."
+      "gatesDa": [
+        "Ingen gated handlinger; alt safe-local"
+      ],
+      "lesson": "Formidler-flowet er valideret — brug det som standard for nye chats.",
+      "lessonDa": "Formidler-flowet er valideret — brug det som standard for nye chats.",
+      "fanOut": []
     },
     {
       "runId": "20260709-masterprompt-formidler",
       "date": "2026-07-09",
       "name": "Måldiagram (v2 + drawio) og verificeret ma",
+      "nameDa": "Masterprompt til formidleren",
       "route": "machine-runtime",
+      "routeDa": "Maskin-drift",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Jonas' systemskitse oversat til godkendt målmodel; flowchart v2 + drawio bygget; masterprompt bygget af 15-agent workflow (69 fakta, 3 udkast, dommerpanel, 3 verifikatorer), 1 high-issue auto-rettet + 2 manuelle rettelser; gemt i generated-prompts og committet",
+      "summaryDa": "Jonas' systemskitse oversat til godkendt målmodel; flowchart v2 + drawio bygget; masterprompt bygget af 15-agent workflow (69 fakta, 3 udkast, dommerpanel, 3 verifikatorer), 1 high-issue auto-rettet + 2 manuelle rettelser; gemt i generated-prompts og committet",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "masterprompt formidler opgradering",
@@ -67,17 +714,28 @@
       "gates": [
         "Drive approval"
       ],
-      "lesson": "Giv masterprompten til den chat der kender systemet bedst: masterprompt-formidler-opgradering-v01."
+      "gatesDa": [
+        "Ingen gated handlinger udført; Drive-kopi af drawio afventer Jonas"
+      ],
+      "lesson": "Giv masterprompten til den chat der kender systemet bedst: masterprompt-formidler-opgradering-v01.",
+      "lessonDa": "Giv masterprompten til den chat der kender systemet bedst: masterprompt-formidler-opgradering-v01.",
+      "fanOut": []
     },
     {
       "runId": "20260707-v2-glass-box-design-trial",
       "date": "2026-07-07",
       "name": "Prototype a local Frankly OS v2 glass-box ",
+      "nameDa": "Glaskasse-designprøve (v2)",
       "route": "system-visualization + v2-window + local-design-qa",
+      "routeDa": "System-visualisering · v2-vindue (pensioneret) · Lokal design-QA",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Restored the standalone glaskasse prism material: chromatic edge light, spectral bands and RGB-split static refraction now make the background visibly bend through the glass. Frankly OS v2 remains de-integrated and clean.",
+      "summaryDa": "Genskabte det selvstændige glaskasse-prisme-materiale: kromatisk kantlys, spektralbånd og RGB-splittet statisk refraktion får nu baggrunden til synligt at bøje gennem glasset. Frankly OS v2 forbliver de-integreret og ren.",
       "validation": "mixed",
+      "validationDa": "Blandet",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "index",
@@ -89,17 +747,30 @@
         "Drive approval",
         "claims locked"
       ],
-      "lesson": "Review the standalone prism/refraction direction in outputs/prototypes/glass-box-system; only promote into any Frankly OS surface after Jonas explicit."
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Review the standalone prism/refraction direction in outputs/prototypes/glass-box-system; only promote into any Frankly OS surface after Jonas explicit.",
+      "lessonDa": "Gennemgå den selvstændige prisme/refraktions-retning i outputs/prototypes/glass-box-system; promover først ind i en Frankly OS-flade når Jonas eksplicit har godkendt designet.",
+      "fanOut": []
     },
     {
       "runId": "20260707-clean-baseline-images-later-qa",
       "date": "2026-07-07",
       "name": "Get the whole workspace to a clean green b",
+      "nameDa": "Grøn baseline (images-later-QA)",
       "route": "os-maintenance + site-qa",
+      "routeDa": "OS-vedligehold · Site-QA",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "run-local-site-qa localRefs now exempts <img> refs that carry an onerror graceful-degradation handler (the images-later pattern): the post ships before its art and hides the slot until the file lands, so a missing optional image no longer fails QA. Teeth preserved: a missing image WITHOUT onerror still fails (negative-tested). This was the only red in the workspace (journal posts 07-10, 16 optional images). Whole baseline now green.",
+      "summaryDa": "run-local-site-qa localRefs undtager nu <img>-referencer med onerror-fallback (images-later-mønstret): posten udgives før sit billedmateriale og skjuler pladsen indtil filen lander, så et manglende valgfrit billede ikke længere fælder QA. Tænderne er bevaret: et manglende billede UDEN onerror fejler stadig (negativ-testet). Dette var den eneste røde i hele workspacet (journal-posts 07-10, 16 valgfrie billeder). Hele baseline er nu grøn.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run local site qa.py"
@@ -108,17 +779,29 @@
         "no public deploy",
         "claims locked"
       ],
-      "lesson": "Jonas-only items remain: enable launchd, cockpit URL, Lab deploy, real journal images when ready."
+      "gatesDa": [
+        "Offentlig deploy",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas-only items remain: enable launchd, cockpit URL, Lab deploy, real journal images when ready.",
+      "lessonDa": "Tilbage er kun Jonas-punkter: slå launchd til, cockpit-URL, Lab-deploy og rigtige journal-billeder når de er klar.",
+      "fanOut": []
     },
     {
       "runId": "20260707-promote-mcq011-active",
       "date": "2026-07-07",
       "name": "Reconcile the active-batch drift by regist",
+      "nameDa": "MCQ-011 promoveret til aktiv",
       "route": "mission-control-queue + machine-state-guard + run-registry",
+      "routeDa": "Missionskø · Maskintilstands-vagt · Kørselsregister",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Registered MCQ-011 (Run Registry + Local Eval Harness) as a batch in mission-control-queue.json (evidenceType=report) and set activeBatch=MCQ-011 across queue/currentBatchId, machine-handoff-state, machine-core-priority, prompt-agent, system-live-data (2), the site feed, the mission-control-queue.html inline QUEUE and the handoff packet header. Evolved validate-machine-state.check_browser_evidence so non-UI batches prove themselves with their run report + artifacts (which must exist) instead of screenshots, and added check_v2_window_alignment so the v2 window can't drift from the core again. Machine-state PASS (0/0), evals 28/28. The active-batch drift is resolved; the daily packet + pulse now target MCQ-011.",
+      "summaryDa": "Registrerede MCQ-011 (Kørselsregister + lokal eval-harness) som batch i mission-control-queue.json (evidenceType=report) og satte activeBatch=MCQ-011 på tværs af kø/currentBatchId, machine-handoff-state, machine-core-priority, prompt-agent, system-live-data (2), site-feedet, mission-control-queue.html's inline QUEUE og handoff-pakkens header. Udviklede validate-machine-state.check_browser_evidence så ikke-UI-batches beviser sig med run-rapport + artefakter (som skal findes) i stedet for screenshots, og tilføjede check_v2_window_alignment så v2-vinduet ikke kan drive fra kernen igen. Machine-state PASS (0/0), evals 28/28. Aktiv-batch-driften er løst; den daglige pakke + puls sigter nu på MCQ-011.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "mission control queue",
@@ -129,17 +812,29 @@
         "no public deploy",
         "claims locked"
       ],
-      "lesson": "Jonas: add the 4 missing blog-07 images so site-QA localRefs goes green; then enable the launchd scheduler."
+      "gatesDa": [
+        "Offentlig deploy",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas: add the 4 missing blog-07 images so site-QA localRefs goes green; then enable the launchd scheduler.",
+      "lessonDa": "Jonas: tilføj de 4 manglende blog-07-billeder så site-QA localRefs bliver grøn; slå derefter launchd-scheduleren til.",
+      "fanOut": []
     },
     {
       "runId": "20260707-retire-static-dashboards",
       "date": "2026-07-07",
       "name": "Formally retire the three static OS dashbo",
+      "nameDa": "Statiske dashboards pensioneret",
       "route": "os-maintenance + v2-window",
+      "routeDa": "OS-vedligehold · v2-vindue (pensioneret)",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Retirement-in-place: deprecation banner (data-retired-banner) added to the 3 pages linking to the v2 window; dated register static-dashboard-retirement-2026-07-07.json; ledger + handoff updated. Kept files in place because 3 Control Cockpit evals read control-cockpit.html from disk and feed-sync/registry/nav still reference all three — hard removal scoped as a follow-up. Also fixed 2 dead blog/index.html nav links (fallout from the parallel blog->journal migration) by repointing to journal/frankly-blog-index.html, which had turned site-QA red independently of this work.",
+      "summaryDa": "Pensionering-på-stedet: deprecation-banner (data-retired-banner) tilføjet de 3 sider med link til v2-vinduet; dateret register static-dashboard-retirement-2026-07-07.json; ledger + handoff opdateret. Filerne blev liggende, fordi 3 Control Cockpit-evals læser control-cockpit.html fra disken, og feed-sync/registry/nav stadig refererer alle tre — hård fjernelse er scopet som opfølgning. Rettede også 2 døde blog/index.html-nav-links (efterdønning af den parallelle blog→journal-migrering) ved at pege dem til journal/frankly-blog-index.html, som uafhængigt havde gjort site-QA rød.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "control cockpit",
@@ -150,17 +845,29 @@
         "no public deploy",
         "claims locked"
       ],
-      "lesson": "Optional hard removal: retire cockpit evals + feed/registry refs + nav cross-links, then move files to outputs/legacy/."
+      "gatesDa": [
+        "Offentlig deploy",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Optional hard removal: retire cockpit evals + feed/registry refs + nav cross-links, then move files to outputs/legacy/.",
+      "lessonDa": "Valgfri hård fjernelse: pensionér cockpit-evals + feed/registry-referencer + nav-krydslinks, og flyt derefter filerne til outputs/legacy/.",
+      "fanOut": []
     },
     {
       "runId": "20260707-heartbeat-layer-v2-liveness",
       "date": "2026-07-07",
       "name": "Make the system feel alive: heartbeat puls",
+      "nameDa": "Hjerteslag-lag (liveness)",
       "route": "automation + v2-window",
+      "routeDa": "Automatisering · v2-vindue (pensioneret)",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "self-check.py now computes active-batch consistency (catches MCQ-010 vs MCQ-011 drift) and writes it to the heartbeat feed; daily-run.py now also syncs site data feeds so the local data layer stays live. v2 Maskine renders a live pulse (green healthy / amber failing / red no-pulse when the job stops firing), a consistency warning, and polls every 60s so an always-open window stays current. Scheduler (launchd) is still Jonas's manual enable.",
+      "summaryDa": "self-check.py beregner nu aktiv-batch-konsistens (fanger MCQ-010 vs MCQ-011-drift) og skriver den til heartbeat-feedet; daily-run.py synkroniserer nu også site-datafeeds, så det lokale datalag holder sig levende. v2 Maskine viser en levende puls (grøn sund / gul fejlende / rød ingen-puls når jobbet holder op med at køre), en konsistens-advarsel og poller hvert 60. sekund, så et altid-åbent vindue forbliver aktuelt. Scheduleren (launchd) er stadig Jonas' manuelle tilvalg.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "self check.py",
@@ -172,17 +879,30 @@
         "standing-scheduler",
         "claims locked"
       ],
-      "lesson": "Jonas enables the launchd job so the pulse beats daily; then reconcile the MCQ-010/011 drift (task_d5d14500)."
+      "gatesDa": [
+        "Offentlig deploy",
+        "Stående scheduler (launchd) kræver dit ja",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas enables the launchd job so the pulse beats daily; then reconcile the MCQ-010/011 drift (task_d5d14500).",
+      "lessonDa": "Jonas slår launchd-jobbet til så pulsen slår dagligt; forlig derefter MCQ-010/011-driften (task_d5d14500).",
+      "fanOut": []
     },
     {
       "runId": "20260707-automation-status-feed-v2-maskine",
       "date": "2026-07-07",
       "name": "Surface the daily automation output (self-",
+      "nameDa": "Automations-statusfeed (v2)",
       "route": "automation + v2-window",
+      "routeDa": "Automatisering · v2-vindue (pensioneret)",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "self-check.py + daily-run.py now emit outputs/prototypes/frankly-os-site-v2/automation-status.json (health, checks, freshness, packet); Maskine renders it via paintAutomation. QA scanner does not scan v2, baseline stays green. Surfaced pre-existing drift: daily packet reads MCQ-010 from a 6-day-stale mission-control-queue.json while true active batch is MCQ-011.",
+      "summaryDa": "self-check.py + daily-run.py udsender nu outputs/prototypes/frankly-os-site-v2/automation-status.json (health, checks, freshness, packet); Maskine viser det via paintAutomation. QA-scanneren scanner ikke v2, baseline forbliver grøn. Synliggjorde eksisterende drift: den daglige pakke læser MCQ-010 fra en 6 dage gammel mission-control-queue.json, mens den reelle aktive batch er MCQ-011.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "self check.py",
@@ -194,17 +914,30 @@
         "Drive approval",
         "claims locked"
       ],
-      "lesson": "Fix mission-control-queue."
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Fix mission-control-queue.",
+      "lessonDa": "Ret mission-control-queue.json's staleness så den genererede pakke sigter på MCQ-011, ikke MCQ-010.",
+      "fanOut": []
     },
     {
       "runId": "20260706-frankly-lab-online-safe-split-publish",
       "date": "2026-07-06",
       "name": "Publish safe Frankly Lab online split afte",
+      "nameDa": "Frankly Lab online: sikkert split",
       "route": "website-publishing-workflow + system-visualization + tool-connector-guard",
+      "routeDa": "Website-udgivelse · System-visualisering · Værktøjs-/connector-vagt",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Updated the online os.franklydesign.dk bundle to the safe Frankly Test Lab boundary: gated landing plus BMW HTML test only; internal OS surfaces and product/legal drafts remain local. GitHub Actions deploy 28821748112 succeeded, then remote deploy workflow was returned to manual-only.",
+      "summaryDa": "Opdaterede online-bundtet for os.franklydesign.dk til den sikre Frankly Test Lab-grænse: gated landing plus BMW HTML-test alene; interne OS-flader og produkt/legal-udkast forbliver lokale. GitHub Actions-deploy 28821748112 lykkedes, hvorefter remote deploy-workflow blev sat tilbage til manuel-kun.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "lock-only",
       "artifacts": [
         "index",
@@ -216,17 +949,30 @@
         "claims locked",
         "Remote workflow returned to workfl"
       ],
-      "lesson": "Resolve git divergence between local frankly-os-site main and remote API commits before the next normal push; keep product/legal drafts out of public ."
+      "gatesDa": [
+        "Offentlig deploy",
+        "Claims / produkt / juridisk",
+        "Remote deploy-workflow kun manuel (workflow_dispatch)"
+      ],
+      "lesson": "Resolve git divergence between local frankly-os-site main and remote API commits before the next normal push; keep product/legal drafts out of public .",
+      "lessonDa": "Løs git-divergensen mellem lokal frankly-os-site main og remote API-commits før næste normale push; hold produkt/legal-udkast ude af det offentlige bundle indtil Jonas eksplicit genåbner det scope.",
+      "fanOut": []
     },
     {
       "runId": "20260706-slack-chat-mesh-v0-1",
       "date": "2026-07-06",
       "name": "Upgrade the local Frankly OS Slack lab so ",
+      "nameDa": "Slack Chat Mesh v0.1",
       "route": "slack-lab + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Slack-lab · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Slack Chat Mesh v0.1 adds a first-class chat route, expanded specialist mesh, higher local run capacity and portable room contract while keeping Slack lab work local-only and approval-gated.",
+      "summaryDa": "Slack Chat Mesh v0.1 tilføjer en førsteklasses chat-rute, udvidet specialist-mesh, højere lokal kørselskapacitet og en flytbar rum-kontrakt, mens Slack-lab-arbejdet forbliver kun-lokalt og godkendelses-gated.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "app.js",
@@ -238,17 +984,30 @@
         "no customer copy",
         "Drive approval"
       ],
-      "lesson": "Use chat: for local reusable multi-agent Slack lab rooms; keep live Slack/company-visible automation, Drive connector writes, paid APIs, plugin instal."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "Use chat: for local reusable multi-agent Slack lab rooms; keep live Slack/company-visible automation, Drive connector writes, paid APIs, plugin instal.",
+      "lessonDa": "Brug chat: til lokale genbrugelige multi-agent Slack-lab-rum; hold live Slack/firma-synlig automatik, Drive-connector-skrivninger, betalte API'er, plugin-installs, automatisk tråd-oprettelse og claims/produkt/legal/source-record-arbejde gated.",
+      "fanOut": []
     },
     {
       "runId": "20260706-claude-run-to-packet-launcher-v0-1",
       "date": "2026-07-06",
       "name": "Claude Run-to-Packet Launcher v0.1",
+      "nameDa": "Run-to-Packet Launcher v0.1",
       "route": "system-visualization + workflow-eval + run-registry",
+      "routeDa": "System-visualisering · Workflow-evals · Kørselsregister",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Claude Run-to-Packet Launcher v0.1 upgrades Studio with a registry-fed source-run selector that pre-fills the Claude task packet with task shape, target surface, objective, source run and source lesson while preserving local gates.",
+      "summaryDa": "Claude Run-to-Packet Launcher v0.1 opgraderer Studio med en registry-født kilde-kørselsvælger, der på forhånd udfylder Claude-task-pakken med opgaveform, målflade, mål, kilde-kørsel og kilde-læring, mens de lokale gates bevares.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "studio",
@@ -260,17 +1019,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "A packet gets easier to trust when it starts from recorded machine memory instead of a blank prompt."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "A packet gets easier to trust when it starts from recorded machine memory instead of a blank prompt.",
+      "lessonDa": "En pakke bliver lettere at stole på, når den starter fra registreret maskin-hukommelse i stedet for en blank prompt.",
+      "fanOut": []
     },
     {
       "runId": "20260706-claude-task-packet-builder-v0-1",
       "date": "2026-07-06",
       "name": "Claude Task Packet Builder v0.1",
+      "nameDa": "Task Packet Builder v0.1",
       "route": "system-visualization + workflow-eval + run-registry",
+      "routeDa": "System-visualisering · Workflow-evals · Kørselsregister",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Claude Task Packet Builder v0.1 upgrades Studio with a local read-only task packet builder for future Claude Code work, including task shape, target surface, objective, read-first files, allowed work, expected outputs, do-not-touch boundaries, validation commands, browser QA target, run trace and strict stop rule.",
+      "summaryDa": "Claude Task Packet Builder v0.1 opgraderer Studio med en lokal read-only task-pakke-bygger til fremtidigt Claude Code-arbejde, inkl. opgaveform, målflade, mål, læs-først-filer, tilladt arbejde, forventede outputs, må-ikke-røres-grænser, valideringskommandoer, browser-QA-mål, kørselsspor og en stram stop-regel.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "studio",
@@ -282,17 +1054,30 @@
         "Drive approval",
         "no public deploy"
       ],
-      "lesson": "A task packet becomes useful when the stop rules are copyable before the agent starts editing."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Offentlig deploy"
+      ],
+      "lesson": "A task packet becomes useful when the stop rules are copyable before the agent starts editing.",
+      "lessonDa": "En task-pakke bliver nyttig, når stop-reglerne kan kopieres, før agenten begynder at redigere.",
+      "fanOut": []
     },
     {
       "runId": "20260706-studio-v0-1",
       "date": "2026-07-06",
       "name": "Studio v0.1",
+      "nameDa": "Studio v0.1",
       "route": "system-visualization + workflow-eval + run-registry",
+      "routeDa": "System-visualisering · Workflow-evals · Kørselsregister",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Studio v0.1 adds a local noindex software-like Frankly OS workbench with command palette, mission/gate view, registry-fed run memory, validation console, Drive queue and Claude Code Execution Lane packet preview.",
+      "summaryDa": "Studio v0.1 tilføjer en lokal noindex software-agtig Frankly OS-arbejdsbænk med kommandopalet, missions-/gate-visning, registry-født kørselshukommelse, valideringskonsol, Drive-kø og pakke-preview for Claude Code-eksekveringssporet.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "studio",
@@ -304,17 +1089,30 @@
         "Drive approval",
         "no public deploy"
       ],
-      "lesson": "The OS becomes easier to use when it feels like software, but still stays backed by files, gates and validation."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Offentlig deploy"
+      ],
+      "lesson": "The OS becomes easier to use when it feels like software, but still stays backed by files, gates and validation.",
+      "lessonDa": "OS'et bliver lettere at bruge, når det føles som software, men stadig er bakket op af filer, gates og validering.",
+      "fanOut": []
     },
     {
       "runId": "20260706-future-mode-v0-1",
       "date": "2026-07-06",
       "name": "Future Mode v0.1",
+      "nameDa": "Future Mode v0.1",
       "route": "system-visualization + workflow-eval + run-registry",
+      "routeDa": "System-visualisering · Workflow-evals · Kørselsregister",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Future Mode v0.1 previews likely next machine moves with lane, allowed work, blocked gates, validation and stop rule while keeping automation, connector writes and claims/product/legal locked.",
+      "summaryDa": "Future Mode v0.1 forhåndsviser sandsynlige næste maskintræk med spor, tilladt arbejde, blokerede gates, validering og stop-regel, mens automatisering, connector-skrivninger og claims/produkt/legal holdes låst.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "observatory",
@@ -326,17 +1124,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "A future preview is useful only when it makes the stop rules as visible as the promise."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "A future preview is useful only when it makes the stop rules as visible as the promise.",
+      "lessonDa": "Et fremtids-preview er kun nyttigt, når det gør stop-reglerne lige så synlige som løftet.",
+      "fanOut": []
     },
     {
       "runId": "20260706-mission-theatre-v0-1",
       "date": "2026-07-06",
       "name": "Mission Theatre v0.1",
+      "nameDa": "Mission Theatre v0.1",
       "route": "system-visualization + run-registry + workflow-eval",
+      "routeDa": "System-visualisering · Kørselsregister · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Mission Theatre v0.1 turns recent local machine runs into brief, gate, build, validate and learn cues inside Observatory while using the same registry-fed run memory as Flight Recorder.",
+      "summaryDa": "Mission Theatre v0.1 gør nylige lokale maskinkørsler til brief-, gate-, byg-, validér- og lær-cues i Observatory, med samme registry-fødte kørselshukommelse som Flight Recorder.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "observatory",
@@ -348,17 +1159,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "Run memory becomes easier to use when the system can replay why it stopped."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Run memory becomes easier to use when the system can replay why it stopped.",
+      "lessonDa": "Kørsels-hukommelse bliver lettere at bruge, når systemet kan afspille, hvorfor det stoppede.",
+      "fanOut": []
     },
     {
       "runId": "20260706-launch-packet-v0-1",
       "date": "2026-07-06",
       "name": "Launch Packet v0.1",
+      "nameDa": "Launch Packet v0.1",
       "route": "prompt-agent + machine-handoff + system-visualization + workflow-eval",
+      "routeDa": "Prompt-agent · Maskin-overlevering · System-visualisering · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Launch Packet v0.1 turns Mission Simulator output into a local agent-ready contract with mission, route, lane, do-not-touch boundaries, validation and stop rule while keeping connector writes and claims/product/legal locked.",
+      "summaryDa": "Launch Packet v0.1 gør Missions-simulatorens output til en lokal agent-klar kontrakt med mission, rute, spor, må-ikke-røres-grænser, validering og stop-regel, mens connector-skrivninger og claims/produkt/legal holdes låst.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "observatory",
@@ -370,17 +1194,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "A visual preflight becomes more useful when it produces an agent-ready stop rule."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "A visual preflight becomes more useful when it produces an agent-ready stop rule.",
+      "lessonDa": "Et visuelt preflight bliver mere nyttigt, når det producerer en agent-klar stop-regel.",
+      "fanOut": []
     },
     {
       "runId": "20260705-mission-simulator-v0-1",
       "date": "2026-07-05",
       "name": "Mission Simulator v0.1",
+      "nameDa": "Missions-simulator v0.1",
       "route": "system-visualization + workflow-eval + drive-pending-queue",
+      "routeDa": "System-visualisering · Workflow-evals · Drive-ventekø",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Mission Simulator v0.1 previews future work inside Observatory as route, lane, allowed actions, blocked gates, validation path and output shape while keeping connector writes and claims/product/legal locked.",
+      "summaryDa": "Missions-simulator v0.1 forhåndsviser fremtidigt arbejde i Observatory som rute, spor, tilladte handlinger, blokerede gates, valideringssti og output-form, mens connector-skrivninger og claims/produkt/legal holdes låst.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "observatory",
@@ -392,17 +1229,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "Future work gets easier when gates are previewed before tools move."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Future work gets easier when gates are previewed before tools move.",
+      "lessonDa": "Fremtidigt arbejde bliver lettere, når gates forhåndsvises, før værktøjerne rører sig.",
+      "fanOut": []
     },
     {
       "runId": "20260705-drive-ready-bundle-dry-run-v0-1",
       "date": "2026-07-05",
       "name": "Drive-Ready Bundle v0.1",
+      "nameDa": "Drive-klar bundle (generalprøve)",
       "route": "drive-pending-queue + machine-handoff + workflow-eval",
+      "routeDa": "Drive-ventekø · Maskin-overlevering · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Drive-Ready Bundle Dry Run v0.1 verifies the six queued Drive continuity runs locally, generates a checksum-backed approval packet, updates continuity state, passes Observatory browser QA and writes a Monday 2026-07-06 decision brief without connector writes.",
+      "summaryDa": "Drive-klar bundle-generalprøve v0.1 verificerer de seks køede Drive-kontinuitetskørsler lokalt, genererer en checksum-bakket godkendelsespakke, opdaterer kontinuitetstilstanden, består Observatory browser-QA og skriver et beslutningsbrief til mandag 2026-07-06 uden connector-skrivninger.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "drive ready bundle dry run 2026 07",
@@ -414,17 +1264,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "Decision packets should be generated before connector writes are requested."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Decision packets should be generated before connector writes are requested.",
+      "lessonDa": "Beslutningspakker bør genereres, før der bedes om connector-skrivninger.",
+      "fanOut": []
     },
     {
       "runId": "20260705-observatory-flight-recorder-feed-v0-1",
       "date": "2026-07-05",
       "name": "Registry Feed v0.1",
+      "nameDa": "Registry-feed v0.1",
       "route": "system-visualization + run-registry + local-site-feed + workflow-eval",
+      "routeDa": "System-visualisering · Kørselsregister · Lokalt site-feed · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Registry Feed v0.1 makes Flight Recorder read frankly-os-site/data/flight-recorder.json generated from run-registry.json, with direct-file fallback preserved and all connector, deploy and claims gates closed.",
+      "summaryDa": "Registry Feed v0.1 får Flight Recorder til at læse frankly-os-site/data/flight-recorder.json genereret fra run-registry.json, med direkte-fil-fallback bevaret og alle connector-, deploy- og claims-gates lukkede.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -436,17 +1299,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "Use the registry-fed Flight Recorder as the default recent-run memory surface; pause unless Jonas approves Drive sync or asks for another concrete non."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Use the registry-fed Flight Recorder as the default recent-run memory surface; pause unless Jonas approves Drive sync or asks for another concrete non.",
+      "lessonDa": "Brug den registry-fødte Flight Recorder som standardflade for nylig kørsels-hukommelse; hold pause medmindre Jonas godkender Drive-sync eller beder om en anden konkret ikke-claims-leverance.",
+      "fanOut": []
     },
     {
       "runId": "20260705-observatory-flight-recorder-v0-1",
       "date": "2026-07-05",
       "name": "Flight Recorder v0.1",
+      "nameDa": "Flight Recorder v0.1",
       "route": "system-visualization + agentic-loop-runtime + workflow-eval",
+      "routeDa": "System-visualisering · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Flight Recorder v0.1 makes recent Frankly OS machine runs inspectable inside Observatory with replay controls, route/status panels, artifacts, gates, validation and reusable lessons while preserving all connector, deploy and claims gates.",
+      "summaryDa": "Flight Recorder v0.1 gør nylige Frankly OS-maskinkørsler inspicerbare i Observatory med replay-kontroller, rute/status-paneler, artefakter, gates, validering og genbrugelige læringer, mens alle connector-, deploy- og claims-gates bevares.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -458,17 +1334,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "A replay surface should read the registry so memory does not drift."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "A replay surface should read the registry so memory does not drift.",
+      "lessonDa": "En replay-flade bør læse registret, så hukommelsen ikke driver.",
+      "fanOut": []
     },
     {
       "runId": "20260705-observatory-v0-1",
       "date": "2026-07-05",
       "name": "Observatory v0.1",
+      "nameDa": "Observatory v0.1",
       "route": "system-visualization + agentic-loop-runtime + workflow-eval",
+      "routeDa": "System-visualisering · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Observatory v0.1 adds a local noindex machine constellation surface with canvas signal map, route forecast, Drive pending dock, run replay, gate radar and route-health lanes without touching claims/product/legal or connector writes.",
+      "summaryDa": "Observatory v0.1 tilføjer en lokal noindex maskin-konstellationsflade med canvas-signalkort, rute-forecast, Drive-ventedok, kørsels-replay, gate-radar og rute-sundhedsspor uden at røre claims/produkt/legal eller connector-skrivninger.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -480,17 +1369,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "A vivid surface works best when grounded in real machine state."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "A vivid surface works best when grounded in real machine state.",
+      "lessonDa": "En levende flade virker bedst, når den er forankret i reel maskintilstand.",
+      "fanOut": []
     },
     {
       "runId": "20260705-drive-pending-queue-rep-001",
       "date": "2026-07-05",
       "name": "Drive Pending Queue",
+      "nameDa": "Drive-ventekø rep 001",
       "route": "drive-pending-queue + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Drive-ventekø · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Drive Pending Queue rep 001 lists three completed-local Frankly OS runs awaiting explicit Drive connector approval and prepares target folders, artifact lists, shared snapshots, exclusions and validation rules without performing any connector writes.",
+      "summaryDa": "Drive-ventekø rep 001 lister tre færdig-lokale Frankly OS-kørsler, der afventer eksplicit Drive-connector-godkendelse, og forbereder målmapper, artefaktlister, delte snapshots, ekskluderinger og valideringsregler uden at udføre connector-skrivninger.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -502,17 +1404,30 @@
         "Drive approval",
         "no customer copy"
       ],
-      "lesson": "Connector-gated continuity should be a visible queue, not a memory burden."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Connector-gated continuity should be a visible queue, not a memory burden.",
+      "lessonDa": "Connector-gated kontinuitet bør være en synlig kø, ikke en hukommelsesbyrde.",
+      "fanOut": []
     },
     {
       "runId": "20260705-route-qa-two-lane-reporting-rep-003",
       "date": "2026-07-05",
       "name": "Route QA Two-Lane",
+      "nameDa": "Rute-QA (to spor) rep 003",
       "route": "route-qa-two-lane-reporting + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Rute-QA (to spor) · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Route QA Two-Lane Reporting rep 003 updated run-route-qa.py to preserve legacy Route QA fields while adding structural completeness and promotion readiness lanes; rep 003 shows 20 structurally complete routes, 12 ready-active, 3 gated-ready and 5 needing real pilots.",
+      "summaryDa": "Rute-QA to-spors-rapportering rep 003 opdaterede run-route-qa.py til at bevare de gamle Rute-QA-felter og tilføje spor for strukturel komplethed og promoverings-parathed; rep 003 viser 20 strukturelt komplette ruter, 12 klar-aktive, 3 gated-klar og 5 der mangler reelle piloter.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -524,17 +1439,30 @@
         "no route promotion without real pi",
         "no customer copy"
       ],
-      "lesson": "Use Route QA rep 003 as the route-health baseline; do not promote test-next or gated routes without a real pilot or explicit approval."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Ingen rute-promovering uden pilot/godkendelse",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Use Route QA rep 003 as the route-health baseline; do not promote test-next or gated routes without a real pilot or explicit approval.",
+      "lessonDa": "Brug Rute-QA rep 003 som baseline for rute-sundhed; promover ikke test-next- eller gatede ruter uden en reel pilot eller eksplicit godkendelse.",
+      "fanOut": []
     },
     {
       "runId": "20260705-capability-radar-pilot-rep-001",
       "date": "2026-07-05",
       "name": "Capability Radar",
+      "nameDa": "Evne-radar-pilot rep 001",
       "route": "capability-radar + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Evne-radar · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Capability Radar Pilot rep 001 used Control Cockpit, the Tool/Connector Guard Matrix and Route QA rep 002 to produce a local build/test/park/reject decision: pause unless Drive-sync housekeeping is explicitly approved or Jonas asks for a concrete non-claim deliverable.",
+      "summaryDa": "Evne-radar-pilot rep 001 brugte Control Cockpit, værktøjs-/connector-vagtmatricen og Rute-QA rep 002 til at producere en lokal byg/test/parkér/afvis-beslutning: hold pause medmindre Drive-sync-oprydning eksplicit godkendes, eller Jonas beder om en konkret ikke-claims-leverance.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -546,17 +1474,30 @@
         "no customer copy",
         "no public deploy"
       ],
-      "lesson": "Pause after validation; if continuing, explicitly approve Drive-sync housekeeping for pending local runs or provide a concrete non-claim deliverable."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Claims / produkt / juridisk",
+        "Offentlig deploy"
+      ],
+      "lesson": "Pause after validation; if continuing, explicitly approve Drive-sync housekeeping for pending local runs or provide a concrete non-claim deliverable.",
+      "lessonDa": "Hold pause efter validering; hvis der fortsættes, godkend eksplicit Drive-sync-oprydning for ventende lokale kørsler eller giv en konkret ikke-claims-leverance.",
+      "fanOut": []
     },
     {
       "runId": "20260705-route-quality-door-hardening-rep-002",
       "date": "2026-07-05",
       "name": "Route Door Hardening",
+      "nameDa": "Rute-kvalitetsdør rep 002",
       "route": "route-quality-door-hardening + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Rute-kvalitetsdør · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Route Quality Door Hardening rep 002 added explicit quality doors to seven gated/test-next route docs, produced a fresh route QA artifact with zero missing structural checks, and kept claims/product/legal scope locked.",
+      "summaryDa": "Rute-kvalitetsdørs-hærdning rep 002 tilføjede eksplicitte kvalitetsdøre til syv gatede/test-next-rutedokumenter, producerede et frisk Rute-QA-artefakt med nul manglende strukturelle tjek og holdt claims/produkt/legal-scope låst.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -568,17 +1509,30 @@
         "no customer copy",
         "no public deploy"
       ],
-      "lesson": "Use the structurally complete route layer for one small non-claim pilot, starting from Control Cockpit and the Tool/Connector Guard Matrix; Drive-sync."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Claims / produkt / juridisk",
+        "Offentlig deploy"
+      ],
+      "lesson": "Use the structurally complete route layer for one small non-claim pilot, starting from Control Cockpit and the Tool/Connector Guard Matrix; Drive-sync.",
+      "lessonDa": "Brug det strukturelt komplette rutelag til én lille ikke-claims-pilot, startende fra Control Cockpit og værktøjs-/connector-vagtmatricen; Drive-sync rep 002 kun efter eksplicit connector-godkendelse.",
+      "fanOut": []
     },
     {
       "runId": "20260705-control-cockpit-v0-1-activation-test",
       "date": "2026-07-05",
       "name": "Control Cockpit v0.1",
+      "nameDa": "Control Cockpit v0.1",
       "route": "system-visualization + mission-control-queue + agentic-loop-runtime + workflow-eval",
+      "routeDa": "System-visualisering · Missionskø · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Control Cockpit v0.1 gives Jonas and future coding agents one internal launch surface for current state, active gates, Claude Code execution lane, run history, Drive continuity and next actions; artifacts are Drive-synced and claims scope remains locked.",
+      "summaryDa": "Control Cockpit v0.1 giver Jonas og fremtidige kodende agenter én intern startflade for aktuel tilstand, aktive gates, Claude Code-eksekveringssporet, kørselshistorik, Drive-kontinuitet og næste handlinger; artefakter er Drive-synkroniserede og claims-scope forbliver låst.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "synced",
+      "driveDa": "Synkroniseret til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -590,17 +1544,30 @@
         "no public deploy",
         "no paid API"
       ],
-      "lesson": "Use Control Cockpit v0."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Offentlig deploy",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Use Control Cockpit v0.",
+      "lessonDa": "Brug Control Cockpit v0.1 som startpunkt for den næste ikke-claims maskin-aktivering, og anvend derefter værktøjs-/connector-vagtmatricen, før agent/loop/ruter bruges igen.",
+      "fanOut": []
     },
     {
       "runId": "20260705-tool-connector-guard-matrix-001",
       "date": "2026-07-05",
       "name": "Tool Guard Matrix",
+      "nameDa": "Værktøjs-/connector-vagtmatrix",
       "route": "tool-connector-guard-matrix + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Værktøjs-/connector-vagt · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Tool/Connector Guard Matrix classifies filesystem, git, browser, Drive, Slack, OpenAI API, deploy, plugin install, thread creation and claims/product/legal actions before more automation.",
+      "summaryDa": "Værktøjs-/connector-vagtmatricen klassificerer filsystem-, git-, browser-, Drive-, Slack-, OpenAI-API-, deploy-, plugin-installations-, tråd-oprettelses- og claims/produkt/legal-handlinger før mere automatisering.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "synced",
+      "driveDa": "Synkroniseret til Drive",
       "claims": "none",
       "artifacts": [
         "tool connector guard matrix 2026 0",
@@ -612,17 +1579,30 @@
         "no public deploy",
         "no Slack"
       ],
-      "lesson": "Use the matrix as preflight on the next non-claim agent/loop/routes task, then record validation and Drive continuity."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Offentlig deploy",
+        "Slack / firma-synlig automatik"
+      ],
+      "lesson": "Use the matrix as preflight on the next non-claim agent/loop/routes task, then record validation and Drive continuity.",
+      "lessonDa": "Brug matricen som preflight på den næste ikke-claims agent/loop/rute-opgave, og registrér derefter validering og Drive-kontinuitet.",
+      "fanOut": []
     },
     {
       "runId": "20260705-repository-instructions-rep-001",
       "date": "2026-07-05",
       "name": "Repository Instructions",
+      "nameDa": "Repo-instruktioner rep 001",
       "route": "frankly-repository-instructions + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Repo-instruktioner · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Repository Instructions rep 001 created root and site AGENTS.md files, a machine-readable artifact, a report, a Drive upload manifest and eval coverage without touching claims/product/legal scope.",
+      "summaryDa": "Repo-instruktioner rep 001 oprettede root- og site-AGENTS.md-filer, et maskinlæsbart artefakt, en rapport, et Drive-upload-manifest og eval-dækning uden at røre claims/produkt/legal-scope.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "synced",
+      "driveDa": "Synkroniseret til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -634,17 +1614,30 @@
         "no public deploy",
         "Drive approval"
       ],
-      "lesson": "Repository Instructions rep is Drive-synced; close root/site git commits, then define a tool/connector guard matrix before more automation."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "Repository Instructions rep is Drive-synced; close root/site git commits, then define a tool/connector guard matrix before more automation.",
+      "lessonDa": "Repo-instruktions-reppen er Drive-synkroniseret; luk root/site git-commits, og definér derefter en værktøjs-/connector-vagtmatrix før mere automatisering.",
+      "fanOut": []
     },
     {
       "runId": "20260705-presentation-machine-rep-001",
       "date": "2026-07-05",
       "name": "Presentation Machine",
+      "nameDa": "Præsentationsmaskine rep 001",
       "route": "presentation-machine + product-marketing-context + frankly-presentation-storytelling + workflow-eval",
+      "routeDa": "Præsentationsmaskine · Produkt-marketing-kontekst · Præsentations-fortælling · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Presentation Machine rep 001 produced a 12-slide internal Frankly OS deck spine with approval gates and no claims/product/legal scope touch.",
+      "summaryDa": "Præsentationsmaskine rep 001 producerede en 12-slides intern Frankly OS deck-rygrad med godkendelses-gates og uden berøring af claims/produkt/legal-scope.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "synced",
+      "driveDa": "Synkroniseret til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -656,17 +1649,30 @@
         "no public sharing without approval",
         "Drive approval"
       ],
-      "lesson": "Presentation Machine rep is Drive-synced; keep the deck spine internal-only until visual QA and Jonas approval, and close root/site git commits before."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Ingen offentlig deling uden godkendelse",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "Presentation Machine rep is Drive-synced; keep the deck spine internal-only until visual QA and Jonas approval, and close root/site git commits before.",
+      "lessonDa": "Presentation Machine-reppen er Drive-synkroniseret; hold deck-rygraden intern indtil visuel QA og Jonas' godkendelse, og luk root/site git-commits før mere autonomi.",
+      "fanOut": []
     },
     {
       "runId": "20260705-route-qa-rep-001",
       "date": "2026-07-05",
       "name": "Route QA rep 001",
+      "nameDa": "Rute-QA rep 001",
       "route": "frankly-route-qa + agentic-loop-runtime + workflow-eval",
+      "routeDa": "Rute-QA · Agent-loop · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Route QA rep 001 audited 20 route docs, hardened four active routes and left 0 high-risk active route findings.",
+      "summaryDa": "Rute-QA rep 001 auditerede 20 rutedokumenter, hærdede fire aktive ruter og efterlod 0 højrisiko-fund på aktive ruter.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "synced",
+      "driveDa": "Synkroniseret til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -678,17 +1684,30 @@
         "Drive approval",
         "no public deploy"
       ],
-      "lesson": "Run Presentation Machine as MCQ-011 route rep 2/3 and create a Frankly OS deck spine without touching claims/product/legal scope."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Connector-skrivning (Drive/API)",
+        "Offentlig deploy"
+      ],
+      "lesson": "Run Presentation Machine as MCQ-011 route rep 2/3 and create a Frankly OS deck spine without touching claims/product/legal scope.",
+      "lessonDa": "Kør Presentation Machine som MCQ-011 rute-rep 2/3 og lav en Frankly OS deck-rygrad uden at røre claims/produkt/legal-scope.",
+      "fanOut": []
     },
     {
       "runId": "20260704-mcq011-run-registry-local-eval-harness",
       "date": "2026-07-04",
       "name": "Run Registry v0.1",
+      "nameDa": "Kørselsregister v0.1",
       "route": "agentic-loop-runtime + mission-control-queue + workflow-eval",
+      "routeDa": "Agent-loop · Missionskø · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Install a local run registry, recorder script and eval coverage so future machine runs become traceable before more automation.",
+      "summaryDa": "Installerede et lokalt kørselsregister, et recorder-script og eval-dækning, så fremtidige maskinkørsler bliver sporbare før mere automatisering.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "synced",
+      "driveDa": "Synkroniseret til Drive",
       "claims": "none",
       "artifacts": [
         "run registry",
@@ -700,17 +1719,30 @@
         "Drive approval",
         "no public deploy"
       ],
-      "lesson": "The system can only learn from work it records."
+      "gatesDa": [
+        "Automatisk tråd-oprettelse",
+        "Connector-skrivning (Drive/API)",
+        "Offentlig deploy"
+      ],
+      "lesson": "The system can only learn from work it records.",
+      "lessonDa": "Systemet kan kun lære af arbejde, det registrerer.",
+      "fanOut": []
     },
     {
       "runId": "20260704-lock-claims-work-refocus-machine-runtime",
       "date": "2026-07-04",
       "name": "Claims Lock",
+      "nameDa": "Claims-lås",
       "route": "agentic-loop-runtime + mission-control-queue + workflow-eval",
+      "routeDa": "Agent-loop · Missionskø · Workflow-evals",
       "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
       "summary": "Recorded Jonas's claims-work lock, redirected the active next move away from evidence/source work and added a local Frankly OS eval harness.",
+      "summaryDa": "Registrerede Jonas' claims-arbejdslås, omdirigerede det aktive næste træk væk fra evidens-/kildearbejde og tilføjede en lokal Frankly OS eval-harness.",
       "validation": "passed",
+      "validationDa": "Bestået",
       "drive": "synced",
+      "driveDa": "Synkroniseret til Drive",
       "claims": "lock-only",
       "artifacts": [
         "frankly claims work lock 2026 07 0",
@@ -722,7 +1754,14 @@
         "no thread spawn",
         "Drive approval"
       ],
-      "lesson": "A good machine must remember what not to work on."
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Automatisk tråd-oprettelse",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "A good machine must remember what not to work on.",
+      "lessonDa": "En god maskine skal huske, hvad den ikke skal arbejde på.",
+      "fanOut": []
     }
   ]
 }

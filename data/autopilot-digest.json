@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-09T13:35:59+00:00",
-  "day": "2026-07-09",
+  "generated": "2026-07-10T00:50:12+00:00",
+  "day": "2026-07-10",
   "status": "healthy",
-  "healthLine": "[self-check] 2026-07-09 15:36 — PASS — report: os-visualization/reports/self-check-2026-07-09.md",
+  "healthLine": "[self-check] 2026-07-10 02:50 — PASS — report: os-visualization/reports/self-check-2026-07-10.md",
   "didAutonomously": [
     {
       "job": "regenerate lessons memory (compounding)",
@@ -14,6 +14,10 @@
     },
     {
       "job": "refresh site data feeds",
+      "ok": true
+    },
+    {
+      "job": "scan for roster gaps (reflective — proposes new agents)",
       "ok": true
     }
   ],

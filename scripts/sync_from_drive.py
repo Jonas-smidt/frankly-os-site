@@ -14,6 +14,7 @@ Environment variables:
 """
 
 import base64
+import json
 import os
 import pathlib
 import re
@@ -21,8 +22,8 @@ import shutil
 
 SITE_DIR = pathlib.Path("site")
 ENTRY_FILE = pathlib.Path("index.html")
+TOOLS_SHELF_FEED = pathlib.Path("data/tools-shelf.json")
 UPLOADABLE_HTML = (
-    pathlib.Path("lab-registry.html"),
     pathlib.Path("frankly-signature-generator.html"),
     pathlib.Path("frankly-brand-reference.html"),
     pathlib.Path("frankly-brand-assistant.html"),
@@ -48,8 +49,6 @@ STATIC_FILES = (
     pathlib.Path("sitemap.xml"),
     pathlib.Path("frankly-lab-brand.css"),
     pathlib.Path("frankly-surfaces.css"),
-    pathlib.Path("frankly-lab-tools.css"),
-    pathlib.Path("frankly-lab-tools.js"),
     pathlib.Path("frankly-ribbon-lab.css"),
     pathlib.Path("frankly-ribbon-lab.js"),
     pathlib.Path("assets/frankly-logo-small.png"),
@@ -223,9 +222,52 @@ def assert_gate_posture(site_dir, gated_rel):
     print(f"Gate assertion OK: {len(gated_rel)} gated pages curtained + index-blocked; journal public/indexable.")
 
 
+def assert_shelf_boundary(manifest):
+    """The canonical local shelf may describe public, local and archived entries.
+    Only active public-lab targets may enter the upload bundle."""
+    if not TOOLS_SHELF_FEED.exists():
+        raise SystemExit(
+            "Shelf boundary FAILED: data/tools-shelf.json mangler; kør sync-site-data-feeds.py først."
+        )
+    feed = json.loads(TOOLS_SHELF_FEED.read_text(encoding="utf-8"))
+    tools = feed.get("tools", [])
+    manifest_paths = set(manifest)
+    public_targets = {
+        str(tool.get("href", "")).split("#", 1)[0]
+        for tool in tools
+        if tool.get("lane") == "public-lab" and not tool.get("retired")
+    }
+    local_targets = {
+        str(tool.get("href", "")).split("#", 1)[0]
+        for tool in tools
+        if tool.get("lane") != "public-lab" or tool.get("retired")
+    }
+    missing = sorted(path for path in public_targets if path not in manifest_paths)
+    leaked = sorted(path for path in local_targets if path in manifest_paths)
+    retired_runtime = sorted(
+        path for path in {"lab-registry.html", "frankly-lab-tools.css", "frankly-lab-tools.js"}
+        if path in manifest_paths
+    )
+    index_text = ENTRY_FILE.read_text(encoding="utf-8")
+    if "href=\"lab-registry.html\"" in index_text:
+        raise SystemExit("Shelf boundary FAILED: index.html linker stadig til den pensionerede Registry.")
+    if missing or leaked or retired_runtime:
+        raise SystemExit(
+            "Shelf boundary FAILED: "
+            f"missing-public={missing}, leaked-local={leaked}, retired-runtime={retired_runtime}"
+        )
+    print(
+        f"Shelf boundary OK: {len(public_targets)} public-lab targets present; "
+        f"{len(local_targets)} local/retired targets excluded."
+    )
+
+
 def main():
     if not ENTRY_FILE.exists():
         raise SystemExit("index.html is required as the uploadable test-site entry.")
+
+    manifest = build_manifest()
+    assert_shelf_boundary(manifest)
 
     if SITE_DIR.exists():
         shutil.rmtree(SITE_DIR)

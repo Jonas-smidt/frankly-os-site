@@ -1,0 +1,46 @@
+{
+  "generated": "2026-07-10T16:38:53+00:00",
+  "lastFeedSync": "2026-07-10T16:38:53+00:00",
+  "selfCheck": {
+    "date": "2026-07-10",
+    "result": "FAIL",
+    "report": "os-visualization/reports/self-check-2026-07-10.md",
+    "checks": {
+      "json": "passed",
+      "feedSync": "FAILED",
+      "localRefs": "FAILED",
+      "css": "passed",
+      "inlineJs": "passed",
+      "uploadBoundary": "passed",
+      "manifestBoundary": "FAILED",
+      "machineStateGuard": "passed",
+      "sourceIntake": "passed",
+      "franklyOsEvals": "failed",
+      "routeQa": "passed"
+    },
+    "freshness": [
+      {
+        "file": "run-registry.json",
+        "date": "2026-07-10",
+        "daysOld": 0
+      },
+      {
+        "file": "mission-control-queue.json",
+        "date": "2026-07-07",
+        "daysOld": 3
+      },
+      {
+        "file": "flight-recorder.json",
+        "date": "2026-07-10",
+        "daysOld": 0
+      }
+    ],
+    "activeBatchConsistency": "OK"
+  },
+  "evals": {
+    "cases": 34,
+    "passed": 30,
+    "failed": 4
+  },
+  "resultDa": "Ikke alt grønt — selvtjek FAIL, 30 af 34 evals grønne"
+}

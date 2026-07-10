@@ -1,4 +1,7 @@
 {
+  "frozen": true,
+  "frozenAt": "2026-07-10",
+  "frozenNote": "Statisk arkiv (MCQ-001–011) — synces ikke længere; kanonisk drift-kø lever i system-intelligence/.",
   "generated": "2026-07-07",
   "status": "mcq011-machine-runtime-active-claims-locked",
   "summary": "Mission Control Queue tracks local mission batches with copyable prompts, state, gates, review checkpoints and returned run output. MCQ-011 (Run Registry + Local Eval Harness) is now the active machine-runtime batch; MCQ-010 and the earlier claims/product-legal batches remain locked/passive.",

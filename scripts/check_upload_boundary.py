@@ -22,16 +22,26 @@ SITE = REPO_ROOT / "site"
 # Frankly OS operating surfaces: allowed in the source tree for local use, but never
 # in the public upload set. (Lab tools, prototypes and gated drafts are allowed and
 # are deliberately NOT listed here.)
+# Canonical backstop set for THIS repo: the 4.0 cockpit + its v3 archive + all 11
+# pages retired by the 4.0 revision (files stay on disk, deliberately never public).
+# publish-dry-run.py imports this set as its FORBIDDEN_SURFACES so the two deploy
+# backstops cannot drift apart.
 OS_ONLY_PAGES = [
-    "control-cockpit.html",
-    "observatory.html",
-    "studio.html",
-    "mission-control-queue.html",
-    "progress-map.html",
-    "overview.html",
-    "frankly-os.html",
+    # the ONE 4.0 operating surface + its archived predecessor
     "frankly-os-cockpit.html",
+    "frankly-os-cockpit-v3-arkiv.html",
+    # the 11 surfaces retired by the 4.0 revision (2026-07-10)
+    "agent-brief-builder.html",
+    "control-cockpit.html",
+    "frankly-os.html",
+    "glass-folders.html",
     "lab-hub.html",
+    "lab-registry.html",
+    "mission-control-queue.html",
+    "observatory.html",
+    "overview.html",
+    "progress-map.html",
+    "studio.html",
 ]
 
 

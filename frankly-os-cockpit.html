@@ -5,243 +5,437 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
 <title>Frankly OS — Cockpit</title>
+<link rel="stylesheet" href="frankly-lab-brand.css">
 <style>
+  /* ============================================================
+     Frankly OS 4.0 Cockpit — page-specific component CSS only.
+     All tokens come from frankly-lab-brand.css (one canon).
+     ============================================================ */
   :root{
-    --bordeaux:#2D0011; --rose:#FF6FA5; --calm:#FFD3E3; --calm-deep:#FFACCA;
-    --blush:#FFF6FA; --limestone:#F5F4F1; --stone:#ECE9E4; --line:#E9E6E1;
-    --white:#fff; --ink:#3a2730; --ink-2:#6b5560; --ink-3:#8a7580;
-    --ok:#1f7a54; --wait:#B26A00; --lock:#9A1B3F;
-    --sans:"Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;
-    --display:"Almarena Neue Display","League Spartan",Georgia,serif;
-    --ease:cubic-bezier(.16,1,.3,1); --ease2:cubic-bezier(.22,.61,.36,1);
-    --r-lg:22px; --r-md:16px; --r-sm:11px; --r-pill:999px;
-    --sh-rest:0 1px 2px rgba(45,0,17,.05),0 10px 26px rgba(45,0,17,.06);
-    --sh-lift:0 3px 8px rgba(45,0,17,.08),0 22px 48px rgba(45,0,17,.13);
+    --ease-io:cubic-bezier(.45,.05,.2,1); /* reversible in/out (accordion, chevron) */
+    --dur-micro:.18s;
+    --dur-small:.3s;
+    --dur-panel:.32s;
+    --dur-enter:.6s;
+    --stagger:55ms;
   }
-  @font-face{font-family:"Almarena Neue Display";font-weight:600;font-display:swap;src:url("journal/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
-  @font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("journal/fonts/Switzer-Regular.otf") format("opentype")}
-  @font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("journal/fonts/Switzer-Medium.otf") format("opentype")}
-  @font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("journal/fonts/Switzer-Semibold.otf") format("opentype")}
   *{box-sizing:border-box;margin:0}
   html{-webkit-text-size-adjust:100%}
-  body{font-family:var(--sans);color:var(--ink);min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;
-    background:radial-gradient(60vmax 50vmax at 88% -12%,#FFEBF3,transparent 60%),
-               radial-gradient(48vmax 48vmax at -8% 108%,#FBEFF4,transparent 60%),var(--limestone)}
+  body{background:var(--limestone);min-height:100vh;line-height:1.5;font-size:14px}
   button{font:inherit;cursor:pointer;border:none;background:none;color:inherit}
   a{color:var(--bordeaux)}
   [hidden]{display:none!important}
-  ::selection{background:var(--calm-deep);color:var(--bordeaux)}
-  :focus-visible{outline:2px solid var(--bordeaux);outline-offset:3px;border-radius:6px}
+  code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
   .wrap{max-width:1180px;margin:0 auto;padding:clamp(24px,4vw,52px) clamp(16px,3vw,30px) 96px}
+  .ref{font-family:var(--fl-sans);font-size:11px;font-weight:600;letter-spacing:.05em;color:var(--grey-2);font-variant-numeric:tabular-nums}
 
-  /* header */
+  /* ---- header ---- */
   .top{display:flex;justify-content:space-between;align-items:flex-end;gap:20px;flex-wrap:wrap;margin-bottom:8px}
   .brand{display:flex;flex-direction:column;gap:6px}
-  .logo{font-family:var(--display);font-weight:600;font-size:23px;letter-spacing:-.01em;color:var(--bordeaux);display:inline-flex;align-items:center}
-  .logo::after{content:"";width:7px;height:7px;border-radius:50%;background:var(--rose);margin-left:4px;margin-top:10px}
-  h1{font-family:var(--display);font-weight:600;font-size:clamp(30px,4.4vw,44px);line-height:1.02;color:var(--bordeaux);letter-spacing:-.02em}
-  .status-pill{display:inline-flex;align-items:center;gap:9px;background:var(--white);border:1px solid var(--line);
-    border-radius:var(--r-pill);padding:9px 15px;font-size:13px;font-weight:500;box-shadow:var(--sh-rest)}
-  .dot{width:9px;height:9px;border-radius:50%;background:var(--ok);position:relative;flex:0 0 auto}
-  .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid var(--ok);opacity:.4;animation:pulse 2.4s var(--ease) infinite}
-  @keyframes pulse{0%{transform:scale(.7);opacity:.6}70%{transform:scale(1.5);opacity:0}100%{opacity:0}}
-  .lede{margin-top:14px;font-size:15.5px;color:var(--ink-2);max-width:66ch}
+  .logo{font-family:var(--fl-display);font-weight:600;font-size:23px;letter-spacing:-.01em;color:var(--bordeaux)}
+  h1{font-size:clamp(30px,4.4vw,44px);line-height:1.02;letter-spacing:-.02em}
+  .status-pill{display:inline-flex;align-items:center;gap:9px;background:var(--paper);border:1px solid var(--line);
+    border-radius:var(--r-pill);padding:9px 15px;font-size:13px;font-weight:500;color:var(--ink)}
+  .status-pill .ref{margin-left:2px}
+  .dot{width:9px;height:9px;border-radius:50%;color:var(--success-live);background:currentColor;position:relative;flex:0 0 auto}
+  .dot::after{content:"";position:absolute;inset:-4px;border-radius:50%;border:1.5px solid currentColor;opacity:.4}
+  @media (prefers-reduced-motion: no-preference){
+    .dot::after{animation:pulse 2.4s var(--ease) infinite}
+  }
+  @keyframes pulse{0%{transform:scale(.7);opacity:.6}70%{transform:scale(1.5);opacity:0}100%{transform:scale(1.5);opacity:0}}
+  .status-pill[data-state="venter"] .dot{color:var(--warn)}
+  .status-pill[data-state="venter"] .dot::after{animation-duration:3.6s}
+  .status-pill[data-state="fejl"] .dot{color:var(--alert)}
+  .status-pill[data-state="fejl"] .dot::after{animation:none;opacity:.5}
+  .lede{margin-top:14px;font-size:15.5px;color:var(--grey-1);max-width:66ch}
   .lede b{color:var(--bordeaux);font-weight:600}
 
-  /* section rule */
-  .sec{margin:38px 0 16px;display:flex;align-items:baseline;gap:14px}
-  .sec h2{font-family:var(--display);font-weight:600;font-size:16px;color:var(--bordeaux);letter-spacing:.01em}
+  /* ---- banners ---- */
+  .banner{margin-bottom:20px;padding:11px 16px;border-radius:var(--r-card);font-size:13px;display:none;
+    background:var(--warn);border:1px solid var(--line-dark);color:var(--bordeaux)}
+  .banner.show{display:block}
+  .banner code{font-size:12px}
+
+  /* ---- section band ---- */
+  .sec{margin:40px 0 16px;display:flex;align-items:baseline;gap:14px}
+  .sec h2{font-size:16px;letter-spacing:.01em}
   .sec .rule{flex:1;height:1px;background:var(--line)}
-  .sec .ref{font-size:11px;color:var(--ink-3);font-variant-numeric:tabular-nums}
 
-  /* stat tiles */
+  /* ---- bands / grid ---- */
+  .band{display:grid;gap:20px;align-items:start}
+  .band--75{grid-template-columns:7fr 5fr}
+  .band--57{grid-template-columns:5fr 7fr}
+  @media(max-width:1023px){.band--75,.band--57{grid-template-columns:1fr}}
+
+  /* ---- tiles ---- */
   .tiles{display:grid;gap:16px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr))}
-  .tile{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 20px 18px;box-shadow:var(--sh-rest);
-    transition:transform .38s var(--ease),box-shadow .38s var(--ease),border-color .38s var(--ease);position:relative;overflow:hidden}
-  .tile:hover{transform:translateY(-4px);box-shadow:var(--sh-lift);border-color:var(--calm-deep)}
-  .tile .k{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ink-3)}
-  .tile .v{font-family:var(--display);font-weight:600;font-size:44px;line-height:1;color:var(--bordeaux);margin:10px 0 6px;font-variant-numeric:tabular-nums}
-  .tile .s{font-size:13px;color:var(--ink-2)}
-  .tile .spark{position:absolute;right:16px;top:18px;font-size:20px;opacity:.9}
+  @media(max-width:639px){.tiles{grid-template-columns:repeat(2,minmax(150px,1fr))}}
+  .tile{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);padding:20px 20px 18px;
+    box-shadow:var(--shadow-card);position:relative;transition:transform var(--dur-small) var(--ease)}
+  .tile::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:var(--shadow-lift);
+    border:1px solid var(--calm-deep);opacity:0;transition:opacity var(--dur-small) var(--ease);pointer-events:none}
+  .tile:hover{transform:translateY(-4px)}
+  .tile:hover::after{opacity:1}
+  .tile .k{font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--grey-2)}
+  .tile .v{font-family:var(--fl-display);font-weight:600;font-size:clamp(40px,3.4vw,44px);line-height:1;color:var(--bordeaux);
+    margin:10px 0 6px;font-variant-numeric:tabular-nums}
+  .tile .s{font-size:13px;color:var(--grey-1)}
+  .healthline{margin-top:12px}
 
-  /* two-column layout */
-  .cols{display:grid;gap:20px;grid-template-columns:1.15fr .85fr;align-items:start}
-  @media(max-width:840px){.cols{grid-template-columns:1fr}}
-
-  /* panel */
-  .panel{background:var(--white);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--sh-rest);overflow:hidden}
-  .panel__head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line)}
-  .panel__head h3{font-family:var(--display);font-weight:600;font-size:17px;color:var(--bordeaux)}
-  .panel__head .count{font-size:12px;font-weight:600;color:var(--ink-3);font-variant-numeric:tabular-nums}
+  /* ---- panel ---- */
+  .panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r-lg);box-shadow:var(--shadow-card);overflow:hidden}
+  .panel__head{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:18px 20px;border-bottom:1px solid var(--line);flex-wrap:wrap}
+  .panel__head h3{font-size:17px}
+  .panel__head .count{font-size:12px;font-weight:600;color:var(--grey-2);font-variant-numeric:tabular-nums}
   .panel__body{padding:8px 8px 12px}
+  .panel--accent{border-color:var(--calm-deep)}
+  .panel--accent .panel__head{background:var(--calm-pink);border-bottom-color:var(--calm-deep)}
+  .panel__src{padding:10px 20px 14px;border-top:1px solid var(--stone);font-size:11.5px;color:var(--grey-2)}
 
-  /* attention panel (venter på dig) */
-  .attention{background:linear-gradient(180deg,#fff, #fff),var(--calm);border:1px solid var(--calm-deep)}
-  .attention .panel__head{background:linear-gradient(100deg,var(--calm) 0%,var(--blush) 90%);border-bottom-color:var(--calm-deep)}
-  .ap-note{margin:6px 8px 4px;padding:11px 13px;border-radius:var(--r-md);background:var(--blush);border:1px solid var(--stone);font-size:12.5px;color:var(--ink-2)}
-  .ap-note b{color:var(--bordeaux)}
+  /* note field */
+  .note{margin:6px 8px 4px;padding:11px 13px;border-radius:var(--r-card);background:var(--blush);border:1px solid var(--stone);
+    font-size:12.5px;color:var(--grey-1)}
+  .note b{color:var(--bordeaux)}
 
-  /* rows */
-  .row{display:flex;gap:13px;align-items:flex-start;padding:13px 14px;border-radius:var(--r-md);transition:background .2s var(--ease)}
-  .row+.row{border-top:1px solid var(--stone)}
+  /* mini section line inside a panel */
+  .minisec{display:flex;align-items:baseline;gap:12px;margin:16px 12px 4px}
+  .minisec .rule{flex:1;height:1px;background:var(--line)}
+
+  /* ---- rows ---- */
+  .row{display:flex;gap:13px;align-items:flex-start;padding:13px 14px;border-radius:var(--r-card);
+    transition:background var(--dur-micro) var(--ease)}
+  .row+.row,.row+.acc,.acc+.row,.acc+.acc{border-top:1px solid var(--stone)}
   .row:hover{background:var(--blush)}
-  .row__icon{flex:0 0 auto;width:30px;height:30px;border-radius:9px;display:grid;place-items:center;font-size:15px;background:var(--calm);color:var(--bordeaux)}
+  .row--flash{background:var(--blush)}
+  .row__icon{flex:0 0 auto;width:30px;height:30px;border-radius:var(--r-sm);display:grid;place-items:center;font-size:15px;
+    background:var(--calm-pink);color:var(--bordeaux)}
+  .row__icon--ok{background:var(--ok)}
   .row__main{min-width:0;flex:1}
   .row__t{font-size:14.5px;font-weight:600;color:var(--bordeaux);line-height:1.35}
-  .row__d{font-size:12.5px;color:var(--ink-2);margin-top:2px}
-  .chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;border-radius:var(--r-pill);padding:3px 9px;white-space:nowrap}
-  .chip--wait{background:#FFF1DC;color:var(--wait)}
-  .chip--lock{background:#FBE4EC;color:var(--lock)}
-  .chip--ok{background:#E3F3EC;color:var(--ok)}
-  .row__side{flex:0 0 auto;align-self:center}
-  .decide{display:flex;gap:6px}
-  .dbtn{font-size:12px;font-weight:600;border-radius:var(--r-pill);padding:6px 12px;border:1px solid var(--line);background:var(--white);color:var(--ink);
-    transition:transform .2s var(--ease),background .2s var(--ease),border-color .2s var(--ease),color .2s var(--ease)}
-  .dbtn:hover{transform:translateY(-1px);border-color:var(--calm-deep)}
-  .dbtn--ok{background:var(--bordeaux);color:#fff;border-color:var(--bordeaux)}
-  .dbtn--ok:hover{background:#420019}
-  .dbtn--no:hover{background:#FBE4EC;border-color:var(--lock);color:var(--lock)}
-  .dwait{font-size:12px;color:var(--ink-3)}
-  .decided{margin-top:8px;font-size:12px;color:var(--ink-2);background:var(--limestone);border-radius:var(--r-sm);padding:9px 11px}
-  .decided code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:11.5px;color:var(--bordeaux);word-break:break-all}
+  .row__t .ref{margin-right:7px}
+  .row__d{font-size:12.5px;color:var(--grey-1);margin-top:2px}
+  .row__r{margin-top:3px}
+  .row__side{flex:0 0 auto;align-self:center;display:flex;gap:6px;flex-wrap:wrap;justify-content:flex-end}
+  @media(max-width:639px){
+    .row{flex-wrap:wrap}
+    .row__side{flex-basis:100%;justify-content:flex-start;margin-left:43px}
+  }
+
+  /* ---- chips ---- */
+  .chip{display:inline-flex;align-items:center;gap:5px;font-size:11px;font-weight:600;letter-spacing:.02em;text-transform:uppercase;
+    border-radius:var(--r-pill);padding:5px 11px;white-space:nowrap;color:var(--bordeaux);background:var(--stone-2)}
+  .chip--ok{background:var(--ok)}
+  .chip--warn{background:var(--warn)}
+  .chip--blue{background:var(--blue)}
+  .chip--recover{background:var(--recover)}
+  .chip--sky{background:var(--sky)}
+  .chip--lock{background:var(--pink-stone)}
+  .chip--dim{color:var(--grey-2)}
+
+  /* ---- decision buttons ---- */
+  .dbtn{font-size:12px;font-weight:600;min-height:32px;border-radius:var(--r-pill);padding:6px 13px;border:1px solid var(--line-dark);
+    background:var(--paper);color:var(--bordeaux);
+    transition:transform var(--dur-micro) var(--ease),background var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
+  .dbtn:hover{transform:translateY(-1px);border-color:var(--calm-deep);background:var(--paper)}
+  .dbtn:active{transform:translateY(0) scale(.96)}
+  .dbtn--ok{background:var(--bordeaux);color:#FFFFFF;border-color:var(--bordeaux)}
+  .dbtn--ok:hover{background:var(--bordeaux);border-color:var(--bordeaux)}
+  .dbtn--no:hover{background:var(--pink-stone)}
+  .dwait{font-size:12px;color:var(--grey-2)}
+  .decided{margin-top:8px;font-size:12px;color:var(--grey-1);background:var(--limestone);border-radius:var(--r-sm);padding:9px 11px}
+  .decided code{font-size:11.5px;color:var(--bordeaux);word-break:break-all}
   .decided b{color:var(--bordeaux)}
 
-  /* runs list */
-  .run{display:flex;gap:12px;align-items:flex-start;padding:12px 14px;border-radius:var(--r-md)}
-  .run+.run{border-top:1px solid var(--stone)}
-  .run:hover{background:var(--blush)}
-  .run__st{flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:7px;background:var(--ok)}
-  .run__st.is-gated{background:var(--wait)}
-  .run__main{min-width:0}
-  .run__id{font-size:12px;color:var(--ink-3);font-variant-numeric:tabular-nums}
-  .run__s{font-size:13.5px;color:var(--ink);line-height:1.4;margin-top:1px}
+  /* ---- runs / accordion ---- */
+  .acc__head{display:flex;gap:12px;width:100%;text-align:left;align-items:flex-start;padding:12px 14px;border-radius:var(--r-card);
+    transition:background var(--dur-micro) var(--ease)}
+  .acc__head:hover{background:var(--blush)}
+  .run__st{flex:0 0 auto;width:8px;height:8px;border-radius:50%;margin-top:7px;background:var(--success)}
+  .run__st.is-gated{background:var(--warn);box-shadow:0 0 0 1px var(--line-dark)}
+  .run__main{min-width:0;flex:1}
+  .run__t{font-size:13.5px;font-weight:600;color:var(--bordeaux);line-height:1.4}
+  .run__s{font-size:12.5px;color:var(--grey-1);line-height:1.45;margin-top:1px}
+  .acc__chev{flex:0 0 auto;margin-top:5px;color:var(--grey-2);transition:transform var(--dur-panel) var(--ease-io)}
+  .acc.is-open .acc__chev{transform:rotate(180deg)}
+  .acc__body{display:grid;grid-template-rows:0fr;transition:grid-template-rows var(--dur-panel) var(--ease-io)}
+  .acc.is-open .acc__body{grid-template-rows:1fr}
+  .acc__inner{min-height:0;overflow:clip}
+  .replay{margin:2px 14px 12px 34px;background:var(--limestone-soft);border-radius:var(--r-card);padding:13px 15px;font-size:12.5px;color:var(--grey-1)}
+  .replay dt{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--grey-2);margin-top:9px}
+  .replay dt:first-child{margin-top:0}
+  .replay dd{margin:2px 0 0;color:var(--grey-1)}
+  .replay dd b{color:var(--bordeaux);font-weight:600}
+  .replay .gates{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px}
+  @media (prefers-reduced-motion: no-preference){
+    .acc__inner > *{opacity:0;transform:translateY(-4px);
+      transition:opacity var(--dur-small) var(--ease) 80ms,transform var(--dur-small) var(--ease) 80ms}
+    .acc.is-open .acc__inner > *{opacity:1;transform:none}
+    .acc:not(.is-open) .acc__inner > *{transition-delay:0ms;transition-duration:.15s}
+  }
 
-  /* composer */
-  .composer{padding:6px 6px 4px}
-  .composer label{display:block;font-size:12px;font-weight:600;color:var(--ink-2);margin:10px 12px 5px}
-  .composer input,.composer select{width:calc(100% - 24px);margin:0 12px;padding:11px 13px;border:1px solid var(--line);border-radius:var(--r-sm);
-    font:inherit;font-size:14px;color:var(--ink);background:var(--limestone)}
-  .composer input:focus,.composer select:focus{outline:none;border-color:var(--calm-deep);background:#fff}
-  .out{margin:14px 12px 4px;background:var(--bordeaux);color:#FFE7F0;border-radius:var(--r-md);padding:14px 15px;font-size:12.5px;line-height:1.6;
-    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word;position:relative}
-  .out b{color:#fff;font-weight:600}
-  .cta{display:inline-flex;align-items:center;gap:8px;margin:12px;padding:12px 20px;background:var(--bordeaux);color:#fff;border-radius:var(--r-pill);
-    font-weight:600;font-size:14px;box-shadow:0 10px 24px rgba(45,0,17,.16);transition:transform .3s var(--ease2),box-shadow .3s var(--ease2)}
-  .cta:hover{transform:translateY(-3px) scale(1.02);box-shadow:0 16px 32px rgba(45,0,17,.24)}
-  .copied{font-size:12px;color:var(--ok);font-weight:600;margin-left:10px;opacity:0;transition:opacity .2s}
+  /* tabs (fl-pill anatomy) */
+  .tabs{display:flex;gap:6px}
+  .tab{min-height:30px;display:inline-flex;align-items:center;border:1px solid var(--stone-4);border-radius:var(--r-pill);
+    padding:5px 13px;background:rgba(255,255,255,.6);font-size:12px;font-weight:600;color:var(--bordeaux);
+    transition:background var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
+  .tab:hover{background:var(--paper);border-color:var(--calm-deep)}
+  .tab[aria-selected="true"]{background:var(--bordeaux);color:#FFFFFF;border-color:var(--bordeaux)}
+
+  /* ---- composer ---- */
+  .composer{padding:6px 6px 8px}
+  .composer label{display:block;font-size:12px;font-weight:600;color:var(--grey-1);margin:10px 12px 5px}
+  .composer input,.composer select{width:calc(100% - 24px);margin:0 12px;padding:11px 13px;border:1px solid var(--line);
+    border-radius:var(--r-sm);font:inherit;font-size:14px;color:var(--ink);background:var(--limestone)}
+  .composer input:focus,.composer select:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
+  .outhead{margin:16px 12px 5px;font-size:12px;font-weight:600;color:var(--grey-1)}
+  .out{margin:0 12px 4px;background:var(--limestone-soft);color:var(--ink);border:1px solid var(--line-dark);
+    border-left:3px solid var(--bordeaux);border-radius:var(--r-sm);padding:14px 15px;font-size:12.5px;line-height:1.6;
+    font-family:ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;word-break:break-word}
+  .cta{display:inline-flex;align-items:center;justify-content:center;gap:8px;margin:12px 0 4px 12px;min-height:44px;padding:11px 20px;
+    background:var(--bordeaux);color:#FFFFFF;border:1px solid var(--bordeaux);border-radius:var(--r-pill);
+    font-weight:600;font-size:14px;position:relative;transition:transform var(--dur-micro) var(--ease)}
+  .cta::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:var(--shadow-card);opacity:0;
+    transition:opacity var(--dur-small) var(--ease);pointer-events:none}
+  .cta:hover{transform:translateY(-1px)}
+  .cta:hover::after{opacity:1}
+  .cta:active{transform:translateY(0) scale(.96)}
+  .copied{font-size:12px;color:var(--success);font-weight:600;margin-left:10px;opacity:0;transition:opacity var(--dur-micro) var(--ease)}
   .copied.show{opacity:1}
+  .offline-hint{margin:6px 12px 4px;font-size:11.5px;color:var(--grey-2)}
 
-  /* agent-method editor (Specialisternes metode) */
-  .mid{display:inline-block;font-size:11px;font-weight:600;color:var(--ink-3);letter-spacing:.05em;margin-right:7px;font-variant-numeric:tabular-nums}
+  /* ---- method editor ---- */
   .medit{margin-top:9px}
   .medit textarea{width:100%;min-height:96px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-sm);
     font:inherit;font-size:13px;line-height:1.55;color:var(--ink);background:var(--limestone);resize:vertical}
   .medit input{width:100%;margin-top:8px;padding:9px 12px;border:1px solid var(--line);border-radius:var(--r-sm);
     font:inherit;font-size:13px;color:var(--ink);background:var(--limestone)}
-  .medit textarea:focus,.medit input:focus{outline:none;border-color:var(--calm-deep);background:#fff}
+  .medit textarea:focus,.medit input:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
   .medit .actions{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;align-items:center}
 
-  /* surfaces grid */
-  .surfaces{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-  .surface{display:flex;flex-direction:column;gap:6px;background:var(--white);border:1px solid var(--line);border-radius:var(--r-md);
-    padding:15px 16px;box-shadow:var(--sh-rest);transition:transform .3s var(--ease),box-shadow .3s var(--ease),border-color .3s var(--ease);
-    text-decoration:none;color:inherit}
-  .surface:hover{transform:translateY(-3px);box-shadow:var(--sh-lift);border-color:var(--calm-deep)}
+  /* ---- agent tree ---- */
+  .tree{background:var(--limestone);border-radius:var(--r-card);margin:8px;padding:6px;min-height:200px}
+  .tcanvas{position:relative;width:100%}
+  .tcanvas svg{position:absolute;inset:0;pointer-events:none}
+  .tgroup{position:absolute;background:var(--limestone-soft);border:1px solid var(--line-dark);border-radius:var(--r-lg)}
+  .tgroup__l{position:absolute;top:12px;left:16px;font-family:var(--fl-display);font-weight:600;font-size:15px;color:var(--bordeaux)}
+  .tgroup__l .ref{font-family:var(--fl-sans);margin-left:8px}
+  .tnode{position:absolute;display:flex;flex-direction:column;justify-content:center;gap:1px;text-align:left;
+    background:var(--paper);border:1px solid var(--line-dark);border-radius:var(--r-card);padding:6px 12px;
+    transition:transform var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
+  .tnode:hover{border-color:var(--calm-deep);transform:translateY(-2px)}
+  .tnode__n{font-size:13px;font-weight:500;color:var(--ink);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tnode__n .ref{margin-right:6px}
+  .tnode__d{font-size:11px;color:var(--grey-2);line-height:1.25;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+  .tnode--root{background:var(--calm-pink);align-items:center;text-align:center}
+  .tnode--root .tnode__n{font-size:14px}
+  .tnode--sub .tnode__n{font-size:12.5px}
+  .tsubchip{display:inline-flex;width:max-content;margin-top:2px;border-radius:var(--r-pill);padding:1px 7px;background:var(--blue);
+    color:var(--bordeaux);font-size:9px;font-weight:600;letter-spacing:.04em;text-transform:uppercase}
+  .tpath{stroke:var(--bordeaux);stroke-width:1.5;fill:none}
+  .tarrow{fill:var(--bordeaux)}
+  @media (prefers-reduced-motion: no-preference){
+    .tcanvas:not(.is-grown) .tnode,.tcanvas:not(.is-grown) .tgroup{opacity:0;transform:translateY(6px) scale(.96)}
+    .tcanvas:not(.is-grown) .tpath{opacity:0}
+    .tcanvas.is-grown .tgroup{animation:node-in .5s var(--ease) both;animation-delay:calc(var(--i,0)*45ms)}
+    .tcanvas.is-grown .tnode{animation:node-in .5s var(--ease) both;animation-delay:calc(var(--i,0)*45ms + 90ms)}
+    .tcanvas.is-grown .tpath{animation:line-in .45s var(--ease) both;animation-delay:calc(var(--i,0)*45ms)}
+    @keyframes node-in{from{opacity:0;transform:translateY(6px) scale(.96)}to{opacity:1;transform:none}}
+    @keyframes line-in{from{opacity:0}to{opacity:1}}
+  }
+  /* mobile list-tree */
+  .tlist{display:none;padding:6px 4px}
+  .tlist .trow{display:block;width:100%;text-align:left;padding:9px 10px;border-left:2px solid var(--bordeaux);margin:6px 0 6px 0;
+    background:var(--paper);border-radius:0 var(--r-sm) var(--r-sm) 0}
+  .tlist .trow--l1{margin-left:16px}
+  .tlist .trow--l2{margin-left:32px}
+  .tlist .trow--l3{margin-left:48px}
+  .tlist .tnode__n,.tlist .tnode__d{white-space:normal}
+  @media(max-width:639px){
+    .tcanvas{display:none}
+    .tlist{display:block}
+  }
+
+  /* ---- shelf ---- */
+  .shelfbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
+  .shelfbar input{flex:1;min-width:180px;max-width:320px;padding:10px 13px;border:1px solid var(--line);border-radius:var(--r-sm);
+    font:inherit;font-size:14px;color:var(--ink);background:var(--limestone)}
+  .shelfbar input:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
+  .fpill{min-height:34px;display:inline-flex;align-items:center;border:1px solid var(--stone-4);border-radius:var(--r-pill);
+    padding:7px 14px;background:rgba(255,255,255,.6);font-size:13px;font-weight:500;color:var(--bordeaux);
+    transition:background var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
+  .fpill:hover{background:var(--paper);border-color:var(--calm-deep)}
+  .fpill[aria-pressed="true"]{background:var(--bordeaux);color:#FFFFFF;border-color:var(--bordeaux)}
+  .shelf{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
+  @media(max-width:639px){.shelf{grid-template-columns:1fr}}
+  .surface{display:flex;flex-direction:column;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-card);
+    padding:15px 16px;text-decoration:none;color:inherit;position:relative;transition:transform var(--dur-small) var(--ease)}
+  .surface::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:var(--shadow-lift);
+    border:1px solid var(--calm-deep);opacity:0;transition:opacity var(--dur-small) var(--ease);pointer-events:none}
+  .surface:hover{transform:translateY(-3px)}
+  .surface:hover::after{opacity:1}
   .surface__n{font-size:14.5px;font-weight:600;color:var(--bordeaux)}
-  .surface__m{font-size:12px;color:var(--ink-3);display:flex;justify-content:space-between;gap:8px}
+  .surface__d{font-size:12.5px;color:var(--grey-1);flex:1}
+  .surface__m{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap}
+  .shelffoot{margin-top:14px;font-size:11.5px;color:var(--grey-1)}
 
-  .banner{margin-bottom:20px;padding:11px 16px;border-radius:var(--r-md);font-size:13px;display:none}
-  .banner.snap{display:block;background:#FFF1DC;color:var(--wait);border:1px solid #F0D6A8}
-
-  footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-3);line-height:1.7}
-  footer b{color:var(--ink-2)}
+  /* ---- footer ---- */
+  footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--grey-1);line-height:1.7}
+  footer b{color:var(--grey-1)}
   .legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px}
-  .legend span code{background:var(--stone);border-radius:5px;padding:1px 6px;font-size:11px;color:var(--ink-2)}
+  .legend span code{background:var(--stone);border-radius:5px;padding:1px 6px;font-size:11px;color:var(--grey-1)}
 
-  .reveal{opacity:0;transform:translateY(14px);animation:up .6s var(--ease) forwards}
-  @keyframes up{to{opacity:1;transform:none}}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.reveal{opacity:1;transform:none}}
+  /* ---- entrance ---- */
+  @media (prefers-reduced-motion: no-preference){
+    .reveal{opacity:0;transform:translateY(14px);
+      animation:up var(--dur-enter) var(--ease) forwards;
+      animation-delay:calc(var(--d,0)*var(--stagger))}
+    @keyframes up{to{opacity:1;transform:none}}
+  }
+  /* global reduced-motion backstop — all hidden start-states live in no-preference blocks above */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{animation:none!important;transition:none!important}
+  }
 </style>
 </head>
-<body>
+<body class="fl">
 <div class="wrap">
 
   <div id="banner" class="banner"></div>
 
-  <header class="top reveal">
+  <!-- ===== BÅND 0: header ===== -->
+  <header class="top reveal" style="--d:0">
     <div class="brand">
       <span class="logo">Frankly</span>
       <h1>Cockpit</h1>
     </div>
-    <div class="status-pill"><span class="dot"></span><span id="statusText">Maskinen kører · lokalt</span></div>
+    <div class="status-pill" id="statusPill" data-state="ok"><span class="dot"></span><span id="statusText">Maskinen kører</span><span class="ref" id="statusRef"></span></div>
   </header>
-  <p class="lede reveal" style="animation-delay:.05s">Ét sted at se hele Frankly OS: hvad der er kørt, hvad der ligger i kø, og
-    <b>hvad der venter på din godkendelse</b> — i almindeligt sprog. Alt kører lokalt og supervised; intet går online uden dig.</p>
+  <p class="lede reveal" style="--d:1">Hele Frankly OS på ét sted: hvad maskinen laver, hvad den har gjort, og
+    <b>hvad der venter på dit ja</b> — i almindeligt sprog. Alt kører lokalt; intet går online uden dig.</p>
 
-  <!-- ===== AT A GLANCE ===== -->
-  <div class="sec reveal" style="animation-delay:.1s"><h2>Maskinen lige nu</h2><div class="rule"></div><span class="ref" id="genRef"></span></div>
+  <!-- ===== BÅND 1: P1 Maskinen lige nu ===== -->
+  <div class="sec reveal" style="--d:2"><h2>Maskinen lige nu</h2><div class="rule"></div><span class="ref" id="genRef"></span></div>
   <div class="tiles" id="tiles"></div>
+  <div class="healthline ref reveal" style="--d:3" id="healthLine"></div>
 
-  <!-- ===== ATTENTION + RUNS ===== -->
-  <div class="cols" style="margin-top:20px">
-    <section class="panel attention reveal" style="animation-delay:.15s">
-      <div class="panel__head"><h3>Venter på dig</h3><span class="count" id="attnCount"></span></div>
+  <!-- ===== BÅND 2: P2 Venter på dig + P3 Læringer ===== -->
+  <div class="sec reveal" style="--d:4"><h2>Beslutninger</h2><div class="rule"></div><span class="ref">autopilot-digest · learning-capture-queue</span></div>
+  <div class="band band--75">
+    <section class="panel panel--accent reveal" style="--d:5" aria-labelledby="attnH">
+      <div class="panel__head"><h3 id="attnH">Venter på dig</h3><span class="count" id="attnCount"></span></div>
       <div class="panel__body" id="attention"></div>
     </section>
 
-    <section class="panel reveal" style="animation-delay:.2s">
-      <div class="panel__head"><h3>Seneste kørsler</h3><span class="count" id="runCount"></span></div>
-      <div class="panel__body" id="runs"></div>
+    <section class="panel reveal" style="--d:6" aria-labelledby="learnH">
+      <div class="panel__head"><h3 id="learnH">Læringer der venter på dit OK</h3><span class="count" id="learnCount"></span></div>
+      <div class="panel__body" id="learnings"></div>
     </section>
   </div>
 
-  <!-- ===== LEARNINGS WAITING (capture loop) ===== -->
-  <div class="sec reveal"><h2>Læringer der venter på dit OK</h2><div class="rule"></div><span class="ref" id="learnRef"></span></div>
-  <section class="panel attention reveal">
-    <div class="panel__head"><h3>Læringer fra dine sessioner</h3><span class="count" id="learnCount"></span></div>
-    <div class="panel__body" id="learnings"></div>
-  </section>
+  <!-- ===== BÅND 3: P4 Kørsler + P5 Start en kørsel ===== -->
+  <div class="sec reveal" style="--d:7"><h2>Kørsler</h2><div class="rule"></div><span class="ref" id="runRef">flight-recorder · arkiv fryses 2026-07</span></div>
+  <div class="band band--75">
+    <section class="panel reveal" aria-labelledby="runsH">
+      <div class="panel__head">
+        <h3 id="runsH">Hvad maskinen har gjort — og hvorfor</h3>
+        <div class="tabs" role="tablist" aria-label="Kørselsvisning">
+          <button class="tab" id="tabLive" role="tab" aria-selected="true" aria-controls="runsLive">Seneste</button>
+          <button class="tab" id="tabArchive" role="tab" aria-selected="false" aria-controls="runsArchive">Arkiv</button>
+        </div>
+        <span class="count" id="runCount"></span>
+      </div>
+      <div class="panel__body" id="runsLive" role="tabpanel" aria-labelledby="tabLive"></div>
+      <div class="panel__body" id="runsArchive" role="tabpanel" aria-labelledby="tabArchive" hidden></div>
+    </section>
 
-  <!-- ===== START A RUN ===== -->
-  <div class="sec reveal"><h2>Start en kørsel</h2><div class="rule"></div><span class="ref">frankly-crew</span></div>
-  <section class="panel reveal">
-    <div class="panel__head"><h3>Byg en opgave til crewet</h3></div>
-    <div class="composer">
-      <label for="cObj">Hvad vil du lave?</label>
-      <input id="cObj" type="text" placeholder="fx: Skriv næste Frankly Journal-post om delt opmærksomhed" value="">
-      <label for="cRoute">Rute</label>
-      <select id="cRoute">
-        <option value="blog-seo-content-engine-route">Blog / indhold</option>
-        <option value="mission-runtime-route">Mission Runtime (loop)</option>
-        <option value="external-skill-research-swarm-route">Research (parallel)</option>
-        <option value="presentation-machine-route">Præsentation</option>
-        <option value="system-visualization-route">System / visualisering</option>
-      </select>
-      <div class="out" id="cOut"></div>
-      <button class="cta" id="cCopy">Kopiér til Claude Code<span aria-hidden="true">→</span></button>
-      <span class="copied" id="cCopied">Kopieret ✓</span>
+    <section class="panel reveal" aria-labelledby="composerH">
+      <div class="panel__head"><h3 id="composerH">Start en kørsel</h3><span class="ref">frankly-crew</span></div>
+      <div class="composer">
+        <label for="cObj">Hvad vil du lave?</label>
+        <input id="cObj" type="text" placeholder="fx: Skriv næste Frankly Journal-post om delt opmærksomhed" value="">
+        <label for="cRoute">Rute</label>
+        <select id="cRoute">
+          <option value="blog-seo-content-engine-route">Blog og indhold · blog-seo-content-engine-route</option>
+          <option value="mission-runtime-route">Maskinrum (loop) · mission-runtime-route</option>
+          <option value="external-skill-research-swarm-route">Research (flere på én gang) · external-skill-research-swarm-route</option>
+          <option value="presentation-machine-route">Præsentation · presentation-machine-route</option>
+          <option value="system-visualization-route">System og visualisering · system-visualization-route</option>
+        </select>
+        <label for="cResume">Start fra en tidligere kørsel</label>
+        <select id="cResume"><option value="">Start forfra (ingen)</option></select>
+        <label for="cDomain">Område</label>
+        <select id="cDomain">
+          <option value="frankly-os">Frankly OS (maskinen)</option>
+          <option value="blog-journal">Blog og Journal</option>
+          <option value="brand-design">Brand og design</option>
+          <option value="frankly-lab">Frankly Lab (værktøjer)</option>
+          <option value="research">Research</option>
+        </select>
+        <label for="cAuto">Hvor frit må crewet arbejde?</label>
+        <select id="cAuto">
+          <option value="forsigtig">Forsigtig — spørg ofte</option>
+          <option value="produktiv" selected>Produktiv — spørg ved gates</option>
+          <option value="ambitioes-lokal">Ambitiøs, men kun lokalt</option>
+        </select>
+        <div class="outhead">Klar til Claude Code — gates og stopregel er bygget ind:</div>
+        <div class="out" id="cOut"></div>
+        <button class="cta" id="cCopy">Kopiér til Claude Code <span aria-hidden="true">→</span></button>
+        <span class="copied" id="cCopied">Kopieret ✓</span>
+        <div class="offline-hint">Virker også uden server — så kopierer du bare selv. Kørslen startes i Claude Code (crew/spawn_task), aldrig herfra.</div>
+      </div>
+    </section>
+  </div>
+
+  <!-- ===== BÅND 4: P7 Agent-træet + P6 Specialisternes metode ===== -->
+  <div class="sec reveal"><h2>Crewet</h2><div class="rule"></div><span class="ref" id="methodRef"></span></div>
+  <div class="band band--57">
+    <section class="panel reveal" aria-labelledby="treeH">
+      <div class="panel__head"><h3 id="treeH">Agent-træet</h3><span class="count" id="treeCount"></span></div>
+      <div class="note" style="margin:8px 8px 0">Sådan hænger crewet sammen: én orkestrator, maskinrummet og specialisterne med deres under-specialister.
+        Klik på en rolle for at justere dens metode. <b>Hvem der var med pr. kørsel logges ikke endnu — træet viser hele holdet.</b></div>
+      <div class="tree" id="tree">
+        <div class="tcanvas" id="treeCanvas"></div>
+        <div class="tlist" id="treeList"></div>
+      </div>
+      <div class="panel__src" id="treeSrc">Kilde: /api/agent-methods · nyeste frankly-crew-contract</div>
+    </section>
+
+    <section class="panel reveal" aria-labelledby="methodsH">
+      <div class="panel__head"><h3 id="methodsH">Specialisternes metode</h3><span class="count" id="methodCount"></span></div>
+      <div class="panel__body" id="methods"></div>
+    </section>
+  </div>
+
+  <!-- ===== BÅND 5: P8 Hylden ===== -->
+  <div class="sec reveal"><h2>Hylden — værktøjer og overflader</h2><div class="rule"></div><span class="ref" id="surfRef" aria-live="polite"></span></div>
+  <div class="reveal">
+    <div class="shelfbar">
+      <input id="shelfSearch" type="search" placeholder="Søg på hylden…" aria-label="Søg på hylden">
+      <div role="group" aria-label="Kategorifilter" style="display:flex;gap:6px;flex-wrap:wrap">
+        <button class="fpill" data-cat="" aria-pressed="true">Alle</button>
+        <button class="fpill" data-cat="Hverdag" aria-pressed="false">Hverdag</button>
+        <button class="fpill" data-cat="Brand" aria-pressed="false">Brand</button>
+        <button class="fpill" data-cat="OS" aria-pressed="false">OS</button>
+        <button class="fpill" data-cat="Leg" aria-pressed="false">Leg</button>
+      </div>
     </div>
-  </section>
+    <div class="shelf" id="shelf"></div>
+    <div class="shelffoot">Pensionerede sider vises ikke her, men bliver liggende på disken som historik.</div>
+  </div>
 
-  <!-- ===== SURFACES ===== -->
-  <div class="sec reveal"><h2>Overflader</h2><div class="rule"></div><span class="ref" id="surfRef"></span></div>
-  <div class="surfaces" id="surfaces"></div>
-
-  <!-- ===== AGENT METHODS (mellem kørsler) ===== -->
-  <div class="sec reveal"><h2>Specialisternes metode</h2><div class="rule"></div><span class="ref" id="methodRef"></span></div>
-  <section class="panel reveal">
-    <div class="panel__head"><h3>Se og justér en specialists metode mellem kørsler</h3><span class="count" id="methodCount"></span></div>
-    <div class="panel__body" id="methods"></div>
-  </section>
-
+  <!-- ===== BÅND 6: footer ===== -->
   <footer>
-    <b>Frankly OS Cockpit v3</b> — lokal, supervised, læser dine live maskin-feeds (<code>data/*.json</code>). Ingen kørsel, deploy eller connector-skrivning sker herfra; knapperne forbereder kun, du beslutter.
+    <b>Frankly OS Cockpit 4.0</b> — lokal og supervised. Siden læser maskinens live-feeds og udfører aldrig noget farligt selv:
+    knapperne herinde beslutter og forbereder, du bestemmer. Ingen kørsel, deploy eller connector-skrivning sker herfra.
+    <br>Kilde: <code>data/*.json</code> · <code>cockpit-server.py</code> · <code>frankly-lab-brand.css</code> —
+    øjebliksbilledet i siden auto-regenereres ved hver feed-sync.
     <div class="legend">
-      <span>Kørsler = <code>run-registry</code></span>
-      <span>Missioner = <code>mission-control-queue</code></span>
-      <span>Godkendelser = <code>gates</code></span>
+      <span>Kørsler = <code>flight-recorder</code></span>
+      <span>Arkiv = <code>mission-control-queue (frosset)</code></span>
+      <span>Beslutninger = <code>autopilot-digest</code></span>
+      <span>Læringer = <code>learning-capture-queue</code></span>
       <span>Overflader = <code>surface-gate-registry</code></span>
-      <span>Aktiveringer = <code>activation-queue</code></span>
+      <span>Crew = <code>/api/agent-methods</code></span>
     </div>
   </footer>
 </div>
@@ -249,144 +443,1209 @@
 <script>
 (function(){
   "use strict";
-  // Baked-in snapshot (2026-07-08) so the cockpit works even opened as a file://.
-  // On a local server it fetches the live feeds and overwrites this.
+
+  /* ============================================================
+     Baked-in snapshot so the cockpit degrades gracefully on file://.
+     Auto-regenerated at every feed sync — never hand-edited.
+     ============================================================ */
+  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-10T16:38:53+00:00 — må ikke håndredigeres)
   var SNAP = {
-    flight:{counts:{runs:30,validatedRuns:29,driveSyncedRuns:7,claimWorkRuns:0},runs:[
-      {runId:"20260707-v2-glass-box-design-trial",status:"completed-local",summary:"Restored the standalone glaskasse prism material."},
-      {runId:"20260707-clean-baseline-images-later-qa",status:"completed-local",summary:"run-local-site-qa now exempts images-later refs."},
-      {runId:"20260707-promote-mcq011-active",status:"completed-local",summary:"Registered MCQ-011 as the active machine-runtime batch."}
-    ]},
-    queue:{currentBatchId:"MCQ-011",counts:{batches:11,missions:40,reviewReadyBatches:11,automatedSpawns:0},
-      gates:["no automatic thread creation without Jonas approval","no connector writes without approval","no public deploy without approval","no paid API spend without approval","no Slack/company-visible automation without approval","no plugin install without approval","no product/legal/customer-facing claim work without a named reopen"]},
-    activation:{stats:{registered:70,activateNow:8,approvalGatedInstalls:2}},
-    surfaces:{counts:{surfaces:12,browserQaPassed:12,publicReady:0,approvalGated:12},surfaces:[]}
-  };
-  var GATE_LABEL = {
-    "automatic thread":"Automatisk tråd-oprettelse","connector":"Connector-skrivning (Drive/API)","public deploy":"Offentlig deploy",
-    "paid api":"Betalt API-forbrug","slack":"Slack / firma-synlig automatik","plugin":"Plugin-installation","claim":"Claims / produkt / juridisk"
-  };
-  function plainGate(g){var l=g.toLowerCase();for(var k in GATE_LABEL){if(l.indexOf(k)>=0)return GATE_LABEL[k];}return g;}
-
-  function num(el,to){ // count-up with a guaranteed final value (rAF can be throttled when the tab is hidden)
-    var d=900,t0=null;to=+to||0;
-    el.textContent=to; // land on the real value immediately; the animation below is enhancement only
-    if(matchMedia('(prefers-reduced-motion:reduce)').matches)return;
-    function step(ts){if(!t0)t0=ts;var p=Math.min(1,(ts-t0)/d);el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);else el.textContent=to;}
-    requestAnimationFrame(step);
-    setTimeout(function(){el.textContent=to;},d+80); // safety net if rAF never fires
+  "generatedAt": "2026-07-10T16:38:53+00:00",
+  "flight": {
+    "counts": {
+      "runs": 51,
+      "machineFocusedRuns": 50,
+      "claimWorkRuns": 0,
+      "driveSyncedRuns": 7,
+      "validatedRuns": 44
+    },
+    "runs": [
+      {
+        "runId": "20260710-frankly-40-opgradering",
+        "date": "2026-07-10",
+        "name": "Frankly OS 4.0: revision af alle flader + ",
+        "nameDa": "Frankly OS 4.0: revision af alle flader + ",
+        "route": "machine-runtime",
+        "routeDa": "Maskin-drift",
+        "status": "completed-local",
+        "statusDa": "Færdig (lokalt)",
+        "summary": "11 flader pensioneret, ét 4.0-cockpit bygget (8 paneler inkl. agent-træ og hylde), feeds på dansk + next-best-action/health-feeds, version stemplet 4.0",
+        "summaryDa": "11 flader pensioneret, ét 4.0-cockpit bygget (8 paneler inkl. agent-træ og hylde), feeds på dansk + next-best-action/health-feeds, version stemplet 4.0",
+        "validation": "passed",
+        "validationDa": "Bestået",
+        "drive": "pending approval",
+        "driveDa": "Afventer dit ja til Drive",
+        "claims": "none",
+        "artifacts": [
+          "frankly os cockpit",
+          "sync site data feeds.py",
+          "frankly 40 revision 2026 07 10"
+        ],
+        "gates": [
+          "ingen gated handlinger; alt lokalt"
+        ],
+        "gatesDa": [
+          "ingen gated handlinger; alt lokalt"
+        ],
+        "lesson": "Jonas åbner 4.",
+        "lessonDa": "Jonas åbner 4.",
+        "fanOut": []
+      },
+      {
+        "runId": "20260710-blog-quality-lift-v1-rollout-01-10",
+        "date": "2026-07-10",
+        "name": "Roll the pilot 3-axis blog upgrade (copy l",
+        "nameDa": "Blog-kvalitetsløft v1 — udrulning (post 01–10)",
+        "route": "blog-seo-content-engine",
+        "routeDa": "Blog/SEO-indholdsmotor",
+        "status": "completed-local",
+        "statusDa": "Færdig (lokalt)",
+        "summary": "Roll the pilot 3-axis blog upgrade (copy lift + conditional 3->4 + 4 graphic treatments) to the remaining 10 posts (01-10) as v2 drafts",
+        "summaryDa": "Udrullede pilotens 3-akse-opgradering (tekstløft + betinget 3→4 kilder + 4 grafik-behandlinger) til de resterende 10 indlæg (01–10) som v2-udkast.",
+        "validation": "passed",
+        "validationDa": "Bestået",
+        "drive": "pending approval",
+        "driveDa": "Afventer dit ja til Drive",
+        "claims": "none",
+        "artifacts": [
+          "frankly blog 01 brug det v2",
+          "frankly blog 02 checkout v2",
+          "frankly blog 03 mental load cd v2"
+        ],
+        "gates": [
+          "no public deploy",
+          "no-push",
+          "drafts-in-journal-drafts-outside-a"
+        ],
+        "gatesDa": [
+          "Offentlig deploy",
+          "Ingen git push",
+          "Udkast kun i journal/drafts (uden for allowlisten)"
+        ],
+        "lesson": "Jonas eyeballs all 12 v2 drafts; optional polish (ease Fire-heading repetition, harmonize post01 summary grid); on approval promote v2 -> live journal.",
+        "lessonDa": "Jonas gennemser alle 12 v2-udkast; valgfri polering (blødere Fire-overskrifts-gentagelse, harmonisér post01's resumé-grid); ved godkendelse promoveres v2 → live journal.",
+        "fanOut": []
+      },
+      {
+        "runId": "20260710-blog-quality-lift-v1-pilot",
+        "date": "2026-07-10",
+        "name": "Blog quality lift v1 pilot: copy lift + 3-",
+        "nameDa": "Blog-kvalitetsløft v1 — pilot (post 11–12)",
+        "route": "blog-seo-content-engine",
+        "routeDa": "Blog/SEO-indholdsmotor",
+        "status": "completed-local",
+        "statusDa": "Færdig (lokalt)",
+        "summary": "Blog quality lift v1 pilot: copy lift + 3->4 (real verified 4th citation) + 4 graphic treatments on posts 11 & 12, side-by-side v2 drafts for review",
+        "summaryDa": "Pilot på blog-kvalitetsløft v1: tekstløft + 3→4 (reel verificeret 4. kilde) + 4 grafik-behandlinger på post 11 & 12 som side-om-side v2-udkast til gennemsyn.",
+        "validation": "passed",
+        "validationDa": "Bestået",
+        "drive": "pending approval",
+        "driveDa": "Afventer dit ja til Drive",
+        "claims": "none",
+        "artifacts": [
+          "frankly blog 11 glippet v2",
+          "frankly blog 12 revnen v2"
+        ],
+        "gates": [
+          "no public deploy",
+          "no-push",
+          "drafts-in-journal-drafts-outside-a"
+        ],
+        "gatesDa": [
+          "Offentlig deploy",
+          "Ingen git push",
+          "Udkast kun i journal/drafts (uden for allowlisten)"
+        ],
+        "lesson": "Jonas eyeballs both v2 drafts (local server); on approval, standardize one grid/diagram convention then roll the 3-axis template to the other 10 posts.",
+        "lessonDa": "Jonas gennemser begge v2-udkast (lokal server); ved godkendelse standardiseres én grid/diagram-konvention, hvorefter 3-akse-skabelonen rulles til de øvrige 10 indlæg.",
+        "fanOut": []
+      }
+    ]
+  },
+  "queue": {
+    "frozen": true,
+    "counts": {
+      "batches": 11,
+      "missions": 40,
+      "activeBatches": 11,
+      "automatedSpawns": 0,
+      "reviewCheckpoints": 11,
+      "reviewReadyBatches": 11,
+      "completedMissionOutputs": 40,
+      "agentReviews": 1
+    }
+  },
+  "activation": {
+    "stats": {
+      "registered": 70,
+      "activateNow": 8,
+      "localAdaptations": 7,
+      "approvalGatedInstalls": 2
+    },
+    "updated": "2026-07-01"
+  },
+  "surfaces": {
+    "counts": {
+      "surfaces": 5,
+      "browserQaPassed": 5,
+      "publicReady": 0,
+      "approvalGated": 5
+    },
+    "surfaces": [
+      {
+        "id": "onboarding-entry",
+        "name": "Start / onboarding",
+        "page": "onboarding.html",
+        "state": "local-live",
+        "gate": "internal-start-surface",
+        "browserQa": "passed",
+        "publicUse": "gated",
+        "reportFile": "os-visualization/reports/onboarding-entry-gate-2026-07-01.md",
+        "evidenceFolder": "os-visualization/evidence/20260701-onboarding-entry-gate-browser-qa/",
+        "nextApproval": "Decide sitemap/robots behavior before public use.",
+        "anchor": "entry-gate",
+        "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
+      },
+      {
+        "id": "frankly-os-cockpit",
+        "name": "Frankly OS Cockpit (4.0)",
+        "page": "frankly-os-cockpit.html",
+        "state": "local-live",
+        "gate": "internal-operating-surface-loopback-only",
+        "browserQa": "passed",
+        "publicUse": "gated",
+        "reportFile": "os-visualization/reports/frankly-lab-40-consolidation-2026-07-10.md",
+        "evidenceFolder": "os-visualization/evidence/20260710-frankly-lab-40-consolidation-browser-qa/",
+        "nextApproval": "Stays a local operating surface served by cockpit-server.py on 127.0.0.1:8137; any public use requires Jonas approval.",
+        "anchor": "cockpit",
+        "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
+      },
+      {
+        "id": "product-clarity-review",
+        "name": "Product clarity review gate",
+        "page": "frankly-daekningsoverblik.html",
+        "state": "review-gated",
+        "gate": "product-legal-approval-needed",
+        "browserQa": "passed",
+        "publicUse": "gated",
+        "reportFile": "os-visualization/reports/product-clarity-review-gate-2026-07-01.md",
+        "evidenceFolder": "os-visualization/evidence/20260701-product-clarity-review-gate-browser-qa/",
+        "nextApproval": "Product/legal must approve terms, exclusions, deductibles and wording.",
+        "anchor": "review",
+        "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
+      },
+      {
+        "id": "blog-publishing",
+        "name": "Blog draft publishing gate",
+        "page": "journal/frankly-blog-index.html",
+        "state": "noindex-gated",
+        "gate": "publishing-setup-and-product-legal-needed",
+        "browserQa": "passed",
+        "publicUse": "blocked",
+        "reportFile": "os-visualization/reports/blog-publishing-gate-2026-07-01.md",
+        "evidenceFolder": "os-visualization/evidence/20260701-blog-publishing-gate-browser-qa/",
+        "nextApproval": "Keep blog out of sitemap until source, legal, author/reviewer and schema policy are approved.",
+        "anchor": "publish-gate",
+        "gateLabelDa": "Blokeret (claims/produkt/legal)"
+      },
+      {
+        "id": "cykelforsikring-article-review",
+        "name": "Cykelforsikring article review gate",
+        "page": "journal/frankly-blog-05-cyklen.html",
+        "state": "noindex-review-gated",
+        "gate": "product-claim-source-and-publishing-approval-needed",
+        "browserQa": "passed",
+        "publicUse": "blocked",
+        "reportFile": "os-visualization/reports/article-review-gate-cykelforsikring-2026-07-01.md",
+        "evidenceFolder": "os-visualization/evidence/20260701-article-review-gate-browser-qa/",
+        "nextApproval": "Frankly bicycle-specific claims, warranty/reklamation sources, author/reviewer, canonical, sitemap and schema remain blocked.",
+        "anchor": "article-gate",
+        "gateLabelDa": "Blokeret (claims/produkt/legal)"
+      }
+    ]
+  },
+  "health": {
+    "result": "FAIL",
+    "resultDa": "Ikke alt grønt — selvtjek FAIL, 30 af 34 evals grønne",
+    "lastFeedSync": "2026-07-10T16:38:53+00:00"
+  },
+  "nba": {
+    "activeBatch": "MCQ-011",
+    "activeBatchDa": "MCQ-011 — Kørselsregister + lokal eval-harness",
+    "nextBestActionDa": "start fra `frankly-os-site/studio.html`, `os-visualization/system-intelligence/studio-v0-1-2026-07-06.json`, `os-visualization/system-intelligence/claude-run-to-packet-launcher-v0-1-2026-07-06.json` og `os-visualization/system-intelligence/claude-task-packet-builder-v0-1-2026-07-06.json` før du vælger værktøjer; brug Studios run-to-packet launcher og packet builder til fremtidigt kodearbejde og `frankly-os-site/control-cockpit.html` som det rapport-agtige driftsoverblik (OBS: kilden er stale — disse flader pensioneres af 4.0)"
+  },
+  "agents": {
+    "contract": "frankly-crew-contract-v0-13.md",
+    "version": "v0-13",
+    "specialists": [
+      {
+        "id": "M1",
+        "name": "Loop Controller",
+        "icon": "🎛️",
+        "method": "Bounds the loop; chooses the next *safe* action; turns the result into button-ready choices. | run-registry, handoff, the packet | Next-safe-action + choices | **Stops** at any raised gate — no primary \"Continue\" when a gate is flagged. Never auto-continues past a Level-2 checkpoint."
+      },
+      {
+        "id": "M2",
+        "name": "System Scout",
+        "icon": "🧭",
+        "method": "Clarifies goal, route, missing context, smallest useful target. | packet objective, route file | Goal + smallest useful target | Stops if the objective is under-specified — asks rather than assumes."
+      },
+      {
+        "id": "M3",
+        "name": "Builder",
+        "icon": "🛠️",
+        "method": "Creates the smallest useful artifact, draft, plan or implementation step. | read-first list, do-not-touch list | The artifact/draft/step | **One writer per surface.** Never touches do-not-touch paths. Never writes claims/product/legal copy."
+      },
+      {
+        "id": "M4",
+        "name": "System Critic",
+        "icon": "🔎",
+        "method": "Checks assumptions, risks, evidence, budget, write-mode and public/company gates. | the Builder's output, gate matrix | Verdict + risks | **Terminal checker.** Must emit a verdict line before Loop Controller decides. Fail-closed: unknown risk → gate."
+      },
+      {
+        "id": "M3.1",
+        "name": "Kode-kvalitet & review-specialist",
+        "icon": "",
+        "method": "Ejer kode-review, fejlfinding, test-forfatning og arkitektur-kritik af scripts og små værktøjer: læser diff/artefakter, peger på risici, manglende tests og forenklinger; anbefaler kun (skriver ikke selv)"
+      },
+      {
+        "id": "M1.1",
+        "name": "Projektleder / koordinator",
+        "icon": "",
+        "method": "Ejer koordinering på tværs af arbejdsenheder: afhængighedskortlægning, kapacitet, rækkefølge og batch-planlægning med tydelige stop-regler; leverer plan og næste-skridt, udfører ikke selv arbejdet"
+      },
+      {
+        "id": "M3.2",
+        "name": "Front-end / CMS byg-ingeniør",
+        "icon": "",
+        "method": "Ejer front-end og CMS side-bygning: HTML/CSS/JS-struktur, komponenter, templating og ydeevne på Frankly-flader; anbefaler udgivelsestrin men udfører dem ikke"
+      },
+      {
+        "id": "R1",
+        "name": "Researcher",
+        "icon": "📚",
+        "method": "Source-backed questions, evidence plans, unknowns. | Evidence plan + open unknowns | Read-only research only. **No SRC records, no claim copy** (claims locked 2026-07-04)."
+      },
+      {
+        "id": "R2",
+        "name": "Partner Strategist",
+        "icon": "🤝",
+        "method": "Partner, retailer, seller proof and activation angles. | Activation angles + proof gaps | No customer-facing claim copy; partner/claims routes are blocked-reason annotated."
+      },
+      {
+        "id": "R3",
+        "name": "Brand Copywriter",
+        "icon": "✍️",
+        "method": "Frankly tone, rewrites, naming, copy direction. | Copy / naming / rewrite | No product/legal claim copy. Stays in Frankly design language."
+      },
+      {
+        "id": "R4",
+        "name": "Visual Director",
+        "icon": "🎨",
+        "method": "Image, Flow, 3D and production prompts. | Image/production prompts | Prompts only — no paid generation or connector writes without approval."
+      },
+      {
+        "id": "R5",
+        "name": "Investor Analyst",
+        "icon": "📊",
+        "method": "Fundraising narrative, proof gaps, objections. | Narrative + objection map | No unverifiable claims; proof gaps flagged, not filled."
+      },
+      {
+        "id": "R6",
+        "name": "Growth Operator",
+        "icon": "📈",
+        "method": "SEO, content, lifecycle, measurable distribution steps. | Distribution/SEO steps | Recommends only; no publish/deploy. Public deploy is Jonas-gated."
+      },
+      {
+        "id": "R7",
+        "name": "Mission Planner",
+        "icon": "🚩",
+        "method": "Bounded human or AI chat missions with clear stop rules. | Bounded mission + stop rule | Every mission ships a stop rule; no background autonomy."
+      },
+      {
+        "id": "R8",
+        "name": "Route Keeper",
+        "icon": "📍",
+        "method": "Frankly OS route fit, QA expectations, smallest valid lane. | Route fit + QA expectations | Blocks work that doesn't fit a route or skips route-QA."
+      },
+      {
+        "id": "R9",
+        "name": "QA Runner",
+        "icon": "✅",
+        "method": "Local checks, smoke tests, validation evidence. | Validation evidence | **Terminal gate per output.** Red check ⇒ item is not done."
+      },
+      {
+        "id": "R10",
+        "name": "Handoff Steward",
+        "icon": "🗂️",
+        "method": "Portable memory, resume packets, future-agent context. | Resume packet / handoff delta | Generate-only; never marks a run Drive-synced when upload is blocked."
+      },
+      {
+        "id": "R11",
+        "name": "Connector Guard",
+        "icon": "🔒",
+        "method": "Slack, Drive, API, deploy, plugin, thread and claims gates. | Gate verdict | **Must emit a verdict before any write.** Fail-closed on unknown actions."
+      },
+      {
+        "id": "R4.1",
+        "name": "Diagram-designer",
+        "icon": "",
+        "method": "Ejer diagram- og systemkort-designsproget: læser frankly-lab-brand.css og nyeste brand-kanon og fastlægger on-brand regler for stregvægte, node-former, forbindelses-/pilkonventioner og diagramtypografi-hierarki; leverer via universal IO; read-only default; arver alle gates; Brug altid Frankly-paletten og de kanoniske fonte fra frankly-lab-brand.css i alle diagrammer"
+      },
+      {
+        "id": "R3.1",
+        "name": "Redaktør (editorial editor)",
+        "icon": "",
+        "method": "Ejer redaktionel gennemgang før publicering: strammer sprog, fjerner AI-slør, tjekker læsbarhed/tone mod Frankly-kanon; ren prompt-baseret redigering, anbefaler ændringer frem for at udføre dem"
+      },
+      {
+        "id": "R4.2",
+        "name": "Narrativ / Story-designer",
+        "icon": "",
+        "method": "Ejer fortællestruktur og story-arc for præsentationer og partner-materiale: hook, spændingskurve, budskabsrækkefølge og landing; leverer struktur og beat-liste, ikke færdig copy; read-only default"
+      },
+      {
+        "id": "R9.1",
+        "name": "Tilgængeligheds- (WCAG) ejer",
+        "icon": "",
+        "method": "Ejer tilgængelighed: WCAG-tjek, kontrast, tastatur-navigation, ARIA og fokus-håndtering på Frankly-flader; leverer findings + rettelsesforslag, read-only default"
+      },
+      {
+        "id": "R6.1",
+        "name": "Teknisk-SEO / schema-ejer",
+        "icon": "",
+        "method": "Ejer teknisk SEO og struktureret data: JSON-LD/schema, indekserbarhed, sitemap, canonical og metadata på Frankly-flader; anbefaler kun, ingen publicering"
+      },
+      {
+        "id": "R5.1",
+        "name": "Product Marketing / Positioning-strateg",
+        "icon": "",
+        "method": "Ejer positionering, kategori-framing og product-marketing-kontekst på tværs af produktionsruterne: budskabshierarki, differentiering og målgruppe-framing; anbefaler positionering, opfinder ikke produkt- eller dækningsfakta"
+      },
+      {
+        "id": "R4.3",
+        "name": "Video-producer / editor",
+        "icon": "",
+        "method": "Ejer videoproduktion og klip: storyboard, shotliste, tempo og eksport-specifikationer for Frankly-videoer; leverer produktionsplan og prompts, ingen betalt generering uden godkendelse"
+      }
+    ]
+  },
+  "toolsShelf": {
+    "schemaVersion": "1.0",
+    "updated": "2026-07-10",
+    "source": "os-visualization/system-intelligence/tools-shelf.json",
+    "description": "Canonical Frankly Lab 4.0 shelf inventory. Consumers filter by lane and retired state; generated site copies are never edited by hand.",
+    "tools": [
+      {
+        "id": "signature",
+        "href": "frankly-signature-generator.html",
+        "labelEn": "Email signature",
+        "labelDa": "E-mail-signatur",
+        "descriptionEn": "Add details, preview the footer and copy HTML or plain text.",
+        "descDa": "Udfyld dine oplysninger og kopiér en konsistent Frankly-footer.",
+        "category": "Brand",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Email signature",
+        "mark": "ES",
+        "art": "signature",
+        "retired": false
+      },
+      {
+        "id": "brand-reference",
+        "href": "frankly-brand-reference.html",
+        "labelEn": "Brand reference",
+        "labelDa": "Brand Reference",
+        "descriptionEn": "Colors, CSS tokens and tone rules for quick Frankly checks.",
+        "descDa": "Farver, typografi, tone og hårde regler samlet ét sted.",
+        "category": "Brand",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Brand reference",
+        "mark": "BR",
+        "art": "brand-reference",
+        "retired": false
+      },
+      {
+        "id": "brand-assistant",
+        "href": "frankly-brand-assistant.html",
+        "labelEn": "Brand assistant",
+        "labelDa": "Brand-assistent",
+        "descriptionEn": "Search recurring brand answers locally without any AI runtime.",
+        "descDa": "Hurtige svar på brandspørgsmål — søgbar og uden AI-runtime.",
+        "category": "Brand",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Brand assistant",
+        "mark": "BA",
+        "art": "brand-assistant",
+        "retired": false
+      },
+      {
+        "id": "ribbon-lab",
+        "href": "frankly-ribbon-lab.html",
+        "labelEn": "Ribbon lab",
+        "labelDa": "Ribbon Lab",
+        "descriptionEn": "Design Frankly ribbon shapes with draw and edit controls and a satin-to-glass material blend.",
+        "descDa": "Design Frankly-ribbonformer med tegnekontroller og materialeblanding.",
+        "category": "Brand",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "prototype",
+        "statusLabelEn": "Prototype",
+        "statusLabelDa": "Prototype",
+        "actionLabelEn": "Open Ribbon lab",
+        "mark": "RB",
+        "art": "ribbon",
+        "retired": false
+      },
+      {
+        "id": "business-card",
+        "href": "frankly-business-card.html",
+        "labelEn": "Business card",
+        "labelDa": "Visitkort",
+        "descriptionEn": "Build a meeting card with contact details, QR and vCard output.",
+        "descDa": "Personligt QR-kort til møder, messer og partnerdage.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Business card",
+        "mark": "BC",
+        "art": "business-card",
+        "retired": false
+      },
+      {
+        "id": "dictionary",
+        "href": "frankly-dictionary.html",
+        "labelEn": "Dictionary",
+        "labelDa": "Ordbog",
+        "descriptionEn": "Plain-language working definitions for common internal terms.",
+        "descDa": "Forsikrings-, butiks- og OS-ord omskrevet til almindeligt sprog.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Dictionary",
+        "mark": "DI",
+        "art": "dictionary",
+        "retired": false
+      },
+      {
+        "id": "qr-link",
+        "href": "frankly-qr-link.html",
+        "labelEn": "QR link",
+        "labelDa": "QR-link",
+        "descriptionEn": "Turn a URL into a local SVG QR code for decks and signs.",
+        "descDa": "Et link bliver til en ren QR-kode til print, skilte og kampagner.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open QR link",
+        "mark": "QR",
+        "art": "qr",
+        "retired": false
+      },
+      {
+        "id": "image-resizer",
+        "href": "frankly-image-resizer.html",
+        "labelEn": "Image resizer",
+        "labelDa": "Billed-tilpasser",
+        "descriptionEn": "Resize local images to useful social and presentation formats.",
+        "descDa": "Billede ind — LinkedIn-, Instagram- og hero-formater ud. Alt lokalt.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Image resizer",
+        "mark": "IR",
+        "art": "image",
+        "retired": false
+      },
+      {
+        "id": "instore-onepager",
+        "href": "frankly-instore-onepager.html",
+        "labelEn": "Instore onepager",
+        "labelDa": "Instore onepager",
+        "descriptionEn": "The Frankly instore sale on one page: flow, payment and coverage. In Danish.",
+        "descDa": "Overblik over Frankly Instore-salget på én side.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "guide",
+        "statusLabelEn": "Guide",
+        "statusLabelDa": "Guide",
+        "actionLabelEn": "Open Instore onepager",
+        "mark": "IN",
+        "art": "instore",
+        "retired": false
+      },
+      {
+        "id": "instore-salgsguide",
+        "href": "frankly-instore-salgsguide.html",
+        "labelEn": "Instore salgsguide",
+        "labelDa": "Instore salgsguide",
+        "descriptionEn": "The full instore sales guide, step by step. In Danish.",
+        "descDa": "Den fulde butiksguide, trin for trin.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "guide",
+        "statusLabelEn": "Guide",
+        "statusLabelDa": "Guide",
+        "actionLabelEn": "Open Instore salgsguide",
+        "mark": "SG",
+        "art": "salgsguide",
+        "retired": false
+      },
+      {
+        "id": "onboarding",
+        "href": "onboarding.html",
+        "labelEn": "Start here",
+        "labelDa": "Start her (onboarding)",
+        "descriptionEn": "The onboarding surface, online as a gated, noindex preview.",
+        "descDa": "Nye kolleger lander her: brand, produkter, værktøjer og quiz.",
+        "category": "Hverdag",
+        "shelf": "pages",
+        "lane": "public-lab",
+        "gate": "gated-preview",
+        "gateLabelEn": "Gated preview",
+        "gateLabelDa": "Kræver dit ja før offentlig",
+        "status": "preview",
+        "statusLabelEn": "Gated preview",
+        "statusLabelDa": "Preview",
+        "actionLabelEn": "Open Start here preview",
+        "mark": "ST",
+        "art": "onboarding",
+        "retired": false
+      },
+      {
+        "id": "coverage-overview",
+        "href": "frankly-daekningsoverblik.html",
+        "labelEn": "Coverage overview",
+        "labelDa": "Dækningsoverblik",
+        "descriptionEn": "Who covers what when something happens. In Danish; not a legal source.",
+        "descDa": "Hvem dækker hvad, når noget sker: Frankly, garanti eller indbo.",
+        "category": "Hverdag",
+        "shelf": "pages",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Coverage overview",
+        "mark": "CO",
+        "art": "coverage",
+        "retired": false
+      },
+      {
+        "id": "journal",
+        "href": "journal/frankly-blog-index.html",
+        "labelEn": "Frankly Journal",
+        "labelDa": "Frankly Journal",
+        "descriptionEn": "Calm stories from everyday life — the Danish journal, public and open to search.",
+        "descDa": "Bloggen: mental load, delt opmærksomhed og livet med ting der går i stykker.",
+        "category": "Brand",
+        "shelf": "pages",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Public",
+        "gateLabelDa": "Offentlig",
+        "status": "public",
+        "statusLabelEn": "Public",
+        "statusLabelDa": "Offentlig",
+        "actionLabelEn": "Open Frankly Journal",
+        "mark": "JO",
+        "art": "blog",
+        "retired": false
+      },
+      {
+        "id": "drop-protection",
+        "href": "frankly-drop-protection.html",
+        "labelEn": "Drop Protection",
+        "labelDa": "Drop Protection",
+        "descriptionEn": "Catch the falling objects with a little browser-game coverage bar.",
+        "descDa": "Ting falder. Grib dem med dækningsbjælken og hold scoren i live.",
+        "category": "Leg",
+        "shelf": "play",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Play Drop Protection",
+        "mark": "DP",
+        "art": "drop",
+        "retired": false
+      },
+      {
+        "id": "franklys-bmw",
+        "href": "franklys-bmw.html",
+        "labelEn": "Frankly's BMW",
+        "labelDa": "Franklys BMW",
+        "descriptionEn": "Drive nicely through Amager, keep the bike lane clear and watch the premium melt.",
+        "descDa": "Kør pænt gennem Amager, hold cykelstien fri og se præmien smelte.",
+        "category": "Leg",
+        "shelf": "play",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Play Frankly's BMW",
+        "mark": "BM",
+        "art": "bmw",
+        "retired": false
+      },
+      {
+        "id": "decision-chicken",
+        "href": "the-decision-chicken.html",
+        "labelEn": "Decision Chicken",
+        "labelDa": "Decision Chicken",
+        "descriptionEn": "Pick from small options when the main job is moving forward.",
+        "descDa": "Til små ja/nej-beslutninger, hvor det vigtigste er at komme videre.",
+        "category": "Leg",
+        "shelf": "play",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Decision Chicken",
+        "mark": "DC",
+        "art": "decision",
+        "retired": false
+      },
+      {
+        "id": "quiz",
+        "href": "frankly-quiz.html",
+        "labelEn": "Do you know Frankly?",
+        "labelDa": "Kender du Frankly?",
+        "descriptionEn": "A short brand quiz for tone, gates and internal basics.",
+        "descDa": "Kort brandquiz om tone, farver og formuleringer.",
+        "category": "Leg",
+        "shelf": "play",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Frankly quiz",
+        "mark": "QZ",
+        "art": "quiz",
+        "retired": false
+      },
+      {
+        "id": "glass-lab",
+        "href": "glass-lab.html",
+        "labelEn": "Glass Lab",
+        "labelDa": "Glass Lab",
+        "descriptionEn": "A playground for liquid-glass surfaces: refraction, frost, edge light and hover-wash.",
+        "descDa": "Legeplads for Franklys liquid-glass-flader med live-kontroller.",
+        "category": "Leg",
+        "shelf": "experiments",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "experiment",
+        "statusLabelEn": "Experiment",
+        "statusLabelDa": "Eksperiment",
+        "actionLabelEn": "Open Glass Lab",
+        "mark": "GL",
+        "art": "glass-lab",
+        "retired": false
+      },
+      {
+        "id": "glass-surface",
+        "href": "glass-surface.html",
+        "labelEn": "Glass Surface",
+        "labelDa": "Glass Surface",
+        "descriptionEn": "A focused study of a single glass surface: material, light and edge.",
+        "descDa": "Materialestudie af én glasflade: lys, dybde og kant.",
+        "category": "Leg",
+        "shelf": "experiments",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "experiment",
+        "statusLabelEn": "Experiment",
+        "statusLabelDa": "Eksperiment",
+        "actionLabelEn": "Open Glass Surface",
+        "mark": "GS",
+        "art": "glass-surface",
+        "retired": false
+      },
+      {
+        "id": "liquid-glass-hover",
+        "href": "liquid-glass-hover.html",
+        "labelEn": "Liquid Glass Hover",
+        "labelDa": "Liquid Glass Hover",
+        "descriptionEn": "1:1 backdrop glass, mouse-light shadows and hero-card flare.",
+        "descDa": "Backdrop-glas, muse-lys og flare i et afgrænset hover-studie.",
+        "category": "Leg",
+        "shelf": "experiments",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "experiment",
+        "statusLabelEn": "Experiment",
+        "statusLabelDa": "Eksperiment",
+        "actionLabelEn": "Open Liquid Glass Hover",
+        "mark": "LH",
+        "art": "glass-hover",
+        "retired": false
+      },
+      {
+        "id": "linkedin-checker",
+        "href": "frankly-linkedin-checker.html",
+        "labelEn": "LinkedIn post checker",
+        "labelDa": "LinkedIn-tjekker",
+        "descriptionEn": "Check a LinkedIn draft against Frankly tone and wording before you post.",
+        "descDa": "Udkast, brandtjekliste og feed-forhåndsvisning før du poster.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "local-os",
+        "gate": "local-only",
+        "gateLabelEn": "Local only",
+        "gateLabelDa": "Kun lokal",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open LinkedIn post checker",
+        "mark": "LI",
+        "art": "linkedin",
+        "retired": false
+      },
+      {
+        "id": "instore-guide",
+        "href": "guide/index.html",
+        "labelEn": "Instore guide",
+        "labelDa": "Butiksguide",
+        "descriptionEn": "Local internal guide surface.",
+        "descDa": "Sig det sådan i butikken: scenarier og sprog samlet lokalt.",
+        "category": "Hverdag",
+        "shelf": "tools",
+        "lane": "local-os",
+        "gate": "claims-locked",
+        "gateLabelEn": "Locked",
+        "gateLabelDa": "Låst (claims)",
+        "status": "locked",
+        "statusLabelEn": "Locked",
+        "statusLabelDa": "Låst",
+        "actionLabelEn": "Open local Instore guide",
+        "mark": "IG",
+        "art": "instore-guide",
+        "retired": false
+      },
+      {
+        "id": "cockpit",
+        "href": "frankly-os-cockpit.html",
+        "labelEn": "Frankly OS Cockpit",
+        "labelDa": "Cockpit (denne side)",
+        "descriptionEn": "The local Frankly OS 4.0 operating surface.",
+        "descDa": "Hele Frankly OS på ét sted: status, beslutninger, kørsler og crew.",
+        "category": "OS",
+        "shelf": "os",
+        "lane": "local-os",
+        "gate": "local-only",
+        "gateLabelEn": "Local only",
+        "gateLabelDa": "Kun lokal",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open Frankly OS Cockpit",
+        "mark": "OS",
+        "art": "cockpit",
+        "retired": false
+      },
+      {
+        "id": "glass-folders",
+        "href": "glass-folders.html",
+        "labelEn": "Glass Folders",
+        "labelDa": "Glass Folders",
+        "descriptionEn": "Retired visual prototype retained as local history.",
+        "descDa": "Pensioneret prototype, bevaret som lokal historik.",
+        "category": "Leg",
+        "shelf": "experiments",
+        "lane": "local-archive",
+        "gate": "local-only",
+        "gateLabelEn": "Local archive",
+        "gateLabelDa": "Lokalt arkiv",
+        "status": "retired",
+        "statusLabelEn": "Retired",
+        "statusLabelDa": "Pensioneret",
+        "actionLabelEn": "Open archived Glass Folders",
+        "mark": "GF",
+        "art": "glass-folders",
+        "retired": true
+      },
+      {
+        "id": "lab-registry",
+        "href": "lab-registry.html",
+        "labelEn": "Lab Registry archive",
+        "labelDa": "Lab Registry-arkiv",
+        "descriptionEn": "Retired Registry snapshot retained on disk for continuity.",
+        "descDa": "Pensioneret Registry-snapshot, bevaret på disk som historik.",
+        "category": "OS",
+        "shelf": "os",
+        "lane": "local-archive",
+        "gate": "local-only",
+        "gateLabelEn": "Local archive",
+        "gateLabelDa": "Lokalt arkiv",
+        "status": "retired",
+        "statusLabelEn": "Retired",
+        "statusLabelDa": "Pensioneret",
+        "actionLabelEn": "Open archived Lab Registry",
+        "mark": "AR",
+        "art": "registry",
+        "retired": true
+      },
+      {
+        "id": "lab-hub",
+        "href": "lab-hub.html",
+        "labelEn": "Lab Hub archive",
+        "labelDa": "Lab Hub-arkiv",
+        "descriptionEn": "Retired v3 Lab surface retained on disk for continuity.",
+        "descDa": "Pensioneret v3-Lab-flade, bevaret på disk som historik.",
+        "category": "OS",
+        "shelf": "os",
+        "lane": "local-archive",
+        "gate": "local-only",
+        "gateLabelEn": "Local archive",
+        "gateLabelDa": "Lokalt arkiv",
+        "status": "retired",
+        "statusLabelEn": "Retired",
+        "statusLabelDa": "Pensioneret",
+        "actionLabelEn": "Open archived Lab Hub",
+        "mark": "LH",
+        "art": "lab-hub",
+        "retired": true
+      }
+    ],
+    "counts": {
+      "total": 26,
+      "active": 23,
+      "publicLab": 20,
+      "localOs": 3,
+      "retired": 3
+    },
+    "syncedAt": "2026-07-10T16:38:53+00:00"
   }
+};
+  // SNAP:END
+
+  /* ---------- helpers ---------- */
   function esc(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;","\"":"&quot;"}[c];});}
+  function $(id){return document.getElementById(id);}
+  var REDUCED = matchMedia('(prefers-reduced-motion:reduce)');
 
-  function render(d){
-    // status
-    document.getElementById('statusText').textContent = "Maskinen kører · batch "+(d.queue.currentBatchId||"—");
-    var gen = d.queue.generated || d.flight.generated || "";
-    document.getElementById('genRef').textContent = gen ? "opdateret "+gen : "";
+  // count-up: lands on the truth first; re-polls with unchanged numbers never re-animate
+  function num(el,to){
+    to=+to||0;
+    if(el.dataset.v===String(to))return;
+    var animate = el.dataset.v===undefined && !document.hidden && !REDUCED.matches;
+    el.dataset.v=to;
+    el.textContent=to;
+    if(!animate)return;
+    var d=900,t0=null;
+    function step(ts){var p;if(!t0)t0=ts;p=Math.min(1,(ts-t0)/d);
+      el.textContent=Math.round(to*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(step);else el.textContent=to;}
+    requestAnimationFrame(step);
+    setTimeout(function(){el.textContent=to;},d+80);
+  }
 
-    // tiles
-    var fc=d.flight.counts||{}, qc=d.queue.counts||{}, ac=d.activation.stats||{}, sc=d.surfaces.counts||{};
+  // Danske gate-etiketter (facit fra copy-decket; flyttes til sync-laget som GATE_LABELS_DA)
+  var GATE_LABEL={
+    "automatic thread":"Automatisk oprettelse af tråde","thread":"Automatisk oprettelse af tråde",
+    "connector":"Skrive til Drive eller andre tjenester","drive":"Skrive til Drive eller andre tjenester",
+    "public deploy":"Lægge noget offentligt op","deploy":"Lægge noget offentligt op",
+    "paid api":"Bruge penge på API","paid":"Bruge penge på API",
+    "slack":"Automatik som kolleger kan se",
+    "plugin":"Installere et nyt plugin",
+    "claim":"Claims, produkt og jura — låst"
+  };
+  function plainGate(g){var l=String(g||"").toLowerCase();for(var k in GATE_LABEL){if(l.indexOf(k)>=0)return GATE_LABEL[k];}return g;}
+
+  var LANE_LABEL={install:"Installér som det næste",adapt:"Tilpas lokalt",audit:"Undersøg / pilot"};
+  var LANE_DESC={install:"Klar til at installere — kræver dit ja",adapt:"Kan bygges lokalt i Frankly-udgave",audit:"Prøves først i lille, overvåget test"};
+
+  // Dansk forklaringslinje pr. kendt rolle (copy-deck P7 — navnene beholdes fra kontrakten)
+  var ROLE_DESC={
+    "M1":"Styrer takten: vælger næste sikre skridt og stopper ved enhver gate.",
+    "M2":"Skærper målet: finder det mindste nyttige, der kan bygges.",
+    "M3":"Bygger selve tingen — én skribent pr. flade, rører aldrig det forbudte.",
+    "M4":"Tjekker antagelser og risici, før noget går videre — i tvivl lukkes der ned.",
+    "R1":"Finder kilder og svar — læser kun, skriver aldrig claims.",
+    "R2":"Tænker i partnere og butikker — uden kundevendte påstande.",
+    "R3":"Skriver i Franklys tone: tekster, navne, omskrivninger.",
+    "R4":"Laver billed- og produktionsprompter — genererer aldrig for penge uden dit ja.",
+    "R5":"Skærper investorhistorien og markerer huller i beviserne — fylder dem ikke.",
+    "R6":"Foreslår SEO og distribution — anbefaler kun, publicerer aldrig.",
+    "R7":"Pakker opgaver med klare grænser og en stopregel i hver.",
+    "R8":"Sørger for at arbejdet følger en kendt rute — og blokerer smutveje.",
+    "R9":"Tester og validerer — er tjekket rødt, er opgaven ikke færdig.",
+    "R10":"Pakker hukommelse og kontekst, så næste session kan tage over.",
+    "R11":"Vogter alle gates: Drive, deploy, betaling, plugins, claims. Siger fra før noget skrives."
+  };
+
+  /* Hylden kommer fra data/tools-shelf.json med samme genererede SNAP som file://-fallback. */
+
+  /* ============================================================
+     P1 — Maskinen lige nu
+     ============================================================ */
+  function renderTiles(d){
+    var fc=(d.flight&&d.flight.counts)||{}, qc=(d.queue&&d.queue.counts)||{},
+        ac=(d.activation&&d.activation.stats)||{}, sc=(d.surfaces&&d.surfaces.counts)||{};
     var tiles=[
-      {k:"Kørsler",v:fc.runs,s:(fc.validatedRuns||0)+" verificeret · "+(fc.claimWorkRuns||0)+" claims",spark:"↻"},
-      {k:"Missioner",v:qc.missions,s:(qc.reviewReadyBatches||0)+" batches klar til review",spark:"◇"},
-      {k:"Aktiveringer",v:ac.activateNow,s:"af "+(ac.registered||0)+" registrerede kandidater",spark:"✦"},
-      {k:"Overflader",v:sc.surfaces,s:(sc.browserQaPassed||0)+" QA-godkendt · "+(sc.publicReady||0)+" offentlige",spark:"▦"}
+      {k:"Kørsler",v:fc.runs,s:(fc.validatedRuns||0)+" verificeret · "+(fc.claimWorkRuns||0)+" claims"},
+      {k:"Missioner",v:qc.missions,s:(qc.reviewReadyBatches||0)+" batches · arkiv t.o.m. MCQ-011"},
+      {k:"Aktiveringer",v:ac.activateNow,s:"af "+(ac.registered||0)+" registrerede kandidater"},
+      {k:"Overflader",v:sc.surfaces,s:(sc.browserQaPassed||0)+" QA-godkendt · "+(sc.publicReady||0)+" offentlige"}
     ];
-    var th=document.getElementById('tiles');th.innerHTML="";
+    var th=$('tiles');
+    var first=!th.dataset.animated; th.dataset.animated="1";
+    th.innerHTML="";
     tiles.forEach(function(t,i){
-      var el=document.createElement('div');el.className="tile reveal";el.style.animationDelay=(.12+i*.05)+"s";
-      el.innerHTML='<span class="spark">'+t.spark+'</span><div class="k">'+esc(t.k)+'</div><div class="v">0</div><div class="s">'+esc(t.s)+'</div>';
-      th.appendChild(el);num(el.querySelector('.v'),t.v);
+      var el=document.createElement('div');
+      el.className=first?"tile reveal":"tile";
+      if(first)el.style.setProperty('--d',3+i);
+      el.innerHTML='<div class="k">'+esc(t.k)+'</div><div class="v">0</div><div class="s">'+esc(t.s)+'</div>';
+      th.appendChild(el);
+      num(el.querySelector('.v'),t.v);
     });
 
-    // attention = the autopilot's batched decisions (preferred), else the queue gates
-    var ap=d.autopilot;
-    var attn=document.getElementById('attention');attn.innerHTML="";
-    if(ap && ap.day){
-      var note=document.createElement('div');note.className="ap-note";
-      var didN=(ap.didAutonomously||[]).length;
-      note.innerHTML='🤖 Autopiloten kørte '+esc(ap.day)+' · gjorde <b>'+didN+' ting selv</b> — her er kun det, der kræver dig:';
-      attn.appendChild(note);
-    }
-    var items;
-    if(ap && ap.waitingForJonas){
-      items=ap.waitingForJonas.map(function(w){return {id:w.id,t:w.title,d:w.why||"",chip:(w.gate==="locked")?"lock":"wait",icon:(w.gate==="locked")?"🔒":"⏳"};});
+    // sundhedslinje — et tal uden friskhedsstempel er forbudt
+    var h=d.health||{}, nba=d.nba||{};
+    var fresh;
+    if(h.lastFeedSync){
+      fresh="Tal synkroniseret "+String(h.lastFeedSync).slice(0,16).replace('T',' kl. ');
     }else{
-      var gates=(d.queue.gates||[]);
-      items=gates.map(function(g){return {t:plainGate(g),d:g,chip:g.toLowerCase().indexOf('claim')>=0?"lock":"wait",icon:"🔒"};});
-      if((ac.approvalGatedInstalls||0)>0) items.unshift({t:ac.approvalGatedInstalls+" plugin-installationer afventer",d:"Kan forbedre workflows, men kræver din godkendelse før installation.",chip:"wait",icon:"⏳"});
+      var gen=(d.flight&&d.flight.generated)||"";
+      fresh=gen?("Tallene er fra "+gen+" — kør feed-synken for friske tal."):"Kør feed-synken for friske tal.";
+    }
+    var hl=$('healthLine');
+    hl.textContent="";
+    hl.appendChild(document.createTextNode(fresh));
+    if(nba.activeBatch){
+      hl.appendChild(document.createTextNode(" · Aktiv batch: "+(nba.activeBatchDa||nba.activeBatch)+" "));
+      if(nba.activeBatchDa){var r=document.createElement('span');r.className='ref';r.textContent="(ref "+nba.activeBatch+")";hl.appendChild(r);}
+    }
+    if(h.resultDa){hl.appendChild(document.createTextNode(" · "+h.resultDa));}
+    var gr=$('genRef');
+    gr.textContent=(d.flight&&d.flight.generated)?("opdateret "+d.flight.generated):"";
+  }
+
+  function renderStatusPill(d,waiting){
+    var pill=$('statusPill'), txt=$('statusText'), ref=$('statusRef');
+    var h=d.health||{}, nba=d.nba||{};
+    var hres=(h.selfCheck&&h.selfCheck.result)||h.result||"";
+    var fail=hres&&String(hres).toUpperCase().indexOf("PASS")<0;
+    if(fail){
+      pill.dataset.state="fejl";
+      txt.textContent="Noget driller — tallene kan være gamle";
+      ref.textContent="";
+    }else if(waiting>0){
+      pill.dataset.state="venter";
+      txt.textContent="Maskinen venter på dig · "+waiting+" beslutning"+(waiting===1?"":"er");
+      ref.textContent="";
+    }else{
+      pill.dataset.state="ok";
+      var b=String(nba.activeBatch||(d.queue&&d.queue.currentBatchId)||"");
+      var n=(b.match(/\d+$/)||[""])[0].replace(/^0+/,'');
+      txt.textContent="Maskinen kører"+(n?" · Batch "+n:"");
+      ref.textContent=b;
+    }
+  }
+
+  /* ============================================================
+     P2 — Venter på dig
+     ============================================================ */
+  function renderAttention(d){
+    var ap=d.autopilot||{};
+    var feedMissing=!d.autopilot; // null = feedet kunne ikke læses (fx file://) — IKKE det samme som "reelt tomt"
+    var box=$('attention');box.innerHTML="";
+    if(ap.day){
+      var didN=(ap.didAutonomously||[]).length;
+      var note=document.createElement('div');note.className="note";
+      note.innerHTML='Autopiloten kørte '+esc(ap.day)+' og klarede <b>'+didN+' ting selv</b>. Her er kun det, der kræver dig:';
+      box.appendChild(note);
+    }
+    var items=(ap.waitingForJonas||[]).map(function(w){
+      return {id:w.id,t:w.title,d:w.why||"",gate:w.gate};
+    });
+    if(!items.length){
+      var empty=document.createElement('div');empty.className="row";
+      if(feedMissing){
+        // Ærlig neutral tilstand: uden feedet VED siden ikke, om der venter noget.
+        empty.innerHTML='<div class="row__icon">🔌</div><div class="row__main">'+
+          '<div class="row__t">Kan ikke læses uden serveren.</div>'+
+          '<div class="row__d">Autopilot-feedet mangler i dette øjebliksbillede — der kan godt vente beslutninger. Kør <code>python3 os-visualization/scripts/cockpit-server.py</code> for at se dem.</div></div>';
+      }else{
+        empty.innerHTML='<div class="row__icon row__icon--ok">✓</div><div class="row__main">'+
+          '<div class="row__t">Ingenting venter — maskinen kører selv.</div>'+
+          '<div class="row__d">Kig forbi igen, eller start en kørsel nedenfor.</div></div>';
+      }
+      box.appendChild(empty);
     }
     items.forEach(function(it){
       var r=document.createElement('div');r.className="row";
-      var side = it.id
-        ? '<div class="row__side"><div class="decide" data-id="'+esc(it.id)+'">'+
-            '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
-            '<button class="dbtn" data-d="deferred">Udskyd</button>'+
-            '<button class="dbtn dbtn--no" data-d="declined">Afvis</button></div></div>'
-        : '<div class="row__side"><span class="chip chip--'+it.chip+'">'+(it.chip==="lock"?"Låst":"Din godkendelse")+'</span></div>';
-      r.innerHTML='<div class="row__icon">'+it.icon+'</div><div class="row__main"><div class="row__t">'+esc(it.t)+'</div><div class="row__d">'+esc(it.d)+'</div><div class="decided" hidden></div></div>'+side;
-      attn.appendChild(r);
+      r.innerHTML='<div class="row__icon">⏳</div><div class="row__main">'+
+        '<div class="row__t">'+esc(it.t)+'</div>'+
+        '<div class="row__d">'+esc(plainGate(it.gate)===it.gate?it.d:(it.d?it.d+' · ':'')+plainGate(it.gate))+'</div>'+
+        '<div class="decided" hidden></div></div>'+
+        '<div class="row__side"><span class="decide" data-id="'+esc(it.id)+'" style="display:flex;gap:6px">'+
+          '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
+          '<button class="dbtn" data-d="deferred">Udskyd</button>'+
+          '<button class="dbtn dbtn--no" data-d="declined">Afvis</button></span></div>';
+      box.appendChild(r);
     });
-    [].forEach.call(attn.querySelectorAll('.decide'),function(box){
-      var id=box.getAttribute('data-id');
-      [].forEach.call(box.querySelectorAll('.dbtn'),function(b){
-        b.addEventListener('click',function(){decide(id,b.getAttribute('data-d'),box);});
+    [].forEach.call(box.querySelectorAll('.decide'),function(bx){
+      var id=bx.getAttribute('data-id');
+      [].forEach.call(bx.querySelectorAll('.dbtn'),function(b){
+        b.addEventListener('click',function(){decide(id,b.getAttribute('data-d'),bx);});
       });
     });
-    document.getElementById('attnCount').textContent=items.length+" ting";
 
-    // runs
-    var rl=document.getElementById('runs');rl.innerHTML="";
-    (d.flight.runs||[]).slice(0,6).forEach(function(r){
-      var el=document.createElement('div');el.className="run";
-      var gated=(r.status||"").indexOf("gated")>=0||(r.status||"").indexOf("blocked")>=0;
-      el.innerHTML='<span class="run__st'+(gated?" is-gated":"")+'"></span><div class="run__main"><div class="run__id">'+esc(r.runId)+'</div><div class="run__s">'+esc((r.summary||"").slice(0,120))+'</div></div>';
-      rl.appendChild(el);
-    });
-    document.getElementById('runCount').textContent=(fc.runs||0)+" i alt";
-
-    // surfaces
-    var sf=document.getElementById('surfaces');sf.innerHTML="";
-    var surfs=(d.surfaces.surfaces||[]);
-    if(!surfs.length){ // fallback: the known local OS pages
-      surfs=[{name:"Start / onboarding",page:"onboarding.html",state:"local-live",gate:"start"},
-             {name:"Control Cockpit",page:"control-cockpit.html",state:"local-live",gate:"internal"},
-             {name:"Studio",page:"studio.html",state:"local-live",gate:"internal"},
-             {name:"Observatory",page:"observatory.html",state:"local-live",gate:"internal"},
-             {name:"Lab Hub",page:"lab-hub.html",state:"local-live",gate:"internal"},
-             {name:"Mission Control",page:"mission-control-queue.html",state:"local-live",gate:"internal"}];
+    // underliste: aktiveringskøen — nye værktøjer der venter på dit ja
+    var act=d.activation||{};
+    var lanes=act.lanes||[];
+    if(lanes.length){
+      var ms=document.createElement('div');ms.className="minisec";
+      ms.innerHTML='<span class="fl-kicker">Nye værktøjer der venter på dit ja</span><div class="rule"></div>'+
+        '<span class="ref">'+esc(act.syncedAt?("synk "+act.syncedAt):("indhold fra "+(act.updated||"")))+'</span>';
+      box.appendChild(ms);
+      lanes.forEach(function(l){
+        (l.items||[]).forEach(function(name){
+          var r=document.createElement('div');r.className="row";
+          var lane=l.labelDa||LANE_LABEL[l.id]||l.label||l.id;
+          var desc=l.gateDa||LANE_DESC[l.id]||l.gate||"";
+          r.innerHTML='<div class="row__icon">🧰</div><div class="row__main">'+
+            '<div class="row__t">'+esc(name)+'</div>'+
+            '<div class="row__d">'+esc(lane)+' — '+esc(desc)+'</div></div>'+
+            '<div class="row__side"><span class="chip chip--warn">Din godkendelse</span></div>';
+          box.appendChild(r);
+        });
+      });
     }
-    surfs.slice(0,12).forEach(function(s){
-      var a=document.createElement('a');a.className="surface";a.href=s.page||"#";
-      a.innerHTML='<div class="surface__n">'+esc(s.name)+'</div><div class="surface__m"><span>'+esc(s.state||"lokal")+'</span><span>'+esc(s.gate||"")+'</span></div>';
-      sf.appendChild(a);
-    });
-    document.getElementById('surfRef').textContent=(sc.surfaces||surfs.length)+" flader · "+(sc.approvalGated||surfs.length)+" gated";
-
-    renderLearnings(d.learning);
+    $('attnCount').textContent=feedMissing?"ukendt":(items.length+" ting");
+    return items.length;
   }
 
-  // learnings waiting for OK — the capture loop's cockpit gate (needs cockpit-server.py to file)
+  function decide(id,decision,box){
+    var row=box.closest('.row');
+    box.innerHTML='<span class="dwait">…</span>';
+    fetch('/api/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskId:id,decision:decision})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">Beslutningen blev ikke gemt — prøv igen</span>';return;}
+        var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
+        box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+label+'</span>';
+        var dc=row.querySelector('.decided');
+        if(res.nextCommand){dc.hidden=false;dc.innerHTML='<b>Kør så, når du er klar:</b><br><code>'+esc(res.nextCommand)+'</code>';}
+        else if(decision!=='approved'){dc.hidden=false;dc.textContent=decision==='deferred'?'Gemt til senere.':'Fjernet fra listen.';}
+      })
+      .catch(function(){box.innerHTML='<span class="chip chip--warn">Kør cockpit-serveren for at beslutte herfra</span>';});
+  }
+
+  /* ============================================================
+     P3 — Læringer der venter på dit OK
+     ============================================================ */
   function renderLearnings(q){
-    var box=document.getElementById('learnings');if(!box)return;box.innerHTML="";
+    var box=$('learnings');box.innerHTML="";
+    if(!q){
+      // Feedet kunne ikke læses (fx file://): sig det ærligt i stedet for at
+      // påstå "0 filet automatisk / hukommelsen er ajour" ud fra manglende data.
+      var na=document.createElement('div');na.className="row";
+      na.innerHTML='<div class="row__icon">🔌</div><div class="row__main">'+
+        '<div class="row__t">Kan ikke læses uden serveren.</div>'+
+        '<div class="row__d">Lærings-feedet mangler i dette øjebliksbillede — der kan godt vente læringer. Kør <code>python3 os-visualization/scripts/cockpit-server.py</code> for at se dem.</div></div>';
+      box.appendChild(na);
+      $('learnCount').textContent="ukendt";
+      return 0;
+    }
     var cands=(q&&q.candidates)||[];
     var pending=cands.filter(function(c){return c.status==='pending'&&c.disposition==='review';});
-    var filed=(q&&q.counts&&q.counts.filed)||0;
-    var note=document.createElement('div');note.className="ap-note";
-    note.innerHTML='🧠 '+(filed?('<b>'+filed+'</b> sikre læringer filet automatisk — '):'Autopiloten filer de sikre selv — ')+'her er kun dem, der kræver din vurdering før de ryger i hukommelsen.';
+    var autoN=(q&&q.counts&&q.counts.byDisposition&&q.counts.byDisposition.auto)||0;
+    var note=document.createElement('div');note.className="note";
+    note.innerHTML='<b>'+autoN+'</b> sikre læringer er filet automatisk — her er kun dem, der kræver din vurdering, før de ryger i hukommelsen.';
     box.appendChild(note);
     if(!pending.length){
       var empty=document.createElement('div');empty.className="row";
-      empty.innerHTML='<div class="row__icon">✓</div><div class="row__main"><div class="row__t">Ingen læringer venter</div><div class="row__d">Hukommelsen er ren — intet at godkende lige nu.</div></div>';
+      empty.innerHTML='<div class="row__icon row__icon--ok">✓</div><div class="row__main">'+
+        '<div class="row__t">Ingen læringer venter — hukommelsen er ajour.</div></div>';
       box.appendChild(empty);
     }
     pending.forEach(function(c){
       var r=document.createElement('div');r.className="row";
-      var meta='rute: '+esc(c.scope||'—')+' · '+esc(c.kind||'use')+' · '+esc(c.confidence||'')+(c.why?' — '+esc(c.why):'');
-      var side='<div class="row__side"><div class="decide" data-id="'+esc(c.id)+'">'+
+      r.innerHTML='<div class="row__icon">💡</div><div class="row__main">'+
+        '<div class="row__t">'+esc(c.text)+'</div>'+
+        '<div class="row__d ref">Rute: '+esc(c.scope||'—')+' · '+esc(c.kind||'use')+' · '+esc(c.confidence||'')+'</div>'+
+        (c.why?'<div class="row__d">'+esc(c.why)+'</div>':'')+
+        '<div class="decided" hidden></div></div>'+
+        '<div class="row__side"><span class="decide" data-id="'+esc(c.id)+'" style="display:flex;gap:6px">'+
           '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
-          '<button class="dbtn dbtn--no" data-d="declined">Afvis</button></div></div>';
-      r.innerHTML='<div class="row__icon">💡</div><div class="row__main"><div class="row__t">'+esc(c.text)+'</div><div class="row__d">'+meta+'</div><div class="decided" hidden></div></div>'+side;
+          '<button class="dbtn dbtn--no" data-d="declined">Afvis</button></span></div>';
       box.appendChild(r);
     });
     [].forEach.call(box.querySelectorAll('.decide'),function(bx){
@@ -395,76 +1654,185 @@
         b.addEventListener('click',function(){decideLearning(id,b.getAttribute('data-d'),bx);});
       });
     });
-    document.getElementById('learnCount').textContent=pending.length+" venter";
-    document.getElementById('learnRef').textContent="learning-capture-queue · "+filed+" filet";
+    $('learnCount').textContent=pending.length+" venter";
+    return pending.length;
   }
 
-  // composer
-  function buildOut(){
-    var obj=document.getElementById('cObj').value.trim()||"<beskriv din opgave>";
-    var route=document.getElementById('cRoute').value;
-    return "Brug frankly-crew.\n\nTask Packet:\n- objective: "+obj+"\n- route: "+route+"\n- lane: claude-code\n- do-not-touch: claims/produkt/juridisk (låst)\n- stop rule: stop ved deploy/connector/claims — vend tilbage til Jonas";
-  }
-  function refreshOut(){var o=buildOut();document.getElementById('cOut').innerHTML="<b>Paste dette i Claude Code:</b>\n\n"+esc(o);document.getElementById('cOut').dataset.raw=o;}
-  document.getElementById('cObj').addEventListener('input',refreshOut);
-  document.getElementById('cRoute').addEventListener('change',refreshOut);
-  document.getElementById('cCopy').addEventListener('click',function(){
-    var raw=document.getElementById('cOut').dataset.raw||buildOut();
-    navigator.clipboard&&navigator.clipboard.writeText(raw);
-    var c=document.getElementById('cCopied');c.classList.add('show');setTimeout(function(){c.classList.remove('show');},1600);
-  });
-  refreshOut();
-
-  // record a decision back to the backlog (needs cockpit-server.py; degrades gracefully on plain http.server)
-  function decide(id,decision,box){
-    var row=box.parentNode.parentNode; // .row
-    box.innerHTML='<span class="dwait">…</span>';
-    fetch('/api/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskId:id,decision:decision})})
-      .then(function(r){return r.json();})
-      .then(function(res){
-        if(!res||!res.ok){box.innerHTML='<span class="chip chip--wait">Prøv igen</span>';return;}
-        var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
-        box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'wait')+'">'+label+'</span>';
-        var dc=row.querySelector('.decided');
-        if(res.nextCommand){dc.hidden=false;dc.innerHTML='<b>Kør så, når du er klar:</b><br><code>'+esc(res.nextCommand)+'</code>';}
-        else if(decision!=='approved'){dc.hidden=false;dc.textContent=decision==='deferred'?'Gemt til senere.':'Fjernet fra listen.';}
-      })
-      .catch(function(){box.innerHTML='<span class="chip chip--wait">Kør cockpit-server.py for at beslutte her</span>';});
-  }
-
-  // Godkend/Afvis a waiting learning. On Godkend the server files it deterministically
-  // (append the dated bullet to the route + rebuild the lessons index) — never a gated action.
   function decideLearning(id,decision,box){
-    var row=box.parentNode.parentNode; // .row
+    var row=box.closest('.row');
     box.innerHTML='<span class="dwait">…</span>';
     fetch('/api/learning',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,decision:decision})})
       .then(function(r){return r.json();})
       .then(function(res){
-        if(!res||!res.ok){box.innerHTML='<span class="chip chip--wait">'+esc((res&&res.error)||'Prøv igen')+'</span>';return;}
-        box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'wait')+'">'+(decision==='approved'?'✓ Filet':'Afvist')+'</span>';
+        if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">'+esc((res&&res.error)||'Prøv igen')+'</span>';return;}
+        box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+(decision==='approved'?'✓ Filet':'Afvist')+'</span>';
         var dc=row.querySelector('.decided');
-        if(decision==='approved'&&res.filedTo){dc.hidden=false;dc.innerHTML='<b>Filet til hukommelsen:</b><br><code>'+esc(res.filedTo.route)+'</code>';}
+        if(decision==='approved'&&res.filedTo){dc.hidden=false;dc.innerHTML='<b>Filet til hukommelsen:</b> <code>'+esc(res.filedTo.route)+'</code>';}
         else if(decision!=='approved'){dc.hidden=false;dc.textContent='Fjernet fra listen.';}
       })
-      .catch(function(){box.innerHTML='<span class="chip chip--wait">Kør cockpit-server.py for at beslutte her</span>';});
+      .catch(function(){box.innerHTML='<span class="chip chip--warn">Kør cockpit-serveren for at godkende læringer herfra</span>';});
   }
 
-  // Specialisternes metode — læser specialist-rækkerne fra den NYESTE crew-kontrakt via
-  // GET /api/agent-methods og lader Jonas justere én metode mellem kørsler via POST
-  // /api/agent-method. Serveren skriver en NY dateret kontraktversion (den gamle bevares),
-  // logger JSONL og filer ændringen som læring; claims/produkt/juridisk afvises altid
-  // fail-closed, og serveren udfører aldrig en gated handling.
+  /* ============================================================
+     P4 — Kørsler (Seneste + Arkiv), blød accordion pr. kørsel
+     ============================================================ */
+  function accordion(headHTML,innerHTML,bodyId){
+    var acc=document.createElement('div');acc.className="acc";
+    acc.innerHTML='<button class="acc__head" aria-expanded="false" aria-controls="'+esc(bodyId)+'">'+headHTML+
+      '<svg class="acc__chev" width="14" height="14" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 5l4 4 4-4" stroke="currentColor" stroke-width="1.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg></button>'+
+      '<div class="acc__body" id="'+esc(bodyId)+'" role="region"><div class="acc__inner">'+innerHTML+'</div></div>';
+    var head=acc.querySelector('.acc__head');
+    head.addEventListener('click',function(){
+      var list=acc.parentNode;
+      if(list){[].forEach.call(list.querySelectorAll('.acc.is-open'),function(other){
+        if(other!==acc){other.classList.remove('is-open');other.querySelector('.acc__head').setAttribute('aria-expanded','false');}
+      });}
+      var open=acc.classList.toggle('is-open');
+      head.setAttribute('aria-expanded',open);
+    });
+    return acc;
+  }
+
+  function chipRow(arr,useDa){
+    return (arr||[]).map(function(g){return '<span class="chip">'+esc(useDa?g:plainGate(g))+'</span>';}).join('');
+  }
+
+  function renderRuns(d){
+    var box=$('runsLive');box.innerHTML="";
+    var runs=(d.flight&&d.flight.runs)||[];
+    if(!runs.length){
+      var empty=document.createElement('div');empty.className="row";
+      empty.innerHTML='<div class="row__icon row__icon--ok">✓</div><div class="row__main">'+
+        '<div class="row__t">Ingen kørsler endnu — start én til højre, så lander den her.</div></div>';
+      box.appendChild(empty);
+    }
+    runs.slice(0,8).forEach(function(r,i){
+      var gated=(String(r.status||"").indexOf("gated")>=0||String(r.status||"").indexOf("blocked")>=0);
+      var head='<span class="run__st'+(gated?' is-gated':'')+'" title="'+(gated?'Stoppede ved en gate — venter på dig':'Gennemført lokalt')+'"></span>'+
+        '<span class="run__main"><span class="run__t">'+esc(r.nameDa||r.name||r.runId)+'</span>'+
+        '<span class="run__s">'+esc(String(r.summaryDa||r.summary||"").slice(0,140))+'</span>'+
+        '<span class="ref">'+esc(r.runId)+' · '+esc(r.date||'')+'</span></span>';
+      var inner='<div class="replay"><dl>'+
+        '<dt>Rute</dt><dd><b>'+esc(r.routeDa||r.route||'—')+'</b>'+(r.routeDa?' <span class="ref">'+esc(r.route)+'</span>':'')+'</dd>'+
+        '<dt>Tjek og validering</dt><dd>'+esc(r.validationDa||r.validation||'Ikke registreret')+'</dd>'+
+        '<dt>Drive-status</dt><dd>'+esc(r.driveDa||r.drive||'—')+'</dd>'+
+        '<dt>Gates undervejs</dt><dd><span class="gates">'+chipRow(r.gatesDa||r.gates,!!r.gatesDa)+'</span></dd>'+
+        (r.lesson||r.lessonDa?'<dt>Det lærte maskinen</dt><dd>“'+esc(r.lessonDa||r.lesson)+'”</dd>':'')+
+        ((r.artifacts&&r.artifacts.length)?'<dt>Filer og resultater</dt><dd>'+esc(r.artifacts.join(' · '))+'</dd>':'')+
+        '</dl></div>';
+      box.appendChild(accordion(head,inner,'run-'+i));
+    });
+    var total=(d.flight&&d.flight.counts&&d.flight.counts.runs)||runs.length;
+    $('runCount').textContent=total+" i alt";
+  }
+
+  function renderArchive(d){
+    var box=$('runsArchive');box.innerHTML="";
+    var q=d.queue||{};
+    var batches=q.batches||[];
+    var note=document.createElement('div');note.className="note";
+    note.innerHTML='De første 11 batches — bevaret som historik. <span class="ref">MCQ-001–011 · statisk arkiv, synces ikke længere</span>';
+    box.appendChild(note);
+    if(!batches.length){
+      var empty=document.createElement('div');empty.className="row";
+      empty.innerHTML='<div class="row__icon row__icon--ok">✓</div><div class="row__main">'+
+        '<div class="row__t">Arkivet er tomt.</div>'+
+        '<div class="row__d">Arkivfeedet læses kun via den lokale server — kør cockpit-server.py.</div></div>';
+      box.appendChild(empty);
+      return;
+    }
+    batches.forEach(function(b,i){
+      var run=b.run||{}, review=b.review||{};
+      var head='<span class="run__st"></span><span class="run__main">'+
+        '<span class="run__t">'+esc(b.title||b.id)+'</span>'+
+        '<span class="run__s">'+esc(String(b.outcome||b.goal||"").slice(0,140))+'</span>'+
+        '<span class="ref">'+esc(b.id)+' · '+esc(b.routeName||'')+'</span></span>'+
+        '<span class="chip chip--dim" style="margin-top:3px">Arkiv</span>';
+      var arts=(run.artifacts||[]).map(function(a){return a.label||a.file||a;});
+      var finds=(review.findings||run.findings||[]);
+      var inner='<div class="replay"><dl>'+
+        (b.goal?'<dt>Mål</dt><dd>'+esc(b.goal)+'</dd>':'')+
+        (b.outcome?'<dt>Resultat</dt><dd>'+esc(b.outcome)+'</dd>':'')+
+        (run.summary?'<dt>Kørsel</dt><dd>'+esc(run.summary)+'</dd>':'')+
+        (b.autonomy?'<dt>Autonomi</dt><dd>'+esc(b.autonomy)+'</dd>':'')+
+        (arts.length?'<dt>Filer og resultater</dt><dd>'+esc(arts.join(' · '))+'</dd>':'')+
+        (finds.length?'<dt>Fund</dt><dd>'+esc(finds.slice(0,3).join(' · '))+'</dd>':'')+
+        (b.nextMove?'<dt>Næste træk (dengang)</dt><dd>'+esc(b.nextMove)+'</dd>':'')+
+        '</dl></div>';
+      box.appendChild(accordion(head,inner,'arch-'+i));
+    });
+  }
+
+  function wireTabs(){
+    var tl=$('tabLive'),ta=$('tabArchive'),pl=$('runsLive'),pa=$('runsArchive');
+    function sel(live){
+      tl.setAttribute('aria-selected',live?'true':'false');
+      ta.setAttribute('aria-selected',live?'false':'true');
+      pl.hidden=!live;pa.hidden=live;
+    }
+    tl.addEventListener('click',function(){sel(true);});
+    ta.addEventListener('click',function(){sel(false);});
+  }
+
+  /* ============================================================
+     P5 — Start en kørsel (ren klient-side; ingen skrive-endpoints)
+     ============================================================ */
+  var AUTONOMY_LABEL={forsigtig:"forsigtig — spørg ofte",produktiv:"produktiv — spørg ved gates","ambitioes-lokal":"ambitiøs, men kun lokalt"};
+  function buildOut(){
+    var obj=$('cObj').value.trim()||"<beskriv din opgave>";
+    var route=$('cRoute').value;
+    var resume=$('cResume').value;
+    var domain=$('cDomain').value;
+    var auto=$('cAuto').value;
+    return "Brug frankly-crew.\n\nTask Packet:\n"+
+      "- objective: "+obj+"\n"+
+      "- route: "+route+"\n"+
+      "- domain: "+domain+"\n"+
+      "- autonomy: "+(AUTONOMY_LABEL[auto]||auto)+"\n"+
+      "- resume-from: "+(resume||"(ingen — start forfra)")+"\n"+
+      "- lane: claude-code\n"+
+      "- do-not-touch: claims/produkt/juridisk (låst)\n"+
+      "- stop rule: stop ved deploy, connector-skrivning, betalt API eller claims — vend tilbage til Jonas";
+  }
+  function refreshOut(){var o=buildOut();$('cOut').textContent=o;$('cOut').dataset.raw=o;}
+  function fillResume(d){
+    var sel=$('cResume');
+    while(sel.options.length>1)sel.remove(1);
+    ((d.flight&&d.flight.runs)||[]).slice(0,12).forEach(function(r){
+      var o=document.createElement('option');
+      o.value=r.runId;
+      o.textContent=(r.nameDa||r.name||r.runId).slice(0,52)+" · "+(r.date||"");
+      sel.appendChild(o);
+    });
+  }
+  ['cObj','cRoute','cResume','cDomain','cAuto'].forEach(function(id){
+    $(id).addEventListener('input',refreshOut);
+    $(id).addEventListener('change',refreshOut);
+  });
+  $('cCopy').addEventListener('click',function(){
+    var raw=$('cOut').dataset.raw||buildOut();
+    if(navigator.clipboard)navigator.clipboard.writeText(raw);
+    var c=$('cCopied');c.classList.add('show');setTimeout(function(){c.classList.remove('show');},1600);
+  });
+  refreshOut();
+
+  /* ============================================================
+     P6 — Specialisternes metode
+     ============================================================ */
   function methodsOffline(box,msg){
     box.innerHTML="";
     var r=document.createElement('div');r.className="row";
-    r.innerHTML='<div class="row__icon">🛠️</div><div class="row__main"><div class="row__t">Metode-fladen er offline</div><div class="row__d">'+esc(msg)+'</div></div>';
+    r.innerHTML='<div class="row__icon">🛠️</div><div class="row__main">'+
+      '<div class="row__t">Metode-panelet kræver cockpit-serveren</div>'+
+      '<div class="row__d">'+esc(msg)+'</div></div>';
     box.appendChild(r);
-    document.getElementById('methodCount').textContent="—";
+    $('methodCount').textContent="—";
   }
   function methodRow(s){
-    var r=document.createElement('div');r.className="row";
+    var r=document.createElement('div');r.className="row";r.id="method-"+s.id;
     r.innerHTML='<div class="row__icon">'+esc(s.icon||'🤖')+'</div>'+
-      '<div class="row__main"><div class="row__t"><span class="mid">'+esc(s.id)+'</span>'+esc(s.name)+'</div>'+
+      '<div class="row__main"><div class="row__t"><span class="ref">'+esc(s.id)+'</span>'+esc(s.name)+'</div>'+
+      (ROLE_DESC[s.id]?'<div class="row__d">'+esc(ROLE_DESC[s.id])+'</div>':'')+
       '<div class="row__d mview">'+esc(s.method)+'</div><div class="medit" hidden></div><div class="decided" hidden></div></div>'+
       '<div class="row__side"><button class="dbtn" data-a="edit">Redigér</button></div>';
     var editBtn=r.querySelector('[data-a="edit"]'),medit=r.querySelector('.medit'),mview=r.querySelector('.mview'),decided=r.querySelector('.decided');
@@ -473,7 +1841,7 @@
       if(!medit.hidden){closeEdit();return;}
       medit.hidden=false;mview.hidden=true;editBtn.textContent='Luk';decided.hidden=true;
       medit.innerHTML='<textarea aria-label="Metode for '+esc(s.id)+'"></textarea>'+
-        '<input type="text" placeholder="Hvorfor justerer du metoden? (valgfri note — ryger i changelog + læring)">'+
+        '<input type="text" placeholder="Hvorfor justerer du? (valgfrit — gemmes i historik og læring)">'+
         '<div class="actions"><button class="dbtn dbtn--ok" data-a="save">Gem som ny version</button>'+
         '<button class="dbtn" data-a="cancel">Fortryd</button><span class="dwait" hidden>…</span></div>';
       medit.querySelector('textarea').value=s.method;
@@ -492,41 +1860,373 @@
             s.method=newMethod;mview.textContent=newMethod;closeEdit();
             var learn=(res.learning&&res.learning.status)?' · læring: '+esc(res.learning.status):'';
             decided.innerHTML='<b>✓ Gemt som '+esc(res.toContract||'ny version')+'</b> — '+esc(res.fromContract||'forrige version')+' bevaret som historik'+learn;
-            if(res.toContract)document.getElementById('methodRef').textContent=res.toContract;
+            if(res.toContract)$('methodRef').textContent=res.toContract;
           })
           .catch(function(){wait.hidden=true;decided.hidden=false;decided.textContent='Kør cockpit-server.py for at gemme metoder her.';});
       });
     });
     return r;
   }
-  function renderMethods(){
-    var box=document.getElementById('methods');if(!box)return;
+  function renderMethodList(res,offlineNote){
+    var box=$('methods');box.innerHTML="";
+    var note=document.createElement('div');note.className="note";
+    note.innerHTML='Justér hvordan specialisterne arbejder — <b>mellem kørsler, aldrig midt i én</b>. Redigér en metode og gem: der oprettes en ny, dateret kontraktversion (den gamle bevares), og ændringen files som læring. Claims, produkt og jura afvises altid.'+
+      (offlineNote?'<br><b>'+esc(offlineNote)+'</b>':'');
+    box.appendChild(note);
+    (res.specialists||[]).forEach(function(s){box.appendChild(methodRow(s));});
+    $('methodCount').textContent=(res.specialists||[]).length+' specialister';
+    $('methodRef').textContent=res.contract||'';
+  }
+
+  /* ============================================================
+     P7 — Agent-træet (datadrevet, generisk roster — aldrig hardcodet)
+     Inline SVG tegner grenene; noderne er klikbare og fører til P6.
+     ============================================================ */
+  var treeGrownOnce=false;
+  function buildTreeModel(specs){
+    var parents=[],byId={};
+    (specs||[]).forEach(function(s){
+      if(String(s.id).indexOf('.')<0){var p={s:s,subs:[]};parents.push(p);byId[s.id]=p;}
+    });
+    (specs||[]).forEach(function(s){
+      var id=String(s.id),dot=id.indexOf('.');
+      if(dot>=0){var par=byId[id.slice(0,dot)];if(par)par.subs.push(s);else parents.push({s:s,subs:[]});}
+    });
+    return {
+      m:parents.filter(function(p){return /^M/i.test(p.s.id);}),
+      r:parents.filter(function(p){return !/^M/i.test(p.s.id);})
+    };
+  }
+
+  function nodeButton(s,cls,idx){
+    var b=document.createElement('button');
+    b.className='tnode '+cls;b.type='button';
+    b.style.setProperty('--i',idx);
+    var isSub=String(s.id).indexOf('.')>=0;
+    b.innerHTML='<span class="tnode__n"><span class="ref">'+esc(s.id)+'</span>'+esc((s.icon?s.icon+' ':'')+s.name)+'</span>'+
+      (isSub?'<span class="tsubchip">Under-specialist</span>':(ROLE_DESC[s.id]?'<span class="tnode__d">'+esc(ROLE_DESC[s.id])+'</span>':''));
+    b.setAttribute('aria-label','Justér metode for '+s.id+' '+s.name);
+    b.addEventListener('click',function(){
+      var row=document.getElementById('method-'+s.id);
+      if(row){
+        row.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'center'});
+        row.classList.add('row--flash');
+        setTimeout(function(){row.classList.remove('row--flash');},2000);
+      }
+    });
+    return b;
+  }
+
+  function renderTreeCanvas(specs){
+    var host=$('treeCanvas');
+    var W=host.clientWidth;
+    if(W<60)return; // hidden (mobile) — list-tree takes over
+    host.innerHTML="";
+    host.classList.remove('is-grown');
+    var model=buildTreeModel(specs);
+    var pad=10, railX=pad+12;
+    var idx=0, svgPaths=[];
+    var frag=document.createDocumentFragment();
+
+    // root: Formidleren (orkestrator — uden for rosteren, tælles aldrig med)
+    var rootW=Math.min(250,W-2*pad), rootH=56, rootX=Math.round((W-rootW)/2), rootY=0;
+    var root=document.createElement('button');
+    root.className='tnode tnode--root';root.type='button';root.style.setProperty('--i',idx++);
+    root.style.left=rootX+'px';root.style.top=rootY+'px';root.style.width=rootW+'px';root.style.height=rootH+'px';
+    root.innerHTML='<span class="tnode__n">Formidleren</span><span class="tnode__d">orkestrator — uden for rosteren</span>';
+    root.setAttribute('aria-label','Formidleren — orkestrator, uden for rosteren');
+    frag.appendChild(root);
+
+    var y=rootY+rootH+28;
+    var lastArmY=y;
+
+    function layoutColumn(items,colX,colW,startY,armFromX){
+      // items = [{s,subs[]}]; returns height
+      var innerX=colX+22, nodeW=colW-30, cy=startY;
+      items.forEach(function(p){
+        var nh=ROLE_DESC[p.s.id]?46:40;
+        var n=nodeButton(p.s,'',idx++);
+        n.style.left=innerX+'px';n.style.top=cy+'px';n.style.width=nodeW+'px';n.style.height=nh+'px';
+        frag.appendChild(n);
+        svgPaths.push({d:'M'+armFromX+' '+(cy+nh/2)+' H'+innerX,arrow:true,i:idx});
+        lastArmY=Math.max(lastArmY,cy+nh/2);
+        var parentBottomX=innerX+14, py=cy+nh;
+        cy+=nh+10;
+        p.subs.forEach(function(su){
+          var sh=42;
+          var sn=nodeButton(su,'tnode--sub',idx++);
+          sn.style.left=(innerX+24)+'px';sn.style.top=cy+'px';sn.style.width=(nodeW-24)+'px';sn.style.height=sh+'px';
+          frag.appendChild(sn);
+          svgPaths.push({d:'M'+parentBottomX+' '+py+' V'+(cy+sh/2)+' H'+(innerX+24),arrow:true,i:idx});
+          cy+=sh+10;
+        });
+      });
+      return cy-startY;
+    }
+
+    // — gruppe: Maskinrummet (M-laget) —
+    var gx=pad,gw=W-2*pad;
+    var mgY=y;
+    var mH=layoutColumn(model.m,gx+8,gw-16,mgY+42,railX)+52;
+    var mg=document.createElement('div');mg.className='tgroup';mg.style.setProperty('--i',1);
+    mg.style.left=gx+'px';mg.style.top=mgY+'px';mg.style.width=gw+'px';mg.style.height=mH+'px';
+    mg.innerHTML='<span class="tgroup__l">Maskinrummet <span class="ref">M1–M4</span></span>';
+    frag.insertBefore(mg,frag.firstChild.nextSibling); // behind nodes, after root
+
+    y=mgY+mH+26;
+
+    // — gruppe: Specialisterne (R-laget), to kolonner når der er plads —
+    var rgY=y;
+    var twoCol=W>=620;
+    var rH;
+    if(twoCol){
+      var colW=(gw-24)/2;
+      // balancér blokke (forælder + subs) mellem kolonnerne
+      var total=model.r.reduce(function(a,p){return a+1+p.subs.length;},0);
+      var c1=[],c2=[],acc=0;
+      model.r.forEach(function(p){
+        if(acc<total/2){c1.push(p);acc+=1+p.subs.length;}else c2.push(p);
+      });
+      var col2X=gx+16+colW, col2RailX=col2X+10;
+      var h1=layoutColumn(c1,gx+8,colW,rgY+42,railX);
+      var h2=layoutColumn(c2,col2X,colW,rgY+42,col2RailX);
+      // feeder til kolonne 2
+      svgPaths.push({d:'M'+railX+' '+(rgY+30)+' H'+col2RailX+' V'+(rgY+42+((c2[0]&&(ROLE_DESC[c2[0].s.id]?46:40))||40)/2),arrow:false,i:2});
+      if(c2.length){
+        // lodret rail i kolonne 2 ned til sidste arm — armene er tegnet fra col2RailX
+        var c2rows=c2.reduce(function(a,p){return a+1+p.subs.length;},0);
+        svgPaths.push({d:'M'+col2RailX+' '+(rgY+30)+' V'+(rgY+42+h2-30),arrow:false,i:2});
+      }
+      rH=Math.max(h1,h2)+52;
+    }else{
+      rH=layoutColumn(model.r,gx+8,gw-16,rgY+42,railX)+52;
+    }
+    var rg=document.createElement('div');rg.className='tgroup';rg.style.setProperty('--i',2);
+    rg.style.left=gx+'px';rg.style.top=rgY+'px';rg.style.width=gw+'px';rg.style.height=rH+'px';
+    rg.innerHTML='<span class="tgroup__l">Specialisterne <span class="ref">R1–R'+model.r.length+'</span></span>';
+    frag.insertBefore(rg,frag.firstChild.nextSibling);
+
+    var H=rgY+rH+8;
+    host.style.height=H+'px';
+
+    // rygraden: fra formidleren ned til sidste arm
+    var spine='M'+(rootX+rootW/2)+' '+(rootY+rootH)+' v14 H'+railX+' V'+lastArmY;
+    var svgNS='http://www.w3.org/2000/svg';
+    var svg=document.createElementNS(svgNS,'svg');
+    svg.setAttribute('width',W);svg.setAttribute('height',H);
+    svg.setAttribute('viewBox','0 0 '+W+' '+H);
+    svg.setAttribute('aria-hidden','true');
+    var defs=document.createElementNS(svgNS,'defs');
+    defs.innerHTML='<marker id="tArr" viewBox="0 0 10 10" refX="9" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0L10 5L0 10z" class="tarrow"/></marker>';
+    svg.appendChild(defs);
+    function addPath(d,arrow,i){
+      var p=document.createElementNS(svgNS,'path');
+      p.setAttribute('d',d);p.setAttribute('class','tpath');p.style.setProperty('--i',Math.min(i||0,20));
+      if(arrow)p.setAttribute('marker-end','url(#tArr)');
+      svg.appendChild(p);
+    }
+    addPath(spine,false,0);
+    svgPaths.forEach(function(sp){addPath(sp.d,sp.arrow,Math.min(sp.i,20));});
+    host.appendChild(svg);
+    host.appendChild(frag);
+
+    if(treeGrownOnce||REDUCED.matches){host.classList.add('is-grown');}
+    else if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(es){
+        if(es.some(function(e){return e.isIntersecting;})){
+          host.classList.add('is-grown');treeGrownOnce=true;io.disconnect();
+        }
+      },{threshold:.2});
+      io.observe(host);
+    }else{host.classList.add('is-grown');treeGrownOnce=true;}
+  }
+
+  function renderTreeList(specs){
+    var host=$('treeList');host.innerHTML="";
+    var model=buildTreeModel(specs);
+    function add(s,lvl,extra){
+      var b=document.createElement('button');b.type='button';
+      b.className='trow trow--l'+lvl;
+      var isSub=String(s.id||'').indexOf('.')>=0;
+      b.innerHTML='<span class="tnode__n">'+(s.id?'<span class="ref">'+esc(s.id)+'</span>':'')+esc((s.icon?s.icon+' ':'')+s.name)+'</span>'+
+        (extra?'<span class="tnode__d">'+esc(extra)+'</span>':'')+
+        (isSub?'<span class="tsubchip">Under-specialist</span>':'');
+      if(s.id){
+        b.addEventListener('click',function(){
+          var row=document.getElementById('method-'+s.id);
+          if(row){row.scrollIntoView({behavior:'auto',block:'center'});row.classList.add('row--flash');
+            setTimeout(function(){row.classList.remove('row--flash');},2000);}
+        });
+      }
+      host.appendChild(b);
+    }
+    add({name:"Formidleren"},0,"orkestrator — uden for rosteren");
+    model.m.forEach(function(p){add(p.s,1,ROLE_DESC[p.s.id]);p.subs.forEach(function(su){add(su,2);});});
+    model.r.forEach(function(p){add(p.s,2,ROLE_DESC[p.s.id]);p.subs.forEach(function(su){add(su,3);});});
+  }
+
+  function renderTree(res,offline){
+    var specs=res.specialists||[];
+    if(!specs.length){
+      // Samme besked i BÅDE canvas (desktop, >639px) og liste (mobil), så
+      // tomtilstanden aldrig er en uforklaret tom boks på nogen viewport.
+      var treeEmpty='<div class="row"><div class="row__icon">🌳</div><div class="row__main">'+
+        '<div class="row__t">Kunne ikke læse crew-kontrakten</div>'+
+        '<div class="row__d">Kør cockpit-serveren, så vokser træet frem.</div></div></div>';
+      $('treeCanvas').innerHTML=treeEmpty;
+      $('treeList').innerHTML=treeEmpty;
+      $('treeCount').textContent="—";
+      return;
+    }
+    var subs=specs.filter(function(s){return String(s.id).indexOf('.')>=0;}).length;
+    $('treeCount').textContent=(specs.length-subs)+" i rosteren · "+subs+" under-specialister · formidleren tælles ikke med";
+    $('treeSrc').textContent="Kilde: "+(offline?"øjebliksbillede af nyeste kontrakt":"/api/agent-methods")+" · "+(res.contract||"frankly-crew-contract");
+    renderTreeCanvas(specs);
+    renderTreeList(specs);
+    // re-læg lærredet ved resize (uden re-animation)
+    if(!renderTree._wired){
+      renderTree._wired=true;
+      var t;
+      window.addEventListener('resize',function(){
+        clearTimeout(t);
+        t=setTimeout(function(){renderTreeCanvas(renderTree._specs||specs);},180);
+      });
+    }
+    renderTree._specs=specs;
+  }
+
+  function loadCrew(){
     fetch('/api/agent-methods',{cache:'no-store'})
       .then(function(r){return r.json();})
       .then(function(res){
-        if(!res||!res.ok){methodsOffline(box,(res&&res.error)||'Kunne ikke læse crew-kontrakten');return;}
-        box.innerHTML="";
-        var note=document.createElement('div');note.className="ap-note";
-        note.innerHTML='🛠️ Rediger en metode og gem — serveren skriver en <b>ny dateret kontraktversion</b> (den gamle bevares som historik), logger beslutningen og filer den som læring. Claims/produkt/juridisk afvises altid; intet gated udføres herfra.';
-        box.appendChild(note);
-        (res.specialists||[]).forEach(function(s){box.appendChild(methodRow(s));});
-        document.getElementById('methodCount').textContent=(res.specialists||[]).length+' specialister';
-        document.getElementById('methodRef').textContent=res.contract||'';
+        if(!res||!res.ok)throw 0;
+        renderMethodList(res);
+        renderTree(res,false);
       })
-      .catch(function(){methodsOffline(box,'Kør cockpit-server.py for at se og justere metoder her.');});
+      .catch(function(){
+        var snapAgents=SNAP&&SNAP.agents;
+        if(snapAgents&&snapAgents.specialists&&snapAgents.specialists.length){
+          renderMethodList({specialists:snapAgents.specialists.map(function(s){return {id:s.id,name:s.name,icon:s.icon,method:s.method};}),contract:snapAgents.contract},
+            'Metode-fladen er offline — kør cockpit-server.py for at redigere her.');
+          // skjul redigér-knapper offline (read-only visning)
+          [].forEach.call($('methods').querySelectorAll('[data-a="edit"]'),function(b){b.disabled=true;b.style.opacity=.45;});
+          renderTree({specialists:snapAgents.specialists,contract:snapAgents.contract},true);
+        }else{
+          methodsOffline($('methods'),'Kør cockpit-server.py, så kan du se og justere her.');
+          renderTree({specialists:[]},true);
+        }
+      });
   }
-  renderMethods();
 
-  // load live feeds; fall back to snapshot
-  var feeds={flight:"data/flight-recorder.json",queue:"data/mission-control-queue.json",activation:"data/activation-queue-data.json",surfaces:"data/surface-gate-registry.json",autopilot:"data/autopilot-digest.json",learning:"data/learning-capture-queue.json"};
-  var data={flight:SNAP.flight,queue:SNAP.queue,activation:SNAP.activation,surfaces:SNAP.surfaces,autopilot:null,learning:null};
+  /* ============================================================
+     P8 — Hylden
+     ============================================================ */
+  var shelfState={q:"",cat:""};
+  function renderShelf(tools){
+    var grid=$('shelf');grid.innerHTML="";
+    var q=shelfState.q.toLowerCase(),cat=shelfState.cat;
+    var visible=(tools||[]).filter(function(t){
+      if(t.retired)return false;
+      if(cat&&t.category!==cat)return false;
+      if(q&&(t.labelDa+" "+(t.descDa||t.descriptionEn||"")+" "+t.category+" "+
+        (t.gateLabelDa||"")+" "+(t.statusLabelDa||"")).toLowerCase().indexOf(q)<0)return false;
+      return true;
+    });
+    if(!visible.length){
+      var d=document.createElement('div');d.className="row";d.style.gridColumn="1/-1";
+      d.innerHTML='<div class="row__icon">🔍</div><div class="row__main">'+
+        '<div class="row__t">'+(q?('Ingenting matcher "'+esc(shelfState.q)+'" — prøv et andet ord eller nulstil filteret.'):'Hylden er tom — registret kunne ikke læses.')+'</div></div>'+
+        (q?'<div class="row__side"><button class="dbtn" id="shelfReset">Nulstil</button></div>':'');
+      grid.appendChild(d);
+      var btn=document.getElementById('shelfReset');
+      if(btn)btn.addEventListener('click',function(){
+        shelfState.q="";$('shelfSearch').value="";renderShelf(tools);
+      });
+    }
+    visible.forEach(function(t){
+      var a=document.createElement('a');a.className="surface";a.href=t.href;
+      var gate=t.gateLabelDa||"Kun lokal";
+      var gc=gate.indexOf("Offentlig")===0?"chip--sky":gate.indexOf("Låst")===0?"chip--lock":gate.indexOf("Kræver")===0?"chip--warn":"";
+      var status=t.statusLabelDa||t.status||"";
+      var sc=t.status==="live"?"chip--ok":t.status==="preview"?"chip--blue":t.status==="locked"?"chip--lock":"";
+      a.setAttribute('aria-label','Åbn '+t.labelDa+' — '+gate+' — '+status);
+      a.innerHTML='<div class="surface__n">'+esc(t.labelDa)+'</div>'+
+        '<div class="surface__d">'+esc(t.descDa||t.descriptionEn||"")+'</div>'+
+        '<div class="surface__m"><span class="chip">'+esc(t.category)+'</span>'+
+        '<span class="chip '+sc+'">'+esc(status)+'</span>'+
+        '<span class="chip '+gc+'">'+(gate.indexOf("Låst")===0?'🔒 ':'')+esc(gate)+'</span></div>';
+      grid.appendChild(a);
+    });
+    $('surfRef').textContent=visible.length+" af "+(tools||[]).filter(function(t){return !t.retired;}).length+" flader";
+  }
+  function wireShelf(tools){
+    $('shelfSearch').addEventListener('input',function(){shelfState.q=this.value.trim();renderShelf(tools);});
+    [].forEach.call(document.querySelectorAll('.fpill'),function(p){
+      p.addEventListener('click',function(){
+        [].forEach.call(document.querySelectorAll('.fpill'),function(x){x.setAttribute('aria-pressed','false');});
+        p.setAttribute('aria-pressed','true');
+        shelfState.cat=p.getAttribute('data-cat');
+        renderShelf(tools);
+      });
+    });
+    renderShelf(tools);
+  }
+
+  /* ============================================================
+     Feeds: live når serveren kører; SNAP-fallback på file://.
+     Én kanonisk kilde pr. datasæt — UI'et oversætter aldrig selv,
+     det læser *Da-felter når sync-laget har skrevet dem.
+     ============================================================ */
+  var feeds={
+    flight:"data/flight-recorder.json",
+    queue:"data/mission-control-queue.json",          // FROSSET arkiv — læses statisk
+    activation:"data/activation-queue-data.json",
+    surfaces:"data/surface-gate-registry.json",
+    autopilot:"data/autopilot-digest.json",
+    learning:"data/learning-capture-queue.json",
+    nba:"data/next-best-action.json",                  // nyt feed (sync) — degraderer pænt hvis det mangler
+    health:"data/health.json",                         // nyt feed (sync) — degraderer pænt hvis det mangler
+    toolsShelf:"data/tools-shelf.json"                 // nyt feed (sync) — indtil da bor TOOLS her i siden
+  };
+  var data={
+    flight:(SNAP&&SNAP.flight)||{counts:{},runs:[]},
+    queue:(SNAP&&SNAP.queue)||{counts:{}},
+    activation:(SNAP&&SNAP.activation)||{stats:{},lanes:[]},
+    surfaces:(SNAP&&SNAP.surfaces)||{counts:{},surfaces:[]},
+    autopilot:null,learning:null,
+    nba:(SNAP&&SNAP.nba)||null,
+    health:(SNAP&&SNAP.health)||null,
+    toolsShelf:(SNAP&&SNAP.toolsShelf)||null
+  };
+  var anyLive=false;
   Promise.all(Object.keys(feeds).map(function(k){
-    return fetch(feeds[k],{cache:"no-store"}).then(function(r){if(!r.ok)throw 0;return r.json();}).then(function(j){data[k]=j;}).catch(function(){});
+    return fetch(feeds[k],{cache:"no-store"})
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(j){data[k]=j;anyLive=true;})
+      .catch(function(){});
   })).then(function(){
-    render(data);
-    var live=false;try{live=location.protocol!=="file:";}catch(e){}
-    if(!live){document.getElementById('banner').className="banner snap";document.getElementById('banner').textContent="Øjebliksbillede (8. juli). Kør siden fra en lokal server for live tal: python3 -m http.server i frankly-os-site/.";}
+    renderTiles(data);
+    var w1=renderAttention(data);
+    var w2=renderLearnings(data.learning);
+    renderStatusPill(data,(w1||0)+(w2||0));
+    renderRuns(data);
+    renderArchive(data);
+    fillResume(data);refreshOut();
+    var shelfTools=(data.toolsShelf&&data.toolsShelf.tools&&data.toolsShelf.tools.length)?data.toolsShelf.tools:[];
+    wireShelf(shelfTools);
+
+    var isFile=false;try{isFile=location.protocol==="file:";}catch(e){}
+    var banner=$('banner');
+    if(isFile||!anyLive){
+      var snapDate=(SNAP&&SNAP.generatedAt)?String(SNAP.generatedAt).slice(0,16).replace('T',', kl. '):"";
+      banner.className="banner show";
+      banner.innerHTML='Du ser et øjebliksbillede'+(snapDate?' fra sidste synkronisering ('+esc(snapDate)+')':'')+
+        '. Kør cockpit-serveren for live tal og knapper der virker: <code>python3 os-visualization/scripts/cockpit-server.py</code>';
+    }
   });
+
+  wireTabs();
+  loadCrew();
 })();
 </script>
 </body>

@@ -1,13 +1,13 @@
 {
-  "generated": "2026-07-06",
+  "generated": "2026-07-10",
   "status": "local-registry-active",
   "source": "os-visualization/system-intelligence/surface-gate-registry.json",
-  "summary": "Canonical local registry for Frankly local OS and Lab surfaces, gate state, QA evidence, Studio/Observatory/Cockpit additions and remaining approvals. Uploadable website bundles stay allowlisted and separate.",
+  "summary": "Canonical local registry for Frankly local OS and Lab surfaces, gate state, QA evidence and remaining approvals. 4.0 (2026-07-10): the cockpit is registered as the ONE operating surface; retired v3 pages left the registry (files stay on disk); the two dead blog/ paths now point at journal/. Uploadable website bundles stay allowlisted and separate.",
   "counts": {
-    "surfaces": 12,
-    "browserQaPassed": 12,
+    "surfaces": 5,
+    "browserQaPassed": 5,
     "publicReady": 0,
-    "approvalGated": 12
+    "approvalGated": 5
   },
   "surfaces": [
     {
@@ -21,111 +21,22 @@
       "reportFile": "os-visualization/reports/onboarding-entry-gate-2026-07-01.md",
       "evidenceFolder": "os-visualization/evidence/20260701-onboarding-entry-gate-browser-qa/",
       "nextApproval": "Decide sitemap/robots behavior before public use.",
-      "anchor": "entry-gate"
+      "anchor": "entry-gate",
+      "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
     },
     {
-      "id": "os-activation",
-      "name": "Frankly OS activation queue",
-      "page": "frankly-os.html",
+      "id": "frankly-os-cockpit",
+      "name": "Frankly OS Cockpit (4.0)",
+      "page": "frankly-os-cockpit.html",
       "state": "local-live",
-      "gate": "public-deploy-and-plugin-install-gated",
+      "gate": "internal-operating-surface-loopback-only",
       "browserQa": "passed",
       "publicUse": "gated",
-      "reportFile": "os-visualization/reports/v14-activation-pilot-implementation-2026-07-01.md",
-      "evidenceFolder": "os-visualization/evidence/20260701-v14-activation-browser-qa/",
-      "nextApproval": "Public deploy and official plugin installs require Jonas approval.",
-      "anchor": "activation"
-    },
-    {
-      "id": "lab-operating-queue",
-      "name": "Frankly Lab operating queue",
-      "page": "lab-hub.html",
-      "state": "local-live",
-      "gate": "live-actions-and-installs-gated",
-      "browserQa": "passed",
-      "publicUse": "gated",
-      "reportFile": "os-visualization/reports/lab-operating-queue-2026-07-01.md",
-      "evidenceFolder": "os-visualization/evidence/20260701-lab-operating-queue-browser-qa/",
-      "nextApproval": "Public deploy, paid API, Slack automation and installs remain gated.",
-      "anchor": "queue"
-    },
-    {
-      "id": "agent-brief-builder",
-      "name": "Agent Brief Builder",
-      "page": "agent-brief-builder.html",
-      "state": "local-live",
-      "gate": "internal-prompt-orchestration-surface",
-      "browserQa": "passed",
-      "publicUse": "gated",
-      "reportFile": "os-visualization/reports/agent-briefing-pipeline-2026-07-01.md",
-      "evidenceFolder": "os-visualization/evidence/20260701-agent-brief-builder-browser-qa/",
-      "nextApproval": "Keep as local prompt builder until thread automation, public use or connector writes are explicitly approved.",
-      "anchor": "brief-builder"
-    },
-    {
-      "id": "mission-control-queue",
-      "name": "Mission Control Queue",
-      "page": "mission-control-queue.html",
-      "state": "local-live",
-      "gate": "thread-handoff-and-connector-writes-gated",
-      "browserQa": "passed",
-      "publicUse": "gated",
-      "reportFile": "os-visualization/reports/mission-control-queue-2026-07-01.md",
-      "evidenceFolder": "os-visualization/evidence/20260701-mission-control-queue-browser-qa/",
-      "nextApproval": "Keep as local queue until automatic thread creation, connector writes or public use are explicitly approved.",
-      "anchor": "mission-control"
-    },
-    {
-      "id": "progress-map",
-      "name": "Frankly OS Progress Map",
-      "page": "progress-map.html",
-      "state": "local-live",
-      "gate": "public-deploy-and-source-status-gated",
-      "browserQa": "passed",
-      "publicUse": "gated",
-      "reportFile": "os-visualization/reports/frankly-os-progress-map-2026-07-01.md",
-      "evidenceFolder": "os-visualization/evidence/20260701-progress-map-browser-qa/",
-      "nextApproval": "Keep as an internal progress surface until public deploy and product/legal source status changes are approved.",
-      "anchor": "progress"
-    },
-    {
-      "id": "control-cockpit",
-      "name": "Frankly OS Control Cockpit",
-      "page": "control-cockpit.html",
-      "state": "local-live",
-      "gate": "internal-machine-activation-surface",
-      "browserQa": "passed",
-      "publicUse": "gated",
-      "reportFile": "os-visualization/reports/control-cockpit-v0-1-activation-test-2026-07-05.md",
-      "evidenceFolder": "os-visualization/evidence/20260705-control-cockpit-browser-qa/",
-      "nextApproval": "Keep as an internal machine cockpit until Drive sync and Jonas approval for any public use.",
-      "anchor": "cockpit"
-    },
-    {
-      "id": "observatory",
-      "name": "Frankly OS Observatory",
-      "page": "observatory.html",
-      "state": "local-live",
-      "gate": "internal-machine-visualization-surface",
-      "browserQa": "passed",
-      "publicUse": "gated",
-      "reportFile": "os-visualization/reports/observatory-v0-1-2026-07-05.md",
-      "evidenceFolder": "os-visualization/evidence/20260705-observatory-browser-qa/",
-      "nextApproval": "Keep as an internal machine observatory until Drive sync and Jonas approval for any public use.",
-      "anchor": "observatory"
-    },
-    {
-      "id": "studio",
-      "name": "Frankly OS Studio",
-      "page": "studio.html",
-      "state": "local-live",
-      "gate": "internal-machine-software-shell",
-      "browserQa": "passed",
-      "publicUse": "gated",
-      "reportFile": "os-visualization/reports/studio-v0-1-2026-07-06.md",
-      "evidenceFolder": "os-visualization/evidence/20260706-studio-browser-qa/",
-      "nextApproval": "Keep as an internal local software shell until Drive sync and Jonas approval for any public use.",
-      "anchor": "studio"
+      "reportFile": "os-visualization/reports/frankly-lab-40-consolidation-2026-07-10.md",
+      "evidenceFolder": "os-visualization/evidence/20260710-frankly-lab-40-consolidation-browser-qa/",
+      "nextApproval": "Stays a local operating surface served by cockpit-server.py on 127.0.0.1:8137; any public use requires Jonas approval.",
+      "anchor": "cockpit",
+      "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
     },
     {
       "id": "product-clarity-review",
@@ -138,12 +49,13 @@
       "reportFile": "os-visualization/reports/product-clarity-review-gate-2026-07-01.md",
       "evidenceFolder": "os-visualization/evidence/20260701-product-clarity-review-gate-browser-qa/",
       "nextApproval": "Product/legal must approve terms, exclusions, deductibles and wording.",
-      "anchor": "review"
+      "anchor": "review",
+      "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
     },
     {
       "id": "blog-publishing",
       "name": "Blog draft publishing gate",
-      "page": "blog/index.html",
+      "page": "journal/frankly-blog-index.html",
       "state": "noindex-gated",
       "gate": "publishing-setup-and-product-legal-needed",
       "browserQa": "passed",
@@ -151,12 +63,13 @@
       "reportFile": "os-visualization/reports/blog-publishing-gate-2026-07-01.md",
       "evidenceFolder": "os-visualization/evidence/20260701-blog-publishing-gate-browser-qa/",
       "nextApproval": "Keep blog out of sitemap until source, legal, author/reviewer and schema policy are approved.",
-      "anchor": "publish-gate"
+      "anchor": "publish-gate",
+      "gateLabelDa": "Blokeret (claims/produkt/legal)"
     },
     {
       "id": "cykelforsikring-article-review",
       "name": "Cykelforsikring article review gate",
-      "page": "blog/cykelforsikring.html",
+      "page": "journal/frankly-blog-05-cyklen.html",
       "state": "noindex-review-gated",
       "gate": "product-claim-source-and-publishing-approval-needed",
       "browserQa": "passed",
@@ -164,7 +77,8 @@
       "reportFile": "os-visualization/reports/article-review-gate-cykelforsikring-2026-07-01.md",
       "evidenceFolder": "os-visualization/evidence/20260701-article-review-gate-browser-qa/",
       "nextApproval": "Frankly bicycle-specific claims, warranty/reklamation sources, author/reviewer, canonical, sitemap and schema remain blocked.",
-      "anchor": "article-gate"
+      "anchor": "article-gate",
+      "gateLabelDa": "Blokeret (claims/produkt/legal)"
     }
   ]
 }

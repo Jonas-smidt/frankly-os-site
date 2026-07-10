@@ -24,14 +24,15 @@ REPO_ROOT = SCRIPT_DIR.parent
 SITE = REPO_ROOT / "site"
 OUT_DIR = REPO_ROOT / "publish-dry-run"
 
-# Internal OS surfaces that must never appear in the public bundle (backstop over the allowlist).
-FORBIDDEN_SURFACES = {
-    "frankly-os.html", "control-cockpit.html", "studio.html", "observatory.html",
-    "mission-control-queue.html", "progress-map.html", "lab-hub.html", "agent-brief-builder.html",
-}
-
 sys.path.insert(0, str(SCRIPT_DIR))
+import check_upload_boundary as cub  # noqa: E402  (sibling module; path injected above)
 import sync_from_drive as sfd  # noqa: E402  (sibling module; path injected above)
+
+# Internal OS surfaces that must never appear in the public bundle (backstop over the
+# allowlist). ONE shared set: check_upload_boundary.OS_ONLY_PAGES is the canonical
+# denylist (cockpit + v3 archive + the 11 retired 4.0 pages), so the two deploy
+# backstops cannot drift apart.
+FORBIDDEN_SURFACES = set(cub.OS_ONLY_PAGES)
 
 
 def _sha256(path: Path) -> str:

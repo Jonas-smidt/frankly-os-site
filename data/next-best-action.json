@@ -1,0 +1,43 @@
+{
+  "generated": "2026-07-10T16:38:53+00:00",
+  "source": "current-machine-handoff.md#next-best-action + machine-handoff-state.json:machineDerived",
+  "activeBatch": "MCQ-011",
+  "activeBatchDa": "MCQ-011 — Kørselsregister + lokal eval-harness",
+  "nextBestAction": "start from `frankly-os-site/studio.html`, `os-visualization/system-intelligence/studio-v0-1-2026-07-06.json`, `os-visualization/system-intelligence/claude-run-to-packet-launcher-v0-1-2026-07-06.json` and `os-visualization/system-intelligence/claude-task-packet-builder-v0-1-2026-07-06.json` before choosing tools; use Studio's run-to-packet launcher and packet builder for future code work and `frankly-os-site/control-cockpit.html` as the report-style operating overview",
+  "nextBestActionDa": "start fra `frankly-os-site/studio.html`, `os-visualization/system-intelligence/studio-v0-1-2026-07-06.json`, `os-visualization/system-intelligence/claude-run-to-packet-launcher-v0-1-2026-07-06.json` og `os-visualization/system-intelligence/claude-task-packet-builder-v0-1-2026-07-06.json` før du vælger værktøjer; brug Studios run-to-packet launcher og packet builder til fremtidigt kodearbejde og `frankly-os-site/control-cockpit.html` som det rapport-agtige driftsoverblik (OBS: kilden er stale — disse flader pensioneres af 4.0)",
+  "activeGates": [
+    "no automatic thread creation without Jonas approval",
+    "no connector writes without approval",
+    "no public deploy without approval",
+    "no paid API spend without approval",
+    "no Slack/company-visible automation without approval",
+    "no plugin install without approval",
+    "no product/legal/customer-facing claims without source approval"
+  ],
+  "activeGatesDa": [
+    "Automatisk tråd-oprettelse",
+    "Connector-skrivning (Drive/API)",
+    "Offentlig deploy",
+    "Betalt API-forbrug",
+    "Slack / firma-synlig automatik",
+    "Plugin-installation",
+    "Claims / produkt / juridisk"
+  ],
+  "approvalNeeded": [
+    "build-web-apps` plugin install",
+    "build-web-data-visualization` plugin install",
+    "Public deploy of OS/site changes",
+    "Paid API or live Slack automation",
+    "Blog/article publishing",
+    "Claims/product/legal work reopen",
+    "Partner activation external use",
+    "Thread automation / parallel chat spawning"
+  ],
+  "runRegistry": {
+    "runs": 51,
+    "machineFocusedRuns": 50,
+    "validatedRuns": 44,
+    "driveSyncedRuns": 7,
+    "claimWorkRuns": 0
+  }
+}

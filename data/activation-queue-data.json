@@ -17,7 +17,9 @@
         "build-web-apps",
         "build-web-data-visualization"
       ],
-      "gate": "Jonas approval before install"
+      "gate": "Jonas approval before install",
+      "labelDa": "Installér som det næste",
+      "gateDa": "Kræver dit ja før installation"
     },
     {
       "id": "adapt",
@@ -29,7 +31,9 @@
         "make-interfaces-feel-better",
         "remotion-marketing-video-skill"
       ],
-      "gate": "Local Frankly-native skill adaptation only"
+      "gate": "Local Frankly-native skill adaptation only",
+      "labelDa": "Tilpas lokalt",
+      "gateDa": "Kun lokal Frankly-tilpasning (ingen rå install)"
     },
     {
       "id": "audit",
@@ -37,7 +41,9 @@
       "items": [
         "codex-site-visual-system-extractor"
       ],
-      "gate": "Dependency and script audit before promotion"
+      "gate": "Dependency and script audit before promotion",
+      "labelDa": "Undersøg / pilot",
+      "gateDa": "Afhængigheds- og script-audit før promovering"
     }
   ],
   "items": [
@@ -121,5 +127,6 @@
       "pilot": "Create one code-driven video brief for an OS/route explainer",
       "gate": "no render service or paid API"
     }
-  ]
+  ],
+  "syncedAt": "2026-07-10T16:38:53+00:00"
 }
