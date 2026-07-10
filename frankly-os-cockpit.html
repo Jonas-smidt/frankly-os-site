@@ -1612,12 +1612,21 @@
     return items.length+pendingAct;
   }
 
+  // Gammel server-proces (fra før et endpoint fandtes) svarer 404/405 eller ikke-JSON:
+  // vis en handlingsanvisning i stedet for den rå fejl. catch() (ingen server) er uændret.
+  var OLD_SERVER_CHIP='<span class="chip chip--warn">Cockpit-serveren kører en ældre version — genstart den og prøv igen</span>';
+  function apiRes(r){
+    if(r.status===404||r.status===405)return {__oldServer:true};
+    return r.json().then(null,function(){return {__oldServer:true};});
+  }
+
   function decide(id,decision,box){
     var row=box.closest('.row');
     box.innerHTML='<span class="dwait">…</span>';
     fetch('/api/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskId:id,decision:decision})})
-      .then(function(r){return r.json();})
+      .then(apiRes)
       .then(function(res){
+        if(res&&res.__oldServer){box.innerHTML=OLD_SERVER_CHIP;return;}
         if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">Beslutningen blev ikke gemt — prøv igen</span>';return;}
         var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
         box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+label+'</span>';
@@ -1634,8 +1643,9 @@
     var row=box.closest('.row');
     box.innerHTML='<span class="dwait">…</span>';
     fetch('/api/activation-decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,decision:decision})})
-      .then(function(r){return r.json();})
+      .then(apiRes)
       .then(function(res){
+        if(res&&res.__oldServer){box.innerHTML=OLD_SERVER_CHIP;return;}
         if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">'+esc((res&&res.error)||'Beslutningen blev ikke gemt — prøv igen')+'</span>';return;}
         var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
         box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+label+'</span>';
