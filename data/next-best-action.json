@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-10T16:38:53+00:00",
+  "generated": "2026-07-10T16:56:23+00:00",
   "source": "current-machine-handoff.md#next-best-action + machine-handoff-state.json:machineDerived",
   "activeBatch": "MCQ-011",
   "activeBatchDa": "MCQ-011 — Kørselsregister + lokal eval-harness",
@@ -35,7 +35,7 @@
   ],
   "runRegistry": {
     "runs": 51,
-    "machineFocusedRuns": 50,
+    "machineFocusedRuns": 51,
     "validatedRuns": 44,
     "driveSyncedRuns": 7,
     "claimWorkRuns": 0
