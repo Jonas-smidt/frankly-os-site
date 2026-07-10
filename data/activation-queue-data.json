@@ -2,10 +2,10 @@
   "updated": "2026-07-10",
   "status": "implemented-browser-qa-passed",
   "source": "os-visualization/system-intelligence/external-capability-activation-queue.md",
-  "summary": "Seventy external capability candidates are registered. Eight are activated for the next supervised Frankly OS pass.",
+  "summary": "Seventy external capability candidates are registered. Four remain live for the next supervised Frankly OS pass (2 installs pending marketplace verification, 2 reduced-scope pilots); four are closed as already adapted (2026-07-01).",
   "stats": {
     "registered": 70,
-    "activateNow": 8,
+    "activateNow": 4,
     "localAdaptations": 7,
     "approvalGatedInstalls": 2
   },
@@ -139,5 +139,5 @@
       "note": "adaptation done (frankly-remotion-video-production-skill.md)"
     }
   ],
-  "syncedAt": "2026-07-10T19:58:10+00:00"
+  "syncedAt": "2026-07-10T20:01:07+00:00"
 }
