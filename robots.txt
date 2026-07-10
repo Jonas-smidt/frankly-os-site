@@ -28,4 +28,4 @@ Disallow: /glass-surface.html
 Disallow: /frankly-ribbon-lab.html
 Disallow: /liquid-glass-hover.html
 
-Sitemap: https://os.franklydesign.dk/sitemap.xml
+Sitemap: https://lab.franklydesign.dk/sitemap.xml
