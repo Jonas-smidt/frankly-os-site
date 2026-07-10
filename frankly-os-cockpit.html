@@ -1511,7 +1511,12 @@
     var items=(ap.waitingForJonas||[]).map(function(w){
       return {id:w.id,t:w.title,d:w.why||"",gate:w.gate};
     });
-    if(!items.length){
+    // aktiveringskøen tælles med FØR tom-tilstanden, så headeren aldrig siger
+    // "Ingenting venter", mens kort nedenfor beder om et ja.
+    var act=d.activation||{};
+    var aItems=act.items||[];
+    var pendingAct=aItems.filter(function(it){return !it.decision;}).length;
+    if(!items.length&&(feedMissing||!pendingAct)){
       var empty=document.createElement('div');empty.className="row";
       if(feedMissing){
         // Ærlig neutral tilstand: uden feedet VED siden ikke, om der venter noget.
@@ -1545,28 +1550,62 @@
     });
 
     // underliste: aktiveringskøen — nye værktøjer der venter på dit ja
-    var act=d.activation||{};
     var lanes=act.lanes||[];
-    if(lanes.length){
+    var laneInfo={};
+    lanes.forEach(function(l){laneInfo[l.id]={label:l.labelDa||LANE_LABEL[l.id]||l.label||l.id,desc:l.gateDa||LANE_DESC[l.id]||l.gate||""};});
+    if(lanes.length||aItems.length){
       var ms=document.createElement('div');ms.className="minisec";
       ms.innerHTML='<span class="fl-kicker">Nye værktøjer der venter på dit ja</span><div class="rule"></div>'+
         '<span class="ref">'+esc(act.syncedAt?("synk "+act.syncedAt):("indhold fra "+(act.updated||"")))+'</span>';
       box.appendChild(ms);
+    }
+    if(aItems.length){
+      // fuldt kort pr. værktøj: samme Godkend/Udskyd/Afvis-flow som backloggen ovenfor
+      aItems.forEach(function(it){
+        var li=laneInfo[it.lane]||{label:LANE_LABEL[it.lane]||it.lane||"",desc:LANE_DESC[it.lane]||it.gate||""};
+        var side;
+        if(it.decision){
+          var lbl=it.decision==='approved'?'✓ Godkendt':it.decision==='deferred'?'Udskudt':'Afvist';
+          side='<span class="chip chip--'+(it.decision==='approved'?'ok':'warn')+'">'+lbl+'</span>';
+        }else{
+          side='<span class="decide-act" data-name="'+esc(it.name)+'" style="display:flex;gap:6px">'+
+            '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
+            '<button class="dbtn" data-d="deferred">Udskyd</button>'+
+            '<button class="dbtn dbtn--no" data-d="declined">Afvis</button></span>';
+        }
+        var r=document.createElement('div');r.className="row";
+        r.innerHTML='<div class="row__icon">🧰</div><div class="row__main">'+
+          '<div class="row__t">'+esc(it.name)+'</div>'+
+          '<div class="row__d">'+esc(li.label)+' — '+esc(li.desc)+'</div>'+
+          (it.pilot?'<div class="row__d ref">Pilot: '+esc(it.pilot)+'</div>':'')+
+          '<div class="decided" hidden></div></div>'+
+          '<div class="row__side">'+side+'</div>';
+        box.appendChild(r);
+      });
+      [].forEach.call(box.querySelectorAll('.decide-act'),function(bx){
+        var nm=bx.getAttribute('data-name');
+        [].forEach.call(bx.querySelectorAll('.dbtn'),function(b){
+          b.addEventListener('click',function(){decideActivation(nm,b.getAttribute('data-d'),bx);});
+        });
+      });
+    }else if(lanes.length){
+      // ældre feed uden items[] (fx et gammelt snapshot): navneliste med statisk chip
       lanes.forEach(function(l){
         (l.items||[]).forEach(function(name){
           var r=document.createElement('div');r.className="row";
-          var lane=l.labelDa||LANE_LABEL[l.id]||l.label||l.id;
-          var desc=l.gateDa||LANE_DESC[l.id]||l.gate||"";
+          var li=laneInfo[l.id];
           r.innerHTML='<div class="row__icon">🧰</div><div class="row__main">'+
             '<div class="row__t">'+esc(name)+'</div>'+
-            '<div class="row__d">'+esc(lane)+' — '+esc(desc)+'</div></div>'+
+            '<div class="row__d">'+esc(li.label)+' — '+esc(li.desc)+'</div></div>'+
             '<div class="row__side"><span class="chip chip--warn">Din godkendelse</span></div>';
           box.appendChild(r);
         });
       });
     }
-    $('attnCount').textContent=feedMissing?"ukendt":(items.length+" ting");
-    return items.length;
+    $('attnCount').textContent=feedMissing
+      ?(pendingAct?pendingAct+" ting · autopilot ukendt":"ukendt")
+      :((items.length+pendingAct)+" ting");
+    return items.length+pendingAct;
   }
 
   function decide(id,decision,box){
@@ -1581,6 +1620,24 @@
         var dc=row.querySelector('.decided');
         if(res.nextCommand){dc.hidden=false;dc.innerHTML='<b>Kør så, når du er klar:</b><br><code>'+esc(res.nextCommand)+'</code>';}
         else if(decision!=='approved'){dc.hidden=false;dc.textContent=decision==='deferred'?'Gemt til senere.':'Fjernet fra listen.';}
+      })
+      .catch(function(){box.innerHTML='<span class="chip chip--warn">Kør cockpit-serveren for at beslutte herfra</span>';});
+  }
+
+  // aktiveringskøens kort: samme flow som decide(), men mod /api/activation-decision (pr. navn).
+  // Serveren udfører ALDRIG noget gated — install-godkendelse giver kun en instruktion tilbage.
+  function decideActivation(name,decision,box){
+    var row=box.closest('.row');
+    box.innerHTML='<span class="dwait">…</span>';
+    fetch('/api/activation-decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,decision:decision})})
+      .then(function(r){return r.json();})
+      .then(function(res){
+        if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">'+esc((res&&res.error)||'Beslutningen blev ikke gemt — prøv igen')+'</span>';return;}
+        var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
+        box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+label+'</span>';
+        var dc=row.querySelector('.decided');
+        if(res.nextCommand){dc.hidden=false;dc.innerHTML='<b>Din tur (dit klik er gaten):</b><br><code>'+esc(res.nextCommand)+'</code>';}
+        else if(res.confirmation){dc.hidden=false;dc.textContent=res.confirmation;}
       })
       .catch(function(){box.innerHTML='<span class="chip chip--warn">Kør cockpit-serveren for at beslutte herfra</span>';});
   }
