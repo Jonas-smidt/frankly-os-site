@@ -1710,8 +1710,9 @@
     var row=box.closest('.row');
     box.innerHTML='<span class="dwait">…</span>';
     fetch('/api/learning',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,decision:decision})})
-      .then(function(r){return r.json();})
+      .then(apiRes)
       .then(function(res){
+        if(res&&res.__oldServer){box.innerHTML=OLD_SERVER_CHIP;return;}
         if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">'+esc((res&&res.error)||'Prøv igen')+'</span>';return;}
         box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+(decision==='approved'?'✓ Filet':'Afvist')+'</span>';
         var dc=row.querySelector('.decided');
