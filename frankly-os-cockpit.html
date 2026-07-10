@@ -1515,7 +1515,7 @@
     // "Ingenting venter", mens kort nedenfor beder om et ja.
     var act=d.activation||{};
     var aItems=act.items||[];
-    var pendingAct=aItems.filter(function(it){return !it.decision;}).length;
+    var pendingAct=aItems.filter(function(it){return !it.decision&&!it.status;}).length;
     if(!items.length&&(feedMissing||!pendingAct)){
       var empty=document.createElement('div');empty.className="row";
       if(feedMissing){
@@ -1567,6 +1567,9 @@
         if(it.decision){
           var lbl=it.decision==='approved'?'✓ Godkendt':it.decision==='deferred'?'Udskudt':'Afvist';
           side='<span class="chip chip--'+(it.decision==='approved'?'ok':'warn')+'">'+lbl+'</span>';
+        }else if(it.status){
+          // lukket uden cockpit-beslutning (fx already-adapted-…): tilstand, ikke knapper
+          side='<span class="chip chip--ok">'+esc(/^already-adapted/.test(it.status)?'✓ Allerede tilpasset':it.status)+'</span>';
         }else{
           side='<span class="decide-act" data-name="'+esc(it.name)+'" style="display:flex;gap:6px">'+
             '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
@@ -1578,6 +1581,7 @@
           '<div class="row__t">'+esc(it.name)+'</div>'+
           '<div class="row__d">'+esc(li.label)+' — '+esc(li.desc)+'</div>'+
           (it.pilot?'<div class="row__d ref">Pilot: '+esc(it.pilot)+'</div>':'')+
+          (it.note?'<div class="row__d">'+esc(it.note)+'</div>':'')+
           '<div class="decided" hidden></div></div>'+
           '<div class="row__side">'+side+'</div>';
         box.appendChild(r);

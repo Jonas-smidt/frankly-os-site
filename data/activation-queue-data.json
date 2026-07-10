@@ -1,5 +1,5 @@
 {
-  "updated": "2026-07-01",
+  "updated": "2026-07-10",
   "status": "implemented-browser-qa-passed",
   "source": "os-visualization/system-intelligence/external-capability-activation-queue.md",
   "summary": "Seventy external capability candidates are registered. Eight are activated for the next supervised Frankly OS pass.",
@@ -55,7 +55,8 @@
       "action": "install-next",
       "destination": "website/page production, browser QA, frontend implementation",
       "pilot": "V14 Frankly OS page polish and local QA",
-      "gate": "plugin install approval"
+      "gate": "plugin install approval",
+      "note": "kilde er et OpenAI-plugin-repo — verificér at plugin'et findes i det installerede marketplace før ja/nej"
     },
     {
       "rank": 2,
@@ -65,7 +66,8 @@
       "action": "install-next",
       "destination": "OS visualization, dashboards, charts, route atlas",
       "pilot": "Improve route/capability visualization model",
-      "gate": "plugin install approval"
+      "gate": "plugin install approval",
+      "note": "kilde er et OpenAI-plugin-repo — verificér at plugin'et findes i det installerede marketplace før ja/nej"
     },
     {
       "rank": 3,
@@ -75,7 +77,9 @@
       "action": "adapt",
       "destination": "frankly-web-experience-design-skill.md",
       "pilot": "Write Frankly-native page brief rules for cinematic/visual-first pages",
-      "gate": "no raw skill install"
+      "gate": "no raw skill install",
+      "status": "already-adapted-2026-07-01",
+      "note": "Allerede dækket af frankly-web-experience-design-skill.md (evidens: external-capability-activation-queue.md → Local Adaptation Status)"
     },
     {
       "rank": 4,
@@ -85,7 +89,9 @@
       "action": "adapt",
       "destination": "frankly-motion-graphics-direction-skill.md and frankly-interaction-motion-skill.md",
       "pilot": "Add calm motion reference rules for OS loop/status interactions",
-      "gate": "no raw skill install"
+      "gate": "no raw skill install",
+      "status": "already-adapted-2026-07-01",
+      "note": "Allerede dækket af frankly-motion-graphics-direction-skill.md + frankly-interaction-motion-skill.md (evidens: external-capability-activation-queue.md → Local Adaptation Status)"
     },
     {
       "rank": 5,
@@ -95,7 +101,9 @@
       "action": "adapt",
       "destination": "frankly-web-experience-design-skill.md and frankly-visual-quality-door.md",
       "pilot": "Add non-generic frontend QA checks to visual quality door",
-      "gate": "no raw skill install"
+      "gate": "no raw skill install",
+      "status": "already-adapted-2026-07-01",
+      "note": "Allerede dækket af frankly-web-experience-design-skill.md (evidens: external-capability-activation-queue.md → Local Adaptation Status)"
     },
     {
       "rank": 6,
@@ -105,7 +113,9 @@
       "action": "adapt",
       "destination": "frankly-browser-visual-qa-skill.md and frankly-visual-quality-door.md",
       "pilot": "Add micro-polish checklist for text fit, rhythm, controls and alignment",
-      "gate": "no raw skill install"
+      "gate": "no raw skill install",
+      "status": "already-adapted-2026-07-01",
+      "note": "Allerede dækket af frankly-browser-visual-qa-skill.md (evidens: external-capability-activation-queue.md → Local Adaptation Status)"
     },
     {
       "rank": 7,
@@ -114,7 +124,7 @@
       "lane": "audit",
       "action": "audit/pilot",
       "destination": "frankly-design-token-extraction-skill.md",
-      "pilot": "Audit scripts and run only a no-network/local-source token extraction pilot",
+      "pilot": "One-time, no-network local audit of the script",
       "gate": "dependency/script audit"
     },
     {
@@ -124,9 +134,10 @@
       "lane": "adapt",
       "action": "adapt",
       "destination": "frankly-remotion-video-production-skill.md",
-      "pilot": "Create one code-driven video brief for an OS/route explainer",
-      "gate": "no render service or paid API"
+      "pilot": "Run the one pilot brief (code-driven video brief for an OS/route explainer)",
+      "gate": "no render service or paid API",
+      "note": "adaptation done (frankly-remotion-video-production-skill.md)"
     }
   ],
-  "syncedAt": "2026-07-10T16:56:23+00:00"
+  "syncedAt": "2026-07-10T19:58:10+00:00"
 }
