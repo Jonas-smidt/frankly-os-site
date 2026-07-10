@@ -4,13 +4,337 @@
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 51,
-    "machineFocusedRuns": 51,
+    "runs": 61,
+    "machineFocusedRuns": 61,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 44
+    "validatedRuns": 54
   },
   "runs": [
+    {
+      "runId": "20260710-cockpit-tal-beslut-fold",
+      "date": "2026-07-10",
+      "name": "Tal-med-agenten-knap, beslutninger samlet ",
+      "nameDa": "Tal-med-agenten-knap, beslutninger samlet ",
+      "route": "machine-runtime",
+      "routeDa": "Maskin-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Persona-boot-knap for alle specialister (pilot R4); 3 chat-beslutninger filet til backlog + formidler-kontrakt kræver det fremover; Fold genbrugt fra instore-fladen som deterministisk hjælper med formidler-handoff",
+      "summaryDa": "Persona-boot-knap for alle specialister (pilot R4); 3 chat-beslutninger filet til backlog + formidler-kontrakt kræver det fremover; Fold genbrugt fra instore-fladen som deterministisk hjælper med formidler-handoff",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly os cockpit",
+        "autopilot backlog"
+      ],
+      "gates": [
+        "ingen gated handlinger; betalt API"
+      ],
+      "gatesDa": [
+        "ingen gated handlinger; betalt API til Fold-chat bevidst IKKE tilføjet (gate)"
+      ],
+      "lesson": "Jonas prøver Tal med agenten (R4) + beslutter de 3 ventende i cockpittet.",
+      "lessonDa": "Jonas prøver Tal med agenten (R4) + beslutter de 3 ventende i cockpittet.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-blog-graphic-pivot-flow3d-plus-qa",
+      "date": "2026-07-10",
+      "name": "Graphic-direction pivot: strip rejected SV",
+      "nameDa": "Graphic-direction pivot: strip rejected SV",
+      "route": "blog-seo-content-engine",
+      "routeDa": "Blog/SEO-indholdsmotor",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Graphic-direction pivot: strip rejected SVG concept diagrams from all 12 blog v2 drafts, rewire to Flow 3D concept-image slots; QA the 10 rollout drafts; write 12 object-universe image briefs",
+      "summaryDa": "Graphic-direction pivot: strip rejected SVG concept diagrams from all 12 blog v2 drafts, rewire to Flow 3D concept-image slots; QA the 10 rollout drafts; write 12 object-universe image briefs",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly blog 01..12 * v2.html (12 ",
+        "blog concept image briefs 2026 07 "
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "Drive approval"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "On Jonas go: dispatch Flow image lane to generate 12 blog-XX-concept.",
+      "lessonDa": "On Jonas go: dispatch Flow image lane to generate 12 blog-XX-concept.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-activation-queue-decidable",
+      "date": "2026-07-10",
+      "name": "Jonas-test: aktiverings-koeens 8 kort kunn",
+      "nameDa": "Jonas-test: aktiverings-koeens 8 kort kunn",
+      "route": "system-visualization-route",
+      "routeDa": "System-visualisering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Jonas-test: aktiverings-koeens 8 kort kunne ikke besluttes i cockpittet; gjort beslutbare (bane-opdelt server-API + knapper + aerlig taeller) og koen afstemt mod completion-log (8 -> 4 aegte beslutninger)",
+      "summaryDa": "Jonas-test: aktiverings-koeens 8 kort kunne ikke besluttes i cockpittet; gjort beslutbare (bane-opdelt server-API + knapper + aerlig taeller) og koen afstemt mod completion-log (8 -> 4 aegte beslutninger)",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "cockpit server.py",
+        "frankly os cockpit",
+        "activation queue data.json (+ site"
+      ],
+      "gates": [
+        "no public deploy",
+        "no plugin install",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Plugin-installation",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas beslutter de 4 tilbagevaerende kort i cockpittet (verificer build-web-apps/-data-visualization i marketplace foerst); derefter blog-13-pilot gen.",
+      "lessonDa": "Jonas beslutter de 4 tilbagevaerende kort i cockpittet (verificer build-web-apps/-data-visualization i marketplace foerst); derefter blog-13-pilot gen.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-video-analyse-toolcraft-reel",
+      "date": "2026-07-10",
+      "name": "Video-analyse: Instagram-reel (build.great",
+      "nameDa": "Video-analyse: Instagram-reel (build.great",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Video-analyse: Instagram-reel (build.greatproducts) om Toolcraft design-vaerktoejs-kit -> relevansdom",
+      "summaryDa": "Video-analyse: Instagram-reel (build.greatproducts) om Toolcraft design-vaerktoejs-kit -> relevansdom",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "20260710 video by build greatprodu"
+      ],
+      "gates": [
+        "no-install (npm + licensaccept = J",
+        "no-paid-api"
+      ],
+      "gatesDa": [
+        "no-install (npm + licensaccept = Jonas beslutning)",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Jonas vaelger: installer Toolcraft ELLER byg kontrolpanel-moensteret ind i Effekt-lab selv (safe-local).",
+      "lessonDa": "Jonas vaelger: installer Toolcraft ELLER byg kontrolpanel-moensteret ind i Effekt-lab selv (safe-local).",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-video-analyse-6-plugins-reel",
+      "date": "2026-07-10",
+      "name": "Video-analyse: Instagram-reel (duncanrogof",
+      "nameDa": "Video-analyse: Instagram-reel (duncanrogof",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Video-analyse: Instagram-reel (duncanrogoff) om 6 Claude Code-plugins -> relevansdom",
+      "summaryDa": "Video-analyse: Instagram-reel (duncanrogoff) om 6 Claude Code-plugins -> relevansdom",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "20260710 video by duncanrogoff"
+      ],
+      "gates": [
+        "no-install (claude-mem/gstack = Jo",
+        "no-paid-api"
+      ],
+      "gatesDa": [
+        "no-install (claude-mem/gstack = Jonas beslutning)",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Evt.",
+      "lessonDa": "Evt.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-video-analyse-ruflo-reel",
+      "date": "2026-07-10",
+      "name": "Video-analyse: Instagram-reel (nicksadler.",
+      "nameDa": "Video-analyse: Instagram-reel (nicksadler.",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Video-analyse: Instagram-reel (nicksadler.io) om Ruflo agent-orkestrering -> relevansdom",
+      "summaryDa": "Video-analyse: Instagram-reel (nicksadler.io) om Ruflo agent-orkestrering -> relevansdom",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "20260710 video by nicksadler io"
+      ],
+      "gates": [
+        "no plugin install",
+        "no-paid-api"
+      ],
+      "gatesDa": [
+        "Plugin-installation",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Evt.",
+      "lessonDa": "Evt.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-apple-design-skill-install",
+      "date": "2026-07-10",
+      "name": "Installer apple-design-skill (emilkowalski",
+      "nameDa": "Installer apple-design-skill (emilkowalski",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Installer apple-design-skill (emilkowalski/skills) efter Jonas' eksplicitte godkendelse",
+      "summaryDa": "Installer apple-design-skill (emilkowalski/skills) efter Jonas' eksplicitte godkendelse",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "SKILL.md (GitHub workspace)"
+      ],
+      "gates": [
+        "install eksplicit godkendt af Jona",
+        "no-paid-api"
+      ],
+      "gatesDa": [
+        "install eksplicit godkendt af Jonas (jah tak)",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Brug apple-design-skill'en naeste gang front-end/Lab-UI bygges eller poleres.",
+      "lessonDa": "Brug apple-design-skill'en naeste gang front-end/Lab-UI bygges eller poleres.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-video-analyse-apple-design-skill",
+      "date": "2026-07-10",
+      "name": "Foerste rigtige video-analyst-koersel: Ins",
+      "nameDa": "Foerste rigtige video-analyst-koersel: Ins",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Foerste rigtige video-analyst-koersel: Instagram-reel om 'design-pakke' -> relevansdom",
+      "summaryDa": "Foerste rigtige video-analyst-koersel: Instagram-reel om 'design-pakke' -> relevansdom",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "20260710 video by artem novitckii"
+      ],
+      "gates": [
+        "no-install (skill-install = Jonas ",
+        "no-paid-api"
+      ],
+      "gatesDa": [
+        "no-install (skill-install = Jonas beslutning, queued)",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Jonas beslutter: installer apple-design-skill fra emilkowalski/skills eller skip.",
+      "lessonDa": "Jonas beslutter: installer apple-design-skill fra emilkowalski/skills eller skip.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-video-analyst-lane",
+      "date": "2026-07-10",
+      "name": "Video-analyst-lane: link (YouTube/IG/TikTo",
+      "nameDa": "Video-analyst-lane: link (YouTube/IG/TikTo",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Video-analyst-lane: link (YouTube/IG/TikTok) -> lokal analysemappe (keyframes+transskript+metadata) som Claude kan laese og doemme Frankly-relevans paa",
+      "summaryDa": "Video-analyst-lane: link (YouTube/IG/TikTok) -> lokal analysemappe (keyframes+transskript+metadata) som Claude kan laese og doemme Frankly-relevans paa",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "video analyst.py",
+        "video analyst howto",
+        "video production workflow route"
+      ],
+      "gates": [
+        "no-paid-api (Gemini fravalgt, gate",
+        "no public deploy",
+        "Drive approval"
+      ],
+      "gatesDa": [
+        "Betalt API-forbrug",
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "Koer lanen paa en rigtig inspirationsvideo Jonas vaelger og lever den foerste Frankly-relevansdom efter howto-skabelonen.",
+      "lessonDa": "Koer lanen paa en rigtig inspirationsvideo Jonas vaelger og lever den foerste Frankly-relevansdom efter howto-skabelonen.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260710-crew-artifact-generator",
+      "date": "2026-07-10",
+      "name": "Token plan 1.1+1.2: generator der udleder ",
+      "nameDa": "Token plan 1.1+1.2: generator der udleder ",
+      "route": "system-visualization-route",
+      "routeDa": "System-visualisering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Token plan 1.1+1.2: generator der udleder kontrakt-digest + 25 .claude/agents-filer af nyeste crew-kontrakt; wired i agent-smeden, autopilot og crew-skill",
+      "summaryDa": "Token plan 1.1+1.2: generator der udleder kontrakt-digest + 25 .claude/agents-filer af nyeste crew-kontrakt; wired i agent-smeden, autopilot og crew-skill",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "generate crew artifacts.py",
+        "frankly crew contract digest",
+        " (25 filer, spejlet til GitHub dir"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-paid-api",
+        "Drive approval"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Betalt API-forbrug",
+        "Connector-skrivning (Drive/API)"
+      ],
+      "lesson": "Pilot: koer et rigtigt crew-run (fx blog-13) gennem digest + agent-filer og maal tokenforbrug mod baseline c74af62; derefter v0-14-beslutning.",
+      "lessonDa": "Pilot: koer et rigtigt crew-run (fx blog-13) gennem digest + agent-filer og maal tokenforbrug mod baseline c74af62; derefter v0-14-beslutning.",
+      "fanOut": []
+    },
     {
       "runId": "20260710-frankly-40-opgradering",
       "date": "2026-07-10",

@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-10T00:50:12+00:00",
+  "generated": "2026-07-10T21:48:17+00:00",
   "day": "2026-07-10",
   "status": "healthy",
-  "healthLine": "[self-check] 2026-07-10 02:50 — PASS — report: os-visualization/reports/self-check-2026-07-10.md",
+  "healthLine": "[self-check] 2026-07-10 23:48 — PASS — report: os-visualization/reports/self-check-2026-07-10.md",
   "didAutonomously": [
     {
       "job": "regenerate lessons memory (compounding)",
@@ -19,6 +19,10 @@
     {
       "job": "scan for roster gaps (reflective — proposes new agents)",
       "ok": true
+    },
+    {
+      "job": "refresh crew artifacts (contract digest + agent files)",
+      "ok": true
     }
   ],
   "readyToAutoRun": [
@@ -31,8 +35,40 @@
       "id": "cockpit-live-surfaces",
       "title": "Make control-cockpit read the live feeds",
       "classified": "guarded-write"
+    },
+    {
+      "id": "audit-codex-site-visual-system-extractor",
+      "title": "Pilot: One-time, no-network local audit of the script — codex-site-visual-system-extractor (kun lokal)",
+      "classified": "guarded-write"
+    },
+    {
+      "id": "adapt-remotion-marketing-video-skill",
+      "title": "Byg lokal Frankly-udgave af remotion-marketing-video-skill",
+      "classified": "guarded-write"
     }
   ],
-  "waitingForJonas": [],
+  "waitingForJonas": [
+    {
+      "id": "drive-copy-drawio",
+      "title": "Kopiér systemdiagrammet til Drive",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "Connector/Drive-skrivning — dit ja; så diagrammet ligger ved siden af din egen skitse."
+    },
+    {
+      "id": "cockpit-repo-boundary",
+      "title": "OS-cockpittet ligger som kildekode i det offentlige site-repo",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "Boundary-hygiejne — siden serveres lokalt og behøver ikke ligge offentligt."
+    },
+    {
+      "id": "vaekst-godkendelse",
+      "title": "Skal nye specialister kræve dit ja før oprettelse?",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "Politik-valg, kun dit — du har rejst spørgsmålet to gange uden at afgøre det."
+    }
+  ],
   "note": "Fully local + reversible. Deploy/connector/paid/claims never auto-run — they are the only decisions here."
 }

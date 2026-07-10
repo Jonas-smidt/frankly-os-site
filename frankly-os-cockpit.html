@@ -145,6 +145,12 @@
   .dbtn--no:hover{background:var(--pink-stone)}
   .dwait{font-size:12px;color:var(--grey-2)}
   .decided{margin-top:8px;font-size:12px;color:var(--grey-1);background:var(--limestone);border-radius:var(--r-sm);padding:9px 11px}
+
+  /* ---- "Tal med agenten" — handling når en node i træet vælges ---- */
+  .ttalk{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:10px 8px 4px;padding:10px 13px;
+    border:1px solid var(--line);border-radius:var(--r-card);background:var(--limestone)}
+  .ttalk__n{font-size:13px;font-weight:600;color:var(--ink);display:flex;align-items:center;gap:8px;margin-right:auto}
+  .ttalk .copied{margin-left:0}
   .decided code{font-size:11.5px;color:var(--bordeaux);word-break:break-all}
   .decided b{color:var(--bordeaux)}
 
@@ -214,6 +220,13 @@
   .medit textarea:focus,.medit input:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
   .medit .actions{display:flex;gap:6px;margin-top:9px;flex-wrap:wrap;align-items:center}
 
+  /* ---- tal med agenten (valgt rolle i træet) ---- */
+  .talkbar{margin:0 8px 8px;padding:11px 13px;border-radius:var(--r-card);background:var(--calm-pink);border:1px solid var(--calm-deep);
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .talkbar__t{font-size:12.5px;font-weight:600;color:var(--bordeaux);min-width:0}
+  .talkbar__t .ref{margin-right:6px}
+  .talkbar .actions{display:flex;gap:6px;align-items:center;flex-wrap:wrap;margin-left:auto}
+
   /* ---- agent tree ---- */
   .tree{background:var(--limestone);border-radius:var(--r-card);margin:8px;padding:6px;min-height:200px}
   .tcanvas{position:relative;width:100%}
@@ -262,6 +275,93 @@
   footer b{color:var(--grey-1)}
   .legend{display:flex;flex-wrap:wrap;gap:6px 18px;margin-top:8px}
   .legend span code{background:var(--stone);border-radius:5px;padding:1px 6px;font-size:11px;color:var(--grey-1)}
+
+  /* ---- Frankly Fold — hjælperen (under udvikling; mønster genbrugt 1:1 fra instore-fladen) ---- */
+  html.flc-helper-ready{scroll-padding-bottom:calc(72px + env(safe-area-inset-bottom,0px))}
+  .flc-helper-ready .wrap{padding-bottom:max(96px,calc(72px + env(safe-area-inset-bottom,0px)))}
+  .flc-launcher{position:fixed;right:max(8px,env(safe-area-inset-right,0px));bottom:max(8px,env(safe-area-inset-bottom,0px));z-index:120;display:grid;width:48px;height:48px;min-height:48px;place-items:center;padding:0;border:0;border-radius:14px;background:transparent;color:var(--bordeaux);cursor:pointer;transition:transform var(--dur-micro) var(--ease),opacity var(--dur-micro) var(--ease)}
+  .flc-launcher:hover{transform:translateY(-1px)}
+  .flc-launcher:focus-visible{outline:2px solid var(--calm-deep);outline-offset:3px}
+  .flc-launcher[aria-expanded="true"]{opacity:0;pointer-events:none}
+  .flc-launcher-tooltip{position:absolute;right:calc(100% + 8px);top:50%;display:flex;width:max-content;max-width:112px;height:32px;align-items:center;padding:0 11px;border:1px solid rgba(255,211,227,.45);border-radius:var(--r-pill);background:var(--bordeaux);color:#FFFFFF;font:700 12px/1 var(--fl-sans);white-space:nowrap;opacity:0;visibility:hidden;transform:translate(4px,-50%);pointer-events:none;transition:opacity .16s var(--ease),transform .16s var(--ease),visibility .16s}
+  .flc-launcher:hover .flc-launcher-tooltip,.flc-launcher:focus-visible .flc-launcher-tooltip{opacity:1;visibility:visible;transform:translate(0,-50%)}
+  .flc-fold-wrap{position:relative;display:grid;width:48px;height:48px;flex:none;place-items:center}
+  .flc-fold{display:block;width:100%;height:100%;overflow:visible}
+  .flc-fold-back{fill:#2D0011}
+  .flc-fold-face{stroke:rgba(45,0,17,.16);stroke-width:1;vector-effect:non-scaling-stroke}
+  .flc-fold-corner{fill:#FFACCA;stroke:rgba(45,0,17,.12);stroke-width:1;vector-effect:non-scaling-stroke;transform-box:fill-box;transform-origin:50% 50%}
+  .flc-fold-highlight{fill:none;stroke:rgba(255,255,255,.72);stroke-width:1;stroke-linecap:round;vector-effect:non-scaling-stroke}
+  .flc-fold-reading-band{fill:#FFD3E3;opacity:0}
+  .flc-fold-error-edge{fill:none;stroke:var(--bordeaux);stroke-width:2;stroke-linecap:round;vector-effect:non-scaling-stroke;opacity:0}
+  .flc-fold-mark{overflow:visible;fill:#2D0011}
+  .flc-dialog{position:fixed;inset:auto 24px 24px auto;width:min(432px,calc(100vw - 48px));max-width:none;max-height:calc(100dvh - 48px);margin:0;padding:0;overflow:hidden;border:1px solid rgba(45,0,17,.1);border-radius:20px;background:var(--paper);color:var(--bordeaux);box-shadow:0 24px 64px rgba(45,0,17,.18),0 5px 16px rgba(45,0,17,.09);font-family:var(--fl-sans)}
+  .flc-dialog:not([open]){display:none}
+  .flc-dialog::backdrop{background:rgba(45,0,17,.08);-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px)}
+  .flc-shell{display:flex;min-height:0;max-height:inherit;flex-direction:column;overflow:hidden}
+  .flc-head{position:relative;display:flex;min-height:88px;align-items:center;gap:14px;padding:12px 62px 12px 18px;background:var(--paper);border-bottom:1px solid rgba(45,0,17,.08)}
+  .flc-head .flc-fold-wrap{width:64px;height:64px}
+  .flc-head-copy{min-width:0;flex:1}
+  .flc-head h2{margin:0;font-size:23px;line-height:1.08;letter-spacing:-.02em}
+  .flc-head p{margin:4px 0 0;color:var(--grey-1);font-size:12.5px;line-height:1.35}
+  .flc-state{display:flex;align-items:center;gap:7px;min-height:18px;margin-top:6px;color:var(--bordeaux);font-size:11px;font-weight:700;line-height:1.25}
+  .flc-state::before{content:"";width:6px;height:6px;flex:none;border-radius:50%;background:var(--calm-deep)}
+  .flc-close{position:absolute;top:12px;right:12px;width:44px;height:44px;display:grid;place-items:center;flex:none;border:1px solid rgba(45,0,17,.1);border-radius:50%;background:transparent;color:var(--bordeaux);cursor:pointer;font-size:24px;line-height:1;transition:background var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
+  .flc-close:hover{background:rgba(255,211,227,.25);border-color:rgba(45,0,17,.18)}
+  .flc-local{display:flex;align-items:center;gap:7px;padding:8px 18px;background:rgba(236,233,228,.36);border-bottom:1px solid rgba(45,0,17,.07);color:var(--grey-1);font-size:10.5px;font-weight:600;line-height:1.35}
+  .flc-local::before{content:"";width:6px;height:6px;flex:none;border:1px solid rgba(45,0,17,.35);border-radius:50%}
+  .flc-log{display:flex;min-height:140px;flex:1;flex-direction:column;gap:14px;overflow-y:auto;padding:16px 18px;background:var(--paper);scrollbar-width:thin;overscroll-behavior:contain}
+  .flc-message{width:100%;max-width:100%;padding:0;font-size:14px;line-height:1.5;white-space:pre-wrap}
+  .flc-message::before{display:block;margin-bottom:6px;color:var(--grey-1);font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .flc-message-copy{display:block}
+  .flc-message--bot{align-self:stretch;padding:12px 13px;border:1px solid rgba(45,0,17,.09);border-radius:12px;background:#FFFFFF;box-shadow:0 3px 10px rgba(45,0,17,.035)}
+  .flc-message--bot::before{content:"Frankly Fold"}
+  .flc-message--user{align-self:stretch;padding:6px 0 6px 12px;border-left:2px solid var(--calm-deep);color:var(--bordeaux)}
+  .flc-message--user::before{content:"Dit spørgsmål"}
+  .flc-source{position:relative;display:grid;width:100%;max-width:100%;grid-template-columns:1fr auto;gap:2px 10px;margin-top:11px;padding:10px 0 0;border:0;border-top:1px solid rgba(45,0,17,.1);border-radius:0;background:transparent;color:var(--bordeaux);text-align:left;cursor:pointer;transition:color var(--dur-micro) var(--ease)}
+  .flc-source:hover{color:var(--calm-deep)}
+  .flc-source-label{grid-column:1;font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase;color:var(--grey-2)}
+  .flc-source-title{grid-column:1;font:700 12.5px/1.25 var(--fl-sans)}
+  .flc-source-arrow{grid-column:2;grid-row:1/3;align-self:center;font-size:18px}
+  .flc-ask{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-top:11px;padding-top:10px;border-top:1px solid rgba(45,0,17,.1);font-size:12px;color:var(--grey-1)}
+  .flc-ask .copied{margin-left:0}
+  .flc-suggestions{display:flex;align-items:center;gap:8px;overflow-x:auto;padding:11px 32px 10px 18px;background:var(--paper);border-top:1px solid rgba(45,0,17,.08);scrollbar-width:none}
+  .flc-suggestions::-webkit-scrollbar{display:none}
+  .flc-suggestions-label{display:inline-flex;flex:none;align-items:center;gap:4px;color:var(--grey-2);font-size:9.5px;font-weight:800;letter-spacing:.1em;text-transform:uppercase}
+  .flc-suggestion{position:relative;z-index:0;width:auto;min-width:max-content;min-height:44px;flex:none;padding:4px 12px;border:0;border-radius:var(--r-pill);background:transparent;color:var(--bordeaux);font:650 12px/1.2 var(--fl-sans);text-align:center;cursor:pointer}
+  .flc-suggestion::before{content:"";position:absolute;z-index:-1;inset:4px 0;border:1px solid rgba(45,0,17,.13);border-radius:var(--r-pill);background:transparent;transition:background var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
+  .flc-suggestion:hover::before{background:rgba(255,211,227,.25);border-color:var(--calm-deep)}
+  .flc-suggestion:focus-visible{outline:2px solid var(--calm-deep);outline-offset:-2px}
+  .flc-form{display:flex;align-items:center;gap:8px;padding:5px 18px calc(14px + env(safe-area-inset-bottom,0px));background:var(--paper)}
+  .flc-input{min-width:0;height:48px;flex:1;padding:11px 14px;border:1px solid rgba(45,0,17,.14);border-radius:12px;background:#FFFFFF;color:var(--bordeaux);font:400 14px/1.3 var(--fl-sans);box-shadow:inset 0 1px 2px rgba(45,0,17,.03)}
+  .flc-input::placeholder{color:var(--grey-2)}
+  .flc-send{width:44px;height:44px;display:grid;place-items:center;flex:none;border:0;border-radius:50%;background:var(--bordeaux);color:#FFFFFF;font:700 0/1 var(--fl-sans);cursor:pointer;box-shadow:0 5px 12px rgba(45,0,17,.14);transition:transform var(--dur-micro) var(--ease),opacity var(--dur-micro) var(--ease)}
+  .flc-send::before{content:"\2191";font-size:19px}
+  .flc-send:hover{transform:translateY(-1px)}
+  .flc-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+  .flc-dialog[data-state="found"] .flc-fold-corner{fill:#FFD3E3}
+  @keyframes flcFoldFound{0%,100%{transform:translateY(0)}50%{transform:translateY(-2px)}}
+  @media (prefers-reduced-motion: no-preference){
+    .flc-dialog[open][data-state="found"] .flc-fold-corner{animation:flcFoldFound .28s ease-out both}
+  }
+  @media(max-height:720px) and (min-width:601px){
+    .flc-dialog{max-height:calc(100dvh - 24px);inset:auto 12px 12px auto}
+    .flc-head{min-height:84px}.flc-head .flc-fold-wrap{width:60px;height:60px}
+    .flc-log{min-height:104px;padding-top:12px;padding-bottom:12px}
+    .flc-local{padding-top:6px;padding-bottom:6px}.flc-suggestions{padding-top:8px}.flc-form{padding-bottom:10px}
+  }
+  @media(max-width:600px){
+    .flc-launcher-tooltip{display:none}
+    .flc-dialog{inset:auto 12px max(12px,env(safe-area-inset-bottom,0px)) 12px;width:calc(100vw - 24px);max-width:none;max-height:calc(100dvh - 24px - env(safe-area-inset-bottom,0px));border-radius:20px}
+    .flc-head{min-height:84px;padding:10px 56px 10px 16px;gap:12px}.flc-head .flc-fold-wrap{width:60px;height:60px}
+    .flc-head h2{font-size:21px}.flc-head p{font-size:12px}.flc-state{margin-top:5px;font-size:10.5px}
+    .flc-local{padding:7px 16px}.flc-log{min-height:112px;padding:14px 16px}
+    .flc-suggestions{padding:9px 28px 9px 16px}.flc-form{padding:4px 16px calc(12px + env(safe-area-inset-bottom,0px))}
+  }
+  @media(pointer:coarse){.flc-launcher-tooltip{display:none}}
+  @media print{
+    html.flc-helper-ready{scroll-padding-bottom:0}
+    .flc-launcher,.flc-dialog{display:none!important}
+  }
 
   /* ---- entrance ---- */
   @media (prefers-reduced-motion: no-preference){
@@ -386,10 +486,15 @@
     <section class="panel reveal" aria-labelledby="treeH">
       <div class="panel__head"><h3 id="treeH">Agent-træet</h3><span class="count" id="treeCount"></span></div>
       <div class="note" style="margin:8px 8px 0">Sådan hænger crewet sammen: én orkestrator, maskinrummet og specialisterne med deres under-specialister.
-        Klik på en rolle for at justere dens metode. <b>Hvem der var med pr. kørsel logges ikke endnu — træet viser hele holdet.</b></div>
+        Klik på en rolle for at justere dens metode — eller tal direkte med agenten i en ny chat. <b>Hvem der var med pr. kørsel logges ikke endnu — træet viser hele holdet.</b></div>
       <div class="tree" id="tree">
         <div class="tcanvas" id="treeCanvas"></div>
         <div class="tlist" id="treeList"></div>
+      </div>
+      <div class="ttalk" id="treeTalk" hidden>
+        <div class="ttalk__n" id="treeTalkName"></div>
+        <button class="dbtn" id="treeTalkBtn" type="button">Tal med agenten <span aria-hidden="true">→</span></button>
+        <span class="copied" id="treeTalkOk">Kopieret ✓</span>
       </div>
       <div class="panel__src" id="treeSrc">Kilde: /api/agent-methods · nyeste frankly-crew-contract</div>
     </section>
@@ -417,6 +522,38 @@
   </footer>
 </div>
 
+<!-- ===== Frankly Fold — hjælper (under udvikling; ingen AI-runtime, alt lokalt) ===== -->
+<button class="flc-launcher" id="flcLauncher" type="button" aria-label="Spørg Frankly" aria-haspopup="dialog" aria-controls="flcDialog" aria-expanded="false" data-state="idle" hidden>
+  <span class="flc-fold-wrap" aria-hidden="true"><svg class="flc-fold" viewBox="0 0 48 48" focusable="false"><defs><linearGradient id="flcFoldFaceLauncher" x1="9" y1="4" x2="39" y2="45" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".56" stop-color="#FFF6FA"/><stop offset="1" stop-color="#FFD3E3"/></linearGradient></defs><path class="flc-fold-back" d="M12 3H36C41.5 3 46 7.5 46 13V33L33 46H12C6.5 46 2 41.5 2 36V13C2 7.5 6.5 3 12 3Z"/><path class="flc-fold-face" fill="url(#flcFoldFaceLauncher)" d="M12 2H36C41.5 2 46 6.5 46 12V32L32 46H12C6.5 46 2 41.5 2 36V12C2 6.5 6.5 2 12 2Z"/><rect class="flc-fold-reading-band" x="7" y="21" width="34" height="6" rx="3"/><path class="flc-fold-highlight" d="M10 7H31C36.5 7 41 11.5 41 17"/><path class="flc-fold-corner" d="M32 46V38C32 34.7 34.7 32 38 32H46L32 46Z"/><path class="flc-fold-error-edge" d="M3 13V35"/><svg class="flc-fold-mark" x="14" y="3.43" width="20" height="41.14" viewBox="0 0 17.81 36.63" preserveAspectRatio="xMidYMid meet"><path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z"/><path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z"/><path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z"/><path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z"/></svg></svg></span>
+  <span class="flc-launcher-tooltip" aria-hidden="true">Spørg Frankly</span>
+</button>
+<dialog class="flc-dialog" id="flcDialog" aria-labelledby="flcTitle" aria-describedby="flcIntro" data-state="idle">
+  <div class="flc-shell">
+    <div class="flc-head">
+      <span class="flc-fold-wrap" aria-hidden="true"><svg class="flc-fold" viewBox="0 0 48 48" focusable="false"><defs><linearGradient id="flcFoldFaceHeader" x1="9" y1="4" x2="39" y2="45" gradientUnits="userSpaceOnUse"><stop offset="0" stop-color="#FFFFFF"/><stop offset=".56" stop-color="#FFF6FA"/><stop offset="1" stop-color="#FFD3E3"/></linearGradient></defs><path class="flc-fold-back" d="M12 3H36C41.5 3 46 7.5 46 13V33L33 46H12C6.5 46 2 41.5 2 36V13C2 7.5 6.5 3 12 3Z"/><path class="flc-fold-face" fill="url(#flcFoldFaceHeader)" d="M12 2H36C41.5 2 46 6.5 46 12V32L32 46H12C6.5 46 2 41.5 2 36V12C2 6.5 6.5 2 12 2Z"/><rect class="flc-fold-reading-band" x="7" y="21" width="34" height="6" rx="3"/><path class="flc-fold-highlight" d="M10 7H31C36.5 7 41 11.5 41 17"/><path class="flc-fold-corner" d="M32 46V38C32 34.7 34.7 32 38 32H46L32 46Z"/><path class="flc-fold-error-edge" d="M3 13V35"/><svg class="flc-fold-mark" x="14" y="3.43" width="20" height="41.14" viewBox="0 0 17.81 36.63" preserveAspectRatio="xMidYMid meet"><path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z"/><path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z"/><path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z"/><path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z"/></svg></svg></span>
+      <div class="flc-head-copy"><h2 id="flcTitle">Frankly Fold</h2><p id="flcIntro">Forklarer panelerne og søger i sidens tal</p><span class="flc-state" id="flcState" role="status" aria-live="polite">Klar — søger lokalt i siden</span></div>
+      <button class="flc-close" id="flcClose" type="button" aria-label="Luk Frankly Fold">&times;</button>
+    </div>
+    <div class="flc-local">Under udvikling · alt lokalt — ingen AI-runtime, ingen nye netkald</div>
+    <div class="flc-log" id="flcLog" role="log" aria-live="polite" aria-relevant="additions">
+      <div class="flc-message flc-message--bot"><span class="flc-message-copy">Hej! Jeg er Frankly Fold — cockpittets hjælper, under udvikling. Jeg kan forklare panelerne, søge i sidens egne tal (kørsler, beslutninger, læringer, specialister) og pakke dit spørgsmål til formidleren. Alt sker lokalt.</span></div>
+    </div>
+    <div class="flc-suggestions" aria-label="Hurtige handlinger">
+      <span class="flc-suggestions-label">Prøv <span aria-hidden="true">&rarr;</span></span>
+      <button class="flc-suggestion" type="button" data-a="overview">Hvad er det her?</button>
+      <button class="flc-suggestion" type="button" data-panel="attention">Beslutninger</button>
+      <button class="flc-suggestion" type="button" data-panel="runs">Kørsler</button>
+      <button class="flc-suggestion" type="button" data-panel="composer">Start en kørsel</button>
+      <button class="flc-suggestion" type="button" data-panel="tree">Crewet</button>
+    </div>
+    <form class="flc-form" id="flcForm">
+      <label class="flc-sr" for="flcInput">Søg eller skriv dit spørgsmål</label>
+      <input class="flc-input" id="flcInput" name="question" type="text" maxlength="240" autocomplete="off" placeholder="Søg eller spørg …" required>
+      <button class="flc-send" type="submit" aria-label="Søg">Søg</button>
+    </form>
+  </div>
+</dialog>
+
 <script>
 (function(){
   "use strict";
@@ -425,29 +562,29 @@
      Baked-in snapshot so the cockpit degrades gracefully on file://.
      Auto-regenerated at every feed sync — never hand-edited.
      ============================================================ */
-  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-10T16:56:23+00:00 — må ikke håndredigeres)
+  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-10T21:48:24+00:00 — må ikke håndredigeres)
   var SNAP = {
-  "generatedAt": "2026-07-10T16:56:23+00:00",
+  "generatedAt": "2026-07-10T21:48:24+00:00",
   "flight": {
     "counts": {
-      "runs": 51,
-      "machineFocusedRuns": 51,
+      "runs": 61,
+      "machineFocusedRuns": 61,
       "claimWorkRuns": 0,
       "driveSyncedRuns": 7,
-      "validatedRuns": 44
+      "validatedRuns": 54
     },
     "runs": [
       {
-        "runId": "20260710-frankly-40-opgradering",
+        "runId": "20260710-cockpit-tal-beslut-fold",
         "date": "2026-07-10",
-        "name": "Frankly OS 4.0: revision af alle flader + ",
-        "nameDa": "Frankly OS 4.0: revision af alle flader + ",
+        "name": "Tal-med-agenten-knap, beslutninger samlet ",
+        "nameDa": "Tal-med-agenten-knap, beslutninger samlet ",
         "route": "machine-runtime",
         "routeDa": "Maskin-drift",
         "status": "completed-local",
         "statusDa": "Færdig (lokalt)",
-        "summary": "11 flader pensioneret, ét 4.0-cockpit bygget (8 paneler inkl. agent-træ og hylde), feeds på dansk + next-best-action/health-feeds, version stemplet 4.0",
-        "summaryDa": "11 flader pensioneret, ét 4.0-cockpit bygget (8 paneler inkl. agent-træ og hylde), feeds på dansk + next-best-action/health-feeds, version stemplet 4.0",
+        "summary": "Persona-boot-knap for alle specialister (pilot R4); 3 chat-beslutninger filet til backlog + formidler-kontrakt kræver det fremover; Fold genbrugt fra instore-fladen som deterministisk hjælper med formidler-handoff",
+        "summaryDa": "Persona-boot-knap for alle specialister (pilot R4); 3 chat-beslutninger filet til backlog + formidler-kontrakt kræver det fremover; Fold genbrugt fra instore-fladen som deterministisk hjælper med formidler-handoff",
         "validation": "passed",
         "validationDa": "Bestået",
         "drive": "pending approval",
@@ -455,86 +592,85 @@
         "claims": "none",
         "artifacts": [
           "frankly os cockpit",
-          "sync site data feeds.py",
-          "frankly 40 revision 2026 07 10"
+          "autopilot backlog"
         ],
         "gates": [
-          "ingen gated handlinger; alt lokalt"
+          "ingen gated handlinger; betalt API"
         ],
         "gatesDa": [
-          "ingen gated handlinger; alt lokalt"
+          "ingen gated handlinger; betalt API til Fold-chat bevidst IKKE tilføjet (gate)"
         ],
-        "lesson": "Jonas åbner 4.",
-        "lessonDa": "Jonas åbner 4.",
+        "lesson": "Jonas prøver Tal med agenten (R4) + beslutter de 3 ventende i cockpittet.",
+        "lessonDa": "Jonas prøver Tal med agenten (R4) + beslutter de 3 ventende i cockpittet.",
         "fanOut": []
       },
       {
-        "runId": "20260710-blog-quality-lift-v1-rollout-01-10",
+        "runId": "20260710-blog-graphic-pivot-flow3d-plus-qa",
         "date": "2026-07-10",
-        "name": "Roll the pilot 3-axis blog upgrade (copy l",
-        "nameDa": "Blog-kvalitetsløft v1 — udrulning (post 01–10)",
+        "name": "Graphic-direction pivot: strip rejected SV",
+        "nameDa": "Graphic-direction pivot: strip rejected SV",
         "route": "blog-seo-content-engine",
         "routeDa": "Blog/SEO-indholdsmotor",
         "status": "completed-local",
         "statusDa": "Færdig (lokalt)",
-        "summary": "Roll the pilot 3-axis blog upgrade (copy lift + conditional 3->4 + 4 graphic treatments) to the remaining 10 posts (01-10) as v2 drafts",
-        "summaryDa": "Udrullede pilotens 3-akse-opgradering (tekstløft + betinget 3→4 kilder + 4 grafik-behandlinger) til de resterende 10 indlæg (01–10) som v2-udkast.",
+        "summary": "Graphic-direction pivot: strip rejected SVG concept diagrams from all 12 blog v2 drafts, rewire to Flow 3D concept-image slots; QA the 10 rollout drafts; write 12 object-universe image briefs",
+        "summaryDa": "Graphic-direction pivot: strip rejected SVG concept diagrams from all 12 blog v2 drafts, rewire to Flow 3D concept-image slots; QA the 10 rollout drafts; write 12 object-universe image briefs",
         "validation": "passed",
         "validationDa": "Bestået",
         "drive": "pending approval",
         "driveDa": "Afventer dit ja til Drive",
         "claims": "none",
         "artifacts": [
-          "frankly blog 01 brug det v2",
-          "frankly blog 02 checkout v2",
-          "frankly blog 03 mental load cd v2"
+          "frankly blog 01..12 * v2.html (12 ",
+          "blog concept image briefs 2026 07 "
         ],
         "gates": [
           "no public deploy",
           "no-push",
-          "drafts-in-journal-drafts-outside-a"
+          "Drive approval"
         ],
         "gatesDa": [
           "Offentlig deploy",
           "Ingen git push",
-          "Udkast kun i journal/drafts (uden for allowlisten)"
+          "Connector-skrivning (Drive/API)"
         ],
-        "lesson": "Jonas eyeballs all 12 v2 drafts; optional polish (ease Fire-heading repetition, harmonize post01 summary grid); on approval promote v2 -> live journal.",
-        "lessonDa": "Jonas gennemser alle 12 v2-udkast; valgfri polering (blødere Fire-overskrifts-gentagelse, harmonisér post01's resumé-grid); ved godkendelse promoveres v2 → live journal.",
+        "lesson": "On Jonas go: dispatch Flow image lane to generate 12 blog-XX-concept.",
+        "lessonDa": "On Jonas go: dispatch Flow image lane to generate 12 blog-XX-concept.",
         "fanOut": []
       },
       {
-        "runId": "20260710-blog-quality-lift-v1-pilot",
+        "runId": "20260710-activation-queue-decidable",
         "date": "2026-07-10",
-        "name": "Blog quality lift v1 pilot: copy lift + 3-",
-        "nameDa": "Blog-kvalitetsløft v1 — pilot (post 11–12)",
-        "route": "blog-seo-content-engine",
-        "routeDa": "Blog/SEO-indholdsmotor",
+        "name": "Jonas-test: aktiverings-koeens 8 kort kunn",
+        "nameDa": "Jonas-test: aktiverings-koeens 8 kort kunn",
+        "route": "system-visualization-route",
+        "routeDa": "System-visualisering",
         "status": "completed-local",
         "statusDa": "Færdig (lokalt)",
-        "summary": "Blog quality lift v1 pilot: copy lift + 3->4 (real verified 4th citation) + 4 graphic treatments on posts 11 & 12, side-by-side v2 drafts for review",
-        "summaryDa": "Pilot på blog-kvalitetsløft v1: tekstløft + 3→4 (reel verificeret 4. kilde) + 4 grafik-behandlinger på post 11 & 12 som side-om-side v2-udkast til gennemsyn.",
+        "summary": "Jonas-test: aktiverings-koeens 8 kort kunne ikke besluttes i cockpittet; gjort beslutbare (bane-opdelt server-API + knapper + aerlig taeller) og koen afstemt mod completion-log (8 -> 4 aegte beslutninger)",
+        "summaryDa": "Jonas-test: aktiverings-koeens 8 kort kunne ikke besluttes i cockpittet; gjort beslutbare (bane-opdelt server-API + knapper + aerlig taeller) og koen afstemt mod completion-log (8 -> 4 aegte beslutninger)",
         "validation": "passed",
         "validationDa": "Bestået",
         "drive": "pending approval",
         "driveDa": "Afventer dit ja til Drive",
         "claims": "none",
         "artifacts": [
-          "frankly blog 11 glippet v2",
-          "frankly blog 12 revnen v2"
+          "cockpit server.py",
+          "frankly os cockpit",
+          "activation queue data.json (+ site"
         ],
         "gates": [
           "no public deploy",
-          "no-push",
-          "drafts-in-journal-drafts-outside-a"
+          "no plugin install",
+          "claims locked"
         ],
         "gatesDa": [
           "Offentlig deploy",
-          "Ingen git push",
-          "Udkast kun i journal/drafts (uden for allowlisten)"
+          "Plugin-installation",
+          "Claims / produkt / juridisk"
         ],
-        "lesson": "Jonas eyeballs both v2 drafts (local server); on approval, standardize one grid/diagram convention then roll the 3-axis template to the other 10 posts.",
-        "lessonDa": "Jonas gennemser begge v2-udkast (lokal server); ved godkendelse standardiseres én grid/diagram-konvention, hvorefter 3-akse-skabelonen rulles til de øvrige 10 indlæg.",
+        "lesson": "Jonas beslutter de 4 tilbagevaerende kort i cockpittet (verificer build-web-apps/-data-visualization i marketplace foerst); derefter blog-13-pilot gen.",
+        "lessonDa": "Jonas beslutter de 4 tilbagevaerende kort i cockpittet (verificer build-web-apps/-data-visualization i marketplace foerst); derefter blog-13-pilot gen.",
         "fanOut": []
       }
     ]
@@ -555,11 +691,11 @@
   "activation": {
     "stats": {
       "registered": 70,
-      "activateNow": 8,
+      "activateNow": 4,
       "localAdaptations": 7,
       "approvalGatedInstalls": 2
     },
-    "updated": "2026-07-01"
+    "updated": "2026-07-10"
   },
   "surfaces": {
     "counts": {
@@ -644,7 +780,7 @@
   "health": {
     "result": "PASS",
     "resultDa": "Alt grønt — selvtjek bestået, 34 af 34 evals grønne",
-    "lastFeedSync": "2026-07-10T16:56:23+00:00"
+    "lastFeedSync": "2026-07-10T21:48:24+00:00"
   },
   "nba": {
     "activeBatch": "MCQ-011",
@@ -1367,7 +1503,7 @@
       "localOs": 3,
       "retired": 3
     },
-    "syncedAt": "2026-07-10T16:56:23+00:00"
+    "syncedAt": "2026-07-10T21:48:24+00:00"
   }
 };
   // SNAP:END
@@ -1868,6 +2004,40 @@
   /* ============================================================
      P6 — Specialisternes metode
      ============================================================ */
+  /* ---- "Tal med agenten" — bygger en færdig persona-prompt til en NY
+     Claude Code-chat og kopierer den (samme mønster som "Kopiér til Claude
+     Code" i composeren). Chatten er kroppen, kontrakten er sjælen. ---- */
+  var CONTRACT_GLOB='/Users/jonas/Documents/Frankly os/os-visualization/system-intelligence/frankly-crew-contract-v*.md';
+  function agentKeywords(s){
+    var n=String(s.name||'').replace(/[^\wæøåÆØÅ&\/ .-]/g,' ').replace(/\s+/g,' ').trim().toLowerCase();
+    return n||String(s.id||'agent');
+  }
+  function buildAgentPrompt(s){
+    return 'Du er nu '+s.id+' · '+s.name+' fra Frankly OS-crewet. Kør hele denne chat som den specialist — trin for trin:\n\n'+
+      '1) Boot OS-et først, så du arbejder på gemt tilstand:\n'+
+      'python3 "/Users/jonas/Documents/Frankly os/os-visualization/scripts/frankly-os-boot.py" --quick\n\n'+
+      '2) Læs din egen sektion ('+s.id+') i den NYESTE crew-kontrakt — find den med glob, højeste versionsnummer vinder:\n'+
+      '"'+CONTRACT_GLOB+'"\n'+
+      'Din metode lige nu (fra /api/agent-methods — kontrakten er facit, hvis de afviger):\n'+
+      s.id+' · '+s.name+'\n'+
+      '»'+s.method+'«\n\n'+
+      '3) Hent din hukommelse — læringerne om dit felt:\n'+
+      'python3 "/Users/jonas/Documents/Frankly os/os-visualization/scripts/build-lessons-index.py" --query "'+agentKeywords(s)+'"\n\n'+
+      '4) VÆR agenten i samtalen med Jonas. Universal IO i hvert svar: Sees (hvad du ser) · Recommends (hvad du anbefaler) · Gate-risk (hvilke gates er i spil) · Next choice (Jonas’ næste valg). Read-only som udgangspunkt; alle Frankly OS-gates er arvet — ingen deploy, connector-skrivning, betalt API, plugins eller automatisk trådoprettelse, og claims/produkt/jura er LÅST.\n\n'+
+      '5) Ved samtalens afslutning: filér det holdbare tilbage. Metode-ændringer gemmes via POST /api/agent-method på cockpit-serveren (127.0.0.1:8137) — eller via agent-smeden-proceduren, hvis serveren er nede. Indsigter files som læringer (learning-capture). Chatten er kroppen, kontrakten er sjælen — det, der skal overleve chatten, skal hjem i kontrakten og læringerne.';
+  }
+  function copyText(raw){
+    function fallback(){
+      var ta=document.createElement('textarea');ta.value=raw;ta.setAttribute('readonly','');
+      ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);
+      ta.select();try{document.execCommand('copy');}catch(e){}
+      document.body.removeChild(ta);
+    }
+    if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(raw).catch(fallback);}
+    else fallback();
+  }
+  function flashCopied(el){el.classList.add('show');setTimeout(function(){el.classList.remove('show');},1600);}
+
   function methodsOffline(box,msg){
     box.innerHTML="";
     var r=document.createElement('div');r.className="row";
@@ -1883,8 +2053,15 @@
       '<div class="row__main"><div class="row__t"><span class="ref">'+esc(s.id)+'</span>'+esc(s.name)+'</div>'+
       (ROLE_DESC[s.id]?'<div class="row__d">'+esc(ROLE_DESC[s.id])+'</div>':'')+
       '<div class="row__d mview">'+esc(s.method)+'</div><div class="medit" hidden></div><div class="decided" hidden></div></div>'+
-      '<div class="row__side"><button class="dbtn" data-a="edit">Redigér</button></div>';
+      '<div class="row__side"><button class="dbtn" data-a="edit">Redigér</button>'+
+      '<button class="dbtn" data-a="talk" aria-label="Tal med '+esc(s.id)+' '+esc(s.name)+' — kopierer en persona-prompt til en ny Claude Code-chat">Tal med agenten <span aria-hidden="true">→</span></button>'+
+      '<span class="copied" data-a="talk-ok">Kopieret ✓</span></div>';
     var editBtn=r.querySelector('[data-a="edit"]'),medit=r.querySelector('.medit'),mview=r.querySelector('.mview'),decided=r.querySelector('.decided');
+    var talkBtn=r.querySelector('[data-a="talk"]'),talkOk=r.querySelector('[data-a="talk-ok"]');
+    talkBtn.addEventListener('click',function(){
+      copyText(buildAgentPrompt(s));
+      flashCopied(talkOk);
+    });
     function closeEdit(){medit.hidden=true;mview.hidden=false;editBtn.textContent='Redigér';}
     editBtn.addEventListener('click',function(){
       if(!medit.hidden){closeEdit();return;}
@@ -1947,6 +2124,22 @@
     };
   }
 
+  /* Klik på en node → vis "Tal med agenten →" som handling under træet
+     (samme prompt + kvittering som i metode-panelet). */
+  function showTreeTalk(s){
+    if(!s||!s.id||typeof s.method!=='string')return;
+    showTreeTalk._spec=s;
+    $('treeTalk').hidden=false;
+    $('treeTalkName').innerHTML='<span class="ref">'+esc(s.id)+'</span>'+esc((s.icon?s.icon+' ':'')+s.name);
+    $('treeTalkBtn').setAttribute('aria-label','Tal med '+s.id+' '+s.name+' — kopierer en persona-prompt til en ny Claude Code-chat');
+  }
+  $('treeTalkBtn').addEventListener('click',function(){
+    var s=showTreeTalk._spec;
+    if(!s)return;
+    copyText(buildAgentPrompt(s));
+    flashCopied($('treeTalkOk'));
+  });
+
   function nodeButton(s,cls,idx){
     var b=document.createElement('button');
     b.className='tnode '+cls;b.type='button';
@@ -1954,8 +2147,9 @@
     var isSub=String(s.id).indexOf('.')>=0;
     b.innerHTML='<span class="tnode__n"><span class="ref">'+esc(s.id)+'</span>'+esc((s.icon?s.icon+' ':'')+s.name)+'</span>'+
       (isSub?'<span class="tsubchip">Under-specialist</span>':(ROLE_DESC[s.id]?'<span class="tnode__d">'+esc(ROLE_DESC[s.id])+'</span>':''));
-    b.setAttribute('aria-label','Justér metode for '+s.id+' '+s.name);
+    b.setAttribute('aria-label','Vælg '+s.id+' '+s.name+' — justér metode eller tal med agenten');
     b.addEventListener('click',function(){
+      showTreeTalk(s);
       var row=document.getElementById('method-'+s.id);
       if(row){
         row.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'center'});
@@ -2102,6 +2296,7 @@
         (isSub?'<span class="tsubchip">Under-specialist</span>':'');
       if(s.id){
         b.addEventListener('click',function(){
+          showTreeTalk(s);
           var row=document.getElementById('method-'+s.id);
           if(row){row.scrollIntoView({behavior:'auto',block:'center'});row.classList.add('row--flash');
             setTimeout(function(){row.classList.remove('row--flash');},2000);}
@@ -2218,6 +2413,212 @@
 
   wireTabs();
   loadCrew();
+
+  /* ============================================================
+     Frankly Fold — hjælperen (under udvikling; ingen AI-runtime)
+     Mønsteret er genbrugt fra instore-fladens Fold (run
+     20260710-frankly-instore-fold-icon-local): fast 48×48-ikon
+     nederst til højre, dialog med log, forslag og felt. Alt lokalt:
+     (1) forklarer panelerne, (2) søger i sidens allerede indlæste
+     data (virker også på file:// via SNAP), (3) hopper til paneler,
+     (4) pakker spørgsmål til formidleren — samme kvitteringsmønster
+     som composeren. Ingen nye netkald.
+     ============================================================ */
+  (function(){
+    var launcher=$('flcLauncher'),dialog=$('flcDialog'),closeButton=$('flcClose'),
+        form=$('flcForm'),input=$('flcInput'),log=$('flcLog'),stateText=$('flcState');
+    if(!launcher||!dialog||!closeButton||!form||!input||!log||!stateText)return;
+    launcher.hidden=false;
+    document.documentElement.classList.add('flc-helper-ready');
+
+    var stateLabels={idle:"Klar — søger lokalt i siden",found:"Fandt noget på siden"};
+    function setState(state){
+      launcher.dataset.state=state;dialog.dataset.state=state;
+      stateText.textContent=stateLabels[state]||stateLabels.idle;
+    }
+
+    // (1) Hvad er det her? — kort dansk forklaring pr. panel (statisk copy fra sidens tone)
+    var FOLD_PANELS=[
+      {id:"tiles",anchor:"tiles",t:"Maskinen lige nu",d:"Fire nøgletal fra maskinens egne feeds — kørsler, missioner, aktiveringer og overflader — altid med friskhedsstempel.",keys:"status tal helbred health overblik nøgletal"},
+      {id:"attention",anchor:"attention",t:"Venter på dig",d:"Beslutningerne autopiloten ikke må tage selv. Godkend, udskyd eller afvis — dit klik er gaten.",keys:"beslutning godkend afvis udskyd autopilot aktivering venter gate"},
+      {id:"learnings",anchor:"learnings",t:"Læringer der venter på dit OK",d:"Læringer der kræver din vurdering, før de ryger i hukommelsen — de sikre files automatisk.",keys:"læring hukommelse memory lesson"},
+      {id:"runs",anchor:"runsLive",t:"Kørsler",d:"Flight-recorderen: hvad maskinen har gjort og hvorfor — med rute, gates, validering og det den lærte.",keys:"kørsel run arkiv flight recorder historik"},
+      {id:"composer",anchor:"cObj",t:"Start en kørsel",d:"Pakker din opgave som Task Packet, klar til Claude Code — kørslen startes altid dér, aldrig herfra.",keys:"start opgave composer task packet crew kopiér rute"},
+      {id:"tree",anchor:"tree",t:"Agent-træet",d:"Hele crewet i ét billede: formidleren, maskinrummet og specialisterne. Klik en rolle for metode eller samtale.",keys:"agent træ crew formidler orkestrator maskinrum"},
+      {id:"methods",anchor:"methods",t:"Specialisternes metode",d:"Sådan arbejder hver specialist — redigér mellem kørsler, og hver ændring bliver en ny kontraktversion.",keys:"metode specialist kontrakt redigér roster"}
+    ];
+    function panelById(id){for(var i=0;i<FOLD_PANELS.length;i++)if(FOLD_PANELS[i].id===id)return FOLD_PANELS[i];return null;}
+
+    function foldNorm(v){return String(v==null?"":v).toLocaleLowerCase('da-DK').normalize('NFD').replace(/[\u0300-\u036f]/g,'');}
+
+    var restoreFocus=true,previousFocus=null;
+    function openDialog(){
+      previousFocus=document.activeElement;restoreFocus=true;setState('idle');
+      if(typeof dialog.showModal==='function'){if(!dialog.open)dialog.showModal();}
+      else dialog.setAttribute('open','');
+      launcher.setAttribute('aria-expanded','true');launcher.tabIndex=-1;
+      requestAnimationFrame(function(){if(dialog.open)input.focus({preventScroll:true});});
+    }
+    function closeDialog(shouldRestore){
+      restoreFocus=shouldRestore!==false;
+      if(typeof dialog.close==='function'&&dialog.open)dialog.close();
+      else{dialog.removeAttribute('open');launcher.setAttribute('aria-expanded','false');launcher.tabIndex=0;if(restoreFocus)(previousFocus||launcher).focus();}
+    }
+
+    function addMessage(kind,text){
+      var m=document.createElement('div');m.className='flc-message flc-message--'+kind;
+      var copy=document.createElement('span');copy.className='flc-message-copy';copy.textContent=text;
+      m.appendChild(copy);log.appendChild(m);log.scrollTop=log.scrollHeight;
+      return m;
+    }
+    function sourceButton(kindLabel,title,go){
+      var b=document.createElement('button');b.type='button';b.className='flc-source';
+      var safe=String(title||'').trim().slice(0,100);
+      b.setAttribute('aria-label','Vis “'+safe+'” på siden');
+      var l=document.createElement('span');l.className='flc-source-label';l.textContent=kindLabel;
+      var t=document.createElement('span');t.className='flc-source-title';t.textContent=safe;
+      var a=document.createElement('span');a.className='flc-source-arrow';a.setAttribute('aria-hidden','true');a.textContent='→';
+      b.appendChild(l);b.appendChild(t);b.appendChild(a);
+      b.addEventListener('click',function(){closeDialog(false);go();});
+      return b;
+    }
+
+    // (3) hurtige handlinger: scroll-til-panel (samme flash-mønster som træets node-klik)
+    function goPanel(p){
+      var el=$(p.anchor);if(!el)return;
+      (el.closest('.panel')||el).scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'start'});
+    }
+    function goMethod(id){
+      var row=document.getElementById('method-'+id);
+      if(!row){goPanel(panelById('methods'));return;}
+      row.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'center'});
+      row.classList.add('row--flash');
+      setTimeout(function(){row.classList.remove('row--flash');},2000);
+    }
+    function goRun(i){
+      var body=document.getElementById('run-'+i);
+      if(!body){goPanel(panelById('runs'));return;}
+      var acc=body.closest('.acc');
+      if(acc&&!acc.classList.contains('is-open')){var head=acc.querySelector('.acc__head');if(head)head.click();}
+      (acc||body).scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'center'});
+    }
+
+    function explainPanel(id){
+      var p=panelById(id);if(!p)return;
+      var m=addMessage('bot',p.t+' — '+p.d);
+      m.appendChild(sourceButton('Panel på siden',p.t,function(){goPanel(p);}));
+      log.scrollTop=log.scrollHeight;
+      setState('found');
+    }
+    function explainOverview(){
+      var m=addMessage('bot','Cockpittet samler hele Frankly OS på én side: status, beslutninger, kørsler og crewet — i almindeligt sprog, alt lokalt. Klik et panel for at hoppe derhen:');
+      FOLD_PANELS.forEach(function(p){m.appendChild(sourceButton('Panel',p.t,function(){goPanel(p);}));});
+      log.scrollTop=log.scrollHeight;
+      setState('found');
+    }
+
+    // (2) søgning på tværs af sidens allerede-indlæste data — genbruger data/SNAP, ingen nye kald
+    function foldSearch(q){
+      var terms=foldNorm(q).split(/\s+/).filter(Boolean);
+      if(!terms.length)return [];
+      function hit(){
+        var t=foldNorm([].join.call(arguments,' '));
+        for(var i=0;i<terms.length;i++)if(t.indexOf(terms[i])<0)return false;
+        return true;
+      }
+      var out=[];
+      FOLD_PANELS.forEach(function(p){
+        if(hit(p.t,p.d,p.keys))out.push({label:'Panel',title:p.t,go:function(){goPanel(p);}});
+      });
+      ((data.flight||{}).runs||[]).forEach(function(r,i){
+        if(hit(r.nameDa,r.name,r.summaryDa,r.summary,r.runId,r.routeDa,r.route))
+          out.push({label:'Kørsel'+(r.date?' · '+r.date:''),title:r.nameDa||r.name||r.runId,go:function(){goRun(i);}});
+      });
+      var attn=panelById('attention');
+      (((data.autopilot||{}).waitingForJonas)||[]).forEach(function(w){
+        if(hit(w.title,w.why,w.gate))out.push({label:'Beslutning',title:w.title,go:function(){goPanel(attn);}});
+      });
+      (((data.activation||{}).items)||[]).forEach(function(it){
+        if(!it.decision&&!it.status&&hit(it.name,it.note,it.lane))
+          out.push({label:'Beslutning · værktøj',title:it.name,go:function(){goPanel(attn);}});
+      });
+      var learn=panelById('learnings');
+      (((data.learning||{}).candidates)||[]).forEach(function(c){
+        if(c.status==='pending'&&hit(c.text,c.scope,c.why))
+          out.push({label:'Læring',title:String(c.text||'').slice(0,90),go:function(){goPanel(learn);}});
+      });
+      var specs=renderTree._specs||((SNAP&&SNAP.agents&&SNAP.agents.specialists)||[]);
+      specs.forEach(function(s){
+        if(hit(s.id,s.name,s.method,ROLE_DESC[s.id]))
+          out.push({label:'Specialist · '+s.id,title:s.name,go:function(){goMethod(s.id);}});
+      });
+      return out.slice(0,8);
+    }
+
+    // (4) Spørg formidleren → pakker spørgsmålet med boot-instruks til en Claude Code-chat
+    // (samme kvitteringsmønster som composerens "Kopiér til Claude Code")
+    function buildFormidlerPrompt(q){
+      return 'Du er formidleren i Frankly OS. Spørgsmålet kommer fra cockpittets Frankly Fold-hjælper.\n\n'+
+        '1) Boot OS-et først, så du svarer på gemt tilstand:\n'+
+        'python3 "/Users/jonas/Documents/Frankly os/os-visualization/scripts/frankly-os-boot.py" --quick\n\n'+
+        '2) Spørgsmålet fra Jonas:\n»'+q+'«\n\n'+
+        '3) Svar som formidler: kort og på dansk, groundet i boot-output og de relevante feeds og læringer — dispatch til crew eller spawn_task, hvis der skal bygges. Alle Frankly OS-gates er arvet: ingen deploy, connector-skrivning, betalt API, plugins eller automatisk trådoprettelse — og claims/produkt/jura er LÅST.';
+    }
+    function askBlock(question){
+      var wrap=document.createElement('div');wrap.className='flc-ask';
+      var lead=document.createElement('span');lead.textContent='Mere end sidens tal?';
+      var b=document.createElement('button');b.type='button';b.className='dbtn';
+      b.innerHTML='Spørg formidleren <span aria-hidden="true">→</span>';
+      b.setAttribute('aria-label','Spørg formidleren — kopierer dit spørgsmål med boot-instruks til en ny Claude Code-chat');
+      var ok=document.createElement('span');ok.className='copied';ok.textContent='Kopieret ✓';
+      b.addEventListener('click',function(){copyText(buildFormidlerPrompt(question));flashCopied(ok);});
+      wrap.appendChild(lead);wrap.appendChild(b);wrap.appendChild(ok);
+      return wrap;
+    }
+
+    function ask(question){
+      var clean=String(question||'').trim();
+      if(!clean)return;
+      addMessage('user',clean);
+      input.value='';
+      var results=foldSearch(clean),m;
+      if(results.length){
+        m=addMessage('bot','Jeg fandt '+results.length+(results.length===1?' sted':' steder')+' på siden — klik for at hoppe derhen:');
+        results.forEach(function(res){m.appendChild(sourceButton(res.label,res.title,res.go));});
+        setState('found');
+      }else{
+        m=addMessage('bot','Jeg fandt ikke noget i sidens egne tal. Spørg formidleren i en Claude Code-chat — knappen pakker dit spørgsmål og kopierer det:');
+        setState('idle');
+      }
+      m.appendChild(askBlock(clean));
+      log.scrollTop=log.scrollHeight;
+      input.focus({preventScroll:true});
+    }
+
+    launcher.addEventListener('click',openDialog);
+    closeButton.addEventListener('click',function(){closeDialog(true);});
+    dialog.addEventListener('cancel',function(event){event.preventDefault();closeDialog(true);});
+    dialog.addEventListener('close',function(){
+      launcher.setAttribute('aria-expanded','false');launcher.tabIndex=0;
+      if(restoreFocus)(previousFocus||launcher).focus({preventScroll:true});
+    });
+    form.addEventListener('submit',function(event){event.preventDefault();ask(input.value);});
+    [].forEach.call(dialog.querySelectorAll('.flc-suggestion'),function(b){
+      b.addEventListener('click',function(){
+        if(b.getAttribute('data-a')==='overview')explainOverview();
+        else if(b.getAttribute('data-panel'))explainPanel(b.getAttribute('data-panel'));
+        input.focus({preventScroll:true});
+      });
+    });
+    dialog.addEventListener('keydown',function(event){
+      if(event.key!=='Tab')return;
+      var focusable=[].slice.call(dialog.querySelectorAll('button:not([disabled]),input:not([disabled]),[href],[tabindex]:not([tabindex="-1"])'));
+      if(!focusable.length)return;
+      var first=focusable[0],last=focusable[focusable.length-1];
+      if(event.shiftKey&&document.activeElement===first){event.preventDefault();last.focus();}
+      else if(!event.shiftKey&&document.activeElement===last){event.preventDefault();first.focus();}
+    });
+  })();
 })();
 </script>
 </body>

@@ -56,7 +56,9 @@
       "destination": "website/page production, browser QA, frontend implementation",
       "pilot": "V14 Frankly OS page polish and local QA",
       "gate": "plugin install approval",
-      "note": "kilde er et OpenAI-plugin-repo — verificér at plugin'et findes i det installerede marketplace før ja/nej"
+      "note": "kilde er et OpenAI-plugin-repo — verificér at plugin'et findes i det installerede marketplace før ja/nej",
+      "decision": "approved",
+      "decidedAt": "2026-07-10T20:16:05+00:00"
     },
     {
       "rank": 2,
@@ -67,7 +69,9 @@
       "destination": "OS visualization, dashboards, charts, route atlas",
       "pilot": "Improve route/capability visualization model",
       "gate": "plugin install approval",
-      "note": "kilde er et OpenAI-plugin-repo — verificér at plugin'et findes i det installerede marketplace før ja/nej"
+      "note": "kilde er et OpenAI-plugin-repo — verificér at plugin'et findes i det installerede marketplace før ja/nej",
+      "decision": "approved",
+      "decidedAt": "2026-07-10T20:16:06+00:00"
     },
     {
       "rank": 3,
@@ -125,7 +129,9 @@
       "action": "audit/pilot",
       "destination": "frankly-design-token-extraction-skill.md",
       "pilot": "One-time, no-network local audit of the script",
-      "gate": "dependency/script audit"
+      "gate": "dependency/script audit",
+      "decision": "approved",
+      "decidedAt": "2026-07-10T20:16:09+00:00"
     },
     {
       "rank": 8,
@@ -136,8 +142,10 @@
       "destination": "frankly-remotion-video-production-skill.md",
       "pilot": "Run the one pilot brief (code-driven video brief for an OS/route explainer)",
       "gate": "no render service or paid API",
-      "note": "adaptation done (frankly-remotion-video-production-skill.md)"
+      "note": "adaptation done (frankly-remotion-video-production-skill.md)",
+      "decision": "approved",
+      "decidedAt": "2026-07-10T20:16:10+00:00"
     }
   ],
-  "syncedAt": "2026-07-10T20:01:07+00:00"
+  "syncedAt": "2026-07-10T21:48:24+00:00"
 }
