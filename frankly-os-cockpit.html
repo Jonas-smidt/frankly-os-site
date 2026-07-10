@@ -255,29 +255,6 @@
     .tlist{display:block}
   }
 
-  /* ---- shelf ---- */
-  .shelfbar{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:14px}
-  .shelfbar input{flex:1;min-width:180px;max-width:320px;padding:10px 13px;border:1px solid var(--line);border-radius:var(--r-sm);
-    font:inherit;font-size:14px;color:var(--ink);background:var(--limestone)}
-  .shelfbar input:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
-  .fpill{min-height:34px;display:inline-flex;align-items:center;border:1px solid var(--stone-4);border-radius:var(--r-pill);
-    padding:7px 14px;background:rgba(255,255,255,.6);font-size:13px;font-weight:500;color:var(--bordeaux);
-    transition:background var(--dur-micro) var(--ease),border-color var(--dur-micro) var(--ease)}
-  .fpill:hover{background:var(--paper);border-color:var(--calm-deep)}
-  .fpill[aria-pressed="true"]{background:var(--bordeaux);color:#FFFFFF;border-color:var(--bordeaux)}
-  .shelf{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(220px,1fr))}
-  @media(max-width:639px){.shelf{grid-template-columns:1fr}}
-  .surface{display:flex;flex-direction:column;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:var(--r-card);
-    padding:15px 16px;text-decoration:none;color:inherit;position:relative;transition:transform var(--dur-small) var(--ease)}
-  .surface::after{content:"";position:absolute;inset:-1px;border-radius:inherit;box-shadow:var(--shadow-lift);
-    border:1px solid var(--calm-deep);opacity:0;transition:opacity var(--dur-small) var(--ease);pointer-events:none}
-  .surface:hover{transform:translateY(-3px)}
-  .surface:hover::after{opacity:1}
-  .surface__n{font-size:14.5px;font-weight:600;color:var(--bordeaux)}
-  .surface__d{font-size:12.5px;color:var(--grey-1);flex:1}
-  .surface__m{display:flex;justify-content:space-between;gap:8px;align-items:center;margin-top:4px;flex-wrap:wrap}
-  .shelffoot{margin-top:14px;font-size:11.5px;color:var(--grey-1)}
-
   /* ---- footer ---- */
   footer{margin-top:52px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--grey-1);line-height:1.7}
   footer b{color:var(--grey-1)}
@@ -404,23 +381,6 @@
       <div class="panel__head"><h3 id="methodsH">Specialisternes metode</h3><span class="count" id="methodCount"></span></div>
       <div class="panel__body" id="methods"></div>
     </section>
-  </div>
-
-  <!-- ===== BÅND 5: P8 Hylden ===== -->
-  <div class="sec reveal"><h2>Hylden — værktøjer og overflader</h2><div class="rule"></div><span class="ref" id="surfRef" aria-live="polite"></span></div>
-  <div class="reveal">
-    <div class="shelfbar">
-      <input id="shelfSearch" type="search" placeholder="Søg på hylden…" aria-label="Søg på hylden">
-      <div role="group" aria-label="Kategorifilter" style="display:flex;gap:6px;flex-wrap:wrap">
-        <button class="fpill" data-cat="" aria-pressed="true">Alle</button>
-        <button class="fpill" data-cat="Hverdag" aria-pressed="false">Hverdag</button>
-        <button class="fpill" data-cat="Brand" aria-pressed="false">Brand</button>
-        <button class="fpill" data-cat="OS" aria-pressed="false">OS</button>
-        <button class="fpill" data-cat="Leg" aria-pressed="false">Leg</button>
-      </div>
-    </div>
-    <div class="shelf" id="shelf"></div>
-    <div class="shelffoot">Pensionerede sider vises ikke her, men bliver liggende på disken som historik.</div>
   </div>
 
   <!-- ===== BÅND 6: footer ===== -->
@@ -1449,7 +1409,7 @@
     "R11":"Vogter alle gates: Drive, deploy, betaling, plugins, claims. Siger fra før noget skrives."
   };
 
-  /* Hylden kommer fra data/tools-shelf.json med samme genererede SNAP som file://-fallback. */
+  /* tools-shelf.json bruges IKKE af siden (hylden udgik i 4.0 — Lab-forsiden er hylden); feedet består som kanonisk kilde for deploy-boundarien. */
 
   /* ============================================================
      P1 — Maskinen lige nu
@@ -1953,7 +1913,7 @@
         var parentBottomX=innerX+14, py=cy+nh;
         cy+=nh+10;
         p.subs.forEach(function(su){
-          var sh=42;
+          var sh=54;
           var sn=nodeButton(su,'tnode--sub',idx++);
           sn.style.left=(innerX+24)+'px';sn.style.top=cy+'px';sn.style.width=(nodeW-24)+'px';sn.style.height=sh+'px';
           frag.appendChild(sn);
@@ -2119,60 +2079,6 @@
   }
 
   /* ============================================================
-     P8 — Hylden
-     ============================================================ */
-  var shelfState={q:"",cat:""};
-  function renderShelf(tools){
-    var grid=$('shelf');grid.innerHTML="";
-    var q=shelfState.q.toLowerCase(),cat=shelfState.cat;
-    var visible=(tools||[]).filter(function(t){
-      if(t.retired)return false;
-      if(cat&&t.category!==cat)return false;
-      if(q&&(t.labelDa+" "+(t.descDa||t.descriptionEn||"")+" "+t.category+" "+
-        (t.gateLabelDa||"")+" "+(t.statusLabelDa||"")).toLowerCase().indexOf(q)<0)return false;
-      return true;
-    });
-    if(!visible.length){
-      var d=document.createElement('div');d.className="row";d.style.gridColumn="1/-1";
-      d.innerHTML='<div class="row__icon">🔍</div><div class="row__main">'+
-        '<div class="row__t">'+(q?('Ingenting matcher "'+esc(shelfState.q)+'" — prøv et andet ord eller nulstil filteret.'):'Hylden er tom — registret kunne ikke læses.')+'</div></div>'+
-        (q?'<div class="row__side"><button class="dbtn" id="shelfReset">Nulstil</button></div>':'');
-      grid.appendChild(d);
-      var btn=document.getElementById('shelfReset');
-      if(btn)btn.addEventListener('click',function(){
-        shelfState.q="";$('shelfSearch').value="";renderShelf(tools);
-      });
-    }
-    visible.forEach(function(t){
-      var a=document.createElement('a');a.className="surface";a.href=t.href;
-      var gate=t.gateLabelDa||"Kun lokal";
-      var gc=gate.indexOf("Offentlig")===0?"chip--sky":gate.indexOf("Låst")===0?"chip--lock":gate.indexOf("Kræver")===0?"chip--warn":"";
-      var status=t.statusLabelDa||t.status||"";
-      var sc=t.status==="live"?"chip--ok":t.status==="preview"?"chip--blue":t.status==="locked"?"chip--lock":"";
-      a.setAttribute('aria-label','Åbn '+t.labelDa+' — '+gate+' — '+status);
-      a.innerHTML='<div class="surface__n">'+esc(t.labelDa)+'</div>'+
-        '<div class="surface__d">'+esc(t.descDa||t.descriptionEn||"")+'</div>'+
-        '<div class="surface__m"><span class="chip">'+esc(t.category)+'</span>'+
-        '<span class="chip '+sc+'">'+esc(status)+'</span>'+
-        '<span class="chip '+gc+'">'+(gate.indexOf("Låst")===0?'🔒 ':'')+esc(gate)+'</span></div>';
-      grid.appendChild(a);
-    });
-    $('surfRef').textContent=visible.length+" af "+(tools||[]).filter(function(t){return !t.retired;}).length+" flader";
-  }
-  function wireShelf(tools){
-    $('shelfSearch').addEventListener('input',function(){shelfState.q=this.value.trim();renderShelf(tools);});
-    [].forEach.call(document.querySelectorAll('.fpill'),function(p){
-      p.addEventListener('click',function(){
-        [].forEach.call(document.querySelectorAll('.fpill'),function(x){x.setAttribute('aria-pressed','false');});
-        p.setAttribute('aria-pressed','true');
-        shelfState.cat=p.getAttribute('data-cat');
-        renderShelf(tools);
-      });
-    });
-    renderShelf(tools);
-  }
-
-  /* ============================================================
      Feeds: live når serveren kører; SNAP-fallback på file://.
      Én kanonisk kilde pr. datasæt — UI'et oversætter aldrig selv,
      det læser *Da-felter når sync-laget har skrevet dem.
@@ -2185,8 +2091,7 @@
     autopilot:"data/autopilot-digest.json",
     learning:"data/learning-capture-queue.json",
     nba:"data/next-best-action.json",                  // nyt feed (sync) — degraderer pænt hvis det mangler
-    health:"data/health.json",                         // nyt feed (sync) — degraderer pænt hvis det mangler
-    toolsShelf:"data/tools-shelf.json"                 // nyt feed (sync) — indtil da bor TOOLS her i siden
+    health:"data/health.json"                          // nyt feed (sync) — degraderer pænt hvis det mangler
   };
   var data={
     flight:(SNAP&&SNAP.flight)||{counts:{},runs:[]},
@@ -2195,8 +2100,7 @@
     surfaces:(SNAP&&SNAP.surfaces)||{counts:{},surfaces:[]},
     autopilot:null,learning:null,
     nba:(SNAP&&SNAP.nba)||null,
-    health:(SNAP&&SNAP.health)||null,
-    toolsShelf:(SNAP&&SNAP.toolsShelf)||null
+    health:(SNAP&&SNAP.health)||null
   };
   var anyLive=false;
   Promise.all(Object.keys(feeds).map(function(k){
@@ -2212,8 +2116,6 @@
     renderRuns(data);
     renderArchive(data);
     fillResume(data);refreshOut();
-    var shelfTools=(data.toolsShelf&&data.toolsShelf.tools&&data.toolsShelf.tools.length)?data.toolsShelf.tools:[];
-    wireShelf(shelfTools);
 
     var isFile=false;try{isFile=location.protocol==="file:";}catch(e){}
     var banner=$('banner');
