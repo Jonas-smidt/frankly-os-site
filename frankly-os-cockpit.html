@@ -647,18 +647,88 @@
      Baked-in snapshot so the cockpit degrades gracefully on file://.
      Auto-regenerated at every feed sync — never hand-edited.
      ============================================================ */
-  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-11T10:18:24+00:00 — må ikke håndredigeres)
+  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-11T10:38:22+00:00 — må ikke håndredigeres)
   var SNAP = {
-  "generatedAt": "2026-07-11T10:18:24+00:00",
+  "generatedAt": "2026-07-11T10:38:22+00:00",
   "flight": {
     "counts": {
-      "runs": 67,
-      "machineFocusedRuns": 67,
+      "runs": 69,
+      "machineFocusedRuns": 69,
       "claimWorkRuns": 0,
       "driveSyncedRuns": 7,
-      "validatedRuns": 60
+      "validatedRuns": 62
     },
     "runs": [
+      {
+        "runId": "20260711-cockpit-agent-overblik",
+        "date": "2026-07-11",
+        "name": "Agent-overblik i cockpittet: klik på en ag",
+        "nameDa": "Agent-overblik i cockpittet: klik på en ag",
+        "route": "system-visualization",
+        "routeDa": "System-visualisering",
+        "status": "completed-local",
+        "statusDa": "Færdig (lokalt)",
+        "summary": "Agent-overblik i cockpittet: klik på en agent i agent-træet giver detalje-skuffe med metode-fil, version + ændringshistorik og brugstal; agentsUsed-logging + agent-stats aggregator som datagrundlag",
+        "summaryDa": "Agent-overblik i cockpittet: klik på en agent i agent-træet giver detalje-skuffe med metode-fil, version + ændringshistorik og brugstal; agentsUsed-logging + agent-stats aggregator som datagrundlag",
+        "validation": "passed",
+        "validationDa": "Bestået",
+        "drive": "pending approval",
+        "driveDa": "Afventer dit ja til Drive",
+        "claims": "none",
+        "artifacts": [
+          "agent stats.py",
+          "agent stats",
+          "record frankly run.py"
+        ],
+        "gates": [
+          "no public deploy",
+          "Drive approval",
+          "no-paid-api"
+        ],
+        "gatesDa": [
+          "Offentlig deploy",
+          "Connector-skrivning (Drive/API)",
+          "Betalt API-forbrug"
+        ],
+        "lesson": "Synk site-data-feeds (flight recorder 67->69) og genstart-vanen: cockpit-serveren skal genstartes efter server-kodeændringer; fremtidige crew-runs log.",
+        "lessonDa": "Synk site-data-feeds (flight recorder 67->69) og genstart-vanen: cockpit-serveren skal genstartes efter server-kodeændringer; fremtidige crew-runs log.",
+        "fanOut": []
+      },
+      {
+        "runId": "20260711-ai-rundbord-v1",
+        "date": "2026-07-11",
+        "name": "AI-Rundbordet v1: multi-model samtale (Cla",
+        "nameDa": "AI-Rundbordet v1: multi-model samtale (Cla",
+        "route": "mission-runtime-route",
+        "routeDa": "Missions-drift",
+        "status": "completed-local",
+        "statusDa": "Færdig (lokalt)",
+        "summary": "AI-Rundbordet v1: multi-model samtale (Claude+OpenAI, Gemini-sæde klar) med transskript, backlog-decisions og cockpit-panel",
+        "summaryDa": "AI-Rundbordet v1: multi-model samtale (Claude+OpenAI, Gemini-sæde klar) med transskript, backlog-decisions og cockpit-panel",
+        "validation": "passed",
+        "validationDa": "Bestået",
+        "drive": "pending approval",
+        "driveDa": "Afventer dit ja til Drive",
+        "claims": "none",
+        "artifacts": [
+          "roundtable.py",
+          "cockpit server.py",
+          "frankly os cockpit"
+        ],
+        "gates": [
+          "no public deploy",
+          "no-paid-api (begge saeder abonneme",
+          "backlog-decisions kun auto:false"
+        ],
+        "gatesDa": [
+          "Offentlig deploy",
+          "Betalt API-forbrug",
+          "backlog-decisions kun auto:false"
+        ],
+        "lesson": "Jonas beslutter i cockpittet: 6 rundbords-forslag + Gemini CLI-installation (gratis, 3.",
+        "lessonDa": "Jonas beslutter i cockpittet: 6 rundbords-forslag + Gemini CLI-installation (gratis, 3.",
+        "fanOut": []
+      },
       {
         "runId": "20260711-ruflo-a1-a5-udfoert",
         "date": "2026-07-11",
@@ -690,73 +760,6 @@
         ],
         "lesson": "A2: pr.",
         "lessonDa": "A2: pr.",
-        "fanOut": []
-      },
-      {
-        "runId": "20260711-frankly-guide-ai-quality-pilot",
-        "date": "2026-07-11",
-        "name": "Kalibrér Frankly Instore-guideassistentens",
-        "nameDa": "Kalibrér Frankly Instore-guideassistentens",
-        "route": "partner-activation",
-        "routeDa": "Partner-aktivering",
-        "status": "completed-local",
-        "statusDa": "Færdig (lokalt)",
-        "summary": "Den afgrænsede AI-kvalitetspilot er lukket ved præcis 8/8 godkendte kald: fase 1 bevarede 4/4 metadata-pas, fase 2 bestod farve og eget tempo, den oprindelige login-case fejlede på en ekstra faktuel klausul, og den diagnosticerede login-recovery bestod 11/11 maskinchecks og 10/10 manuel review. quiz_repeat blev ikke kørt.",
-        "summaryDa": "Den afgrænsede AI-kvalitetspilot er lukket ved præcis 8/8 godkendte kald: fase 1 bevarede 4/4 metadata-pas, fase 2 bestod farve og eget tempo, den oprindelige login-case fejlede på en ekstra faktuel klausul, og den diagnosticerede login-recovery bestod 11/11 maskinchecks og 10/10 manuel review. quiz_repeat blev ikke kørt.",
-        "validation": "passed",
-        "validationDa": "Bestået",
-        "drive": "pending approval",
-        "driveDa": "Afventer dit ja til Drive",
-        "claims": "lock-only",
-        "artifacts": [
-          "frankly instore guide assistant ai",
-          "guide assistant core.js",
-          "guide assistant server.js"
-        ],
-        "gates": [
-          "local-only",
-          "no paid API",
-          "runtime default FRANKLY_GUIDE_MAX_"
-        ],
-        "gatesDa": [
-          "Kun lokal",
-          "Betalt API-forbrug",
-          "runtime default FRANKLY_GUIDE_MAX_API_CALLS=0; no reset on restart"
-        ],
-        "lesson": "Behold serverens standardkaldeloft på 0.",
-        "lessonDa": "Behold serverens standardkaldeloft på 0.",
-        "fanOut": []
-      },
-      {
-        "runId": "20260711-frankly-reel-skabelon",
-        "date": "2026-07-11",
-        "name": "Dagens 4 video-analysers formatgreb samlet",
-        "nameDa": "Dagens 4 video-analysers formatgreb samlet",
-        "route": "video-production-workflow-route",
-        "routeDa": "video-production-workflow-route",
-        "status": "completed-local",
-        "statusDa": "Færdig (lokalt)",
-        "summary": "Dagens 4 video-analysers formatgreb samlet i genbrugelig Frankly reel-skabelon (8 greb + beat-liste + 2 ikke-claims-storyboards)",
-        "summaryDa": "Dagens 4 video-analysers formatgreb samlet i genbrugelig Frankly reel-skabelon (8 greb + beat-liste + 2 ikke-claims-storyboards)",
-        "validation": "passed",
-        "validationDa": "Bestået",
-        "drive": "pending approval",
-        "driveDa": "Afventer dit ja til Drive",
-        "claims": "none",
-        "artifacts": [
-          "frankly reel skabelon v0 1",
-          "video production workflow route.md"
-        ],
-        "gates": [
-          "claims locked",
-          "no-publish (produktion/publicering"
-        ],
-        "gatesDa": [
-          "Claims / produkt / juridisk",
-          "no-publish (produktion/publicering = separat gate)"
-        ],
-        "lesson": "Ved naeste reel-behov: R4.",
-        "lessonDa": "Ved naeste reel-behov: R4.",
         "fanOut": []
       }
     ]
@@ -864,9 +867,9 @@
     ]
   },
   "health": {
-    "result": "PASS",
-    "resultDa": "Alt grønt — selvtjek bestået, 34 af 34 evals grønne",
-    "lastFeedSync": "2026-07-11T10:18:24+00:00"
+    "result": "FAIL",
+    "resultDa": "Ikke alt grønt — selvtjek FAIL, 33 af 34 evals grønne",
+    "lastFeedSync": "2026-07-11T10:38:22+00:00"
   },
   "nba": {
     "activeBatch": "MCQ-011",
@@ -874,8 +877,8 @@
     "nextBestActionDa": "start fra `frankly-os-site/studio.html`, `os-visualization/system-intelligence/studio-v0-1-2026-07-06.json`, `os-visualization/system-intelligence/claude-run-to-packet-launcher-v0-1-2026-07-06.json` og `os-visualization/system-intelligence/claude-task-packet-builder-v0-1-2026-07-06.json` før du vælger værktøjer; brug Studios run-to-packet launcher og packet builder til fremtidigt kodearbejde og `frankly-os-site/control-cockpit.html` som det rapport-agtige driftsoverblik (OBS: kilden er stale — disse flader pensioneres af 4.0)"
   },
   "agents": {
-    "contract": "frankly-crew-contract-v0-14.md",
-    "version": "v0-14",
+    "contract": "frankly-crew-contract-v0-15.md",
+    "version": "v0-15",
     "specialists": [
       {
         "id": "M1",
@@ -1026,6 +1029,12 @@
         "name": "Video-producer / editor",
         "icon": "",
         "method": "Ejer videoproduktion og klip: storyboard, shotliste, tempo og eksport-specifikationer for Frankly-videoer; leverer produktionsplan og prompts, ingen betalt generering uden godkendelse"
+      },
+      {
+        "id": "R4.4",
+        "name": "Video-analytiker",
+        "icon": "",
+        "method": "Ejer videoANALYSE af eksterne/inspirations-videoer: kører video-analyst-lanen (yt-dlp/ffmpeg/whisper, lokalt og gratis) på et link eller en lokal fil, læser keyframes + transskript som billeder i tidsorden og leverer Frankly-relevansdom (hook/budskab/stil/format/genbrug/dom) efter video-analyst-howto; verificerer omtalte produkter ved kilden; anbefaler kun — ingen betalt API (Gemini fravalgt), videofiler kun til lokal analysemappe, nye værktøjer/køb altid gated"
       }
     ]
   },
@@ -1589,7 +1598,7 @@
       "localOs": 3,
       "retired": 3
     },
-    "syncedAt": "2026-07-11T10:18:24+00:00"
+    "syncedAt": "2026-07-11T10:38:22+00:00"
   }
 };
   // SNAP:END
