@@ -1,8 +1,12 @@
 /* ============================================================
-   Frankly Lab — brand canon
+   Frankly Lab — brand canon + shared component layer
    One source of truth for the Lab's look: real brand fonts
    (Almarena Neue Display + Switzer), the canonical Frankly
-   palette, radii, easing and a small set of primitives.
+   palette, radii, easing, primitives AND the shared page
+   anatomy (topbar, page head, card grid, tool shell, footer,
+   gate screen, forms).
+
+   Binding spec: frankly-lab-design-spec.md (repo root).
 
    Fonts are the ones already in journal/fonts/, referenced with
    a root-relative path so every Lab page at the repo root can use
@@ -14,6 +18,12 @@
    Token aliases below cover the older names pages already use
    (--grounded/--bordeaux, --pink/--calm-pink, --edge/--stone-4 …)
    so linking this sheet corrects drift without renaming everything.
+
+   Discipline reminders (see spec §4):
+   - green tokens are SEMANTIC ONLY (live/success chips + dots)
+   - Almarena is 600 only; Switzer 400/500/600 only; no font CDNs
+   - radii: 10 / 16 / 24 / pill — never 8px admin cards
+   - shadows are bordeaux-tinted, never grey/black
    ============================================================ */
 
 @font-face{font-family:"Almarena Neue Display";font-style:normal;font-weight:600;font-display:swap;src:url("journal/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
@@ -52,7 +62,7 @@
   --line:#E9E6E1;
   --line-dark:rgba(45,0,17,.14);
 
-  /* — status / chips — */
+  /* — status / chips (semantic ONLY — never surfaces) — */
   --ok:#CFE8BF;
   --warn:#F3D187;
   --blue:#CCD8F0;
@@ -78,6 +88,21 @@
   --shadow-card:0 1px 2px rgba(45,0,17,.05),0 10px 28px rgba(45,0,17,.07);
   --shadow-lift:0 2px 6px rgba(45,0,17,.07),0 22px 50px rgba(45,0,17,.12);
 
+  /* — spacing scale (additive, nothing renamed) — */
+  --sp-1:4px;
+  --sp-2:8px;
+  --sp-3:12px;
+  --sp-4:16px;
+  --sp-5:20px;
+  --sp-6:26px;
+  --sp-7:34px;
+  --sp-8:52px;
+  --wrap-max:1180px;
+
+  /* — alert ink (form errors / destructive text only; never a surface;
+       hex already in canon use as the semantic "up" tone in franklys-bmw) — */
+  --alert:#C2244F;
+
   /* — compatibility aliases (older per-page token names) — */
   --grounded:#2D0011;
   --pink:#FFD3E3;
@@ -96,6 +121,8 @@
   -webkit-font-smoothing:antialiased;
   text-rendering:optimizeLegibility;
 }
+/* zero-specificity defaults: any page-local body/element rule wins */
+:where(.fl){background:var(--limestone);font-size:16px;line-height:1.6;margin:0}
 .fl h1,.fl h2,.fl h3,.fl h4,.fl .fl-display{
   font-family:var(--fl-display);
   font-weight:600;
@@ -104,6 +131,8 @@
   text-wrap:balance;
 }
 .fl p{text-wrap:pretty}
+:where(.fl) img{max-width:100%;height:auto}
+:where(.fl) a{color:var(--bordeaux)}
 
 /* ---- premium global layer (applies wherever this sheet is linked) ---- */
 ::selection{background:var(--calm-pink);color:var(--bordeaux)}
@@ -140,6 +169,7 @@
 }
 .fl-pill:hover{background:var(--white);border-color:var(--calm-deep)}
 .fl-pill:active{transform:scale(.97)}
+.fl-pill[aria-current="page"],.fl-pill.is-active{background:var(--white);border-color:var(--line-dark)}
 
 /* ---- buttons ---- */
 .fl-btn{
@@ -153,11 +183,14 @@
 .fl-btn:active{transform:translateY(0) scale(.97)}
 .fl-btn--ghost{background:transparent;color:var(--bordeaux);border-color:var(--line-dark)}
 .fl-btn--ghost:hover{background:var(--white);border-color:var(--calm-deep)}
+.fl-btn--sm{min-height:36px;padding:7px 14px;font-size:13.5px}
+.fl-btn[disabled],.fl-btn:disabled{opacity:.45;cursor:not-allowed;transform:none;box-shadow:none}
 
 /* ---- eyebrow / kicker ---- */
 .fl-kicker{
   font-family:var(--fl-sans);font-size:12px;font-weight:600;
   letter-spacing:.12em;text-transform:uppercase;color:rgba(45,0,17,.62);
+  margin:0;
 }
 
 /* ---- status chip ---- */
@@ -168,12 +201,232 @@
   letter-spacing:.02em;text-transform:uppercase;color:var(--bordeaux);
   background:var(--stone-2);
 }
-.fl-chip.is-live{background:var(--ok)}
+.fl-chip.is-live{background:var(--ok)}          /* green = semantic live/success ONLY */
 .fl-chip.is-draft{background:var(--blue)}
 .fl-chip.is-locked{background:var(--warn)}
 .fl-chip.is-public{background:var(--sky)}
+.fl-chip.is-missing{background:var(--recover)}
+/* experiment badge: pink-family wash + dashed Deep Calm edge — glass-lab-family cards */
+.fl-chip.is-experiment{background:var(--blush);border:1px dashed var(--calm-deep)}
+/* OS-surface badge: the one permitted dark chip — marks operating surfaces, never hub tools */
+.fl-chip.is-os{background:var(--bordeaux);color:var(--limestone)}
 
+/* status dot (pairs with chips or standalone in tables) */
+.fl-dot{display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--stone-deep);vertical-align:middle}
+.fl-dot.is-live{background:var(--success-live)}
+.fl-dot.is-locked{background:var(--warn)}
+.fl-dot.is-draft{background:var(--blue)}
+
+/* ============================================================
+   SHARED PAGE ANATOMY (spec §2) — additive component layer.
+   Class names here are binding for every Lab page reskin.
+   ============================================================ */
+
+/* ---- layout column ---- */
+.fl-wrap{width:min(var(--wrap-max),calc(100% - 40px));margin-inline:auto}
+
+/* ---- topbar (spec §2.1) ---- */
+.fl-topbar{display:flex;align-items:center;justify-content:space-between;gap:18px;padding:var(--sp-6) 0}
+.fl-brand{display:inline-flex;align-items:center;gap:11px;text-decoration:none;color:var(--bordeaux)}
+.fl-brand svg{height:24px;width:auto;display:block;color:var(--bordeaux)}
+.fl-brand .lab{
+  font-family:var(--fl-sans);font-weight:600;font-size:14px;letter-spacing:.02em;
+  color:var(--bordeaux);padding-left:11px;border-left:1px solid var(--line-dark);
+}
+.fl-nav{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+
+/* ---- page header (spec §2.2) ---- */
+.fl-page-head{padding:var(--sp-7) 0 var(--sp-3)}
+.fl-page-head h1{
+  font-size:clamp(38px,6vw,64px);line-height:1;letter-spacing:-.02em;
+  margin:10px 0 14px;max-width:16ch;
+}
+.fl-lede{font-size:19px;line-height:1.55;max-width:56ch;margin:0;color:var(--grey-1)}
+
+/* ---- banded section + section head (spec §2.3) ---- */
+.fl-band{padding:var(--sp-7) 0 60px;border-top:1px solid var(--line)}
+.fl-band:first-of-type{border-top:0}
+.fl-section-head{display:flex;align-items:flex-end;justify-content:space-between;gap:18px;margin-bottom:22px}
+.fl-section-head h2{font-size:32px;line-height:1.04;margin:6px 0 0}
+.fl-section-head p{margin:8px 0 0;max-width:60ch}
+
+/* ---- card grid (spec §2.3) ---- */
+.fl-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--sp-4)}
+.fl-card{
+  position:relative;display:flex;flex-direction:column;gap:10px;
+  background:var(--paper);border:1px solid var(--stone-4);border-radius:var(--r-card);
+  padding:var(--sp-5);min-height:238px;
+  color:var(--grey-1);text-decoration:none;
+  transition:border-color var(--dur-hover) var(--ease),box-shadow var(--dur-hover) var(--ease),transform var(--dur-hover) var(--ease);
+}
+.fl-card:hover{border-color:var(--calm-deep);box-shadow:var(--shadow-card);transform:translateY(-3px)}
+.fl-card h3{font-size:23px;line-height:1.1;margin:2px 0 0}
+.fl-card p{font-size:14.5px;line-height:1.5;margin:0}
+.fl-go{
+  margin-top:auto;display:inline-flex;align-items:center;gap:6px;
+  font-size:13px;font-weight:600;color:var(--bordeaux);
+}
+.fl-go::after{content:"\2192";transition:transform var(--dur-ui) var(--ease)}
+.fl-card:hover .fl-go::after{transform:translateX(3px)}
+
+/* ---- tool page shell (spec §2.4) ---- */
+.fl-tool{display:flex;flex-direction:column;gap:var(--sp-5);padding-bottom:var(--sp-8)}
+.fl-crumb{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--grey-2);padding-top:var(--sp-2)}
+.fl-crumb a{color:var(--bordeaux);text-decoration:none}
+.fl-crumb a:hover{text-decoration:underline;text-underline-offset:3px}
+.fl-tool-panel{
+  background:var(--paper);border:1px solid var(--stone-4);border-radius:var(--r-card);
+  padding:var(--sp-6);
+}
+.fl-tool-panel + .fl-tool-panel{margin-top:0} /* gap comes from .fl-tool */
+.fl-tool-panel h2{font-size:26px;line-height:1.06;margin:0 0 var(--sp-4)}
+
+/* ---- footer (spec §2.5) ---- */
+.fl-footer{
+  margin-top:var(--sp-8);padding:var(--sp-6) 0 44px;border-top:1px solid var(--line);
+  font-size:13.5px;line-height:1.6;color:var(--grey-1);
+}
+.fl-footer p{margin:0;max-width:72ch}
+.fl-footer a{color:var(--bordeaux)}
+
+/* ---- dark status panel — the ONE permitted dark surface (spec §2.7) ---- */
+.fl-panel{
+  background:var(--bordeaux);color:var(--limestone);
+  border-radius:var(--r-lg);padding:var(--sp-6) var(--sp-6) var(--sp-6);
+  box-shadow:var(--shadow-lift);
+}
+.fl-panel .fl-kicker{color:rgba(245,244,241,.7);font-size:11px}
+.fl-panel b,.fl-panel .fl-panel-display{
+  display:block;font-family:var(--fl-display);font-weight:600;
+  font-size:34px;line-height:1.05;letter-spacing:-.012em;color:var(--paper);
+  margin:10px 0 8px;text-wrap:balance;
+}
+.fl-panel p{font-size:14.5px;line-height:1.55;color:rgba(245,244,241,.82);margin:0}
+.fl-metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:18px}
+.fl-metrics>div{background:rgba(255,255,255,.06);border:1px solid rgba(245,244,241,.14);border-radius:var(--r-sm);padding:12px}
+.fl-metrics strong{display:block;font-size:26px;font-weight:600;font-variant-numeric:tabular-nums;color:var(--paper)}
+.fl-metrics small{font-size:10px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(245,244,241,.66)}
+
+/* ---- form controls (spec §2.4) ---- */
+.fl-field{display:flex;flex-direction:column;gap:6px;margin:0 0 var(--sp-4)}
+.fl-field>label{
+  font-family:var(--fl-sans);font-size:12px;font-weight:600;
+  letter-spacing:.04em;text-transform:uppercase;color:rgba(45,0,17,.7);
+}
+.fl-input,.fl-select,.fl-textarea{
+  width:100%;box-sizing:border-box;
+  font-family:var(--fl-sans);font-size:16px;color:var(--bordeaux);
+  background:var(--paper);border:1px solid var(--stone-4);border-radius:var(--r-sm);
+  padding:11px 13px;
+  transition:border-color var(--dur-ui) var(--ease),box-shadow var(--dur-ui) var(--ease);
+}
+.fl-input::placeholder,.fl-textarea::placeholder{color:var(--grey-2)}
+.fl-input:hover,.fl-select:hover,.fl-textarea:hover{border-color:var(--stone-deep)}
+.fl-input:focus,.fl-select:focus,.fl-textarea:focus{
+  outline:none;border-color:var(--calm-deep);
+  box-shadow:0 0 0 3px rgba(255,172,202,.28);
+}
+.fl-textarea{min-height:110px;resize:vertical}
+.fl-select{
+  appearance:none;-webkit-appearance:none;padding-right:38px;cursor:pointer;
+  background-image:url("data:image/svg+xml;charset=utf-8,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1.5 6 6.5 11 1.5' fill='none' stroke='%232D0011' stroke-width='1.6' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:right 14px center;
+}
+.fl-help{font-size:12.5px;line-height:1.45;color:var(--grey-2);margin:0}
+.fl-error{font-size:13px;line-height:1.4;color:var(--alert);margin:0} /* text only — never an alarm surface */
+.fl-field.has-error .fl-input,.fl-field.has-error .fl-select,.fl-field.has-error .fl-textarea{border-color:var(--alert)}
+.fl-actions{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin-top:var(--sp-2)}
+
+/* ---- code-gate screen (spec §2.6) — pages that carry their own gate ---- */
+.fl-gate{
+  position:fixed;inset:0;z-index:9999;
+  display:flex;align-items:center;justify-content:center;
+  background:radial-gradient(1200px 600px at 75% -10%,var(--calm-pink),var(--limestone) 45%);
+  font-family:var(--fl-sans);
+}
+.fl-gate-card{
+  background:var(--paper);border:1px solid var(--stone-4);border-radius:var(--r-lg);
+  box-shadow:var(--shadow-lift);
+  width:min(360px,calc(100vw - 40px));box-sizing:border-box;
+  padding:36px 32px;text-align:center;
+}
+.fl-gate-card h1{
+  font-family:var(--fl-display);font-weight:600;letter-spacing:-.012em;
+  font-size:23px;color:var(--bordeaux);margin:8px 0 4px;
+}
+.fl-gate-card p{color:var(--grey-1);font-size:14px;margin:0 0 18px}
+.fl-gate-card .fl-input{text-align:center}
+.fl-gate-card .fl-btn{width:100%;margin-top:10px}
+.fl-gate-error{color:var(--alert);font-size:13px;min-height:18px;margin:6px 0 0}
+@media (max-width:540px){
+  .fl-gate{align-items:flex-start;padding-top:18vh}
+}
+
+/* ---- deploy-injected gate (#__flab_gate from sync_from_drive.py) —
+   the script writes inline styles we cannot edit, so this block
+   re-brands the injected overlay wherever this sheet is linked.
+   !important is required to beat the inline styles. ---- */
+#__flab_gate{
+  background:radial-gradient(1200px 600px at 75% -10%,var(--calm-pink),var(--limestone) 45%)!important;
+  font-family:var(--fl-sans)!important;
+}
+#__flab_card{
+  border:1px solid var(--stone-4)!important;
+  border-radius:var(--r-lg)!important;
+  box-shadow:var(--shadow-lift)!important;
+}
+#__flab_card>div:first-child{ /* eyebrow */
+  font-weight:600!important;letter-spacing:.12em!important;
+  color:rgba(45,0,17,.62)!important;
+}
+#__flab_card h1{
+  font-family:var(--fl-display)!important;font-weight:600!important;
+  letter-spacing:-.012em!important;color:var(--bordeaux)!important;
+}
+#__flab_card p{color:var(--grey-1)!important}
+#__flab_in{
+  font-family:var(--fl-sans)!important;
+  border:1px solid var(--stone-4)!important;border-radius:var(--r-sm)!important;
+  color:var(--bordeaux)!important;
+}
+#__flab_in:focus{outline:none!important;border-color:var(--calm-deep)!important;box-shadow:0 0 0 3px rgba(255,172,202,.28)!important}
+#__flab_err{color:var(--alert)!important}
+#__flab_b{
+  font-family:var(--fl-sans)!important;font-weight:600!important;
+  background:var(--bordeaux)!important;border-radius:var(--r-pill)!important;
+}
+
+/* ---- small utilities ---- */
+.fl-muted{color:var(--grey-2)}
+.fl-hr{border:0;border-top:1px solid var(--line);margin:var(--sp-6) 0}
+.fl-visually-hidden{
+  position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;
+  overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;
+}
+.fl-stack-2>*+*{margin-top:var(--sp-2)}
+.fl-stack-4>*+*{margin-top:var(--sp-4)}
+.fl-stack-6>*+*{margin-top:var(--sp-6)}
+
+/* ---- responsive (shared breakpoints: 860 / 640 / 520) ---- */
+@media (max-width:860px){
+  .fl-grid{grid-template-columns:1fr 1fr}
+  .fl-card{min-height:0}
+}
+@media (max-width:640px){
+  .fl-grid{grid-template-columns:1fr}
+  .fl-topbar{flex-direction:column;align-items:flex-start;gap:14px}
+  .fl-section-head{flex-direction:column;align-items:flex-start}
+  .fl-tool-panel{padding:var(--sp-5)}
+}
+@media (max-width:520px){
+  .fl-page-head h1{font-size:34px}
+  .fl-section-head h2{font-size:27px}
+  .fl-metrics{grid-template-columns:1fr 1fr}
+  .fl-panel{padding:var(--sp-5)}
+}
+
+/* ---- reduced motion: kill transforms/transitions everywhere ---- */
 @media (prefers-reduced-motion:reduce){
-  .fl-btn,.fl-pill{transition:none}
-  .fl-btn:hover,.fl-btn:active,.fl-pill:active{transform:none}
+  .fl-btn,.fl-pill,.fl-card,.fl-go::after,.fl-input,.fl-select,.fl-textarea{transition:none}
+  .fl-btn:hover,.fl-btn:active,.fl-pill:active,.fl-card:hover,.fl-card:hover .fl-go::after{transform:none}
 }
