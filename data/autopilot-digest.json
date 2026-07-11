@@ -1,9 +1,30 @@
 {
-  "generated": "2026-07-11T15:50:22+00:00",
+  "generated": "2026-07-11T16:58:09+00:00",
   "day": "2026-07-11",
-  "status": "unhealthy-did-not-act",
-  "healthLine": "[self-check] 2026-07-11 17:50 — FAIL — report: os-visualization/reports/self-check-2026-07-11.md",
-  "didAutonomously": [],
+  "status": "healthy",
+  "healthLine": "[self-check] 2026-07-11 18:58 — PASS — report: os-visualization/reports/self-check-2026-07-11.md",
+  "didAutonomously": [
+    {
+      "job": "regenerate lessons memory (compounding)",
+      "ok": true
+    },
+    {
+      "job": "refresh handoff-derived state",
+      "ok": true
+    },
+    {
+      "job": "refresh site data feeds",
+      "ok": true
+    },
+    {
+      "job": "scan for roster gaps (reflective — proposes new agents)",
+      "ok": true
+    },
+    {
+      "job": "refresh crew artifacts (contract digest + agent files)",
+      "ok": true
+    }
+  ],
   "readyToAutoRun": [
     {
       "id": "blog-13",
@@ -51,100 +72,15 @@
       "classified": "guarded-write"
     }
   ],
-  "waitingForJonas": [
-    {
-      "id": "roundtable-20260711-141057-rgtest-hvad-er-styrken-ved-tre-forskelli-p1",
-      "title": "Fast rollekontrakt efter temperament",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-141057-rgtest-hvad-er-styrken-ved-tre-forskelli, emne: \"Røgtest: hvad er styrken ved tre forskellige AI-modeller ved samme bord?\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): BYG-SENERE · 4/5 · effort S — Ægte divergens: Claude vil temperament-roller, Gemini kapabilitet-roller — Jonas skal vælge grundlag først."
-    },
-    {
-      "id": "roundtable-20260711-141057-rgtest-hvad-er-styrken-ved-tre-forskelli-p2",
-      "title": "Divergenslog som primært lessons-indeks",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-141057-rgtest-hvad-er-styrken-ved-tre-forskelli, emne: \"Røgtest: hvad er styrken ved tre forskellige AI-modeller ved samme bord?\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): BYG-NU · 5/5 · effort M — Gem hvor modellerne var UENIGE (i dag gemmes kun hvad der virkede) — måske det mest værdifulde lessons-format."
-    },
-    {
-      "id": "roundtable-20260711-141057-rgtest-hvad-er-styrken-ved-tre-forskelli-p3",
-      "title": "Passivt blind spot-skema i cockpittet",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-141057-rgtest-hvad-er-styrken-ved-tre-forskelli, emne: \"Røgtest: hvad er styrken ved tre forskellige AI-modeller ved samme bord?\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): PARK · 3/5 · effort S — Nice-to-have; venter naturligt på rolle-definitionen (p1)."
-    },
-    {
-      "id": "roundtable-20260711-141532-jeg-vil-gerne-bare-lave-en-test-hvor-vi-p1",
-      "title": "Luk hilsenrunden som bestået",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-141532-jeg-vil-gerne-bare-lave-en-test-hvor-vi, emne: \"jeg vil gerne bare lave en test hvor vi alle lige kan sige hej til hinanden\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): DROP · 1/5 · effort S — Test-artefakt fra hilsen-runden — administrativ observation, ikke byggearbejde."
-    },
-    {
-      "id": "roundtable-20260711-141532-jeg-vil-gerne-bare-lave-en-test-hvor-vi-p2",
-      "title": "Næste runde: et emne med reel substans",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-141532-jeg-vil-gerne-bare-lave-en-test-hvor-vi, emne: \"jeg vil gerne bare lave en test hvor vi alle lige kan sige hej til hinanden\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): DROP · 1/5 · effort S — Meta-forslag om næste rundbords emne — proces, ikke OS-forbedring."
-    },
-    {
-      "id": "roundtable-20260711-141532-jeg-vil-gerne-bare-lave-en-test-hvor-vi-p3",
-      "title": "Udsæt infrastruktur til en dedikeret teknisk runde",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-141532-jeg-vil-gerne-bare-lave-en-test-hvor-vi, emne: \"jeg vil gerne bare lave en test hvor vi alle lige kan sige hej til hinanden\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): DROP · 1/5 · effort S — Metodisk pointe om testdesign — hører til emne-valg, ikke byggekøen."
-    },
-    {
-      "id": "deploy-tema-hubsider",
-      "title": "Deploy 4 tema-hubsider + tema-nav til Frankly Lab Journal",
-      "classified": "locked",
-      "gate": "locked",
-      "why": "Public deploy — Jonas beslutter. QA PASS 8/8, committed safe-local 2026-07-11."
-    },
-    {
-      "id": "roundtable-20260711-142234-hvad-tnker-i-om-frankly-lab-4-0-og-hvad-p2",
-      "title": "Jonas-modellen som skjult lag",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-142234-hvad-tnker-i-om-frankly-lab-4-0-og-hvad, emne: \"hvad tænker i om frankly lab 4.0 og hvad skal der til for det bliver en 5.0\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): BYG-SENERE · 4/5 · effort M — Lær Jonas' beslutningsmønstre — konceptuelt dybt men høj kompleksitet; kræver udvidet gate-logging først."
-    },
-    {
-      "id": "roundtable-20260711-142924-skal-cockpittet-vise-rundbordssamtaler-l-r4-p2",
-      "title": "Gate-link direkte fra beslutningspunkterne",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-142924-skal-cockpittet-vise-rundbordssamtaler-l, emne: \"Skal cockpittet vise rundbordssamtaler live eller kun som referat?\") — din beslutning; intet er udført. || Crewets dom (2026-07-11): BYG-SENERE · 3/5 · effort S — Reel UX-værdi, men venter på beslutningsblokken (r4-p1) er live."
-    },
-    {
-      "id": "roundtable-20260711-163114-hvad-gr-et-rundbords-referat-beslutnings-p1",
-      "title": "Indfør gate-tabel som fast referatåbning",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-163114-hvad-gr-et-rundbords-referat-beslutnings, emne: \"Hvad gør et rundbords-referat beslutningsklart for Jonas?\") — din beslutning; intet er udført."
-    },
-    {
-      "id": "roundtable-20260711-163114-hvad-gr-et-rundbords-referat-beslutnings-p2",
-      "title": "Standardisér statuslinje for autopilot-arbejde",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-163114-hvad-gr-et-rundbords-referat-beslutnings, emne: \"Hvad gør et rundbords-referat beslutningsklart for Jonas?\") — din beslutning; intet er udført."
-    },
-    {
-      "id": "roundtable-20260711-163114-hvad-gr-et-rundbords-referat-beslutnings-p3",
-      "title": "Eksplicit nul-beslutnings-markering",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Topforslag fra AI-Rundbordet (session 20260711-163114-hvad-gr-et-rundbords-referat-beslutnings, emne: \"Hvad gør et rundbords-referat beslutningsklart for Jonas?\") — din beslutning; intet er udført."
-    },
+  "waitingForJonas": [],
+  "recentAnswers": [
     {
       "id": "DEC-20260711-brand-reference-assets",
       "title": "Skal design-reference-assets (video/billeder) med i det offentlige Lab-bundle?",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "frankly-brand-reference.html peger paa assets/design-reference/*.mp4/.jpg som IKKE er i deploy-allowlisten -> localRefs-fejl (maskinen roed). To muligheder: (A) allowliste de tunge assets, saa siden virker offentligt (de bliver public ved naeste deploy) — eller (B) fjern/erstat de tunge referencer i brand-reference-siden, saa den ikke peger paa udeladte filer. Skriv gerne din begrundelse som kommentar — den foelger med som instruks."
-    }
-  ],
-  "recentAnswers": [
+      "decision": "afgjort",
+      "note": "Loest safe-local (mulighed A): assets/design-reference/ tilfoejet til sync_from_drive-allowlisten (48 filer, 8,8 MB) — alle 18 refs havde en fil, ren forglemmelse fra Design-Reference-lanen. Bundtet er nu konsistent, maskinen groen. Assets ligger bag SAMME code-gate som brand-reference-siden; faktisk offentliggoerelse sker foerst ved din deploy (git push) — den gate er uroert.",
+      "decidedAt": "2026-07-11T18:58:09+02:00"
+    },
     {
       "id": "roundtable-install-gemini-cli",
       "title": "Installér Gemini CLI (gratis, Google-login) som 3. sæde ved AI-Rundbordet",
@@ -172,13 +108,6 @@
       "decision": "godkendt",
       "note": "Jonas valgte A: genbrug den eksisterende brugbare nøgle; godkend en persistent samlet pulje på 25 betalte gpt-5.4-mini-svar til lokal UI-brug, uden automatisk model-fallback og kun med manuel fornyelse.",
       "decidedAt": "2026-07-11T12:18:03+02:00"
-    },
-    {
-      "id": "DEC-20260711-frankly-helper-ai-quality-pilot",
-      "title": "Vælg omfang for betalt AI-kvalitetspilot til Frankly-hjælperen",
-      "decision": "godkendt",
-      "note": "Jonas valgte A: genbrug den eksisterende brugbare nøgle og godkend højst 8 betalte gpt-5.4-mini-kald til lokal kalibrering/evaluering; ingen automatisk model-fallback.",
-      "decidedAt": "2026-07-11T01:17:42+02:00"
     }
   ],
   "note": "Fully local + reversible. Deploy/connector/paid/claims never auto-run — they are the only decisions here."

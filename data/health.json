@@ -1,14 +1,14 @@
 {
-  "generated": "2026-07-11T15:00:20+00:00",
-  "lastFeedSync": "2026-07-11T15:00:20+00:00",
+  "generated": "2026-07-11T16:58:15+00:00",
+  "lastFeedSync": "2026-07-11T16:58:15+00:00",
   "selfCheck": {
     "date": "2026-07-11",
-    "result": "FAIL",
+    "result": "PASS",
     "report": "os-visualization/reports/self-check-2026-07-11.md",
     "checks": {
       "json": "passed",
       "feedSync": "passed",
-      "localRefs": "FAILED",
+      "localRefs": "passed",
       "css": "passed",
       "inlineJs": "passed",
       "uploadBoundary": "passed",
@@ -42,5 +42,5 @@
     "passed": 34,
     "failed": 0
   },
-  "resultDa": "Ikke alt grønt — selvtjek FAIL, 34 af 34 evals grønne"
+  "resultDa": "Alt grønt — selvtjek bestået, 34 af 34 evals grønne"
 }
