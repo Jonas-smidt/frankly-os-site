@@ -24,3 +24,6 @@ studio.html
 # Diverse
 .DS_Store
 *.local
+
+# Lokal publish-prep dry-run-evidens — maskinstate, skal ikke i det offentlige repo
+publish-dry-run/
