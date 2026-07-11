@@ -143,6 +143,12 @@ def build_manifest(root=pathlib.Path(".")):
     if tools_dir.exists():
         for src in sorted(tools_dir.glob("*.png")):
             manifest[src.relative_to(root).as_posix()] = src
+    # Design-reference assets belong to the gated frankly-brand-reference.html page.
+    design_ref_dir = root / "assets" / "design-reference"
+    if design_ref_dir.exists():
+        for src in sorted(design_ref_dir.iterdir()):
+            if src.is_file():
+                manifest[src.relative_to(root).as_posix()] = src
     journal_dir = root / "journal"
     if journal_dir.exists():
         for src in sorted(journal_dir.rglob("*")):
@@ -291,6 +297,13 @@ def main():
     if tools_dir.exists():
         for src in sorted(tools_dir.glob("*.png")):
             copy_file(src, SITE_DIR / src)
+
+    # Design-reference assets — belong to the gated frankly-brand-reference.html page.
+    design_ref_dir = pathlib.Path("assets/design-reference")
+    if design_ref_dir.exists():
+        for src in sorted(design_ref_dir.iterdir()):
+            if src.is_file():
+                copy_file(src, SITE_DIR / src)
 
     # Journal (Frankly blog suite) — copy the whole directory tree.
     # The Journal is the one PUBLIC surface of the Lab: pages are NOT gated and
