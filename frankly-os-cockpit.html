@@ -246,6 +246,22 @@
   .rt-syn{margin:14px 12px 8px;padding:13px 15px;border:1px solid var(--calm-deep);border-radius:var(--r-card);
     background:var(--calm-pink);font-size:13px;color:var(--ink);line-height:1.55}
   .rt-syn b{display:block;color:var(--bordeaux);margin-bottom:3px}
+  /* Jonas' egne beskeder: højre-indrykket, anden farve — seat "jonas" fra motoren */
+  .rt-bubble--jonas{margin-left:56px;background:var(--blush);border-color:var(--line-dark)}
+  .rt-reply{display:inline-block;margin-left:8px;font-size:11px;font-weight:600;color:var(--grey-2);
+    text-decoration:underline;text-underline-offset:3px;transition:color var(--dur-micro) var(--ease)}
+  .rt-reply:hover{color:var(--bordeaux)}
+  .rt-compose{border-top:1px solid var(--stone);padding:12px 14px 14px}
+  .rt-replybar{margin-bottom:8px;font-size:12px;color:var(--grey-1);background:var(--calm-pink);
+    border:1px solid var(--calm-deep);border-radius:var(--r-sm);padding:7px 11px;display:flex;align-items:center;gap:8px}
+  .rt-replybar b{color:var(--bordeaux)}
+  .rt-replyx{margin-left:auto;font-size:16px;line-height:1;color:var(--grey-2);padding:0 4px}
+  .rt-replyx:hover{color:var(--bordeaux)}
+  .rt-composerow{display:flex;gap:8px;align-items:flex-end}
+  .rt-composerow textarea{flex:1;min-height:52px;padding:10px 12px;border:1px solid var(--line);border-radius:var(--r-sm);
+    font:inherit;font-size:13px;line-height:1.5;color:var(--ink);background:var(--limestone);resize:vertical}
+  .rt-composerow textarea:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
+  .rt-compose .decided{margin-top:8px}
   .composer .decided{margin:10px 12px 4px}
 
   /* ---- method editor ---- */
@@ -587,6 +603,19 @@
   <section class="panel reveal" id="rtViewer" aria-labelledby="rtViewH" hidden>
     <div class="panel__head"><h3 id="rtViewH">Transskript</h3><span class="count" id="rtViewMeta"></span></div>
     <div class="panel__body" id="rtTranscript"></div>
+    <!-- Skriv til bordet: beskeden appendes til sessionens inbox (<id>.inbox.jsonl) via
+         POST /api/roundtable/say — motoren læser den før næste sæde-kald / ved genåbning -->
+    <div class="rt-compose" id="rtCompose" hidden>
+      <div class="rt-replybar" id="rtReplyBar" hidden>
+        <span>Svarer på: <b id="rtReplyLabel"></b></span>
+        <button class="rt-replyx" id="rtReplyCancel" type="button" aria-label="Fortryd svar">&times;</button>
+      </div>
+      <div class="rt-composerow">
+        <textarea id="rtSay" maxlength="2000" placeholder="Skriv til bordet …" aria-label="Skriv til bordet"></textarea>
+        <button class="dbtn dbtn--ok" id="rtSend" type="button">Send</button>
+      </div>
+      <div class="decided" id="rtSayMsg" hidden></div>
+    </div>
   </section>
 
   <!-- ===== BÅND 6: footer ===== -->
@@ -647,119 +676,118 @@
      Baked-in snapshot so the cockpit degrades gracefully on file://.
      Auto-regenerated at every feed sync — never hand-edited.
      ============================================================ */
-  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-11T10:38:22+00:00 — må ikke håndredigeres)
+  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-11T12:33:44+00:00 — må ikke håndredigeres)
   var SNAP = {
-  "generatedAt": "2026-07-11T10:38:22+00:00",
+  "generatedAt": "2026-07-11T12:33:44+00:00",
   "flight": {
     "counts": {
-      "runs": 69,
-      "machineFocusedRuns": 69,
+      "runs": 75,
+      "machineFocusedRuns": 75,
       "claimWorkRuns": 0,
       "driveSyncedRuns": 7,
-      "validatedRuns": 62
+      "validatedRuns": 67
     },
     "runs": [
       {
-        "runId": "20260711-cockpit-agent-overblik",
+        "runId": "20260711-journal-tema-hubsider",
         "date": "2026-07-11",
-        "name": "Agent-overblik i cockpittet: klik på en ag",
-        "nameDa": "Agent-overblik i cockpittet: klik på en ag",
-        "route": "system-visualization",
-        "routeDa": "System-visualisering",
-        "status": "completed-local",
-        "statusDa": "Færdig (lokalt)",
-        "summary": "Agent-overblik i cockpittet: klik på en agent i agent-træet giver detalje-skuffe med metode-fil, version + ændringshistorik og brugstal; agentsUsed-logging + agent-stats aggregator som datagrundlag",
-        "summaryDa": "Agent-overblik i cockpittet: klik på en agent i agent-træet giver detalje-skuffe med metode-fil, version + ændringshistorik og brugstal; agentsUsed-logging + agent-stats aggregator som datagrundlag",
+        "name": "4 tema-hubsider (Go/Home/Care/Hverdagens p",
+        "nameDa": "4 tema-hubsider (Go/Home/Care/Hverdagens p",
+        "route": "blog-seo-content-engine-route",
+        "routeDa": "blog-seo-content-engine-route",
+        "status": "blocked-gated",
+        "statusDa": "Blokeret (gated)",
+        "summary": "4 tema-hubsider (Go/Home/Care/Hverdagens psykologi) oven på Journal + tema-nav i indeks + sitemap-entries",
+        "summaryDa": "4 tema-hubsider (Go/Home/Care/Hverdagens psykologi) oven på Journal + tema-nav i indeks + sitemap-entries",
         "validation": "passed",
         "validationDa": "Bestået",
-        "drive": "pending approval",
-        "driveDa": "Afventer dit ja til Drive",
+        "drive": "local only",
+        "driveDa": "Kun lokal",
         "claims": "none",
         "artifacts": [
-          "agent stats.py",
-          "agent stats",
-          "record frankly run.py"
+          "tema frankly go",
+          "tema frankly home",
+          "tema frankly care"
         ],
         "gates": [
           "no public deploy",
-          "Drive approval",
-          "no-paid-api"
+          "claims locked"
         ],
         "gatesDa": [
           "Offentlig deploy",
-          "Connector-skrivning (Drive/API)",
-          "Betalt API-forbrug"
+          "Claims / produkt / juridisk"
         ],
-        "lesson": "Synk site-data-feeds (flight recorder 67->69) og genstart-vanen: cockpit-serveren skal genstartes efter server-kodeændringer; fremtidige crew-runs log.",
-        "lessonDa": "Synk site-data-feeds (flight recorder 67->69) og genstart-vanen: cockpit-serveren skal genstartes efter server-kodeændringer; fremtidige crew-runs log.",
+        "lesson": "Jonas beslutter deploy-tema-hubsider i cockpittet; ved go: git push + gh workflow run deploy.",
+        "lessonDa": "Jonas beslutter deploy-tema-hubsider i cockpittet; ved go: git push + gh workflow run deploy.",
         "fanOut": []
       },
       {
-        "runId": "20260711-ai-rundbord-v1",
+        "runId": "20260711-lab-undersider-ideation",
         "date": "2026-07-11",
-        "name": "AI-Rundbordet v1: multi-model samtale (Cla",
-        "nameDa": "AI-Rundbordet v1: multi-model samtale (Cla",
-        "route": "mission-runtime-route",
-        "routeDa": "Missions-drift",
+        "name": "Fuld-crew ideation: prioriteret liste af u",
+        "nameDa": "Fuld-crew ideation: prioriteret liste af u",
+        "route": "website-publishing-workflow",
+        "routeDa": "Website-udgivelse",
         "status": "completed-local",
         "statusDa": "Færdig (lokalt)",
-        "summary": "AI-Rundbordet v1: multi-model samtale (Claude+OpenAI, Gemini-sæde klar) med transskript, backlog-decisions og cockpit-panel",
-        "summaryDa": "AI-Rundbordet v1: multi-model samtale (Claude+OpenAI, Gemini-sæde klar) med transskript, backlog-decisions og cockpit-panel",
+        "summary": "Fuld-crew ideation: prioriteret liste af undersider til Frankly Lab (formål, målgruppe, indhold, indsats)",
+        "summaryDa": "Fuld-crew ideation: prioriteret liste af undersider til Frankly Lab (formål, målgruppe, indhold, indsats)",
         "validation": "passed",
         "validationDa": "Bestået",
         "drive": "pending approval",
         "driveDa": "Afventer dit ja til Drive",
         "claims": "none",
         "artifacts": [
-          "roundtable.py",
-          "cockpit server.py",
-          "frankly os cockpit"
+          "lab undersider ideation 2026 07 11",
+          "website publishing workflow route"
         ],
         "gates": [
           "no public deploy",
-          "no-paid-api (begge saeder abonneme",
-          "backlog-decisions kun auto:false"
+          "claims locked",
+          "read-only-ideation"
         ],
         "gatesDa": [
           "Offentlig deploy",
-          "Betalt API-forbrug",
-          "backlog-decisions kun auto:false"
+          "Claims / produkt / juridisk",
+          "read-only-ideation"
         ],
-        "lesson": "Jonas beslutter i cockpittet: 6 rundbords-forslag + Gemini CLI-installation (gratis, 3.",
-        "lessonDa": "Jonas beslutter i cockpittet: 6 rundbords-forslag + Gemini CLI-installation (gratis, 3.",
+        "lesson": "Jonas vælger: (A) byg Tier 1 (about-side + mental-load-hub) + step 0 teknisk baseline, (B) besvar beslutnings-packet (OS-åbenhed, sprogvalg, changelog.",
+        "lessonDa": "Jonas vælger: (A) byg Tier 1 (about-side + mental-load-hub) + step 0 teknisk baseline, (B) besvar beslutnings-packet (OS-åbenhed, sprogvalg, changelog.",
         "fanOut": []
       },
       {
-        "runId": "20260711-ruflo-a1-a5-udfoert",
+        "runId": "20260711-frankly-helper-reference-desk-local",
         "date": "2026-07-11",
-        "name": "A1 script-foer-model-regel i kontrakt v0-1",
-        "nameDa": "A1 script-foer-model-regel i kontrakt v0-1",
-        "route": "mission-runtime-route",
-        "routeDa": "Missions-drift",
-        "status": "completed-local",
-        "statusDa": "Færdig (lokalt)",
-        "summary": "A1 script-foer-model-regel i kontrakt v0-14 + A5 effort:low paa 7 haiku-seats i generatoren",
-        "summaryDa": "A1 script-foer-model-regel i kontrakt v0-14 + A5 effort:low paa 7 haiku-seats i generatoren",
+        "name": "Redesign Frankly-hjælperen som en rolig Re",
+        "nameDa": "Redesign Frankly-hjælperen som en rolig Re",
+        "route": "partner-activation",
+        "routeDa": "Partner-aktivering",
+        "status": "parked-local",
+        "statusDa": "Parkeret (lokalt)",
+        "summary": "Præsentationslaget er komprimeret til en Reference Desk med conversation-owned scroll, 2x2 prompts og scanbare faktarækker. Seks all_yes- og seks all_no-fragmenter vises som rækker, mens samlet textContent forbliver byteidentisk med de originale newline-fragmenter; ledger og providerbrug er urørt.",
+        "summaryDa": "Præsentationslaget er komprimeret til en Reference Desk med conversation-owned scroll, 2x2 prompts og scanbare faktarækker. Seks all_yes- og seks all_no-fragmenter vises som rækker, mens samlet textContent forbliver byteidentisk med de originale newline-fragmenter; ledger og providerbrug er urørt.",
         "validation": "passed",
         "validationDa": "Bestået",
-        "drive": "pending approval",
-        "driveDa": "Afventer dit ja til Drive",
-        "claims": "none",
+        "drive": "local only",
+        "driveDa": "Kun lokal",
+        "claims": "lock-only",
         "artifacts": [
-          "frankly crew contract v0 14",
-          "generate crew artifacts.py",
-          "agents filer + digest (begge dirs)"
+          "frankly instore salgsguide",
+          "guide assistant exact claims test.",
+          "qa report"
         ],
         "gates": [
-          "kontrakt-edit versioneret (v0-13 u",
-          "no public deploy"
+          "local-only",
+          "presentation-only; exact claim str",
+          "live ledger untouched at 2/25 used"
         ],
         "gatesDa": [
-          "kontrakt-edit versioneret (v0-13 uroert)",
-          "Offentlig deploy"
+          "Kun lokal",
+          "Claims / produkt / juridisk",
+          "live ledger untouched at 2/25 used; 0 provider calls"
         ],
-        "lesson": "A2: pr.",
-        "lessonDa": "A2: pr.",
+        "lesson": "Gentag desktop/390/320/reduced-motion-browsermatrixen med fake/DOM-only states, når browserbackenden er tilgængelig, og kør fuld guide:check i et milj.",
+        "lessonDa": "Gentag desktop/390/320/reduced-motion-browsermatrixen med fake/DOM-only states, når browserbackenden er tilgængelig, og kør fuld guide:check i et milj.",
         "fanOut": []
       }
     ]
@@ -867,9 +895,9 @@
     ]
   },
   "health": {
-    "result": "FAIL",
-    "resultDa": "Ikke alt grønt — selvtjek FAIL, 33 af 34 evals grønne",
-    "lastFeedSync": "2026-07-11T10:38:22+00:00"
+    "result": "PASS",
+    "resultDa": "Alt grønt — selvtjek bestået, 34 af 34 evals grønne",
+    "lastFeedSync": "2026-07-11T12:33:44+00:00"
   },
   "nba": {
     "activeBatch": "MCQ-011",
@@ -1040,7 +1068,7 @@
   },
   "toolsShelf": {
     "schemaVersion": "1.0",
-    "updated": "2026-07-10",
+    "updated": "2026-07-11",
     "source": "os-visualization/system-intelligence/tools-shelf.json",
     "description": "Canonical Frankly Lab 4.0 shelf inventory. Consumers filter by lane and retired state; generated site copies are never edited by hand.",
     "tools": [
@@ -1294,6 +1322,27 @@
         "actionLabelEn": "Open Coverage overview",
         "mark": "CO",
         "art": "coverage",
+        "retired": false
+      },
+      {
+        "id": "om-frankly-lab",
+        "href": "om-frankly-lab.html",
+        "labelEn": "About Frankly Lab",
+        "labelDa": "Om Frankly Lab",
+        "descriptionEn": "What the Lab is, shelf by shelf, and where the boundary sits.",
+        "descDa": "Hvad Lab'et er, hylde for hylde — og hvor grænsen går.",
+        "category": "Brand",
+        "shelf": "pages",
+        "lane": "public-lab",
+        "gate": "public",
+        "gateLabelEn": "Gated Lab",
+        "gateLabelDa": "Offentlig",
+        "status": "live",
+        "statusLabelEn": "Live",
+        "statusLabelDa": "Live",
+        "actionLabelEn": "Open About Frankly Lab",
+        "mark": "OM",
+        "art": "about",
         "retired": false
       },
       {
@@ -1592,13 +1641,13 @@
       }
     ],
     "counts": {
-      "total": 26,
-      "active": 23,
-      "publicLab": 20,
+      "total": 27,
+      "active": 24,
+      "publicLab": 21,
       "localOs": 3,
       "retired": 3
     },
-    "syncedAt": "2026-07-11T10:38:22+00:00"
+    "syncedAt": "2026-07-11T12:33:44+00:00"
   }
 };
   // SNAP:END
@@ -2655,7 +2704,7 @@
   var RT_OLD_SERVER='Genstart cockpit-serveren (<code>python3 os-visualization/scripts/cockpit-server.py</code>) — den kører en ældre version';
   var RT_NO_SERVER='Kør cockpit-serveren for at bruge rundbordet: <code>python3 os-visualization/scripts/cockpit-server.py</code>';
   var RT_STATUS={running:{t:'Kører',c:' chip--warn'},completed:{t:'Færdig',c:' chip--ok'},failed:{t:'Fejlede',c:' chip--lock'}};
-  var rtOpenId=null,rtPollTimer=null,rtListTimer=null;
+  var rtOpenId=null,rtPollTimer=null,rtListTimer=null,rtOpenStatus='',rtReplyTo=null;
 
   function rtChip(status){
     var m=RT_STATUS[status]||{t:status||'ukendt',c:''};
@@ -2710,11 +2759,29 @@
   }
 
   function openRoundtable(id,scroll){
+    if(rtOpenId!==id){ // ny session: nulstil svar-tilstand og kvittering fra den forrige
+      rtClearReply();
+      var m=$('rtSayMsg');if(m){m.hidden=true;m.textContent='';}
+    }
     rtOpenId=id;
     if(rtPollTimer){clearTimeout(rtPollTimer);rtPollTimer=null;}
     var panel=$('rtViewer');panel.hidden=false;
     if(scroll)panel.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'start'});
     fetchRtSession(id);
+  }
+
+  /* Svar-tilstand: "Svar" på et AI-indlæg sætter reply_to (kompakt reference r<runde>:<sæde>@<at>
+     — motoren slår indlægget op ud fra den) og viser "Svarer på: …" med fortryd-X. */
+  function rtSetReply(ref,label){
+    rtReplyTo=ref;
+    $('rtReplyBar').hidden=false;
+    $('rtReplyLabel').textContent=label;
+    $('rtSay').focus();
+  }
+  function rtClearReply(){
+    rtReplyTo=null;
+    var bar=$('rtReplyBar');
+    if(bar){bar.hidden=true;$('rtReplyLabel').textContent='';}
   }
 
   function fetchRtSession(id){
@@ -2747,9 +2814,22 @@
       ms.innerHTML='<span class="fl-kicker">Runde '+esc(String(rd.n||''))+'</span><div class="rule"></div>';
       box.appendChild(ms);
       (rd.entries||[]).forEach(function(e){
-        var d=document.createElement('div');d.className='rt-bubble';
-        d.innerHTML='<b>'+esc(seatName[e.seat]||e.seat||'')+
+        var isJonas=String(e.seat)==='jonas';
+        var name=isJonas?(seatName[e.seat]||'Jonas'):(seatName[e.seat]||e.seat||'');
+        var d=document.createElement('div');d.className='rt-bubble'+(isJonas?' rt-bubble--jonas':'');
+        d.innerHTML='<b>'+esc(name)+
           (e.at?'<span class="ref">'+esc(rtWhen(e.at))+'</span>':'')+'</b>'+esc(e.text||'');
+        if(!isJonas){ // "Svar" på et AI-indlæg → sætter reply_to i skrivefeltet
+          var rb=document.createElement('button');
+          rb.type='button';rb.className='rt-reply';rb.textContent='Svar';
+          rb.setAttribute('aria-label','Svar på indlægget fra '+name+' i runde '+(rd.n||''));
+          (function(n,seat,at,nm){
+            rb.addEventListener('click',function(){
+              rtSetReply('r'+n+':'+seat+(at?'@'+at:''),'runde '+n+', '+nm);
+            });
+          })(rd.n||'',String(e.seat||''),String(e.at||''),name);
+          d.appendChild(rb);
+        }
         box.appendChild(d);
       });
     });
@@ -2770,7 +2850,55 @@
         box.appendChild(r);
       });
     }
+    // Skriv til bordet: åbent for running (næste tur) og completed (genåbnes via --resume);
+    // en fejlet session kan ikke genåbnes, så feltet skjules dér.
+    rtOpenStatus=String(s.status||'');
+    var compose=$('rtCompose');
+    if(compose){
+      compose.hidden=!(rtOpenStatus==='running'||rtOpenStatus==='completed');
+      $('rtSay').placeholder=rtOpenStatus==='running'
+        ?'Skriv til bordet — beskeden når bordet i næste tur …'
+        :'Skriv til bordet — det genåbnes med én ekstra runde …';
+    }
   }
+
+  // POST-svar: 404/405 kan BÅDE være en gammel serverproces (JSON "not found" eller HTML) og et
+  // ægte dansk API-svar (fx ukendt session fra /say) — kun "not found"/ikke-JSON bliver til
+  // genstart-anvisningen (L0060); et dansk fejlsvar vises som det er.
+  function rtPost(url,body){
+    return fetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)})
+      .then(function(r){
+        return r.json().then(function(j){
+          if((r.status===404||r.status===405)&&(!j||j.error==='not found'))return {__oldServer:true};
+          return {status:r.status,json:j};
+        },function(){return {__oldServer:true};});
+      });
+  }
+
+  $('rtReplyCancel').addEventListener('click',rtClearReply);
+  $('rtSend').addEventListener('click',function(){
+    var btn=this,msg=$('rtSayMsg'),text=$('rtSay').value.trim();
+    msg.hidden=false;
+    if(!rtOpenId){msg.textContent='Åbn en session først.';return;}
+    if(!text){msg.textContent='Skriv en besked først — det er den, bordet får.';return;}
+    var id=rtOpenId,wasCompleted=rtOpenStatus==='completed';
+    btn.disabled=true;msg.textContent='Sender …';
+    rtPost('/api/roundtable/say',{id:id,text:text,reply_to:rtReplyTo})
+      .then(function(res){
+        btn.disabled=false;
+        if(res.__oldServer){msg.innerHTML=RT_OLD_SERVER;return;}
+        if(!res.json||!res.json.ok){msg.innerHTML='<b>Afvist:</b> '+esc((res.json&&res.json.error)||'ukendt fejl');return;}
+        msg.textContent=res.json.besked||'Sendt.';
+        $('rtSay').value='';rtClearReply();
+        // genoptag/opfrisk pollen: når status flipper til "running", holder fetchRtSession selv 5s-kadencen
+        setTimeout(function(){if(rtOpenId===id)fetchRtSession(id);},2500);
+        if(wasCompleted||res.json.resumed){
+          setTimeout(function(){if(rtOpenId===id)fetchRtSession(id);},8000);
+          setTimeout(loadRoundtable,3000);
+        }
+      })
+      .catch(function(){btn.disabled=false;msg.innerHTML=RT_NO_SERVER;});
+  });
 
   $('rtStart').addEventListener('click',function(){
     var btn=this,msg=$('rtStartMsg'),topic=$('rtTopic').value.trim();
