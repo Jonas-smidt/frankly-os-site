@@ -154,6 +154,32 @@
   .decided code{font-size:11.5px;color:var(--bordeaux);word-break:break-all}
   .decided b{color:var(--bordeaux)}
 
+  /* ---- detalje-skuffe: klik på en agent i træet → brugstal, version, historik, metode-fil ---- */
+  .tdrawer{margin:10px 8px 4px;border:1px solid var(--line);border-radius:var(--r-card);background:var(--paper);overflow:hidden}
+  .tdrawer__head{display:flex;align-items:center;gap:8px;flex-wrap:wrap;padding:10px 13px;background:var(--limestone);border-bottom:1px solid var(--line)}
+  .tdrawer__head .ttalk__n{margin-right:auto}
+  .tdrawer__body{padding:2px 13px 13px}
+  .tdrawer h4{font-size:11px;font-weight:600;letter-spacing:.05em;text-transform:uppercase;color:var(--grey-2);margin:14px 0 6px}
+  .tdrawer .tstat{display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+  .tdrawer .tfact{font-size:12.5px;color:var(--grey-1);line-height:1.5}
+  .tdrawer .tfact b{color:var(--bordeaux)}
+  .tdrawer ul{list-style:none;margin:6px 0 0;padding:0}
+  .tdrawer li{font-size:12px;color:var(--grey-1);line-height:1.5;padding:6px 0;border-top:1px solid var(--stone)}
+  .tdrawer li:first-child{border-top:0}
+  .tdrawer li b{color:var(--bordeaux)}
+  .tdrawer pre{margin:0;max-height:300px;overflow:auto;font-size:11.5px;line-height:1.55;white-space:pre-wrap;word-break:break-word;
+    background:var(--limestone);border:1px solid var(--line);border-radius:var(--r-sm);padding:10px 12px;color:var(--ink)}
+  .tdrawer .tpath{font-size:11px;color:var(--grey-2);word-break:break-all;margin-top:6px}
+
+  /* ---- kommentar til en beslutning (valgfri, sendes som note i /api/decision m.fl.) ---- */
+  .notelink{display:inline-block;margin-top:5px;padding:2px 0;font-size:11.5px;font-weight:600;color:var(--grey-2);
+    text-decoration:underline;text-underline-offset:3px;transition:color var(--dur-micro) var(--ease)}
+  .notelink:hover{color:var(--bordeaux)}
+  .cnote{margin-top:7px}
+  .cnote textarea{width:100%;min-height:54px;padding:9px 11px;border:1px solid var(--line);border-radius:var(--r-sm);
+    font:inherit;font-size:12.5px;line-height:1.5;color:var(--ink);background:var(--limestone);resize:vertical}
+  .cnote textarea:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
+
   /* ---- runs / accordion ---- */
   .acc__head{display:flex;gap:12px;width:100%;text-align:left;align-items:flex-start;padding:12px 14px;border-radius:var(--r-card);
     transition:background var(--dur-micro) var(--ease)}
@@ -210,6 +236,17 @@
   .copied{font-size:12px;color:var(--success);font-weight:600;margin-left:10px;opacity:0;transition:opacity var(--dur-micro) var(--ease)}
   .copied.show{opacity:1}
   .offline-hint{margin:6px 12px 4px;font-size:11.5px;color:var(--grey-2)}
+
+  /* ---- rundbordet (P8) ---- */
+  .rt-row{width:100%;text-align:left}
+  .rt-bubble{margin:8px 12px;padding:11px 14px;border:1px solid var(--line);border-radius:var(--r-card);
+    background:var(--limestone-soft);font-size:13px;color:var(--grey-1);line-height:1.55}
+  .rt-bubble b{display:block;font-size:12px;color:var(--bordeaux);margin-bottom:3px}
+  .rt-bubble b .ref{font-weight:500;margin-left:6px}
+  .rt-syn{margin:14px 12px 8px;padding:13px 15px;border:1px solid var(--calm-deep);border-radius:var(--r-card);
+    background:var(--calm-pink);font-size:13px;color:var(--ink);line-height:1.55}
+  .rt-syn b{display:block;color:var(--bordeaux);margin-bottom:3px}
+  .composer .decided{margin:10px 12px 4px}
 
   /* ---- method editor ---- */
   .medit{margin-top:9px}
@@ -418,6 +455,8 @@
     <section class="panel panel--accent reveal" style="--d:5" aria-labelledby="attnH">
       <div class="panel__head"><h3 id="attnH">Venter på dig</h3><span class="count" id="attnCount"></span></div>
       <div class="panel__body" id="attention"></div>
+      <!-- Seneste beslutninger: læses via GET /api/recent-decisions (backloggens afgjorte tasks) — skjult uden server -->
+      <div class="panel__body" id="recentDecisions" hidden></div>
     </section>
 
     <section class="panel reveal" style="--d:6" aria-labelledby="learnH">
@@ -486,7 +525,8 @@
     <section class="panel reveal" aria-labelledby="treeH">
       <div class="panel__head"><h3 id="treeH">Agent-træet</h3><span class="count" id="treeCount"></span></div>
       <div class="note" style="margin:8px 8px 0">Sådan hænger crewet sammen: én orkestrator, maskinrummet og specialisterne med deres under-specialister.
-        Klik på en rolle for at justere dens metode — eller tal direkte med agenten i en ny chat. <b>Hvem der var med pr. kørsel logges ikke endnu — træet viser hele holdet.</b></div>
+        Klik på en rolle for detaljer: brugstal, version, historik og metode — eller tal direkte med agenten i en ny chat.
+        <b>Faktisk brug logges pr. kørsel fremover; ældre kørsler vises som estimat.</b></div>
       <div class="tree" id="tree">
         <div class="tcanvas" id="treeCanvas"></div>
         <div class="tlist" id="treeList"></div>
@@ -496,6 +536,15 @@
         <button class="dbtn" id="treeTalkBtn" type="button">Tal med agenten <span aria-hidden="true">→</span></button>
         <span class="copied" id="treeTalkOk">Kopieret ✓</span>
       </div>
+      <div class="tdrawer" id="treeDrawer" hidden>
+        <div class="tdrawer__head">
+          <div class="ttalk__n" id="tdName"></div>
+          <button class="dbtn" id="tdRefresh" type="button" title="Kører agent-stats.py og henter friske tal">Opdatér tal</button>
+          <button class="dbtn" id="tdMethod" type="button">Justér metode <span aria-hidden="true">→</span></button>
+          <button class="dbtn" id="tdClose" type="button" aria-label="Luk agent-detaljer">Luk</button>
+        </div>
+        <div class="tdrawer__body" id="tdBody"></div>
+      </div>
       <div class="panel__src" id="treeSrc">Kilde: /api/agent-methods · nyeste frankly-crew-contract</div>
     </section>
 
@@ -504,6 +553,41 @@
       <div class="panel__body" id="methods"></div>
     </section>
   </div>
+
+  <!-- ===== BÅND 5: P8 Rundbordet — AI-rundbords-sessioner (motoren skriver, panelet læser) ===== -->
+  <div class="sec reveal"><h2>Rundbordet</h2><div class="rule"></div><span class="ref">roundtable · /api/roundtable</span></div>
+  <div class="band band--57">
+    <section class="panel reveal" aria-labelledby="rtStartH">
+      <div class="panel__head"><h3 id="rtStartH">🪑 Start et rundbord</h3><span class="ref">roundtable.py</span></div>
+      <div class="composer">
+        <label for="rtTopic">Hvad skal rundbordet drøfte?</label>
+        <input id="rtTopic" type="text" maxlength="200" placeholder="fx: Hvad er den bedste næste Frankly Journal-serie?" value="">
+        <label for="rtRounds">Runder</label>
+        <select id="rtRounds">
+          <!-- QA: 1 runde springer al dialog over i motoren (kun syntese) — minimum er 2 -->
+          <option value="2">2 runder — hurtig temperatur</option>
+          <option value="3" selected>3 runder — standard</option>
+          <option value="4">4 runder</option>
+          <option value="5">5 runder — grundig</option>
+        </select>
+        <button class="cta" id="rtStart" type="button">Start rundbordet <span aria-hidden="true">→</span></button>
+        <div class="decided" id="rtStartMsg" hidden></div>
+        <div class="offline-hint">Motoren kører lokalt i baggrunden — kun ét rundbord ad gangen.
+          Rundbordets forslag ender som beslutninger til dig, aldrig som handlinger.</div>
+      </div>
+    </section>
+
+    <section class="panel reveal" aria-labelledby="rtListH">
+      <div class="panel__head"><h3 id="rtListH">Sessioner</h3><span class="count" id="rtCount"></span></div>
+      <div class="panel__body" id="rtSessions"></div>
+      <div class="panel__src">Kilde: <code>system-intelligence/roundtable/</code> · <code>/api/roundtable/sessions</code> — én kanonisk kilde, panelet genberegner aldrig selv</div>
+    </section>
+  </div>
+
+  <section class="panel reveal" id="rtViewer" aria-labelledby="rtViewH" hidden>
+    <div class="panel__head"><h3 id="rtViewH">Transskript</h3><span class="count" id="rtViewMeta"></span></div>
+    <div class="panel__body" id="rtTranscript"></div>
+  </section>
 
   <!-- ===== BÅND 6: footer ===== -->
   <footer>
@@ -518,6 +602,7 @@
       <span>Læringer = <code>learning-capture-queue</code></span>
       <span>Overflader = <code>surface-gate-registry</code></span>
       <span>Crew = <code>/api/agent-methods</code></span>
+      <span>Rundbordet = <code>/api/roundtable</code></span>
     </div>
   </footer>
 </div>
@@ -562,115 +647,116 @@
      Baked-in snapshot so the cockpit degrades gracefully on file://.
      Auto-regenerated at every feed sync — never hand-edited.
      ============================================================ */
-  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-10T21:48:24+00:00 — må ikke håndredigeres)
+  // SNAP:BEGIN (auto-genereret af sync-site-data-feeds.py 2026-07-11T10:18:24+00:00 — må ikke håndredigeres)
   var SNAP = {
-  "generatedAt": "2026-07-10T21:48:24+00:00",
+  "generatedAt": "2026-07-11T10:18:24+00:00",
   "flight": {
     "counts": {
-      "runs": 61,
-      "machineFocusedRuns": 61,
+      "runs": 67,
+      "machineFocusedRuns": 67,
       "claimWorkRuns": 0,
       "driveSyncedRuns": 7,
-      "validatedRuns": 54
+      "validatedRuns": 60
     },
     "runs": [
       {
-        "runId": "20260710-cockpit-tal-beslut-fold",
-        "date": "2026-07-10",
-        "name": "Tal-med-agenten-knap, beslutninger samlet ",
-        "nameDa": "Tal-med-agenten-knap, beslutninger samlet ",
-        "route": "machine-runtime",
-        "routeDa": "Maskin-drift",
+        "runId": "20260711-ruflo-a1-a5-udfoert",
+        "date": "2026-07-11",
+        "name": "A1 script-foer-model-regel i kontrakt v0-1",
+        "nameDa": "A1 script-foer-model-regel i kontrakt v0-1",
+        "route": "mission-runtime-route",
+        "routeDa": "Missions-drift",
         "status": "completed-local",
         "statusDa": "Færdig (lokalt)",
-        "summary": "Persona-boot-knap for alle specialister (pilot R4); 3 chat-beslutninger filet til backlog + formidler-kontrakt kræver det fremover; Fold genbrugt fra instore-fladen som deterministisk hjælper med formidler-handoff",
-        "summaryDa": "Persona-boot-knap for alle specialister (pilot R4); 3 chat-beslutninger filet til backlog + formidler-kontrakt kræver det fremover; Fold genbrugt fra instore-fladen som deterministisk hjælper med formidler-handoff",
+        "summary": "A1 script-foer-model-regel i kontrakt v0-14 + A5 effort:low paa 7 haiku-seats i generatoren",
+        "summaryDa": "A1 script-foer-model-regel i kontrakt v0-14 + A5 effort:low paa 7 haiku-seats i generatoren",
         "validation": "passed",
         "validationDa": "Bestået",
         "drive": "pending approval",
         "driveDa": "Afventer dit ja til Drive",
         "claims": "none",
         "artifacts": [
-          "frankly os cockpit",
-          "autopilot backlog"
+          "frankly crew contract v0 14",
+          "generate crew artifacts.py",
+          "agents filer + digest (begge dirs)"
         ],
         "gates": [
-          "ingen gated handlinger; betalt API"
+          "kontrakt-edit versioneret (v0-13 u",
+          "no public deploy"
         ],
         "gatesDa": [
-          "ingen gated handlinger; betalt API til Fold-chat bevidst IKKE tilføjet (gate)"
+          "kontrakt-edit versioneret (v0-13 uroert)",
+          "Offentlig deploy"
         ],
-        "lesson": "Jonas prøver Tal med agenten (R4) + beslutter de 3 ventende i cockpittet.",
-        "lessonDa": "Jonas prøver Tal med agenten (R4) + beslutter de 3 ventende i cockpittet.",
+        "lesson": "A2: pr.",
+        "lessonDa": "A2: pr.",
         "fanOut": []
       },
       {
-        "runId": "20260710-blog-graphic-pivot-flow3d-plus-qa",
-        "date": "2026-07-10",
-        "name": "Graphic-direction pivot: strip rejected SV",
-        "nameDa": "Graphic-direction pivot: strip rejected SV",
-        "route": "blog-seo-content-engine",
-        "routeDa": "Blog/SEO-indholdsmotor",
+        "runId": "20260711-frankly-guide-ai-quality-pilot",
+        "date": "2026-07-11",
+        "name": "Kalibrér Frankly Instore-guideassistentens",
+        "nameDa": "Kalibrér Frankly Instore-guideassistentens",
+        "route": "partner-activation",
+        "routeDa": "Partner-aktivering",
         "status": "completed-local",
         "statusDa": "Færdig (lokalt)",
-        "summary": "Graphic-direction pivot: strip rejected SVG concept diagrams from all 12 blog v2 drafts, rewire to Flow 3D concept-image slots; QA the 10 rollout drafts; write 12 object-universe image briefs",
-        "summaryDa": "Graphic-direction pivot: strip rejected SVG concept diagrams from all 12 blog v2 drafts, rewire to Flow 3D concept-image slots; QA the 10 rollout drafts; write 12 object-universe image briefs",
+        "summary": "Den afgrænsede AI-kvalitetspilot er lukket ved præcis 8/8 godkendte kald: fase 1 bevarede 4/4 metadata-pas, fase 2 bestod farve og eget tempo, den oprindelige login-case fejlede på en ekstra faktuel klausul, og den diagnosticerede login-recovery bestod 11/11 maskinchecks og 10/10 manuel review. quiz_repeat blev ikke kørt.",
+        "summaryDa": "Den afgrænsede AI-kvalitetspilot er lukket ved præcis 8/8 godkendte kald: fase 1 bevarede 4/4 metadata-pas, fase 2 bestod farve og eget tempo, den oprindelige login-case fejlede på en ekstra faktuel klausul, og den diagnosticerede login-recovery bestod 11/11 maskinchecks og 10/10 manuel review. quiz_repeat blev ikke kørt.",
         "validation": "passed",
         "validationDa": "Bestået",
         "drive": "pending approval",
         "driveDa": "Afventer dit ja til Drive",
-        "claims": "none",
+        "claims": "lock-only",
         "artifacts": [
-          "frankly blog 01..12 * v2.html (12 ",
-          "blog concept image briefs 2026 07 "
+          "frankly instore guide assistant ai",
+          "guide assistant core.js",
+          "guide assistant server.js"
         ],
         "gates": [
-          "no public deploy",
-          "no-push",
-          "Drive approval"
+          "local-only",
+          "no paid API",
+          "runtime default FRANKLY_GUIDE_MAX_"
         ],
         "gatesDa": [
-          "Offentlig deploy",
-          "Ingen git push",
-          "Connector-skrivning (Drive/API)"
+          "Kun lokal",
+          "Betalt API-forbrug",
+          "runtime default FRANKLY_GUIDE_MAX_API_CALLS=0; no reset on restart"
         ],
-        "lesson": "On Jonas go: dispatch Flow image lane to generate 12 blog-XX-concept.",
-        "lessonDa": "On Jonas go: dispatch Flow image lane to generate 12 blog-XX-concept.",
+        "lesson": "Behold serverens standardkaldeloft på 0.",
+        "lessonDa": "Behold serverens standardkaldeloft på 0.",
         "fanOut": []
       },
       {
-        "runId": "20260710-activation-queue-decidable",
-        "date": "2026-07-10",
-        "name": "Jonas-test: aktiverings-koeens 8 kort kunn",
-        "nameDa": "Jonas-test: aktiverings-koeens 8 kort kunn",
-        "route": "system-visualization-route",
-        "routeDa": "System-visualisering",
+        "runId": "20260711-frankly-reel-skabelon",
+        "date": "2026-07-11",
+        "name": "Dagens 4 video-analysers formatgreb samlet",
+        "nameDa": "Dagens 4 video-analysers formatgreb samlet",
+        "route": "video-production-workflow-route",
+        "routeDa": "video-production-workflow-route",
         "status": "completed-local",
         "statusDa": "Færdig (lokalt)",
-        "summary": "Jonas-test: aktiverings-koeens 8 kort kunne ikke besluttes i cockpittet; gjort beslutbare (bane-opdelt server-API + knapper + aerlig taeller) og koen afstemt mod completion-log (8 -> 4 aegte beslutninger)",
-        "summaryDa": "Jonas-test: aktiverings-koeens 8 kort kunne ikke besluttes i cockpittet; gjort beslutbare (bane-opdelt server-API + knapper + aerlig taeller) og koen afstemt mod completion-log (8 -> 4 aegte beslutninger)",
+        "summary": "Dagens 4 video-analysers formatgreb samlet i genbrugelig Frankly reel-skabelon (8 greb + beat-liste + 2 ikke-claims-storyboards)",
+        "summaryDa": "Dagens 4 video-analysers formatgreb samlet i genbrugelig Frankly reel-skabelon (8 greb + beat-liste + 2 ikke-claims-storyboards)",
         "validation": "passed",
         "validationDa": "Bestået",
         "drive": "pending approval",
         "driveDa": "Afventer dit ja til Drive",
         "claims": "none",
         "artifacts": [
-          "cockpit server.py",
-          "frankly os cockpit",
-          "activation queue data.json (+ site"
+          "frankly reel skabelon v0 1",
+          "video production workflow route.md"
         ],
         "gates": [
-          "no public deploy",
-          "no plugin install",
-          "claims locked"
+          "claims locked",
+          "no-publish (produktion/publicering"
         ],
         "gatesDa": [
-          "Offentlig deploy",
-          "Plugin-installation",
-          "Claims / produkt / juridisk"
+          "Claims / produkt / juridisk",
+          "no-publish (produktion/publicering = separat gate)"
         ],
-        "lesson": "Jonas beslutter de 4 tilbagevaerende kort i cockpittet (verificer build-web-apps/-data-visualization i marketplace foerst); derefter blog-13-pilot gen.",
-        "lessonDa": "Jonas beslutter de 4 tilbagevaerende kort i cockpittet (verificer build-web-apps/-data-visualization i marketplace foerst); derefter blog-13-pilot gen.",
+        "lesson": "Ved naeste reel-behov: R4.",
+        "lessonDa": "Ved naeste reel-behov: R4.",
         "fanOut": []
       }
     ]
@@ -780,7 +866,7 @@
   "health": {
     "result": "PASS",
     "resultDa": "Alt grønt — selvtjek bestået, 34 af 34 evals grønne",
-    "lastFeedSync": "2026-07-10T21:48:24+00:00"
+    "lastFeedSync": "2026-07-11T10:18:24+00:00"
   },
   "nba": {
     "activeBatch": "MCQ-011",
@@ -788,8 +874,8 @@
     "nextBestActionDa": "start fra `frankly-os-site/studio.html`, `os-visualization/system-intelligence/studio-v0-1-2026-07-06.json`, `os-visualization/system-intelligence/claude-run-to-packet-launcher-v0-1-2026-07-06.json` og `os-visualization/system-intelligence/claude-task-packet-builder-v0-1-2026-07-06.json` før du vælger værktøjer; brug Studios run-to-packet launcher og packet builder til fremtidigt kodearbejde og `frankly-os-site/control-cockpit.html` som det rapport-agtige driftsoverblik (OBS: kilden er stale — disse flader pensioneres af 4.0)"
   },
   "agents": {
-    "contract": "frankly-crew-contract-v0-13.md",
-    "version": "v0-13",
+    "contract": "frankly-crew-contract-v0-14.md",
+    "version": "v0-14",
     "specialists": [
       {
         "id": "M1",
@@ -1503,7 +1589,7 @@
       "localOs": 3,
       "retired": 3
     },
-    "syncedAt": "2026-07-10T21:48:24+00:00"
+    "syncedAt": "2026-07-11T10:18:24+00:00"
   }
 };
   // SNAP:END
@@ -1671,6 +1757,7 @@
       r.innerHTML='<div class="row__icon">⏳</div><div class="row__main">'+
         '<div class="row__t">'+esc(it.t)+'</div>'+
         '<div class="row__d">'+esc(plainGate(it.gate)===it.gate?it.d:(it.d?it.d+' · ':'')+plainGate(it.gate))+'</div>'+
+        noteFieldHTML()+
         '<div class="decided" hidden></div></div>'+
         '<div class="row__side"><span class="decide" data-id="'+esc(it.id)+'" style="display:flex;gap:6px">'+
           '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
@@ -1718,6 +1805,7 @@
           '<div class="row__d">'+esc(li.label)+' — '+esc(li.desc)+'</div>'+
           (it.pilot?'<div class="row__d ref">Pilot: '+esc(it.pilot)+'</div>':'')+
           (it.note?'<div class="row__d">'+esc(it.note)+'</div>':'')+
+          (it.decision||it.status?'':noteFieldHTML())+
           '<div class="decided" hidden></div></div>'+
           '<div class="row__side">'+side+'</div>';
         box.appendChild(r);
@@ -1742,10 +1830,40 @@
         });
       });
     }
+    // kommentar-felterne (valgfri note til beslutningen) foldes ud pr. række
+    [].forEach.call(box.querySelectorAll('.row'),wireNoteField);
     $('attnCount').textContent=feedMissing
       ?(pendingAct?pendingAct+" ting · autopilot ukendt":"ukendt")
       :((items.length+pendingAct)+" ting");
     return items.length+pendingAct;
+  }
+
+  /* ---- valgfri kommentar til en beslutning — sendes som note i det eksisterende API-kald ---- */
+  function noteFieldHTML(){
+    return '<button class="notelink" type="button" data-a="note" aria-expanded="false">Tilføj kommentar</button>'+
+      '<div class="cnote" hidden><textarea rows="2" maxlength="600" '+
+      'aria-label="Kommentar til din beslutning (valgfri)" '+
+      'placeholder="Skriv en kommentar til din beslutning (valgfrit)…"></textarea></div>';
+  }
+  function wireNoteField(row){
+    var ln=row.querySelector('[data-a="note"]'),cn=row.querySelector('.cnote');
+    if(!ln||!cn)return;
+    ln.addEventListener('click',function(){
+      var open=cn.hidden; // hidden nu => vi åbner
+      cn.hidden=!open;
+      ln.setAttribute('aria-expanded',String(open));
+      ln.textContent=open?'Skjul kommentar':'Tilføj kommentar';
+      if(open)cn.querySelector('textarea').focus();
+    });
+  }
+  function rowNote(row){
+    var ta=row?row.querySelector('.cnote textarea'):null;
+    return ta?ta.value.trim():'';
+  }
+  function hideNoteField(row){
+    var ln=row?row.querySelector('[data-a="note"]'):null,cn=row?row.querySelector('.cnote'):null;
+    if(ln)ln.hidden=true;
+    if(cn)cn.hidden=true;
   }
 
   // Gammel server-proces (fra før et endpoint fandtes) svarer 404/405 eller ikke-JSON:
@@ -1758,17 +1876,22 @@
 
   function decide(id,decision,box){
     var row=box.closest('.row');
+    var note=rowNote(row); // valgfri kommentar — sendes som note i det eksisterende kald
     box.innerHTML='<span class="dwait">…</span>';
-    fetch('/api/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskId:id,decision:decision})})
+    fetch('/api/decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({taskId:id,decision:decision,note:note})})
       .then(apiRes)
       .then(function(res){
         if(res&&res.__oldServer){box.innerHTML=OLD_SERVER_CHIP;return;}
         if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">Beslutningen blev ikke gemt — prøv igen</span>';return;}
         var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
         box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+label+'</span>';
-        var dc=row.querySelector('.decided');
-        if(res.nextCommand){dc.hidden=false;dc.innerHTML='<b>Kør så, når du er klar:</b><br><code>'+esc(res.nextCommand)+'</code>';}
-        else if(decision!=='approved'){dc.hidden=false;dc.textContent=decision==='deferred'?'Gemt til senere.':'Fjernet fra listen.';}
+        hideNoteField(row);
+        var dc=row.querySelector('.decided'),parts=[];
+        if(res.nextCommand)parts.push('<b>Kør så, når du er klar:</b><br><code>'+esc(res.nextCommand)+'</code>');
+        else if(decision!=='approved')parts.push(esc(decision==='deferred'?'Gemt til senere.':'Fjernet fra listen.'));
+        if(note)parts.push('<b>Din kommentar:</b> '+esc(note));
+        if(parts.length){dc.hidden=false;dc.innerHTML=parts.join('<br>');}
+        loadRecentDecisions(); // så kommentaren straks kan ses under "Seneste beslutninger"
       })
       .catch(function(){box.innerHTML='<span class="chip chip--warn">Kør cockpit-serveren for at beslutte herfra</span>';});
   }
@@ -1777,19 +1900,54 @@
   // Serveren udfører ALDRIG noget gated — install-godkendelse giver kun en instruktion tilbage.
   function decideActivation(name,decision,box){
     var row=box.closest('.row');
+    var note=rowNote(row); // valgfri kommentar — /api/activation-decision tager også note
     box.innerHTML='<span class="dwait">…</span>';
-    fetch('/api/activation-decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,decision:decision})})
+    fetch('/api/activation-decision',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({name:name,decision:decision,note:note})})
       .then(apiRes)
       .then(function(res){
         if(res&&res.__oldServer){box.innerHTML=OLD_SERVER_CHIP;return;}
         if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">'+esc((res&&res.error)||'Beslutningen blev ikke gemt — prøv igen')+'</span>';return;}
         var label=decision==='approved'?'✓ Godkendt':decision==='deferred'?'Udskudt':'Afvist';
         box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+label+'</span>';
-        var dc=row.querySelector('.decided');
-        if(res.nextCommand){dc.hidden=false;dc.innerHTML='<b>Din tur (dit klik er gaten):</b><br><code>'+esc(res.nextCommand)+'</code>';}
-        else if(res.confirmation){dc.hidden=false;dc.textContent=res.confirmation;}
+        hideNoteField(row);
+        var dc=row.querySelector('.decided'),parts=[];
+        if(res.nextCommand)parts.push('<b>Din tur (dit klik er gaten):</b><br><code>'+esc(res.nextCommand)+'</code>');
+        else if(res.confirmation)parts.push(esc(res.confirmation));
+        if(note)parts.push('<b>Din kommentar:</b> '+esc(note));
+        if(parts.length){dc.hidden=false;dc.innerHTML=parts.join('<br>');}
       })
       .catch(function(){box.innerHTML='<span class="chip chip--warn">Kør cockpit-serveren for at beslutte herfra</span>';});
+  }
+
+  /* ---- Seneste beslutninger — de afgjorte tasks fra backloggen (GET /api/recent-decisions,
+     read-only), så Jonas kan se sine egne kommentarer igen. Skjules pænt uden server. ---- */
+  function loadRecentDecisions(){
+    var box=$('recentDecisions');
+    if(!box)return;
+    fetch('/api/recent-decisions',{cache:'no-store'})
+      .then(function(r){if(!r.ok)throw 0;return r.json();})
+      .then(function(res){
+        var ds=(res&&res.ok&&res.decisions)||[];
+        if(!ds.length){box.hidden=true;box.innerHTML='';return;}
+        box.innerHTML='<div class="minisec"><span class="fl-kicker">Seneste beslutninger</span><div class="rule"></div>'+
+          '<span class="ref">autopilot-backlog · seneste '+ds.length+'</span></div>';
+        ds.forEach(function(t){
+          var chip=t.decision==='approved'?'<span class="chip chip--ok">✓ Godkendt</span>'
+            :t.decision==='deferred'?'<span class="chip chip--warn">Udskudt</span>'
+            :t.decision==='declined'?'<span class="chip chip--warn">Afvist</span>'
+            :'<span class="chip">'+esc(t.decision||'—')+'</span>';
+          var when=t.decidedAt?String(t.decidedAt).slice(0,16).replace('T',' kl. '):'';
+          var r=document.createElement('div');r.className='row';
+          r.innerHTML='<div class="row__icon">🗂️</div><div class="row__main">'+
+            '<div class="row__t">'+esc(t.title||t.taskId)+'</div>'+
+            (t.note?'<div class="row__d"><b style="color:var(--bordeaux)">Din kommentar:</b> '+esc(t.note)+'</div>':'')+
+            '<div class="row__r"><span class="ref">'+esc(t.taskId)+(when?' · '+esc(when):'')+'</span></div></div>'+
+            '<div class="row__side">'+chip+'</div>';
+          box.appendChild(r);
+        });
+        box.hidden=false;
+      })
+      .catch(function(){box.hidden=true;box.innerHTML='';});
   }
 
   /* ============================================================
@@ -1826,6 +1984,7 @@
         '<div class="row__t">'+esc(c.text)+'</div>'+
         '<div class="row__d ref">Rute: '+esc(c.scope||'—')+' · '+esc(c.kind||'use')+' · '+esc(c.confidence||'')+'</div>'+
         (c.why?'<div class="row__d">'+esc(c.why)+'</div>':'')+
+        noteFieldHTML()+
         '<div class="decided" hidden></div></div>'+
         '<div class="row__side"><span class="decide" data-id="'+esc(c.id)+'" style="display:flex;gap:6px">'+
           '<button class="dbtn dbtn--ok" data-d="approved">Godkend</button>'+
@@ -1838,22 +1997,27 @@
         b.addEventListener('click',function(){decideLearning(id,b.getAttribute('data-d'),bx);});
       });
     });
+    [].forEach.call(box.querySelectorAll('.row'),wireNoteField);
     $('learnCount').textContent=pending.length+" venter";
     return pending.length;
   }
 
   function decideLearning(id,decision,box){
     var row=box.closest('.row');
+    var note=rowNote(row); // valgfri kommentar — /api/learning tager også note
     box.innerHTML='<span class="dwait">…</span>';
-    fetch('/api/learning',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,decision:decision})})
+    fetch('/api/learning',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:id,decision:decision,note:note})})
       .then(apiRes)
       .then(function(res){
         if(res&&res.__oldServer){box.innerHTML=OLD_SERVER_CHIP;return;}
         if(!res||!res.ok){box.innerHTML='<span class="chip chip--warn">'+esc((res&&res.error)||'Prøv igen')+'</span>';return;}
         box.innerHTML='<span class="chip chip--'+(decision==='approved'?'ok':'warn')+'">'+(decision==='approved'?'✓ Filet':'Afvist')+'</span>';
-        var dc=row.querySelector('.decided');
-        if(decision==='approved'&&res.filedTo){dc.hidden=false;dc.innerHTML='<b>Filet til hukommelsen:</b> <code>'+esc(res.filedTo.route)+'</code>';}
-        else if(decision!=='approved'){dc.hidden=false;dc.textContent='Fjernet fra listen.';}
+        hideNoteField(row);
+        var dc=row.querySelector('.decided'),parts=[];
+        if(decision==='approved'&&res.filedTo)parts.push('<b>Filet til hukommelsen:</b> <code>'+esc(res.filedTo.route)+'</code>');
+        else if(decision!=='approved')parts.push('Fjernet fra listen.');
+        if(note)parts.push('<b>Din kommentar:</b> '+esc(note));
+        if(parts.length){dc.hidden=false;dc.innerHTML=parts.join('<br>');}
       })
       .catch(function(){box.innerHTML='<span class="chip chip--warn">Kør cockpit-serveren for at godkende læringer herfra</span>';});
   }
@@ -2140,6 +2304,123 @@
     flashCopied($('treeTalkOk'));
   });
 
+  /* ---- Detalje-skuffen: klik på en agent-node → brugstal, version, historik og metode-fil.
+     UI'et genberegner ALDRIG tal selv (lesson L0066) — alt læses fra serverens kanoniske
+     feed /api/agent-stats (agent-stats.json) + /api/agent-file (whitelistet fil-visning).
+     Guard (lesson L0060): en ældre kørende server kender ikke de nye endpoints og svarer
+     404/HTML — det vises altid som handlingsanvisning, aldrig som rå fejltekst. ---- */
+  var AGENT_GUARD='Genstart cockpit-serveren for at aktivere agent-panelet.';
+  var agentStatsCache=null;
+  function fetchAgentJson(url){
+    return fetch(url,{cache:'no-store'}).then(function(r){
+      return r.text().then(function(t){
+        var data=null;
+        try{data=JSON.parse(t);}catch(e){}
+        if(data===null||typeof data!=='object')throw new Error('guard'); // 404/405/HTML fra gammel server
+        return data;
+      });
+    });
+  }
+  function loadAgentStats(refresh){
+    if(!refresh&&agentStatsCache)return Promise.resolve(agentStatsCache);
+    return fetchAgentJson('/api/agent-stats'+(refresh?'?refresh=1':''))
+      .then(function(res){
+        if(!res.ok)throw new Error('server:'+(res.error||'ukendt fejl')); // kontrolleret dansk besked fra serveren
+        agentStatsCache=res;
+        return res;
+      });
+  }
+  function agentErrText(err){
+    var m=String((err&&err.message)||'');
+    return m.indexOf('server:')===0?m.slice(7):AGENT_GUARD;
+  }
+  function daTs(s){return s?String(s).slice(0,16).replace('T',' kl. '):'';}
+  function shortContract(c){return c?String(c).replace('frankly-crew-contract-','').replace('.md',''):'';}
+  var OP_DA={'method-updated':'Metode opdateret','rejected':'Afvist (gate)','created':'Oprettet'};
+  function drawerMsg(html){
+    $('tdBody').innerHTML='<div class="tfact" style="padding:10px 0">'+html+'</div>';
+  }
+  function drawAgentDetails(a,stats){
+    var u=a.usage||{};
+    var isSub=String(a.id).indexOf('.')>=0;
+    var roleLine=isSub?('Under-specialist af '+esc(a.parent||String(a.id).split('.')[0])):'Fast rolle i rosteren';
+    var usage='<span class="chip">'+(u.actualRuns===1?'Brugt 1 gang':'Brugt '+(u.actualRuns||0)+' gange')+'</span>';
+    if(u.estimatedRuns>0)usage+='<span class="chip chip--blue">≈ '+u.estimatedRuns+' estimeret (bagudrettet)</span>';
+    var last;
+    if(u.lastUsed){
+      var estOnly=!u.actualRuns&&u.estimatedRuns>0; // datoen stammer fra et estimat, ikke en målt kørsel
+      last='Senest brugt '+esc(u.lastUsed)+(estOnly?' <b>(estimat)</b>':'');
+    }else{
+      last='Ikke brugt endnu — hverken målt eller estimeret.';
+    }
+    var hist=a.methodHistory||[],histHtml;
+    if(!hist.length){histHtml='<div class="tfact">Ingen metode-ændringer endnu.</div>';}
+    else{
+      histHtml='<ul>'+hist.map(function(h){ // nyeste først — feedet er allerede sorteret sådan
+        var op=OP_DA[h.op]||h.op||'ændring';
+        var ver=(h.fromContract||h.toContract)?(' · '+esc(shortContract(h.fromContract)||'—')+' → '+esc(shortContract(h.toContract)||'—')):'';
+        var note=h.note||h.reason||'';
+        return '<li><b>'+esc(op)+'</b> · '+esc(daTs(h.ts)||'ukendt tidspunkt')+ver+(note?'<br>'+esc(note):'')+'</li>';
+      }).join('')+'</ul>';
+    }
+    $('tdBody').innerHTML=
+      '<div class="tfact" style="margin-top:12px">'+roleLine+' · id <b>'+esc(a.id)+'</b></div>'+
+      '<h4>Brugstal</h4><div class="tstat">'+usage+'</div><div class="tfact" style="margin-top:6px">'+last+'</div>'+
+      '<h4>Version og ændringshistorik</h4><div class="tfact">Metode-version: <b>'+esc(shortContract(a.methodVersion)||'—')+'</b></div>'+histHtml+
+      '<h4>Metode (agentens fil)</h4><div id="tdFile"><div class="tfact">Henter filen …</div></div>'+
+      '<div class="tfact" style="margin-top:10px">Talkilde: agent-stats.json · genereret '+esc(daTs(stats.generated)||'—')+'</div>';
+  }
+  function renderAgentDrawer(refresh){
+    var id=openAgentDrawer._id;
+    return loadAgentStats(refresh).then(function(stats){
+      if(id!==openAgentDrawer._id)return; // Jonas har klikket videre imens
+      var a=(stats.agents||[]).filter(function(x){return x&&x.id===id;})[0];
+      if(!a){drawerMsg(esc('Agenten '+id+' findes ikke i agent-stats.json — prøv "Opdatér tal".'));return;}
+      drawAgentDetails(a,stats);
+      return fetchAgentJson('/api/agent-file?slug='+encodeURIComponent(a.slug||''))
+        .then(function(res){
+          var box=document.getElementById('tdFile');
+          if(!box||id!==openAgentDrawer._id)return;
+          if(!res.ok){box.innerHTML='<div class="tfact">'+esc(res.error||AGENT_GUARD)+'</div>';return;}
+          box.innerHTML='<pre></pre><div class="tpath"></div>';
+          box.querySelector('pre').textContent=res.content||'';
+          box.querySelector('.tpath').textContent='Fil: '+(res.path||a.file||'');
+        })
+        .catch(function(){
+          var box=document.getElementById('tdFile');
+          if(box)box.innerHTML='<div class="tfact">'+esc(AGENT_GUARD)+'</div>';
+        });
+    }).catch(function(err){
+      if(id===openAgentDrawer._id)drawerMsg(esc(agentErrText(err)));
+    });
+  }
+  function openAgentDrawer(s){
+    if(!s||!s.id)return;
+    openAgentDrawer._id=s.id;
+    var d=$('treeDrawer');d.hidden=false;
+    $('tdName').innerHTML='<span class="ref">'+esc(s.id)+'</span>'+esc((s.icon?s.icon+' ':'')+s.name);
+    drawerMsg('Henter agentens tal og metode …');
+    renderAgentDrawer(false);
+    if(d.scrollIntoView)d.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'nearest'});
+  }
+  $('tdClose').addEventListener('click',function(){$('treeDrawer').hidden=true;});
+  $('tdMethod').addEventListener('click',function(){
+    var row=document.getElementById('method-'+openAgentDrawer._id);
+    if(row){
+      row.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'center'});
+      row.classList.add('row--flash');
+      setTimeout(function(){row.classList.remove('row--flash');},2000);
+    }
+  });
+  $('tdRefresh').addEventListener('click',function(){
+    var b=$('tdRefresh');
+    if(b.disabled)return;
+    b.disabled=true;b.textContent='Opdaterer …';
+    agentStatsCache=null; // friske tal: serveren kører agent-stats.py og serverer det nye feed
+    function done(){b.disabled=false;b.textContent='Opdatér tal';}
+    renderAgentDrawer(true).then(done,done);
+  });
+
   function nodeButton(s,cls,idx){
     var b=document.createElement('button');
     b.className='tnode '+cls;b.type='button';
@@ -2147,15 +2428,10 @@
     var isSub=String(s.id).indexOf('.')>=0;
     b.innerHTML='<span class="tnode__n"><span class="ref">'+esc(s.id)+'</span>'+esc((s.icon?s.icon+' ':'')+s.name)+'</span>'+
       (isSub?'<span class="tsubchip">Under-specialist</span>':(ROLE_DESC[s.id]?'<span class="tnode__d">'+esc(ROLE_DESC[s.id])+'</span>':''));
-    b.setAttribute('aria-label','Vælg '+s.id+' '+s.name+' — justér metode eller tal med agenten');
+    b.setAttribute('aria-label','Vælg '+s.id+' '+s.name+' — se detaljer, brugstal og metode, eller tal med agenten');
     b.addEventListener('click',function(){
       showTreeTalk(s);
-      var row=document.getElementById('method-'+s.id);
-      if(row){
-        row.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'center'});
-        row.classList.add('row--flash');
-        setTimeout(function(){row.classList.remove('row--flash');},2000);
-      }
+      openAgentDrawer(s);
     });
     return b;
   }
@@ -2297,9 +2573,7 @@
       if(s.id){
         b.addEventListener('click',function(){
           showTreeTalk(s);
-          var row=document.getElementById('method-'+s.id);
-          if(row){row.scrollIntoView({behavior:'auto',block:'center'});row.classList.add('row--flash');
-            setTimeout(function(){row.classList.remove('row--flash');},2000);}
+          openAgentDrawer(s);
         });
       }
       host.appendChild(b);
@@ -2363,6 +2637,157 @@
   }
 
   /* ============================================================
+     P8 — Rundbordet (AI-rundbords-sessioner, /api/roundtable/*)
+     Motoren (roundtable.py) skriver sessions-JSON — panelet LÆSER
+     kun og genberegner aldrig. L0060: 404/405/ikke-JSON fra en
+     ældre serverproces oversættes til en genstart-anvisning i
+     stedet for en rå fejl (vi genstarter ALDRIG serveren selv).
+     ============================================================ */
+  var RT_OLD_SERVER='Genstart cockpit-serveren (<code>python3 os-visualization/scripts/cockpit-server.py</code>) — den kører en ældre version';
+  var RT_NO_SERVER='Kør cockpit-serveren for at bruge rundbordet: <code>python3 os-visualization/scripts/cockpit-server.py</code>';
+  var RT_STATUS={running:{t:'Kører',c:' chip--warn'},completed:{t:'Færdig',c:' chip--ok'},failed:{t:'Fejlede',c:' chip--lock'}};
+  var rtOpenId=null,rtPollTimer=null,rtListTimer=null;
+
+  function rtChip(status){
+    var m=RT_STATUS[status]||{t:status||'ukendt',c:''};
+    return '<span class="chip'+m.c+'">'+esc(m.t)+'</span>';
+  }
+  function rtWhen(iso){return iso?String(iso).slice(0,16).replace('T',' kl. '):'';}
+  function rtInfoRow(box,icon,t,dHtml){
+    box.innerHTML='<div class="row"><div class="row__icon">'+icon+'</div><div class="row__main">'+
+      '<div class="row__t">'+esc(t)+'</div><div class="row__d">'+dHtml+'</div></div></div>';
+  }
+  // GET-svar: JSON → {status,json}; ikke-JSON (gammel serverproces' HTML-404) → {__oldServer:true}.
+  // En JSON-404 fra session?id= er en ÆGTE "ukendt session" og må ikke forveksles med gammel server.
+  function rtGet(url){
+    return fetch(url,{cache:'no-store'}).then(function(r){
+      return r.json().then(function(j){return {status:r.status,json:j};},
+                           function(){return {__oldServer:true};});
+    });
+  }
+
+  function loadRoundtable(){
+    var box=$('rtSessions');
+    if(!box)return;
+    rtGet('/api/roundtable/sessions')
+      .then(function(res){
+        if(res.__oldServer){rtInfoRow(box,'🔌','Rundbords-panelet kræver en nyere server',RT_OLD_SERVER);$('rtCount').textContent='—';return;}
+        var ss=(res.json&&res.json.ok&&res.json.sessions)||[];
+        if(!ss.length){
+          rtInfoRow(box,'🪑','Ingen rundbord endnu',esc('Start det første med formularen til venstre — sessionerne lander her.'));
+          $('rtCount').textContent='0';
+          return;
+        }
+        box.innerHTML='';
+        var anyRunning=false;
+        ss.forEach(function(s){
+          if(s.status==='running')anyRunning=true;
+          var b=document.createElement('button');
+          b.type='button';b.className='row rt-row';
+          b.setAttribute('aria-label','Åbn transskript: '+(s.topic||s.id));
+          b.innerHTML='<div class="row__icon">🪑</div><div class="row__main">'+
+            '<div class="row__t">'+esc(s.topic||s.id)+'</div>'+
+            '<div class="row__d">'+esc(rtWhen(s.started))+' · '+esc(String(s.rounds_done||0))+' runder'+
+            ((s.seats&&s.seats.length)?' · '+esc(s.seats.join(', ')):'')+'</div></div>'+
+            '<div class="row__side">'+rtChip(s.status)+'</div>';
+          b.addEventListener('click',function(){openRoundtable(s.id,true);});
+          box.appendChild(b);
+        });
+        $('rtCount').textContent=ss.length+(ss.length===1?' session':' sessioner');
+        // hold listen frisk, mens et rundbord kører (samme 5 sek. som transskript-pollen)
+        if(anyRunning&&!rtListTimer){rtListTimer=setTimeout(function(){rtListTimer=null;loadRoundtable();},5000);}
+      })
+      .catch(function(){rtInfoRow(box,'🔌','Kan ikke læses uden serveren',RT_NO_SERVER);$('rtCount').textContent='—';});
+  }
+
+  function openRoundtable(id,scroll){
+    rtOpenId=id;
+    if(rtPollTimer){clearTimeout(rtPollTimer);rtPollTimer=null;}
+    var panel=$('rtViewer');panel.hidden=false;
+    if(scroll)panel.scrollIntoView({behavior:REDUCED.matches?'auto':'smooth',block:'start'});
+    fetchRtSession(id);
+  }
+
+  function fetchRtSession(id){
+    rtGet('/api/roundtable/session?id='+encodeURIComponent(id))
+      .then(function(res){
+        if(rtOpenId!==id)return; // brugeren har åbnet en anden session imens
+        var box=$('rtTranscript');
+        if(res.__oldServer){rtInfoRow(box,'🔌','Rundbords-panelet kræver en nyere server',RT_OLD_SERVER);return;}
+        if(!res.json||!res.json.ok){rtInfoRow(box,'❓','Kunne ikke hente sessionen',esc((res.json&&res.json.error)||'ukendt fejl'));return;}
+        renderRtTranscript(res.json.session||{});
+        if(String((res.json.session||{}).status)==='running'){
+          rtPollTimer=setTimeout(function(){rtPollTimer=null;fetchRtSession(id);},5000);
+        }
+      })
+      .catch(function(){if(rtOpenId===id)rtInfoRow($('rtTranscript'),'🔌','Kan ikke læses uden serveren',RT_NO_SERVER);});
+  }
+
+  function renderRtTranscript(s){
+    var box=$('rtTranscript');box.innerHTML='';
+    var seatName={};
+    (s.seats||[]).forEach(function(x){if(x&&x.id)seatName[x.id]=x.name||x.id;});
+    $('rtViewH').textContent='Transskript — '+(s.topic||s.id||'');
+    $('rtViewMeta').textContent=rtWhen(s.started)+' · '+((s.rounds||[]).length)+' runder';
+    var head=document.createElement('div');head.className='note';
+    head.innerHTML=rtChip(s.status)+' <span class="ref">'+esc(s.id||'')+'</span>'+
+      (s.status==='running'?' — rundbordet kører: transskriptet opdateres automatisk hvert 5. sekund.':'');
+    box.appendChild(head);
+    (s.rounds||[]).forEach(function(rd){
+      var ms=document.createElement('div');ms.className='minisec';
+      ms.innerHTML='<span class="fl-kicker">Runde '+esc(String(rd.n||''))+'</span><div class="rule"></div>';
+      box.appendChild(ms);
+      (rd.entries||[]).forEach(function(e){
+        var d=document.createElement('div');d.className='rt-bubble';
+        d.innerHTML='<b>'+esc(seatName[e.seat]||e.seat||'')+
+          (e.at?'<span class="ref">'+esc(rtWhen(e.at))+'</span>':'')+'</b>'+esc(e.text||'');
+        box.appendChild(d);
+      });
+    });
+    if(s.synthesis&&s.synthesis.text){
+      var syn=document.createElement('div');syn.className='rt-syn';
+      syn.innerHTML='<b>Syntese'+(seatName[s.synthesis.seat]?' — '+esc(seatName[s.synthesis.seat]):'')+'</b>'+esc(s.synthesis.text);
+      box.appendChild(syn);
+    }
+    if((s.proposals||[]).length){
+      var ms2=document.createElement('div');ms2.className='minisec';
+      ms2.innerHTML='<span class="fl-kicker">Forslag</span><div class="rule"></div><span class="ref">sendt til beslutninger — du afgør dem, intet udføres</span>';
+      box.appendChild(ms2);
+      (s.proposals||[]).forEach(function(p){
+        var r=document.createElement('div');r.className='row';
+        r.innerHTML='<div class="row__icon">💡</div><div class="row__main">'+
+          '<div class="row__t">'+esc(p.title||'')+'</div>'+
+          (p.detail?'<div class="row__d">'+esc(p.detail)+'</div>':'')+'</div>';
+        box.appendChild(r);
+      });
+    }
+  }
+
+  $('rtStart').addEventListener('click',function(){
+    var btn=this,msg=$('rtStartMsg'),topic=$('rtTopic').value.trim();
+    msg.hidden=false;
+    if(!topic){msg.innerHTML='Skriv et emne først — det er det, rundbordet drøfter.';return;}
+    btn.disabled=true;msg.textContent='Starter …';
+    fetch('/api/roundtable/start',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({topic:topic,rounds:parseInt($('rtRounds').value,10)||3})})
+      .then(function(r){
+        // POST: en gammel serverproces svarer 404 (JSON "not found" eller HTML) / 405 → genstart-anvisning
+        if(r.status===404||r.status===405)return {__oldServer:true};
+        return r.json().then(function(j){return {status:r.status,json:j};},function(){return {__oldServer:true};});
+      })
+      .then(function(res){
+        btn.disabled=false;
+        if(res.__oldServer){msg.innerHTML=RT_OLD_SERVER;return;}
+        if(!res.json||!res.json.ok){msg.innerHTML='<b>Afvist:</b> '+esc((res.json&&res.json.error)||'ukendt fejl');return;}
+        msg.textContent=res.json.besked||'Rundbordet er startet.';
+        $('rtTopic').value='';
+        setTimeout(loadRoundtable,2500);
+        setTimeout(loadRoundtable,8000);
+      })
+      .catch(function(){btn.disabled=false;msg.innerHTML=RT_NO_SERVER;});
+  });
+
+  /* ============================================================
      Feeds: live når serveren kører; SNAP-fallback på file://.
      Én kanonisk kilde pr. datasæt — UI'et oversætter aldrig selv,
      det læser *Da-felter når sync-laget har skrevet dem.
@@ -2413,6 +2838,8 @@
 
   wireTabs();
   loadCrew();
+  loadRecentDecisions();
+  loadRoundtable();
 
   /* ============================================================
      Frankly Fold — hjælperen (under udvikling; ingen AI-runtime)
@@ -2444,8 +2871,9 @@
       {id:"learnings",anchor:"learnings",t:"Læringer der venter på dit OK",d:"Læringer der kræver din vurdering, før de ryger i hukommelsen — de sikre files automatisk.",keys:"læring hukommelse memory lesson"},
       {id:"runs",anchor:"runsLive",t:"Kørsler",d:"Flight-recorderen: hvad maskinen har gjort og hvorfor — med rute, gates, validering og det den lærte.",keys:"kørsel run arkiv flight recorder historik"},
       {id:"composer",anchor:"cObj",t:"Start en kørsel",d:"Pakker din opgave som Task Packet, klar til Claude Code — kørslen startes altid dér, aldrig herfra.",keys:"start opgave composer task packet crew kopiér rute"},
-      {id:"tree",anchor:"tree",t:"Agent-træet",d:"Hele crewet i ét billede: formidleren, maskinrummet og specialisterne. Klik en rolle for metode eller samtale.",keys:"agent træ crew formidler orkestrator maskinrum"},
-      {id:"methods",anchor:"methods",t:"Specialisternes metode",d:"Sådan arbejder hver specialist — redigér mellem kørsler, og hver ændring bliver en ny kontraktversion.",keys:"metode specialist kontrakt redigér roster"}
+      {id:"tree",anchor:"tree",t:"Agent-træet",d:"Hele crewet i ét billede: formidleren, maskinrummet og specialisterne. Klik en rolle for detaljer: brugstal, version, historik og metode.",keys:"agent træ crew formidler orkestrator maskinrum brugstal detaljer"},
+      {id:"methods",anchor:"methods",t:"Specialisternes metode",d:"Sådan arbejder hver specialist — redigér mellem kørsler, og hver ændring bliver en ny kontraktversion.",keys:"metode specialist kontrakt redigér roster"},
+      {id:"roundtable",anchor:"rtSessions",t:"Rundbordet",d:"AI-rundbords-sessioner: start et rundbord om et emne, følg transskriptet live, og få forslagene som beslutninger.",keys:"rundbord roundtable session transskript syntese forslag sæde"}
     ];
     function panelById(id){for(var i=0;i<FOLD_PANELS.length;i++)if(FOLD_PANELS[i].id===id)return FOLD_PANELS[i];return null;}
 
