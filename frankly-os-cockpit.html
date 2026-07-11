@@ -263,6 +263,30 @@
   .rt-composerow textarea:focus{outline:none;border-color:var(--calm-deep);background:var(--paper)}
   .rt-compose .decided{margin-top:8px}
   .composer .decided{margin:10px 12px 4px}
+  /* Referatet (referat-familien): primær visning når motoren har skrevet det.
+     Fluid ned til ~380px — kun bløde bredder + overflow-wrap, ingen vandret scroll. */
+  .rt-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .rt-stopmsg{font-size:12px;color:var(--grey-1)}
+  .rt-dlgtoggle{margin:10px 12px 4px}
+  .rt-referat{margin:10px 12px;padding:16px 16px 14px;border:1px solid var(--calm-deep);border-radius:var(--r-lg);
+    background:var(--paper);box-shadow:var(--shadow-card);min-width:0}
+  .rt-referat h4{font-size:16px;color:var(--bordeaux);line-height:1.3;overflow-wrap:anywhere}
+  .rt-referat .k{font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--grey-2);margin:12px 0 4px}
+  .rt-referat p{font-size:13.5px;color:var(--ink);line-height:1.6;overflow-wrap:anywhere}
+  .rt-referat ul{margin:2px 0 0;padding-left:18px}
+  .rt-referat li{font-size:13px;color:var(--grey-1);line-height:1.55;margin-top:4px;overflow-wrap:anywhere}
+  .rt-decisions{margin-top:14px;padding:12px 13px 10px;background:var(--calm-pink);border:1px solid var(--calm-deep);border-radius:var(--r-card)}
+  .rt-decisions .k{margin-top:0}
+  .rt-dec{padding:7px 0}
+  .rt-dec+.rt-dec{border-top:1px solid var(--calm-deep)}
+  .rt-dec b{display:block;font-size:13.5px;color:var(--bordeaux);overflow-wrap:anywhere}
+  .rt-dec span{display:block;font-size:12.5px;color:var(--grey-1);line-height:1.5;margin-top:2px;overflow-wrap:anywhere}
+  .rt-dec-note{margin-top:8px;font-size:11.5px;color:var(--grey-2)}
+  @media(max-width:479px){
+    .rt-referat{margin:8px 6px;padding:13px 12px 12px}
+    .rt-bubble--jonas{margin-left:24px}
+    .rt-composerow{flex-wrap:wrap}
+  }
 
   /* ---- method editor ---- */
   .medit{margin-top:9px}
@@ -2705,6 +2729,7 @@
   var RT_NO_SERVER='Kør cockpit-serveren for at bruge rundbordet: <code>python3 os-visualization/scripts/cockpit-server.py</code>';
   var RT_STATUS={running:{t:'Kører',c:' chip--warn'},completed:{t:'Færdig',c:' chip--ok'},failed:{t:'Fejlede',c:' chip--lock'}};
   var rtOpenId=null,rtPollTimer=null,rtListTimer=null,rtOpenStatus='',rtReplyTo=null;
+  var rtDialogOpen=false,rtStopSent=false,rtStopNote=''; // referat-visning + afbryd-tilstand (pr. åben session)
 
   function rtChip(status){
     var m=RT_STATUS[status]||{t:status||'ukendt',c:''};
@@ -2759,8 +2784,9 @@
   }
 
   function openRoundtable(id,scroll){
-    if(rtOpenId!==id){ // ny session: nulstil svar-tilstand og kvittering fra den forrige
+    if(rtOpenId!==id){ // ny session: nulstil svar-, dialog- og afbryd-tilstand fra den forrige
       rtClearReply();
+      rtDialogOpen=false;rtStopSent=false;rtStopNote='';
       var m=$('rtSayMsg');if(m){m.hidden=true;m.textContent='';}
     }
     rtOpenId=id;
@@ -2803,16 +2829,46 @@
     var box=$('rtTranscript');box.innerHTML='';
     var seatName={};
     (s.seats||[]).forEach(function(x){if(x&&x.id)seatName[x.id]=x.name||x.id;});
-    $('rtViewH').textContent='Transskript — '+(s.topic||s.id||'');
+    var hasReferat=!!(s.referat&&typeof s.referat==='object');
+    $('rtViewH').textContent=(hasReferat?'Referat — ':'Transskript — ')+(s.topic||s.id||'');
     $('rtViewMeta').textContent=rtWhen(s.started)+' · '+((s.rounds||[]).length)+' runder';
-    var head=document.createElement('div');head.className='note';
+
+    // Statuslinje — og mens bordet kører er PRIMÆRHANDLINGEN her "Afbryd runden" (/stop:
+    // serveren sætter kun stop-filen; motoren går selv til syntese/referat, pollen kører videre).
+    var head=document.createElement('div');head.className='note rt-head';
     head.innerHTML=rtChip(s.status)+' <span class="ref">'+esc(s.id||'')+'</span>'+
-      (s.status==='running'?' — rundbordet kører: transskriptet opdateres automatisk hvert 5. sekund.':'');
+      (s.status==='running'?' — rundbordet kører: opdateres automatisk hvert 5. sekund.':'');
+    if(s.status==='running'){
+      var sm=document.createElement('span');sm.className='rt-stopmsg';
+      if(rtStopSent){
+        sm.textContent=rtStopNote||'Runden afbrydes — bordet samler op og skriver referatet';
+      }else{
+        var stopBtn=document.createElement('button');
+        stopBtn.type='button';stopBtn.className='dbtn dbtn--no';stopBtn.textContent='Afbryd runden';
+        stopBtn.addEventListener('click',function(){
+          stopBtn.disabled=true;sm.textContent='Afbryder …';
+          rtPost('/api/roundtable/stop',{id:s.id})
+            .then(function(res){
+              if(res.__oldServer){sm.innerHTML=RT_OLD_SERVER;stopBtn.disabled=false;return;}
+              if(!res.json||!res.json.ok){sm.textContent=(res.json&&res.json.error)||'ukendt fejl';stopBtn.disabled=false;return;}
+              rtStopSent=true;rtStopNote=res.json.besked||'Runden afbrydes.';
+              stopBtn.hidden=true;sm.textContent=rtStopNote; // 5s-pollen fortsætter til referatet lander
+            })
+            .catch(function(){sm.innerHTML=RT_NO_SERVER;stopBtn.disabled=false;});
+        });
+        head.appendChild(stopBtn);
+      }
+      head.appendChild(sm);
+    }
     box.appendChild(head);
+
+    // Dialogen (runde-bobler + syntese + forslag) bygges i sin egen container,
+    // så den kan foldes bag referatet, når referatet findes.
+    var dlg=document.createElement('div');
     (s.rounds||[]).forEach(function(rd){
       var ms=document.createElement('div');ms.className='minisec';
       ms.innerHTML='<span class="fl-kicker">Runde '+esc(String(rd.n||''))+'</span><div class="rule"></div>';
-      box.appendChild(ms);
+      dlg.appendChild(ms);
       (rd.entries||[]).forEach(function(e){
         var isJonas=String(e.seat)==='jonas';
         var name=isJonas?(seatName[e.seat]||'Jonas'):(seatName[e.seat]||e.seat||'');
@@ -2830,26 +2886,63 @@
           })(rd.n||'',String(e.seat||''),String(e.at||''),name);
           d.appendChild(rb);
         }
-        box.appendChild(d);
+        dlg.appendChild(d);
       });
     });
     if(s.synthesis&&s.synthesis.text){
       var syn=document.createElement('div');syn.className='rt-syn';
       syn.innerHTML='<b>Syntese'+(seatName[s.synthesis.seat]?' — '+esc(seatName[s.synthesis.seat]):'')+'</b>'+esc(s.synthesis.text);
-      box.appendChild(syn);
+      dlg.appendChild(syn);
     }
     if((s.proposals||[]).length){
       var ms2=document.createElement('div');ms2.className='minisec';
       ms2.innerHTML='<span class="fl-kicker">Forslag</span><div class="rule"></div><span class="ref">sendt til beslutninger — du afgør dem, intet udføres</span>';
-      box.appendChild(ms2);
+      dlg.appendChild(ms2);
       (s.proposals||[]).forEach(function(p){
         var r=document.createElement('div');r.className='row';
         r.innerHTML='<div class="row__icon">💡</div><div class="row__main">'+
           '<div class="row__t">'+esc(p.title||'')+'</div>'+
           (p.detail?'<div class="row__d">'+esc(p.detail)+'</div>':'')+'</div>';
-        box.appendChild(r);
+        dlg.appendChild(r);
       });
     }
+
+    if(hasReferat){
+      // REFERAT FØRST — kortet er den primære visning; dialogen ligger bag en toggle.
+      var ref=s.referat,h='<h4>'+esc(ref.emne||s.topic||'')+'</h4>';
+      if(ref.konsensus)h+='<div class="k">Konsensus</div><p>'+esc(ref.konsensus)+'</p>';
+      if((ref.uenigheder||[]).length){
+        h+='<div class="k">Uenigheder</div><ul>';
+        (ref.uenigheder||[]).forEach(function(u){h+='<li>'+esc(u)+'</li>';});
+        h+='</ul>';
+      }
+      if((ref.beslutninger||[]).length){
+        h+='<div class="rt-decisions"><div class="k">Dine beslutninger</div>';
+        (ref.beslutninger||[]).forEach(function(b){
+          h+='<div class="rt-dec"><b>'+esc((b&&b.titel)||'')+'</b>'+
+            ((b&&b.anbefaling)?'<span>'+esc(b.anbefaling)+'</span>':'')+'</div>';
+        });
+        h+='<div class="rt-dec-note">Ligger som kort i Beslutninger — du afgør dem dér, intet udføres.</div></div>';
+      }
+      var card=document.createElement('div');card.className='rt-referat';card.innerHTML=h;
+      box.appendChild(card);
+      var tg=document.createElement('button');
+      tg.type='button';tg.className='dbtn rt-dlgtoggle';
+      tg.textContent=rtDialogOpen?'Skjul fuld dialog':'Vis fuld dialog';
+      tg.setAttribute('aria-expanded',String(rtDialogOpen));
+      tg.addEventListener('click',function(){
+        rtDialogOpen=!rtDialogOpen;
+        dlg.hidden=!rtDialogOpen;
+        tg.textContent=rtDialogOpen?'Skjul fuld dialog':'Vis fuld dialog';
+        tg.setAttribute('aria-expanded',String(rtDialogOpen));
+      });
+      dlg.hidden=!rtDialogOpen;
+      box.appendChild(tg);
+      box.appendChild(dlg);
+    }else{
+      box.appendChild(dlg); // uden referat: nuværende visning uændret
+    }
+
     // Skriv til bordet: åbent for running (næste tur) og completed (genåbnes via --resume);
     // en fejlet session kan ikke genåbnes, så feltet skjules dér.
     rtOpenStatus=String(s.status||'');
