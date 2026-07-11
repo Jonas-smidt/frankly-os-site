@@ -3,17 +3,17 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Derfor gør revnen mere ondt end den burde — Frankly Blog</title>
-<meta name="description" content="En lille revne i noget, du ejer, kan ærgre dig ud af al proportion. Tabsaversion og ejerskabsfølelsen forklarer hvorfor — og hvorfor stikket letter, når prisen tages af dig.">
-<meta property="og:title" content="Derfor gør revnen mere ondt end den burde.">
-<meta property="og:description" content="Tabsaversion og the endowment effect forklarer, hvorfor skader på det, du ejer, gør uforholdsmæssigt ondt — og hvorfor det letter, når prisen tages af dig.">
+<title>Det halve sekund, hånden glipper. — Frankly Blog</title>
+<meta name="description" content="Vi taber ikke telefonen, fordi vi er klodsede. Vi taber den, fordi opmærksomheden er én stråle — og hånden slipper i samme sekund, den peger et andet sted hen. Hvad forskningen siger om det korte glip.">
+<meta property="og:title" content="Det halve sekund, hånden glipper.">
+<meta property="og:description" content="Delt opmærksomhed og inattentional blindness forklarer, hvorfor tingene glider ud af hånden — og hvorfor det ikke er din skyld.">
 <meta property="og:type" content="article">
 <meta name="theme-color" content="#F5F4F1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=League+Spartan:wght@500;600&display=swap" rel="stylesheet">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"BlogPosting","headline":"Derfor gør revnen mere ondt end den burde.","inLanguage":"da","datePublished":"2026-07-08","publisher":{"@type":"Organization","name":"Frankly"},"citation":["https://www.econometricsociety.org/publications/econometrica/1979/03/01/prospect-theory-analysis-decision-under-risk","https://doi.org/10.1086/261737","https://journals.sagepub.com/doi/10.1037/1089-2680.5.4.323"]}
+{"@context":"https://schema.org","@type":"BlogPosting","headline":"Det halve sekund, hånden glipper.","inLanguage":"da","datePublished":"2026-07-08","publisher":{"@type":"Organization","name":"Frankly"},"citation":["https://journals.sagepub.com/doi/10.1068/p281059","https://onlinelibrary.wiley.com/doi/10.1002/acp.1638","https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2024.1375152/full","https://doi.org/10.1037/0096-3445.124.2.207"]}
 </script>
 <style>
 /* ---------- Brand fonts (self-hosted) ---------- */
@@ -586,6 +586,34 @@ h2 .nowrap{white-space:nowrap}
   .item__btn{padding:14px 6px;font-size:1rem}
   .module__head{padding-inline:6px}
 }
+
+/* ---------- v2 upgrade: 2×2 grids (4 reads better than 3) ---------- */
+.section--research .studies{grid-template-columns:repeat(2,1fr)}
+.vignettes{grid-template-columns:repeat(2,1fr)}
+@media (max-width:560px){
+  .section--research .studies{grid-template-columns:1fr}
+  .vignettes{grid-template-columns:1fr}
+}
+
+/* ---------- v2 upgrade: concept diagram (calm bordeaux line-art) ---------- */
+.concept{margin:0}
+.concept__panel{
+  background:var(--blush);border-radius:var(--radius-xl);
+  padding:clamp(1.4rem,3.5vw,2.4rem) clamp(1.2rem,3vw,2rem);
+  box-shadow:var(--shadow-rest);
+}
+.concept svg{display:block;width:100%;height:auto}
+.concept .ln{fill:none;stroke:var(--bordeaux);stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.concept .ln--bold{stroke-width:2.6}
+.concept .ln--faint{opacity:.32}
+.concept .ln--dash{stroke-dasharray:2 6}
+.concept .dot{fill:var(--bordeaux)}
+.concept .accent{fill:var(--calm-deep)}
+.concept .lbl{font-family:var(--font-sans);font-size:12.5px;fill:var(--ink-70)}
+.concept .lbl--em{font-family:var(--font-display);font-size:13.5px;fill:var(--bordeaux)}
+.concept .lbl--eyebrow{font-family:var(--font-sans);font-size:11px;font-weight:600;letter-spacing:.06em;fill:var(--ink-eyebrow);text-transform:uppercase}
+.concept figcaption{margin-top:14px;font-size:.875rem;line-height:1.55;color:var(--grey-1);text-align:center;max-width:52ch;margin-inline:auto}
+@media (prefers-reduced-motion:reduce){.concept svg *{animation:none !important}}
 </style>
 </head>
 <body>
@@ -632,32 +660,32 @@ h2 .nowrap{white-space:nowrap}
       <!-- ================= HERO ================= -->
       <section class="hero" aria-labelledby="postTitle">
         <div class="hero__art" id="heroArt">
-          <img class="hero__photo" src="images/blog-12-hero.jpg" alt="Et nærbillede af en fin revne hen over en telefonskærm, holdt i to hænder i et stille, ærgerligt øjeblik." width="1376" height="768" fetchpriority="high">
+          <img class="hero__photo" src="images/blog-11-hero.jpg" alt="En hånd rækker ud efter en bildør i et kort, uskarpt øjeblik; telefonen er lige ved at glide ud af de samme fingre." width="1376" height="768" fetchpriority="high" onerror="this.style.display='none'">
         </div>
         <div class="hero__inner">
-          <p class="hero__kicker">Revnen · hvad forskningen siger</p>
-          <h1 class="hero__title" id="postTitle"><span class="w"><span class="wi" style="--i:0">Revnen</span></span> <span class="w"><span class="wi" style="--i:1">gør</span></span> <span class="w"><span class="wi" style="--i:2">mere</span></span> <span class="w"><span class="wi" style="--i:3">ondt,</span></span> <span class="w"><span class="wi" style="--i:4">end</span></span> <span class="w"><span class="wi" style="--i:5">den</span></span> <span class="w"><span class="wi" style="--i:6">burde.</span></span></h1>
-          <p class="hero__manchet">En lille revne i noget, du ejer, kan ærgre dig ud af al proportion. Ikke fordi du er materialistisk — men fordi hjernen vægter tab tungere end næsten alt andet.</p>
+          <p class="hero__kicker">Faldet · hvad forskningen siger</p>
+          <h1 class="hero__title" id="postTitle"><span class="w"><span class="wi" style="--i:0">Det</span></span> <span class="w"><span class="wi" style="--i:1">halve</span></span> <span class="w"><span class="wi" style="--i:2">sekund,</span></span> <span class="w"><span class="wi" style="--i:3">hånden</span></span> <span class="w"><span class="wi" style="--i:4">glipper.</span></span></h1>
+          <p class="hero__manchet">Du taber den ikke, fordi du er klodset. Du taber den, fordi opmærksomheden er én stråle — og hånden slipper i samme sekund, den peger et andet sted hen.</p>
         </div>
       </section>
 
       <!-- ================= BODY ================= -->
       <div class="post">
 
-        <section class="reveal" aria-labelledby="h-stik">
+        <section class="reveal" aria-labelledby="h-liste">
           <span class="kicker"><span class="kicker__num">01</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Øjeblikket</span></span>
-          <h2 id="h-stik">Alle kender det lille stik.</h2>
-          <p class="dropcap lede">Du vender den i hånden, og der er den: en fin revne hen over skærmen. Et hjørne, der er slået af. En ridse, der ikke var der i går. Og et lille stik i maven, der er langt større, end skaden egentlig er.</p>
-          <p>Bagefter kan du godt se, at det bare er en ting. At den stadig virker. At det kunne have været værre. Men stikket sidder der alligevel — og forskningen kan forklare hvorfor. Forklaringen ender oven i købet et sted, der tager stikket af dig.</p>
+          <h2 id="h-liste">Alle kender det korte glip.</h2>
+          <p class="dropcap lede">Du rakte ud efter noget andet. Trak i en dør, greb en pose, kiggede op efter bussen. Og i det halve sekund var telefonen allerede på vej mod fliserne — før du nåede at tænke "nej".</p>
+          <p>Bagefter føles det som klodsethed. Som noget, du burde have kunnet holde fast i. Men fejlen sker ikke der. Den sker et helt andet sted — og forskningen kan pege ret præcist på hvor. Svaret ender oven i købet med at tage skylden af dig.</p>
         </section>
 
         <figure class="photo photo--inset reveal">
           <div class="photo__side">
-            <span class="kicker"><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Det første blik</span></span>
-            <p class="photo__lead">Skaden er lille. Ærgrelsen er stor. Forskellen mellem de to laver hjernen helt af sig selv.</p>
+            <span class="kicker"><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Et halvt sekund</span></span>
+            <p class="photo__lead">Fingrene løsner grebet, før du ved af det. Hånden gør præcis, som opmærksomheden siger.</p>
           </div>
           <div class="photo__frame">
-            <img src="images/blog-12-object.jpg" alt="Nærbillede af en finger, der følger en tynd revne hen over et skærmglas." loading="lazy" onerror="this.closest('.photo').classList.add('is-missing')">
+            <img src="images/blog-11-object.jpg" alt="Nærbillede af en hånd, hvor en telefon er ved at glide ud mellem fingrene i det øjeblik, blikket er vendt væk." loading="lazy" onerror="this.closest('.photo').classList.add('is-missing')">
             <div class="photo__fallback" aria-hidden="true">
               <img src="images/ribbon-accent.png" alt="" aria-hidden="true">
               <span class="photo__fallback-label">Billede på vej</span>
@@ -666,38 +694,57 @@ h2 .nowrap{white-space:nowrap}
           </div>
         </figure>
 
-        <section class="reveal" aria-labelledby="h-tab">
+        <section class="reveal" aria-labelledby="h-haand">
           <span class="kicker"><span class="kicker__num">02</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Videnskaben</span></span>
-          <h2 id="h-tab">Tab vejer tungere end gevinst.</h2>
-          <p>Hjernen behandler ikke gevinst og tab lige. Den vægter tab langt tungere. Psykologerne Daniel Kahneman og Amos Tversky viste det allerede i 1979: smerten ved at miste noget er cirka dobbelt så stærk som glæden ved at vinde det samme. Det kaldes <em>tabsaversion</em>.</p>
-          <p>Det betyder, at en revne ikke bare er en revne. Den er et tab — og tab fylder mere i regnskabet end alt det, der stadig er helt. Skærmen virker, telefonen ringer, alt fungerer. Men hjernen holder regnskab i minus, ikke i plus.</p>
-          <p>Derfor gør en lille skade så uforholdsmæssigt ondt. Ikke fordi du overreagerer, men fordi hjernen er bygget til at mærke tab hårdere end alt andet.</p>
+          <h2 id="h-haand">Hånden er kun så sikker som opmærksomheden.</h2>
+          <p>At holde fast er ikke noget, der passer sig selv. Det er en lille, løbende opgave, hjernen kører i baggrunden — et konstant, fint afstemt greb. Og beder du den om at gøre to ting på én gang, deles regnestykket.</p>
+          <p>Forskning i det, der kaldes <em>dual-task interference</em>, viser det igen og igen: kører en motorisk opgave og en tankeopgave samtidig, bliver den motoriske målbart mindre præcis — også hos helt raske mennesker. Grebet bliver et hak løsere, timingen et hak dårligere. Ikke fordi hånden er svag, men fordi opmærksomheden er delt.</p>
+          <p>Det er derfor, tingene glider netop når du rækker ud efter noget andet. Ikke i det fokuserede sekund — i overgangen, hvor hovedet allerede er et andet sted.</p>
         </section>
 
-        <section class="reveal" aria-labelledby="h-eje">
-          <span class="kicker"><span class="kicker__num">03</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Ejerskabet</span></span>
-          <h2 id="h-eje">Det bliver mere værd, fordi det er dit.</h2>
-          <p>I 1990 lavede Daniel Kahneman sammen med Jack Knetsch og Richard Thaler et forsøg, der er blevet en klassiker. Halvdelen af en gruppe fik udleveret et krus. Så skulle nogle sælge, og andre købe. De, der ejede kruset, ville have næsten dobbelt så meget for at give slip på det, som de andre var villige til at betale. Det samme krus — men pludselig meget mere værd, bare fordi det var deres.</p>
-          <p>Fænomenet hedder <em>the endowment effect</em>: i det øjeblik noget er dit, stiger dets værdi i dine øjne. Ikke prisen i butikken — værdien inde i dig.</p>
-          <p>Læg tabsaversion og ejerskab sammen, og revnen bliver dobbelt dyr. Tingen betyder mere, fordi den er din — og skaden gør mere ondt, fordi det er et tab. To helt normale mekanismer, der trækker i samme retning.</p>
+<figure class="photo photo--bleed reveal">
+          <div class="photo__frame">
+            <img src="images/blog-11-concept.jpg" alt="Det halve sekund" loading="lazy" onerror="this.closest('.photo').classList.add('is-missing')">
+            <div class="photo__fallback" aria-hidden="true">
+              <img src="images/ribbon-accent.png" alt="" aria-hidden="true">
+              <span class="photo__fallback-label">Billede på vej</span>
+              <p class="photo__fallback-sub">3D-billede genereres i Flow.</p>
+            </div>
+          </div>
+          <figcaption>Ikke klodsethed — bare et menneske, hvis opmærksomhed nåede videre end hånden.</figcaption>
+        </figure>
+
+        <section class="reveal" aria-labelledby="h-residue">
+          <span class="kicker"><span class="kicker__num">03</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Det blinde punkt</span></span>
+          <h2 id="h-residue">Vi ser slet ikke det, vi ikke passer på.</h2>
+          <p>I 1999 lavede psykologerne Daniel Simons og Christopher Chabris et af de mest berømte forsøg i moderne psykologi. Forsøgspersoner så en video og skulle tælle afleveringer mellem nogle spillere. Midt i det hele gik en person i gorilladragt tværs gennem billedet, stoppede, bankede sig på brystet — og cirka halvdelen så det aldrig. Fænomenet hedder <em>inattentional blindness</em>: er opmærksomheden bundet op andetsteds, forsvinder resten, selv det åbenlyse.</p>
+          <p>Elleve år senere gik forskeren Ira Hyman på gaden med det. Folk, der talte i telefon mens de gik, overså i langt højere grad en klovn på en ethjulet cykel end alle andre — midt på fortovet, umulig at overse. Med mindre man taler i telefon.</p>
+          <p>Det er den samme blinde vinkel, der taber telefonen. I det halve sekund er den ikke bare uden for grebet — den er uden for din bevidsthed. Du registrerer ikke faldet, mens det sker. Kun bagefter, med et sæt i kroppen.</p>
           <figure class="photo photo--bleed reveal">
             <div class="photo__frame">
-              <img src="images/blog-12-scene.jpg" alt="En person holder en hverdagsting tæt og næsten beskyttende — det, man ejer, føles mere værd, end det koster." loading="lazy" onerror="this.closest('.photo').classList.add('is-missing')">
+              <img src="images/blog-11-scene.jpg" alt="En person går på et fortov mens de taler i telefon, blikket rettet fremad og indad, uopmærksom på verden lige omkring hænderne." loading="lazy" onerror="this.closest('.photo').classList.add('is-missing')">
               <div class="photo__fallback" aria-hidden="true">
                 <img src="images/ribbon-accent.png" alt="" aria-hidden="true">
                 <span class="photo__fallback-label">Billede på vej</span>
                 <p class="photo__fallback-sub">Billedet kunne ikke indlæses.</p>
               </div>
             </div>
-            <figcaption>Det er dit. Derfor er det mere værd i dine øjne, end det nogensinde kostede — og derfor svider skaden ekstra.</figcaption>
+            <figcaption>Blikket er rettet indad. Verden lige omkring hænderne holder op med at eksistere — et kort, blindt øjeblik.</figcaption>
           </figure>
         </section>
 
-        <section class="reveal wide" aria-labelledby="h-hvor">
+        <figure class="pullquote reveal">
+          <span class="pullquote__mark" aria-hidden="true">&ldquo;</span>
+          <blockquote>
+            <p>I det halve sekund er telefonen ikke bare uden for grebet. Den er uden for din bevidsthed.</p>
+          </blockquote>
+        </figure>
+
+        <section class="reveal wide" aria-labelledby="h-steder">
           <div style="max-width:680px;margin:0 auto">
-            <span class="kicker"><span class="kicker__num">04</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">De små skader</span></span>
-            <h2 id="h-hvor">Det svider på de mest hverdagsagtige steder.</h2>
-            <p>Sjældent de store ulykker. Næsten altid de små, dumme skrammer på det, du bruger hver dag. Tre klassikere:</p>
+            <span class="kicker"><span class="kicker__num">04</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Overgangene</span></span>
+            <h2 id="h-steder">Det sker altid i overgangen.</h2>
+            <p>Sjældent når du kigger på tingen. Næsten altid i skiftet fra det ene til det andet. Fire klassikere:</p>
           </div>
           <div class="vignettes">
             <div class="vig edge">
@@ -712,8 +759,8 @@ h2 .nowrap{white-space:nowrap}
                 </g>
                 <circle cx="21.5" cy="10.5" r="2" fill="#FFACCA"/>
               </svg>
-              <h3>Skrammen på cyklen.</h3>
-              <p>Én gang væltet, og lakken har et sår. Den kører som altid — men dit blik falder på mærket hver gang.</p>
+              <h3>Af med cyklen.</h3>
+              <p>Du svinger benet over med telefonen i den ene hånd. Den hånd har travlt med balancen.</p>
             </div>
             <div class="vig edge">
               <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
@@ -726,8 +773,8 @@ h2 .nowrap{white-space:nowrap}
                 </g>
                 <circle cx="24.5" cy="10.5" r="1.6" fill="#FFACCA"/>
               </svg>
-              <h3>Revnen i skærmen.</h3>
-              <p>Computeren gled en enkelt gang. Nu er der en fin streg i glasset, kun du lægger mærke til — og altid ser.</p>
+              <h3>Op fra bordet.</h3>
+              <p>Du rejser dig midt i en tanke. Telefonen følger med i en løs hånd, halvt glemt.</p>
             </div>
             <div class="vig edge">
               <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
@@ -740,49 +787,66 @@ h2 .nowrap{white-space:nowrap}
                 </g>
                 <circle cx="16" cy="4.2" r="1.7" fill="#FFACCA"/>
               </svg>
-              <h3>Bulen i etuiet.</h3>
-              <p>Høretelefonerne røg på gulvet. En lille bule, en løs hængsel — lyden er den samme, men følelsen er ikke.</p>
+              <h3>Det sidste scroll.</h3>
+              <p>Halvt i søvn, armen ud over sengekanten. Grebet giver langsomt slip, uden besked.</p>
+            </div>
+            <div class="vig edge">
+              <svg viewBox="0 0 32 32" aria-hidden="true" focusable="false">
+                <g class="stroke">
+                  <path d="M7 11.5h18l-1.4 15a1.5 1.5 0 0 1-1.5 1.35H9.9a1.5 1.5 0 0 1-1.5-1.35z"/>
+                  <path d="M11.5 13.5V9.5a4.5 4.5 0 0 1 9 0v4"/>
+                </g>
+                <circle cx="16" cy="19.5" r="1.7" fill="#FFACCA"/>
+              </svg>
+              <h3>Ved kassen.</h3>
+              <p>Kort i den ene hånd, pose i den anden, telefonen klemt ind imellem. Noget må give slip.</p>
             </div>
           </div>
         </section>
 
         <section class="reveal" aria-labelledby="h-lukning">
           <span class="kicker"><span class="kicker__num">05</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Lukningen</span></span>
-          <h2 id="h-lukning">Du kan ikke lade være med at ærgre dig. Heldigvis.</h2>
-          <p>Her bliver forskningen faktisk befriende. Tabsaversion og ejerskabsfølelse er ikke fejl, du kan trænes ud af — det er sådan, en helt normal hjerne fungerer. Du kommer til at ærgre dig over revnen. Du kommer til at føle den som et tab. At forlange, at du bare "tager det roligt", er at bede om det umulige.</p>
-          <p>Så løsningen ligger ikke i at føle mindre. Den ligger i at gøre tabet mindre. Man kan ikke slukke for stikket — men man kan fjerne det, stikket handler om. Tag pengene ud af regnestykket, og tilbage er bare en ting med en revne. Ærgerligt, ja. Men ikke et tab.</p>
+          <h2 id="h-lukning">Du kan ikke være mere opmærksom. Heldigvis.</h2>
+          <p>Her bliver forskningen faktisk befriende. Delt opmærksomhed er ikke en fejl, du kan trænes ud af — det er sådan, en helt normal hjerne fungerer. Du kommer til at kigge væk. Du kommer til at række ud efter noget andet. At forlange konstant vagtsomhed af dig selv er at bede om det umulige, hele dagen, hver dag.</p>
+          <p>Så løsningen ligger ikke i at holde bedre fast. Den ligger i at gøre det ligegyldigt, når du ikke gør. Man kan ikke fjerne det halve sekund — men man kan fjerne det, det halve sekund koster. Flyt konsekvensen ud af hovedet, ligesom man flytter en huskeseddel ud af det: så holder baghovedet op med at holde øje.</p>
         </section>
 
         <section class="reveal section--research" aria-labelledby="h-fund">
           <span class="kicker"><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Forskningen, kort fortalt</span></span>
-          <h2 id="h-fund">Tre fund. Én pointe.</h2>
+          <h2 id="h-fund">Fire fund. Én pointe.</h2>
           <div class="studies">
             <article class="study edge">
+              <span class="study__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8h13"/><path d="m14 5 3 3-3 3"/><path d="M20 16H7"/><path d="m10 13-3 3 3 3"/></svg></span>
+              <div class="study__year">1995</div>
+              <p class="study__who">Rogers &amp; Monsell</p>
+              <p class="study__what">Skift mellem to opgaver koster mest i selve skiftet — dér, hvor hånden allerede er på vej videre.</p>
+            </article>
+            <article class="study edge">
               <span class="study__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M4 8h13v4a5 5 0 0 1-5 5H9a5 5 0 0 1-5-5V8Z"/><path d="M17 9h2.4a2 2 0 0 1 0 4H17"/><path d="M7 3v2M11 3v2"/></svg></span>
-              <div class="study__year">1979</div>
-              <p class="study__who">Kahneman &amp; Tversky</p>
-              <p class="study__what">Tab vejer cirka dobbelt så tungt som en tilsvarende gevinst.</p>
+              <div class="study__year">1999</div>
+              <p class="study__who">Simons &amp; Chabris</p>
+              <p class="study__what">Er opmærksomheden bundet, ser vi ikke engang en gorilla midt i billedet.</p>
             </article>
             <article class="study edge">
               <span class="study__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21v-9"/><path d="M12 12 6 5"/><path d="M12 12l6-7"/><path d="M4 4h3.2v3.2"/><path d="M20 4h-3.2v3.2"/></svg></span>
-              <div class="study__year">1990</div>
-              <p class="study__who">Kahneman, Knetsch &amp; Thaler</p>
-              <p class="study__what">Ejer man noget, vil man have næsten det dobbelte for at give slip på det.</p>
+              <div class="study__year">2010</div>
+              <p class="study__who">Ira Hyman m.fl.</p>
+              <p class="study__what">Folk i telefon overså en klovn på ethjulet cykel midt på fortovet.</p>
             </article>
             <article class="study edge">
               <span class="study__icon" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V2.6h6V4"/><path d="M8.6 13l2.4 2.4 4.4-4.6"/></svg></span>
-              <div class="study__year">2001</div>
-              <p class="study__who">Baumeister m.fl.</p>
-              <p class="study__what">Det negative slår hårdere end det positive — på tværs af næsten alt.</p>
+              <div class="study__year">2024</div>
+              <p class="study__who">Dual-task-metaanalyse</p>
+              <p class="study__what">To ting på én gang gør grebet målbart mindre præcist — også hos raske.</p>
             </article>
           </div>
           <p class="studies__note">Fuld kildeliste står nederst i artiklen.</p>
         </section>
 
-        <section class="reveal" aria-labelledby="h-proev">
+        <section class="reveal" aria-labelledby="h-rydop">
           <span class="kicker"><span class="kicker__num">06</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Prøv det</span></span>
-          <h2 id="h-proev">Prøv at tage stikket ud af skaderne.</h2>
-          <p class="module-intro">Alle de små ærgrelser, der bliver hængende, hver gang noget får en skramme. Klik dem væk — bare for fornemmelsen af, hvad der sker, når prisen ikke længere følger med.</p>
+          <h2 id="h-rydop">Prøv at klikke bekymringerne væk.</h2>
+          <p class="module-intro">Alle de små "pas nu på"-beskeder, du giver dig selv hele dagen. Klik dem væk — bare for fornemmelsen af, hvad der sker, når de holder op med at fylde.</p>
 
           <div class="module edge" id="huskModule">
             <div id="huskInner">
@@ -794,31 +858,31 @@ h2 .nowrap{white-space:nowrap}
                 <li class="item">
                   <button type="button" class="item__btn" aria-pressed="false">
                     <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
-                    <span class="item__text">Ærgrelse: den nye telefon fik en revne i skærmen første uge.</span>
+                    <span class="item__text">Husk: hold godt fast på telefonen, når du står af cyklen.</span>
                   </button>
                 </li>
                 <li class="item">
                   <button type="button" class="item__btn" aria-pressed="false">
                     <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
-                    <span class="item__text">Ærgrelse: der er en bule i computeren, kun jeg kan se.</span>
+                    <span class="item__text">Husk: pas på, den ikke glider, når du rejser dig fra bordet.</span>
                   </button>
                 </li>
                 <li class="item">
                   <button type="button" class="item__btn" aria-pressed="false">
                     <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
-                    <span class="item__text">Ærgrelse: cyklen fik en skramme, og den var lige blevet min.</span>
+                    <span class="item__text">Husk: hold ekstra godt fast på vej ud ad døren med fulde hænder.</span>
                   </button>
                 </li>
                 <li class="item">
                   <button type="button" class="item__btn" aria-pressed="false">
                     <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
-                    <span class="item__text">Ærgrelse: urskiven har en ridse, jeg ikke kan lade være med at kigge på.</span>
+                    <span class="item__text">Husk: læg den væk, før du falder i søvn med den i hånden.</span>
                   </button>
                 </li>
                 <li class="item">
                   <button type="button" class="item__btn" aria-pressed="false">
                     <span class="item__check" aria-hidden="true"><svg viewBox="0 0 16 16" aria-hidden="true" focusable="false"><path d="M3 8.5 6.5 12 13 4.5"/></svg></span>
-                    <span class="item__text">Ærgrelse: hver lille skade føles som et tab, jeg selv skulle have undgået.</span>
+                    <span class="item__text">Husk: sig til dig selv hele dagen — pas nu på.</span>
                   </button>
                 </li>
               </ul>
@@ -826,38 +890,39 @@ h2 .nowrap{white-space:nowrap}
 
             <div class="module__done" id="huskDone" tabindex="-1" hidden>
               <p class="done__display">Sådan skal hverdag føles.</p>
-              <p class="done__sub">Færre tab at bære rundt på. Mere at bruge frit.</p>
+              <p class="done__sub">Mindre at holde styr på. Mere at leve i.</p>
               <img class="done__ribbon" src="images/ribbon-accent.png" alt="" aria-hidden="true">
               <button type="button" class="done__reset" id="huskReset">Start forfra</button>
             </div>
           </div>
 
           <div class="sr-only" role="status" id="huskLive"></div>
-          <p class="note" style="margin-top:1rem">Det, du lige mærkede, er hele pointen: du kan ikke tænke dig til at ærgre dig mindre. Men du kan gøre skaden billig — og så mister den sit stik.</p>
+          <p class="note" style="margin-top:1rem">Det, du lige mærkede, er hele pointen: du kan ikke klikke mere opmærksomhed til dig selv. Men du kan gøre listen ligegyldig.</p>
         </section>
 
         <figure class="pullquote reveal">
           <span class="pullquote__mark" aria-hidden="true">&ldquo;</span>
           <blockquote>
-            <p>Du kommer til at ærgre dig. Det må bare ikke koste noget.</p>
+            <p>Du kommer til at kigge væk. Det må bare ikke koste noget.</p>
           </blockquote>
         </figure>
 
-        <section class="reveal" aria-labelledby="h-pointe">
+        <section class="reveal" aria-labelledby="h-friktion">
           <span class="kicker"><span class="kicker__num">07</span><svg class="kicker__icon" viewBox="0 0 18 37" role="img" aria-label="Frankly" focusable="false"><use href="#frankly-mark"/></svg><span class="kicker__label">Pointen</span></span>
-          <h2 id="h-pointe">Derfor sælger vi ikke rigtig dækning.</h2>
-          <p class="lede">Frankly™ sælger sådan set ikke dækning. Vi sælger retten til at ærgre dig mindre — dækningen er bare måden.</p>
-          <p>Der kommer revner. Ting falder, støder ind i noget, får en skramme. Det er ikke en karakterbrist, det er et liv, der bliver brugt. Så i stedet for at bede dig om at passe bedre på, tager vi bare prisen af skaden: sker der noget, er der styr på det. Så bliver revnen bare en revne — ikke et tab.</p>
-          <p class="outro-line">Skaden må gerne ske. Den skal bare ikke koste dig noget.</p>
+          <h2 id="h-friktion">Derfor sælger vi ikke rigtig dækning.</h2>
+          <p class="lede">Frankly™ sælger sådan set ikke dækning. Vi sælger retten til at kigge væk — dækningen er bare måden.</p>
+          <p>Du kommer til at glippe. Det er ikke en karakterbrist, det er et menneske. Så i stedet for at bede dig om at være mere vagtsom, tager vi bare prisen af det halve sekund: glider den, er der styr på det. "Pas på telefonen" bliver til "det er der styr på" — og baghovedet holder op med at holde øje.</p>
+          <p class="outro-line">Du skal ikke passe bedre på. Du skal bare slippe.</p>
           <p><a class="cta" href="#">Se Frankly Care™<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a></p>
         </section>
 
         <section class="sources reveal" aria-labelledby="h-kilder">
           <h2 id="h-kilder">Kilder.</h2>
           <ol>
-            <li>Kahneman, D. &amp; Tversky, A. (1979). <em>Prospect Theory: An Analysis of Decision under Risk.</em> Econometrica, 47(2), 263–291. <a href="https://www.econometricsociety.org/publications/econometrica/1979/03/01/prospect-theory-analysis-decision-under-risk" rel="noopener">Econometric Society</a></li>
-            <li>Kahneman, D., Knetsch, J.L. &amp; Thaler, R.H. (1990). <em>Experimental Tests of the Endowment Effect and the Coase Theorem.</em> Journal of Political Economy, 98(6), 1325–1348. <a href="https://doi.org/10.1086/261737" rel="noopener">JPOE (doi:10.1086/261737)</a></li>
-            <li>Baumeister, R.F., Bratslavsky, E., Finkenauer, C. &amp; Vohs, K.D. (2001). <em>Bad Is Stronger than Good.</em> Review of General Psychology, 5(4), 323–370. <a href="https://journals.sagepub.com/doi/10.1037/1089-2680.5.4.323" rel="noopener">SAGE (doi:10.1037/1089-2680.5.4.323)</a></li>
+            <li>Rogers, R.D. &amp; Monsell, S. (1995). <em>Costs of a Predictable Switch Between Simple Cognitive Tasks.</em> Journal of Experimental Psychology: General, 124(2), 207–231. <a href="https://ora.ox.ac.uk/objects/uuid:6180113d-b831-419b-8716-46652110880d" rel="noopener">Oxford Research Archive (doi:10.1037/0096-3445.124.2.207)</a></li>
+            <li>Simons, D.J. &amp; Chabris, C.F. (1999). <em>Gorillas in Our Midst: Sustained Inattentional Blindness for Dynamic Events.</em> Perception, 28(9), 1059–1074. <a href="https://journals.sagepub.com/doi/10.1068/p281059" rel="noopener">SAGE (doi:10.1068/p281059)</a></li>
+            <li>Hyman, I.E. m.fl. (2010). <em>Did you see the unicycling clown? Inattentional blindness while walking and talking on a cell phone.</em> Applied Cognitive Psychology, 24(5), 597–607. <a href="https://onlinelibrary.wiley.com/doi/10.1002/acp.1638" rel="noopener">Wiley (doi:10.1002/acp.1638)</a></li>
+            <li>Dual-task interference i overekstremitets-bevægelser — systematisk review og metaanalyse (2024). <em>Frontiers in Neurology.</em> <a href="https://www.frontiersin.org/journals/neurology/articles/10.3389/fneur.2024.1375152/full" rel="noopener">Frontiers (doi:10.3389/fneur.2024.1375152)</a></li>
           </ol>
         </section>
 
@@ -867,11 +932,11 @@ h2 .nowrap{white-space:nowrap}
 
   <!-- ================= CLOSING CTA ================= -->
   <section class="foot-cta reveal" aria-labelledby="cta-title">
-    <img class="foot-cta__img" src="images/blog-12-cta.jpg" alt="En person bruger sin telefon afslappet, uden at bekymre sig om den lille revne i hjørnet." loading="lazy">
+    <img class="foot-cta__img" src="images/blog-11-cta.jpg" alt="En person går afslappet ned ad gaden med telefonen løst i hånden, uden at tænke over det." loading="lazy" onerror="this.style.display='none'">
     <div class="foot-cta__inner">
       <span class="foot-cta__eyebrow">Frankly Care™</span>
-      <h2 class="foot-cta__title" id="cta-title">Så må der gerne komme en revne.</h2>
-      <p class="foot-cta__sub">Dækning til de ting, du bruger hver dag. Tilføjet på få sekunder — så en skade ikke føles som et tab.</p>
+      <h2 class="foot-cta__title" id="cta-title">Så må hånden gerne glippe.</h2>
+      <p class="foot-cta__sub">Dækning til de ting, du bruger hver dag. Tilføjet på få sekunder — så det korte glip ikke koster noget.</p>
       <a class="foot-cta__btn" href="#">Se Frankly Care™<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg></a>
     </div>
   </section>
@@ -885,9 +950,9 @@ h2 .nowrap{white-space:nowrap}
     <nav class="site-foot__more" aria-label="Flere indlæg">
       <p class="site-foot__more-label">Læs også</p>
       <ul class="site-foot__links">
-        <li><a href="frankly-blog-01-brug-det.html">Stop med at passe for meget på dine ting.</a></li>
+        <li><a href="frankly-blog-01-brug-det.html">Du købte det ikke for at passe på det.</a></li>
         <li><a href="frankly-blog-02-checkout.html">Den rolige del af checkout.</a></li>
-        <li><a href="frankly-blog-03-mental-load-cd.html">En ting mindre at tænke på.</a></li>
+        <li><a href="frankly-blog-04-tirsdag.html">Ting går i stykker. Og det er helt ok.</a></li>
       </ul>
     </nav>
     <hr class="site-foot__rule">
