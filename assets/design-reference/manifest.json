@@ -1,0 +1,510 @@
+{
+  "schemaVersion": "0.2",
+  "generated": "2026-07-11",
+  "scope": "Internal noindex Frankly Design Reference only",
+  "positiveCanon": [
+    "franklyinsure.com",
+    "Frankly Investor Pitch",
+    "Bike & Co Pitch",
+    "Frankly Instore onepager"
+  ],
+  "authorityRule": "Only the four approved outputs are positive canon. Manual and Claude Design entries are supporting/reference-only.",
+  "publicDistribution": "blocked",
+  "assetCount": 47,
+  "assets": [
+    {
+      "id": "web-main-motion",
+      "file": "main-visual-motion.mp4",
+      "category": "ribbon-motion",
+      "mediaType": "video/mp4",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/videos/FRANKLY_MAIN-VISUAL_ANIMATION_V11_mp4.mp4",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Primary website hero motion",
+      "motion": {
+        "staticFallback": "main-visual-poster.jpg"
+      }
+    },
+    {
+      "id": "web-main-poster",
+      "file": "main-visual-poster.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/videos/FRANKLY_MAIN-VISUAL_ANIMATION_V11_poster.0000000.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Website hero and reduced-motion frame"
+    },
+    {
+      "id": "web-espresso-motion",
+      "file": "espresso-motion.mp4",
+      "category": "ribbon-motion",
+      "mediaType": "video/mp4",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/videos/FRANKLY_ESPRESSO_MACHINE_mp4.mp4",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Object-wrap motion example",
+      "motion": {
+        "staticFallback": "espresso-poster.jpg"
+      }
+    },
+    {
+      "id": "web-espresso-poster",
+      "file": "espresso-poster.jpg",
+      "category": "ribbon-static",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/videos/FRANKLY_ESPRESSO_MACHINE_poster.0000000.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Static wrap-and-protect ribbon reference"
+    },
+    {
+      "id": "web-device-motion",
+      "file": "device-motion.mp4",
+      "category": "ribbon-motion",
+      "mediaType": "video/mp4",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/videos/FRANKLY_LAPTOPSMARTPHONE_mp4.mp4",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Device-connection motion example",
+      "motion": {
+        "staticFallback": "device-poster.jpg"
+      }
+    },
+    {
+      "id": "web-device-poster",
+      "file": "device-poster.jpg",
+      "category": "ribbon-static",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/videos/FRANKLY_LAPTOPSMARTPHONE_poster.0000000.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Static connect-and-guide ribbon reference"
+    },
+    {
+      "id": "web-main-object-stack",
+      "file": "main-object-stack.png",
+      "category": "3d-object-material",
+      "mediaType": "image/png",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Frankly-Main-Visual-07-1.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Transparent 3D protagonist and material reference"
+    },
+    {
+      "id": "web-photo-street-couple",
+      "file": "photo-street-couple.jpg",
+      "category": "photography",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Kobdetduelsker-1.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Candid people/place crop reference"
+    },
+    {
+      "id": "web-photo-street-blue",
+      "file": "photo-street-blue.jpg",
+      "category": "photography",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Swipeogduerdaekket-1.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Single-person street crop and colour beat"
+    },
+    {
+      "id": "web-photo-home-couple",
+      "file": "photo-home-couple.jpg",
+      "category": "photography",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Social-Proof-1.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Warm home-life and intimate crop reference"
+    },
+    {
+      "id": "investor-cover-frame",
+      "file": "investor-ribbon-scene.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/png",
+      "source": "Investor Pitch rendered thumbs folder 1x2MMHdB7GFg17xrO9eosUE80IV3Yts_S::00.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Investor opening composition and ribbon-in-reality",
+      "visualOnly": true
+    },
+    {
+      "id": "investor-product-crop",
+      "file": "investor-product-stage.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Investor Pitch rendered thumbs folder 1x2MMHdB7GFg17xrO9eosUE80IV3Yts_S::04.jpg visual crop",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Product/object crop with business copy excluded",
+      "visualOnly": true
+    },
+    {
+      "id": "bike-billboard-frame",
+      "file": "bike-billboard.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Latest Bike & Co update-slide3::nav-thumb-s03.png / Drive 1MjHIBLQj3VMjk6jpovk_hkrSjnWhDRCK",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Partner-deck product, ribbon and placement frame",
+      "visualOnly": true
+    },
+    {
+      "id": "instore-object-anchor",
+      "file": "instore-ribbon-object.png",
+      "category": "approved-output-frames",
+      "mediaType": "image/png",
+      "source": "Approved Instore lineage::frankly-os-site/assets/tools/instore.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Instore onepager visual anchor"
+    },
+    {
+      "id": "brand-wordmark",
+      "file": "mark-wordmark.svg",
+      "category": "marks-logo-lockups",
+      "mediaType": "image/svg+xml",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Logo.svg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Primary Frankly wordmark"
+    },
+    {
+      "id": "brand-monogram",
+      "file": "mark-monogram.svg",
+      "category": "marks-logo-lockups",
+      "mediaType": "image/svg+xml",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/favicon.svg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Compact Frankly monogram"
+    },
+    {
+      "id": "bike-ribbon-static-a",
+      "file": "ribbon-static-bike.png",
+      "category": "ribbon-static",
+      "mediaType": "image/png",
+      "source": "Bike & Co asset pack::ribbon.png / Drive 1Jm8XK-cf8AJCynmqJugycc1Gg9vmmS3p",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Standalone ribbon path reference"
+    },
+    {
+      "id": "bike-ribbon-static-b",
+      "file": "ribbon-static-sweep.png",
+      "category": "ribbon-static",
+      "mediaType": "image/png",
+      "source": "Bike & Co asset pack::ribbon-2.png / Drive 1BoWjziIKB-LSN40y4LRCnDSEadmSFZnz",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Alternate ribbon sweep and depth reference"
+    },
+    {
+      "id": "bike-ribbon-static-blur",
+      "file": "ribbon-static-blur.png",
+      "category": "ribbon-static",
+      "mediaType": "image/png",
+      "source": "Bike & Co asset pack::ribbon-blur.png / Drive 16vIkNsubRxdflvYrhDY0ooi6e8hZBo1m",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Ribbon depth-of-field treatment"
+    },
+    {
+      "id": "web-material-doghouse",
+      "file": "material-doghouse-stage.jpg",
+      "category": "palette-material-swatches",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/87bb93d2f66d26cb388b1720cb3d044f3244da1f-p-1600.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Material, palette and ribbon-on-object reference"
+    },
+    {
+      "id": "web-photo-flower-street",
+      "file": "photo-flower-street.jpg",
+      "category": "photography",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Photorealistic-Candid-Street-1-p-1080.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Candid Copenhagen place/people reference"
+    },
+    {
+      "id": "web-photo-retail-human",
+      "file": "photo-retail-human.jpg",
+      "category": "photography",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Woman-Late-20s-Insure-p-1600.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Human retail interaction reference"
+    },
+    {
+      "id": "web-photo-furniture-store",
+      "file": "photo-furniture-store.jpg",
+      "category": "photography",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/tagbilledeafkvittering-p-1080.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Warm retail place and wide-scene crop"
+    },
+    {
+      "id": "bike-photo-lifestyle",
+      "file": "photo-bike-lifestyle.jpg",
+      "category": "photography",
+      "mediaType": "image/jpeg",
+      "source": "Bike & Co asset pack::lifestyle-harbourfront.jpeg / Drive 13rY2Uc_tnpaSB2-8jHbZ6JR7MlOnPCjF",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Bike partner-deck lifestyle/place reference"
+    },
+    {
+      "id": "web-object-bike",
+      "file": "object-bike.png",
+      "category": "3d-object-material",
+      "mediaType": "image/png",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/franklyctykel.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Transparent everyday-object cutout"
+    },
+    {
+      "id": "web-object-sofa",
+      "file": "object-sofa.png",
+      "category": "3d-object-material",
+      "mediaType": "image/png",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/franklysofa_front.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Transparent soft-material object cutout"
+    },
+    {
+      "id": "web-object-speakers",
+      "file": "object-speakers.png",
+      "category": "3d-object-material",
+      "mediaType": "image/png",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/franklyspeakers.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Transparent electronics object cutout"
+    },
+    {
+      "id": "web-object-device-ribbon",
+      "file": "object-device-ribbon.png",
+      "category": "3d-object-material",
+      "mediaType": "image/png",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Frame-1948755676-p-800.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Device/ribbon spatial relationship"
+    },
+    {
+      "id": "bike-object-ebike-ribbon",
+      "file": "object-ebike-ribbon.png",
+      "category": "3d-object-material",
+      "mediaType": "image/png",
+      "source": "Bike & Co asset pack::s07-ebike-ribbon.png / Drive 1HXRkPZmLe_lupr5jd7AmGG19A5zosVb1",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "E-bike and ribbon protagonist"
+    },
+    {
+      "id": "web-object-lifestyle-stack",
+      "file": "object-lifestyle-stack.jpg",
+      "category": "3d-object-material",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/image-2324.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Dense everyday-object/material stack"
+    },
+    {
+      "id": "web-illustration-portrait",
+      "file": "illustration-portrait.jpg",
+      "category": "illustration-reference",
+      "mediaType": "image/jpeg",
+      "source": "User-provided franklyinsure-main.zip / approved franklyinsure.com export::migration/webflow-export/images/Card-p-800.png",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Website illustration-line reference"
+    },
+    {
+      "id": "investor-intro-thumb",
+      "file": "investor-sequence-intro.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Investor Pitch rendered thumbs folder 1x2MMHdB7GFg17xrO9eosUE80IV3Yts_S::01.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Small sequence thumbnail; copy intentionally unreadable",
+      "visualOnly": true
+    },
+    {
+      "id": "investor-product-thumb",
+      "file": "investor-product-sequence.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Investor Pitch rendered thumbs folder 1x2MMHdB7GFg17xrO9eosUE80IV3Yts_S::06.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Small product-sequence thumbnail; copy intentionally unreadable",
+      "visualOnly": true
+    },
+    {
+      "id": "investor-structure-thumb",
+      "file": "investor-structure-sequence.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Investor Pitch rendered thumbs folder 1x2MMHdB7GFg17xrO9eosUE80IV3Yts_S::10.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Small structure thumbnail; copy intentionally unreadable",
+      "visualOnly": true
+    },
+    {
+      "id": "investor-closing-thumb",
+      "file": "investor-closing-sequence.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Investor Pitch rendered thumbs folder 1x2MMHdB7GFg17xrO9eosUE80IV3Yts_S::22.jpg",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Small closing thumbnail; copy intentionally unreadable",
+      "visualOnly": true
+    },
+    {
+      "id": "bike-opening-thumb",
+      "file": "bike-opening-sequence.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Bike & Co asset pack::nav-thumb-s01.png / Drive 1ocdOYghg5fy5oGDKGiNPOkFtOh6NUunh",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Small opening thumbnail; copy intentionally unreadable",
+      "visualOnly": true
+    },
+    {
+      "id": "bike-object-thumb",
+      "file": "bike-object-sequence.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Bike & Co asset pack::nav-thumb-s07.png / Drive 1dmh4Qh0Eb1AzQogZypMopef-SEbGm8XA",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Small object-stage thumbnail; copy intentionally unreadable",
+      "visualOnly": true
+    },
+    {
+      "id": "bike-closing-thumb",
+      "file": "bike-closing-sequence.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Bike & Co asset pack::nav-thumb-s20.png / Drive 1rBv7X7rQHsqdYItIQJVltMZB05jI42ho",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Small closing thumbnail; copy intentionally unreadable",
+      "visualOnly": true
+    },
+    {
+      "id": "instore-statement-frame",
+      "file": "instore-statement-stage.jpg",
+      "category": "approved-output-frames",
+      "mediaType": "image/jpeg",
+      "source": "Approved Instore onepager::embedded statement JPEG",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Instore calm-guide atmospheric frame",
+      "visualOnly": true
+    },
+    {
+      "id": "instore-walkthrough-motion",
+      "file": "instore-walkthrough.webm",
+      "category": "ribbon-motion",
+      "mediaType": "video/webm",
+      "source": "Approved Instore onepager::embedded vidData.v0",
+      "provenanceStatus": "approved-ground-truth",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Instore walkthrough motion example",
+      "motion": {
+        "staticFallback": "instore-ribbon-object.png"
+      }
+    },
+    {
+      "id": "manual-palette-excerpt",
+      "file": "manual-palette.jpg",
+      "category": "palette-material-swatches",
+      "mediaType": "image/jpeg",
+      "source": "Frankly Mini Brand Guide.pdf / Drive 1tCtRX7-LvAiFjrJMsA8QX7u5czftHV-i::page 5",
+      "provenanceStatus": "supporting-reference",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Palette and colour-role excerpt"
+    },
+    {
+      "id": "manual-type-excerpt",
+      "file": "manual-type.jpg",
+      "category": "manual-claude-supporting",
+      "mediaType": "image/jpeg",
+      "source": "Frankly Mini Brand Guide.pdf / Drive 1tCtRX7-LvAiFjrJMsA8QX7u5czftHV-i::page 10",
+      "provenanceStatus": "supporting-reference",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Typography specimen excerpt"
+    },
+    {
+      "id": "manual-stage-excerpt",
+      "file": "manual-stage.jpg",
+      "category": "manual-claude-supporting",
+      "mediaType": "image/jpeg",
+      "source": "Frankly Mini Brand Guide.pdf / Drive 1tCtRX7-LvAiFjrJMsA8QX7u5czftHV-i::page 15",
+      "provenanceStatus": "supporting-reference",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Application/stage composition excerpt"
+    },
+    {
+      "id": "manual-ui-flow-excerpt",
+      "file": "manual-ui-flow.jpg",
+      "category": "ui-interaction-reference",
+      "mediaType": "image/jpeg",
+      "source": "Frankly Mini Brand Guide.pdf / Drive 1tCtRX7-LvAiFjrJMsA8QX7u5czftHV-i::page 45",
+      "provenanceStatus": "supporting-reference",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Product UI flow excerpt at reference scale"
+    },
+    {
+      "id": "claude-motion-card",
+      "file": "claude-motion-reference.jpg",
+      "category": "manual-claude-supporting",
+      "mediaType": "image/jpeg",
+      "source": "Claude Design screenshots::card-motion.png / Drive 1G5nd3LO3-r3bUXIq_cGzD6BB01TcwZDG",
+      "provenanceStatus": "supporting-reference",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Motion mechanism reference; not positive canon"
+    },
+    {
+      "id": "claude-navigator-card",
+      "file": "claude-navigator-reference.jpg",
+      "category": "ui-interaction-reference",
+      "mediaType": "image/jpeg",
+      "source": "Claude Design screenshots::card-navigator.png / Drive 1fn8Vua9R2pDtDSJMW21iqIyfgWGW8Mpq",
+      "provenanceStatus": "supporting-reference",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Navigation interaction reference; not positive canon"
+    },
+    {
+      "id": "claude-product-library-card",
+      "file": "claude-product-library-reference.jpg",
+      "category": "ui-interaction-reference",
+      "mediaType": "image/jpeg",
+      "source": "Claude Design screenshots::card-product-library.png / Drive 1m4kD9qz_9h2aP1oogqAZfD8GRbU_65ph",
+      "provenanceStatus": "supporting-reference",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "Product-library reference; not positive canon"
+    }
+  ]
+}
+
