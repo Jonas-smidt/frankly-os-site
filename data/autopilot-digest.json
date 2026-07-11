@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-11T15:00:14+00:00",
+  "generated": "2026-07-11T15:50:22+00:00",
   "day": "2026-07-11",
   "status": "unhealthy-did-not-act",
-  "healthLine": "[self-check] 2026-07-11 17:00 — FAIL — report: os-visualization/reports/self-check-2026-07-11.md",
+  "healthLine": "[self-check] 2026-07-11 17:50 — FAIL — report: os-visualization/reports/self-check-2026-07-11.md",
   "didAutonomously": [],
   "readyToAutoRun": [
     {
@@ -135,6 +135,13 @@
       "classified": "approval-required",
       "gate": "approval-required",
       "why": "Topforslag fra AI-Rundbordet (session 20260711-163114-hvad-gr-et-rundbords-referat-beslutnings, emne: \"Hvad gør et rundbords-referat beslutningsklart for Jonas?\") — din beslutning; intet er udført."
+    },
+    {
+      "id": "DEC-20260711-brand-reference-assets",
+      "title": "Skal design-reference-assets (video/billeder) med i det offentlige Lab-bundle?",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "frankly-brand-reference.html peger paa assets/design-reference/*.mp4/.jpg som IKKE er i deploy-allowlisten -> localRefs-fejl (maskinen roed). To muligheder: (A) allowliste de tunge assets, saa siden virker offentligt (de bliver public ved naeste deploy) — eller (B) fjern/erstat de tunge referencer i brand-reference-siden, saa den ikke peger paa udeladte filer. Skriv gerne din begrundelse som kommentar — den foelger med som instruks."
     }
   ],
   "recentAnswers": [
