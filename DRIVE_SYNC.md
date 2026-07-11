@@ -4,6 +4,13 @@ Frankly OS operating work is local-only by default. Website uploads are a separa
 
 ## Current Snapshot
 
+- Pending Frankly Lab 4.0 consolidation:
+  - Date: 2026-07-10
+  - Scope: canonical tool shelf, public-only Lab fallback, full local cockpit shelf, honest Registry retirement, upload-boundary enforcement and browser QA evidence.
+  - Status: completed locally; pending explicit Drive connector-write approval.
+  - Manifest: `os-visualization/system-intelligence/frankly-lab-40-consolidation-drive-pending-2026-07-10.json`
+  - Report: `os-visualization/reports/frankly-lab-40-consolidation-2026-07-10.md`
+
 - Pending after latest local build:
   - Date: 2026-07-06
   - Scope: Claude Run-to-Packet Launcher v0.1, Claude Task Packet Builder v0.1, Studio v0.1, Observatory v0.1, Flight Recorder v0.1, registry feed, Drive-Ready Bundle Dry Run v0.1, Mission Simulator v0.1, Launch Packet v0.1, Mission Theatre v0.1, Future Mode v0.1, navigation updates, site data feed refresh, browser QA evidence and a fresh site snapshot.
