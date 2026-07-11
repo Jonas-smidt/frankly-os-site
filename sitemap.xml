@@ -42,6 +42,18 @@
   <url>
     <loc>https://lab.franklydesign.dk/journal/frankly-blog-10-boern.html</loc>
   </url>
+  <url>
+    <loc>https://lab.franklydesign.dk/journal/tema-frankly-go.html</loc>
+  </url>
+  <url>
+    <loc>https://lab.franklydesign.dk/journal/tema-frankly-home.html</loc>
+  </url>
+  <url>
+    <loc>https://lab.franklydesign.dk/journal/tema-frankly-care.html</loc>
+  </url>
+  <url>
+    <loc>https://lab.franklydesign.dk/journal/tema-hverdagens-psykologi.html</loc>
+  </url>
   <!-- Lab registry and Start here stay noindex/robots-blocked and are intentionally excluded. -->
   <!-- Internal operating pages stay local and are intentionally excluded. -->
 </urlset>

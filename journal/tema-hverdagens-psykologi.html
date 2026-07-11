@@ -3,9 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Frankly Blog</title>
-<meta name="description" content="Rolige historier fra hverdagen — om at bruge sine ting, mindre mental load, og de øjeblikke hvor noget går i stykker.">
-<meta property="og:title" content="Frankly Blog">
+<title>Hverdagens psykologi — Frankly Blog</title>
+<meta name="description" content="Zeigarnik-effekten, tabsaversion og det halve sekund, hånden glipper. Hvad forskningen siger om de små reaktioner, vi alle genkender fra hverdagen.">
+<meta property="og:title" content="Hverdagens psykologi — Frankly Blog">
+<meta property="og:description" content="Zeigarnik-effekten, tabsaversion og det halve sekund, hånden glipper. Hvad forskningen siger om de små reaktioner, vi alle genkender fra hverdagen.">
+<meta property="og:url" content="https://lab.franklydesign.dk/journal/tema-hverdagens-psykologi.html">
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#F5F4F1">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -68,6 +70,7 @@ a{color:var(--bordeaux)}
 @keyframes fadeIn{from{opacity:0}to{opacity:1}}
 @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}.card:hover{transform:none}.card:hover .card__media img{transform:none}}
 </style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"CollectionPage","name":"Hverdagens psykologi — Frankly Blog","description":"Zeigarnik-effekten, tabsaversion og det halve sekund, hånden glipper. Hvad forskningen siger om de små reaktioner, vi alle genkender fra hverdagen.","url":"https://lab.franklydesign.dk/journal/tema-hverdagens-psykologi.html","inLanguage":"da","isPartOf":{"@type":"Blog","name":"Frankly Blog","url":"https://lab.franklydesign.dk/journal/frankly-blog-index.html"},"mainEntity":{"@type":"ItemList","itemListElement":[{"@type":"ListItem","position":1,"url":"https://lab.franklydesign.dk/journal/frankly-blog-03-mental-load-cd.html","name":"En ting mindre at tænke på."},{"@type":"ListItem","position":2,"url":"https://lab.franklydesign.dk/journal/frankly-blog-11-glippet.html","name":"Det halve sekund, hånden glipper."},{"@type":"ListItem","position":3,"url":"https://lab.franklydesign.dk/journal/frankly-blog-12-revnen.html","name":"Derfor gør revnen mere ondt end den burde."}]},"breadcrumb":{"@type":"BreadcrumbList","itemListElement":[{"@type":"ListItem","position":1,"name":"Frankly Blog","item":"https://lab.franklydesign.dk/journal/frankly-blog-index.html"},{"@type":"ListItem","position":2,"name":"Hverdagens psykologi"}]}}</script>
 </head>
 <body>
 
@@ -98,38 +101,12 @@ a{color:var(--bordeaux)}
   <main>
     <section class="hero">
       <p class="hero__kicker">Frankly Blog</p>
-      <h1>Rolige historier fra hverdagen.</h1>
-      <p>Om at bruge sine ting, mindre mental load, den rolige del af et køb — og de tirsdage, hvor noget går i stykker.</p>
+      <h1>Hvorfor vi reagerer, som vi gør.</h1>
+      <p>Nogle reaktioner er så velkendte, at man glemmer at spørge hvorfor. Her samler vi de historier, der går til forskningen — Zeigarnik-effekten, attention residue, tabsaversion — og lader den forklare de små, genkendelige øjeblikke. Ikke fordi forklaringen ændrer noget, men fordi den er interessant.</p>
+      <a class="card__tag" href="frankly-blog-index.html" style="text-decoration:none;margin-top:clamp(16px,2.4vw,24px)">Tilbage til alle indlæg</a>
     </section>
 
-    <nav class="page-themes" aria-label="Temaer" style="display:flex;gap:10px;flex-wrap:wrap;margin:clamp(20px,3vw,32px) 0 0">
-      <a class="card__tag" href="tema-frankly-go.html" style="text-decoration:none">Frankly Go</a>
-      <a class="card__tag" href="tema-frankly-home.html" style="text-decoration:none">Frankly Home</a>
-      <a class="card__tag" href="tema-frankly-care.html" style="text-decoration:none">Frankly Care</a>
-      <a class="card__tag" href="tema-hverdagens-psykologi.html" style="text-decoration:none">Hverdagens psykologi</a>
-    </nav>
-
     <nav class="grid" aria-label="Blogindlæg">
-      <a class="card" href="frankly-blog-01-brug-det.html" target="_blank" rel="noopener">
-        <div class="card__media"><img src="images/blog-01-hero.jpg" alt="Kvinde danser barfodet i sit køkken med høretelefoner og en kop kaffe." loading="lazy"></div>
-        <div class="card__body">
-          <span class="card__tag">Playful</span>
-          <h2>Du købte det ikke for at passe på det.</h2>
-          <p>Et opgør med forsigtig-mode — tingene, du ejer på halv kraft, og kontakten du kan slå fra.</p>
-          <span class="card__meta">3 min · interaktiv</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-02-checkout.html" target="_blank" rel="noopener">
-        <div class="card__media"><img src="images/blog-02-hero.jpg" alt="Mand sidder afslappet ved køkkenbordet efter et køb, en ny æske på bordet." loading="lazy"></div>
-        <div class="card__body">
-          <span class="card__tag">Confident</span>
-          <h2>Den rolige del af checkout.</h2>
-          <p>Købsøjeblikket fortjener bedre end ti siders vilkår. Tilføj. Færdig. Dækket.</p>
-          <span class="card__meta">3 min · checkout-demo</span>
-        </div>
-      </a>
-
       <a class="card" href="frankly-blog-03-mental-load-cd.html" target="_blank" rel="noopener">
         <div class="card__media"><img src="images/mental-load-hero.jpg" alt="Kvinde sidder afslappet i sofaen med en kop kaffe, telefonen ligger med skærmen nedad." loading="lazy"></div>
         <div class="card__body">
@@ -137,76 +114,6 @@ a{color:var(--bordeaux)}
           <h2>En ting mindre at tænke på.</h2>
           <p>Den usynlige huskeliste i baghovedet — og hvad forskningen siger om at gøre den kortere.</p>
           <span class="card__meta">7 min · interaktiv</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-04-tirsdag.html" target="_blank" rel="noopener">
-        <div class="card__media"><img src="images/blog-04-hero.jpg" alt="Kvinde samler roligt sin telefon op fra gulvet, helt uberørt." loading="lazy"></div>
-        <div class="card__body">
-          <span class="card__tag">Calm</span>
-          <h2>Ting går i stykker. Og det er helt ok.</h2>
-          <p>Det er ikke en katastrofe. Det er en tirsdag. Tre ting, du skal vide — i den rækkefølge.</p>
-          <span class="card__meta">3 min · 3-trins guide</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-05-cyklen.html" target="_blank" rel="noopener">
-        <div class="card__media"><img src="images/blog-05-hero.jpg" alt="Kvinde cykler frit gennem en grøn københavnsk gade med blomster i kurven." loading="lazy"></div>
-        <div class="card__body">
-          <span class="card__tag">Frankly Go™</span>
-          <h2>Cyklen er til at cykle på.</h2>
-          <p>Den gode cykel, der helst skal stå indenfor — og friheden til bare at tage den med.</p>
-          <span class="card__meta">3 min · interaktiv</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-06-hjem.html" target="_blank" rel="noopener">
-        <div class="card__media"><img src="images/blog-06-hero.jpg" alt="Kvinde ligger afslappet i sin lyse sofa med en kop og fødderne oppe, griner." loading="lazy"></div>
-        <div class="card__body">
-          <span class="card__tag">Frankly Home™</span>
-          <h2>Dit hjem er ikke et museum.</h2>
-          <p>Sofaen ingen tør sidde i, rummet der gemmes til gæster — og lov til at bo i det hele.</p>
-          <span class="card__meta">3 min · interaktiv</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-07-tag-det-med.html" target="_blank" rel="noopener">
-        <div class="card__media" style="background:linear-gradient(135deg,#F5F4F1,#FFD3E3)"><img src="images/blog-07-hero.jpg" alt="Ung kvinde på vej ud ad døren med en pakket taske og et kamera, klar til at tage af sted." loading="lazy" onerror="this.style.display='none'"></div>
-        <div class="card__body">
-          <span class="card__tag">Frankly Go™</span>
-          <h2>Tag det med.</h2>
-          <p>Det gode grej, der bliver hjemme — og friheden til bare at tage det med ud i verden.</p>
-          <span class="card__meta">6 min · interaktiv</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-08-holder.html" target="_blank" rel="noopener">
-        <div class="card__media" style="background:linear-gradient(135deg,#F5F4F1,#FFD3E3)"><img src="images/blog-08-hero.jpg" alt="En velbrugt lædertaske og en telefon med et lille hak på et bord i varmt lys." loading="lazy" onerror="this.style.display='none'"></div>
-        <div class="card__body">
-          <span class="card__tag">Frankly Care™</span>
-          <h2>Det er lavet til at holde.</h2>
-          <p>Den første ridse føles som en katastrofe. Det er den ikke — reparér frem for at skifte ud.</p>
-          <span class="card__meta">6 min · interaktiv</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-09-ny.html" target="_blank" rel="noopener">
-        <div class="card__media" style="background:linear-gradient(135deg,#F5F4F1,#FFD3E3)"><img src="images/blog-09-hero.jpg" alt="En ny telefon i hånden ved et lyst vindue, taget i brug fra dag ét." loading="lazy" onerror="this.style.display='none'"></div>
-        <div class="card__body">
-          <span class="card__tag">Frankly Care™</span>
-          <h2>De første par uger.</h2>
-          <p>Den nye ting, man passer lidt for meget på. Om at tage etuiet af og bruge den fra dag ét.</p>
-          <span class="card__meta">6 min · interaktiv</span>
-        </div>
-      </a>
-
-      <a class="card" href="frankly-blog-10-boern.html" target="_blank" rel="noopener">
-        <div class="card__media" style="background:linear-gradient(135deg,#F5F4F1,#FFD3E3)"><img src="images/blog-10-hero.jpg" alt="En familie omkring køkkenbordet i aftenlys, midt i et almindeligt måltid." loading="lazy" onerror="this.style.display='none'"></div>
-        <div class="card__body">
-          <span class="card__tag">Frankly Home™</span>
-          <h2>Lad dem bruge de gode ting.</h2>
-          <p>Det pæne service på øverste hylde — og lov til at bo i hele huset, også med børn.</p>
-          <span class="card__meta">6 min · interaktiv</span>
         </div>
       </a>
 
