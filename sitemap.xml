@@ -10,6 +10,9 @@
     <loc>https://lab.franklydesign.dk/frankly-daekningsoverblik.html</loc>
   </url>
   <url>
+    <loc>https://lab.franklydesign.dk/om-frankly-lab.html</loc>
+  </url>
+  <url>
     <loc>https://lab.franklydesign.dk/journal/frankly-blog-index.html</loc>
   </url>
   <url>
@@ -43,6 +46,12 @@
     <loc>https://lab.franklydesign.dk/journal/frankly-blog-10-boern.html</loc>
   </url>
   <url>
+    <loc>https://lab.franklydesign.dk/journal/frankly-blog-11-glippet.html</loc>
+  </url>
+  <url>
+    <loc>https://lab.franklydesign.dk/journal/frankly-blog-12-revnen.html</loc>
+  </url>
+  <url>
     <loc>https://lab.franklydesign.dk/journal/tema-frankly-go.html</loc>
   </url>
   <url>
@@ -53,6 +62,9 @@
   </url>
   <url>
     <loc>https://lab.franklydesign.dk/journal/tema-hverdagens-psykologi.html</loc>
+  </url>
+  <url>
+    <loc>https://lab.franklydesign.dk/journal/tema-mental-load.html</loc>
   </url>
   <!-- Lab registry and Start here stay noindex/robots-blocked and are intentionally excluded. -->
   <!-- Internal operating pages stay local and are intentionally excluded. -->

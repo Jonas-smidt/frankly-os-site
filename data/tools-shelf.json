@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "updated": "2026-07-10",
+  "updated": "2026-07-11",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "description": "Canonical Frankly Lab 4.0 shelf inventory. Consumers filter by lane and retired state; generated site copies are never edited by hand.",
   "tools": [
@@ -254,6 +254,27 @@
       "actionLabelEn": "Open Coverage overview",
       "mark": "CO",
       "art": "coverage",
+      "retired": false
+    },
+    {
+      "id": "om-frankly-lab",
+      "href": "om-frankly-lab.html",
+      "labelEn": "About Frankly Lab",
+      "labelDa": "Om Frankly Lab",
+      "descriptionEn": "What the Lab is, shelf by shelf, and where the boundary sits.",
+      "descDa": "Hvad Lab'et er, hylde for hylde — og hvor grænsen går.",
+      "category": "Brand",
+      "shelf": "pages",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open About Frankly Lab",
+      "mark": "OM",
+      "art": "about",
       "retired": false
     },
     {
@@ -552,11 +573,11 @@
     }
   ],
   "counts": {
-    "total": 26,
-    "active": 23,
-    "publicLab": 20,
+    "total": 27,
+    "active": 24,
+    "publicLab": 21,
     "localOs": 3,
     "retired": 3
   },
-  "syncedAt": "2026-07-10T21:48:24+00:00"
+  "syncedAt": "2026-07-11T12:33:44+00:00"
 }

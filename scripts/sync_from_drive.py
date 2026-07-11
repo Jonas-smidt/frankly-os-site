@@ -38,6 +38,7 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-quiz.html"),
     pathlib.Path("onboarding.html"),
     pathlib.Path("frankly-daekningsoverblik.html"),
+    pathlib.Path("om-frankly-lab.html"),
     pathlib.Path("frankly-instore-onepager.html"),
     pathlib.Path("frankly-instore-salgsguide.html"),
     pathlib.Path("glass-lab.html"),
@@ -47,6 +48,9 @@ UPLOADABLE_HTML = (
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
     pathlib.Path("sitemap.xml"),
+    # 404.html ships UNGATED on purpose (a code-gated error page is useless);
+    # it is noindex and deliberately absent from sitemap.xml per gate posture.
+    pathlib.Path("404.html"),
     pathlib.Path("frankly-lab-brand.css"),
     pathlib.Path("frankly-surfaces.css"),
     pathlib.Path("frankly-ribbon-lab.css"),

@@ -27,5 +27,6 @@ Disallow: /glass-lab.html
 Disallow: /glass-surface.html
 Disallow: /frankly-ribbon-lab.html
 Disallow: /liquid-glass-hover.html
+Disallow: /frankly-linkedin-checker.html
 
 Sitemap: https://lab.franklydesign.dk/sitemap.xml
