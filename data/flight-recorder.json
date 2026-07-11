@@ -4,13 +4,48 @@
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 75,
-    "machineFocusedRuns": 75,
+    "runs": 77,
+    "machineFocusedRuns": 77,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 67
+    "validatedRuns": 69
   },
   "runs": [
+    {
+      "runId": "20260711-lab-tier1-build-baseline",
+      "date": "2026-07-11",
+      "name": "Byg Tier 1 (om-frankly-lab + tema-mental-l",
+      "nameDa": "Byg Tier 1 (om-frankly-lab + tema-mental-l",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Byg Tier 1 (om-frankly-lab + tema-mental-load-hub) + step 0 teknisk baseline (sitemap/canonical/JSON-LD/404/robots/a11y) safe-local",
+      "summaryDa": "Byg Tier 1 (om-frankly-lab + tema-mental-load-hub) + step 0 teknisk baseline (sitemap/canonical/JSON-LD/404/robots/a11y) safe-local",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "om frankly lab",
+        "tema mental load",
+        "404"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas reviewer de to nye sider lokalt og beslutter deploy; separat oprydning af pre-eksisterende working-tree-støj (css-design-udvidelse, journal-draf.",
+      "lessonDa": "Jonas reviewer de to nye sider lokalt og beslutter deploy; separat oprydning af pre-eksisterende working-tree-støj (css-design-udvidelse, journal-draf.",
+      "fanOut": []
+    },
     {
       "runId": "20260711-journal-tema-hubsider",
       "date": "2026-07-11",
@@ -2555,6 +2590,41 @@
       ],
       "lesson": "A good machine must remember what not to work on.",
       "lessonDa": "En god maskine skal huske, hvad den ikke skal arbejde på.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-site-worktree-cleanup",
+      "date": "2026-07-11",
+      "name": "Klassificér og checkpoint pre-eksisterende",
+      "nameDa": "Klassificér og checkpoint pre-eksisterende",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "8 logiske commits (896f9d0..074b6be): design-spec v1 + brand.css-komponentlag og Lab 4.0-konsolidering (run 20260710, QA bestået); brand-værktøjs-reskins; Design Reference v0.1 + repareret Switzer-Regular (checkpoint, visuel QA udestår); instore Reference Desk (checkpoint, parked); 12 journal-v2-udkast + gamle v1 udgår; friske data-feeds; publish-dry-run/ gitignoret. Slettet: 12 journal/_preview-*.html (leak-risiko: sync kopierer journal/ verbatim offentligt) + journal-drafts/.bak-preflow/ (backups af forkastet SVG-retning). Uafklaret til Jonas: frankly-ribbon-lab.html/css/js (~1.4k linjers udokumenteret feature-iteration, intet run-kort) efterladt ukommitteret.",
+      "summaryDa": "8 logiske commits (896f9d0..074b6be): design-spec v1 + brand.css-komponentlag og Lab 4.0-konsolidering (run 20260710, QA bestået); brand-værktøjs-reskins; Design Reference v0.1 + repareret Switzer-Regular (checkpoint, visuel QA udestår); instore Reference Desk (checkpoint, parked); 12 journal-v2-udkast + gamle v1 udgår; friske data-feeds; publish-dry-run/ gitignoret. Slettet: 12 journal/_preview-*.html (leak-risiko: sync kopierer journal/ verbatim offentligt) + journal-drafts/.bak-preflow/ (backups af forkastet SVG-retning). Uafklaret til Jonas: frankly-ribbon-lab.html/css/js (~1.4k linjers udokumenteret feature-iteration, intet run-kort) efterladt ukommitteret.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "* (8 commits 896f9d0..074b6be, se ",
+        "run registry",
+        "autopilot backlog"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas beslutter ribbon-lab-iterationen (backlog-beslutning ribbon-lab-uncommitted-work); Design Reference + instore-guide afventer fortsat rendered br.",
+      "lessonDa": "Jonas beslutter ribbon-lab-iterationen (backlog-beslutning ribbon-lab-uncommitted-work); Design Reference + instore-guide afventer fortsat rendered br.",
       "fanOut": []
     }
   ]
