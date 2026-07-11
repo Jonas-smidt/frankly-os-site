@@ -1,16 +1,486 @@
 {
-  "generated": "2026-07-10",
+  "generated": "2026-07-11",
   "status": "registry-fed-flight-recorder-v0.1",
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 61,
-    "machineFocusedRuns": 61,
+    "runs": 75,
+    "machineFocusedRuns": 75,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 54
+    "validatedRuns": 67
   },
   "runs": [
+    {
+      "runId": "20260711-journal-tema-hubsider",
+      "date": "2026-07-11",
+      "name": "4 tema-hubsider (Go/Home/Care/Hverdagens p",
+      "nameDa": "4 tema-hubsider (Go/Home/Care/Hverdagens p",
+      "route": "blog-seo-content-engine-route",
+      "routeDa": "blog-seo-content-engine-route",
+      "status": "blocked-gated",
+      "statusDa": "Blokeret (gated)",
+      "summary": "4 tema-hubsider (Go/Home/Care/Hverdagens psykologi) oven på Journal + tema-nav i indeks + sitemap-entries",
+      "summaryDa": "4 tema-hubsider (Go/Home/Care/Hverdagens psykologi) oven på Journal + tema-nav i indeks + sitemap-entries",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "none",
+      "artifacts": [
+        "tema frankly go",
+        "tema frankly home",
+        "tema frankly care"
+      ],
+      "gates": [
+        "no public deploy",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas beslutter deploy-tema-hubsider i cockpittet; ved go: git push + gh workflow run deploy.",
+      "lessonDa": "Jonas beslutter deploy-tema-hubsider i cockpittet; ved go: git push + gh workflow run deploy.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-lab-undersider-ideation",
+      "date": "2026-07-11",
+      "name": "Fuld-crew ideation: prioriteret liste af u",
+      "nameDa": "Fuld-crew ideation: prioriteret liste af u",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Fuld-crew ideation: prioriteret liste af undersider til Frankly Lab (formål, målgruppe, indhold, indsats)",
+      "summaryDa": "Fuld-crew ideation: prioriteret liste af undersider til Frankly Lab (formål, målgruppe, indhold, indsats)",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "lab undersider ideation 2026 07 11",
+        "website publishing workflow route"
+      ],
+      "gates": [
+        "no public deploy",
+        "claims locked",
+        "read-only-ideation"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Claims / produkt / juridisk",
+        "read-only-ideation"
+      ],
+      "lesson": "Jonas vælger: (A) byg Tier 1 (about-side + mental-load-hub) + step 0 teknisk baseline, (B) besvar beslutnings-packet (OS-åbenhed, sprogvalg, changelog.",
+      "lessonDa": "Jonas vælger: (A) byg Tier 1 (about-side + mental-load-hub) + step 0 teknisk baseline, (B) besvar beslutnings-packet (OS-åbenhed, sprogvalg, changelog.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-frankly-helper-reference-desk-local",
+      "date": "2026-07-11",
+      "name": "Redesign Frankly-hjælperen som en rolig Re",
+      "nameDa": "Redesign Frankly-hjælperen som en rolig Re",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "parked-local",
+      "statusDa": "Parkeret (lokalt)",
+      "summary": "Præsentationslaget er komprimeret til en Reference Desk med conversation-owned scroll, 2x2 prompts og scanbare faktarækker. Seks all_yes- og seks all_no-fragmenter vises som rækker, mens samlet textContent forbliver byteidentisk med de originale newline-fragmenter; ledger og providerbrug er urørt.",
+      "summaryDa": "Præsentationslaget er komprimeret til en Reference Desk med conversation-owned scroll, 2x2 prompts og scanbare faktarækker. Seks all_yes- og seks all_no-fragmenter vises som rækker, mens samlet textContent forbliver byteidentisk med de originale newline-fragmenter; ledger og providerbrug er urørt.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore salgsguide",
+        "guide assistant exact claims test.",
+        "qa report"
+      ],
+      "gates": [
+        "local-only",
+        "presentation-only; exact claim str",
+        "live ledger untouched at 2/25 used"
+      ],
+      "gatesDa": [
+        "Kun lokal",
+        "Claims / produkt / juridisk",
+        "live ledger untouched at 2/25 used; 0 provider calls"
+      ],
+      "lesson": "Gentag desktop/390/320/reduced-motion-browsermatrixen med fake/DOM-only states, når browserbackenden er tilgængelig, og kør fuld guide:check i et milj.",
+      "lessonDa": "Gentag desktop/390/320/reduced-motion-browsermatrixen med fake/DOM-only states, når browserbackenden er tilgængelig, og kør fuld guide:check i et milj.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-frankly-guide-price-coverage-local",
+      "date": "2026-07-11",
+      "name": "Implementér og afgræns den navngivne lokal",
+      "nameDa": "Implementér og afgræns den navngivne lokal",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "parked-local",
+      "statusDa": "Parkeret (lokalt)",
+      "summary": "Den lokale exact_claims-gren router pris før generiske forsikringsord, lader modellen vælge én godkendt evidensenhed og renderer eksakte guidefragmenter på serveren. Lokal runtime gav pris som not_covered fra tal, blandet pris/dækning som deterministisk split og betaling som blocked uden providerbrug; mocket bred dækning valgte korrekt eksakt enhed.",
+      "summaryDa": "Den lokale exact_claims-gren router pris før generiske forsikringsord, lader modellen vælge én godkendt evidensenhed og renderer eksakte guidefragmenter på serveren. Lokal runtime gav pris som not_covered fra tal, blandet pris/dækning som deterministisk split og betaling som blocked uden providerbrug; mocket bred dækning valgte korrekt eksakt enhed.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore helper price cover",
+        "frankly instore salgsguide",
+        "frankly instore safe context"
+      ],
+      "gates": [
+        "local-only",
+        "claims locked",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Kun lokal",
+        "Claims / produkt / juridisk",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Behold løsningen lokal og parked.",
+      "lessonDa": "Behold løsningen lokal og parked.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-r4-4-video-analytiker-saede",
+      "date": "2026-07-11",
+      "name": "Nyt crew-saede R4.4 Video-analytiker (unde",
+      "nameDa": "Nyt crew-saede R4.4 Video-analytiker (unde",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Nyt crew-saede R4.4 Video-analytiker (under R4) via agent-smeden: video-analyst-metoden indbygget, kontrakt v0-14 -> v0-15",
+      "summaryDa": "Nyt crew-saede R4.4 Video-analytiker (under R4) via agent-smeden: video-analyst-metoden indbygget, kontrakt v0-14 -> v0-15",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly crew contract v0 15",
+        "agents filer + digest (begge dirs)"
+      ],
+      "gates": [
+        "kontrakt-edit versioneret via agen",
+        "no public deploy"
+      ],
+      "gatesDa": [
+        "kontrakt-edit versioneret via agent-smeden (v0-14 uroert)",
+        "Offentlig deploy"
+      ],
+      "lesson": "Naeste video-link dispatches direkte til r4-4-video-analytiker som live-test af saedet.",
+      "lessonDa": "Naeste video-link dispatches direkte til r4-4-video-analytiker som live-test af saedet.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-frankly-design-reference-stabilization-v01",
+      "date": "2026-07-11",
+      "name": "Stabilise the local Frankly Design Referen",
+      "nameDa": "Stabilise the local Frankly Design Referen",
+      "route": "os-visualization/routes/website-publishing-workflow-route.md",
+      "routeDa": "os-visualization/routes/website-publishing-workflow-route.md",
+      "status": "blocked-gated",
+      "statusDa": "Blokeret (gated)",
+      "summary": "Repaired the eight-byte-truncated local Switzer Regular from the matching already-local font set and completed static QA; actual browser selection remained unavailable for both file and localhost, so no render pass or promotion was claimed.",
+      "summaryDa": "Repaired the eight-byte-truncated local Switzer Regular from the matching already-local font set and completed static QA; actual browser selection remained unavailable for both file and localhost, so no render pass or promotion was claimed.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "none",
+      "artifacts": [
+        "Switzer Regular.otf",
+        "README",
+        "frankly design reference stabiliza"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "When an in-app browser instance is available, run only 1440/1024/390 renders, font/console/interaction/accessibility checks and the independent termin.",
+      "lessonDa": "When an in-app browser instance is available, run only 1440/1024/390 renders, font/console/interaction/accessibility checks and the independent termin.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-cockpit-agent-overblik",
+      "date": "2026-07-11",
+      "name": "Agent-overblik i cockpittet: klik på en ag",
+      "nameDa": "Agent-overblik i cockpittet: klik på en ag",
+      "route": "system-visualization",
+      "routeDa": "System-visualisering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Agent-overblik i cockpittet: klik på en agent i agent-træet giver detalje-skuffe med metode-fil, version + ændringshistorik og brugstal; agentsUsed-logging + agent-stats aggregator som datagrundlag",
+      "summaryDa": "Agent-overblik i cockpittet: klik på en agent i agent-træet giver detalje-skuffe med metode-fil, version + ændringshistorik og brugstal; agentsUsed-logging + agent-stats aggregator som datagrundlag",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "agent stats.py",
+        "agent stats",
+        "record frankly run.py"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "no-paid-api"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Synk site-data-feeds (flight recorder 67->69) og genstart-vanen: cockpit-serveren skal genstartes efter server-kodeændringer; fremtidige crew-runs log.",
+      "lessonDa": "Synk site-data-feeds (flight recorder 67->69) og genstart-vanen: cockpit-serveren skal genstartes efter server-kodeændringer; fremtidige crew-runs log.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-ai-rundbord-v1",
+      "date": "2026-07-11",
+      "name": "AI-Rundbordet v1: multi-model samtale (Cla",
+      "nameDa": "AI-Rundbordet v1: multi-model samtale (Cla",
+      "route": "mission-runtime-route",
+      "routeDa": "Missions-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "AI-Rundbordet v1: multi-model samtale (Claude+OpenAI, Gemini-sæde klar) med transskript, backlog-decisions og cockpit-panel",
+      "summaryDa": "AI-Rundbordet v1: multi-model samtale (Claude+OpenAI, Gemini-sæde klar) med transskript, backlog-decisions og cockpit-panel",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "roundtable.py",
+        "cockpit server.py",
+        "frankly os cockpit"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-paid-api (begge saeder abonneme",
+        "backlog-decisions kun auto:false"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Betalt API-forbrug",
+        "backlog-decisions kun auto:false"
+      ],
+      "lesson": "Jonas beslutter i cockpittet: 6 rundbords-forslag + Gemini CLI-installation (gratis, 3.",
+      "lessonDa": "Jonas beslutter i cockpittet: 6 rundbords-forslag + Gemini CLI-installation (gratis, 3.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-ruflo-a1-a5-udfoert",
+      "date": "2026-07-11",
+      "name": "A1 script-foer-model-regel i kontrakt v0-1",
+      "nameDa": "A1 script-foer-model-regel i kontrakt v0-1",
+      "route": "mission-runtime-route",
+      "routeDa": "Missions-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "A1 script-foer-model-regel i kontrakt v0-14 + A5 effort:low paa 7 haiku-seats i generatoren",
+      "summaryDa": "A1 script-foer-model-regel i kontrakt v0-14 + A5 effort:low paa 7 haiku-seats i generatoren",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly crew contract v0 14",
+        "generate crew artifacts.py",
+        "agents filer + digest (begge dirs)"
+      ],
+      "gates": [
+        "kontrakt-edit versioneret (v0-13 u",
+        "no public deploy"
+      ],
+      "gatesDa": [
+        "kontrakt-edit versioneret (v0-13 uroert)",
+        "Offentlig deploy"
+      ],
+      "lesson": "A2: pr.",
+      "lessonDa": "A2: pr.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-frankly-guide-ai-quality-pilot",
+      "date": "2026-07-11",
+      "name": "Kalibrér Frankly Instore-guideassistentens",
+      "nameDa": "Kalibrér Frankly Instore-guideassistentens",
+      "route": "partner-activation",
+      "routeDa": "Partner-aktivering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Den afgrænsede AI-kvalitetspilot er lukket ved præcis 8/8 godkendte kald: fase 1 bevarede 4/4 metadata-pas, fase 2 bestod farve og eget tempo, den oprindelige login-case fejlede på en ekstra faktuel klausul, og den diagnosticerede login-recovery bestod 11/11 maskinchecks og 10/10 manuel review. quiz_repeat blev ikke kørt.",
+      "summaryDa": "Den afgrænsede AI-kvalitetspilot er lukket ved præcis 8/8 godkendte kald: fase 1 bevarede 4/4 metadata-pas, fase 2 bestod farve og eget tempo, den oprindelige login-case fejlede på en ekstra faktuel klausul, og den diagnosticerede login-recovery bestod 11/11 maskinchecks og 10/10 manuel review. quiz_repeat blev ikke kørt.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "lock-only",
+      "artifacts": [
+        "frankly instore guide assistant ai",
+        "guide assistant core.js",
+        "guide assistant server.js"
+      ],
+      "gates": [
+        "local-only",
+        "no paid API",
+        "runtime default FRANKLY_GUIDE_MAX_"
+      ],
+      "gatesDa": [
+        "Kun lokal",
+        "Betalt API-forbrug",
+        "runtime default FRANKLY_GUIDE_MAX_API_CALLS=0; no reset on restart"
+      ],
+      "lesson": "Behold serverens standardkaldeloft på 0.",
+      "lessonDa": "Behold serverens standardkaldeloft på 0.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-frankly-reel-skabelon",
+      "date": "2026-07-11",
+      "name": "Dagens 4 video-analysers formatgreb samlet",
+      "nameDa": "Dagens 4 video-analysers formatgreb samlet",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Dagens 4 video-analysers formatgreb samlet i genbrugelig Frankly reel-skabelon (8 greb + beat-liste + 2 ikke-claims-storyboards)",
+      "summaryDa": "Dagens 4 video-analysers formatgreb samlet i genbrugelig Frankly reel-skabelon (8 greb + beat-liste + 2 ikke-claims-storyboards)",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly reel skabelon v0 1",
+        "video production workflow route.md"
+      ],
+      "gates": [
+        "claims locked",
+        "no-publish (produktion/publicering"
+      ],
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "no-publish (produktion/publicering = separat gate)"
+      ],
+      "lesson": "Ved naeste reel-behov: R4.",
+      "lessonDa": "Ved naeste reel-behov: R4.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-ruflo-token-routing-studie",
+      "date": "2026-07-11",
+      "name": "Read-only studie af Ruflos token-routing -",
+      "nameDa": "Read-only studie af Ruflos token-routing -",
+      "route": "capability-radar-route",
+      "routeDa": "capability-radar-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Read-only studie af Ruflos token-routing -> 5 prioriterede forbedringer til crew'ens model-tiering",
+      "summaryDa": "Read-only studie af Ruflos token-routing -> 5 prioriterede forbedringer til crew'ens model-tiering",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "ruflo token routing study 2026 07 "
+      ],
+      "gates": [
+        "no-install (Ruflo kun laest)",
+        "no-paid-api (OpenRouter/proxy bevi"
+      ],
+      "gatesDa": [
+        "no-install (Ruflo kun laest)",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Jonas beslutter: godkend A1+A5 (script-foer-model + effort:low paa haiku-seats) som foerste bid.",
+      "lessonDa": "Jonas beslutter: godkend A1+A5 (script-foer-model + effort:low paa haiku-seats) som foerste bid.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-effekt-lab-kontrolpanel-pilot",
+      "date": "2026-07-11",
+      "name": "Toolcraft-moensteret bygget ind i Effekt-l",
+      "nameDa": "Toolcraft-moensteret bygget ind i Effekt-l",
+      "route": "brand-logo-visual-production-route",
+      "routeDa": "brand-logo-visual-production-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Toolcraft-moensteret bygget ind i Effekt-lab: genbrugeligt FranklyPanel (sliders/swatches/PNG-eksport) + 2 pilot-tools, dependency-frit",
+      "summaryDa": "Toolcraft-moensteret bygget ind i Effekt-lab: genbrugeligt FranklyPanel (sliders/swatches/PNG-eksport) + 2 pilot-tools, dependency-frit",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly panel.css + frankly panel.",
+        "calculating burst tool.html + spac",
+        "effects hub.html (2 vaerktoejs bad"
+      ],
+      "gates": [
+        "no-install (Toolcraft fravalgt, va",
+        "no public deploy"
+      ],
+      "gatesDa": [
+        "no-install (Toolcraft fravalgt, vanilla i stedet)",
+        "Offentlig deploy"
+      ],
+      "lesson": "Jonas proever pilot-tools i browseren; ved godkendelse rulles panelet ud paa flere effekter.",
+      "lessonDa": "Jonas proever pilot-tools i browseren; ved godkendelse rulles panelet ud paa flere effekter.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-intake-forcing-questions",
+      "date": "2026-07-11",
+      "name": "gstack forcing-questions oversat til Task ",
+      "nameDa": "gstack forcing-questions oversat til Task ",
+      "route": "mission-runtime-route",
+      "routeDa": "Missions-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "gstack forcing-questions oversat til Task Packet-intake-tjekliste + 1-linjes pointer i frankly-crew skill",
+      "summaryDa": "gstack forcing-questions oversat til Task Packet-intake-tjekliste + 1-linjes pointer i frankly-crew skill",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "task packet intake questions v0 1",
+        "SKILL.md (GitHub workspace, 1 linj"
+      ],
+      "gates": [
+        "no-install (gstack kun laest)",
+        "no-contract-edit"
+      ],
+      "gatesDa": [
+        "no-install (gstack kun laest)",
+        "no-contract-edit"
+      ],
+      "lesson": "Formidleren bruger tjeklisten live i naeste dispatch.",
+      "lessonDa": "Formidleren bruger tjeklisten live i naeste dispatch.",
+      "fanOut": []
+    },
     {
       "runId": "20260710-cockpit-tal-beslut-fold",
       "date": "2026-07-10",

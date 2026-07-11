@@ -1,30 +1,9 @@
 {
-  "generated": "2026-07-10T21:48:17+00:00",
-  "day": "2026-07-10",
-  "status": "healthy",
-  "healthLine": "[self-check] 2026-07-10 23:48 — PASS — report: os-visualization/reports/self-check-2026-07-10.md",
-  "didAutonomously": [
-    {
-      "job": "regenerate lessons memory (compounding)",
-      "ok": true
-    },
-    {
-      "job": "refresh handoff-derived state",
-      "ok": true
-    },
-    {
-      "job": "refresh site data feeds",
-      "ok": true
-    },
-    {
-      "job": "scan for roster gaps (reflective — proposes new agents)",
-      "ok": true
-    },
-    {
-      "job": "refresh crew artifacts (contract digest + agent files)",
-      "ok": true
-    }
-  ],
+  "generated": "2026-07-11T11:10:07+00:00",
+  "day": "2026-07-11",
+  "status": "unhealthy-did-not-act",
+  "healthLine": "[self-check] 2026-07-11 13:10 — FAIL — report: os-visualization/reports/self-check-2026-07-11.md",
+  "didAutonomously": [],
   "readyToAutoRun": [
     {
       "id": "blog-13",
@@ -45,30 +24,18 @@
       "id": "adapt-remotion-marketing-video-skill",
       "title": "Byg lokal Frankly-udgave af remotion-marketing-video-skill",
       "classified": "guarded-write"
-    }
-  ],
-  "waitingForJonas": [
-    {
-      "id": "drive-copy-drawio",
-      "title": "Kopiér systemdiagrammet til Drive",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Connector/Drive-skrivning — dit ja; så diagrammet ligger ved siden af din egen skitse."
     },
     {
-      "id": "cockpit-repo-boundary",
-      "title": "OS-cockpittet ligger som kildekode i det offentlige site-repo",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Boundary-hygiejne — siden serveres lokalt og behøver ikke ligge offentligt."
+      "id": "roundtable-20260711-122406-hvordan-bliver-onboarding-enklere-p3",
+      "title": "Progressiv panelåbning via kvitteringen",
+      "classified": "safe-local"
     },
     {
-      "id": "vaekst-godkendelse",
-      "title": "Skal nye specialister kræve dit ja før oprettelse?",
-      "classified": "approval-required",
-      "gate": "approval-required",
-      "why": "Politik-valg, kun dit — du har rejst spørgsmålet to gange uden at afgøre det."
+      "id": "roundtable-20260711-122701-qa-rgtest-nvn-en-styrke-ved-frankly-os-p1",
+      "title": "Bekræft gate-modellen som dokumenteret styrke",
+      "classified": "safe-local"
     }
   ],
+  "waitingForJonas": [],
   "note": "Fully local + reversible. Deploy/connector/paid/claims never auto-run — they are the only decisions here."
 }
