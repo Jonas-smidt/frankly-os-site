@@ -1,8 +1,8 @@
 {
-  "generated": "2026-07-11T16:58:09+00:00",
-  "day": "2026-07-11",
+  "generated": "2026-07-13T09:33:19+00:00",
+  "day": "2026-07-13",
   "status": "healthy",
-  "healthLine": "[self-check] 2026-07-11 18:58 — PASS — report: os-visualization/reports/self-check-2026-07-11.md",
+  "healthLine": "[self-check] 2026-07-13 11:33 — PASS — report: os-visualization/reports/self-check-2026-07-13.md",
   "didAutonomously": [
     {
       "job": "regenerate lessons memory (compounding)",
@@ -33,7 +33,7 @@
     },
     {
       "id": "cockpit-live-surfaces",
-      "title": "Make control-cockpit read the live feeds",
+      "title": "Make the unified cockpit read the live feeds",
       "classified": "guarded-write"
     },
     {
@@ -70,9 +70,29 @@
       "id": "ribbon-lab-uncommitted-work",
       "title": "Ribbon Lab: ~1.400 linjers ukommitteret feature-iteration — behold, committ eller kassér?",
       "classified": "guarded-write"
+    },
+    {
+      "id": "roundtable-20260713-105656-hvordan-kan-vi-forbedre-bruger-venlighed-p1",
+      "title": "Autonomistige per workflow",
+      "classified": "safe-local"
     }
   ],
-  "waitingForJonas": [],
+  "waitingForJonas": [
+    {
+      "id": "roundtable-20260713-105656-hvordan-kan-vi-forbedre-bruger-venlighed-p2",
+      "title": "Fald med værdighed-protokol",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "Topforslag fra AI-Rundbordet (session 20260713-105656-hvordan-kan-vi-forbedre-bruger-venlighed, emne: \"hvordan kan vi forbedre bruger venligheden og effektiviteten på frankly. er der noget i vores hvad tænker i om frankly lab 4.0 og hvad skal der til for det bliver en 5.0 som ikke er blevet indført mm\") — din beslutning; intet er udført."
+    },
+    {
+      "id": "roundtable-20260713-105656-hvordan-kan-vi-forbedre-bruger-venlighed-p3",
+      "title": "Udkast-drevet workflow med daglig kvittering",
+      "classified": "approval-required",
+      "gate": "approval-required",
+      "why": "Topforslag fra AI-Rundbordet (session 20260713-105656-hvordan-kan-vi-forbedre-bruger-venlighed, emne: \"hvordan kan vi forbedre bruger venligheden og effektiviteten på frankly. er der noget i vores hvad tænker i om frankly lab 4.0 og hvad skal der til for det bliver en 5.0 som ikke er blevet indført mm\") — din beslutning; intet er udført."
+    }
+  ],
   "recentAnswers": [
     {
       "id": "DEC-20260711-brand-reference-assets",

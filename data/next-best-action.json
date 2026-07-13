@@ -1,10 +1,10 @@
 {
-  "generated": "2026-07-11T14:58:36+00:00",
+  "generated": "2026-07-13T09:34:32+00:00",
   "source": "current-machine-handoff.md#next-best-action + machine-handoff-state.json:machineDerived",
   "activeBatch": "MCQ-011",
   "activeBatchDa": "MCQ-011 — Kørselsregister + lokal eval-harness",
-  "nextBestAction": "start from `frankly-os-site/studio.html`, `os-visualization/system-intelligence/studio-v0-1-2026-07-06.json`, `os-visualization/system-intelligence/claude-run-to-packet-launcher-v0-1-2026-07-06.json` and `os-visualization/system-intelligence/claude-task-packet-builder-v0-1-2026-07-06.json` before choosing tools; use Studio's run-to-packet launcher and packet builder for future code work and `frankly-os-site/control-cockpit.html` as the report-style operating overview",
-  "nextBestActionDa": "start fra `frankly-os-site/studio.html`, `os-visualization/system-intelligence/studio-v0-1-2026-07-06.json`, `os-visualization/system-intelligence/claude-run-to-packet-launcher-v0-1-2026-07-06.json` og `os-visualization/system-intelligence/claude-task-packet-builder-v0-1-2026-07-06.json` før du vælger værktøjer; brug Studios run-to-packet launcher og packet builder til fremtidigt kodearbejde og `frankly-os-site/control-cockpit.html` som det rapport-agtige driftsoverblik (OBS: kilden er stale — disse flader pensioneres af 4.0)",
+  "nextBestAction": "build through the `frankly-crew` skill with a Task Packet; use the unified cockpit as the operating overview (`python3 os-visualization/scripts/cockpit-server.py` -> http://127.0.0.1:8137/frankly-os-cockpit.html) and read relevant lessons first via `python3 os-visualization/scripts/build-lessons-index.py --query \"<topic>\"`",
+  "nextBestActionDa": "byg gennem `frankly-crew`-skillen med et Task Packet; brug det samlede cockpit som driftsoverblik (`python3 os-visualization/scripts/cockpit-server.py` -> http://127.0.0.1:8137/frankly-os-cockpit.html) og læs relevante læringer først via `python3 os-visualization/scripts/build-lessons-index.py --query \"<emne>\"`",
   "activeGates": [
     "no automatic thread creation without Jonas approval",
     "no connector writes without approval",
@@ -34,9 +34,9 @@
     "Thread automation / parallel chat spawning"
   ],
   "runRegistry": {
-    "runs": 77,
-    "machineFocusedRuns": 77,
-    "validatedRuns": 69,
+    "runs": 83,
+    "machineFocusedRuns": 83,
+    "validatedRuns": 73,
     "driveSyncedRuns": 7,
     "claimWorkRuns": 0
   }

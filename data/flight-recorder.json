@@ -1,16 +1,222 @@
 {
-  "generated": "2026-07-11",
+  "generated": "2026-07-13",
   "status": "registry-fed-flight-recorder-v0.1",
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 77,
-    "machineFocusedRuns": 77,
+    "runs": 83,
+    "machineFocusedRuns": 83,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 69
+    "validatedRuns": 73
   },
   "runs": [
+    {
+      "runId": "20260713-self-check-green-fix-pass",
+      "date": "2026-07-13",
+      "name": "Bring self-check back to PASS honestly: re",
+      "nameDa": "Bring self-check back to PASS honestly: re",
+      "route": "system-maintenance",
+      "routeDa": "system-maintenance",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "3 red checks fixed at root cause: feedSync (flight-recorder + next-best-action stale since 2026-07-11 -> sync-site-data-feeds.py), franklyOsEvals 31/34 (2 flight-recorder-feed cases + stale lessons index -> feed sync + build-lessons-index.py), localRefs (8 anchors into retired lab-hub.html -> lab-hub was the only retired 4.0 page missing data-retired-banner; standard banner added, no check loosened). Self-check PASS 11/11; autopilot full pass healthy, 5 maintenance jobs, 2 gated rundbord decisions untouched.",
+      "summaryDa": "3 red checks fixed at root cause: feedSync (flight-recorder + next-best-action stale since 2026-07-11 -> sync-site-data-feeds.py), franklyOsEvals 31/34 (2 flight-recorder-feed cases + stale lessons index -> feed sync + build-lessons-index.py), localRefs (8 anchors into retired lab-hub.html -> lab-hub was the only retired 4.0 page missing data-retired-banner; standard banner added, no check loosened). Self-check PASS 11/11; autopilot full pass healthy, 5 maintenance jobs, 2 gated rundbord decisions untouched.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "lab hub",
+        "next best action",
+        "lessons index"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas decides the 2 waiting rundbord decisions in the cockpit.",
+      "lessonDa": "Jonas decides the 2 waiting rundbord decisions in the cockpit.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-v2-decouple-maintenance-chain",
+      "date": "2026-07-13",
+      "name": "Afkobl vedligeholdelseskaeden fra den pens",
+      "nameDa": "Afkobl vedligeholdelseskaeden fra den pens",
+      "route": "system-maintenance",
+      "routeDa": "system-maintenance",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "self-check.py + daily-run.py skriver nu automation-heartbeat til os-visualization/system-intelligence/automation-status.json (v2-feedet skrives ikke laengere); batch-konsistens laeser machine-handoff-state.json i stedet for v2 data.json; validate-machine-state.py's v2-window-batch-alignment-tjek fjernet (daekkes af active-batch-alignment, nu 11 tjek, PASS 11/0/0); backlog-punktet cockpit-live-surfaces retargetet fra pensioneret control-cockpit.html til frankly-os-cockpit.html. Commit 35ea9a0. Self-check foer/efter: FAIL af samme 3 forud-eksisterende aarsager (feedSync, localRefs, franklyOsEvals) — ingen nye fejl, ingen v2-stier i output.",
+      "summaryDa": "self-check.py + daily-run.py skriver nu automation-heartbeat til os-visualization/system-intelligence/automation-status.json (v2-feedet skrives ikke laengere); batch-konsistens laeser machine-handoff-state.json i stedet for v2 data.json; validate-machine-state.py's v2-window-batch-alignment-tjek fjernet (daekkes af active-batch-alignment, nu 11 tjek, PASS 11/0/0); backlog-punktet cockpit-live-surfaces retargetet fra pensioneret control-cockpit.html til frankly-os-cockpit.html. Commit 35ea9a0. Self-check foer/efter: FAIL af samme 3 forud-eksisterende aarsager (feedSync, localRefs, franklyOsEvals) — ingen nye fejl, ingen v2-stier i output.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "self check.py",
+        "daily run.py",
+        "validate machine state.py"
+      ],
+      "gates": [
+        "no public deploy",
+        "Drive approval",
+        "no paid API"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Connector-skrivning (Drive/API)",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Ret de forud-eksisterende roede tjek: feedSync-pins (flight-recorder, next-best-action), 8 manglende lab-hub-ankre og de 2 roede eval-cases.",
+      "lessonDa": "Ret de forud-eksisterende roede tjek: feedSync-pins (flight-recorder, next-best-action), 8 manglende lab-hub-ankre og de 2 roede eval-cases.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-audit-fix-pass-7-defects",
+      "date": "2026-07-13",
+      "name": "Rette 7 konkrete defekter fra to audits: s",
+      "nameDa": "Rette 7 konkrete defekter fra to audits: s",
+      "route": "system-maintenance",
+      "routeDa": "system-maintenance",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "formidler-kontrakt + route + skill peger nu paa nyeste frankly-crew-contract-v*.md via glob; gap-finder tager de NYESTE window-koersler (dato-sorteret); handoffens Next Best Action + NBA_TEXT_DA omskrevet til 4.0 (crew-skill + samlet cockpit + lessons-index); record-frankly-run advarer hoejt naar frankly-crew-koersler mangler agentsUsed; v2-plist omdoebt til RETIRED-*.bak; generate-crew-artifacts har eksplicit SEAT_TRIGGERS-map (Use when + Prefer over) — 26 filer regenereret i begge dirs, --check in-sync. Commit 9a3c6be.",
+      "summaryDa": "formidler-kontrakt + route + skill peger nu paa nyeste frankly-crew-contract-v*.md via glob; gap-finder tager de NYESTE window-koersler (dato-sorteret); handoffens Next Best Action + NBA_TEXT_DA omskrevet til 4.0 (crew-skill + samlet cockpit + lessons-index); record-frankly-run advarer hoejt naar frankly-crew-koersler mangler agentsUsed; v2-plist omdoebt til RETIRED-*.bak; generate-crew-artifacts har eksplicit SEAT_TRIGGERS-map (Use when + Prefer over) — 26 filer regenereret i begge dirs, --check in-sync. Commit 9a3c6be.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "formidler contract v0 1",
+        "gap finder.py",
+        "blog seo content engine route"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Naeste crew-koersel logger saeder via --agent-used; hold oeje med at orchestratoren nu matcher opgaver til saederne i stedet for plugin-agenter.",
+      "lessonDa": "Naeste crew-koersel logger saeder via --agent-used; hold oeje med at orchestratoren nu matcher opgaver til saederne i stedet for plugin-agenter.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-partner-pitch-quickadd",
+      "date": "2026-07-13",
+      "name": "Add a paste-a-link quick-add box to the pa",
+      "nameDa": "Add a paste-a-link quick-add box to the pa",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Add a paste-a-link quick-add box to the partner-pitch overview: URL -> card on the list (localStorage), plus Copy-as-code bridge to make it permanent in the file",
+      "summaryDa": "Add a paste-a-link quick-add box to the partner-pitch overview: URL -> card on the list (localStorage), plus Copy-as-code bridge to make it permanent in the file",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "Partner pitches"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Confirm filename (renamed to Partner_pitches.",
+      "lessonDa": "Confirm filename (renamed to Partner_pitches.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-partner-pitch-overview",
+      "date": "2026-07-13",
+      "name": "Internal visual overview of Frankly partne",
+      "nameDa": "Internal visual overview of Frankly partne",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Internal visual overview of Frankly partner pitch decks; web team adds a new pitch by editing one line in a PITCHES array",
+      "summaryDa": "Internal visual overview of Frankly partner pitch decks; web team adds a new pitch by editing one line in a PITCHES array",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "index"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas decides hosting: drop index.",
+      "lessonDa": "Jonas decides hosting: drop index.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260711-frankly-lab-visual-overhaul",
+      "date": "2026-07-11",
+      "name": "Complete visual overhaul + cleanup of the ",
+      "nameDa": "Complete visual overhaul + cleanup of the ",
+      "route": "website-publishing-workflow",
+      "routeDa": "Website-udgivelse",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Complete visual overhaul + cleanup of the Frankly Lab: one coherent on-brand design language across all Lab pages, rebuilt searchable/filterable hub, experiments badged, parked OS surfaces de-linked",
+      "summaryDa": "Complete visual overhaul + cleanup of the Frankly Lab: one coherent on-brand design language across all Lab pages, rebuilt searchable/filterable hub, experiments badged, parked OS surfaces de-linked",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "frankly lab brand.css",
+        "frankly lab design spec",
+        "index"
+      ],
+      "gates": [
+        "no public deploy",
+        "no-push",
+        "claims locked"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Ingen git push",
+        "Claims / produkt / juridisk"
+      ],
+      "lesson": "Jonas: review + decide (a) commit reskin by explicit path excl.",
+      "lessonDa": "Jonas: review + decide (a) commit reskin by explicit path excl.",
+      "fanOut": []
+    },
     {
       "runId": "20260711-lab-tier1-build-baseline",
       "date": "2026-07-11",
