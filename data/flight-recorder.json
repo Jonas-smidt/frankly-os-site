@@ -4,13 +4,203 @@
   "source": "os-visualization/system-intelligence/run-registry.json",
   "generatedFromRunRegistry": true,
   "counts": {
-    "runs": 83,
-    "machineFocusedRuns": 83,
+    "runs": 89,
+    "machineFocusedRuns": 89,
     "claimWorkRuns": 0,
     "driveSyncedRuns": 7,
-    "validatedRuns": 73
+    "validatedRuns": 77
   },
   "runs": [
+    {
+      "runId": "20260713-remotion-explainer-brief-pilot",
+      "date": "2026-07-13",
+      "name": "Pilot rank 8 (remotion-marketing-video-ski",
+      "nameDa": "Pilot rank 8 (remotion-marketing-video-ski",
+      "route": "video-production-workflow-route",
+      "routeDa": "video-production-workflow-route",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "54s Remotion-brief 'Sådan arbejder Frankly OS — byg, lær, compound' (6 scener, frames @30fps, tokens, pilot-cut 32s) leveret canon-tro; queue rank 8 markeret DONE; render/install forbliver gated hos Jonas",
+      "summaryDa": "54s Remotion-brief 'Sådan arbejder Frankly OS — byg, lær, compound' (6 scener, frames @30fps, tokens, pilot-cut 32s) leveret canon-tro; queue rank 8 markeret DONE; render/install forbliver gated hos Jonas",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "remotion video brief frankly os ex",
+        "external capability activation que"
+      ],
+      "gates": [
+        "render/npm-install/licens/musik/pu"
+      ],
+      "gatesDa": [
+        "render/npm-install/licens/musik/publicering = Jonas"
+      ],
+      "lesson": "Jonas' gate: godkend lokal Remotion test-render + capture af boot-output/cockpit-screenshot til proof-frames.",
+      "lessonDa": "Jonas' gate: godkend lokal Remotion test-render + capture af boot-output/cockpit-screenshot til proof-frames.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-codex-extractor-audit-pilot",
+      "date": "2026-07-13",
+      "name": "Aktiveringskø rang 7: audit-pilot af codex",
+      "nameDa": "Aktiveringskø rang 7: audit-pilot af codex",
+      "route": "external-skill-research-swarm-route",
+      "routeDa": "external-skill-research-swarm-route",
+      "status": "blocked-gated",
+      "statusDa": "Blokeret (gated)",
+      "summary": "Kildekoden findes ikke lokalt (hele repoet, Documents, Downloads, ~/.claude, Spotlight tjekket) og klon er selv gated — ingen klon/fetch/scripts kørt. Papir-audit filet i reports/codex-site-visual-system-extractor-audit-2026-07-13.md; kø + activation-queue-data.json markeret blocked 2026-07-13.",
+      "summaryDa": "Kildekoden findes ikke lokalt (hele repoet, Documents, Downloads, ~/.claude, Spotlight tjekket) og klon er selv gated — ingen klon/fetch/scripts kørt. Papir-audit filet i reports/codex-site-visual-system-extractor-audit-2026-07-13.md; kø + activation-queue-data.json markeret blocked 2026-07-13.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "none",
+      "artifacts": [
+        "codex site visual system extractor",
+        "external capability activation que",
+        "activation queue data"
+      ],
+      "gates": [
+        "external repository clone or scrip"
+      ],
+      "gatesDa": [
+        "external repository clone or script execution (still gated)"
+      ],
+      "lesson": "Jonas: giv eksplicit klon-godkendelse (pinned commit) i cockpittet, eller luk punktet og kør token-udtræk med egne scripts jf.",
+      "lessonDa": "Jonas: giv eksplicit klon-godkendelse (pinned commit) i cockpittet, eller luk punktet og kør token-udtræk med egne scripts jf.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-learning-queue-backfill-triage",
+      "date": "2026-07-13",
+      "name": "Triage af de 188 ventende læringskandidate",
+      "nameDa": "Triage af de 188 ventende læringskandidate",
+      "route": "mission-runtime",
+      "routeDa": "Missions-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "296-kandidat-kø triageret: 170 filet (39 auto + 131 godkendt inkl. meta-læring), 17 afvist med sporbar begrundelse (dubletter/forældede/modsiger sikkerhedslæring), 1 efterladt til Jonas (LC-20260713-114, sprogkanon-dilemma). 6 kandidater re-scoped til eksisterende ruter; 2 ruter fik Lessons From Use-sektion. Harvest-baseline committet først (172dc82). self-check PASS.",
+      "summaryDa": "296-kandidat-kø triageret: 170 filet (39 auto + 131 godkendt inkl. meta-læring), 17 afvist med sporbar begrundelse (dubletter/forældede/modsiger sikkerhedslæring), 1 efterladt til Jonas (LC-20260713-114, sprogkanon-dilemma). 6 kandidater re-scoped til eksisterende ruter; 2 ruter fik Lessons From Use-sektion. Harvest-baseline committet først (172dc82). self-check PASS.",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "learning capture queue",
+        "website publishing workflow route",
+        "brand logo visual production route"
+      ],
+      "gates": [
+        "claims locked",
+        "no public deploy"
+      ],
+      "gatesDa": [
+        "Claims / produkt / juridisk",
+        "Offentlig deploy"
+      ],
+      "lesson": "Jonas afgør LC-20260713-114 (engelsk vs dansk UI-copy) i cockpittet.",
+      "lessonDa": "Jonas afgør LC-20260713-114 (engelsk vs dansk UI-copy) i cockpittet.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-instore-helper-price-coverage-local-qa",
+      "date": "2026-07-13",
+      "name": "Bounded local QA of Frankly Instore helper",
+      "nameDa": "Bounded local QA of Frankly Instore helper",
+      "route": "frankly-instore-helper-price-coverage-local-scope",
+      "routeDa": "frankly-instore-helper-price-coverage-local-scope",
+      "status": "running-local",
+      "statusDa": "running-local",
+      "summary": "Bounded local QA of Frankly Instore helper (price/coverage): free precondition suite + paid verification",
+      "summaryDa": "Bounded local QA of Frankly Instore helper (price/coverage): free precondition suite + paid verification",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "local only",
+      "driveDa": "Kun lokal",
+      "claims": "none",
+      "artifacts": [
+        "20260713 frankly instore helper pr"
+      ],
+      "gates": [
+        "no public deploy",
+        "local-only",
+        "no-paid-calls-this-run"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "Kun lokal",
+        "Betalt API-forbrug"
+      ],
+      "lesson": "Run paid Phase B via M3 Builder subagent once session capacity returns (~14:30): wire grounded price/coverage Qs to record against the 25-pool live-bu.",
+      "lessonDa": "Run paid Phase B via M3 Builder subagent once session capacity returns (~14:30): wire grounded price/coverage Qs to record against the 25-pool live-bu.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-agent-stats-staleproof",
+      "date": "2026-07-13",
+      "name": "Gør /api/agent-stats selv-helende: mtime-s",
+      "nameDa": "Gør /api/agent-stats selv-helende: mtime-s",
+      "route": "system-visualization",
+      "routeDa": "System-visualisering",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Cockpittets agent-panel kunne servere et forældet agent-stats.json indtil nogen klikkede Opdatér. Nu: _agent_stats_stale() i cockpit-server.py sammenligner snapshot-mtime med run-registry/method-log/nyeste kontrakt og genkører agent-stats.py før servering når en kilde er nyere; cache serveres urørt når den er aktuel. Autopilot fik 'refresh agent stats' som fast MAINTENANCE-job. Kørende 8137-server kræver genstart for at få den nye handler.",
+      "summaryDa": "Cockpittets agent-panel kunne servere et forældet agent-stats.json indtil nogen klikkede Opdatér. Nu: _agent_stats_stale() i cockpit-server.py sammenligner snapshot-mtime med run-registry/method-log/nyeste kontrakt og genkører agent-stats.py før servering når en kilde er nyere; cache serveres urørt når den er aktuel. Autopilot fik 'refresh agent stats' som fast MAINTENANCE-job. Kørende 8137-server kræver genstart for at få den nye handler.",
+      "validation": "mixed",
+      "validationDa": "Blandet",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "cockpit server.py",
+        "autopilot.py"
+      ],
+      "gates": [
+        "local validation"
+      ],
+      "gatesDa": [
+        "Lokal validering"
+      ],
+      "lesson": "Genstart cockpit-serveren på 8137 (python3 cockpit-server.",
+      "lessonDa": "Genstart cockpit-serveren på 8137 (python3 cockpit-server.",
+      "fanOut": []
+    },
+    {
+      "runId": "20260713-learning-capture-wiring",
+      "date": "2026-07-13",
+      "name": "Fix the broken learning-capture leg: wire ",
+      "nameDa": "Fix the broken learning-capture leg: wire ",
+      "route": "mission-runtime",
+      "routeDa": "Missions-drift",
+      "status": "completed-local",
+      "statusDa": "Færdig (lokalt)",
+      "summary": "Fix the broken learning-capture leg: wire the orphaned file-learning intake into contract+crew close, mirror Claude-memory into the OS queue as a daily autopilot job, and make learning visible (boot signal + missing-lesson warning)",
+      "summaryDa": "Fix the broken learning-capture leg: wire the orphaned file-learning intake into contract+crew close, mirror Claude-memory into the OS queue as a daily autopilot job, and make learning visible (boot signal + missing-lesson warning)",
+      "validation": "passed",
+      "validationDa": "Bestået",
+      "drive": "pending approval",
+      "driveDa": "Afventer dit ja til Drive",
+      "claims": "none",
+      "artifacts": [
+        "sync claude memory learnings.py",
+        "file learning.py",
+        "autopilot.py"
+      ],
+      "gates": [
+        "no public deploy",
+        "memory-dir-read-only"
+      ],
+      "gatesDa": [
+        "Offentlig deploy",
+        "memory-dir-read-only"
+      ],
+      "lesson": "Jonas afgør de 7 gated læringer i cockpittet (Læringer der venter på dit OK); næste autopilot-pass kører memory-spejlingen automatisk.",
+      "lessonDa": "Jonas afgør de 7 gated læringer i cockpittet (Læringer der venter på dit OK); næste autopilot-pass kører memory-spejlingen automatisk.",
+      "fanOut": []
+    },
     {
       "runId": "20260713-self-check-green-fix-pass",
       "date": "2026-07-13",

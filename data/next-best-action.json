@@ -1,5 +1,5 @@
 {
-  "generated": "2026-07-13T09:34:32+00:00",
+  "generated": "2026-07-13T14:36:58+00:00",
   "source": "current-machine-handoff.md#next-best-action + machine-handoff-state.json:machineDerived",
   "activeBatch": "MCQ-011",
   "activeBatchDa": "MCQ-011 — Kørselsregister + lokal eval-harness",
@@ -34,9 +34,9 @@
     "Thread automation / parallel chat spawning"
   ],
   "runRegistry": {
-    "runs": 83,
-    "machineFocusedRuns": 83,
-    "validatedRuns": 73,
+    "runs": 89,
+    "machineFocusedRuns": 89,
+    "validatedRuns": 77,
     "driveSyncedRuns": 7,
     "claimWorkRuns": 0
   }
