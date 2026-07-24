@@ -1,0 +1,65 @@
+/* ============================================================
+   Frankly — brand kit for the Effekt-lab
+   Self-contained: real Almarena Neue Display + Switzer fonts
+   (in ./fonts/) and the canonical Frankly palette, radii, easing.
+   Link from an effect page in effects/ with:
+     <link rel="stylesheet" href="../assets/frankly-brand.css">
+   ============================================================ */
+
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("fonts/Switzer-Semibold.otf") format("opentype")}
+
+:root{
+  /* neutrals / paper */
+  --limestone:#F5F4F1; --limestone-soft:#F0EEE9; --blush:#FFF6FA;
+  --paper:#FFFFFF; --stone:#ECE9E4; --stone-4:#E3DDD5; --stone-deep:#D9D1C8;
+  --pink-stone:#F3DEE4;
+  /* ink / brand core */
+  --bordeaux:#2D0011; --bordeaux-2:#4A1030; --ink:#111111;
+  --grey-1:#585C60; --grey-2:#7C7A77;
+  /* pink family */
+  --calm-pink:#FFD3E3; --calm-deep:#FFACCA; --pink-wash:#FFF6FA;
+  /* lines */
+  --line:#E9E6E1; --line-dark:rgba(45,0,17,.14);
+  /* status */
+  --ok:#CFE8BF; --warn:#F3D187; --blue:#CCD8F0; --sky:#CEEBFF;
+  --success-live:#27C966;
+  /* type */
+  --display:"Almarena Neue Display","Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --sans:"Switzer",system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  /* shape / motion */
+  --r-sm:10px; --r-card:16px; --r-lg:24px; --r-pill:999px;
+  --ease:cubic-bezier(.22,.61,.36,1);
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-spring:cubic-bezier(.2,.9,.3,1.2);
+  --dur-ui:300ms; --dur-hover:320ms;
+  --shadow-card:0 1px 2px rgba(45,0,17,.05),0 10px 28px rgba(45,0,17,.07);
+  --shadow-lift:0 2px 6px rgba(45,0,17,.07),0 22px 50px rgba(45,0,17,.12);
+  /* the Frankly "brand prism" — iridescent sweep tuned to our palette
+     (bordeaux → bordeaux-2 → calm-deep → calm-pink → blush) for use in
+     iridescent / caustic effects instead of a generic RGB rainbow */
+  --prism:linear-gradient(100deg,#2D0011,#4A1030 18%,#8A1F4A 34%,#FF6FA5 50%,#FFACCA 63%,#FFD3E3 76%,#FFF6FA 90%);
+}
+
+/* Frankly brand prism as a conic, for rings/edges */
+:root{
+  --prism-conic:conic-gradient(from 0deg,#2D0011,#8A1F4A,#FF6FA5,#FFACCA,#FFD3E3,#FF6FA5,#8A1F4A,#2D0011);
+}
+
+*{box-sizing:border-box}
+::selection{background:var(--calm-pink);color:var(--bordeaux)}
+
+/* base opt-in: class="fl" on body */
+.fl{font-family:var(--sans);color:var(--grey-1);-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+.fl h1,.fl h2,.fl h3,.fl h4,.fl .display{
+  font-family:var(--display);font-weight:600;letter-spacing:-.012em;color:var(--bordeaux);text-wrap:balance;
+}
+.fl p{text-wrap:pretty}
+
+.fl-kicker{font-family:var(--sans);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:rgba(45,0,17,.55)}
+
+@media (prefers-reduced-motion:reduce){
+  *{animation-duration:.001ms!important;animation-iteration-count:1!important;transition-duration:.001ms!important}
+}
