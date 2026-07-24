@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Beregner-burst — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  html,body{height:100%}
+  body{margin:0}
+
+  /* ---------- Stage: full-viewport near-black bordeaux ---------- */
+  .stage{
+    position:fixed; inset:0;
+    display:grid; place-items:center;
+    background:
+      radial-gradient(130% 110% at 50% 44%, #180208 0%, #100107 44%, #0a0005 78%, #060003 100%);
+    overflow:hidden;
+  }
+
+  /* ---------- The dark card / stage the burst lives in ---------- */
+  .card{
+    position:relative;
+    width:min(88vw, 920px);
+    aspect-ratio:16/10;
+    border-radius:clamp(20px,3.2vw,34px);
+    isolation:isolate;
+    overflow:hidden;
+    background:
+      radial-gradient(120% 130% at 18% 96%, #23020f 0%, #16010a 46%, #0d0106 74%, #0a0105 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.06),
+      inset 0 0 0 1px rgba(255,255,255,.035),
+      inset 0 0 60px rgba(0,0,0,.55),
+      0 1px 2px rgba(45,0,17,.5),
+      0 30px 60px rgba(0,0,0,.55),
+      0 60px 120px rgba(0,0,0,.4);
+  }
+  /* crisp bright top-left rim + fading edge line for material depth */
+  .card::after{
+    content:""; position:absolute; inset:0; border-radius:inherit; z-index:6; pointer-events:none;
+    box-shadow:
+      inset 0 1.5px 0 rgba(255,255,255,.10),
+      inset 1.5px 0 0 rgba(255,255,255,.05),
+      inset 0 0 0 1px rgba(255,255,255,.025);
+  }
+
+  /* soft ambient bloom that sits BEHIND the burst core */
+  .bloom{
+    position:absolute; z-index:1; pointer-events:none;
+    width:52%; height:74%;
+    left:calc(var(--cx) - 26%);
+    top:calc(var(--cy) - 37%);
+    background:radial-gradient(circle at 50% 50%,
+      rgba(255,255,255,.30) 0%,
+      rgba(255,225,238,.20) 14%,
+      rgba(255,172,202,.12) 30%,
+      rgba(138,31,74,.10) 50%,
+      rgba(138,31,74,0) 72%);
+    filter:blur(14px);
+    mix-blend-mode:screen;
+    animation:bloomPulse 3.5s cubic-bezier(.4,0,.2,1) infinite;
+  }
+  @keyframes bloomPulse{
+    0%   { transform:scale(.86); opacity:.68 }
+    24%  { transform:scale(1.06); opacity:1 }
+    56%  { transform:scale(.94); opacity:.72 }
+    100% { transform:scale(.86); opacity:.68 }
+  }
+
+  /* the canvas the filaments are painted on */
+  .burst{
+    position:absolute; inset:0; z-index:2; pointer-events:none;
+    mix-blend-mode:screen;
+  }
+
+  /* ---------- The word ---------- */
+  .word{
+    position:absolute; z-index:4; pointer-events:none;
+    left:44%; top:var(--cy);
+    transform:translateY(-52%);
+    display:flex; align-items:baseline;
+    font-family:var(--display); font-weight:600;
+    font-size:clamp(30px,5.6vw,62px);
+    letter-spacing:-.018em; line-height:1;
+    white-space:nowrap;
+  }
+  /* base low-contrast grey glyphs + a bright shimmer band swept across them */
+  .word .txt{
+    background:linear-gradient(100deg,
+      rgba(212,206,214,.30) 0%,
+      rgba(212,206,214,.30) 34%,
+      rgba(255,255,255,.98) 47%,
+      rgba(255,232,244,.95) 52%,
+      rgba(212,206,214,.30) 66%,
+      rgba(212,206,214,.30) 100%);
+    background-size:280% 100%;
+    background-position:120% 0;
+    -webkit-background-clip:text; background-clip:text;
+    -webkit-text-fill-color:transparent; color:transparent;
+    animation:sweep 3.5s cubic-bezier(.55,0,.28,1) infinite;
+  }
+  @keyframes sweep{
+    0%   { background-position:135% 0 }
+    46%  { background-position:-35% 0 }
+    62%  { background-position:-35% 0 }
+    100% { background-position:135% 0 }
+  }
+  /* animated ellipsis */
+  .word .dots{ display:inline-flex; margin-left:.02em }
+  .word .dots i{
+    font-style:normal;
+    color:rgba(212,206,214,.34);
+    animation:dot 1.4s steps(1,end) infinite;
+  }
+  .word .dots i:nth-child(1){ animation-delay:0ms }
+  .word .dots i:nth-child(2){ animation-delay:200ms }
+  .word .dots i:nth-child(3){ animation-delay:400ms }
+  @keyframes dot{
+    0%,64%,100%{ opacity:.14 }
+    16%,50%{ opacity:.8 }
+  }
+
+  /* ---------- Grain overlay to kill banding on the bloom ---------- */
+  .grain{
+    position:absolute; inset:0; z-index:5; pointer-events:none;
+    opacity:.05; mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---------- Shared page furniture ---------- */
+  .back{
+    position:fixed; top:18px; left:18px; z-index:20;
+    display:inline-flex; align-items:center; gap:.5em;
+    padding:9px 15px; border-radius:999px;
+    font-family:var(--sans); font-size:13px; font-weight:500;
+    color:rgba(255,255,255,.78); text-decoration:none;
+    background:rgba(255,255,255,.05);
+    border:1px solid rgba(255,255,255,.1);
+    -webkit-backdrop-filter:blur(8px); backdrop-filter:blur(8px);
+    transition:color .3s var(--ease), background .3s var(--ease);
+  }
+  .back:hover{ color:#fff; background:rgba(255,255,255,.1) }
+
+  .caption{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%); z-index:20;
+    text-align:center; pointer-events:none; font-family:var(--sans);
+  }
+  .caption .t{ display:block; color:rgba(255,255,255,.82); font-size:14px; font-weight:500; letter-spacing:.01em }
+  .caption .s{ display:block; margin-top:3px; color:rgba(255,255,255,.34); font-size:11px; letter-spacing:.06em }
+
+  @media (prefers-reduced-motion:reduce){
+    .bloom{ animation:none; transform:scale(1); opacity:.9 }
+    .word .txt{ animation:none; background-position:24% 0 }
+    .word .dots i{ animation:none; opacity:.5 }
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+
+  <a class="back" href="../../index.html">← Effekt-lab</a>
+
+  <div class="stage">
+    <div class="card" style="--cx:22%; --cy:66%">
+      <div class="bloom" aria-hidden="true"></div>
+      <canvas class="burst" aria-hidden="true"></canvas>
+      <div class="grain" aria-hidden="true"></div>
+      <div class="word" aria-label="Beregner">
+        <span class="txt">Beregner</span>
+        <span class="dots" aria-hidden="true"><i>.</i><i>.</i><i>.</i></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <span class="t">Beregner-burst</span>
+    <span class="s">efter Calculating Burst</span>
+  </div>
+
+<script>
+(function(){
+  const canvas = document.querySelector('.burst');
+  const card   = document.querySelector('.card');
+  const ctx    = canvas.getContext('2d');
+  const reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+
+  // core anchor as fractions of the card box (matches --cx / --cy)
+  const CX = 0.22, CY = 0.66;
+
+  let W = 0, H = 0, dpr = 1, coreX = 0, coreY = 0, maxR = 0;
+
+  function resize(){
+    const r = card.getBoundingClientRect();
+    dpr = Math.min(window.devicePixelRatio || 1, 2);
+    W = r.width; H = r.height;
+    canvas.width  = Math.round(W * dpr);
+    canvas.height = Math.round(H * dpr);
+    canvas.style.width = W + 'px';
+    canvas.style.height = H + 'px';
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    coreX = W * CX; coreY = H * CY;
+    maxR = Math.min(W, H) * 0.30;
+  }
+
+  // ---- precompute the filament field (seeded once, stable across the loop) ----
+  const N = 190;
+  const fil = [];
+  for (let i=0; i<N; i++){
+    const ang = (i / N) * Math.PI * 2 + (Math.random()-0.5) * 0.10; // even ring + jitter
+    fil.push({
+      ang,
+      lr:  0.42 + Math.pow(Math.random(), 1.6) * 0.72,  // length ratio, mostly short + few long spikes
+      w:   0.55 + Math.random() * 1.25,                 // line width
+      br:  0.55 + Math.random() * 0.45,                 // base brightness
+      tw:  0.7  + Math.random() * 2.4,                  // twinkle speed
+      tp:  Math.random() * Math.PI * 2,                 // twinkle phase
+      wob: (Math.random()-0.5) * 0.05                   // slight angular curl
+    });
+  }
+
+  const easeOut = p => 1 - Math.pow(1 - p, 2.4);
+
+  // draw one burst instance at local phase p (0..1)
+  function drawInstance(p, t){
+    const R   = easeOut(p);              // radial growth 0..1
+    const env = Math.sin(Math.PI * p);   // periodic envelope: 0 at ends, 1 mid
+    const A   = Math.pow(env, 0.85);     // overall opacity for this instance
+    if (A <= 0.001) return;
+    const inner = maxR * (0.05 + R * 0.04);
+
+    ctx.globalCompositeOperation = 'lighter';
+    ctx.lineCap = 'round';
+    for (let i=0; i<N; i++){
+      const f  = fil[i];
+      const a  = f.ang + f.wob * R * 6;
+      const ca = Math.cos(a), sa = Math.sin(a);
+      const len = maxR * R * f.lr;
+      const x1 = coreX + ca * inner, y1 = coreY + sa * inner;
+      const x2 = coreX + ca * len,   y2 = coreY + sa * len;
+      const tw = 0.62 + 0.38 * Math.sin(t * 0.001 * f.tw * 6 + f.tp); // energetic twinkle
+      const al = A * f.br * tw;
+      if (al <= 0.01) continue;
+      const g = ctx.createLinearGradient(x1, y1, x2, y2);
+      g.addColorStop(0,    'rgba(255,255,255,' + al + ')');
+      g.addColorStop(0.30, 'rgba(255,247,251,' + (al*0.85) + ')');
+      g.addColorStop(0.62, 'rgba(255,211,227,' + (al*0.55) + ')'); // calm-pink
+      g.addColorStop(0.86, 'rgba(255,172,202,' + (al*0.22) + ')'); // calm-deep
+      g.addColorStop(1,    'rgba(255,172,202,0)');
+      ctx.strokeStyle = g;
+      ctx.lineWidth = f.w;
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+    }
+
+    // hot core
+    const cr  = maxR * (0.16 + R * 0.05);
+    const ca2 = Math.min(1, A * 1.15);
+    const cg  = ctx.createRadialGradient(coreX, coreY, 0, coreX, coreY, cr);
+    cg.addColorStop(0,    'rgba(255,255,255,' + ca2 + ')');
+    cg.addColorStop(0.35, 'rgba(255,250,253,' + (ca2*0.7) + ')');
+    cg.addColorStop(0.70, 'rgba(255,214,229,' + (ca2*0.28) + ')');
+    cg.addColorStop(1,    'rgba(255,172,202,0)');
+    ctx.fillStyle = cg;
+    ctx.beginPath();
+    ctx.arc(coreX, coreY, cr, 0, Math.PI*2);
+    ctx.fill();
+  }
+
+  const PERIOD = 3500; // ms — matches the CSS bloom + sweep loop
+
+  function frame(now){
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.clearRect(0,0,W,H);
+    const gp = (now % PERIOD) / PERIOD;
+    // two crossfading burst instances, half a period apart → seamless re-burst
+    drawInstance(gp, now);
+    drawInstance((gp + 0.5) % 1, now);
+    ctx.globalCompositeOperation = 'source-over';
+    requestAnimationFrame(frame);
+  }
+
+  function boot(){
+    resize();
+    if (reduce){
+      ctx.clearRect(0,0,W,H);
+      drawInstance(0.34, 0); // one composed frame, mid-expansion at near-peak brightness
+      ctx.globalCompositeOperation = 'source-over';
+    } else {
+      requestAnimationFrame(frame);
+    }
+  }
+
+  let rt;
+  window.addEventListener('resize', ()=>{ clearTimeout(rt); rt = setTimeout(boot, 120); });
+  if (document.fonts && document.fonts.ready){ document.fonts.ready.then(boot); }
+  boot();
+})();
+</script>
+</body>
+</html>

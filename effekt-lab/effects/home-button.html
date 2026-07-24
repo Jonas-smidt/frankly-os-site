@@ -1,0 +1,313 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iriserende hjem-knap</title>
+<style>
+  :root{
+    --bordeaux:#2D0011;
+    --magenta:#8A1F4A;
+    --rose:#FF6FA5;
+    --calm:#FFD3E3;
+    --blush:#FFF6FA;
+    --spin:5.4s;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    background:#07030a;
+    font-family:"Switzer",system-ui,-apple-system,"Segoe UI",Roboto,sans-serif;
+    color:#fff;
+    overflow:hidden;
+  }
+
+  /* ---- Stage ---- */
+  .stage{
+    position:fixed;
+    inset:0;
+    display:grid;
+    place-items:center;
+    background:
+      radial-gradient(120% 90% at 50% -12%, rgba(255,120,170,0.12), transparent 44%),
+      radial-gradient(150% 130% at 50% 52%, #1c0a14 0%, #12050d 46%, #080003 100%);
+    isolation:isolate;
+  }
+  /* faint top light sheen so the stage isn't flat */
+  .stage::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    background:radial-gradient(60% 42% at 50% 6%, rgba(255,190,215,0.12), transparent 60%);
+    pointer-events:none;
+    mix-blend-mode:screen;
+  }
+
+  /* ---- Pill ---- */
+  .pill{
+    position:relative;
+    width:min(72vw,880px);
+    height:min(33vw,300px);
+    border-radius:999px;
+    display:flex;
+    align-items:center;
+    gap:min(5vw,60px);
+    padding:0 min(7vw,80px);
+    background:
+      linear-gradient(180deg, rgba(255,255,255,0.10), rgba(255,255,255,0) 16%),
+      linear-gradient(180deg, #241019 0%, #170a11 42%, #0b0308 100%);
+    box-shadow:
+      inset 0 2px 3px rgba(255,255,255,0.18),
+      inset 0 -18px 42px rgba(0,0,0,0.88),
+      inset 0 1px 0 rgba(255,255,255,0.08),
+      0 44px 100px rgba(0,0,0,0.78),
+      0 2px 0 rgba(255,255,255,0.03);
+  }
+  /* top glossy reflection band */
+  .pill::before{
+    content:"";
+    position:absolute;
+    left:6%; right:6%; top:5%;
+    height:34%;
+    border-radius:999px;
+    background:linear-gradient(180deg, rgba(255,255,255,0.15), rgba(255,255,255,0));
+    filter:blur(3px);
+    pointer-events:none;
+  }
+
+  /* ---- Knob (button + ring) ---- */
+  .knob{
+    position:relative;
+    width:min(24vw,220px);
+    height:min(24vw,220px);
+    flex:0 0 auto;
+    display:grid;
+    place-items:center;
+  }
+
+  /* every orbiting layer spins together so the prism + specular travel as one */
+  .ring,.ringGlow,.hotspot,.bloom{
+    position:absolute;
+    inset:-9%;
+    border-radius:50%;
+    will-change:transform;
+    animation:spin var(--spin) linear infinite;
+  }
+
+  /* Prism annulus — smooth conic, hot-white at the specular, bordeaux opposite */
+  .ring{
+    background:conic-gradient(from -90deg,
+      var(--blush) 0deg,
+      var(--calm) 26deg,
+      var(--rose) 74deg,
+      var(--magenta) 128deg,
+      var(--bordeaux) 180deg,
+      var(--magenta) 232deg,
+      var(--rose) 286deg,
+      var(--calm) 334deg,
+      var(--blush) 360deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 0 79%, #000 83%, #000 95%, transparent 99%);
+    mask:radial-gradient(closest-side, transparent 0 79%, #000 83%, #000 95%, transparent 99%);
+    filter:saturate(1.4) brightness(1.22);
+    z-index:2;
+  }
+  /* soft outer colour glow of the prism band, lighting the black */
+  .ringGlow{
+    background:conic-gradient(from -90deg,
+      var(--blush),var(--calm),var(--rose),var(--magenta),var(--bordeaux),var(--magenta),var(--rose),var(--calm),var(--blush));
+    -webkit-mask:radial-gradient(closest-side, transparent 0 74%, #000 86%, transparent 100%);
+    mask:radial-gradient(closest-side, transparent 0 74%, #000 86%, transparent 100%);
+    filter:blur(10px) saturate(1.5) brightness(1.2);
+    opacity:0.6;
+    mix-blend-mode:screen;
+    z-index:1;
+  }
+
+  /* Rotating specular hotspot — the travelling light */
+  .hotspot{
+    pointer-events:none;
+    mix-blend-mode:screen;
+    z-index:6;
+  }
+  /* bright white core, sitting ON the band at 12 o'clock */
+  .hotspot::before{
+    content:"";
+    position:absolute;
+    left:50%; top:6%;
+    width:22%; height:22%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle,
+      #ffffff 0%, #ffffff 26%,
+      rgba(255,240,248,0.9) 44%,
+      rgba(255,150,190,0.4) 68%,
+      transparent 80%);
+    filter:blur(1.5px);
+  }
+  /* elongated dispersion comet sweeping along the band, trailing the core */
+  .hotspot::after{
+    content:"";
+    position:absolute;
+    left:50%; top:6%;
+    width:56%; height:56%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:conic-gradient(from -128deg at 50% 50%,
+      transparent 0deg,
+      rgba(255,160,195,0.15) 18deg,
+      rgba(255,210,230,0.55) 30deg,
+      rgba(255,255,255,0.98) 40deg,
+      rgba(255,210,230,0.5) 50deg,
+      transparent 66deg);
+    -webkit-mask:radial-gradient(closest-side, transparent 0 79%, #000 84%, #000 95%, transparent 100%);
+    mask:radial-gradient(closest-side, transparent 0 79%, #000 84%, #000 95%, transparent 100%);
+    filter:blur(2px);
+    opacity:0.95;
+  }
+
+  /* Big soft bloom that spills OUTSIDE the pill as the specular passes the top */
+  .bloom{
+    inset:-9%;
+    pointer-events:none;
+    mix-blend-mode:screen;
+    z-index:5;
+  }
+  .bloom::after{
+    content:"";
+    position:absolute;
+    left:50%; top:6%;
+    width:52%; height:52%;
+    transform:translate(-50%,-50%);
+    border-radius:50%;
+    background:radial-gradient(circle,
+      rgba(255,255,255,0.85) 0%,
+      rgba(255,160,198,0.5) 26%,
+      rgba(255,95,155,0.22) 52%,
+      transparent 72%);
+    filter:blur(16px);
+  }
+
+  /* Glossy dark inner button */
+  .btn{
+    position:relative;
+    width:100%; height:100%;
+    border-radius:50%;
+    z-index:4;
+    background:
+      radial-gradient(120% 120% at 34% 22%, rgba(255,255,255,0.20), rgba(255,255,255,0) 34%),
+      radial-gradient(140% 120% at 50% 118%, rgba(120,20,55,0.38), transparent 55%),
+      radial-gradient(100% 100% at 50% 40%, #241119 0%, #150912 52%, #090308 100%);
+    box-shadow:
+      inset 0 3px 5px rgba(255,255,255,0.22),
+      inset 0 -14px 30px rgba(0,0,0,0.88),
+      inset 0 0 0 1px rgba(0,0,0,0.6),
+      0 10px 26px rgba(0,0,0,0.6);
+    display:grid;
+    place-items:center;
+  }
+  /* inner top gloss */
+  .btn::before{
+    content:"";
+    position:absolute;
+    left:16%; right:16%; top:9%;
+    height:38%;
+    border-radius:50%;
+    background:linear-gradient(180deg, rgba(255,255,255,0.24), rgba(255,255,255,0));
+    filter:blur(2px);
+    pointer-events:none;
+  }
+  .btn svg{
+    width:44%; height:44%;
+    transform:translateY(4%); /* optical centring */
+    filter:drop-shadow(0 2px 4px rgba(0,0,0,0.6));
+  }
+
+  /* ---- Word ---- */
+  .word{
+    font-size:min(11vw,110px);
+    font-weight:600;
+    letter-spacing:-0.02em;
+    line-height:1;
+    background:linear-gradient(180deg,#fff 0%, #f6e2eb 58%, #e6b9ce 100%);
+    -webkit-background-clip:text;
+    background-clip:text;
+    color:transparent;
+    filter:drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+  }
+
+  /* ---- Grain (kills banding) ---- */
+  .grain{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:50;
+    opacity:0.05;
+    background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='140' height='140'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    mix-blend-mode:overlay;
+  }
+
+  /* ---- Chrome ---- */
+  .back{
+    position:fixed;
+    top:22px; left:22px;
+    z-index:60;
+    text-decoration:none;
+    color:rgba(255,235,244,0.82);
+    font-size:14px;
+    font-weight:500;
+    padding:8px 15px;
+    border-radius:999px;
+    background:rgba(255,255,255,0.05);
+    border:1px solid rgba(255,255,255,0.10);
+    backdrop-filter:blur(6px);
+    transition:background .2s;
+  }
+  .back:hover{background:rgba(255,255,255,0.10)}
+  .caption{
+    position:fixed;
+    left:0; right:0; bottom:24px;
+    text-align:center;
+    z-index:60;
+    font-size:13px;
+    letter-spacing:0.02em;
+    color:rgba(255,220,232,0.42);
+  }
+
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  @media (prefers-reduced-motion: reduce){
+    .ring,.ringGlow,.hotspot,.bloom{ animation:none; transform:rotate(-42deg); }
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← Oversigt</a>
+
+  <div class="stage">
+    <div class="pill">
+      <div class="knob">
+        <div class="ringGlow"></div>
+        <div class="ring"></div>
+        <div class="btn">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M3.2 11.6 12 4l8.8 7.6" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+            <path d="M5.4 10.1V19a1 1 0 0 0 1 1H10v-5.2a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1V20h3.6a1 1 0 0 0 1-1v-8.9" stroke="#fff" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </div>
+        <div class="bloom"></div>
+        <div class="hotspot"></div>
+      </div>
+      <div class="word">Hjem</div>
+    </div>
+  </div>
+
+  <div class="grain"></div>
+  <div class="caption">Iriserende hjem-knap · efter Iridescent Home Button</div>
+</body>
+</html>

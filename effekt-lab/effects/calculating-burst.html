@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Beregner-burst · frankly</title>
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{background:#080308;overflow:hidden;font-family:"Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;
+    display:grid;place-items:center}
+  .stage{position:fixed;inset:0;display:grid;place-items:center;
+    background:radial-gradient(50% 45% at 50% 48%, #17070f 0%, #0b0409 60%, #070206 100%)}
+  .row{display:flex;align-items:center;gap:30px}
+  .burst{position:relative;width:150px;height:150px;flex:0 0 auto}
+  canvas{position:absolute;inset:0;width:100%;height:100%}
+  .bloom{position:absolute;inset:-30%;border-radius:50%;pointer-events:none;
+    background:radial-gradient(circle,rgba(255,220,235,.5),rgba(255,120,175,.15) 40%,transparent 68%);
+    filter:blur(8px);animation:bl 3.4s ease-in-out infinite}
+  @keyframes bl{0%,100%{opacity:.3;transform:scale(.7)}42%{opacity:.9;transform:scale(1.05)}}
+  .word{font-size:44px;font-weight:600;letter-spacing:-.01em;
+    background:linear-gradient(90deg,#8a7480,#f0d7e2 50%,#8a7480);background-size:250% 100%;
+    -webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 3.4s ease-in-out infinite}
+  @keyframes shine{0%{background-position:120% 0}50%{background-position:-20% 0}100%{background-position:-120% 0}}
+  .word::after{content:"…";color:#6b5560}
+
+  .back{position:fixed;top:20px;left:20px;z-index:9;color:#f4d9e4;text-decoration:none;font-size:13px;font-weight:500;
+    padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+  .cap{position:fixed;left:0;right:0;bottom:22px;text-align:center;color:#c9a7b6;font-size:12px}
+  .cap b{color:#f0d7e2;font-weight:600}
+</style><style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← Oversigt</a>
+  <div class="stage"><div class="row">
+    <div class="burst"><div class="bloom"></div><canvas id="c" width="300" height="300"></canvas></div>
+    <div class="word">Beregner</div>
+  </div></div>
+  <div class="cap">Beregner-burst · efter <b>Calculating Burst</b></div>
+  <script>
+    const cv=document.getElementById('c'),x=cv.getContext('2d'),N=170,CX=150,CY=150;
+    const P=[];for(let i=0;i<N;i++){const a=Math.random()*6.283;P.push({a,len:40+Math.random()*70,ph:Math.random()});}
+    function frame(t){
+      x.clearRect(0,0,300,300);
+      const cyc=(t*0.00029)%1; // 3.4s loop
+      const grow=Math.min(1,cyc/0.42), fade=cyc<0.42?1:Math.max(0,1-(cyc-0.42)/0.5);
+      x.globalCompositeOperation='lighter';
+      for(const p of P){const e=(Math.sin((grow+p.ph)*3.14));const r=e*p.len*grow;
+        const x1=CX+Math.cos(p.a)*10, y1=CY+Math.sin(p.a)*10;
+        const x2=CX+Math.cos(p.a)*(10+r), y2=CY+Math.sin(p.a)*(10+r);
+        const g=x.createLinearGradient(x1,y1,x2,y2);
+        g.addColorStop(0,`rgba(255,255,255,${.9*fade})`);g.addColorStop(.6,`rgba(255,190,220,${.5*fade})`);g.addColorStop(1,'rgba(255,120,175,0)');
+        x.strokeStyle=g;x.lineWidth=1.1;x.beginPath();x.moveTo(x1,y1);x.lineTo(x2,y2);x.stroke();}
+      // hot core
+      const cg=x.createRadialGradient(CX,CY,0,CX,CY,26*grow);
+      cg.addColorStop(0,`rgba(255,255,255,${fade})`);cg.addColorStop(.5,`rgba(255,210,230,${.6*fade})`);cg.addColorStop(1,'rgba(255,120,175,0)');
+      x.fillStyle=cg;x.beginPath();x.arc(CX,CY,26*grow,0,6.283);x.fill();
+      requestAnimationFrame(frame);
+    }
+    requestAnimationFrame(frame);
+  </script>
+</body></html>

@@ -1,0 +1,212 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Iriserende hjem-knap — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  html,body{height:100%}
+  body{
+    margin:0;
+    min-height:100dvh;
+    display:grid;
+    place-items:center;
+    /* near-black bordeaux stage with a soft radial lift, like the reference */
+    background:
+      radial-gradient(120% 90% at 50% 42%, #16060d 0%, #0c0308 46%, #060104 100%);
+    overflow:hidden;
+  }
+
+  /* ---- back-link pill (top-left) ---- */
+  .backlink{
+    position:fixed; top:20px; left:20px; z-index:10;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 15px 9px 13px;
+    font-family:var(--sans); font-size:13px; font-weight:500; letter-spacing:.01em;
+    color:rgba(255,244,248,.72); text-decoration:none;
+    background:rgba(255,255,255,.04);
+    border:1px solid rgba(255,255,255,.08);
+    border-radius:var(--r-pill);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    transition:color var(--dur-hover) var(--ease), background var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease);
+  }
+  .backlink:hover{ color:#fff; background:rgba(255,255,255,.07); border-color:rgba(255,111,165,.35); }
+  .backlink .arw{ transition:transform var(--dur-hover) var(--ease-out); }
+  .backlink:hover .arw{ transform:translateX(-3px); }
+
+  /* ---- the component ---- */
+  .stage{ display:grid; place-items:center; }
+
+  .pill{
+    --btn:220px;             /* diameter of the circular home button */
+    --pillpad:34px;          /* breathing room inside the pill */
+    position:relative;
+    display:flex; align-items:center; gap:36px;
+    padding:var(--pillpad) 64px var(--pillpad) var(--pillpad);
+    border-radius:var(--r-pill);
+    /* dark glossy shell */
+    background:
+      linear-gradient(180deg, #24141a 0%, #180a10 42%, #120508 100%);
+    box-shadow:
+      inset 0 1px 0 rgba(255,255,255,.10),
+      inset 0 -1px 0 rgba(0,0,0,.6),
+      inset 0 0 0 1px rgba(255,255,255,.03),
+      0 30px 60px -20px rgba(0,0,0,.8),
+      0 2px 4px rgba(0,0,0,.5);
+    cursor:pointer;
+    -webkit-user-select:none; user-select:none;
+    transition:transform var(--dur-hover) var(--ease-out);
+  }
+  /* faint top gloss sheen across the pill */
+  .pill::after{
+    content:""; position:absolute; inset:1px; border-radius:inherit; pointer-events:none;
+    background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,0) 32%);
+  }
+
+  /* ---- iridescent ring assembly ---- */
+  .knob{
+    position:relative;
+    width:var(--btn); height:var(--btn);
+    flex:none;
+    border-radius:50%;
+    display:grid; place-items:center;
+  }
+
+  /* the rotating Frankly prism ring, masked to a thin annulus */
+  .ring, .bloom{
+    position:absolute; inset:-9px;           /* ring sits just outside the button */
+    border-radius:50%;
+    background:var(--prism-conic);
+    -webkit-mask:radial-gradient(closest-side, transparent calc(100% - 15px), #000 calc(100% - 15px), #000 calc(100% - 3px), transparent calc(100% - 2px));
+            mask:radial-gradient(closest-side, transparent calc(100% - 15px), #000 calc(100% - 15px), #000 calc(100% - 3px), transparent calc(100% - 2px));
+    animation:spin 6s linear infinite;
+  }
+  /* soft bloom copy behind, blurred, for the glow */
+  .bloom{
+    inset:-14px;
+    filter:blur(14px) saturate(1.4);
+    opacity:.75;
+    -webkit-mask:radial-gradient(closest-side, transparent calc(100% - 26px), #000 calc(100% - 26px), #000 calc(100% - 4px), transparent calc(100% - 2px));
+            mask:radial-gradient(closest-side, transparent calc(100% - 26px), #000 calc(100% - 26px), #000 calc(100% - 4px), transparent calc(100% - 2px));
+    animation:spin 6s linear infinite;
+    transition:opacity var(--dur-hover) var(--ease), filter var(--dur-hover) var(--ease);
+  }
+
+  @keyframes spin{ to{ transform:rotate(360deg); } }
+
+  /* glossy dark inner button */
+  .btn{
+    position:relative;
+    width:calc(var(--btn) - 26px); height:calc(var(--btn) - 26px);
+    border-radius:50%;
+    background:
+      radial-gradient(120% 120% at 50% 22%, #241319 0%, #180a10 55%, #0d0407 100%);
+    box-shadow:
+      inset 0 2px 5px rgba(255,255,255,.10),
+      inset 0 -6px 16px rgba(0,0,0,.7),
+      inset 0 0 0 1px rgba(0,0,0,.5),
+      0 6px 18px rgba(0,0,0,.55);
+    display:grid; place-items:center;
+    transition:transform var(--dur-hover) var(--ease-out), box-shadow var(--dur-hover) var(--ease-out);
+    z-index:1;
+  }
+  /* top specular highlight on the glass */
+  .btn::before{
+    content:""; position:absolute; top:6px; left:14%; right:14%; height:42%;
+    border-radius:50%;
+    background:radial-gradient(120% 100% at 50% 0%, rgba(255,255,255,.14), rgba(255,255,255,0) 70%);
+    pointer-events:none;
+  }
+
+  .btn svg{ width:44%; height:44%; display:block; position:relative; z-index:1;
+    filter:drop-shadow(0 1px 1px rgba(0,0,0,.45)); }
+
+  .home-fill{ fill:url(#homeGrad); }
+
+  .label{
+    font-family:var(--sans); font-weight:600;
+    font-size:76px; line-height:1; letter-spacing:-.02em;
+    color:#f6f2f0;
+    text-shadow:0 1px 2px rgba(0,0,0,.5);
+  }
+
+  /* ---- hover: ring speeds up + blooms, button depresses ---- */
+  .pill:hover .ring, .pill:hover .bloom{ animation-duration:2.4s; }
+  .pill:hover .bloom{ opacity:1; filter:blur(18px) saturate(1.6); }
+  .pill:hover .btn{
+    transform:scale(.965);
+    box-shadow:
+      inset 0 2px 4px rgba(255,255,255,.07),
+      inset 0 -4px 14px rgba(0,0,0,.75),
+      inset 0 0 0 1px rgba(0,0,0,.55),
+      0 3px 10px rgba(0,0,0,.5);
+  }
+  .pill:active{ transform:scale(.99); }
+
+  /* ---- caption (bottom-center) ---- */
+  .caption{
+    position:fixed; left:0; right:0; bottom:26px; z-index:10;
+    text-align:center; pointer-events:none;
+  }
+  .caption .cap-title{
+    font-family:var(--sans); font-size:14px; font-weight:500; letter-spacing:.02em;
+    color:rgba(255,244,248,.6);
+  }
+  .caption .cap-sub{
+    margin-top:4px;
+    font-family:var(--sans); font-size:11px; font-weight:400; letter-spacing:.04em;
+    color:rgba(255,244,248,.28);
+  }
+
+  /* ---- reduced motion: hold a static glowing ring ---- */
+  @media (prefers-reduced-motion:reduce){
+    .ring, .bloom{ animation:none; }
+    .pill:hover .ring, .pill:hover .bloom{ animation:none; }
+  }
+
+  /* keep it graceful on small screens */
+  @media (max-width:720px){
+    .pill{ --btn:150px; --pillpad:22px; gap:22px; padding-right:44px; }
+    .label{ font-size:52px; }
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+
+  <a class="backlink" href="../../index.html"><span class="arw">←</span> Effekt-lab</a>
+
+  <div class="stage">
+    <div class="pill" id="pill">
+      <div class="knob">
+        <div class="bloom" aria-hidden="true"></div>
+        <div class="ring" aria-hidden="true"></div>
+        <div class="btn">
+          <svg viewBox="0 0 24 24" role="img" aria-label="Hjem">
+            <defs>
+              <linearGradient id="homeGrad" x1="0" y1="0" x2="0" y2="1">
+                <stop offset="0" stop-color="#ffffff"/>
+                <stop offset="1" stop-color="#d7cfd2"/>
+              </linearGradient>
+            </defs>
+            <path class="home-fill" d="M12 2.6 1.8 11.1c-.5.42-.2 1.24.45 1.24H4v8.2c0 .48.39.86.86.86h4.09c.44 0 .8-.36.8-.8v-4.5c0-.44.36-.8.8-.8h2.9c.44 0 .8.36.8.8v4.5c0 .44.36.8.8.8h4.09c.47 0 .86-.38.86-.86v-8.2h1.75c.65 0 .95-.82.45-1.24L12 2.6Z"/>
+          </svg>
+        </div>
+      </div>
+      <div class="label">Hjem</div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <div class="cap-title">Iriserende hjem-knap</div>
+    <div class="cap-sub">efter Iridescent Home Button</div>
+  </div>
+
+</body>
+</html>

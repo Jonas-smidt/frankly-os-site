@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Mappe-linse · frankly</title>
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{background:#070308;overflow:hidden;font-family:"Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;
+    display:grid;place-items:center}
+  .stage{position:fixed;inset:0;display:grid;place-items:center;
+    background:radial-gradient(45% 40% at 50% 46%, #140811 0%, #0a0409 60%, #060207 100%)}
+  .panel{position:relative;width:280px}
+  .h{font-size:14px;font-weight:700;color:#f0d7e2;margin:0 0 12px 4px}
+  .row{display:flex;align-items:center;gap:10px;padding:11px 14px;border-radius:12px;font-size:15px;color:#c8aab7;margin-bottom:4px}
+  .row.on{background:rgba(255,111,165,.12);box-shadow:inset 0 0 0 1px rgba(255,111,165,.3);color:#fff}
+  .row .ch{color:#7d6672;font-size:12px}
+  .row svg{width:17px;height:17px;opacity:.85}
+  .row.on svg{color:#FF6FA5;opacity:1}
+
+  /* glass lens hovering over the list */
+  .lens{position:absolute;left:50%;top:-6px;width:210px;height:210px;margin-left:-105px;border-radius:50%;
+    pointer-events:none;
+    /* transparent centre so the folders show through the glass; bright top-left gloss */
+    background:radial-gradient(circle at 36% 30%, rgba(255,255,255,.22), rgba(255,255,255,.05) 30%, rgba(255,255,255,0) 55%);
+    box-shadow:inset 0 2px 12px rgba(255,255,255,.3), inset 0 0 0 1px rgba(255,255,255,.16),
+      inset 0 -10px 24px rgba(120,30,70,.18), 0 24px 55px rgba(0,0,0,.5);
+    animation:drift 6.5s ease-in-out infinite}
+  /* bright caustic rim that slowly rotates */
+  .lens::before{content:"";position:absolute;inset:0;border-radius:50%;
+    background:conic-gradient(from 0deg, transparent, rgba(255,180,210,.5), transparent 25%, transparent 55%, rgba(120,200,255,.35), transparent 78%);
+    -webkit-mask:radial-gradient(closest-side, transparent 84%, #000 92%, transparent 100%);
+            mask:radial-gradient(closest-side, transparent 84%, #000 92%, transparent 100%);
+    animation:spin 12s linear infinite;mix-blend-mode:screen}
+  @keyframes spin{to{transform:rotate(360deg)}}
+  @keyframes drift{0%,100%{transform:translateY(-24px) scale(1)}50%{transform:translateY(48px) scale(1.03)}}
+
+  .back{position:fixed;top:20px;left:20px;z-index:9;color:#f4d9e4;text-decoration:none;font-size:13px;font-weight:500;
+    padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+  .cap{position:fixed;left:0;right:0;bottom:22px;text-align:center;color:#c9a7b6;font-size:12px}
+  .cap b{color:#f0d7e2;font-weight:600}
+  .fld{width:16px;height:13px;border:1.6px solid currentColor;border-radius:2px;position:relative;display:inline-block}
+  .fld::before{content:"";position:absolute;top:-4px;left:0;width:7px;height:4px;border:1.6px solid currentColor;border-bottom:none;border-radius:2px 2px 0 0}
+</style><style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← Oversigt</a>
+  <div class="stage">
+    <div class="panel">
+      <div class="h">Design</div>
+      <div class="row"><span class="ch">›</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v11H3z"/></svg> Elementer</div>
+      <div class="row on"><span class="ch">›</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v11H3z"/></svg> Ikoner</div>
+      <div class="row"><span class="ch">›</span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7h6l2 2h10v11H3z"/></svg> Shader</div>
+      <div class="lens"></div>
+    </div>
+  </div>
+  <div class="cap">Mappe-linse · efter <b>Framer Folders</b></div>
+</body></html>

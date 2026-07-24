@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="da"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Tænke-tilstande · frankly</title>
+<style>
+  *{box-sizing:border-box;margin:0}
+  html,body{height:100%}
+  body{background:#0a0409;overflow:hidden;font-family:"Switzer",system-ui,-apple-system,"Segoe UI",sans-serif;color:#fff;
+    display:grid;place-items:center}
+  .stage{position:fixed;inset:0;display:grid;place-items:center;
+    background:radial-gradient(55% 45% at 50% 44%, #180712 0%, #0c0409 60%, #070206 100%)}
+  .grid{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .cell{display:flex;align-items:center;gap:16px;padding:20px 26px;border-radius:20px;min-width:270px;
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.08),inset 0 0 0 1px rgba(255,255,255,.04)}
+  .ico{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center}
+  .tx .t{font-size:16px;font-weight:600;color:#fbeef3}
+  .tx .t::after{content:"…";animation:dots 1.6s steps(4,end) infinite;clip-path:inset(0 100% 0 0)}
+  @keyframes dots{to{clip-path:inset(0 0 0 0)}}
+  .tx .s{font-size:12.5px;color:#a98d9a;margin-top:2px}
+
+  /* 1: pulsing dot ring */
+  .d1 span{position:absolute;width:7px;height:7px;border-radius:50%;background:#FFD3E3;top:50%;left:50%;margin:-3.5px}
+  .d1{position:relative;width:44px;height:44px}
+  .d1 span:nth-child(1){animation:orb 1.4s linear infinite}
+  .d1 span:nth-child(2){animation:orb 1.4s linear infinite -.47s;opacity:.7}
+  .d1 span:nth-child(3){animation:orb 1.4s linear infinite -.94s;opacity:.45}
+  @keyframes orb{to{transform:rotate(360deg) translateX(15px)}}
+  /* 2: equalizer bars */
+  .d2{display:flex;gap:4px;align-items:center;height:30px}
+  .d2 i{width:4px;border-radius:3px;background:linear-gradient(#FFD3E3,#FF6FA5);animation:eq 1s ease-in-out infinite}
+  .d2 i:nth-child(2){animation-delay:.15s}.d2 i:nth-child(3){animation-delay:.3s}.d2 i:nth-child(4){animation-delay:.45s}.d2 i:nth-child(5){animation-delay:.2s}
+  @keyframes eq{0%,100%{height:8px}50%{height:30px}}
+  /* 3: sweeping lines */
+  .d3{display:flex;flex-direction:column;gap:5px;width:34px}
+  .d3 i{height:3px;border-radius:3px;background:#FFD3E3;transform-origin:left;animation:sw 1.4s ease-in-out infinite}
+  .d3 i:nth-child(2){animation-delay:.16s;opacity:.8}.d3 i:nth-child(3){animation-delay:.32s;opacity:.6}.d3 i:nth-child(4){animation-delay:.48s;opacity:.4}
+  @keyframes sw{0%,100%{transform:scaleX(.3)}50%{transform:scaleX(1)}}
+  /* 4: pulsing soft orb */
+  .d4{width:34px;height:34px;border-radius:50%;background:radial-gradient(circle at 38% 34%,#fff,#FF6FA5 55%,#8A1F4A);
+    box-shadow:0 0 18px rgba(255,110,170,.5);animation:pulse 1.6s ease-in-out infinite}
+  @keyframes pulse{0%,100%{transform:scale(.82);opacity:.8}50%{transform:scale(1);opacity:1}}
+
+  .back{position:fixed;top:20px;left:20px;z-index:9;color:#f4d9e4;text-decoration:none;font-size:13px;font-weight:500;
+    padding:7px 13px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.12)}
+  .cap{position:fixed;left:0;right:0;bottom:22px;text-align:center;color:#c9a7b6;font-size:12px}
+  .cap b{color:#f0d7e2;font-weight:600}
+</style><style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body>
+  <a class="back" href="../index.html">← Oversigt</a>
+  <div class="stage"><div class="grid">
+    <div class="cell"><div class="ico"><div class="d1"><span></span><span></span><span></span></div></div><div class="tx"><div class="t">Frankly tænker</div><div class="s">Variant 1</div></div></div>
+    <div class="cell"><div class="ico"><div class="d2"><i></i><i></i><i></i><i></i><i></i></div></div><div class="tx"><div class="t">Frankly tænker</div><div class="s">Variant 2</div></div></div>
+    <div class="cell"><div class="ico"><div class="d3"><i></i><i></i><i></i><i></i></div></div><div class="tx"><div class="t">Frankly tænker</div><div class="s">Variant 3</div></div></div>
+    <div class="cell"><div class="ico"><div class="d4"></div></div><div class="tx"><div class="t">Frankly tænker</div><div class="s">Variant 4</div></div></div>
+  </div></div>
+  <div class="cap">Tænke-tilstande · efter <b>Thinking States</b></div>
+</body></html>

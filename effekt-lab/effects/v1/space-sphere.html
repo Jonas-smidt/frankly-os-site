@@ -1,0 +1,428 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Glas-sfære — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  html,body{height:100%;margin:0}
+  body.fl{
+    background:#040203;
+    color:var(--calm-pink);
+    overflow:hidden;
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+  }
+
+  /* near-black stage with a faint warm centre glow so the sphere sits in space */
+  .stage{
+    position:fixed;
+    inset:0;
+    display:grid;
+    place-items:center;
+    background:
+      radial-gradient(120% 120% at 50% 46%, rgba(45,0,17,.35) 0%, rgba(10,3,6,.9) 42%, #040203 72%);
+  }
+
+  /* ---- the sphere ---- */
+  .sphere-wrap{
+    position:relative;
+    width:min(74vmin,680px);
+    aspect-ratio:1/1;
+    animation:bob 13s ease-in-out infinite;
+    will-change:transform;
+  }
+  @keyframes bob{
+    0%,100%{transform:translateY(-1.1%) scale(.994)}
+    50%{transform:translateY(1.1%) scale(1.006)}
+  }
+
+  .sphere{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    overflow:hidden;
+    isolation:isolate;
+    /* ambient contact shadow / bloom cast on the stage */
+    box-shadow:
+      0 0 2px rgba(255,111,165,.10),
+      0 40px 120px rgba(138,31,74,.28),
+      0 0 180px rgba(255,111,165,.10);
+  }
+
+  /* the cosmic interior lives on the canvas */
+  .nebula{
+    position:absolute;
+    inset:0;
+    width:100%;
+    height:100%;
+    display:block;
+    /* slow rotation of the whole galactic field inside the glass */
+    animation:spin 90s linear infinite;
+    will-change:transform;
+  }
+  @keyframes spin{to{transform:rotate(360deg)}}
+
+  /* fresnel darkening toward the rim so the glass reads as a solid ball */
+  .fresnel{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    background:
+      radial-gradient(circle at 50% 50%,
+        rgba(4,2,3,0) 52%,
+        rgba(4,2,3,.28) 70%,
+        rgba(4,2,3,.72) 86%,
+        rgba(4,2,3,.95) 100%);
+    mix-blend-mode:multiply;
+    pointer-events:none;
+  }
+
+  /* chromatic aberration split at the very edge */
+  .aberration{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 50% 50%, transparent 88%, rgba(255,60,120,.30) 93%, transparent 97%),
+      radial-gradient(circle at 49% 49%, transparent 89%, rgba(90,150,255,.22) 95%, transparent 99%),
+      radial-gradient(circle at 51% 51%, transparent 89%, rgba(120,255,180,.14) 95%, transparent 99%);
+    mix-blend-mode:screen;
+  }
+
+  /* glassy body shading: bottom-right fill light + overall sphere volume */
+  .shade{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    pointer-events:none;
+    background:
+      radial-gradient(120% 120% at 32% 28%, rgba(255,214,227,.10) 0%, rgba(255,214,227,0) 30%),
+      radial-gradient(90% 90% at 72% 78%, rgba(138,31,74,.20) 0%, rgba(138,31,74,0) 46%);
+    mix-blend-mode:screen;
+  }
+
+  /* prism rim — Frankly brand prism swept around the edge, masked to a thin ring */
+  .prism-rim{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    pointer-events:none;
+    background:var(--prism-conic);
+    opacity:.28;
+    mix-blend-mode:screen;
+    -webkit-mask:radial-gradient(circle at 50% 50%, transparent 84%, #000 90%, #000 96%, transparent 99%);
+            mask:radial-gradient(circle at 50% 50%, transparent 84%, #000 90%, #000 96%, transparent 99%);
+    animation:spin 60s linear infinite reverse;
+    will-change:transform;
+  }
+
+  /* glassy inner rim light (thin bright refractive edge, top-left biased) */
+  .rimlight{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    pointer-events:none;
+    background:
+      radial-gradient(circle at 38% 30%, rgba(255,246,250,.55) 0%, rgba(255,246,250,0) 8%),
+      radial-gradient(circle at 50% 50%, transparent 90%, rgba(255,246,250,.16) 95%, transparent 100%);
+    mix-blend-mode:screen;
+  }
+
+  /* big soft specular highlight top-left */
+  .specular{
+    position:absolute;
+    left:14%;
+    top:9%;
+    width:44%;
+    height:34%;
+    border-radius:50%;
+    pointer-events:none;
+    background:
+      radial-gradient(closest-side at 42% 40%,
+        rgba(255,255,255,.92) 0%,
+        rgba(255,246,250,.55) 26%,
+        rgba(255,214,227,.16) 55%,
+        rgba(255,214,227,0) 78%);
+    filter:blur(2px);
+    transform:rotate(-18deg);
+    animation:sheen 13s ease-in-out infinite;
+  }
+  @keyframes sheen{
+    0%,100%{opacity:.85;transform:rotate(-18deg) translate(0,0)}
+    50%{opacity:1;transform:rotate(-18deg) translate(1.5%,1%)}
+  }
+
+  /* tiny sharp secondary glint */
+  .glint{
+    position:absolute;
+    left:60%;
+    top:20%;
+    width:8%;
+    height:8%;
+    border-radius:50%;
+    pointer-events:none;
+    background:radial-gradient(closest-side, rgba(255,255,255,.9), rgba(255,255,255,0) 70%);
+    filter:blur(.5px);
+    opacity:.7;
+  }
+
+  /* faint rainbow speckle glints around the rim (prismatic dust) */
+  .speckle{
+    position:absolute;
+    inset:0;
+    border-radius:50%;
+    pointer-events:none;
+    mix-blend-mode:screen;
+    opacity:.8;
+  }
+
+  /* ---- chrome ---- */
+  .backlink{
+    position:fixed;
+    top:20px;left:20px;
+    z-index:10;
+    display:inline-flex;align-items:center;gap:.4em;
+    padding:9px 15px;
+    font-family:var(--sans);font-size:13px;font-weight:500;
+    color:var(--calm-pink);
+    text-decoration:none;
+    background:rgba(255,214,227,.06);
+    border:1px solid rgba(255,214,227,.16);
+    border-radius:var(--r-pill);
+    backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);
+    transition:background var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease), transform var(--dur-hover) var(--ease);
+  }
+  .backlink:hover{background:rgba(255,214,227,.12);border-color:rgba(255,214,227,.32);transform:translateY(-1px)}
+
+  .caption{
+    position:fixed;
+    left:0;right:0;bottom:26px;
+    z-index:10;
+    text-align:center;
+    pointer-events:none;
+  }
+  .caption .t{
+    font-family:var(--display);
+    font-size:clamp(15px,2.4vmin,20px);
+    font-weight:600;
+    letter-spacing:-.01em;
+    color:var(--calm-pink);
+  }
+  .caption .s{
+    display:block;
+    margin-top:3px;
+    font-family:var(--sans);
+    font-size:11px;
+    letter-spacing:.05em;
+    color:rgba(255,214,227,.42);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .sphere-wrap,.nebula,.prism-rim,.specular{animation:none!important}
+    .sphere-wrap{transform:none}
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+  <a class="backlink" href="../../index.html">&larr; Effekt-lab</a>
+
+  <div class="stage">
+    <div class="sphere-wrap">
+      <div class="sphere">
+        <canvas class="nebula" width="900" height="900" aria-hidden="true"></canvas>
+        <div class="fresnel"></div>
+        <div class="shade"></div>
+        <div class="speckle" id="speckle"></div>
+        <div class="prism-rim"></div>
+        <div class="aberration"></div>
+        <div class="rimlight"></div>
+        <div class="specular"></div>
+        <div class="glint"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="caption">
+    <span class="t">Glas-sfære</span>
+    <span class="s">efter Glassy Space Sphere</span>
+  </div>
+
+<script>
+(function(){
+  var reduce = window.matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var canvas = document.querySelector('.nebula');
+  var ctx = canvas.getContext('2d');
+  var W = canvas.width, H = canvas.height, CX = W/2, CY = H/2, R = W/2;
+
+  // ---------- static star field (generated once) ----------
+  var stars = [];
+  for(var i=0;i<260;i++){
+    var a = Math.random()*Math.PI*2;
+    var r = Math.sqrt(Math.random())*R*0.94;
+    stars.push({
+      x: CX + Math.cos(a)*r,
+      y: CY + Math.sin(a)*r,
+      s: Math.random()*1.6 + 0.4,
+      b: Math.random()*0.6 + 0.35,
+      tw: Math.random()*Math.PI*2,          // twinkle phase
+      tv: 0.6 + Math.random()*1.4           // twinkle speed
+    });
+  }
+
+  // a few brighter "hero" stars with cross flares
+  var heroes = [];
+  for(var h=0;h<7;h++){
+    var ha = Math.random()*Math.PI*2;
+    var hr = Math.sqrt(Math.random())*R*0.8;
+    heroes.push({x:CX+Math.cos(ha)*hr, y:CY+Math.sin(ha)*hr, s:1.6+Math.random()*1.4});
+  }
+
+  // nebula cloud blobs — Frankly bordeaux -> magenta -> blush
+  var clouds = [
+    {ox:-0.08, oy:0.04, r:0.62, col:'138,31,74',  a:0.42},   // magenta mass
+    {ox:0.10,  oy:-0.14,r:0.44, col:'74,16,48',   a:0.40},   // deep bordeaux
+    {ox:0.22,  oy:0.20, r:0.40, col:'138,31,74',  a:0.30},
+    {ox:-0.24, oy:0.26, r:0.36, col:'45,0,17',    a:0.55},   // dark bordeaux pocket
+    {ox:0.02,  oy:-0.02,r:0.30, col:'255,111,165',a:0.30},   // pink veil near core
+    {ox:-0.30, oy:-0.10,r:0.30, col:'74,16,48',   a:0.35}
+  ];
+
+  function drawBlob(cx, cy, rad, col, alpha){
+    var g = ctx.createRadialGradient(cx,cy,0,cx,cy,rad);
+    g.addColorStop(0,   'rgba('+col+','+alpha+')');
+    g.addColorStop(0.45,'rgba('+col+','+(alpha*0.5)+')');
+    g.addColorStop(1,   'rgba('+col+',0)');
+    ctx.fillStyle = g;
+    ctx.beginPath();
+    ctx.arc(cx,cy,rad,0,Math.PI*2);
+    ctx.fill();
+  }
+
+  function render(t){
+    ctx.clearRect(0,0,W,H);
+
+    // deep space base inside the glass
+    var base = ctx.createRadialGradient(CX,CY,0,CX,CY,R);
+    base.addColorStop(0,   'rgba(50,6,26,1)');
+    base.addColorStop(0.5, 'rgba(20,4,12,1)');
+    base.addColorStop(1,   'rgba(5,2,4,1)');
+    ctx.fillStyle = base;
+    ctx.fillRect(0,0,W,H);
+
+    ctx.globalCompositeOperation = 'lighter';
+
+    // drifting nebula clouds
+    var slow = t*0.00006;
+    for(var c=0;c<clouds.length;c++){
+      var cl = clouds[c];
+      var dx = Math.sin(slow*1.0 + c*1.7) * R*0.05;
+      var dy = Math.cos(slow*0.8 + c*2.1) * R*0.05;
+      drawBlob(CX + cl.ox*R + dx, CY + cl.oy*R + dy, cl.r*R, cl.col, cl.a);
+    }
+
+    // bright galactic core (warm calm-pink / blush) with slow pulse
+    var pulse = 0.82 + 0.18*Math.sin(t*0.0008);
+    var coreX = CX - 0.06*R + Math.sin(slow*0.6)*R*0.02;
+    var coreY = CY - 0.04*R + Math.cos(slow*0.5)*R*0.02;
+    // elongated core: draw with vertical squash
+    ctx.save();
+    ctx.translate(coreX, coreY);
+    ctx.scale(1.35, 0.72);
+    var core = ctx.createRadialGradient(0,0,0,0,0,R*0.30);
+    core.addColorStop(0,   'rgba(255,255,255,'+(0.95*pulse)+')');
+    core.addColorStop(0.18,'rgba(255,246,250,'+(0.75*pulse)+')');
+    core.addColorStop(0.42,'rgba(255,172,202,'+(0.42*pulse)+')');
+    core.addColorStop(0.72,'rgba(255,111,165,'+(0.16*pulse)+')');
+    core.addColorStop(1,   'rgba(255,111,165,0)');
+    ctx.fillStyle = core;
+    ctx.beginPath();
+    ctx.arc(0,0,R*0.30,0,Math.PI*2);
+    ctx.fill();
+    ctx.restore();
+
+    // faint hot pinpoint at core centre
+    var hot = ctx.createRadialGradient(coreX,coreY,0,coreX,coreY,R*0.05);
+    hot.addColorStop(0,'rgba(255,255,255,'+pulse+')');
+    hot.addColorStop(1,'rgba(255,255,255,0)');
+    ctx.fillStyle = hot;
+    ctx.beginPath();ctx.arc(coreX,coreY,R*0.05,0,Math.PI*2);ctx.fill();
+
+    // stars (twinkling)
+    for(var i=0;i<stars.length;i++){
+      var st = stars[i];
+      var tw = reduce ? st.b : st.b*(0.55 + 0.45*Math.sin(t*0.001*st.tv + st.tw));
+      ctx.fillStyle = 'rgba(255,248,252,'+tw+')';
+      ctx.beginPath();
+      ctx.arc(st.x, st.y, st.s, 0, Math.PI*2);
+      ctx.fill();
+    }
+
+    // hero stars + soft cross flare
+    for(var k=0;k<heroes.length;k++){
+      var hs = heroes[k];
+      var hb = reduce ? 0.9 : (0.65 + 0.35*Math.sin(t*0.0012 + k));
+      var hg = ctx.createRadialGradient(hs.x,hs.y,0,hs.x,hs.y,hs.s*5);
+      hg.addColorStop(0,'rgba(255,255,255,'+hb+')');
+      hg.addColorStop(0.3,'rgba(255,246,250,'+(hb*0.4)+')');
+      hg.addColorStop(1,'rgba(255,246,250,0)');
+      ctx.fillStyle = hg;
+      ctx.beginPath();ctx.arc(hs.x,hs.y,hs.s*5,0,Math.PI*2);ctx.fill();
+      // thin cross
+      ctx.strokeStyle='rgba(255,255,255,'+(hb*0.5)+')';
+      ctx.lineWidth=0.8;
+      ctx.beginPath();
+      ctx.moveTo(hs.x-hs.s*7,hs.y);ctx.lineTo(hs.x+hs.s*7,hs.y);
+      ctx.moveTo(hs.x,hs.y-hs.s*7);ctx.lineTo(hs.x,hs.y+hs.s*7);
+      ctx.stroke();
+    }
+
+    ctx.globalCompositeOperation = 'source-over';
+  }
+
+  if(reduce){
+    render(3200);   // one beautiful static frame
+  } else {
+    var start = performance.now();
+    (function loop(now){
+      render(now - start);
+      requestAnimationFrame(loop);
+    })(performance.now());
+  }
+
+  // ---------- prismatic rim speckle glints ----------
+  // small rainbow dust flecks scattered near the rim, using the Frankly prism hues
+  var speckle = document.getElementById('speckle');
+  var hues = ['#FF6FA5','#FFACCA','#FFD3E3','#8A1F4A','#5A96FF','#78FFB4','#FFF6FA'];
+  var shadows = [];
+  for(var s=0;s<70;s++){
+    var ang = Math.random()*Math.PI*2;
+    // bias toward the rim (0.68 - 0.98 of radius)
+    var rr = 0.68 + Math.random()*0.30;
+    var px = 50 + Math.cos(ang)*rr*48;   // in %
+    var py = 50 + Math.sin(ang)*rr*48;
+    var col = hues[(Math.random()*hues.length)|0];
+    var sz = (Math.random()*2.2 + 0.6).toFixed(1);
+    // build layered box-shadow dots via child spans instead (crisper), use gradient dots
+    var dot = document.createElement('span');
+    dot.style.cssText =
+      'position:absolute;border-radius:50%;pointer-events:none;'+
+      'left:'+px.toFixed(2)+'%;top:'+py.toFixed(2)+'%;'+
+      'width:'+sz+'px;height:'+sz+'px;margin:-'+(sz/2)+'px 0 0 -'+(sz/2)+'px;'+
+      'background:'+col+';box-shadow:0 0 '+(2+Math.random()*3).toFixed(1)+'px '+col+';'+
+      'opacity:'+(0.35+Math.random()*0.5).toFixed(2)+';';
+    speckle.appendChild(dot);
+  }
+})();
+</script>
+</body>
+</html>

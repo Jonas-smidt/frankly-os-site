@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Liquid glass UI — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  *{margin:0;padding:0;box-sizing:border-box}
+  html,body{height:100%}
+
+  body.fl{
+    background:
+      radial-gradient(120vmax 90vmax at 68% 12%, rgba(74,16,48,.55), transparent 60%),
+      radial-gradient(90vmax 90vmax at 20% 88%, rgba(45,0,17,.9), transparent 62%),
+      #0b0206;
+    color:#fff;
+    overflow:hidden;
+    display:grid;
+    place-items:center;
+    min-height:100vh;
+  }
+
+  /* faint drifting brand glow behind the panel — gives the glass something to refract */
+  .halo{
+    position:fixed; inset:-10%; z-index:0; pointer-events:none;
+    background:
+      radial-gradient(38vmax 38vmax at 30% 40%, rgba(255,111,165,.16), transparent 60%),
+      radial-gradient(44vmax 44vmax at 74% 64%, rgba(138,31,74,.22), transparent 62%);
+    filter:blur(14px);
+    animation:haloDrift 22s ease-in-out infinite alternate;
+  }
+  @keyframes haloDrift{
+    0%{transform:translate3d(-2%,-1%,0) scale(1)}
+    100%{transform:translate3d(3%,2%,0) scale(1.08)}
+  }
+
+  /* ---- 3D perspective stage ---- */
+  .stage{
+    position:relative; z-index:2;
+    perspective:1700px;
+    perspective-origin:60% 42%;
+  }
+
+  .tilt{
+    transform:rotateX(7deg) rotateY(-25deg) rotateZ(-1.2deg);
+    transform-style:preserve-3d;
+    animation:tiltBreathe 18s ease-in-out infinite alternate;
+  }
+  @keyframes tiltBreathe{
+    0%{transform:rotateX(7deg) rotateY(-25deg) rotateZ(-1.2deg)}
+    100%{transform:rotateX(9deg) rotateY(-21deg) rotateZ(-1.2deg)}
+  }
+
+  /* ================= the glass panel ================= */
+  .panel{
+    position:relative;
+    width:560px;
+    padding:22px;
+    border-radius:32px;
+    display:flex;
+    flex-direction:column;
+    gap:18px;
+    background:
+      linear-gradient(155deg, rgba(74,16,48,.34), rgba(20,4,11,.62) 52%, rgba(8,2,5,.78));
+    box-shadow:
+      0 60px 120px rgba(0,0,0,.62),
+      0 20px 46px rgba(0,0,0,.5),
+      0 0 0 1px rgba(255,255,255,.04),
+      inset 0 0 0 1px rgba(255,255,255,.14),      /* crisp bright rim */
+      inset 0 1px 0 rgba(255,255,255,.28),         /* top edge light */
+      inset 0 -2px 14px rgba(0,0,0,.5),            /* inner base shadow */
+      inset 0 0 40px rgba(255,111,165,.05);        /* faint pink inner bloom */
+  }
+  /* glossy directional rim light around the whole panel */
+  .panel::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:6;
+    padding:1.4px;
+    background:linear-gradient(135deg,
+      rgba(255,255,255,.85) 0%, rgba(255,255,255,.18) 18%,
+      transparent 44%, rgba(255,172,202,.28) 64%,
+      rgba(170,235,255,.34) 82%, rgba(255,255,255,.55) 100%);
+    -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite:xor; mask-composite:exclude;
+            mask-composite:exclude;
+    filter:blur(.4px);
+  }
+  /* faint chromatic fringe on the receding edge */
+  .panel::after{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none; z-index:5;
+    box-shadow:
+      inset -2px 0 6px rgba(120,220,255,.10),
+      inset 2px 0 6px rgba(255,120,170,.09);
+  }
+
+  /* the group whose geometry gets rippled by the SVG filter */
+  .liquid{
+    display:flex; flex-direction:column; gap:18px;
+    filter:url(#franklyLiquid);
+    will-change:filter;
+  }
+
+  /* ---- shared glass sub-surface for every control ---- */
+  .glass{
+    position:relative;
+    border-radius:20px;
+    background:linear-gradient(160deg, rgba(255,255,255,.06), rgba(255,255,255,.015) 40%, rgba(0,0,0,.28));
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.10),
+      inset 0 1px 0 rgba(255,255,255,.22),
+      inset 0 -3px 10px rgba(0,0,0,.42),
+      0 8px 22px rgba(0,0,0,.35);
+  }
+  .glass::before{
+    content:""; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
+    background:linear-gradient(120deg, transparent 42%, rgba(255,255,255,.10) 50%, transparent 58%);
+    mix-blend-mode:screen;
+  }
+
+  /* ---- top bar ---- */
+  .topbar{
+    display:flex; align-items:center; gap:20px;
+    padding:12px 18px; min-height:66px;
+  }
+  .brandchip{
+    display:flex; align-items:center; gap:12px;
+    padding:11px 18px 11px 15px;
+    border-radius:16px;
+    background:linear-gradient(160deg, rgba(255,255,255,.10), rgba(0,0,0,.32));
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.16),
+      inset 0 1px 0 rgba(255,255,255,.34),
+      inset 0 -3px 9px rgba(0,0,0,.45),
+      0 6px 16px rgba(0,0,0,.4);
+  }
+  .brandchip .leaf{width:19px; height:auto; display:block; filter:drop-shadow(0 1px 1px rgba(0,0,0,.4))}
+  .brandchip .name{
+    font-family:var(--display); font-weight:600; font-size:23px; letter-spacing:-.01em;
+    color:#fff; line-height:1;
+  }
+  .brandchip .caret{opacity:.62; margin-left:2px}
+
+  .tools{display:flex; align-items:center; gap:22px; margin-left:auto; padding-right:6px}
+  .tools svg{display:block; width:24px; height:24px}
+  .tools .ic{stroke:rgba(255,255,255,.82); stroke-width:1.7; fill:none; stroke-linecap:round; stroke-linejoin:round}
+  .tools .ic-fill{fill:rgba(255,255,255,.82)}
+
+  /* ---- segmented row ---- */
+  .segmented{
+    display:flex; align-items:center; gap:6px;
+    padding:9px; min-height:58px;
+  }
+  .seg{
+    font-family:var(--display); font-weight:600; font-size:19px; letter-spacing:-.005em;
+    padding:11px 20px; border-radius:14px; color:rgba(255,255,255,.42); white-space:nowrap;
+  }
+  .seg.active{
+    color:#fff;
+    background:linear-gradient(160deg, rgba(255,255,255,.16), rgba(0,0,0,.34));
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.20),
+      inset 0 1px 0 rgba(255,255,255,.4),
+      inset 0 -3px 9px rgba(0,0,0,.42),
+      0 6px 15px rgba(0,0,0,.4);
+  }
+
+  /* ---- search field ---- */
+  .search{
+    display:flex; align-items:center; gap:14px;
+    padding:16px 22px; min-height:64px;
+    border-radius:20px;
+  }
+  .search svg{width:22px; height:22px; flex:none}
+  .search .q{stroke:rgba(255,255,255,.6); stroke-width:1.8; fill:none}
+  .search .placeholder{
+    font-family:var(--display); font-weight:600; font-size:21px; letter-spacing:-.005em;
+    color:rgba(255,255,255,.4);
+  }
+
+  /* ---- back-link pill ---- */
+  .back{
+    position:fixed; top:22px; left:22px; z-index:20;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 16px 9px 13px; border-radius:var(--r-pill);
+    font-family:var(--sans); font-weight:500; font-size:13.5px;
+    color:rgba(255,255,255,.82); text-decoration:none;
+    background:rgba(255,255,255,.05);
+    box-shadow:
+      inset 0 0 0 1px rgba(255,255,255,.13),
+      inset 0 1px 0 rgba(255,255,255,.2),
+      0 6px 18px rgba(0,0,0,.35);
+    backdrop-filter:blur(10px); -webkit-backdrop-filter:blur(10px);
+    transition:color .3s var(--ease), background .3s var(--ease), transform .3s var(--ease-spring);
+  }
+  .back:hover{color:#fff; background:rgba(255,211,227,.1); transform:translateY(-1px)}
+
+  /* ---- caption ---- */
+  .caption{
+    position:fixed; bottom:26px; left:0; right:0; z-index:20; text-align:center;
+    pointer-events:none;
+  }
+  .caption .title{
+    font-family:var(--display); font-weight:600; font-size:15px; letter-spacing:.01em;
+    color:rgba(255,255,255,.78);
+  }
+  .caption .sub{
+    display:block; margin-top:4px;
+    font-family:var(--sans); font-size:11.5px; letter-spacing:.16em; text-transform:uppercase;
+    color:rgba(255,255,255,.32);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .halo, .tilt{animation:none}
+    .liquid{filter:url(#franklyLiquidStatic)}
+  }
+  @media (max-width:640px){
+    .panel{width:calc(100vw - 44px)}
+    .tilt{transform:rotateX(6deg) rotateY(-14deg)}
+    @keyframes tiltBreathe{0%,100%{transform:rotateX(6deg) rotateY(-14deg)}}
+    .seg{font-size:16px; padding:10px 14px}
+    .brandchip .name{font-size:20px}
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+
+  <div class="halo"></div>
+
+  <a class="back" href="../../index.html">← Effekt-lab</a>
+
+  <div class="stage">
+    <div class="tilt">
+      <div class="panel">
+        <div class="liquid">
+
+          <!-- top bar -->
+          <div class="glass topbar">
+            <div class="brandchip">
+              <svg class="leaf" viewBox="0 0 18 37" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+                <path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z" fill="#FFD9E6"/>
+                <path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z" fill="#FFD9E6"/>
+                <path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z" fill="#FFD9E6"/>
+                <path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z" fill="#FFD9E6"/>
+              </svg>
+              <span class="name">Lærred</span>
+              <svg class="caret" width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>
+            </div>
+
+            <div class="tools" aria-hidden="true">
+              <!-- plus -->
+              <svg viewBox="0 0 24 24"><path class="ic" d="M12 5v14M5 12h14"/></svg>
+              <!-- component / framed circle -->
+              <svg viewBox="0 0 24 24">
+                <circle class="ic" cx="12" cy="12" r="4.2"/>
+                <path class="ic" d="M5 8V6a1 1 0 0 1 1-1h2M16 5h2a1 1 0 0 1 1 1v2M19 16v2a1 1 0 0 1-1 1h-2M8 19H6a1 1 0 0 1-1-1v-2"/>
+              </svg>
+              <!-- text T -->
+              <svg viewBox="0 0 24 24"><path class="ic" d="M6 6h12M12 6v13"/></svg>
+              <!-- triangle -->
+              <svg viewBox="0 0 24 24"><path class="ic" d="M12 6l6.5 12h-13z"/></svg>
+            </div>
+          </div>
+
+          <!-- segmented -->
+          <div class="glass segmented">
+            <span class="seg active">Sider</span>
+            <span class="seg">Lag</span>
+            <span class="seg">Elementer</span>
+          </div>
+
+          <!-- search -->
+          <div class="glass search">
+            <svg class="" viewBox="0 0 24 24" aria-hidden="true">
+              <circle class="q" cx="11" cy="11" r="6.5"/>
+              <path class="q" d="M20 20l-4-4" stroke-linecap="round"/>
+            </svg>
+            <span class="placeholder">Søg…</span>
+          </div>
+
+        </div><!-- /liquid -->
+      </div><!-- /panel -->
+    </div><!-- /tilt -->
+  </div><!-- /stage -->
+
+  <div class="caption">
+    <span class="title">Liquid glass UI</span>
+    <span class="sub">efter Liquid Glass UI</span>
+  </div>
+
+  <!-- ================= animated liquid-glass distortion ================= -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <!-- animated: a ripple that travels + breathes across the whole panel -->
+    <filter id="franklyLiquid" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.006 0.011" numOctaves="2" seed="6" result="noise">
+        <animate attributeName="baseFrequency" dur="16s" repeatCount="indefinite"
+          values="0.006 0.011; 0.011 0.007; 0.008 0.013; 0.006 0.011"
+          calcMode="spline" keyTimes="0;0.34;0.68;1"
+          keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"/>
+      </feTurbulence>
+      <!-- shift the noise so the ripple visibly travels across the surface -->
+      <feOffset in="noise" dx="0" dy="0" result="moved">
+        <animate attributeName="dx" dur="9s" repeatCount="indefinite"
+          values="-40; 40; -40" calcMode="spline" keyTimes="0;0.5;1"
+          keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+        <animate attributeName="dy" dur="13s" repeatCount="indefinite"
+          values="-24; 22; -24" calcMode="spline" keyTimes="0;0.5;1"
+          keySplines="0.45 0 0.55 1; 0.45 0 0.55 1"/>
+      </feOffset>
+      <feDisplacementMap in="SourceGraphic" in2="moved" xChannelSelector="R" yChannelSelector="G" result="disp">
+        <animate attributeName="scale" dur="7.5s" repeatCount="indefinite"
+          values="9; 20; 12; 9" calcMode="spline" keyTimes="0;0.4;0.72;1"
+          keySplines="0.4 0 0.2 1; 0.4 0 0.2 1; 0.4 0 0.2 1"/>
+      </feDisplacementMap>
+    </filter>
+
+    <!-- reduced-motion: a single tasteful static warp, no animation -->
+    <filter id="franklyLiquidStatic" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.007 0.012" numOctaves="2" seed="6" result="noise"/>
+      <feDisplacementMap in="SourceGraphic" in2="noise" scale="10" xChannelSelector="R" yChannelSelector="G"/>
+    </filter>
+  </svg>
+
+</body>
+</html>

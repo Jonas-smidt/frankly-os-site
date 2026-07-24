@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Notifikations-toasts — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  html,body{margin:0;height:100%}
+  body.fl{
+    min-height:100vh;
+    background:
+      radial-gradient(120% 90% at 50% 4%, #200210 0%, #120008 46%, #08000420 78%, #050002 100%);
+    color:#FFF6FA;
+    display:flex; align-items:center; justify-content:center;
+    overflow:hidden;
+  }
+
+  /* soft vignette to keep the black stage rich, not flat */
+  body.fl::after{
+    content:""; position:fixed; inset:0; pointer-events:none; z-index:1;
+    background:radial-gradient(130% 100% at 50% 44%, transparent 52%, rgba(0,0,0,.55) 100%);
+  }
+
+  /* faint bordeaux glow blooming behind the stack */
+  .glow{
+    position:fixed; z-index:0; left:50%; top:46%;
+    width:640px; height:640px; transform:translate(-50%,-50%);
+    background:radial-gradient(closest-side, rgba(138,31,74,.20), rgba(45,0,17,0) 72%);
+    filter:blur(6px); pointer-events:none;
+  }
+
+  /* ---- back-link pill ---- */
+  .back{
+    position:fixed; top:22px; left:22px; z-index:20;
+    display:inline-flex; align-items:center; gap:8px;
+    padding:9px 15px 9px 13px;
+    font-family:var(--sans); font-size:13px; font-weight:500; letter-spacing:.01em;
+    color:rgba(255,246,250,.72); text-decoration:none;
+    background:rgba(255,246,250,.05);
+    border:1px solid rgba(255,246,250,.10);
+    border-radius:var(--r-pill);
+    backdrop-filter:blur(8px); -webkit-backdrop-filter:blur(8px);
+    transition:color var(--dur-hover) var(--ease), background var(--dur-hover) var(--ease), border-color var(--dur-hover) var(--ease);
+  }
+  .back:hover{ color:#FFF6FA; background:rgba(255,246,250,.09); border-color:rgba(255,246,250,.20); }
+  .back .arw{ font-size:15px; line-height:1; transition:transform var(--dur-hover) var(--ease); }
+  .back:hover .arw{ transform:translateX(-3px); }
+
+  /* ---- stack ---- */
+  .stack{
+    position:relative; z-index:5;
+    width:392px; height:260px;
+  }
+
+  .toast{
+    position:absolute; top:0; left:50%;
+    width:392px; margin-left:-196px;
+    display:flex; align-items:center; gap:14px;
+    padding:15px 18px;
+    border-radius:22px;
+    background:
+      linear-gradient(180deg, rgba(74,16,48,.60), rgba(45,0,17,.72));
+    border:1px solid rgba(255,211,227,.12);
+    box-shadow:
+      0 1px 0 rgba(255,246,250,.06) inset,
+      0 18px 44px rgba(10,0,5,.55),
+      0 4px 14px rgba(10,0,5,.40);
+    backdrop-filter:blur(14px) saturate(1.1);
+    -webkit-backdrop-filter:blur(14px) saturate(1.1);
+    transform-origin:center top;
+    will-change:transform, opacity, filter;
+    transition:
+      transform 640ms var(--ease-spring),
+      opacity 560ms var(--ease),
+      filter 560ms var(--ease);
+  }
+
+  /* ---- avatar ---- */
+  .av{
+    flex:0 0 auto; position:relative;
+    width:46px; height:46px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 1px rgba(255,246,250,.10) inset;
+    overflow:visible;
+  }
+  .av svg.leaf{ display:block; height:22px; width:auto; }
+  .av .mono{ font-family:var(--display); font-weight:600; font-size:18px; color:#2D0011; }
+
+  /* status glyph on the avatar */
+  .badge{
+    position:absolute; right:-4px; bottom:-4px;
+    width:22px; height:22px; border-radius:50%;
+    display:flex; align-items:center; justify-content:center;
+    box-shadow:0 0 0 2.5px #180009;
+  }
+  .badge svg{ width:12px; height:12px; display:block; }
+  .badge.repost{ background:var(--success-live); }
+  .badge.like{ background:linear-gradient(160deg,#FFACCA,#FF6FA5); }
+  .badge.follow{ background:var(--calm-pink); }
+
+  /* ---- text ---- */
+  .body{ flex:1 1 auto; min-width:0; }
+  .ttl{
+    font-family:var(--sans); font-size:15.5px; line-height:1.28;
+    color:#FFF6FA; letter-spacing:-.006em;
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .ttl .h{ font-weight:600; color:#FFFFFF; }
+  .ttl .a{ font-weight:500; color:rgba(255,246,250,.82); }
+  .sub{
+    margin-top:2px;
+    font-family:var(--sans); font-weight:400; font-size:13.5px; line-height:1.3;
+    color:rgba(255,246,250,.50);
+    white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  }
+  .time{
+    flex:0 0 auto; align-self:flex-start; margin-top:1px;
+    font-family:var(--sans); font-weight:500; font-size:12px;
+    color:rgba(255,246,250,.34);
+    font-variant-numeric:tabular-nums;
+  }
+
+  /* ---- caption ---- */
+  .caption{
+    position:fixed; bottom:26px; left:50%; transform:translateX(-50%);
+    text-align:center; z-index:20;
+  }
+  .caption .c1{
+    font-family:var(--display); font-weight:600;
+    font-size:14px; letter-spacing:.02em; color:rgba(255,246,250,.62);
+  }
+  .caption .c2{
+    font-family:var(--sans); font-weight:400;
+    font-size:11px; letter-spacing:.06em; text-transform:uppercase;
+    color:rgba(255,246,250,.28); margin-top:3px;
+  }
+
+  @media (max-width:460px){
+    .stack, .toast{ width:340px; }
+    .toast{ margin-left:-170px; }
+  }
+
+  /* reduced motion: freeze into a neat static stack */
+  @media (prefers-reduced-motion:reduce){
+    .toast{ transition:none !important; }
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+  <div class="glow"></div>
+
+  <a class="back" href="../../index.html"><span class="arw">←</span> Effekt-lab</a>
+
+  <div class="stack" id="stack"></div>
+
+  <div class="caption">
+    <div class="c1">Notifikations-toasts</div>
+    <div class="c2">efter X Toasts</div>
+  </div>
+
+<script>
+(function(){
+  const stack = document.getElementById('stack');
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  // --- Frankly leaf (avatar accent) ---
+  const LEAF = '<svg class="leaf" viewBox="0 0 18 37" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
+    + '<path d="M17.8 2.35c.1 1.84-.11 3.65-1.6 4.61-.52.34-1.06.57-1.64.76-.87.29-1.73.51-2.62.72l-3.41.8c-1.26.29-2.49.61-3.72 1-.72.23-1.39.48-2.08.79-.56.26-1.08.56-1.57.95-.35.27-.61.58-.88 1.01-.05-1.79-.03-3.17.26-4.9.13-.79.48-1.46 1.01-1.98 1.02-1 2.45-1.63 3.72-2.06.94-.32 1.86-.59 2.82-.82l4.01-.99c.89-.22 1.74-.46 2.61-.77.47-.16.9-.36 1.33-.6.31-.21.6-.4.85-.7 0 0 .75-1.05.92 2.19z" fill="#2D0011"/>'
+    + '<path d="M15.28 13.31l-2.23-.48c-1.58-.34-3.15-.67-4.72-1.09-1.17-.32-2.32-.67-3.45-1.08l-1.24.43c-.5.18-.96.42-1.44.66-.65.37-2.1 1.34-1.67 2.39.26.64.96 1.05 1.48 1.36 1.58.84 3.21 1.42 4.9 1.92 1.33-.4 2.62-.73 3.98-1.03l3.72-.81c.46-.12 2.81-.63 2.79-1.27 0-.31-.61-.55-.84-.63-.42-.15-.83-.28-1.27-.37z" fill="#2D0011"/>'
+    + '<path d="M16.96 15.27c-1.08.5-2.29.74-3.44 1l-4.08.91c-1.13.25-2.22.58-3.33.95-1.62.55-3.78 1.45-5 2.83-.49.56-.78 1.26-.89 2.05-.12.84-.18 1.66-.21 2.5-.03.78.02 1.67.1 2.47 1.6-2.43 7.03-4.13 9.52-4.68l2.73-.6c1.19-.26 2.67-.51 3.71-1.17 1.03-.66 1.34-1.87 1.48-3.15.13-1.21.15-2.4.11-3.66-.2.23-.43.41-.7.54z" fill="#2D0011"/>'
+    + '<path d="M8.47 35.24c.21.34.36.7.46 1.08.3 1.23.72-1.88.78-2.37.09-1.08.08-2.16-.1-3.09-.27-1.41-.97-2.54-1.94-3.41-1.01-.86-2.05-1.45-3.19-2.06-1.29.6-2.62 1.27-3.69 2.29-.15.18-.3.35-.41.56-.43.8.3 1.42.84 1.77.48.31.97.57 1.47.84l1.38.75c1.15.62 2.46 1.46 3.44 2.42.36.37.68.75.94 1.2z" fill="#2D0011"/>'
+    + '</svg>';
+
+  // --- status glyphs ---
+  const G = {
+    repost:'<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 9V7.5A2.5 2.5 0 0 1 6.5 5H16m1 0-2.4-2.4M17 5l-2.4 2.4M20 15v1.5A2.5 2.5 0 0 1 17.5 19H8m-1 0 2.4 2.4M7 19l2.4-2.4" stroke="#0B2A16" stroke-width="2.1" stroke-linecap="round" stroke-linejoin="round"/></svg>',
+    like:'<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path d="M12 20.3l-1.5-1.36C5.4 14.3 2.5 11.66 2.5 8.4 2.5 5.9 4.5 4 7 4c1.54 0 3.02.72 3.96 1.86h.08C11.98 4.72 13.46 4 15 4c2.5 0 4.5 1.9 4.5 4.4 0 3.26-2.9 5.9-8 10.54L12 20.3z" fill="#3A0016"/></svg>',
+    follow:'<svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M10 11a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7ZM3.5 19c0-3.04 2.9-5 6.5-5s6.5 1.96 6.5 5" stroke="#2D0011" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M19 8v5m2.5-2.5h-5" stroke="#2D0011" stroke-width="2" stroke-linecap="round"/></svg>'
+  };
+
+  // --- avatar fills (some carry the leaf) ---
+  const AV = {
+    leafPink:{bg:'radial-gradient(120% 120% at 30% 25%, #FFF6FA, #FFD3E3 62%, #FFACCA)', mark:LEAF},
+    leafBlush:{bg:'radial-gradient(120% 120% at 30% 25%, #FFFFFF, #FFE7F0 60%, #FFD3E3)', mark:LEAF},
+    m:{bg:'linear-gradient(150deg, #FF9EC4, #FF6FA5)', mono:'M'},
+    j:{bg:'linear-gradient(150deg, #C7A2FF, #8A1F4A)', mono:'J'},
+    s:{bg:'linear-gradient(150deg, #FFC98A, #E8617B)', mono:'S'},
+    a:{bg:'linear-gradient(150deg, #9FD8FF, #5A7BE0)', mono:'A'},
+    l:{bg:'linear-gradient(150deg, #B7E7B0, #27C966)', mono:'L'}
+  };
+
+  // --- notification pool (Danish) ---
+  const POOL = [
+    {av:'m',      kind:'repost', h:'@mette',  a:'delte dit opslag',   sub:'De nye toasts i Frankly er så rene',      t:'nu'},
+    {av:'j',      kind:'like',   h:'@jonas',  a:'kunne lide dit opslag', sub:'Endelig et ordentligt notifikations-design', t:'1m'},
+    {av:'leafPink',kind:'follow',h:'@frankly',a:'følger dig nu',      sub:'I følger nu hinanden',                    t:'2m'},
+    {av:'s',      kind:'repost', h:'@sofie',  a:'delte dit opslag',   sub:'Det her fortjener at blive delt bredt',    t:'4m'},
+    {av:'a',      kind:'like',   h:'@anders', a:'kunne lide dit opslag', sub:'Rent, roligt og rigtig godt lavet',    t:'6m'},
+    {av:'leafBlush',kind:'follow',h:'@laura', a:'følger dig nu',      sub:'I følger nu hinanden',                    t:'9m'}
+  ];
+
+  // depth choreography — 0 is the crisp front card, deeper recedes & fades
+  const DEPTH = {
+    '-1':{y:-52, s:.94, o:0,  b:8 },   // entering, above the stack
+    0:   {y:0,   s:1,   o:1,  b:0 },
+    1:   {y:52,  s:.935,o:.55,b:.7},
+    2:   {y:95,  s:.875,o:.28,b:1.8},
+    3:   {y:130, s:.825,o:.11,b:3.4},
+    4:   {y:158, s:.79, o:0,  b:5 }    // exiting
+  };
+  const MAX = 4; // depths 0..3 visible
+
+  function setDepth(el, d){
+    const c = DEPTH[d] || DEPTH[4];
+    el.style.transform = 'translateY(' + c.y + 'px) scale(' + c.s + ')';
+    el.style.opacity = c.o;
+    el.style.filter = c.b ? 'blur(' + c.b + 'px)' : 'none';
+    el.style.zIndex = String(100 - d);
+  }
+
+  function build(data){
+    const el = document.createElement('div');
+    el.className = 'toast';
+    const av = AV[data.av];
+    const inner = av.mark ? av.mark : '<span class="mono">' + av.mono + '</span>';
+    el.innerHTML =
+      '<div class="av" style="background:' + av.bg + '">' + inner +
+        '<span class="badge ' + data.kind + '">' + G[data.kind] + '</span>' +
+      '</div>' +
+      '<div class="body">' +
+        '<div class="ttl"><span class="h">' + data.h + '</span> <span class="a">' + data.a + '</span></div>' +
+        '<div class="sub">' + data.sub + '</div>' +
+      '</div>' +
+      '<div class="time">' + data.t + '</div>';
+    return el;
+  }
+
+  let toasts = [];   // index 0 = front
+  let idx = 0;
+
+  // reduced motion: render one neat static stack, no loop
+  if(reduce){
+    for(let d = 3; d >= 0; d--){
+      const el = build(POOL[d % POOL.length]);
+      stack.appendChild(el);
+      setDepth(el, d);
+      toasts.unshift(el);
+    }
+    return;
+  }
+
+  // prefill a full stack (no entrance animation)
+  for(let d = 3; d >= 0; d--){
+    const el = build(POOL[(idx + d) % POOL.length]);
+    el.style.transition = 'none';
+    stack.appendChild(el);
+    setDepth(el, d);
+    // restore transition next frame
+    requestAnimationFrame(function(){ requestAnimationFrame(function(){ el.style.transition = ''; }); });
+    toasts.unshift(el);
+  }
+  idx += 4;
+
+  function cycle(){
+    const data = POOL[idx % POOL.length]; idx++;
+    const el = build(data);
+    setDepth(el, -1);           // start above the stack, invisible
+    stack.appendChild(el);
+    void el.offsetWidth;        // commit start state
+    toasts.unshift(el);
+
+    // spring everyone down one depth
+    toasts.forEach(function(t, i){ setDepth(t, i); });
+
+    // retire the oldest
+    if(toasts.length > MAX){
+      const old = toasts.pop();
+      setDepth(old, MAX);
+      setTimeout(function(){ if(old && old.parentNode) old.remove(); }, 760);
+    }
+  }
+
+  setTimeout(function tick(){
+    cycle();
+    setTimeout(tick, 2000);
+  }, 1400);
+})();
+</script>
+</body>
+</html>

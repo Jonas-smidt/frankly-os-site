@@ -1,0 +1,322 @@
+<!doctype html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Kinetiske felter — Frankly Effekt-lab</title>
+<link rel="stylesheet" href="../assets/frankly-brand.css">
+<style>
+  html,body{height:100%;margin:0}
+  .fl{
+    min-height:100%;
+    background:
+      radial-gradient(130% 100% at 50% 8%, var(--blush) 0%, var(--limestone) 44%, var(--limestone-soft) 100%);
+    overflow:hidden;
+  }
+
+  /* bespoke soft-body easing — anticipation, ease, settle ---------- */
+  :root{
+    --e-body:cubic-bezier(.62,.02,.24,1);      /* soft-body slide          */
+    --e-antic:cubic-bezier(.86,-0.12,.22,1);   /* pull back then go        */
+    --e-settle:cubic-bezier(.18,.86,.28,1.06); /* tiny overshoot → settle  */
+    --e-glide:cubic-bezier(.34,.06,.2,1);      /* long decelerating glide  */
+    --loop:12s;
+  }
+
+  /* ---- stage ---------------------------------------------------- */
+  .stage{ position:fixed; inset:0; display:grid; place-items:center; }
+  .scene{
+    position:relative;
+    width:min(80vmin,660px);
+    height:min(80vmin,660px);
+    /* echo the ref: cluster reads a touch above centre */
+    transform:translateY(-3%);
+  }
+
+  /* ambient floor wash so the composition sits on something -------- */
+  .scene::after{
+    content:""; position:absolute; left:50%; top:58%;
+    width:70%; height:34%;
+    transform:translate(-50%,-50%);
+    background:radial-gradient(50% 50% at 50% 50%, rgba(45,0,17,.06), rgba(45,0,17,0) 70%);
+    filter:blur(24px); pointer-events:none;
+  }
+
+  /* ---- shared tile / sphere base -------------------------------- */
+  .tile,.sphere{
+    position:absolute; left:50%; top:50%;
+    transform:translate(-50%,-50%);
+  }
+
+  /* ---- tiles: physical panels ----------------------------------- */
+  .tile{
+    border-radius:30% / 34%;
+    overflow:hidden; isolation:isolate;
+    will-change:transform,border-radius;
+    box-shadow:
+      0 1px 2px rgba(45,0,17,.06),
+      0 8px 20px rgba(45,0,17,.10),
+      0 30px 60px rgba(45,0,17,.14);
+  }
+  /* crisp top-left rim + faint inner outline for a "panel edge" */
+  .tile::before{
+    content:""; position:absolute; inset:0; z-index:3; pointer-events:none;
+    border-radius:inherit;
+    box-shadow:
+      inset 1px 1px 0 rgba(255,255,255,.38),
+      inset 0 0 0 1px rgba(255,255,255,.06),
+      inset -1px -14px 26px rgba(45,0,17,.14);
+  }
+  /* diagonal specular sheen */
+  .tile::after{
+    content:""; position:absolute; inset:0; z-index:2; pointer-events:none;
+    background:linear-gradient(158deg,rgba(255,255,255,.40),rgba(255,255,255,0) 40%);
+    mix-blend-mode:screen;
+  }
+
+  .t1{ width:206px; height:250px;
+    background:linear-gradient(152deg,var(--bordeaux) 0%,var(--bordeaux-2) 52%,#8A1F4A 100%);
+    animation:t1 var(--loop) infinite; z-index:5; }
+  .t2{ width:176px; height:212px;
+    background:linear-gradient(202deg,var(--calm-pink) 0%,var(--calm-deep) 58%,#FF6FA5 100%);
+    animation:t2 var(--loop) infinite; z-index:6; }
+  .t3{ width:194px; height:236px;
+    background:linear-gradient(180deg,var(--blush) 0%,var(--calm-pink) 46%,var(--calm-deep) 100%);
+    animation:t3 var(--loop) infinite; z-index:4; }
+  .t4{ width:150px; height:150px;
+    background:var(--prism); background-size:180% 180%;
+    animation:t4 var(--loop) infinite; z-index:7; }
+  .t5{ width:158px; height:196px;
+    background:linear-gradient(160deg,var(--paper) 0%,var(--pink-stone) 68%,var(--calm-pink) 100%);
+    box-shadow:
+      0 1px 2px rgba(45,0,17,.05),
+      0 8px 18px rgba(45,0,17,.08),
+      0 26px 50px rgba(45,0,17,.11);
+    animation:t5 var(--loop) infinite; z-index:3; }
+
+  /* a slow travelling prism sweep across the two "glossy" tiles ---- */
+  .sweep{
+    position:absolute; top:-40%; left:-60%; z-index:1;
+    width:70%; height:180%;
+    background:linear-gradient(100deg,
+      rgba(255,255,255,0) 0%,
+      rgba(255,214,227,.55) 40%,
+      rgba(255,111,165,.65) 52%,
+      rgba(255,214,227,.55) 64%,
+      rgba(255,255,255,0) 100%);
+    filter:blur(6px);
+    mix-blend-mode:screen;
+    transform:translateX(0) rotate(8deg);
+    animation:sweep var(--loop) linear infinite;
+  }
+  .t4 .sweep{ mix-blend-mode:overlay; opacity:.9; }
+  @keyframes sweep{
+    0%,58%  {transform:translateX(0) rotate(8deg)}
+    78%,100%{transform:translateX(360%) rotate(8deg)}
+  }
+
+  /* ---- spheres: genuinely dimensional --------------------------- */
+  .sphere{ border-radius:50%; will-change:transform,filter; }
+
+  /* soft bordeaux-tinted contact shadow cast down-right (light TL) */
+  .sphere .shadow{
+    position:absolute; left:52%; bottom:-26%;
+    width:80%; height:24%;
+    transform:translateX(-50%);
+    background:radial-gradient(50% 50% at 50% 50%,rgba(45,0,17,.30),rgba(45,0,17,0) 70%);
+    filter:blur(7px); z-index:-1;
+  }
+  /* terminator: dark occlusion bottom-right, faint bounce top-left */
+  .sphere .body{
+    position:absolute; inset:0; border-radius:50%;
+    box-shadow:
+      inset -7px -9px 18px rgba(45,0,17,.50),
+      inset 5px 6px 14px rgba(255,255,255,.18);
+  }
+  /* tight specular hot-spot */
+  .sphere .spec{
+    position:absolute; left:27%; top:22%;
+    width:26%; height:22%; border-radius:50%;
+    background:radial-gradient(closest-side,rgba(255,255,255,.98),rgba(255,255,255,0) 78%);
+    filter:blur(.4px);
+  }
+
+  .s1{ width:126px; height:126px;   /* sphere A — deep bordeaux/magenta */
+    background:
+      radial-gradient(58% 52% at 34% 30%, #E06B92 0%, rgba(224,107,146,0) 58%),
+      radial-gradient(120% 120% at 38% 34%, #C23A63 0%, #8A1F4A 42%, var(--bordeaux-2) 74%, var(--bordeaux) 100%);
+    animation:s1 var(--loop) infinite; z-index:9; }
+  .s2{ width:78px; height:78px;     /* sphere B — calm-pink */
+    background:
+      radial-gradient(58% 52% at 34% 30%, #FFFFFF 0%, rgba(255,255,255,0) 52%),
+      radial-gradient(120% 120% at 38% 34%, var(--calm-pink) 0%, var(--calm-deep) 46%, #E0709A 100%);
+    animation:s2 var(--loop) infinite; z-index:8; }
+  .s3{ width:46px; height:46px;     /* trailing satellite */
+    background:
+      radial-gradient(60% 54% at 34% 30%, #F09FBB 0%, rgba(240,159,187,0) 56%),
+      radial-gradient(120% 120% at 38% 34%, #B23A5F 0%, var(--bordeaux-2) 50%, var(--bordeaux) 100%);
+    animation:s3 var(--loop) infinite; z-index:10; }
+  .s4{ width:26px; height:26px;     /* tiny drifting dot */
+    background:
+      radial-gradient(60% 54% at 34% 30%, #FFFFFF 0%, rgba(255,255,255,0) 58%),
+      radial-gradient(120% 120% at 38% 34%, var(--calm-deep) 0%, #E0709A 60%, #8A1F4A 100%);
+    animation:s4 var(--loop) infinite; z-index:7; }
+
+  /* ============ choreography (0% === 100%, seamless) ==============
+     per-keyframe timing-functions carry the rhythm: hold → antic →
+     glide → settle. Elements travel on offset phases (staggered).    */
+
+  @keyframes t1{
+    0%   {transform:translate(-50%,-50%) translate(-108px,-46px) rotate(-6deg) scale(1);    border-radius:28%/32%; animation-timing-function:var(--e-antic)}
+    22%  {transform:translate(-50%,-50%) translate(-40px,-70px)  rotate(2deg)  scale(1.05); border-radius:44% 30% 40% 30%/34% 46% 30% 42%; animation-timing-function:var(--e-glide)}
+    46%  {transform:translate(-50%,-50%) translate(52px,-6px)    rotate(7deg)  scale(.95);  border-radius:30%/34%; animation-timing-function:var(--e-body)}
+    70%  {transform:translate(-50%,-50%) translate(-6px,54px)    rotate(-3deg) scale(1.02); border-radius:38% 42% 30% 44%/42% 30% 46% 30%; animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(-108px,-46px) rotate(-6deg) scale(1);    border-radius:28%/32%}
+  }
+  @keyframes t2{
+    0%   {transform:translate(-50%,-50%) translate(64px,-78px)   rotate(6deg)  scale(1);    border-radius:32%/36%; animation-timing-function:var(--e-glide)}
+    26%  {transform:translate(-50%,-50%) translate(2px,-16px)    rotate(-2deg) scale(1.06); border-radius:46% 30% 42% 30%/30% 44% 30% 48%; animation-timing-function:var(--e-body)}
+    52%  {transform:translate(-50%,-50%) translate(-78px,42px)   rotate(-8deg) scale(.93);  border-radius:28%/32%; animation-timing-function:var(--e-antic)}
+    76%  {transform:translate(-50%,-50%) translate(24px,82px)    rotate(4deg)  scale(1.02); border-radius:38% 46% 30% 42%/46% 30% 42% 34%; animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(64px,-78px)   rotate(6deg)  scale(1);    border-radius:32%/36%}
+  }
+  @keyframes t3{
+    0%   {transform:translate(-50%,-50%) translate(112px,44px)   rotate(-4deg) scale(1);    border-radius:34%/36%; animation-timing-function:var(--e-body)}
+    24%  {transform:translate(-50%,-50%) translate(62px,98px)    rotate(5deg)  scale(.94);  border-radius:42% 30% 48% 30%/30% 46% 30% 42%; animation-timing-function:var(--e-glide)}
+    50%  {transform:translate(-50%,-50%) translate(-44px,66px)   rotate(9deg)  scale(1.05); border-radius:30%/38%; animation-timing-function:var(--e-antic)}
+    74%  {transform:translate(-50%,-50%) translate(76px,-8px)    rotate(2deg)  scale(1.0);  border-radius:46% 34% 42% 30%/42% 30% 48% 30%; animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(112px,44px)   rotate(-4deg) scale(1);    border-radius:34%/36%}
+  }
+  @keyframes t4{
+    0%   {transform:translate(-50%,-50%) translate(-26px,100px)  rotate(8deg)  scale(1);    border-radius:34%/34%; animation-timing-function:var(--e-antic)}
+    22%  {transform:translate(-50%,-50%) translate(-92px,32px)   rotate(-4deg) scale(1.14); border-radius:50%/50%; animation-timing-function:var(--e-glide)}
+    48%  {transform:translate(-50%,-50%) translate(-8px,-42px)   rotate(3deg)  scale(.88);  border-radius:26%/26%; animation-timing-function:var(--e-body)}
+    74%  {transform:translate(-50%,-50%) translate(70px,62px)    rotate(-6deg) scale(1.05); border-radius:48% 30% 46% 30%/30% 48% 30% 46%; animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(-26px,100px)  rotate(8deg)  scale(1);    border-radius:34%/34%}
+  }
+  @keyframes t5{
+    0%   {transform:translate(-50%,-50%) translate(-116px,74px)  rotate(4deg)  scale(1);    border-radius:36%/38%; animation-timing-function:var(--e-glide)}
+    24%  {transform:translate(-50%,-50%) translate(-52px,12px)   rotate(-3deg) scale(1.06); border-radius:46% 30% 42% 34%/30% 46% 34% 42%; animation-timing-function:var(--e-body)}
+    50%  {transform:translate(-50%,-50%) translate(42px,-42px)   rotate(6deg)  scale(.94);  border-radius:30%/34%; animation-timing-function:var(--e-antic)}
+    76%  {transform:translate(-50%,-50%) translate(-68px,-62px)  rotate(-2deg) scale(1.02); border-radius:42% 46% 30% 44%/44% 30% 46% 30%; animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(-116px,74px)  rotate(4deg)  scale(1);    border-radius:36%/38%}
+  }
+
+  /* spheres — velocity-synced motion blur (filter peaks mid-travel) */
+  @keyframes s1{
+    0%   {transform:translate(-50%,-50%) translate(-158px,128px) scale(1);    filter:blur(0); animation-timing-function:var(--e-antic)}
+    25%  {transform:translate(-50%,-50%) translate(118px,152px)  scale(1.16); filter:blur(1.4px); animation-timing-function:var(--e-glide)}
+    50%  {transform:translate(-50%,-50%) translate(180px,-34px)  scale(.86);  filter:blur(1.2px); animation-timing-function:var(--e-body)}
+    75%  {transform:translate(-50%,-50%) translate(-44px,-150px) scale(1.04); filter:blur(1.4px); animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(-158px,128px) scale(1);    filter:blur(0)}
+  }
+  @keyframes s2{
+    0%   {transform:translate(-50%,-50%) translate(176px,-124px) scale(1);    filter:blur(0); animation-timing-function:var(--e-glide)}
+    25%  {transform:translate(-50%,-50%) translate(58px,172px)   scale(.8);   filter:blur(1.6px); animation-timing-function:var(--e-body)}
+    50%  {transform:translate(-50%,-50%) translate(-196px,66px)  scale(1.22); filter:blur(1.3px); animation-timing-function:var(--e-antic)}
+    75%  {transform:translate(-50%,-50%) translate(-98px,-156px) scale(.94);  filter:blur(1.6px); animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(176px,-124px) scale(1);    filter:blur(0)}
+  }
+  @keyframes s3{
+    0%   {transform:translate(-50%,-50%) translate(-182px,-100px) scale(1);   filter:blur(0); animation-timing-function:var(--e-body)}
+    25%  {transform:translate(-50%,-50%) translate(156px,-146px)  scale(1.18);filter:blur(1.8px); animation-timing-function:var(--e-glide)}
+    50%  {transform:translate(-50%,-50%) translate(202px,114px)   scale(.82); filter:blur(1.6px); animation-timing-function:var(--e-antic)}
+    75%  {transform:translate(-50%,-50%) translate(14px,184px)    scale(1.06);filter:blur(1.8px); animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(-182px,-100px) scale(1);   filter:blur(0)}
+  }
+  @keyframes s4{
+    0%   {transform:translate(-50%,-50%) translate(216px,44px)    scale(1);   filter:blur(0); animation-timing-function:var(--e-glide)}
+    25%  {transform:translate(-50%,-50%) translate(124px,-176px)  scale(.9);  filter:blur(1.6px); animation-timing-function:var(--e-body)}
+    50%  {transform:translate(-50%,-50%) translate(-206px,-124px) scale(1.28);filter:blur(1.4px); animation-timing-function:var(--e-antic)}
+    75%  {transform:translate(-50%,-50%) translate(-154px,154px)  scale(1);   filter:blur(1.6px); animation-timing-function:var(--e-settle)}
+    100% {transform:translate(-50%,-50%) translate(216px,44px)    scale(1);   filter:blur(0)}
+  }
+
+  /* ---- grain overlay: kills gradient banding -------------------- */
+  .grain{
+    position:fixed; inset:0; z-index:40; pointer-events:none;
+    opacity:.055; mix-blend-mode:soft-light;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.82' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  }
+
+  /* ---- back-link pill ------------------------------------------- */
+  .back{
+    position:fixed; top:20px; left:20px; z-index:50;
+    display:inline-flex; align-items:center; gap:7px;
+    padding:9px 15px 9px 12px;
+    font-family:var(--sans); font-size:13px; font-weight:500;
+    color:var(--bordeaux); text-decoration:none;
+    background:rgba(255,255,255,.72);
+    -webkit-backdrop-filter:blur(10px); backdrop-filter:blur(10px);
+    border:1px solid var(--line-dark);
+    border-radius:var(--r-pill);
+    box-shadow:var(--shadow-card);
+    transition:transform var(--dur-hover) var(--ease-out), background var(--dur-hover) var(--ease-out);
+  }
+  .back:hover{ transform:translateX(-2px); background:rgba(255,255,255,.9); }
+  .back:active{ transform:translateX(-2px) scale(.96); }
+
+  /* ---- caption -------------------------------------------------- */
+  .caption{
+    position:fixed; left:50%; bottom:26px; transform:translateX(-50%);
+    z-index:50; text-align:center; pointer-events:none;
+  }
+  .caption .title{
+    font-family:var(--display); font-weight:600; font-size:15px;
+    letter-spacing:-.01em; color:var(--bordeaux);
+  }
+  .caption .sub{
+    display:block; margin-top:3px;
+    font-family:var(--sans); font-size:11px; letter-spacing:.06em;
+    color:var(--grey-2);
+  }
+
+  @media (prefers-reduced-motion:reduce){
+    .tile,.sphere,.sweep{animation:none!important}
+    /* one composed, balanced still */
+    .t1{transform:translate(-50%,-50%) translate(-108px,-46px) rotate(-6deg); border-radius:28%/32%}
+    .t2{transform:translate(-50%,-50%) translate(64px,-78px)   rotate(6deg);  border-radius:32%/36%}
+    .t3{transform:translate(-50%,-50%) translate(112px,44px)   rotate(-4deg); border-radius:34%/36%}
+    .t4{transform:translate(-50%,-50%) translate(-26px,100px)  rotate(8deg);  border-radius:34%/34%}
+    .t5{transform:translate(-50%,-50%) translate(-116px,74px)  rotate(4deg);  border-radius:36%/38%}
+    .s1{transform:translate(-50%,-50%) translate(-158px,128px)}
+    .s2{transform:translate(-50%,-50%) translate(176px,-124px)}
+    .s3{transform:translate(-50%,-50%) translate(-182px,-100px)}
+    .s4{transform:translate(-50%,-50%) translate(216px,44px)}
+  }
+</style>
+<style>
+@font-face{font-family:"Almarena Neue Display";font-weight:600 700;font-display:swap;src:url("/effekt-lab/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}
+@font-face{font-family:"Switzer";font-weight:400;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Regular.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:500;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Medium.otf") format("opentype")}
+@font-face{font-family:"Switzer";font-weight:600;font-display:swap;src:url("/effekt-lab/fonts/Switzer-Semibold.otf") format("opentype")}
+</style>
+</head>
+<body class="fl">
+
+  <a class="back" href="../../index.html">← Effekt-lab</a>
+
+  <div class="stage">
+    <div class="scene">
+      <div class="tile t5"></div>
+      <div class="tile t3"></div>
+      <div class="tile t1"><span class="sweep"></span></div>
+      <div class="tile t2"></div>
+      <div class="tile t4"><span class="sweep"></span></div>
+
+      <div class="sphere s2"><span class="shadow"></span><span class="body"></span><span class="spec"></span></div>
+      <div class="sphere s4"><span class="shadow"></span><span class="body"></span><span class="spec"></span></div>
+      <div class="sphere s1"><span class="shadow"></span><span class="body"></span><span class="spec"></span></div>
+      <div class="sphere s3"><span class="shadow"></span><span class="body"></span><span class="spec"></span></div>
+    </div>
+  </div>
+
+  <div class="grain"></div>
+
+  <div class="caption">
+    <span class="title">Kinetiske felter</span>
+    <span class="sub">efter Kinetic Tile Study</span>
+  </div>
+
+</body>
+</html>
