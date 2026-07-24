@@ -155,6 +155,15 @@ def build_manifest(root=pathlib.Path(".")):
             if src.is_dir():
                 continue
             manifest[src.relative_to(root).as_posix()] = src
+    # Effekt-lab: main()'s copy loop rglob-copies the whole effekt-lab/ tree, so the manifest
+    # must account for it too (lockstep with main()). Missing here since origin added effekt-lab
+    # without updating build_manifest → manifestBoundary count-mismatch. (2026-07-24 fix.)
+    lab_dir = root / "effekt-lab"
+    if lab_dir.exists():
+        for src in sorted(lab_dir.rglob("*")):
+            if src.is_dir():
+                continue
+            manifest[src.relative_to(root).as_posix()] = src
     manifest[".nojekyll"] = None
     domain = os.environ.get("SITE_DOMAIN", "").strip()
     if not domain and (root / "CNAME").exists():
