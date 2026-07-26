@@ -13,6 +13,7 @@ __pycache__/
 # af site/ (allowlist + check_upload_boundary.py); dette holder kilden ude af repoet.
 control-cockpit.html
 frankly-os-cockpit.html
+frankly-os-cockpit-v1-arkiv.html
 frankly-os-cockpit-v3-arkiv.html
 frankly-os.html
 data/autopilot-digest.json
