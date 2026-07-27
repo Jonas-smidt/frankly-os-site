@@ -23,6 +23,7 @@ Disallow: /the-decision-chicken.html
 Disallow: /frankly-quiz.html
 Disallow: /frankly-instore-onepager.html
 Disallow: /frankly-instore-salgsguide.html
+Disallow: /frankly-attach-rate.html
 Disallow: /glass-lab.html
 Disallow: /glass-surface.html
 Disallow: /frankly-ribbon-lab.html

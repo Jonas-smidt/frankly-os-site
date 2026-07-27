@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "updated": "2026-07-11",
+  "updated": "2026-07-27",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "description": "Canonical Frankly Lab 4.0 shelf inventory. Consumers filter by lane and retired state; generated site copies are never edited by hand.",
   "tools": [
@@ -212,6 +212,27 @@
       "actionLabelEn": "Open Instore salgsguide",
       "mark": "SG",
       "art": "salgsguide",
+      "retired": false
+    },
+    {
+      "id": "attach-rate",
+      "href": "frankly-attach-rate.html",
+      "labelEn": "Attach-rate simulator",
+      "labelDa": "Attach-rate simulator",
+      "descriptionEn": "Drag the attach rate and see what a few points are worth at the partner's own volume. Illustrative model on entered figures. In Danish.",
+      "descDa": "Træk i attach-raten og se, hvad få point er værd ved partnerens eget volumen. Illustrativ model på egne tal.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open Attach-rate simulator",
+      "mark": "AR",
+      "art": "instore",
       "retired": false
     },
     {
@@ -573,11 +594,11 @@
     }
   ],
   "counts": {
-    "total": 27,
-    "active": 24,
-    "publicLab": 21,
+    "total": 28,
+    "active": 25,
+    "publicLab": 22,
     "localOs": 3,
     "retired": 3
   },
-  "syncedAt": "2026-07-13T09:34:32+00:00"
+  "syncedAt": "2026-07-27T08:06:06+00:00"
 }

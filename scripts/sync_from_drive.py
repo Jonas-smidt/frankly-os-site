@@ -41,6 +41,7 @@ UPLOADABLE_HTML = (
     pathlib.Path("om-frankly-lab.html"),
     pathlib.Path("frankly-instore-onepager.html"),
     pathlib.Path("frankly-instore-salgsguide.html"),
+    pathlib.Path("frankly-attach-rate.html"),
     pathlib.Path("glass-lab.html"),
     pathlib.Path("glass-surface.html"),
     pathlib.Path("liquid-glass-hover.html"),

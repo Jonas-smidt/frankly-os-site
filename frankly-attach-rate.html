@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Frankly — Attach-rate simulator</title>
+<link rel="stylesheet" href="frankly-lab-brand.css">
+<style>
+  /* Page-local layer only — tokens + shared components come from frankly-lab-brand.css */
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%}
+
+  /* --- persistent disclaimer --- */
+  .ar-disclaimer{
+    position:sticky; top:0; z-index:20;
+    display:flex; gap:10px; align-items:flex-start;
+    background:var(--blush); border:1px solid var(--stone-4); border-radius:var(--r-pill);
+    padding:10px 18px; font-size:13px; line-height:1.45; color:var(--grey-1);
+  }
+  .ar-disclaimer b{color:var(--bordeaux); font-weight:600}
+  @media (max-width:560px){ .ar-disclaimer{border-radius:var(--r-card)} }
+
+  /* --- hero: the one slider that carries the page --- */
+  .ar-hero{display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,340px); gap:var(--sp-6); align-items:center}
+  @media (max-width:860px){ .ar-hero{grid-template-columns:1fr} }
+
+  .ar-big{font-family:var(--fl-display); font-weight:600; letter-spacing:-.02em; line-height:.92;
+    font-size:clamp(46px,9vw,84px); color:var(--bordeaux); font-variant-numeric:tabular-nums; margin:0}
+  .ar-big small{display:block; font-family:var(--fl-sans); font-size:15px; font-weight:500; letter-spacing:0;
+    line-height:1.4; color:var(--grey-1); margin-top:var(--sp-3); max-width:34ch}
+  .ar-sub{margin:var(--sp-4) 0 0; font-size:14.5px; line-height:1.5; color:var(--grey-2); max-width:40ch}
+
+  .ar-slider-wrap{background:var(--limestone-soft); border:1px solid var(--stone-4);
+    border-radius:var(--r-card); padding:var(--sp-5)}
+  .ar-slider-wrap .ar-value{font-family:var(--fl-display); font-weight:600; font-size:34px; line-height:1;
+    color:var(--bordeaux); font-variant-numeric:tabular-nums}
+  .ar-slider-wrap .ar-delta{font-size:13px; color:var(--grey-2); margin:6px 0 0}
+
+  input[type=range]{
+    -webkit-appearance:none; appearance:none; width:100%; height:26px; margin:var(--sp-3) 0 0;
+    background:transparent; cursor:grab; display:block;
+  }
+  input[type=range]:active{cursor:grabbing}
+  input[type=range]::-webkit-slider-runnable-track{height:6px; border-radius:var(--r-pill); background:var(--stone-4)}
+  input[type=range]::-moz-range-track{height:6px; border-radius:var(--r-pill); background:var(--stone-4)}
+  input[type=range]::-webkit-slider-thumb{
+    -webkit-appearance:none; appearance:none; width:24px; height:24px; margin-top:-9px;
+    border-radius:var(--r-pill); background:var(--bordeaux); border:3px solid var(--paper);
+    box-shadow:var(--shadow-card);
+  }
+  input[type=range]::-moz-range-thumb{
+    width:24px; height:24px; border-radius:var(--r-pill); background:var(--bordeaux);
+    border:3px solid var(--paper); box-shadow:var(--shadow-card);
+  }
+  input[type=range]:hover::-webkit-slider-thumb{background:var(--calm-deep)}
+  input[type=range]:hover::-moz-range-thumb{background:var(--calm-deep)}
+  input[type=range]:focus-visible::-webkit-slider-thumb{outline:2px solid var(--calm-deep); outline-offset:2px}
+  input[type=range]:focus-visible::-moz-range-thumb{outline:2px solid var(--calm-deep); outline-offset:2px}
+  .ar-scale{display:flex; justify-content:space-between; font-size:11.5px; color:var(--grey-2); margin-top:4px;
+    font-variant-numeric:tabular-nums}
+
+  /* --- inputs --- */
+  .ar-inputs{display:grid; grid-template-columns:repeat(auto-fit,minmax(210px,1fr)); gap:0 var(--sp-5)}
+  .ar-inputs .fl-field{margin-bottom:var(--sp-4)}
+  .ar-unset{font-size:12.5px; color:var(--grey-2); font-variant-numeric:tabular-nums}
+  .ar-inline-val{font-family:var(--fl-sans); font-weight:600; color:var(--bordeaux); font-variant-numeric:tabular-nums}
+
+  /* --- result table --- */
+  .ar-rows{display:grid; gap:1px; background:var(--line); border:1px solid var(--stone-4);
+    border-radius:var(--r-card); overflow:hidden}
+  .ar-row{display:flex; flex-wrap:wrap; gap:10px; justify-content:space-between; align-items:baseline;
+    background:var(--paper); padding:14px 18px}
+  .ar-row span{font-size:14.5px; color:var(--grey-1)}
+  .ar-row strong{font-size:20px; font-weight:600; color:var(--bordeaux); font-variant-numeric:tabular-nums}
+
+  .ar-note{margin:var(--sp-4) 0 0; font-size:13px; line-height:1.55; color:var(--grey-2)}
+  .ar-honest{display:grid; grid-template-columns:repeat(auto-fit,minmax(230px,1fr)); gap:var(--sp-4)}
+  .ar-honest article{background:var(--limestone-soft); border:1px solid var(--stone-4);
+    border-radius:var(--r-card); padding:var(--sp-5)}
+  .ar-honest h3{font-size:19px; margin:0 0 8px}
+  .ar-honest p{margin:0; font-size:14px; line-height:1.5; color:var(--grey-1)}
+
+  @media (prefers-reduced-motion:reduce){ *{transition:none!important; animation:none!important} }
+</style>
+</head>
+<body class="fl">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="frankly-logo" viewBox="0 0 147.16 36.63">
+      <path d="M139.652 17.19V13.63H138.352V12.71H142.082V13.63H140.782V17.19H139.652Z" fill="currentColor"></path>
+      <path d="M142.555 17.19V12.71H143.935L144.855 15.57H144.865L145.785 12.71H147.165V17.19H146.095V14.4H146.085L145.255 17.19H144.465L143.635 14.4H143.625V17.19H142.555Z" fill="currentColor"></path>
+      <path d="M39.8391 9.93012C40.3091 9.93012 40.7191 9.62012 40.7191 9.15012V6.15012C40.7191 5.78012 40.4691 5.47012 40.1091 5.38012C39.4291 5.20012 38.6091 5.12012 37.6491 5.12012C35.4291 5.12012 33.7391 5.75012 32.5791 7.01012C31.4191 8.27012 30.8291 10.0201 30.8291 12.2601V12.7201H28.5791C28.1491 12.7201 27.7891 13.0701 27.7891 13.5101V16.2801C27.7891 16.7101 28.1391 17.0701 28.5791 17.0701H30.0391C30.4691 17.0701 30.8291 17.4201 30.8291 17.8601V28.5201C30.8291 28.9501 31.1791 29.3101 31.6191 29.3101H35.9491C36.3791 29.3101 36.7391 28.9601 36.7391 28.5201V17.8601C36.7391 17.4301 37.0891 17.0701 37.5291 17.0701H40.9091C41.4191 17.0701 41.6991 17.4501 41.6991 17.8601V28.5101C41.6991 28.9401 42.0491 29.3001 42.4891 29.3001H46.8191C47.2491 29.3001 47.6091 28.9501 47.6091 28.5101V20.9801C47.6091 18.6101 48.8491 17.4201 51.3291 17.4201C51.3591 17.4201 51.3891 17.4201 51.4191 17.4201C52.8391 17.4401 54.0391 16.3601 54.0391 14.9401V13.2301C54.0391 12.8801 53.8191 12.5601 53.4891 12.4801C53.1291 12.3801 52.6891 12.3401 52.1791 12.3401C51.0891 12.3401 50.1091 12.6101 49.2391 13.1601C48.3691 13.7001 48.0091 14.4901 47.6191 15.5101V13.4201C47.5691 13.0301 47.2391 12.7301 46.8391 12.7301H36.7491V12.3401C36.7491 12.3401 36.7091 9.95012 39.8491 9.95012L39.8391 9.93012Z" fill="currentColor"></path>
+      <path d="M66.0619 14.83C65.5619 14.05 64.8619 13.42 63.9619 12.95C63.0619 12.48 62.0619 12.25 60.9819 12.25C59.5919 12.25 58.3419 12.62 57.2319 13.36C56.1219 14.1 55.2519 15.13 54.6219 16.46C53.9919 17.79 53.6719 19.31 53.6719 21.03C53.6719 22.75 53.9819 24.22 54.6019 25.51C55.2219 26.8 56.0819 27.8 57.1919 28.49C58.3019 29.19 59.5619 29.53 60.9719 29.53C62.0619 29.53 63.0619 29.31 63.9719 28.86C64.8819 28.41 65.5819 27.8 66.0619 27.02V28.48C66.0619 28.91 66.4119 29.27 66.8519 29.27H71.0819C71.5119 29.27 71.8719 28.92 71.8719 28.48V13.48C71.8719 13.05 71.5219 12.69 71.0819 12.69H66.8519C66.4219 12.69 66.0619 13.04 66.0619 13.48V14.81V14.83ZM65.2119 24.06C64.6419 24.78 63.8419 25.14 62.8019 25.14C61.7619 25.14 60.9219 24.79 60.3519 24.08C59.7819 23.37 59.5019 22.36 59.5019 21.03C59.5019 19.7 59.7919 18.6 60.3819 17.85C60.9719 17.1 61.7719 16.72 62.7919 16.72C63.8119 16.72 64.6419 17.08 65.2019 17.81C65.7619 18.54 66.0519 19.59 66.0519 20.96C66.0519 22.33 65.7719 23.34 65.2019 24.06H65.2119Z" fill="currentColor"></path>
+      <path d="M73.3984 28.49C73.3984 28.92 73.7484 29.28 74.1884 29.28H78.5184C78.9484 29.28 79.3084 28.93 79.3084 28.49V20.05C79.3084 19.07 79.5784 18.28 80.1284 17.69C80.6784 17.1 81.3884 16.79 82.2784 16.79C83.0184 16.79 83.5584 17.01 83.9084 17.46C84.2584 17.91 84.4284 18.64 84.4284 19.66V28.5C84.4284 28.93 84.7784 29.29 85.2184 29.29H89.5484C89.9784 29.29 90.3384 28.94 90.3384 28.5V19.4C90.3384 17.01 89.8584 15.22 88.8884 14.03C87.9184 12.85 86.4584 12.25 84.4984 12.25C83.3284 12.25 82.2684 12.5 81.3384 13C80.8884 13.24 80.4684 13.54 80.0884 13.88C79.6084 14.31 78.8584 14.04 78.7784 13.4C78.7284 13 78.3984 12.71 77.9984 12.71H74.2084C73.7484 12.71 73.3684 13.11 73.4184 13.57V28.49H73.3984Z" fill="currentColor"></path>
+      <path d="M108.896 27.2901L104.076 21.1701C103.846 20.8801 103.856 20.4701 104.086 20.1801L109.146 14.0301C109.566 13.5201 109.206 12.7401 108.536 12.7401H103.596C103.356 12.7401 103.136 12.8501 102.986 13.0301L99.0756 17.8801C98.6056 18.4601 97.6756 18.1301 97.6756 17.3901V5.90011C97.6756 5.47011 97.3256 5.11011 96.8856 5.11011H92.5556C92.1256 5.11011 91.7656 5.46011 91.7656 5.90011V28.5001C91.7656 28.9301 92.1156 29.2901 92.5556 29.2901H96.8856C97.3156 29.2901 97.6756 28.9401 97.6756 28.5001V24.4101C97.6756 23.6601 98.6156 23.3401 99.0756 23.9201L103.076 28.9901C103.226 29.1801 103.456 29.2901 103.696 29.2901H115.416C115.846 29.2901 116.206 28.9401 116.206 28.5001V5.90011C116.206 5.47011 115.856 5.11011 115.416 5.11011H111.086C110.656 5.11011 110.296 5.46011 110.296 5.90011V26.8101C110.296 27.5601 109.356 27.8801 108.896 27.3001V27.2901Z" fill="currentColor"></path>
+      <path d="M129.867 13.2002L126.957 20.4202C126.687 21.0802 125.757 21.0802 125.497 20.4202L122.697 13.2202C122.577 12.9202 122.287 12.7202 121.967 12.7202H117.577C117.007 12.7202 116.627 13.3002 116.857 13.8202C117.897 16.1402 120.367 21.5902 122.137 25.5002C124.017 28.8702 121.637 30.8402 118.357 32.0402C117.927 32.1502 117.667 32.6002 117.797 33.0302L118.727 36.0702C118.837 36.4402 119.217 36.6902 119.597 36.6202C121.517 36.3102 123.157 35.7002 124.517 34.7702C126.027 33.7402 127.287 32.1002 128.287 29.8602L135.397 13.8102C135.627 13.2902 135.247 12.7102 134.677 12.7102H130.607C130.287 12.7102 129.997 12.9002 129.877 13.2002H129.867Z" fill="currentColor"></path>
+      <path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z" fill="currentColor"></path>
+      <path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z" fill="currentColor"></path>
+      <path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z" fill="currentColor"></path>
+      <path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z" fill="currentColor"></path>
+  </symbol>
+</svg>
+<header class="fl-wrap fl-topbar">
+  <a class="fl-brand" href="index.html" aria-label="Frankly Lab">
+    <svg role="img" aria-hidden="true" focusable="false" viewBox="0 0 147.16 36.63"><use href="#frankly-logo"/></svg>
+    <span class="lab">Lab</span>
+  </a>
+  <nav class="fl-nav" aria-label="Lab-sider">
+    <a class="fl-pill" href="index.html">Værktøjer</a>
+    <a class="fl-pill" href="journal/frankly-blog-index.html">Journal</a>
+  </nav>
+</header>
+
+<main class="fl-wrap fl-tool">
+  <nav class="fl-crumb" aria-label="Brødkrumme">
+    <a href="index.html">Lab</a><span aria-hidden="true">/</span><span>Attach-rate simulator</span>
+  </nav>
+
+  <p class="ar-disclaimer" role="note">
+    <b>Illustrativ model.</b>
+    <span>Alle tal herunder indtaster du selv. Siden er ikke et tilbud, ikke en pris og ikke en aftale — den viser kun, hvad dine egne tal giver.</span>
+  </p>
+
+  <section class="fl-page-head">
+    <p class="fl-kicker">Prototype · Partnermøde</p>
+    <h1>Attach-rate simulator.</h1>
+    <p class="fl-lede">Selv få point på attach-raten er, ved dit eget volumen, værd mere end det ser ud. Træk i skyderen og se det i dine egne tal, live.</p>
+  </section>
+
+  <section class="fl-tool-panel" aria-labelledby="dineTal">
+    <h2 id="dineTal">Dine tal</h2>
+    <p class="fl-help" style="margin-bottom:var(--sp-4)">Tre tal, du kender i forvejen. Ret dem, så de passer til din butik eller kæde.</p>
+    <div class="ar-inputs">
+      <div class="fl-field">
+        <label for="volume">Salg pr. måned (enheder)</label>
+        <input class="fl-input" id="volume" name="volume" type="number" inputmode="numeric" min="0" max="1000000" step="1" value="400">
+        <p class="fl-help">Antal enheder, hvor en forsikring kunne tilbydes.</p>
+      </div>
+      <div class="fl-field">
+        <label for="price">Gennemsnitlig pris pr. enhed (kr.)</label>
+        <input class="fl-input" id="price" name="price" type="number" inputmode="numeric" min="0" max="1000000" step="100" value="6000">
+        <p class="fl-help">Dit eget gennemsnit på de enheder, du talte ovenfor.</p>
+      </div>
+      <div class="fl-field">
+        <label for="current">Nuværende attach-rate: <span class="ar-inline-val" id="currentOut">0 %</span></label>
+        <input id="current" name="current" type="range" min="0" max="60" step="1" value="0"
+               aria-describedby="currentHelp">
+        <div class="ar-scale" aria-hidden="true"><span>0 %</span><span>30 %</span><span>60 %</span></div>
+        <p class="fl-help" id="currentHelp">Hvor mange af enhederne der i dag sælges med en forsikring. Må gerne være 0 %.</p>
+      </div>
+    </div>
+
+    <div class="fl-field" style="margin-bottom:0">
+      <label for="share">Din andel pr. solgt forsikring: <span class="ar-inline-val" id="shareOut">ikke sat</span></label>
+      <input id="share" name="share" type="range" min="0" max="40" step="1" value="0"
+             aria-describedby="shareHelp">
+      <div class="ar-scale" aria-hidden="true"><span>ikke sat</span><span>20 %</span><span>40 %</span></div>
+      <p class="fl-help" id="shareHelp">Dit eget tal — fx 15 %. Ret den, så den matcher din forretning. Du behøver ikke sætte den for at se et resultat: står den på “ikke sat”, viser vi i stedet, hvor mange flere forsikringer det handler om.</p>
+    </div>
+  </section>
+
+  <section class="fl-tool-panel" aria-labelledby="hvisTitel">
+    <h2 id="hvisTitel">Hvis attach-raten var …</h2>
+    <div class="ar-hero">
+      <div>
+        <p class="ar-big" id="headline" aria-live="polite">
+          <span id="headlineNum">0 kr.</span>
+          <small id="headlineLabel">mere om måneden til dig</small>
+        </p>
+        <p class="ar-sub" id="headlineSub"></p>
+      </div>
+      <div class="ar-slider-wrap">
+        <label class="fl-kicker" for="target" style="display:block">Attach-rate du sigter efter</label>
+        <span class="ar-value" id="targetOut">15 %</span>
+        <input id="target" name="target" type="range" min="0" max="60" step="1" value="15"
+               aria-describedby="targetHelp">
+        <div class="ar-scale" aria-hidden="true"><span>0 %</span><span>30 %</span><span>60 %</span></div>
+        <p class="ar-delta" id="deltaOut"></p>
+        <p class="fl-help" id="targetHelp">Træk skyderen. Alt på siden regnes om med det samme.</p>
+      </div>
+    </div>
+
+    <div class="ar-rows" style="margin-top:var(--sp-5)">
+      <div class="ar-row"><span>Flere solgte forsikringer pr. måned</span><strong id="rowUnits">—</strong></div>
+      <div class="ar-row"><span>Din indtjening pr. måned (af de ekstra salg)</span><strong id="rowMonth">—</strong></div>
+      <div class="ar-row"><span>Samme tal set over 12 måneder</span><strong id="rowYear">—</strong></div>
+      <div class="ar-row"><span>Hvad ét point på attach-raten er værd pr. måned</span><strong id="rowPoint">—</strong></div>
+    </div>
+    <p class="ar-note" id="modelNote"></p>
+  </section>
+
+  <section class="fl-tool-panel" aria-labelledby="ikkeTitel">
+    <h2 id="ikkeTitel">Hvad regnestykket ikke afgør</h2>
+    <p class="fl-help" style="margin-bottom:var(--sp-5)">Attach-rate gange volumen er den åbnende løftestang — ikke den lukkende. Tallet siger, hvad der er på spil; det siger ikke, at det er let at hente.</p>
+    <div class="ar-honest">
+      <article>
+        <h3>Kassen er travl</h3>
+        <p>Den største modstand er sjældent matematik, men de sekunder personalet har til rådighed, og om det føles naturligt at spørge. Bliver det ikke nemt i hverdagen, flytter raten sig ikke.</p>
+      </article>
+      <article>
+        <h3>Der er noget på plads i forvejen</h3>
+        <p>De fleste har allerede en aftale eller en ordning at tage hensyn til. Den skal tales igennem — den bliver ikke overflødig, fordi et regnestykke ser pænt ud.</p>
+      </article>
+      <article>
+        <h3>Tallet er dit, ikke vores</h3>
+        <p>Siden regner udelukkende på det, du selv har skrevet ind. Den lover ingen effekt, og ingen sats her er en Frankly-oplysning.</p>
+      </article>
+    </div>
+  </section>
+</main>
+
+<footer class="fl-wrap fl-footer">
+  <p>Frankly Lab er et lukket forhåndsvisningsrum. Værktøjerne kører lokalt i din browser; intet her er kundevendt produkt-, dæknings- eller aftalemateriale. Denne side er en prototype til intern brug — ikke frigivet til partnermøder.</p>
+</footer>
+
+<script>
+(function(){
+  var elVolume=document.getElementById('volume');
+  var elPrice=document.getElementById('price');
+  var elCurrent=document.getElementById('current');
+  var elTarget=document.getElementById('target');
+  var elShare=document.getElementById('share');
+
+  var outCurrent=document.getElementById('currentOut');
+  var outTarget=document.getElementById('targetOut');
+  var outShare=document.getElementById('shareOut');
+  var outDelta=document.getElementById('deltaOut');
+
+  var headNum=document.getElementById('headlineNum');
+  var headLabel=document.getElementById('headlineLabel');
+  var headSub=document.getElementById('headlineSub');
+  var rowUnits=document.getElementById('rowUnits');
+  var rowMonth=document.getElementById('rowMonth');
+  var rowYear=document.getElementById('rowYear');
+  var rowPoint=document.getElementById('rowPoint');
+  var modelNote=document.getElementById('modelNote');
+
+  function num(el, fallback){
+    var v=parseFloat(el.value);
+    if(!isFinite(v) || v<0) return fallback;
+    return v;
+  }
+  function kr(v){
+    return Math.round(v).toLocaleString('da-DK') + ' kr.';
+  }
+  function stk(v){
+    return (Math.round(v*10)/10).toLocaleString('da-DK', {maximumFractionDigits:1});
+  }
+  function pct(v){
+    return v.toLocaleString('da-DK') + ' %';
+  }
+
+  function render(){
+    var volume=num(elVolume, 0);
+    var price=num(elPrice, 0);
+    var current=parseFloat(elCurrent.value);
+    var target=parseFloat(elTarget.value);
+    var share=parseFloat(elShare.value);
+    var shareSet = share > 0;
+
+    outCurrent.textContent=pct(current);
+    outTarget.textContent=pct(target);
+    outShare.textContent= shareSet ? pct(share) : 'ikke sat';
+
+    var points = target - current;
+    var extraUnits = volume * (points/100);
+    var perUnit = price * (share/100);
+    var extraMonth = extraUnits * perUnit;
+    var onePoint = volume * 0.01 * perUnit;
+
+    if(points > 0){
+      outDelta.textContent = '+' + pct(points) + ' point mod din nuværende rate.';
+    } else if(points === 0){
+      outDelta.textContent = 'Samme som din nuværende rate.';
+    } else {
+      outDelta.textContent = pct(points) + ' point — lavere end din nuværende rate.';
+    }
+
+    rowUnits.textContent = stk(extraUnits) + ' stk.';
+
+    if(shareSet){
+      rowMonth.textContent = kr(extraMonth);
+      rowYear.textContent = kr(extraMonth*12);
+      rowPoint.textContent = kr(onePoint);
+      headNum.textContent = kr(extraMonth);
+      headLabel.textContent = 'mere om måneden til dig, ved ' + pct(target) + ' attach-rate';
+      headSub.textContent = 'Det er ' + kr(extraMonth*12) + ' over 12 måneder — ud af ' + stk(extraUnits) + ' flere solgte forsikringer om måneden. Regnet på ' + pct(share) + ' af en gennemsnitspris på ' + kr(price) + '.';
+    } else {
+      rowMonth.textContent = 'sæt din andel';
+      rowYear.textContent = 'sæt din andel';
+      rowPoint.textContent = stk(volume*0.01) + ' stk.';
+      headNum.textContent = '+' + stk(extraUnits) + ' stk.';
+      headLabel.textContent = 'flere solgte forsikringer om måneden, ved ' + pct(target) + ' attach-rate';
+      headSub.textContent = 'Sæt “din andel pr. solgt forsikring” ovenfor, så viser vi det samme tal i kroner. Du kan også bare gange selv: ' + stk(extraUnits) + ' × din indtjening pr. salg.';
+    }
+
+    modelNote.textContent = 'Model: (' + pct(target) + ' − ' + pct(current) + ') × ' + volume.toLocaleString('da-DK') + ' enheder × ' + (shareSet ? pct(share) + ' af ' + kr(price) : 'din egen indtjening pr. salg') + '. Ingen sats på siden er en Frankly-oplysning, og modellen regner ikke på afgange, returneringer eller sæson.';
+  }
+
+  ['input','change'].forEach(function(evt){
+    [elVolume,elPrice,elCurrent,elTarget,elShare].forEach(function(el){
+      el.addEventListener(evt, render);
+    });
+  });
+  render();
+})();
+</script>
+</body>
+</html>
