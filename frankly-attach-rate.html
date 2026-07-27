@@ -11,15 +11,25 @@
   *{box-sizing:border-box}
   html{-webkit-text-size-adjust:100%}
 
-  /* --- persistent disclaimer --- */
+  /* --- persistent disclaimer ---
+     Deliberately NOT position:sticky. A top-sticky bar covers whatever scrolls
+     under it, and the first thing it covered was the page's own h1. Persistence
+     is instead achieved by binding a short restatement to the control that
+     produces the number (.ar-caveat, inside the hero panel), so the caveat is
+     on screen whenever the sliders are — and in frame if the big number is
+     photographed in a meeting. Nothing overlays anything. */
   .ar-disclaimer{
-    position:sticky; top:0; z-index:20;
     display:flex; gap:10px; align-items:flex-start;
     background:var(--blush); border:1px solid var(--stone-4); border-radius:var(--r-pill);
     padding:10px 18px; font-size:13px; line-height:1.45; color:var(--grey-1);
   }
   .ar-disclaimer b{color:var(--bordeaux); font-weight:600}
   @media (max-width:560px){ .ar-disclaimer{border-radius:var(--r-card)} }
+
+  .ar-caveat{
+    margin:var(--sp-4) 0 0; padding-top:var(--sp-3); border-top:1px solid var(--stone-4);
+    font-size:12.5px; line-height:1.45; color:var(--grey-2);
+  }
 
   /* --- hero: the one slider that carries the page --- */
   .ar-hero{display:grid; grid-template-columns:minmax(0,1fr) minmax(260px,340px); gap:var(--sp-6); align-items:center}
@@ -177,14 +187,15 @@
         <div class="ar-scale" aria-hidden="true"><span>0 %</span><span>30 %</span><span>60 %</span></div>
         <p class="ar-delta" id="deltaOut"></p>
         <p class="fl-help" id="targetHelp">Træk skyderen. Alt på siden regnes om med det samme.</p>
+        <p class="ar-caveat">Illustrativ model på dine egne tal — ikke et tilbud og ikke en aftale.</p>
       </div>
     </div>
 
     <div class="ar-rows" style="margin-top:var(--sp-5)">
-      <div class="ar-row"><span>Flere solgte forsikringer pr. måned</span><strong id="rowUnits">—</strong></div>
-      <div class="ar-row"><span>Din indtjening pr. måned (af de ekstra salg)</span><strong id="rowMonth">—</strong></div>
-      <div class="ar-row"><span>Samme tal set over 12 måneder</span><strong id="rowYear">—</strong></div>
-      <div class="ar-row"><span>Hvad ét point på attach-raten er værd pr. måned</span><strong id="rowPoint">—</strong></div>
+      <div class="ar-row"><span id="rowUnitsLabel">Flere solgte forsikringer pr. måned</span><strong id="rowUnits">—</strong></div>
+      <div class="ar-row"><span id="rowMonthLabel">Din indtjening pr. måned (af de ekstra salg)</span><strong id="rowMonth">—</strong></div>
+      <div class="ar-row"><span id="rowYearLabel">Samme tal set over 12 måneder</span><strong id="rowYear">—</strong></div>
+      <div class="ar-row"><span id="rowPointLabel">Hvad ét point på attach-raten er værd pr. måned</span><strong id="rowPoint">—</strong></div>
     </div>
     <p class="ar-note" id="modelNote"></p>
   </section>
@@ -232,7 +243,11 @@
   var rowUnits=document.getElementById('rowUnits');
   var rowMonth=document.getElementById('rowMonth');
   var rowYear=document.getElementById('rowYear');
+  var rowUnitsLabel=document.getElementById('rowUnitsLabel');
+  var rowMonthLabel=document.getElementById('rowMonthLabel');
+  var rowYearLabel=document.getElementById('rowYearLabel');
   var rowPoint=document.getElementById('rowPoint');
+  var rowPointLabel=document.getElementById('rowPointLabel');
   var modelNote=document.getElementById('modelNote');
 
   function num(el, fallback){
@@ -276,22 +291,63 @@
       outDelta.textContent = pct(points) + ' point — lavere end din nuværende rate.';
     }
 
-    rowUnits.textContent = stk(extraUnits) + ' stk.';
+    // Retningen bestemmer BÅDE tallet og ordene. Et negativt tal må aldrig stå
+    // under ordene "mere ... til dig" eller "flere" — så vender rammen i stedet
+    // til hvad en lavere rate koster. Tallene vises som størrelse (uden minus),
+    // fordi ordet ved siden af bærer fortegnet.
+    var absUnits = Math.abs(extraUnits);
+    var absMonth = Math.abs(extraMonth);
+
+    if(points > 0){
+      rowUnitsLabel.textContent = 'Flere solgte forsikringer pr. måned';
+      rowMonthLabel.textContent = 'Din indtjening pr. måned (af de ekstra salg)';
+      rowYearLabel.textContent = 'Samme tal set over 12 måneder';
+    } else if(points === 0){
+      rowUnitsLabel.textContent = 'Forskel i solgte forsikringer pr. måned';
+      rowMonthLabel.textContent = 'Forskel i din indtjening pr. måned';
+      rowYearLabel.textContent = 'Samme tal set over 12 måneder';
+    } else {
+      rowUnitsLabel.textContent = 'Færre solgte forsikringer pr. måned';
+      rowMonthLabel.textContent = 'Indtjening du går glip af pr. måned';
+      rowYearLabel.textContent = 'Samme tal set over 12 måneder';
+    }
+
+    rowUnits.textContent = stk(absUnits) + ' stk.';
 
     if(shareSet){
-      rowMonth.textContent = kr(extraMonth);
-      rowYear.textContent = kr(extraMonth*12);
+      rowMonth.textContent = kr(absMonth);
+      rowYear.textContent = kr(absMonth*12);
+      rowPointLabel.textContent = 'Hvad ét point på attach-raten er værd pr. måned';
       rowPoint.textContent = kr(onePoint);
-      headNum.textContent = kr(extraMonth);
-      headLabel.textContent = 'mere om måneden til dig, ved ' + pct(target) + ' attach-rate';
-      headSub.textContent = 'Det er ' + kr(extraMonth*12) + ' over 12 måneder — ud af ' + stk(extraUnits) + ' flere solgte forsikringer om måneden. Regnet på ' + pct(share) + ' af en gennemsnitspris på ' + kr(price) + '.';
+      headNum.textContent = kr(absMonth);
+      if(points > 0){
+        headLabel.textContent = 'mere om måneden til dig, ved ' + pct(target) + ' attach-rate';
+        headSub.textContent = 'Det er ' + kr(absMonth*12) + ' over 12 måneder — ud af ' + stk(absUnits) + ' flere solgte forsikringer om måneden. Regnet på ' + pct(share) + ' af en gennemsnitspris på ' + kr(price);
+      } else if(points === 0){
+        headLabel.textContent = 'til forskel — ' + pct(target) + ' er din nuværende attach-rate';
+        headSub.textContent = 'Træk skyderen op for at se, hvad flere point er værd i dine egne tal.';
+      } else {
+        headLabel.textContent = 'mindre om måneden til dig, hvis attach-raten falder til ' + pct(target);
+        headSub.textContent = 'Det er ' + kr(absMonth*12) + ' mindre over 12 måneder — ' + stk(absUnits) + ' færre solgte forsikringer om måneden. Regnet på ' + pct(share) + ' af en gennemsnitspris på ' + kr(price);
+      }
     } else {
       rowMonth.textContent = 'sæt din andel';
       rowYear.textContent = 'sæt din andel';
+      rowPointLabel.textContent = 'Hvad ét point på attach-raten svarer til pr. måned';
       rowPoint.textContent = stk(volume*0.01) + ' stk.';
-      headNum.textContent = '+' + stk(extraUnits) + ' stk.';
-      headLabel.textContent = 'flere solgte forsikringer om måneden, ved ' + pct(target) + ' attach-rate';
-      headSub.textContent = 'Sæt “din andel pr. solgt forsikring” ovenfor, så viser vi det samme tal i kroner. Du kan også bare gange selv: ' + stk(extraUnits) + ' × din indtjening pr. salg.';
+      if(points > 0){
+        headNum.textContent = '+' + stk(absUnits) + ' stk.';
+        headLabel.textContent = 'flere solgte forsikringer om måneden, ved ' + pct(target) + ' attach-rate';
+        headSub.textContent = 'Sæt “din andel pr. solgt forsikring” ovenfor, så viser vi det samme tal i kroner. Du kan også bare gange selv: ' + stk(absUnits) + ' × din indtjening pr. salg.';
+      } else if(points === 0){
+        headNum.textContent = '0 stk.';
+        headLabel.textContent = 'til forskel — ' + pct(target) + ' er din nuværende attach-rate';
+        headSub.textContent = 'Træk skyderen op for at se, hvor mange flere forsikringer flere point ville betyde.';
+      } else {
+        headNum.textContent = stk(absUnits) + ' stk.';
+        headLabel.textContent = 'færre solgte forsikringer om måneden, hvis attach-raten falder til ' + pct(target);
+        headSub.textContent = 'Sæt “din andel pr. solgt forsikring” ovenfor, så viser vi det samme tal i kroner. Du kan også bare gange selv: ' + stk(absUnits) + ' × din indtjening pr. salg.';
+      }
     }
 
     modelNote.textContent = 'Model: (' + pct(target) + ' − ' + pct(current) + ') × ' + volume.toLocaleString('da-DK') + ' enheder × ' + (shareSet ? pct(share) + ' af ' + kr(price) : 'din egen indtjening pr. salg') + '. Ingen sats på siden er en Frankly-oplysning, og modellen regner ikke på afgange, returneringer eller sæson.';
