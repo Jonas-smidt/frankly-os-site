@@ -17,6 +17,10 @@ The current priority is machine visibility and safe local review. Public deploym
 
 Everything we produce is in English by default unless Jonas asks otherwise. The machine's historical content (pre-2026-08-03 lessons, run notes, decisions) stays Danish.
 
+## Version rule — standing rule (2026-08-03)
+
+Version rule (2026-08-03): every run that changes the OS itself (machine scripts, cockpit, contract, routes, evals) bumps the OS version at its single source (`os-visualization/system-intelligence/os-version.json`, field `version`) — patch for small fixes, minor for system-wide changes (e.g. 5.0 -> 5.1 for the English-at-source conversion), major only when Jonas names it. Surfaces read the version from the source; never hardcode it.
+
 ## Key Files
 
 - `index.html`: uploadable test-site entry page. It links only to allowlisted test outputs.
