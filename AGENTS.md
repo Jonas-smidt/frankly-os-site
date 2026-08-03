@@ -13,6 +13,10 @@ Frankly OS operating surfaces run locally. They must not be copied into the publ
 
 The current priority is machine visibility and safe local review. Public deployment, paid API automation, Slack automation and claims/product/legal work remain gated.
 
+## Language — standing rule (2026-08-03)
+
+Everything we produce is in English by default unless Jonas asks otherwise. The machine's historical content (pre-2026-08-03 lessons, run notes, decisions) stays Danish.
+
 ## Key Files
 
 - `index.html`: uploadable test-site entry page. It links only to allowlisted test outputs.
