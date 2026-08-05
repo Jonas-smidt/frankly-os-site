@@ -19,7 +19,7 @@ Everything we produce is in English by default unless Jonas asks otherwise. The 
 
 ## Version rule — standing rule (2026-08-03)
 
-Version rule (2026-08-03): every run that changes the OS itself (machine scripts, cockpit, contract, routes, evals) bumps the OS version at its single source (`os-visualization/system-intelligence/os-version.json`, field `version`) — patch for small fixes, minor for system-wide changes (e.g. 5.0 -> 5.1 for the English-at-source conversion), major only when Jonas names it. Surfaces read the version from the source; never hardcode it.
+Version rule (2026-08-03, simplified 2026-08-04): every run that changes the OS itself (machine scripts, cockpit, contract, routes, evals) bumps the OS version by +0.1 at its single source (os-visualization/system-intelligence/os-version.json, field version) — no patch numbers; major versions only when Jonas names them. Surfaces read the version from the source; never hardcode it.
 
 ## Key Files
 
