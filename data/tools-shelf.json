@@ -244,10 +244,10 @@
       "descDa": "Klikbar prototype af en support-widget der afgør sagen i widget'en i stedet for at sende videre: opslag på telefonnummer, ét-kliks stop, rigtig FAQ. Testdata.",
       "category": "Hverdag",
       "shelf": "tools",
-      "lane": "public-lab",
-      "gate": "public",
-      "gateLabelEn": "Gated Lab",
-      "gateLabelDa": "Offentlig",
+      "lane": "local-os",
+      "gate": "local-only",
+      "gateLabelEn": "Local only",
+      "gateLabelDa": "Kun lokal",
       "status": "beta",
       "statusLabelEn": "Beta",
       "statusLabelDa": "Beta",
@@ -265,10 +265,10 @@
       "descDa": "Hvorfor kunder tror vi er fake. Alle data samlet — Trustpilot, churn, support — med prioriteret plan og færdige mailtekster. Intern.",
       "category": "Hverdag",
       "shelf": "tools",
-      "lane": "public-lab",
-      "gate": "public",
-      "gateLabelEn": "Gated Lab",
-      "gateLabelDa": "Offentlig",
+      "lane": "local-os",
+      "gate": "local-only",
+      "gateLabelEn": "Local only",
+      "gateLabelDa": "Kun lokal",
       "status": "live",
       "statusLabelEn": "Live",
       "statusLabelDa": "Live",
@@ -638,9 +638,9 @@
   "counts": {
     "total": 30,
     "active": 27,
-    "publicLab": 24,
-    "localOs": 3,
+    "publicLab": 22,
+    "localOs": 5,
     "retired": 3
   },
-  "syncedAt": "2026-08-11T16:25:31+00:00"
+  "syncedAt": "2026-08-11T17:04:53+00:00"
 }
