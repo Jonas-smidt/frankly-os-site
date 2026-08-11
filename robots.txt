@@ -30,4 +30,4 @@ Disallow: /frankly-ribbon-lab.html
 Disallow: /liquid-glass-hover.html
 Disallow: /frankly-linkedin-checker.html
 
-Sitemap: https://lab.franklydesign.dk/sitemap.xml
+Sitemap: https://os.franklydesign.dk/sitemap.xml
