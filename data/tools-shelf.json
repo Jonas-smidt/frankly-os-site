@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "updated": "2026-07-27",
+  "updated": "2026-08-11",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "description": "Canonical Frankly Lab 4.0 shelf inventory. Consumers filter by lane and retired state; generated site copies are never edited by hand.",
   "tools": [
@@ -227,11 +227,53 @@
       "gate": "public",
       "gateLabelEn": "Gated Lab",
       "gateLabelDa": "Offentlig",
+      "status": "prototype",
+      "statusLabelEn": "Prototype",
+      "statusLabelDa": "Prototype",
+      "actionLabelEn": "Open Attach-rate simulator",
+      "mark": "AR",
+      "art": "instore",
+      "retired": false
+    },
+    {
+      "id": "support-widget",
+      "href": "frankly-support-widget.html",
+      "labelEn": "Support widget",
+      "labelDa": "Support-widget",
+      "descriptionEn": "Clickable prototype of a support widget that resolves the case in-widget instead of routing: phone-number lookup, one-tap stop, real FAQ. Dummy data. In Danish.",
+      "descDa": "Klikbar prototype af en support-widget der afgør sagen i widget'en i stedet for at sende videre: opslag på telefonnummer, ét-kliks stop, rigtig FAQ. Testdata.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "beta",
+      "statusLabelEn": "Beta",
+      "statusLabelDa": "Beta",
+      "actionLabelEn": "Open Support widget",
+      "mark": "SW",
+      "art": "instore",
+      "retired": false
+    },
+    {
+      "id": "cx-causal-chain",
+      "href": "frankly-kundeoplevelse-strategi.html",
+      "labelEn": "Customer experience: the causal chain",
+      "labelDa": "Kundeoplevelse: årsagskæden",
+      "descriptionEn": "Why customers think Frankly is fake. All available data in one analysis, with a prioritised plan and ready email copy. Internal. In Danish.",
+      "descDa": "Hvorfor kunder tror vi er fake. Alle data samlet — Trustpilot, churn, support — med prioriteret plan og færdige mailtekster. Intern.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
       "status": "live",
       "statusLabelEn": "Live",
       "statusLabelDa": "Live",
-      "actionLabelEn": "Open Attach-rate simulator",
-      "mark": "AR",
+      "actionLabelEn": "Open Customer experience analysis",
+      "mark": "CX",
       "art": "instore",
       "retired": false
     },
@@ -594,11 +636,11 @@
     }
   ],
   "counts": {
-    "total": 28,
-    "active": 25,
-    "publicLab": 22,
+    "total": 30,
+    "active": 27,
+    "publicLab": 24,
     "localOs": 3,
     "retired": 3
   },
-  "syncedAt": "2026-07-27T08:06:06+00:00"
+  "syncedAt": "2026-08-11T16:25:31+00:00"
 }
