@@ -1,6 +1,6 @@
 {
-  "generated": "2026-08-12T07:00:31+00:00",
-  "lastFeedSync": "2026-08-12T07:00:31+00:00",
+  "generated": "2026-08-12T20:10:43+00:00",
+  "lastFeedSync": "2026-08-12T20:10:43+00:00",
   "selfCheck": {
     "date": "2026-08-12",
     "result": "FAIL",
@@ -38,9 +38,10 @@
     "activeBatchConsistency": "OK"
   },
   "evals": {
-    "cases": 54,
-    "passed": 52,
-    "failed": 2
+    "cases": 57,
+    "passed": 56,
+    "failed": 1
   },
-  "resultDa": "Not all green — self-check FAIL, 52 of 54 evals green"
+  "resultDa": "Not all green — self-check FAIL, 56 of 57 evals green",
+  "sourceMtime": 1786565443.0006917
 }

@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-12T07:00:10+00:00",
+  "generated": "2026-08-12T17:47:01+00:00",
   "day": "2026-08-12",
   "commentRule": "A comment on a decision is a binding instruction — its terms are as binding as the yes/no itself (see system-intelligence/decision-bootstrap-rule.md).",
   "groups": {
@@ -114,7 +114,7 @@
     },
     "laeringerDerVenter": {
       "label": "Learnings awaiting review",
-      "count": 1,
+      "count": 2,
       "items": [
         {
           "id": "LC-20260724-14",
@@ -123,6 +123,14 @@
           "kind": "source",
           "disposition": "auto",
           "date": "2026-07-24"
+        },
+        {
+          "id": "LC-20260812-17",
+          "text": "Loosening a classifier is not the same as loosening a gate, and the difference is where enforcement lives. Making classify_action target-aware for os.franklydesign.dk sounded like it would remove the ",
+          "scope": "system-maintenance",
+          "kind": "use",
+          "disposition": "review",
+          "date": "2026-08-12"
         }
       ]
     },
@@ -131,34 +139,34 @@
       "count": 5,
       "items": [
         {
-          "taskId": "attach-rate-partner-modstrid-2026-08-11",
+          "taskId": null,
           "decision": "approved",
           "note": "",
-          "ts": "2026-08-11T21:59:37+00:00"
+          "ts": "2026-08-12T15:36:09+00:00"
         },
         {
           "taskId": null,
           "decision": "approved",
           "note": "",
-          "ts": "2026-08-11T19:25:11+00:00"
+          "ts": "2026-08-12T10:01:58+00:00"
         },
         {
           "taskId": null,
           "decision": "approved",
           "note": "",
-          "ts": "2026-08-11T19:25:09+00:00"
-        },
-        {
-          "taskId": "cockpit-mark-executed-ui-evidence",
-          "decision": "approved",
-          "note": "",
-          "ts": "2026-08-11T12:50:49+00:00"
+          "ts": "2026-08-12T10:01:56+00:00"
         },
         {
           "taskId": null,
           "decision": "approved",
           "note": "",
-          "ts": "2026-08-05T08:07:18+00:00"
+          "ts": "2026-08-12T10:01:54+00:00"
+        },
+        {
+          "taskId": null,
+          "decision": "approved",
+          "note": "",
+          "ts": "2026-08-12T10:01:49+00:00"
         }
       ]
     }

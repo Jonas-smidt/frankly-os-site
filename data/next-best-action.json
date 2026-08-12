@@ -1,5 +1,5 @@
 {
-  "generated": "2026-08-12T06:01:17+00:00",
+  "generated": "2026-08-12T20:10:43+00:00",
   "source": "current-machine-handoff.md#next-best-action + machine-handoff-state.json:machineDerived",
   "activeBatch": "MCQ-011",
   "activeBatchDa": "MCQ-011 — Run registry + local eval harness",
@@ -34,11 +34,11 @@
     "Thread automation / parallel chat spawning"
   ],
   "runRegistry": {
-    "runs": 202,
-    "machineFocusedRuns": 200,
-    "validatedRuns": 117,
+    "runs": 211,
+    "machineFocusedRuns": 208,
+    "validatedRuns": 122,
     "driveSyncedRuns": 7,
     "claimWorkRuns": 0
   },
-  "sourceMtime": 1786485161.6663039
+  "sourceMtime": 1786555509.8166788
 }

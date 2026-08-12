@@ -1,7 +1,7 @@
 {
   "id": "learning-capture-queue",
   "purpose": "Durable learnings extracted from work sessions, awaiting deterministic filing into routes' Lessons From Use — the extraction leg of the build→learn→compound loop. Nothing is lost: clearly-safe candidates auto-file; judgment calls wait for Jonas's OK in the Cockpit; claims/product/legal is locked.",
-  "generated": "2026-08-12T05:44:56+00:00",
+  "generated": "2026-08-12T20:10:43+00:00",
   "schema": {
     "required": [
       "id",
@@ -35,15 +35,15 @@
     "lockedBoundary": "claims/product/legal (frankly-claims-work-lock-2026-07-04.json) is never auto-filed or cockpit-filed — it requires a named reopen. Enforced fail-closed by file-learning.py via classify_action."
   },
   "counts": {
-    "candidates": 534,
-    "pending": 1,
-    "filed": 513,
+    "candidates": 556,
+    "pending": 2,
+    "filed": 534,
     "declined": 20,
     "byDisposition": {
-      "auto": 307,
-      "review": 227
+      "auto": 322,
+      "review": 234
     },
-    "pendingReview": 0
+    "pendingReview": 1
   },
   "candidates": [
     {
@@ -9819,7 +9819,400 @@
         "route": "routes/system-maintenance-route.md",
         "bullet": "- 2026-08-12: A file can be homeless by construction, and nobody notices because each exclusion looks correct on its own. frankly-os-cockpit.html was gitignored in the public site repo (right — it must never ship publicly) and sat inside frankly-os-site/, which the private repo gitignores wholesale (also right — separate repos). Each rule was sound; together they left an operating surface with nowhere to be committed, which silently blocked a UI fix and an open card for weeks. When a change cannot be committed anywhere, the question is not which repo to bend but whether the file is simply in the wrong directory: the private repo already tracked 21 cockpit files."
       }
+    },
+    {
+      "id": "LC-20260812-07",
+      "date": "2026-08-12",
+      "text": "A secret-scanning regex without word boundaries is an entropy detector, not a secret scanner. AKIA[0-9A-Z]{16} matched four prototype HTML files whose only sin was containing base64-embedded PNG logos — a 40KB base64 blob will statistically contain almost any four-character sequence followed by alphanumerics. Adding \\b removed all four false positives without weakening anything. The corollary matters more: I nearly widened the ALLOWLIST to make the noise go away, which would have blinded the scanner permanently instead of fixing its aim. When a guard fires wrongly, fix the pattern, not the exception list.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-canon-snapshot-in-git",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T07:59:15+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: A secret-scanning regex without word boundaries is an entropy detector, not a secret scanner. AKIA[0-9A-Z]{16} matched four prototype HTML files whose only sin was containing base64-embedded PNG logos — a 40KB base64 blob will statistically contain almost any four-character sequence followed by alphanumerics. Adding \\b removed all four false positives without weakening anything. The corollary matters more: I nearly widened the ALLOWLIST to make the noise go away, which would have blinded the scanner permanently instead of fixing its aim. When a guard fires wrongly, fix the pattern, not the exception list."
+      }
+    },
+    {
+      "id": "LC-20260812-08",
+      "date": "2026-08-12",
+      "text": "Test a guard against the thing it exists to catch, not only against the noise it produced. After fixing the false positives on the secret scanner I ran it against real key formats and found two blind spots that had been there from the first draft: BEGIN (RSA|OPENSSH|PRIVATE) KEY never matches an actual key, because real keys say 'BEGIN RSA PRIVATE KEY' — two words where the pattern allowed one — and sk-[A-Za-z0-9]{20,} misses every modern OpenAI sk-proj- key because the body stops at the hyphen. Both were invisible while the scanner was only ever measured by what it wrongly flagged. A guard verified solely by its false positives is unverified.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-canon-snapshot-in-git",
+      "disposition": "review",
+      "status": "filed",
+      "why": null,
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-08-12T10:01:49+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Test a guard against the thing it exists to catch, not only against the noise it produced. After fixing the false positives on the secret scanner I ran it against real key formats and found two blind spots that had been there from the first draft: BEGIN (RSA|OPENSSH|PRIVATE) KEY never matches an actual key, because real keys say 'BEGIN RSA PRIVATE KEY' — two words where the pattern allowed one — and sk-[A-Za-z0-9]{20,} misses every modern OpenAI sk-proj- key because the body stops at the hyphen. Both were invisible while the scanner was only ever measured by what it wrongly flagged. A guard verified solely by its false positives is unverified."
+      }
+    },
+    {
+      "id": "LC-20260812-09",
+      "date": "2026-08-12",
+      "text": "The Drive canon is a stream, not a folder of files, and every measurement of it must account for that. du reported 140M for the whole canon while actually copying it produced 895M, because unmaterialised Drive files occupy no disk until read. Two separate scans hung for minutes on ordinary greps — each read was forcing a download. So metadata operations (find, stat, wc -c) are instant and content operations are expensive and can block indefinitely. Any process that must read the whole canon should copy it locally FIRST and work on the copy; scanning in place looks identical in the code and behaves completely differently.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-canon-snapshot-in-git",
+      "disposition": "review",
+      "status": "filed",
+      "why": null,
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-08-12T10:01:54+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: The Drive canon is a stream, not a folder of files, and every measurement of it must account for that. du reported 140M for the whole canon while actually copying it produced 895M, because unmaterialised Drive files occupy no disk until read. Two separate scans hung for minutes on ordinary greps — each read was forcing a download. So metadata operations (find, stat, wc -c) are instant and content operations are expensive and can block indefinitely. Any process that must read the whole canon should copy it locally FIRST and work on the copy; scanning in place looks identical in the code and behaves completely differently."
+      }
+    },
+    {
+      "id": "LC-20260812-10",
+      "date": "2026-08-12",
+      "text": "Matching files by basename is not an identity, and a drift report built on it over-counts. Comparing the Drive canon against the repo by filename alone paired the canon's README.md with os-visualization/agent-loop/README.md — one titled 'Frankly Agent Loop Runner', the other 'Frankly Slack Agent', entirely unrelated documents reported as a difference. The 13 *-skill.md pairings are trustworthy because those names are distinctive; the 25 generic ones are not. Report a comparison's matching rule alongside its result, or the number will be read as more than it is.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-canon-snapshot-in-git",
+      "disposition": "review",
+      "status": "filed",
+      "why": null,
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-08-12T10:01:56+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Matching files by basename is not an identity, and a drift report built on it over-counts. Comparing the Drive canon against the repo by filename alone paired the canon's README.md with os-visualization/agent-loop/README.md — one titled 'Frankly Agent Loop Runner', the other 'Frankly Slack Agent', entirely unrelated documents reported as a difference. The 13 *-skill.md pairings are trustworthy because those names are distinctive; the 25 generic ones are not. Report a comparison's matching rule alongside its result, or the number will be read as more than it is."
+      }
+    },
+    {
+      "id": "LC-20260812-11",
+      "date": "2026-08-12",
+      "text": "Split a store by what benefits from history, not by what feels tidy. The canon's 895 MB was 858 MB of assets/, and 820 MB of that was two files: a 475MB Figma document and a 345MB video. Neither diffs, neither merges, and both would sit in git history permanently. Excluding assets/ and anything over 2MB left 575 files and 14 MB — all the markdown, routes, skills and structured knowledge that version control is actually good at. Git holds what benefits from history; Drive holds what does not. And every excluded file is listed by name, because silently dropping content is the failure mode this whole exercise exists to prevent.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-canon-snapshot-in-git",
+      "disposition": "review",
+      "status": "filed",
+      "why": null,
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-08-12T10:01:58+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Split a store by what benefits from history, not by what feels tidy. The canon's 895 MB was 858 MB of assets/, and 820 MB of that was two files: a 475MB Figma document and a 345MB video. Neither diffs, neither merges, and both would sit in git history permanently. Excluding assets/ and anything over 2MB left 575 files and 14 MB — all the markdown, routes, skills and structured knowledge that version control is actually good at. Git holds what benefits from history; Drive holds what does not. And every excluded file is listed by name, because silently dropping content is the failure mode this whole exercise exists to prevent."
+      }
+    },
+    {
+      "id": "LC-20260812-12",
+      "date": "2026-08-12",
+      "text": "Put the warning where the confusion happens, not in a document someone must remember to read. Three locations in this repo held files that looked exactly like working ones — the canon snapshot, _retired, and three git worktrees frozen weeks in the past. A governing rule saying 'the routes live in os-visualization' does not help a session that landed in a worktree via a path, because it never sees the rule. A README sitting in the directory itself, naming the live location for each kind of thing, is read by whoever actually arrives there. Markers beat rules when the failure mode is arriving somewhere by accident.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-remove-the-confusing-copies",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T09:03:31+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Put the warning where the confusion happens, not in a document someone must remember to read. Three locations in this repo held files that looked exactly like working ones — the canon snapshot, _retired, and three git worktrees frozen weeks in the past. A governing rule saying 'the routes live in os-visualization' does not help a session that landed in a worktree via a path, because it never sees the rule. A README sitting in the directory itself, naming the live location for each kind of thing, is read by whoever actually arrives there. Markers beat rules when the failure mode is arriving somewhere by accident."
+      }
+    },
+    {
+      "id": "LC-20260812-13",
+      "date": "2026-08-12",
+      "text": "awk '{print $2}' cuts any path containing a space, and this workspace is called 'Frankly os'. A worktree cleanup loop reported nothing to remove and exited cleanly, because the path extraction produced /Users/jonas/Documents/Frankly and matched no directory — a silent no-op that looked like success. sed -n 's/^worktree //p' takes the whole remainder of the line and works. Any script in this repo that parses paths from command output must not split on whitespace.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-remove-the-confusing-copies",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T09:03:31+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: awk '{print $2}' cuts any path containing a space, and this workspace is called 'Frankly os'. A worktree cleanup loop reported nothing to remove and exited cleanly, because the path extraction produced /Users/jonas/Documents/Frankly and matched no directory — a silent no-op that looked like success. sed -n 's/^worktree //p' takes the whole remainder of the line and works. Any script in this repo that parses paths from command output must not split on whitespace."
+      }
+    },
+    {
+      "id": "LC-20260812-14",
+      "date": "2026-08-12",
+      "text": "Check before you force. The first version of the worktree cleanup ran git worktree remove --force with no inspection, which would have discarded uncommitted work without a word if any had existed. The shipped version runs git status in each worktree first and leaves any dirty one alone with its changes listed. All three happened to be clean, so the check changed nothing this time — which is exactly when it is cheapest to add and easiest to skip.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-remove-the-confusing-copies",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T09:03:31+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Check before you force. The first version of the worktree cleanup ran git worktree remove --force with no inspection, which would have discarded uncommitted work without a word if any had existed. The shipped version runs git status in each worktree first and leaves any dirty one alone with its changes listed. All three happened to be clean, so the check changed nothing this time — which is exactly when it is cheapest to add and easiest to skip."
+      }
+    },
+    {
+      "id": "LC-20260812-15",
+      "date": "2026-08-12",
+      "text": "When a suite drops from 53/1 to 49/5, read every failure before believing your own change caused it. Four new reds appeared minutes after I edited classify_action, and the obvious story was that I broke something. The failure texts said otherwise: another session had recorded two runs and not rebuilt the derived feeds, so the flight recorder held 204 runs against a registry of 205 and the lessons index read 'stale'. Rebuilding the feeds cleared three. The fourth was my own backup carve-out correctly refusing because the registry's error set no longer matched its pin. Causation ran the other way from the obvious guess, and only the failure detail showed it.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-close-deploy-gate-bypass",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T10:04:06+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: When a suite drops from 53/1 to 49/5, read every failure before believing your own change caused it. Four new reds appeared minutes after I edited classify_action, and the obvious story was that I broke something. The failure texts said otherwise: another session had recorded two runs and not rebuilt the derived feeds, so the flight recorder held 204 runs against a registry of 205 and the lessons index read 'stale'. Rebuilding the feeds cleared three. The fourth was my own backup carve-out correctly refusing because the registry's error set no longer matched its pin. Causation ran the other way from the obvious guess, and only the failure detail showed it."
+      }
+    },
+    {
+      "id": "LC-20260812-16",
+      "date": "2026-08-12",
+      "text": "A fail-closed pin can be switched off by an unrelated omission in another session. The 5.15 backup carve-out only lets the Drive backup run when the registry's failure set matches its pinned string exactly. Another chat recorded two runs today without --machine-focus; that added two entries to the set, the pin stopped matching, and the automatic backup silently began refusing. The pin is doing what M4 designed — any error not matching still blocks — but the practical consequence is that one forgotten flag in an unrelated session disables a nightly safety net. Fail-closed is right; pinning on a set that any other writer can grow is the fragile part, and the root cause is an eval that demands every run be machine-focused when planning and intake runs are not.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-close-deploy-gate-bypass",
+      "disposition": "review",
+      "status": "filed",
+      "why": null,
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-08-12T15:36:09+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: A fail-closed pin can be switched off by an unrelated omission in another session. The 5.15 backup carve-out only lets the Drive backup run when the registry's failure set matches its pinned string exactly. Another chat recorded two runs today without --machine-focus; that added two entries to the set, the pin stopped matching, and the automatic backup silently began refusing. The pin is doing what M4 designed — any error not matching still blocks — but the practical consequence is that one forgotten flag in an unrelated session disables a nightly safety net. Fail-closed is right; pinning on a set that any other writer can grow is the fragile part, and the root cause is an eval that demands every run be machine-focused when planning and intake runs are not."
+      }
+    },
+    {
+      "id": "LC-20260812-17",
+      "date": "2026-08-12",
+      "text": "Loosening a classifier is not the same as loosening a gate, and the difference is where enforcement lives. Making classify_action target-aware for os.franklydesign.dk sounded like it would remove the unnecessary deploy stops. It would not: pretooluse-gate.py blocks git push with a target-blind regex and never consults classify_action, so the change would only have altered how actions are described and bucketed, not whether a deploy runs — while introducing a demonstrated bypass class, since \\b matches inside os.franklydesign.dk.attacker.com because a dot is a non-word character. Before loosening a check, trace who actually enforces the thing you want changed.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-governance-in-git-and-vocabulary-precision",
+      "disposition": "review",
+      "status": "filed",
+      "why": null,
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": "2026-08-12T20:04:06+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Loosening a classifier is not the same as loosening a gate, and the difference is where enforcement lives. Making classify_action target-aware for os.franklydesign.dk sounded like it would remove the unnecessary deploy stops. It would not: pretooluse-gate.py blocks git push with a target-blind regex and never consults classify_action, so the change would only have altered how actions are described and bucketed, not whether a deploy runs — while introducing a demonstrated bypass class, since \\b matches inside os.franklydesign.dk.attacker.com because a dot is a non-word character. Before loosening a check, trace who actually enforces the thing you want changed."
+      }
+    },
+    {
+      "id": "LC-20260812-18",
+      "date": "2026-08-12",
+      "text": "An agent may propose moving the boundary of what needs the human's approval; it may never move it. I filled a gap in classify_action so ordinary verbs would stop hitting the fail-closed default, cleared it through an in-system critic, verified the traps held and the evals went green — and it still had to come out, because the change decided what Jonas has to see. 'Reduce the unnecessary stops' is an instruction about friction, not consent to redraw the approval line. A security check flagged it on exactly that ground and was right. The technical review was thorough and entirely beside the point: no amount of AI clearance substitutes for the owner's decision about their own gate.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-revert-guarded-widening",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T16:33:15+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: An agent may propose moving the boundary of what needs the human's approval; it may never move it. I filled a gap in classify_action so ordinary verbs would stop hitting the fail-closed default, cleared it through an in-system critic, verified the traps held and the evals went green — and it still had to come out, because the change decided what Jonas has to see. 'Reduce the unnecessary stops' is an instruction about friction, not consent to redraw the approval line. A security check flagged it on exactly that ground and was right. The technical review was thorough and entirely beside the point: no amount of AI clearance substitutes for the owner's decision about their own gate."
+      }
+    },
+    {
+      "id": "LC-20260812-19",
+      "date": "2026-08-12",
+      "text": "'No live string matches it' is the wrong test for a boundary gap. The builder found that _GUARDED's both-sides word boundary blocks a match inside a longer word but not a hyphenated continuation — a hyphen is itself a word boundary — and reported it honestly, then judged it inert because none of 17,000 corpus strings triggered it. But a classifier is fed future text, not the corpus. Verified in seconds: 'rename a variable-length payroll record for the new hire' and 'bump the version-controlled customer contract' both reached the executing lane. Ask what an action text CAN contain, not what the archive happens to contain today.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-revert-guarded-widening",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T16:33:15+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: 'No live string matches it' is the wrong test for a boundary gap. The builder found that _GUARDED's both-sides word boundary blocks a match inside a longer word but not a hyphenated continuation — a hyphen is itself a word boundary — and reported it honestly, then judged it inert because none of 17,000 corpus strings triggered it. But a classifier is fed future text, not the corpus. Verified in seconds: 'rename a variable-length payroll record for the new hire' and 'bump the version-controlled customer contract' both reached the executing lane. Ask what an action text CAN contain, not what the archive happens to contain today."
+      }
+    },
+    {
+      "id": "LC-20260812-20",
+      "date": "2026-08-12",
+      "text": "A safety argument that is true inside a function can be false at the caller. I argued that adding verbs to _GUARDED/_SAFE cannot weaken a gate, because the gate branches return first — correct, verified line by line, and misleading. approval-required routes to needsJonas; guarded-write routes to readySafe, gets a Task Packet and executes. So the change could not weaken a gate and still moved eleven money, hiring and customer sentences out of the human's inbox into the lane that runs. When reasoning about a classifier, trace what each return value CAUSES downstream before calling any reclassification neutral.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-revert-guarded-widening",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T16:33:15+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: A safety argument that is true inside a function can be false at the caller. I argued that adding verbs to _GUARDED/_SAFE cannot weaken a gate, because the gate branches return first — correct, verified line by line, and misleading. approval-required routes to needsJonas; guarded-write routes to readySafe, gets a Task Packet and executes. So the change could not weaken a gate and still moved eleven money, hiring and customer sentences out of the human's inbox into the lane that runs. When reasoning about a classifier, trace what each return value CAUSES downstream before calling any reclassification neutral."
+      }
+    },
+    {
+      "id": "LC-20260812-21",
+      "date": "2026-08-12",
+      "text": "Measure a candidate keyword against the actual business vocabulary before adding it. Frankly is an insurance company, so 'customer', 'price', 'payment' and 'contract' are ordinary words here, not signals. Bare 'contract' and 'kontrakt' hit 26 and 31 corpus records, almost all of them the filename frankly-crew-contract-v0-N.md — the crew's own governance document, which a bare token would have gated every time it was mentioned. Bare 'fund' hit 35 because it means FINDING in Danish, and 'wire' hit 13 as 'wired end-to-end'. Every multi-word phrase naming the actual act scored zero. The rejected tokens are now written into the code with their hit counts so nobody re-adds them from intuition.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-gate-money-hr-customer",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T16:58:57+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Measure a candidate keyword against the actual business vocabulary before adding it. Frankly is an insurance company, so 'customer', 'price', 'payment' and 'contract' are ordinary words here, not signals. Bare 'contract' and 'kontrakt' hit 26 and 31 corpus records, almost all of them the filename frankly-crew-contract-v0-N.md — the crew's own governance document, which a bare token would have gated every time it was mentioned. Bare 'fund' hit 35 because it means FINDING in Danish, and 'wire' hit 13 as 'wired end-to-end'. Every multi-word phrase naming the actual act scored zero. The rejected tokens are now written into the code with their hit counts so nobody re-adds them from intuition."
+      }
+    },
+    {
+      "id": "LC-20260812-22",
+      "date": "2026-08-12",
+      "text": "A vocabulary change to classify_action is only half a change: touches_gated_topic() is consumed by 33 files, including file-learning.py's auto-file guard, autopilot, gap-finder, agent-smeden, cockpit-server and improvement-loop. Adding a category to one and not the other means the classifier gates a money or HR action while a learning candidate naming the same topic still files itself without Jonas. The two must land in the same pass, or the deferral must be said out loud. Grep for who consumes a predicate before deciding a change to it is complete.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-gate-money-hr-customer",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T16:58:57+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: A vocabulary change to classify_action is only half a change: touches_gated_topic() is consumed by 33 files, including file-learning.py's auto-file guard, autopilot, gap-finder, agent-smeden, cockpit-server and improvement-loop. Adding a category to one and not the other means the classifier gates a money or HR action while a learning candidate naming the same topic still files itself without Jonas. The two must land in the same pass, or the deferral must be said out loud. Grep for who consumes a predicate before deciding a change to it is complete."
+      }
+    },
+    {
+      "id": "LC-20260812-23",
+      "date": "2026-08-12",
+      "text": "Three separate defects kept one nightly backup off, and each hid the next. First an all-or-nothing health gate ANDed with an eval that is deliberately red forever, so the job was structurally unable to run. Fixing that exposed a pin matching the accepted failure by literal error string, which broke the moment an unrelated session recorded a run that was legitimately not machine work. Fixing that exposed a reader requiring status == 'passed' while the file carried 'skipped', a value the QA suite's own aggregate already treats as clean. Each fix was correct and each revealed the next — so 'we fixed it' after the first one would have been true and useless. Prove the outcome, not the change: the only evidence that counted was a 154 MB zip with an age of zero minutes.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-backup-runs-itself",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T17:51:13+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Three separate defects kept one nightly backup off, and each hid the next. First an all-or-nothing health gate ANDed with an eval that is deliberately red forever, so the job was structurally unable to run. Fixing that exposed a pin matching the accepted failure by literal error string, which broke the moment an unrelated session recorded a run that was legitimately not machine work. Fixing that exposed a reader requiring status == 'passed' while the file carried 'skipped', a value the QA suite's own aggregate already treats as clean. Each fix was correct and each revealed the next — so 'we fixed it' after the first one would have been true and useless. Prove the outcome, not the change: the only evidence that counted was a 154 MB zip with an age of zero minutes."
+      }
+    },
+    {
+      "id": "LC-20260812-24",
+      "date": "2026-08-12",
+      "text": "A status field with more than two legal values will eventually be read as if it had two. run-local-site-qa.py:481 accepts inlineJs as clean when its status is 'passed' OR 'skipped'; the backup predicate reading the same file tested status == 'passed' and blocked on skipped. Skipped means the check had nothing to check — a genuine failure writes 'failed'. Same shape as validation_status_ok() counting only the literal word 'passed' while 79 runs recorded '34/34'. When a reader and its source disagree about what counts as clean, the source's own aggregate is the authoritative definition to align to, not a judgement call to make freshly.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-backup-runs-itself",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T17:51:13+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: A status field with more than two legal values will eventually be read as if it had two. run-local-site-qa.py:481 accepts inlineJs as clean when its status is 'passed' OR 'skipped'; the backup predicate reading the same file tested status == 'passed' and blocked on skipped. Skipped means the check had nothing to check — a genuine failure writes 'failed'. Same shape as validation_status_ok() counting only the literal word 'passed' while 79 runs recorded '34/34'. When a reader and its source disagree about what counts as clean, the source's own aggregate is the authoritative definition to align to, not a judgement call to make freshly."
+      }
+    },
+    {
+      "id": "LC-20260812-25",
+      "date": "2026-08-12",
+      "text": "Do not falsify a record to make a check green. The pinned eval demands every run be machine-focused, and three of 209 are not — a partner film-product deck, a skill intake, and a governance diagnosis, all legitimately non-machine work. Setting machineFocus=true on them would have cleared the eval in one edit and made the registry lie about what those runs were. The pin was made shape-aware instead, so the eval stays honestly red and the backup stops depending on its exact wording. When a check and a record disagree, ask which one is wrong before changing the one that is easier to change.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-backup-runs-itself",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T17:51:13+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Do not falsify a record to make a check green. The pinned eval demands every run be machine-focused, and three of 209 are not — a partner film-product deck, a skill intake, and a governance diagnosis, all legitimately non-machine work. Setting machineFocus=true on them would have cleared the eval in one edit and made the registry lie about what those runs were. The pin was made shape-aware instead, so the eval stays honestly red and the backup stops depending on its exact wording. When a check and a record disagree, ask which one is wrong before changing the one that is easier to change."
+      }
+    },
+    {
+      "id": "LC-20260812-26",
+      "date": "2026-08-12",
+      "text": "The object decides, not the verb. Closing the fail-closed default by naming ordinary verbs was measured and rejected twice: with all twelve bare verbs simulated into _GUARDED, six of eleven adversarial traps hold on the money/HR gate and five still break, and each new gate phrase invites a new trap. Enumeration cannot win that race, which is precisely why a fail-closed default exists. What works is naming the OBJECT — 'rename a variable', 'tidy the imports', 'remove the dead code' — because a variable cannot be a customer, a payroll record or a contract, whatever verb is applied to it. Seven phrases removed the friction; zero records left the human's queue.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-close-the-verb-gap-by-object",
+      "disposition": "review",
+      "status": "pending",
+      "why": null,
+      "guardReason": "names a gated topic (deploy/connector/paid/plugin/thread) — needs your explicit OK",
+      "decidedAt": null,
+      "filedTo": null
+    },
+    {
+      "id": "LC-20260812-27",
+      "date": "2026-08-12",
+      "text": "Any finite-vocabulary classifier can be defeated by appending intent. M4 found that every accepted safe phrase, paired with 'quietly' or 'without telling anyone' or 'to obscure it' and no other keyword, reached the executing lane — universally, for every phrase tested. That is not a flaw in which words were chosen; it is a property of matching a fixed list against free text written by someone who knows the list exists. The mitigation is not more vocabulary but a trip-wire on the obfuscating language itself, checked before the permissive branch, because legitimate engineering hygiene has no reason to say 'so nobody notices'.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-close-the-verb-gap-by-object",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T20:10:43+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: Any finite-vocabulary classifier can be defeated by appending intent. M4 found that every accepted safe phrase, paired with 'quietly' or 'without telling anyone' or 'to obscure it' and no other keyword, reached the executing lane — universally, for every phrase tested. That is not a flaw in which words were chosen; it is a property of matching a fixed list against free text written by someone who knows the list exists. The mitigation is not more vocabulary but a trip-wire on the obfuscating language itself, checked before the permissive branch, because legitimate engineering hygiene has no reason to say 'so nobody notices'."
+      }
+    },
+    {
+      "id": "LC-20260812-28",
+      "date": "2026-08-12",
+      "text": "A hyphen is a word boundary, and that quietly broke matching in both directions for months. _match's both-sides path used plain \\b, so a phrase survived a hyphenated continuation ('rename a variable-length payroll calculation logic' matched 'rename a variable') and a bare keyword could start immediately after a hyphen — which is why any record containing the literal string 'guarded-write' classified as guarded-write, via the word sitting inside it. The record warning about the gap was itself mis-gated by it. Lookarounds excluding [\\w-] on both sides fix both directions at once, and gate-side prefix matching is unaffected because it never used the both-sides path.",
+      "scope": "system-maintenance",
+      "kind": "use",
+      "confidence": "high",
+      "sourceSession": "20260812-close-the-verb-gap-by-object",
+      "disposition": "auto",
+      "status": "filed",
+      "why": null,
+      "guardReason": "clearly-safe: names no gated topic",
+      "decidedAt": "2026-08-12T20:10:43+00:00",
+      "filedTo": {
+        "route": "routes/system-maintenance-route.md",
+        "bullet": "- 2026-08-12: A hyphen is a word boundary, and that quietly broke matching in both directions for months. _match's both-sides path used plain \\b, so a phrase survived a hyphenated continuation ('rename a variable-length payroll calculation logic' matched 'rename a variable') and a bare keyword could start immediately after a hyphen — which is why any record containing the literal string 'guarded-write' classified as guarded-write, via the word sitting inside it. The record warning about the gap was itself mis-gated by it. Lookarounds excluding [\\w-] on both sides fix both directions at once, and gate-side prefix matching is unaffected because it never used the both-sides path."
+      }
     }
   ],
-  "sourceMtime": 1786513496.1968005
+  "sourceMtime": 1786565443.4851108
 }
