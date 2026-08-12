@@ -5,9 +5,9 @@
   "summary": "Seventy external capability candidates are registered. Four remain live for the next supervised Frankly OS pass (2 installs pending marketplace verification, 2 reduced-scope pilots); four are closed as already adapted (2026-07-01).",
   "stats": {
     "registered": 70,
-    "activateNow": 4,
+    "activateNow": 0,
     "localAdaptations": 7,
-    "approvalGatedInstalls": 2
+    "approvalGatedInstalls": 0
   },
   "lanes": [
     {
@@ -18,8 +18,8 @@
         "build-web-data-visualization"
       ],
       "gate": "Jonas approval before install",
-      "labelDa": "Installér som det næste",
-      "gateDa": "Kræver dit ja før installation"
+      "labelDa": "Install next",
+      "gateDa": "Needs your yes before install"
     },
     {
       "id": "adapt",
@@ -32,8 +32,8 @@
         "remotion-marketing-video-skill"
       ],
       "gate": "Local Frankly-native skill adaptation only",
-      "labelDa": "Tilpas lokalt",
-      "gateDa": "Kun lokal Frankly-tilpasning (ingen rå install)"
+      "labelDa": "Adapt locally",
+      "gateDa": "Local Frankly-native adaptation only (no raw install)"
     },
     {
       "id": "audit",
@@ -42,8 +42,8 @@
         "codex-site-visual-system-extractor"
       ],
       "gate": "Dependency and script audit before promotion",
-      "labelDa": "Undersøg / pilot",
-      "gateDa": "Afhængigheds- og script-audit før promovering"
+      "labelDa": "Investigate / pilot",
+      "gateDa": "Dependency and script audit before promotion"
     }
   ],
   "items": [
@@ -131,7 +131,9 @@
       "pilot": "One-time, no-network local audit of the script",
       "gate": "dependency/script audit",
       "decision": "approved",
-      "decidedAt": "2026-07-10T20:16:09+00:00"
+      "decidedAt": "2026-07-10T20:16:09+00:00",
+      "status": "blocked-needs-clone-approval-2026-07-13",
+      "note": "Audit forsøgt 2026-07-13: kildekoden findes ikke lokalt, og klon af eksterne repos er selv gated — papir-audit filet i os-visualization/reports/codex-site-visual-system-extractor-audit-2026-07-13.md; venter på eksplicit klon-godkendelse fra Jonas"
     },
     {
       "rank": 8,
@@ -147,5 +149,6 @@
       "decidedAt": "2026-07-10T20:16:10+00:00"
     }
   ],
-  "syncedAt": "2026-07-13T09:34:32+00:00"
+  "syncedAt": "2026-08-12T06:01:17+00:00",
+  "sourceMtime": 1783953161.1545165
 }

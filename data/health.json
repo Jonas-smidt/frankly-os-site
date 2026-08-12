@@ -1,46 +1,46 @@
 {
-  "generated": "2026-07-13T09:35:30+00:00",
-  "lastFeedSync": "2026-07-13T09:35:30+00:00",
+  "generated": "2026-08-12T07:00:31+00:00",
+  "lastFeedSync": "2026-08-12T07:00:31+00:00",
   "selfCheck": {
-    "date": "2026-07-13",
-    "result": "PASS",
-    "report": "os-visualization/reports/self-check-2026-07-13.md",
+    "date": "2026-08-12",
+    "result": "FAIL",
+    "report": "os-visualization/reports/self-check-2026-08-12.md",
     "checks": {
       "json": "passed",
       "feedSync": "passed",
       "localRefs": "passed",
       "css": "passed",
-      "inlineJs": "passed",
+      "inlineJs": "skipped",
       "uploadBoundary": "passed",
       "manifestBoundary": "passed",
       "machineStateGuard": "passed",
       "sourceIntake": "passed",
-      "franklyOsEvals": "passed",
+      "franklyOsEvals": "failed",
       "routeQa": "passed"
     },
     "freshness": [
       {
         "file": "run-registry.json",
-        "date": "2026-07-13",
+        "date": "2026-08-12",
         "daysOld": 0
       },
       {
         "file": "mission-control-queue.json",
         "date": "2026-07-07",
-        "daysOld": 6
+        "daysOld": 36
       },
       {
         "file": "flight-recorder.json",
-        "date": "2026-07-13",
+        "date": "2026-08-12",
         "daysOld": 0
       }
     ],
     "activeBatchConsistency": "OK"
   },
   "evals": {
-    "cases": 34,
-    "passed": 34,
-    "failed": 0
+    "cases": 54,
+    "passed": 52,
+    "failed": 2
   },
-  "resultDa": "Alt grønt — selvtjek bestået, 34 af 34 evals grønne"
+  "resultDa": "Not all green — self-check FAIL, 52 of 54 evals green"
 }

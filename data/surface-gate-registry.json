@@ -22,7 +22,7 @@
       "evidenceFolder": "os-visualization/evidence/20260701-onboarding-entry-gate-browser-qa/",
       "nextApproval": "Decide sitemap/robots behavior before public use.",
       "anchor": "entry-gate",
-      "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
+      "gateLabelDa": "Local only — needs your yes before public"
     },
     {
       "id": "frankly-os-cockpit",
@@ -36,7 +36,7 @@
       "evidenceFolder": "os-visualization/evidence/20260710-frankly-lab-40-consolidation-browser-qa/",
       "nextApproval": "Stays a local operating surface served by cockpit-server.py on 127.0.0.1:8137; any public use requires Jonas approval.",
       "anchor": "cockpit",
-      "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
+      "gateLabelDa": "Local only — needs your yes before public"
     },
     {
       "id": "product-clarity-review",
@@ -50,7 +50,7 @@
       "evidenceFolder": "os-visualization/evidence/20260701-product-clarity-review-gate-browser-qa/",
       "nextApproval": "Product/legal must approve terms, exclusions, deductibles and wording.",
       "anchor": "review",
-      "gateLabelDa": "Kun lokal — kræver dit ja før offentlig"
+      "gateLabelDa": "Local only — needs your yes before public"
     },
     {
       "id": "blog-publishing",
@@ -64,7 +64,7 @@
       "evidenceFolder": "os-visualization/evidence/20260701-blog-publishing-gate-browser-qa/",
       "nextApproval": "Keep blog out of sitemap until source, legal, author/reviewer and schema policy are approved.",
       "anchor": "publish-gate",
-      "gateLabelDa": "Blokeret (claims/produkt/legal)"
+      "gateLabelDa": "Blocked (claims/product/legal)"
     },
     {
       "id": "cykelforsikring-article-review",
@@ -78,7 +78,8 @@
       "evidenceFolder": "os-visualization/evidence/20260701-article-review-gate-browser-qa/",
       "nextApproval": "Frankly bicycle-specific claims, warranty/reklamation sources, author/reviewer, canonical, sitemap and schema remain blocked.",
       "anchor": "article-gate",
-      "gateLabelDa": "Blokeret (claims/produkt/legal)"
+      "gateLabelDa": "Blocked (claims/product/legal)"
     }
-  ]
+  ],
+  "sourceMtime": 1783699757.9845152
 }

@@ -1,0 +1,12 @@
+{
+  "generated": "2026-08-12T06:01:17+00:00",
+  "status": "measurement-v0.1",
+  "source": "os-visualization/system-intelligence/run-registry.json",
+  "generatedFromRunRegistry": true,
+  "sourceMtime": 1786514477.8254828,
+  "avgQualityScore": 0.6744,
+  "measurableRuns": 201,
+  "lessonFiledRuns": 118,
+  "totalRuns": 202,
+  "lessonFiledRate": 0.5842
+}
