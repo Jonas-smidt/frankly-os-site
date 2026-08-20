@@ -32,3 +32,17 @@ studio.html
 # Lokal publish-prep dry-run-evidens — maskinstate, skal ikke i det offentlige repo
 publish-dry-run/
 frankly-os-cockpit-v2.html
+
+# Internal operational state feeds — live locally for the cockpit/OS, must never
+# be committed to the public repo (2026-08-20, precedent: cockpit-html 2026-07-09).
+# EXCEPTION: data/tools-shelf.json stays tracked — sync_from_drive.py's fail-closed
+# shelf boundary check reads it in CI on a fresh checkout. data/README.md stays too.
+data/activation-queue-data.json
+data/daily-decision-digest.json
+data/health.json
+data/learning-capture-queue.json
+data/librarian-review.json
+data/measurement.json
+data/mission-control-queue.json
+data/next-best-action.json
+data/surface-gate-registry.json
