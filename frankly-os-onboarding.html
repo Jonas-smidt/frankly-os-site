@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Welcome to Frankly OS | Frankly</title>
+<meta name="description" content="Internal onboarding for new Frankly teammates: what Frankly OS is, how the build-learn-compound loop runs, and where to start on day one.">
+<link rel="icon" href="assets/frankly-logo-small.png">
+<link rel="stylesheet" href="frankly-surfaces.css">
+<link rel="stylesheet" href="frankly-lab-brand.css">
+<style>
+  /* Page-scoped: type-and-light hero wash + ribbon sweep (CSS-drawn, no bitmap) */
+  .osw-hero{position:relative;overflow:hidden;background:linear-gradient(180deg,var(--limestone,#F5F4F1) 0%,var(--pink-soft,#FFF6FA) 100%);padding:96px 0 72px}
+  .osw-hero::after{content:"";position:absolute;left:-10%;right:-10%;bottom:-140px;height:340px;border-radius:50% 50% 0 0;background:linear-gradient(90deg,var(--pink,#FFD3E3),var(--calm-deep,#FFACCA));opacity:.28;pointer-events:none}
+  .osw-hero .wrap{position:relative;z-index:1}
+  .osw-hero img.osw-wordmark{width:180px;max-width:60vw;height:auto;display:block;margin-bottom:28px}
+  .osw-hero h1{font-family:var(--fl-display,inherit);color:var(--bordeaux,#2D0011);font-weight:600;font-size:clamp(34px,5vw,54px);letter-spacing:-.4px;margin:0 0 12px}
+  .osw-hero .standfirst{max-width:640px;color:var(--grey-1,#5b4a51);font-size:18px;line-height:1.6;margin:0 0 26px}
+  .osw-band{padding:56px 0;border-top:1px solid var(--line,#E9E6E1)}
+  .osw-band .wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  .osw-band h2{font-family:var(--fl-display,inherit);color:var(--bordeaux,#2D0011);font-weight:600;font-size:clamp(24px,3vw,32px);margin:0 0 18px}
+  .osw-band h3{color:var(--bordeaux,#2D0011);font-size:18px;margin:26px 0 8px}
+  .osw-band p,.osw-band li{color:var(--grey-1,#4d3c44);line-height:1.65;font-size:16px}
+  .osw-band code{background:var(--pink-soft,#FFF6FA);border:1px solid var(--line,#E9E6E1);border-radius:6px;padding:1px 6px;font-size:14px;word-break:break-word}
+  .osw-card{background:var(--paper,#fff);border:1px solid var(--line,#E9E6E1);border-radius:16px;padding:26px 28px;box-shadow:var(--shadow-card,0 10px 30px rgba(45,0,17,.06));margin:18px 0}
+  .osw-chip{display:inline-block;background:var(--pink,#FFD3E3);color:var(--bordeaux,#2D0011);border-radius:999px;font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;padding:4px 12px;margin-bottom:12px}
+  .osw-steps{counter-reset:s;list-style:none;padding:0;margin:0}
+  .osw-steps li{position:relative;padding:0 0 18px 52px}
+  .osw-steps li::before{counter-increment:s;content:counter(s);position:absolute;left:0;top:0;width:34px;height:34px;border-radius:50%;background:var(--bordeaux,#2D0011);color:#fff;font-weight:600;display:flex;align-items:center;justify-content:center;font-size:15px}
+  .osw-facts{list-style:none;padding:0;margin:0;counter-reset:f}
+  .osw-facts li{padding:10px 0 10px 40px;position:relative;border-bottom:1px solid var(--line,#E9E6E1)}
+  .osw-facts li::before{counter-increment:f;content:counter(f);position:absolute;left:0;top:12px;width:26px;height:26px;border-radius:50%;background:var(--pink-soft,#FFF6FA);border:1px solid var(--pink,#FFD3E3);color:var(--bordeaux,#2D0011);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
+  .osw-diagram{overflow-x:auto;padding:8px 0}
+  .osw-diagram svg{width:100%;min-width:720px;height:auto;display:block}
+  @media (max-width:719px){.dg-annot{display:none}}
+  .osw-footnote{font-size:13px;color:var(--grey-2,#8a7a80)}
+</style>
+</head>
+<body class="surface-page fl">
+  <header class="site-nav" aria-label="Frankly navigation">
+    <div class="wide-wrap">
+      <a class="nav-brand" href="index.html" aria-label="Frankly Lab">
+        <img class="brand-logo brand-logo-light" src="assets/frankly-logo-small.png" alt="frankly">
+        <span class="nav-surface-label">Welcome</span>
+      </a>
+      <nav class="nav-links" aria-label="Internal Lab surfaces">
+        <a href="index.html">Lab home</a>
+        <a class="active" href="frankly-os-onboarding.html">Welcome to Frankly OS</a>
+        <a href="onboarding.html">Start here</a>
+        <a href="index.html#live">Live tools</a>
+        <a href="journal/frankly-blog-index.html">Journal</a>
+      </nav>
+    </div>
+  </header>
+
+  <main>
+    <!-- Beat 1+2: hook + counterweight -->
+    <section class="osw-hero" id="top">
+      <div class="wrap" style="max-width:880px;margin:0 auto;padding:0 24px">
+        <img class="osw-wordmark" src="assets/frankly-wordmark.png" alt="Frankly">
+        <span class="osw-chip">Internal · Team</span>
+        <h1>Welcome to Frankly OS.</h1>
+        <p class="standfirst">The machine that remembers, so you don't have to start from scratch.</p>
+        <p class="standfirst">This is our internal workshop: it builds things, keeps what it learned, and gets a little better every time. You are teammate number two. Nothing here is finished, and that is the point.</p>
+        <p class="standfirst"><strong style="color:var(--bordeaux,#2D0011)">Nothing it does is public by itself.</strong> Publishing and approving are human acts, and they are Jonas's.</p>
+        <div class="actions">
+          <a class="surface-button" href="#five-steps">Start the five steps</a>
+          <a class="surface-button secondary" href="#how-it-flows">See how work flows</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Beat 3: orientation — the three things you will meet -->
+    <section class="osw-band" id="orientation">
+      <div class="wrap">
+        <h2>The three things you will meet</h2>
+        <div class="osw-card">
+          <h3 style="margin-top:0">Boot</h3>
+          <p>Start every session by booting. One command loads everything the machine already knows — health, the active batch, the decisions waiting for Jonas, what ran overnight. Read it before you ask a single question; most of your questions are already answered on that screen.</p>
+          <p><code>python3 "/Users/jonas/Documents/Frankly os/os-visualization/scripts/frankly-os-boot.py" --quick</code> <span class="osw-footnote">(your clone's path once you have one)</span></p>
+        </div>
+        <div class="osw-card">
+          <h3 style="margin-top:0">The crew</h3>
+          <p>You are not alone in here. Twenty-seven seats, each with one job, one contract and one clear stop rule. You scope the work and hand it out; the seats do the lifting and report back. If a seat says it cannot do something, that is the system working, not a bug.</p>
+        </div>
+        <div class="osw-card">
+          <h3 style="margin-top:0">The close</h3>
+          <p>The way we work has three beats: build, learn, compound. You build something real, the machine writes down what it learned, and the next build starts from there. That is why the boring closing steps matter — the lesson you skip is the mistake someone repeats.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Diagram: Process River (R4.1 spec) -->
+    <section class="osw-band" id="how-it-flows">
+      <div class="wrap">
+        <h2>How a task flows</h2>
+        <div class="osw-diagram">
+        <svg viewBox="0 0 1120 320" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="dgTitle dgDesc">
+          <title id="dgTitle">How a task flows through Frankly OS</title>
+          <desc id="dgDesc">Six stages in order: You ask, the chat routes it, a task packet scopes it, Jonas decides at the gate, twenty-seven seats build, and the result ships after approval in the cockpit. A dashed feedback line returns the learning to the chat.</desc>
+          <!-- baseline hairline -->
+          <line x1="40" y1="300" x2="1080" y2="300" stroke="var(--line,#E9E6E1)" stroke-width="1"/>
+          <!-- pink glow behind the river -->
+          <path d="M 60 200 C 240 200 260 120 440 120 S 700 120 780 150 S 1000 190 1060 190" fill="none" stroke="var(--calm-pink,#FFD3E3)" stroke-width="10" stroke-linecap="round" opacity=".45"/>
+          <!-- the river -->
+          <path d="M 60 200 C 240 200 260 120 440 120 S 700 120 780 150 S 1000 190 1060 190" fill="none" stroke="var(--bordeaux,#2D0011)" stroke-width="2.5" stroke-linecap="round" opacity=".9"/>
+          <!-- feedback path: approval back to chat -->
+          <path d="M 1060 190 C 980 265 420 275 260 215" fill="none" stroke="var(--calm-deep,#FFACCA)" stroke-width="1.5" stroke-dasharray="6 6" opacity=".8"/>
+          <path d="M 268 224 L 258 214 L 272 212" fill="none" stroke="var(--calm-deep,#FFACCA)" stroke-width="1.5"/>
+          <!-- chevrons 2->3, 3->4, 5->6 -->
+          <path d="M 336 132 l 6 -4 l -6 -4" fill="none" stroke="var(--bordeaux,#2D0011)" stroke-width="1.5"/>
+          <path d="M 528 116 l 6 4 l -6 4" fill="none" stroke="var(--bordeaux,#2D0011)" stroke-width="1.5" transform="rotate(180 531 120)"/>
+          <path d="M 940 176 l 6 4 l -6 4" fill="none" stroke="var(--bordeaux,#2D0011)" stroke-width="1.5"/>
+          <!-- 1 You: filled pink circle -->
+          <circle cx="60" cy="200" r="13" fill="var(--calm-deep,#FFACCA)"/>
+          <text x="60" y="234" text-anchor="middle" font-family="Switzer,system-ui" font-weight="600" font-size="15" fill="var(--bordeaux,#2D0011)">You</text>
+          <text x="60" y="252" text-anchor="middle" class="dg-annot" font-family="Switzer,system-ui" font-weight="500" font-size="11" letter-spacing=".08em" fill="var(--grey-1,#6b5a61)">YOU ASK</text>
+          <!-- 2 Chat: hollow circle -->
+          <circle cx="255" cy="182" r="13" fill="var(--paper,#fff)" stroke="var(--bordeaux,#2D0011)" stroke-width="2"/>
+          <text x="255" y="216" text-anchor="middle" font-family="Switzer,system-ui" font-weight="600" font-size="15" fill="var(--bordeaux,#2D0011)">Chat</text>
+          <text x="255" y="234" text-anchor="middle" class="dg-annot" font-family="Switzer,system-ui" font-weight="500" font-size="11" letter-spacing=".08em" fill="var(--grey-1,#6b5a61)">ROUTES IT</text>
+          <!-- 3 Task Packet: rounded rect -->
+          <rect x="417" y="103" width="46" height="34" rx="10" fill="var(--limestone,#F5F4F1)" stroke="var(--line-dark,rgba(45,0,17,.14))" stroke-width="1.5"/>
+          <text x="440" y="162" text-anchor="middle" font-family="Switzer,system-ui" font-weight="600" font-size="15" fill="var(--bordeaux,#2D0011)">Task packet</text>
+          <text x="440" y="180" text-anchor="middle" class="dg-annot" font-family="Switzer,system-ui" font-weight="500" font-size="11" letter-spacing=".08em" fill="var(--grey-1,#6b5a61)">SCOPE + READS</text>
+          <!-- 4 Gate: amber diamond (the only diamond) -->
+          <rect x="601" y="103" width="34" height="34" transform="rotate(45 618 120)" fill="var(--warn,#F3D187)" stroke="var(--bordeaux,#2D0011)" stroke-width="1.5"/>
+          <text x="618" y="170" text-anchor="middle" font-family="Switzer,system-ui" font-weight="600" font-size="15" fill="var(--bordeaux,#2D0011)">Gate</text>
+          <text x="618" y="188" text-anchor="middle" class="dg-annot" font-family="Switzer,system-ui" font-weight="500" font-size="11" letter-spacing=".08em" fill="var(--grey-1,#6b5a61)">JONAS DECIDES</text>
+          <!-- 5 Seats: cluster of three small circles -->
+          <circle cx="780" cy="140" r="7" fill="var(--pink-stone,#F3DEE4)" stroke="var(--bordeaux,#2D0011)" stroke-width="1.2"/>
+          <circle cx="770" cy="155" r="7" fill="var(--pink-stone,#F3DEE4)" stroke="var(--bordeaux,#2D0011)" stroke-width="1.2"/>
+          <circle cx="790" cy="155" r="7" fill="var(--pink-stone,#F3DEE4)" stroke="var(--bordeaux,#2D0011)" stroke-width="1.2"/>
+          <text x="780" y="184" text-anchor="middle" font-family="Switzer,system-ui" font-weight="600" font-size="15" fill="var(--bordeaux,#2D0011)">Seats</text>
+          <text x="780" y="202" text-anchor="middle" class="dg-annot" font-family="Switzer,system-ui" font-weight="500" font-size="11" letter-spacing=".08em" fill="var(--grey-1,#6b5a61)">27 SEATS</text>
+          <!-- 6 Approval: hollow circle + green status dot (green appears exactly once) -->
+          <circle cx="1060" cy="190" r="15" fill="var(--blush,#FFF6FA)" stroke="var(--bordeaux,#2D0011)" stroke-width="2.5"/>
+          <circle cx="1071" cy="179" r="4" fill="var(--success-live,#27C966)"/>
+          <text x="1060" y="226" text-anchor="middle" font-family="Switzer,system-ui" font-weight="600" font-size="15" fill="var(--bordeaux,#2D0011)">Approval</text>
+          <text x="1060" y="244" text-anchor="middle" class="dg-annot" font-family="Switzer,system-ui" font-weight="500" font-size="11" letter-spacing=".08em" fill="var(--grey-1,#6b5a61)">SHIPPED</text>
+        </svg>
+        </div>
+        <p class="osw-footnote">The gate is the only amber object on purpose: it is the only place work can stop. The dashed line is the learning returning — the loop is supervised, not autonomous.</p>
+      </div>
+    </section>
+
+    <!-- Where things live (R8.1) -->
+    <section class="osw-band" id="where-things-live">
+      <div class="wrap">
+        <h2>Where things live</h2>
+        <p><strong>One home: the machine repo.</strong> Everything the OS knows and everything it runs with lives in one folder on your machine: <code>Frankly os</code>. Start there. If two places disagree, this one is right.</p>
+        <h3>Two rooms inside that home</h3>
+        <ul>
+          <li><code>canon/</code> — what we KNOW. The knowledge layer: <code>library/</code> (brand and design canon), <code>brain/</code> (how we work, plus the feedback the team writes back), <code>skills/</code>, <code>source-material/</code>, <code>tools/</code>. It arrived here from Drive on 2026-08-20 — 240 files, copied not moved.</li>
+          <li><code>os-visualization/</code> — what we RUN. Scripts, routes, evals, the crew's seat contracts, the cockpit page, and the small state files that remember runs, backlog and lessons.</li>
+        </ul>
+        <h3>Drive is the archive, not the desk</h3>
+        <p><code>My Drive/Frankly AI Lab/Frankly OS</code> still holds the heavy things that do not belong in a repo — around 1.1&nbsp;GB of assets and 1.5&nbsp;GB of backups, PDFs, film, deck files. Read it freely; treat it as history. It has exactly one live inbox: <code>brain/</code>, where the team drops feedback for the machine to read. Any other write to Drive is Jonas's call.</p>
+        <h3>Where your work goes</h3>
+        <p>Text and code you produce belong in the repo, committed by the run that made them. Heavy files go to Drive. <code>outputs/</code> is a workbench, not a home — things left there are not saved. Nothing is ever deleted: retired files move to <code>_retired/&lt;date&gt;-&lt;why&gt;/</code>.</p>
+        <h3>One honest loose end</h3>
+        <p>Thirteen files exist in both places with different edits. They were deliberately not merged; they are listed in <code>outputs/canon-vs-machine.md</code> and wait for Jonas. If you land on one, ask rather than pick.</p>
+      </div>
+    </section>
+
+    <!-- Beat 4: prerequisites -->
+    <section class="osw-band" id="before-you-start">
+      <div class="wrap">
+        <h2>Before you start</h2>
+        <ul>
+          <li><code>git</code> and <code>python3</code> on your machine</li>
+          <li>Claude Code installed</li>
+          <li>Repo access to <code>frankly-os-maskinen</code> granted by Jonas</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Beat 5: the five steps -->
+    <section class="osw-band" id="five-steps">
+      <div class="wrap">
+        <h2>Five steps to your first run</h2>
+        <ol class="osw-steps">
+          <li><strong>Clone</strong> the repo (ask Jonas for access): <code>git clone &lt;frankly-os-maskinen url&gt; "Frankly os"</code></li>
+          <li><strong>Run the setup script</strong> from your clone: <code>bash tools/setup-teammate.sh</code> — read what it prints; add <code>--yes-hooks</code> when you are ready for it to wire the session hooks into your <code>~/.claude/settings.json</code> (it shows the exact change first).</li>
+          <li><strong>Open Claude Code in the repo.</strong> The hooks boot the OS for you; the crew skill lives at <code>.claude/skills/frankly-crew/</code> and loads automatically.</li>
+          <li><strong>Read the governance file</strong> — the tracked copy is at <code>os-visualization/system-intelligence/CLAUDE.md</code>. It is the contract for how we work; the gates in it bind you and the machine alike.</li>
+          <li><strong>Do your first run.</strong> Every run closes with a run-card and a lesson — the Stop hook walks you through it. That close IS the work being saved.</li>
+        </ol>
+        <p>The page you are reading re-presents <code>ONBOARDING.md</code> in the machine repo — that file stays the source of truth; if the two drift, the file is right.</p>
+      </div>
+    </section>
+
+    <!-- Your first week (R7) -->
+    <section class="osw-band" id="first-week">
+      <div class="wrap">
+        <h2>Your first week: one bounded mission</h2>
+        <p>You get one mission, not a backlog. It is finished when the stop rule fires, and then you stop.</p>
+        <p><strong>Mission:</strong> ship one small, real change to the internal Lab surface, supervised end to end.</p>
+        <h3>Day 1 — Get the machine on your machine</h3>
+        <p>Clone the private machine repo (ask Jonas for access; do not improvise a location). Boot it, every session, before anything else, and read what it prints: health, active batch, decisions waiting for Jonas, next best action. Then read the governance file end to end. It overrides your instincts. The parts to know cold: the gates, the deletion rule (never delete, move to <code>_retired/</code>), the version rule (+0.1 per OS-changing run), English at source.</p>
+        <h3>Day 2–3 — Your first supervised run</h3>
+        <p>Ask the machine what it already learned about your topic: <code>python3 os-visualization/scripts/build-lessons-index.py --query "&lt;your topic&gt;"</code>. Build through the crew, not by hand — if the skill will not load, read the seat file in <code>.claude/agents/</code> and brief a real subagent with it, and say out loud which lane you are in. Check yourself with <code>python3 os-visualization/scripts/run-frankly-os-evals.py</code>, then close the run with <code>python3 os-visualization/scripts/record-frankly-run.py</code> — at least <code>--agent-used M1</code>, plus the lessons you learned.</p>
+        <h3>Stop rules — non-negotiable, whichever comes first</h3>
+        <ul>
+          <li>Green evals + a recorded run-card: done. Stop and report.</li>
+          <li>Any gate reached: connector/Drive write, paid API, plugin install, anything touching franklyinsure.com, or claims/product/legal wording outside <code>_scratch/</code>. Stop and hand back to Jonas.</li>
+          <li>Second failed attempt at the same fix: stop, write down what you learned, ask.</li>
+          <li>End of week regardless of state: stop and report honestly. An unfinished mission described accurately beats a finished one described vaguely.</li>
+        </ul>
+        <p>Nothing runs in the background on your behalf. If it is running, someone chose it.</p>
+      </div>
+    </section>
+
+    <!-- How work flows: routes (R8) -->
+    <section class="osw-band" id="routes">
+      <div class="wrap">
+        <h2>How work flows: routes</h2>
+        <p>A route is a written recipe for one kind of work. It names the goal, what it needs as input, the steps in order, the quality door the result must pass, when to stop, and what to hand back to Jonas instead of deciding yourself. Every route ends with "Lessons From Use" — the notes earlier runs left behind — so you read the route before you start and add to it when you finish. Twenty routes live in <code>os-visualization/routes/</code>. If your task doesn't fit one, that's a signal, not a shortcut: say so before building.</p>
+        <h3>The three routes a newcomer meets first</h3>
+        <ul>
+          <li><code>website-publishing-workflow-route.md</code> — any page, Lab surface or landing draft. Six steps: Context → Layout translation → Content draft → Visual QA → SEO QA → Publish or park. Start from the git-tracked <code>frankly-os-site/</code> repo, never the Drive copies (they are stale).</li>
+          <li><code>system-maintenance-route.md</code> — keeping the OS healthy. Run <code>janitor.py</code> (dry-run by default, <code>--apply</code> to fix). It never decides anything for Jonas.</li>
+          <li><code>system-visualization-route.md</code> — decks and system visuals. Read its one-pass runbook at the top, and run <code>preflight-visual-run.py</code> before building; it exits 1 until the plan, reference, method card, asset inventory and format are in place.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Working with partners (R2) -->
+    <section class="osw-band" id="partners">
+      <div class="wrap">
+        <h2>Working with partners</h2>
+        <p>Partner work has its own rails. Read them before you touch anything a partner will see.</p>
+        <p><em>The one rule.</em> Nothing partner-facing, customer-facing or checkout-facing goes out until Jonas plus the product/legal owner plus the partner owner approve it. The partner activation route says this in its own words and has stayed <code>test-next</code> since 2026-07-08 for exactly that reason. No real partner pilot has run yet.</p>
+        <p><em>What is showable.</em> Internally: kit structures, audience splits, seller-usefulness reviews, 1–90 day activation plans, missing-source lists, approval checklists. You can build all of that today.</p>
+        <p><em>What is gated.</em> Approved product descriptions, coverage explanations, checkout copy, commercial terms, launch templates, logo/brand usage rules, and any live partner communication. Also: Slack posts, Drive writes, paid tools, and public deploy to franklyinsure.com. If you are unsure whether a sentence is a claim, treat it as one.</p>
+        <p><em>How to work when a fact is missing.</em> Record it as a gap. Never invent a product fact, a price, a coverage detail or a commercial proof point to make a draft feel finished. "Gap, not guess" is the whole method.</p>
+        <p><em>Where partner material lives.</em> Route: <code>os-visualization/routes/partner-activation-route.md</code> (activation + kit structure) and <code>partner-case-study-route.md</code>. Heavy partner assets — logos, film, deck zips — live in Drive; text deliverables live in this repo.</p>
+        <p><em>Two things past runs learned the hard way.</em> Frankly-authored partner copy is written in English even when the partner's own slogan is Danish (verbatim quotes with attribution and proper product names are the exception). And "the logo" is not one field when a partner has both a wordmark and a compact mark — name assets after what they are, and let a missing asset fail visibly rather than silently falling back to type.</p>
+      </div>
+    </section>
+
+    <!-- Beat 6: the turn — rules and gates -->
+    <section class="osw-band" id="rules">
+      <div class="wrap">
+        <h2>Rules that bind from day one</h2>
+        <p>Most of what you do needs no permission — build it, check it, log it, keep going. A short list is different: anything that leaves this machine, costs money, or touches the real customer site stops and goes to Jonas. Product and legal wording stays off-limits until he opens it by name. The gates are not distrust. They are the reason the rest is open.</p>
+        <ul>
+          <li><strong>Nothing is deleted — ever.</strong> Superseded files move to <code>_retired/&lt;date&gt;-&lt;why&gt;/</code>.</li>
+          <li><strong>Claims / product / legal content is LOCKED</strong> everywhere except one lane: <code>_scratch/</code> is your private, local, gitignored workspace — anything there never leaves your machine by any automated path. Moving content OUT of <code>_scratch/</code> is a human act and it goes to Jonas.</li>
+          <li><strong>English at source.</strong> Everything new is written in English (history stays Danish).</li>
+          <li><strong>Only Jonas approves.</strong> Improvements, new agents, and merges to <code>main</code> are proposed by you and approved by him. Work on a branch; he merges.</li>
+          <li><strong>Say what lane you are in.</strong> If a tool or skill is unavailable, say so on the first turn — never silently hand-execute what should have been staffed.</li>
+        </ul>
+        <h3>Four things you never do alone</h3>
+        <ul>
+          <li><strong>Money:</strong> any paid API call goes to Jonas. Code-enforced.</li>
+          <li><strong>Anything that leaves this machine:</strong> Drive/connector writes, Slack posts, plugin installs, auto-created threads, git push to remotes. Jonas. Code-enforced.</li>
+          <li><strong>The real site:</strong> franklyinsure.com is human-supervised, permanently. os.franklydesign.dk is our internal test surface and is open — build, fix, push, deploy, then say plainly what went out. This split lives in prose (the governance file), not in the classifier — the governance file is the authority.</li>
+          <li><strong>Claims, product, coverage, legal wording:</strong> locked everywhere except <code>_scratch/</code>, which is free. The classifier's verdicts are hints, verb-dependent, and do not cover Danish — never quote one as permission.</li>
+        </ul>
+        <p class="osw-footnote">Newcomer footnote: the tier charters (v0-2/v0-3) are mostly written, not wired — only verify-before-attest, terminal-is-terminal and deferred-goes-to-Future-Improvements are actually enforced by code. Never cite a charter as permission. And the cockpit approve button is Jonas's hand only.</p>
+      </div>
+    </section>
+
+    <!-- Ten facts (R10) -->
+    <section class="osw-band" id="ten-facts">
+      <div class="wrap">
+        <h2>Ten facts about Frankly OS</h2>
+        <p>Ten things that are true today, 2026-08-21. Every number here comes from a file the machine maintains — if it drifts, the file is right and this page is wrong.</p>
+        <ol class="osw-facts">
+          <li><strong>One home.</strong> The private machine repo is the home: knowledge in <code>canon/</code>, the operating layer in <code>os-visualization/</code>. Drive is the archive, the home for heavy files, and one live write lane — the <code>brain/</code> feedback inbox. If the repo and Drive disagree, the repo is right.</li>
+          <li><strong>Version 6.21, as of 2026-08-21.</strong> The single source is <code>os-visualization/system-intelligence/os-version.json</code>, field <code>version</code>. Never hardcode it anywhere — read it. Every run that changes the OS bumps it +0.1; major numbers only when Jonas names them (6.0 = "One home").</li>
+          <li><strong>Boot before you build.</strong> The boot script prints health, the active batch, what is waiting for Jonas, and the next best action. It replaces asking 200 questions.</li>
+          <li><strong>One surface.</strong> The cockpit at <code>http://127.0.0.1:8137/frankly-os-cockpit.html</code> is the only UI. Decisions get approved there — every attempt, including refusals, is audited.</li>
+          <li><strong>A crew of 27 seats, tiered by responsibility</strong> (contract v0-26). Full-crew runs are rare, so cost exposure is bounded; the daily token meter is the named watch instrument.</li>
+          <li><strong>Never delete — move.</strong> Retired things go to <code>_retired/&lt;date&gt;-&lt;why&gt;/</code>. Nothing is removed until the system is proven to work without it. Applies to <code>git rm</code> too: untrack and move.</li>
+          <li><strong>Tighten freely, loosen only with Jonas.</strong> Making a check, test, gate or eval stricter is your own call; loosening one is Jonas's. A stricter test cannot hide a fault; a looser one can.</li>
+          <li><strong>Two deploy targets, two rules.</strong> os.franklydesign.dk is the internal test surface and is open — build, fix, push, deploy, then say plainly what went out. franklyinsure.com is the real site and never moves without Jonas.</li>
+          <li><strong>Claims, product and legal are LOCKED — with one open lane.</strong> Inside <code>_scratch/</code> that work is free, because the wall is the directory. Getting anything OUT is a human act and goes to Jonas.</li>
+          <li><strong>The loop compounds.</strong> Every run reads the matching lessons first and files new ones back; 60/60 evals and a green self-check as of 6.20/6.21. If you solve something by hand in the chat instead, say so and say what got skipped — the silence is the failure, not the shortcut.</li>
+        </ol>
+      </div>
+    </section>
+
+    <!-- The numbers (R1, stamped) -->
+    <section class="osw-band" id="numbers">
+      <div class="wrap">
+        <h2>The machine in numbers — as of 2026-08-21</h2>
+        <p>Stamped, not live: these figures were read from the machine's own state files on 2026-08-21 (OS 6.21) and change at every run close. The files are right; this page is a snapshot.</p>
+        <ul>
+          <li><strong>260 closed runs</strong> since 2026-07-04 — 135 of 260 with all validations passed.</li>
+          <li><strong>1,133 lessons captured</strong> (850 use + 260 run + 23 source) across <strong>70 scopes</strong>.</li>
+          <li><strong>15 open questions</strong> the machine is still carrying (26 resolved).</li>
+          <li><strong>27 crew seats</strong> (contract v0-26).</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Beat 7: honest beat -->
+    <section class="osw-band" id="not-working-yet">
+      <div class="wrap">
+        <h2>What does NOT work for teammates yet</h2>
+        <ul>
+          <li><strong>The plugin</strong> (<code>frankly-plugins</code>, v0.9.0) still carries absolute <code>/Users/jonas/...</code> paths — known machine-bound, not yet portable.</li>
+          <li><strong>The cockpit is per-machine</strong>, not shared: your <code>127.0.0.1:8137</code> shows your clone's state only.</li>
+          <li><strong>Simultaneous runs</strong> on the same registry are not supported yet — the run-registry split is pending. Coordinate with Jonas before parallel sessions.</li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- Beat 8: landing -->
+    <section class="osw-band" id="next">
+      <div class="wrap">
+        <h2>Where to look next</h2>
+        <ul>
+          <li><code>ONBOARDING.md</code> in the machine repo — the source of truth for this page.</li>
+          <li><code>os-visualization/system-intelligence/CLAUDE.md</code> — the governance contract.</li>
+          <li><code>os-visualization/routes/</code> — the twenty work recipes.</li>
+          <li>The cockpit: <code>http://127.0.0.1:8137/frankly-os-cockpit.html</code> (your machine, your state).</li>
+          <li><a href="index.html#live">Live tools on the Lab</a> and <a href="journal/frankly-blog-index.html">the Frankly Journal</a>.</li>
+        </ul>
+        <div class="osw-card" style="background:var(--pink-soft,#FFF6FA)">
+          <h3 style="margin-top:0">Day one, in one line</h3>
+          <p>Boot it, break something small, and write down what you learned. That is the whole job on day one. Ask early, ask plainly — the only expensive question here is the one nobody asked. Your first run makes the next one better — that is the whole machine.</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="wrap" style="max-width:880px;margin:0 auto;padding:32px 24px;color:var(--grey-2,#8a7a80);font-size:13px;border-top:1px solid var(--line,#E9E6E1)">
+    Internal Frankly team page — gated, noindex. Source of truth: <code>ONBOARDING.md</code> in the machine repo. No product, coverage or legal wording lives here by design.
+  </footer>
+</body>
+</html>

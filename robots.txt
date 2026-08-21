@@ -11,6 +11,7 @@ Disallow: /control-cockpit.html
 Disallow: /observatory.html
 Disallow: /studio.html
 Disallow: /onboarding.html
+Disallow: /frankly-os-onboarding.html
 Disallow: /frankly-signature-generator.html
 Disallow: /frankly-brand-reference.html
 Disallow: /frankly-brand-assistant.html
@@ -30,5 +31,6 @@ Disallow: /glass-folders.html
 Disallow: /frankly-ribbon-lab.html
 Disallow: /liquid-glass-hover.html
 Disallow: /frankly-linkedin-checker.html
+Disallow: /marketing/
 
 Sitemap: https://os.franklydesign.dk/sitemap.xml

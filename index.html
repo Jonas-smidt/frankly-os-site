@@ -118,6 +118,10 @@
   .item[data-art="bmw"]::before,.item[data-art="onboarding"]::before{background-size:cover;background-position:center}
   .item[data-art="ribbon"]::before{background:var(--thumb);background-color:var(--limestone-soft)}
   .item[data-art="effekt-lab"]::before{background:url(effekt-lab/thumbs/iridescent-button.png) center/cover;background-color:#120009;border-bottom-color:rgba(45,0,17,.2)}
+  /* Marketing Engine board — CSS-art only (no render exists yet): a phase-split
+     column chart in the gate colours, so the card reads as a status board. */
+  .item[data-art="marketing"]{--accent:var(--blue);--accent-2:var(--warn)}
+  .item[data-art="marketing"]::before{background:linear-gradient(var(--ok) 0 0) 118px 92px/26px 34px no-repeat,linear-gradient(var(--warn) 0 0) 152px 60px/26px 66px no-repeat,linear-gradient(var(--bordeaux) 0 0) 186px 104px/26px 22px no-repeat,linear-gradient(rgba(45,0,17,.2) 0 0) 112px 128px/152px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 232px 40px/46px 2px no-repeat,linear-gradient(rgba(45,0,17,.12) 0 0) 232px 56px/34px 2px no-repeat,linear-gradient(160deg,#fff,var(--blush) 60%,#EFE0E4);background-color:transparent}
 
   .note{border-top:1px solid var(--line);padding:26px 0 48px;font-family:var(--fl-sans);color:var(--grey-1);font-size:14px;line-height:1.6}
 
@@ -249,6 +253,12 @@
             <p>11 design/animationer genskabt i Frankly-universet — glas, iriserende lys og motion. Klik en effekt for fuldskærm.</p>
             <span class="go">Open gallery</span>
           </a>
+          <a class="item draft" href="marketing/" data-art="marketing" data-mark="ME">
+            <span class="chip">Prototype surface</span>
+            <h3>Marketing Engine</h3>
+            <p>Status board for the marketing branch: backlog by phase and gate, the KPI tree, the prompt panel and the route map. Prototype — nothing here is approved.</p>
+            <span class="go">Open board</span>
+          </a>
           <a class="item live" href="frankly-instore-onepager.html" data-art="instore" data-mark="IN">
             <span class="chip">Online guide</span>
             <h3>Instore salgsguide</h3>
@@ -373,6 +383,12 @@
           <p>Coverage, Start here and Journal stay visible as pages, not tools.</p>
         </div>
         <div class="grid">
+          <a class="item draft" href="frankly-os-onboarding.html" data-art="onboarding" data-mark="WF">
+            <span class="chip">Internal · Team</span>
+            <h3>Welcome to Frankly OS</h3>
+            <p>How the machine works, what it decides itself, and where you come in — for new teammates.</p>
+            <span class="go">Open the welcome page</span>
+          </a>
           <a class="item draft" href="onboarding.html" data-art="onboarding" data-mark="ST">
             <span class="chip">Gated preview</span>
             <h3>Start here</h3>
@@ -401,6 +417,12 @@
         <p>The short shelf view groups the non-game things visitors can open in the online Lab.</p>
       </div>
       <div class="grid">
+        <article class="item draft" data-art="onboarding" data-mark="WF">
+          <span class="chip">Internal · Team</span>
+          <h3>Welcome to Frankly OS</h3>
+          <p>How the machine works, what it decides itself, and where you come in — for new teammates.</p>
+          <span class="go">Open the welcome page</span>
+        </article>
         <article class="item draft" data-art="onboarding" data-mark="ST">
           <span class="chip">Gated preview</span>
           <h3>Start here</h3>
@@ -434,10 +456,10 @@
     This online Lab is gated but not treated as security. Jonas reopened Coverage overview as an online page and reopened Start here plus blog drafts as preview pages; source records, customer-facing claims and all other product/legal work stay out of the upload bundle.
   </footer>
   <script>document.documentElement.classList.add('js');</script>
-  <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-generated 2026-08-21T10:33:23+00:00; never hand-edit) -->
+  <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-generated 2026-08-21T19:32:18+00:00; never hand-edit) -->
   <script id="toolsShelfSnapshot" type="application/json">{
   "schemaVersion": "1.0",
-  "generated": "2026-08-21T10:33:23+00:00",
+  "generated": "2026-08-21T19:32:18+00:00",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "tools": [
     {
@@ -689,6 +711,27 @@
       "statusLabelDa": "Preview",
       "actionLabelEn": "Open Start here preview",
       "mark": "ST",
+      "art": "onboarding",
+      "retired": false
+    },
+    {
+      "id": "frankly-os-onboarding",
+      "href": "frankly-os-onboarding.html",
+      "labelEn": "Welcome to Frankly OS",
+      "labelDa": "Welcome to Frankly OS",
+      "descriptionEn": "How the machine works, what it decides itself, and where you come in - for new teammates.",
+      "descDa": "Sådan virker maskinen, hvad den selv beslutter, og hvor du kommer ind - til nye kolleger.",
+      "category": "Hverdag",
+      "shelf": "pages",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "preview",
+      "statusLabelEn": "Gated preview",
+      "statusLabelDa": "Preview",
+      "actionLabelEn": "Open the welcome page",
+      "mark": "WF",
       "art": "onboarding",
       "retired": false
     },

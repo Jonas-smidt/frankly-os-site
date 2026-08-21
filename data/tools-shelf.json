@@ -299,6 +299,27 @@
       "retired": false
     },
     {
+      "id": "frankly-os-onboarding",
+      "href": "frankly-os-onboarding.html",
+      "labelEn": "Welcome to Frankly OS",
+      "labelDa": "Welcome to Frankly OS",
+      "descriptionEn": "How the machine works, what it decides itself, and where you come in - for new teammates.",
+      "descDa": "Sådan virker maskinen, hvad den selv beslutter, og hvor du kommer ind - til nye kolleger.",
+      "category": "Hverdag",
+      "shelf": "pages",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "preview",
+      "statusLabelEn": "Gated preview",
+      "statusLabelDa": "Preview",
+      "actionLabelEn": "Open the welcome page",
+      "mark": "WF",
+      "art": "onboarding",
+      "retired": false
+    },
+    {
       "id": "coverage-overview",
       "href": "frankly-daekningsoverblik.html",
       "labelEn": "Coverage overview",
@@ -636,13 +657,13 @@
     }
   ],
   "counts": {
-    "total": 30,
-    "active": 28,
-    "publicLab": 23,
+    "total": 31,
+    "active": 29,
+    "publicLab": 24,
     "localOs": 5,
     "gatePublic": 22,
-    "gateNonPublic": 6,
+    "gateNonPublic": 7,
     "retired": 2
   },
-  "syncedAt": "2026-08-21T13:23:54+00:00"
+  "syncedAt": "2026-08-21T19:32:18+00:00"
 }

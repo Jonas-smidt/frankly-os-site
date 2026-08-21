@@ -48,6 +48,9 @@ UPLOADABLE_HTML = (
     # Reopened by Jonas 2026-08-21 (card lab-glass-folders-shelf-feed-2026-07-24):
     # public Play experiment again, in lockstep with the shelf feed.
     pathlib.Path("glass-folders.html"),
+    # Internal teammate onboarding page (full-crew build 2026-08-21): gated + noindex
+    # + robots-Disallowed like onboarding.html; describes the OS only, no claims copy.
+    pathlib.Path("frankly-os-onboarding.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
@@ -165,6 +168,19 @@ def build_manifest(root=pathlib.Path(".")):
     lab_dir = root / "effekt-lab"
     if lab_dir.exists():
         for src in sorted(lab_dir.rglob("*")):
+            if src.is_dir():
+                continue
+            manifest[src.relative_to(root).as_posix()] = src
+    # Marketing Engine status surface — same directory-page shape as effekt-lab:
+    # main() rglob-copies the whole marketing/ tree, so the manifest must too, or
+    # manifestBoundary count-mismatches (the exact 2026-07-24 effekt-lab bug above).
+    # Its data is an INLINE snapshot inside index.html; there is deliberately no
+    # marketing/data/ folder (check_upload_boundary.py hard-fails on any .json whose
+    # parent dir is named "data"), and no generator script lives in the tree either —
+    # scripts/build-marketing-snapshot.py stays in scripts/, which is never copied.
+    marketing_dir = root / "marketing"
+    if marketing_dir.exists():
+        for src in sorted(marketing_dir.rglob("*")):
             if src.is_dir():
                 continue
             manifest[src.relative_to(root).as_posix()] = src
@@ -347,6 +363,23 @@ def main():
             if is_html:
                 lab_pages += 1
         print(f"effekt-lab/ -> {lab_pages} page(s) + assets")
+
+    # Marketing Engine status surface — copy the whole tree; HTML is gated like the
+    # other Lab surfaces. The page is also noindex and robots-Disallowed (/marketing/).
+    # KEEP IN LOCKSTEP with the matching block in build_manifest() above — adding a
+    # directory to only one of the two is what caused the 2026-07-24 effekt-lab
+    # manifestBoundary count-mismatch.
+    marketing_dir = pathlib.Path("marketing")
+    if marketing_dir.exists():
+        marketing_pages = 0
+        for src in sorted(marketing_dir.rglob("*")):
+            if src.is_dir():
+                continue
+            is_html = src.suffix.lower() in {".html", ".htm"}
+            copy_file(src, SITE_DIR / src, gated=is_html)
+            if is_html:
+                marketing_pages += 1
+        print(f"marketing/ -> {marketing_pages} page(s) + assets")
 
     (SITE_DIR / ".nojekyll").write_text("", encoding="utf-8")
     domain = os.environ.get("SITE_DOMAIN", "").strip()
