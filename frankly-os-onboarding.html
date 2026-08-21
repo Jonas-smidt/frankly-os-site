@@ -17,6 +17,12 @@
   .osw-hero img.osw-wordmark{width:180px;max-width:60vw;height:auto;display:block;margin-bottom:28px}
   .osw-hero h1{font-family:var(--fl-display,inherit);color:var(--bordeaux,#2D0011);font-weight:600;font-size:clamp(34px,5vw,54px);letter-spacing:-.4px;margin:0 0 12px}
   .osw-hero .standfirst{max-width:640px;color:var(--grey-1,#5b4a51);font-size:18px;line-height:1.6;margin:0 0 26px}
+  .osw-hero .osw-body{max-width:640px;color:var(--grey-1,#5b4a51);font-size:16px;line-height:1.65;margin:0 0 14px}
+  .osw-wrap{max-width:880px;margin:0 auto;padding:0 24px}
+  .osw-strong{color:var(--bordeaux,#2D0011)}
+  .osw-card--soft{background:var(--pink-soft,#FFF6FA)}
+  .skip-link{position:absolute;left:-9999px;top:0;background:var(--bordeaux,#2D0011);color:#fff;padding:10px 18px;border-radius:0 0 10px 0;z-index:10}
+  .skip-link:focus{left:0}
   .osw-band{padding:56px 0;border-top:1px solid var(--line,#E9E6E1)}
   .osw-band .wrap{max-width:880px;margin:0 auto;padding:0 24px}
   .osw-band h2{font-family:var(--fl-display,inherit);color:var(--bordeaux,#2D0011);font-weight:600;font-size:clamp(24px,3vw,32px);margin:0 0 18px}
@@ -33,11 +39,11 @@
   .osw-facts li::before{counter-increment:f;content:counter(f);position:absolute;left:0;top:12px;width:26px;height:26px;border-radius:50%;background:var(--pink-soft,#FFF6FA);border:1px solid var(--pink,#FFD3E3);color:var(--bordeaux,#2D0011);font-size:13px;font-weight:600;display:flex;align-items:center;justify-content:center}
   .osw-diagram{overflow-x:auto;padding:8px 0}
   .osw-diagram svg{width:100%;min-width:720px;height:auto;display:block}
-  @media (max-width:719px){.dg-annot{display:none}}
-  .osw-footnote{font-size:13px;color:var(--grey-2,#8a7a80)}
+  .osw-footnote{font-size:13px;color:var(--grey-1,#585C60)}
 </style>
 </head>
 <body class="surface-page fl">
+  <a class="skip-link" href="#main">Skip to content</a>
   <header class="site-nav" aria-label="Frankly navigation">
     <div class="wide-wrap">
       <a class="nav-brand" href="index.html" aria-label="Frankly Lab">
@@ -46,7 +52,7 @@
       </a>
       <nav class="nav-links" aria-label="Internal Lab surfaces">
         <a href="index.html">Lab home</a>
-        <a class="active" href="frankly-os-onboarding.html">Welcome to Frankly OS</a>
+        <a class="active" aria-current="page" href="frankly-os-onboarding.html">Welcome to Frankly OS</a>
         <a href="onboarding.html">Start here</a>
         <a href="index.html#live">Live tools</a>
         <a href="journal/frankly-blog-index.html">Journal</a>
@@ -54,16 +60,16 @@
     </div>
   </header>
 
-  <main>
+  <main id="main">
     <!-- Beat 1+2: hook + counterweight -->
-    <section class="osw-hero" id="top">
-      <div class="wrap" style="max-width:880px;margin:0 auto;padding:0 24px">
-        <img class="osw-wordmark" src="assets/frankly-wordmark.png" alt="Frankly">
+    <section class="osw-hero" id="top" aria-labelledby="h-top">
+      <div class="wrap osw-wrap">
+        <img class="osw-wordmark" src="assets/frankly-wordmark.png" alt="">
         <span class="osw-chip">Internal · Team</span>
-        <h1>Welcome to Frankly OS.</h1>
+        <h1 id="h-top">Welcome to Frankly OS.</h1>
         <p class="standfirst">The machine that remembers, so you don't have to start from scratch.</p>
-        <p class="standfirst">This is our internal workshop: it builds things, keeps what it learned, and gets a little better every time. You are teammate number two. Nothing here is finished, and that is the point.</p>
-        <p class="standfirst"><strong style="color:var(--bordeaux,#2D0011)">Nothing it does is public by itself.</strong> Publishing and approving are human acts, and they are Jonas's.</p>
+        <p class="osw-body">This is the internal workshop at Frankly™: it builds things, keeps what it learned, and gets a little better every time. You are teammate number two. Nothing here is finished, and that is the point.</p>
+        <p class="osw-body"><strong class="osw-strong">Nothing it does is public by itself.</strong> Publishing and approving are human acts, and they are Jonas's.</p>
         <div class="actions">
           <a class="surface-button" href="#five-steps">Start the five steps</a>
           <a class="surface-button secondary" href="#how-it-flows">See how work flows</a>
@@ -72,9 +78,9 @@
     </section>
 
     <!-- Beat 3: orientation — the three things you will meet -->
-    <section class="osw-band" id="orientation">
+    <section class="osw-band" id="orientation" aria-labelledby="h-orientation">
       <div class="wrap">
-        <h2>The three things you will meet</h2>
+        <h2 id="h-orientation">Three things you will use every day</h2>
         <div class="osw-card">
           <h3 style="margin-top:0">Boot</h3>
           <p>Start every session by booting. One command loads everything the machine already knows — health, the active batch, the decisions waiting for Jonas, what ran overnight. Read it before you ask a single question; most of your questions are already answered on that screen.</p>
@@ -85,17 +91,17 @@
           <p>You are not alone in here. Twenty-seven seats, each with one job, one contract and one clear stop rule. You scope the work and hand it out; the seats do the lifting and report back. If a seat says it cannot do something, that is the system working, not a bug.</p>
         </div>
         <div class="osw-card">
-          <h3 style="margin-top:0">The close</h3>
+          <h3 style="margin-top:0">Closing a run</h3>
           <p>The way we work has three beats: build, learn, compound. You build something real, the machine writes down what it learned, and the next build starts from there. That is why the boring closing steps matter — the lesson you skip is the mistake someone repeats.</p>
         </div>
       </div>
     </section>
 
     <!-- Diagram: Process River (R4.1 spec) -->
-    <section class="osw-band" id="how-it-flows">
+    <section class="osw-band" id="how-it-flows" aria-labelledby="h-flows">
       <div class="wrap">
-        <h2>How a task flows</h2>
-        <div class="osw-diagram">
+        <h2 id="h-flows">How a task flows</h2>
+        <div class="osw-diagram" tabindex="0" role="group" aria-label="Diagram: how a task flows through Frankly OS">
         <svg viewBox="0 0 1120 320" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="dgTitle dgDesc">
           <title id="dgTitle">How a task flows through Frankly OS</title>
           <desc id="dgDesc">Six stages in order: You ask, the chat routes it, a task packet scopes it, Jonas decides at the gate, twenty-seven seats build, and the result ships after approval in the cockpit. A dashed feedback line returns the learning to the chat.</desc>
@@ -146,9 +152,9 @@
     </section>
 
     <!-- Where things live (R8.1) -->
-    <section class="osw-band" id="where-things-live">
+    <section class="osw-band" id="where-things-live" aria-labelledby="h-where">
       <div class="wrap">
-        <h2>Where things live</h2>
+        <h2 id="h-where">Where things live</h2>
         <p><strong>One home: the machine repo.</strong> Everything the OS knows and everything it runs with lives in one folder on your machine: <code>Frankly os</code>. Start there. If two places disagree, this one is right.</p>
         <h3>Two rooms inside that home</h3>
         <ul>
@@ -165,9 +171,9 @@
     </section>
 
     <!-- Beat 4: prerequisites -->
-    <section class="osw-band" id="before-you-start">
+    <section class="osw-band" id="before-you-start" aria-labelledby="h-before">
       <div class="wrap">
-        <h2>Before you start</h2>
+        <h2 id="h-before">Before you start</h2>
         <ul>
           <li><code>git</code> and <code>python3</code> on your machine</li>
           <li>Claude Code installed</li>
@@ -177,13 +183,13 @@
     </section>
 
     <!-- Beat 5: the five steps -->
-    <section class="osw-band" id="five-steps">
+    <section class="osw-band" id="five-steps" aria-labelledby="h-steps">
       <div class="wrap">
-        <h2>Five steps to your first run</h2>
+        <h2 id="h-steps">Five steps to your first run</h2>
         <ol class="osw-steps">
           <li><strong>Clone</strong> the repo (ask Jonas for access): <code>git clone &lt;frankly-os-maskinen url&gt; "Frankly os"</code></li>
           <li><strong>Run the setup script</strong> from your clone: <code>bash tools/setup-teammate.sh</code> — read what it prints; add <code>--yes-hooks</code> when you are ready for it to wire the session hooks into your <code>~/.claude/settings.json</code> (it shows the exact change first).</li>
-          <li><strong>Open Claude Code in the repo.</strong> The hooks boot the OS for you; the crew skill lives at <code>.claude/skills/frankly-crew/</code> and loads automatically.</li>
+          <li><strong>Open Claude Code in the repo.</strong> The hooks boot the OS for you. The crew skill loads if it is available in your environment; if it is not, read the seat file in <code>.claude/agents/</code> and brief a subagent with it — the governance file describes exactly this fallback.</li>
           <li><strong>Read the governance file</strong> — the tracked copy is at <code>os-visualization/system-intelligence/CLAUDE.md</code>. It is the contract for how we work; the gates in it bind you and the machine alike.</li>
           <li><strong>Do your first run.</strong> Every run closes with a run-card and a lesson — the Stop hook walks you through it. That close IS the work being saved.</li>
         </ol>
@@ -192,9 +198,9 @@
     </section>
 
     <!-- Your first week (R7) -->
-    <section class="osw-band" id="first-week">
+    <section class="osw-band" id="first-week" aria-labelledby="h-week">
       <div class="wrap">
-        <h2>Your first week: one bounded mission</h2>
+        <h2 id="h-week">Your first week: one bounded mission</h2>
         <p>You get one mission, not a backlog. It is finished when the stop rule fires, and then you stop.</p>
         <p><strong>Mission:</strong> ship one small, real change to the internal Lab surface, supervised end to end.</p>
         <h3>Day 1 — Get the machine on your machine</h3>
@@ -213,9 +219,9 @@
     </section>
 
     <!-- How work flows: routes (R8) -->
-    <section class="osw-band" id="routes">
+    <section class="osw-band" id="routes" aria-labelledby="h-routes">
       <div class="wrap">
-        <h2>How work flows: routes</h2>
+        <h2 id="h-routes">Routes — our written recipes</h2>
         <p>A route is a written recipe for one kind of work. It names the goal, what it needs as input, the steps in order, the quality door the result must pass, when to stop, and what to hand back to Jonas instead of deciding yourself. Every route ends with "Lessons From Use" — the notes earlier runs left behind — so you read the route before you start and add to it when you finish. Twenty routes live in <code>os-visualization/routes/</code>. If your task doesn't fit one, that's a signal, not a shortcut: say so before building.</p>
         <h3>The three routes a newcomer meets first</h3>
         <ul>
@@ -227,9 +233,9 @@
     </section>
 
     <!-- Working with partners (R2) -->
-    <section class="osw-band" id="partners">
+    <section class="osw-band" id="partners" aria-labelledby="h-partners">
       <div class="wrap">
-        <h2>Working with partners</h2>
+        <h2 id="h-partners">Working with partners</h2>
         <p>Partner work has its own rails. Read them before you touch anything a partner will see.</p>
         <p><em>The one rule.</em> Nothing partner-facing, customer-facing or checkout-facing goes out until Jonas plus the product/legal owner plus the partner owner approve it. The partner activation route says this in its own words and has stayed <code>test-next</code> since 2026-07-08 for exactly that reason. No real partner pilot has run yet.</p>
         <p><em>What is showable.</em> Internally: kit structures, audience splits, seller-usefulness reviews, 1–90 day activation plans, missing-source lists, approval checklists. You can build all of that today.</p>
@@ -241,9 +247,9 @@
     </section>
 
     <!-- Beat 6: the turn — rules and gates -->
-    <section class="osw-band" id="rules">
+    <section class="osw-band" id="rules" aria-labelledby="h-rules">
       <div class="wrap">
-        <h2>Rules that bind from day one</h2>
+        <h2 id="h-rules">Rules that bind from day one</h2>
         <p>Most of what you do needs no permission — build it, check it, log it, keep going. A short list is different: anything that leaves this machine, costs money, or touches the real customer site stops and goes to Jonas. Product and legal wording stays off-limits until he opens it by name. The gates are not distrust. They are the reason the rest is open.</p>
         <ul>
           <li><strong>Nothing is deleted — ever.</strong> Superseded files move to <code>_retired/&lt;date&gt;-&lt;why&gt;/</code>.</li>
@@ -264,10 +270,10 @@
     </section>
 
     <!-- Ten facts (R10) -->
-    <section class="osw-band" id="ten-facts">
+    <section class="osw-band" id="ten-facts" aria-labelledby="h-facts">
       <div class="wrap">
-        <h2>Ten facts about Frankly OS</h2>
-        <p>Ten things that are true today, 2026-08-21. Every number here comes from a file the machine maintains — if it drifts, the file is right and this page is wrong.</p>
+        <h2 id="h-facts">Ten things that are true today</h2>
+        <p>As of 2026-08-21. Every number here comes from a file the machine maintains — if it drifts, the file is right and this page is wrong.</p>
         <ol class="osw-facts">
           <li><strong>One home.</strong> The private machine repo is the home: knowledge in <code>canon/</code>, the operating layer in <code>os-visualization/</code>. Drive is the archive, the home for heavy files, and one live write lane — the <code>brain/</code> feedback inbox. If the repo and Drive disagree, the repo is right.</li>
           <li><strong>Version 6.21, as of 2026-08-21.</strong> The single source is <code>os-visualization/system-intelligence/os-version.json</code>, field <code>version</code>. Never hardcode it anywhere — read it. Every run that changes the OS bumps it +0.1; major numbers only when Jonas names them (6.0 = "One home").</li>
@@ -284,9 +290,9 @@
     </section>
 
     <!-- The numbers (R1, stamped) -->
-    <section class="osw-band" id="numbers">
+    <section class="osw-band" id="numbers" aria-labelledby="h-numbers">
       <div class="wrap">
-        <h2>The machine in numbers — as of 2026-08-21</h2>
+        <h2 id="h-numbers">The machine in numbers — as of 2026-08-21</h2>
         <p>Stamped, not live: these figures were read from the machine's own state files on 2026-08-21 (OS 6.21) and change at every run close. The files are right; this page is a snapshot.</p>
         <ul>
           <li><strong>260 closed runs</strong> since 2026-07-04 — 135 of 260 with all validations passed.</li>
@@ -298,9 +304,9 @@
     </section>
 
     <!-- Beat 7: honest beat -->
-    <section class="osw-band" id="not-working-yet">
+    <section class="osw-band" id="not-working-yet" aria-labelledby="h-notyet">
       <div class="wrap">
-        <h2>What does NOT work for teammates yet</h2>
+        <h2 id="h-notyet">What does NOT work for teammates yet</h2>
         <ul>
           <li><strong>The plugin</strong> (<code>frankly-plugins</code>, v0.9.0) still carries absolute <code>/Users/jonas/...</code> paths — known machine-bound, not yet portable.</li>
           <li><strong>The cockpit is per-machine</strong>, not shared: your <code>127.0.0.1:8137</code> shows your clone's state only.</li>
@@ -310,9 +316,9 @@
     </section>
 
     <!-- Beat 8: landing -->
-    <section class="osw-band" id="next">
+    <section class="osw-band" id="next" aria-labelledby="h-next">
       <div class="wrap">
-        <h2>Where to look next</h2>
+        <h2 id="h-next">Where to look next</h2>
         <ul>
           <li><code>ONBOARDING.md</code> in the machine repo — the source of truth for this page.</li>
           <li><code>os-visualization/system-intelligence/CLAUDE.md</code> — the governance contract.</li>
@@ -320,7 +326,7 @@
           <li>The cockpit: <code>http://127.0.0.1:8137/frankly-os-cockpit.html</code> (your machine, your state).</li>
           <li><a href="index.html#live">Live tools on the Lab</a> and <a href="journal/frankly-blog-index.html">the Frankly Journal</a>.</li>
         </ul>
-        <div class="osw-card" style="background:var(--pink-soft,#FFF6FA)">
+        <div class="osw-card osw-card--soft">
           <h3 style="margin-top:0">Day one, in one line</h3>
           <p>Boot it, break something small, and write down what you learned. That is the whole job on day one. Ask early, ask plainly — the only expensive question here is the one nobody asked. Your first run makes the next one better — that is the whole machine.</p>
         </div>
@@ -328,8 +334,8 @@
     </section>
   </main>
 
-  <footer class="wrap" style="max-width:880px;margin:0 auto;padding:32px 24px;color:var(--grey-2,#8a7a80);font-size:13px;border-top:1px solid var(--line,#E9E6E1)">
-    Internal Frankly team page — gated, noindex. Source of truth: <code>ONBOARDING.md</code> in the machine repo. No product, coverage or legal wording lives here by design.
+  <footer class="wrap osw-wrap" style="padding:32px 24px;color:var(--grey-1,#585C60);font-size:13px;border-top:1px solid var(--line,#E9E6E1)">
+    Internal Frankly team page — noindex. Source of truth: <code>ONBOARDING.md</code> in the machine repo. No product, coverage or legal wording lives here by design.
   </footer>
 </body>
 </html>
