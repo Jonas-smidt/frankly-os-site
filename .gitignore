@@ -42,6 +42,7 @@ data/daily-decision-digest.json
 data/health.json
 data/learning-capture-queue.json
 data/lessons.json
+data/crew.json
 data/librarian-review.json
 data/measurement.json
 data/mission-control-queue.json
