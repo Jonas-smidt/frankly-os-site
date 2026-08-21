@@ -640,7 +640,9 @@
     "active": 28,
     "publicLab": 23,
     "localOs": 5,
+    "gatePublic": 22,
+    "gateNonPublic": 6,
     "retired": 2
   },
-  "syncedAt": "2026-08-21T10:33:23+00:00"
+  "syncedAt": "2026-08-21T13:07:53+00:00"
 }
