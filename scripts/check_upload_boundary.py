@@ -30,11 +30,13 @@ OS_ONLY_PAGES = [
     # the ONE 4.0 operating surface + its archived predecessor
     "frankly-os-cockpit.html",
     "frankly-os-cockpit-v3-arkiv.html",
-    # the 11 surfaces retired by the 4.0 revision (2026-07-10)
+    # the surfaces retired by the 4.0 revision (2026-07-10).
+    # glass-folders.html left this list 2026-08-21: Jonas reopened it as a public
+    # Play experiment (card lab-glass-folders-shelf-feed-2026-07-24) — it is now an
+    # allowlisted, gated Lab page like the other glass experiments.
     "agent-brief-builder.html",
     "control-cockpit.html",
     "frankly-os.html",
-    "glass-folders.html",
     "lab-hub.html",
     "lab-registry.html",
     "mission-control-queue.html",

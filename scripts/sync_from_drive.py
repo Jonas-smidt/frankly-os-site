@@ -45,6 +45,9 @@ UPLOADABLE_HTML = (
     pathlib.Path("glass-lab.html"),
     pathlib.Path("glass-surface.html"),
     pathlib.Path("liquid-glass-hover.html"),
+    # Reopened by Jonas 2026-08-21 (card lab-glass-folders-shelf-feed-2026-07-24):
+    # public Play experiment again, in lockstep with the shelf feed.
+    pathlib.Path("glass-folders.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),

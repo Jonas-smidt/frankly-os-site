@@ -26,6 +26,7 @@ Disallow: /frankly-instore-salgsguide.html
 Disallow: /frankly-attach-rate.html
 Disallow: /glass-lab.html
 Disallow: /glass-surface.html
+Disallow: /glass-folders.html
 Disallow: /frankly-ribbon-lab.html
 Disallow: /liquid-glass-hover.html
 Disallow: /frankly-linkedin-checker.html

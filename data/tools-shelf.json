@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "updated": "2026-08-11",
+  "updated": "2026-08-21",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "description": "Canonical Frankly Lab 4.0 shelf inventory. Consumers filter by lane and retired state; generated site copies are never edited by hand.",
   "tools": [
@@ -576,21 +576,21 @@
       "href": "glass-folders.html",
       "labelEn": "Glass Folders",
       "labelDa": "Glass Folders",
-      "descriptionEn": "Retired visual prototype retained as local history.",
-      "descDa": "Pensioneret prototype, bevaret som lokal historik.",
+      "descriptionEn": "Frosted glass folders on a colored bokeh backdrop; files fan out on hover.",
+      "descDa": "Frostede glas-mapper på farvet bokeh – filerne folder sig ud på hover.",
       "category": "Leg",
       "shelf": "experiments",
-      "lane": "local-archive",
-      "gate": "local-only",
-      "gateLabelEn": "Local archive",
-      "gateLabelDa": "Lokalt arkiv",
-      "status": "retired",
-      "statusLabelEn": "Retired",
-      "statusLabelDa": "Pensioneret",
-      "actionLabelEn": "Open archived Glass Folders",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "experiment",
+      "statusLabelEn": "Experiment",
+      "statusLabelDa": "Eksperiment",
+      "actionLabelEn": "Open Glass Folders",
       "mark": "GF",
       "art": "glass-folders",
-      "retired": true
+      "retired": false
     },
     {
       "id": "lab-registry",
@@ -637,10 +637,10 @@
   ],
   "counts": {
     "total": 30,
-    "active": 27,
-    "publicLab": 22,
+    "active": 28,
+    "publicLab": 23,
     "localOs": 5,
-    "retired": 3
+    "retired": 2
   },
-  "syncedAt": "2026-08-20T13:20:17+00:00"
+  "syncedAt": "2026-08-21T10:33:23+00:00"
 }

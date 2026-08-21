@@ -86,7 +86,7 @@ Do not reconnect the website deploy to Drive metadata or machine feeds unless Jo
 
 `../os-visualization/system-intelligence/tools-shelf.json` is the only hand-maintained shelf inventory. `sync-site-data-feeds.py` validates every target, writes `data/tools-shelf.json`, injects the public-only static fallback into `index.html` and includes the full local fallback in the cockpit SNAP. `scripts/sync_from_drive.py` fails closed if a public target is missing or a local/retired target enters the upload manifest.
 
-`lab-registry.html`, `lab-hub.html`, `glass-folders.html` and the old `frankly-lab-tools.css/js` runtime remain on disk as history. They are not active navigation or upload-bundle inputs.
+`lab-registry.html`, `lab-hub.html` and the old `frankly-lab-tools.css/js` runtime remain on disk as history. They are not active navigation or upload-bundle inputs. `glass-folders.html` was reopened by Jonas 2026-08-21 as a public Play experiment (gated like the other glass pages).
 
 ## Current Run
 
