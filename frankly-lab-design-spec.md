@@ -247,11 +247,13 @@ A page built on the grip (§6) is a named **variant** of the anatomy above, not 
 - `.fl-page-head` (§2.2) is **replaced** by `.lg-hero` — kicker (`.fl-kicker`), couplet, 2–3
   snapshot numbers, "as of" line, one object still. No `.fl-lede`.
 - `.fl-footer` (§2.5) is **replaced** by the stage caption's provenance line `.lg-cap__prov`,
-  which becomes **mandatory**: source + generator + as-of, rendered from the page's own
+  which becomes **mandatory**: as of · built · source; generator in `title`/`data-generator`, rendered from the page's own
   snapshot. A hero-led page with no `.lg-cap__prov` fails. On a hero-led page with **no `.lg-stage`**, the
-  provenance line is `.lg-asof.is-prov` (13px `--grey-1`; source · generator · as-of, rendered from the
-  snapshot) — it replaces `.lg-cap__prov` and satisfies this rule. One line, not two: the as-of and the
-  provenance merge. (M4.1 index attack gap 6, 2026-08-22.)
+  provenance line is `.lg-asof.is-prov` (13px `--grey-1`): one human-words line, **as of · built · source**,
+  in that order, written by the page's generator into its inline snapshot. The generator's own name is
+  **machine-readable only** — `title` and `data-generator` on the same element — never hero copy
+  (M4 §12 amendment, 2026-08-23). One line, not two: the as-of and the provenance merge.
+  (M4.1 index attack gap 6, 2026-08-22.)
 - The topbar (§2.1) stays verbatim. The tool-shell and gate blocks (§2.4, §2.6) are unchanged
   where the page has them.
 
@@ -301,7 +303,7 @@ Before marking a page done, verify every line:
 - [ ] `<link rel="stylesheet" href="frankly-lab-brand.css">` present (before any page `<style>`).
 - [ ] `<body class="fl">`.
 - [ ] Topbar block (§2.1) adopted **verbatim**, including the inline SVG wordmark defs.
-- [ ] Footer block (§2.5) adopted verbatim — **or** the §2.8 provenance line (`.lg-cap__prov` on a stage, `.lg-asof.is-prov` on a stage-less hero-led page).
+- [ ] Footer block (§2.5) adopted verbatim — **or** the §2.8 provenance line (`.lg-cap__prov` on a stage, `.lg-asof.is-prov` on a stage-less hero-led page: as of · built · source, generator in `title`/`data-generator`, both from the page's own generated snapshot).
 - [ ] Page header uses `.fl-page-head` + `.fl-kicker` + `.fl-lede` — **or** §2.8 `.lg-hero` (hero-led page).
 - [ ] All off-canon colors removed: no page-private hex/palette forks; every color maps to
       a token from §1.1; green only in `is-live` chips/dots.
@@ -354,6 +356,10 @@ its ONE instrument).
 (22px / 14px ≤520 — the source value, not the `--sp` scale) on `.lg-stage`. A page overrides them on
 those elements only.
 
+**What may stay page-private:** a page may add *new* selectors the block does not define (`marketing/index.html`:
+`.lg-stop__l` stop labels, `.lg-count .lg-pill{white-space:nowrap}`) and may set the declared geometry knobs.
+It may **not** re-declare a selector the block already defines — if it needs to, the rule belongs in the block.
+
 ### 6.2 Hard-rule 6 — extensions that the grip makes binding
 
 - **A literal equal to a token's hex is still a violation.** `#F5F4F1` on a page is wrong even though it
@@ -378,7 +384,8 @@ number is written by the page's generator into its inline snapshot — never cou
 New type slots: **Couplet** `clamp(42px,4.9vw,70px)` lh .96 (smaller than the hero h1 because two lines
 must fit beside a ≥50% stage) · **Snapshot number** 44px Almarena 600 tabular · **As-of** 13px `--grey-1`.
 `.lg-asof.is-prov` is the as-of line doing provenance duty on a stage-less page (§2.8): same slot, one line
-(`white-space:nowrap; width:max-content`, wrapping again ≤980). At ≤520 `.lg-numbers` is a pinned three-up grid
+(`white-space:nowrap; width:max-content`, wrapping again ≤980; content as of · built · source, generator in
+`title`/`data-generator`). At ≤520 `.lg-numbers` is a pinned three-up grid
 (30px numbers, 10px labels) — never 2+1.
 
 ### 6.4 Stage — `.lg-stage` (REUSABLE; what the image MEANS is SIBLING DECIDES)
