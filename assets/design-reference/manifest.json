@@ -10,7 +10,7 @@
   ],
   "authorityRule": "Only the four approved outputs are positive canon. Manual and Claude Design entries are supporting/reference-only.",
   "publicDistribution": "blocked",
-  "assetCount": 68,
+  "assetCount": 69,
   "assets": [
     {
       "id": "web-main-motion",
@@ -777,6 +777,19 @@
       "intendedUse": "kalender.html feed LI-03 'One shape. Every category.' — 4:5 poster for main-visual-motion.mp4",
       "slot": "kalender feed LI-03 (poster)",
       "addedBy": "run 20260823-feed-subject-fit"
+    },
+    {
+      "id": "feed-li06-device-ribbon-4x5",
+      "file": "feed-li-06-device-ribbon.png",
+      "category": "ribbon-object",
+      "mediaType": "image/png",
+      "source": "frankly-os-site/assets/design-reference/object-device-ribbon.png (800x466, padded top/bottom to 4:5 with the file's own ground, no scaling, no crop)",
+      "px": "800x1000",
+      "provenanceStatus": "approved-crop",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "kalender.html feed LI-06 placeholder (object stand-in, chip 'Placeholder · real shoot to follow')",
+      "slot": "kalender feed LI-06 (placeholder)",
+      "addedBy": "run 20260823-feed-subject-fit pass 2"
     }
   ]
 }
