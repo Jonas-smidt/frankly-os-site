@@ -240,6 +240,23 @@ Tools are code-gated (default code `frankly`). Two cases:
 </aside>
 ```
 
+### 2.8 Hero-led page — `.lg-hero` (the grip variant, spec §6)
+
+A page built on the grip (§6) is a named **variant** of the anatomy above, not an exception to it:
+
+- `.fl-page-head` (§2.2) is **replaced** by `.lg-hero` — kicker (`.fl-kicker`), couplet, 2–3
+  snapshot numbers, "as of" line, one object still. No `.fl-lede`.
+- `.fl-footer` (§2.5) is **replaced** by the stage caption's provenance line `.lg-cap__prov`,
+  which becomes **mandatory**: source + generator + as-of, rendered from the page's own
+  snapshot. A hero-led page with no `.lg-cap__prov` fails. On a hero-led page with **no `.lg-stage`**, the
+  provenance line is `.lg-asof.is-prov` (13px `--grey-1`; source · generator · as-of, rendered from the
+  snapshot) — it replaces `.lg-cap__prov` and satisfies this rule. One line, not two: the as-of and the
+  provenance merge. (M4.1 index attack gap 6, 2026-08-22.)
+- The topbar (§2.1) stays verbatim. The tool-shell and gate blocks (§2.4, §2.6) are unchanged
+  where the page has them.
+
+Adopted from M4 review 2026-08-22 (item 7). Source: `marketing/kalender.html`, accepted by Jonas 2026-08-22.
+
 ---
 
 ## 3. Copy rules
@@ -284,8 +301,8 @@ Before marking a page done, verify every line:
 - [ ] `<link rel="stylesheet" href="frankly-lab-brand.css">` present (before any page `<style>`).
 - [ ] `<body class="fl">`.
 - [ ] Topbar block (§2.1) adopted **verbatim**, including the inline SVG wordmark defs.
-- [ ] Footer block (§2.5) adopted verbatim.
-- [ ] Page header uses `.fl-page-head` + `.fl-kicker` + `.fl-lede`.
+- [ ] Footer block (§2.5) adopted verbatim — **or** the §2.8 provenance line (`.lg-cap__prov` on a stage, `.lg-asof.is-prov` on a stage-less hero-led page).
+- [ ] Page header uses `.fl-page-head` + `.fl-kicker` + `.fl-lede` — **or** §2.8 `.lg-hero` (hero-led page).
 - [ ] All off-canon colors removed: no page-private hex/palette forks; every color maps to
       a token from §1.1; green only in `is-live` chips/dots.
 - [ ] No `font-weight` above 600 on Almarena; no external font CDNs; no non-canon families.
@@ -299,3 +316,171 @@ Before marking a page done, verify every line:
       no marketing fluff, no stray Danish strings.
 - [ ] Reduced motion: no page-local animation that ignores `prefers-reduced-motion`.
 - [ ] Nothing outside your page touched; no deploy, no push, no `gh workflow run`.
+
+---
+
+## 6. The grip — components (`.lg-*` + `.fl-chip` modifiers)
+
+**Status: binding** (codified 2026-08-22, run `20260822-lab-design-grip`; R4.5 draft → M4 13 amendments →
+M4.1 byte-identity ruling → this section). Source: `marketing/kalender.html` (CSS L10–257), accepted by
+Jonas 2026-08-22 ("kan vi opdatere lab med det design greb"). The CSS lives in `frankly-lab-brand.css`
+under the delimiter `/* ===== GRIP … ===== */` (the last block of the sheet). `kalender.html` itself is
+**not** refactored onto the block yet — it stays pixel-faithful on its own CSS until its own pass.
+
+**What the grip IS, in one sentence:** one crisp object, one couplet, two or three numbers that are true
+as of a date — then ONE instrument whose stage is an image, with everything the page knows sitting ON
+that image as glass, never beside it as prose.
+
+Three classes of every part (the question a sibling page asks): **REUSABLE** (take from the block),
+**LOOM** (the calendar's own instrument logic — do not copy), **SIBLING DECIDES** (its ONE hero object,
+its ONE instrument).
+
+### 6.1 Tokens added to `:root` (the only additions; nothing renamed or removed)
+
+| Token | Value | Role / provenance |
+|---|---|---|
+| `--ease-lead` `--ease-spring` `--dur-pop` `--dur-count` `--shadow-soft` | byte-identical to `canon/library/frankly-deck-motion-glass-spec.md` §1 | **Hosted canon motion tokens.** The comment above them names the canon path + the canon file's `sha256[:12]`; `check-grip-block.py` re-hashes canon and value-diffs the five on every pass. `--shadow-lift` is **deliberately not hosted** — the Lab value wins. |
+| `--on-stage-soft` / `-story` / `-muted` / `-faint` | limestone at .92 / .9 / .78 / .72 | Text ON imagery or bordeaux: caption body / storyboard copy / glass-card date / provenance. Values **match kalender.html's source** — no two-stop normalisation (M4 item 2, facilitator ruling). |
+| `--on-stage-hairline` | limestone .2 | Caption divider; canon glass §6 hairline. |
+| `--scrim-stage` | bordeaux 0 → .38 → .66, bottom 62% | The stage scrim under caption/cards. |
+| `--scrim-frame-story` | bordeaux .55 → .78 → .92 | Storyboard frame only (used once, still a token — rule 6). |
+| `--scrim-card` / `--scrim-card-hover` / `--scrim-cap` / `--scrim-counter` | bordeaux .68 / .82 / .56 / .55 | Glass card, its hover, caption + count pill, carousel counter. |
+| `--veil` | bordeaux .38 | Sheet backdrop. |
+| `--ink-soft` | bordeaux .62 | Kicker / control-label / `dt` ink. Replaced the two inline `.62` in this sheet (`.fl-kicker`, `#__flab_card` eyebrow); `.fl-field>label` is `.7` and untouched. |
+| `--glass-pill` / `--glass-hover` / `--glass-dot` | white .6 / .28 / .55 | **Canon glass family**, not Lab colour (provenance: glass spec §6). Lane pill resting fill, glass-pill hover, carousel dots. |
+
+**Geometry knobs are page-level, not `:root`:** `--lg-hero-split-a/-b` (40fr/60fr) and `--lg-hero-h`
+(900px) are declared on `.lg-hero`; `--lg-stage-h` (640 / 720 ≤980 / 780 ≤520) and `--lg-stage-inset`
+(22px / 14px ≤520 — the source value, not the `--sp` scale) on `.lg-stage`. A page overrides them on
+those elements only.
+
+### 6.2 Hard-rule 6 — extensions that the grip makes binding
+
+- **A literal equal to a token's hex is still a violation.** `#F5F4F1` on a page is wrong even though it
+  *is* `--limestone`; write `var(--limestone)`.
+- **A page may not re-declare a token that `frankly-lab-brand.css` declares.** Pasting canon §1 into a
+  page `:root` re-declared `--shadow-lift` with a different value and silently changed every `.fl-panel`
+  / `.fl-modal` on that page — the hosted tokens exist so that no page pastes §1 again.
+- Tints of `--bordeaux` / `--limestone` used to put text on imagery are the `--scrim-*` / `--on-stage-*`
+  / `--veil` / `--ink-soft` tokens above — never written inline. Need another stop? Flag it; do not mint it.
+- **`--grey-2` is forbidden below 14px inside grip components** (≈3.9:1 on limestone, ≈4.2:1 on paper);
+  small chrome text uses `--grey-1`.
+
+### 6.3 Hero — `.lg-hero` (REUSABLE; the object is SIBLING DECIDES)
+
+`.lg-hero > .lg-hero__grid > (.lg-hero__copy + .lg-hero__stage)`. Copy column: `.fl-kicker`, `h1.lg-couplet`
+with two `<span>` lines, optional `.lg-sub`, `.lg-numbers` (`<div><strong data-count>…</strong><small>label</small></div>` × 2–3),
+`.lg-asof`. Stage column: one `<img>` at native size or below, on the limestone halo, bleeding to the
+right viewport edge (that bleed is how the hero reaches ≥50% imagery inside the 1180 wrap). Every
+number is written by the page's generator into its inline snapshot — never counted from markup, never
+`fetch()`ed. Prose budget for the hero ≤30 words for siblings (kalender measures 41 incl. its optional sub-line).
+
+New type slots: **Couplet** `clamp(42px,4.9vw,70px)` lh .96 (smaller than the hero h1 because two lines
+must fit beside a ≥50% stage) · **Snapshot number** 44px Almarena 600 tabular · **As-of** 13px `--grey-1`.
+`.lg-asof.is-prov` is the as-of line doing provenance duty on a stage-less page (§2.8): same slot, one line
+(`white-space:nowrap; width:max-content`, wrapping again ≤980). At ≤520 `.lg-numbers` is a pinned three-up grid
+(30px numbers, 10px labels) — never 2+1.
+
+### 6.4 Stage — `.lg-stage` (REUSABLE; what the image MEANS is SIBLING DECIDES)
+
+The stage IS the image: full content width, `--lg-stage-h`, `--r-lg`, `--bordeaux` ground, `--shadow-soft`.
+`.lg-stage__media` covers (photos) or contains right-weighted (`is-object`, `is-wide` for alpha objects).
+Scrim `::after` (bottom 62%). Z-order: media → scrim → `.lg-cap` / `.lg-count` / `.lg-cards` / `.lg-empty` at z 2.
+Glass caption top-left: `.lg-cap__title` (22px Almarena) · `.lg-cap__body` · `.lg-cap__prov` (mandatory on a
+hero-led page, §2.8 — on a stage-less hero-led page the same duty is carried by `.lg-asof.is-prov` in the hero,
+§2.8 / §6.3). Count pills top-right: `.lg-pill` "<period> · N items" and, on overflow, `.lg-pill.is-btn`
+"+N · scrub →". Glass cards bottom-left, two columns: `.lg-card` = **≤3 visible fields** (`.lg-card__t`,
+`.lg-card__d`, `.lg-card__row` of chips), **max 4 cards**; `div[role=button][tabindex=0]` with Enter/Space
+(a `<button>` cannot contain chip buttons). Glass only over image or bordeaux — never over bare limestone.
+
+The page still pastes the canon `.glass.glass-standard` block (glass spec §6). Because that block is `(0,2,0)`
+and loads after this sheet, the grip mirrors it: `.lg-cap.glass-standard`, `.lg-pill.glass-standard`,
+`.lg-card.glass-standard` re-assert the scrims and snap the radius to **`--r-sm`** (10px; canon's 9.98px is
+0.02px away — below a device pixel at any DPR, no spec row blesses 9.98).
+
+**Radius — a frame is not a card.** `.lg-device` (the Instagram 4:5 frame) has a 22px border-radius and a
+7px bordeaux edge: that is a **device edge**, not a card, and is the one radius in the block outside the
+10/16/24 scale. `.lg-sheet__panel code` 4px is an inline code chip. Everything else is `--r-sm` / `--r-card` /
+`--r-lg` / `--r-pill`.
+
+**On-stage focus.** The global focus ring is bordeaux and invisible on a bordeaux card; `.lg-card`,
+`.lg-lane[aria-checked=true]` and `.lg-pill.is-btn` get a `--limestone` ring on `:focus-visible`.
+
+### 6.5 Chips — `.fl-chip` modifiers (REUSABLE; which gates its data carries is SIBLING DECIDES)
+
+Six gate values → six chips, named from the source data's own vocabulary: `is-gate-none` (`--ok` — green
+means **cleared**, still chip-size only), `is-gate-claims` (`--warn`), `is-gate-blocked` (bordeaux/limestone),
+`is-gate-jonas` (`--recover`, "Awaiting Jonas"), `is-gate-number` (`--pink-stone`), `is-gate-partner`
+(`--stone` + dashed `--stone-deep`). Each gate chip adds `is-gate` for the 8px `currentColor` dot. Plus
+`is-est` (`~ estimate · owner`, `--calm-pink`), `is-canon` (bordeaux, sentence case), `is-slot` (dashed
+pink-stone), `is-verdict` (paper + border). `.fl-chip`'s own 11px / .02em / 5px 11px apply — kalender's .05em
+/ 4px 10px are dropped. **Every chip may be a tap target** (`button.fl-chip.is-btn[data-sheet]` → a sheet
+with the one-line glossary from the page's own snapshot); hover is never the only path. The UA button
+border is reset at `button.fl-chip` (0,1,1) so no bordered modifier loses its border (M4 item 11).
+
+### 6.6 Instrument — `.lg-controls` = `.lg-lanes` + `.lg-scrub` (REUSABLE; the axes are SIBLING DECIDES)
+
+A radio group of `button.lg-lane[role=radio][aria-checked]` (roving tabindex, Arrow keys) and a period
+scrubber `input[type=range]` in `.lg-scrub` (`.lg-scrub__top` with `.lg-scrub__now` readout) with a
+`.lg-stops` dot row (`button.lg-stop`, 24px hit area, `is-now`, `position:relative` so a page may hang a label
+under each stop; `.lg-scrub` keeps 18px beneath the track for it). `.lg-lane i` is the lane count and stretches
+to a pill for 3-digit counts (`min-width:22px`, `--r-pill`). **Reachable-states rule (binding):** the
+scrubber's stops are the populated states only — empty states are unreachable by construction; the
+generator writes the stop list, the page never computes it from text. A panel becomes a stage state
+**only if its full item set is reachable by the scrubber**; otherwise it stays a section below the stage
+(a 72-card truth cannot survive a ≤4-cards stage without becoming a lie). Re-selecting the active value
+does nothing. Deep-link hash state `#lane=<id>&period=<id>[&page=n]` read on boot + `hashchange`, written
+with `replaceState` — headless Chrome renders any state from the hash, which is how evidence is captured.
+Keyboard: Arrows in the radio group and on the range; Enter/Space on cards; Esc closes the sheet; focus
+returns to the opener. Reduced motion: instant render, no count-up, no autoplay.
+
+### 6.7 Feed frames — `.lg-feed` + `.lg-frame` (REUSABLE; whether a page has a feed is SIBLING DECIDES)
+
+Only as a stage state. `.lg-badge` channel pill + `is-draft` "Proposal · nothing posted". Frames:
+`.lg-frame.lg-frame-li` (LinkedIn document: `.lg-frame__head` with `.lg-avatar` monogram, `.lg-frame__copy`
+folded at 3 lines + `.lg-more`, `.lg-media`, `.lg-bar`, `.lg-frame__foot` with `.lg-details`), `.lg-device`
+(Instagram 4:5: `__head`, `.lg-media.r4x5`, `__bar`, `__cap`), `.lg-media.is-story` (storyboard — approved
+still at .42 under `--scrim-frame-story`, shot list verbatim, **no stand-in face, ever**), `.lg-media.is-type`
+(hook verbatim, Almarena 600 on limestone). Masonry: `.lg-feed__grid` 8px rows, each frame spans `--span`
+set by the page JS. The wordmark symbol may be reused as a monogram avatar via `currentColor`.
+
+### 6.8 Sheet — `.lg-sheet` (REUSABLE)
+
+`.lg-sheet` (fixed, `--veil`) › `.lg-sheet__panel` (paper, `--r-lg`, `--shadow-lift` — the **Lab** value) with
+`.lg-sheet__close`, `dl` two-column (150px / 1fr), `dt` in `--ink-soft`, `.row`, `.note`. Bottom-sheet below
+760px, centred dialog above.
+
+### 6.9 Motion — what the grip uses and the one rule
+
+Used: `--ease`, `--ease-out`, `--ease-lead`, `--ease-spring`, `--dur-ui`, `--shadow-soft`, `--dur-pop` /
+`--dur-count` (count-up), the canon reveal keyframes `fk-rise` / `fk-riseHead` / `fk-fade` / `fk-word` (the page
+pastes canon §2a as before) and the grip's own `lg-stamp` (= canon §3 `s6stamp`). **Spring rule:**
+`--ease-spring` only at proof moments — gate chips stamping when a state opens, and on feed reveal. Never on
+hover, never on navigation. Reveal threshold for 900px stages: observe at `[.25,.6]` (a deliberate
+deviation from canon §2b's `.6`, recorded here). Every grip animation has a `prefers-reduced-motion` guard
+in the block; a future `.lg-sheet` open transition must add its own.
+
+### 6.10 Breakpoints, data, measures
+
+- **980 is the stage breakpoint** (added; the Lab's 860 / 640 / 520 are untouched): hero to one column with a
+  4:5 stage, controls to one column, cards to one column, stage to 720px. At 520: couplet 40px, stage 780px
+  with `--r-card` and 14px inset, caption body hidden.
+- **Data:** `<!-- <NAME>-SNAPSHOT:BEGIN/END -->` around `<script id="<name>-snapshot" type="application/json">`,
+  written by a generator in `scripts/` with `--check` (exit 1 when stale), `</` escaped; never `fetch()`,
+  never a `data/` folder. Every number on the page comes from the snapshot; everything data-rendered sits in
+  `[data-content]`; the soft-fail is one caption line naming the script to run.
+- **Measures (per 1440×900 band, reduced motion):** prose ≤50 words outside `[data-content]` / the sheet;
+  imagery ≥50%; dead states = 0; card fields = 3; horizontal overflow false. Source script:
+  `os-visualization/reports/20260822-marketing-calendar-social-examples/measure-kalender.py`.
+
+### 6.11 What a sibling page must bring (the brief's minimum)
+
+1. ONE hero object (approved still, native size, alpha or clean ground) — different from its stage art.
+2. ONE couplet (≤14 words) and 2–3 numbers its snapshot can prove, with an "as of" date.
+3. ONE instrument: its axes, its populated-state list (written by its generator), its stage image per state,
+   its ≤3 card fields — and, per panel it absorbs, the item count it must preserve (reachable-states rule).
+4. Its gate vocabulary — only values its data carries, each with a one-line glossary in the snapshot.
+5. A generator with `--check`, and a measure run with the three numbers in its scorecard.
+
+Everything else is the shared block. Adopting the grip never rewrites a tool to fit it (hard rule 4): the
+`.lg-stage` / `.lg-controls` shell wraps the existing JS and id hooks.

@@ -1,0 +1,3526 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>Marketing calendar — Frankly Lab</title>
+<meta name="description" content="Internal proposal surface: the Frankly marketing calendar as one instrument, with the LinkedIn and Instagram content examples rendered as the posts they would become. Prototype, gated, noindex.">
+<link rel="stylesheet" href="../frankly-lab-brand.css">
+<style>
+/* ---- canon motion tokens — canon/library/frankly-deck-motion-glass-spec.md §1, byte-identical ---- */
+:root{
+  --ease: cubic-bezier(.22,.61,.36,1);         /* signature: pops, lifts */
+  --ease-out: cubic-bezier(.16,1,.3,1);        /* entrance soft-landing */
+  --ease-in-out: cubic-bezier(.4,0,.2,1);      /* hover micro */
+  --ease-fly: cubic-bezier(.5,0,.85,.42);      /* loader iris */
+  --ease-lead: cubic-bezier(.2,.8,.2,1);       /* headline / word rise */
+  --ease-spring: cubic-bezier(.34,1.56,.64,1); /* springy icon overshoot */
+  --dur-slide:700ms; --dur-fade:600ms; --dur-hover:320ms; --dur-ui:300ms;
+  --dur-micro:220ms; --dur-pop:480ms; --dur-count:1500ms; --dur-fly:820ms; --dur-loader:620ms;
+  --shadow-lift:0 3px 7px rgba(45,0,17,.085);
+  --shadow-soft:0 18px 48px rgba(45,0,17,.12);
+}
+
+*{box-sizing:border-box}
+html,body{margin:0;overflow-x:hidden}
+body{background:var(--limestone);color:var(--grey-1)}
+button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:pointer}
+.fl-visually-hidden{position:absolute!important;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}
+
+/* ---- reveal system — spec §2a ---- */
+.slide .reveal{opacity:0}
+.slide .reveal.rise-words{opacity:1}
+.slide .reveal.rise-words .fk-w{display:inline-block;opacity:0;translate:0 .5em;will-change:opacity,transform}
+.slide.is-active .reveal        {animation:fk-rise 550ms var(--ease-out) both; animation-delay:calc(var(--i,0)*90ms)}
+.slide.is-active .reveal.rise-head{animation:fk-riseHead 700ms var(--ease-out) both}
+.slide.is-active .reveal.rise-lead{animation:fk-rise 680ms var(--ease-lead) both}
+.slide.is-active .reveal.fade-only{animation:fk-fade 900ms var(--ease-out) both}
+.slide.is-active .reveal.rise-words .fk-w{animation:fk-word 680ms var(--ease-lead) both; animation-delay:calc(var(--wi,0)*70ms)}
+@keyframes fk-rise    {from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:none}}
+@keyframes fk-riseHead{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+@keyframes fk-fade    {from{opacity:0}to{opacity:1}}
+@keyframes fk-word    {from{opacity:0;translate:0 .5em}to{opacity:1;translate:0 0}}
+@media (prefers-reduced-motion:reduce){
+  .slide .reveal,.slide .reveal .fk-w{opacity:1!important;transform:none!important;translate:0!important;animation:none!important}
+}
+
+/* ---- glass — spec §6 ---- */
+.glass{position:relative;isolation:isolate;box-shadow:0 10px 30px rgba(0,0,0,0.20),inset 0 1px 1px rgba(255,255,255,0.50),inset 0 0 0 1px rgba(255,255,255,0.12)}
+.glass::before{content:"";position:absolute;inset:0;border-radius:inherit;padding:1px;background:linear-gradient(135deg,rgba(255,255,255,0.70) 0%,rgba(255,255,255,0.15) 35%,rgba(255,255,255,0.05) 60%,rgba(255,255,255,0.70) 100%);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;pointer-events:none}
+.glass-standard{background:rgba(255,255,255,0.15);border-radius:9.98px;-webkit-backdrop-filter:blur(84.43px);backdrop-filter:blur(84.43px);color:#F5F4F1}
+
+/* ---- hover lift / zoom — spec §5 ---- */
+.fk-card{transition:transform .32s var(--ease),box-shadow .32s var(--ease);will-change:transform}
+.fk-card:hover{transform:translateY(-4px) scale(1.03);box-shadow:var(--shadow-soft)}
+.fk-zoom{transition:transform .42s var(--ease-out);will-change:transform}
+.fk-zoom:hover{transform:scale(1.06)}
+@media (prefers-reduced-motion:reduce){.fk-card,.fk-card:hover,.fk-zoom{transition:none;transform:none;animation:none!important}}
+
+/* ---- topbar ---- */
+.fl-topbar{padding:var(--sp-5) 0}
+
+/* ---- hero ---- */
+.hero{min-height:900px;display:flex;align-items:stretch}
+.hero-grid{display:grid;grid-template-columns:minmax(0,40fr) minmax(0,60fr);gap:var(--sp-6);align-items:center}
+.hero-copy{padding:var(--sp-7) 0}
+.hero h1{font-size:clamp(42px,4.9vw,70px);line-height:.96;letter-spacing:-.02em;margin:14px 0 0;max-width:11ch}
+.hero h1 span{display:block}
+.hero .sub{font-size:19px;line-height:1.5;color:var(--grey-1);margin:22px 0 0;max-width:34ch}
+.numbers{display:flex;gap:var(--sp-7);margin:40px 0 0;flex-wrap:wrap}
+.numbers div{display:flex;flex-direction:column;gap:2px}
+.numbers strong{font-family:var(--fl-display);font-weight:600;font-size:44px;line-height:1;color:var(--bordeaux);font-variant-numeric:tabular-nums;letter-spacing:-.02em}
+.numbers small{font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(45,0,17,.62)}
+.asof{margin:16px 0 0;font-size:13px;color:var(--grey-1)}
+.hero-stage{position:relative;height:900px;margin-right:calc(-1 * max(20px,(100vw - 1180px) / 2));display:flex;align-items:flex-end;justify-content:center;overflow:hidden}
+.hero-stage::before{content:"";position:absolute;left:50%;bottom:-8%;width:118%;aspect-ratio:1;border-radius:50%;translate:-50% 0;background:radial-gradient(closest-side,var(--calm-pink) 0%,var(--pink-wash) 55%,transparent 72%)}
+.hero-stage img{position:relative;height:96%;width:auto;max-width:100%;object-fit:contain;object-position:bottom}
+
+/* ---- the loom ---- */
+.loom{padding:var(--sp-8) 0 var(--sp-8)}
+.loom-head{display:flex;align-items:flex-end;justify-content:space-between;gap:22px;margin-bottom:var(--sp-5);flex-wrap:wrap}
+.loom-head h2{font-size:32px;line-height:1.04;margin:6px 0 0}
+.loom-head p{margin:8px 0 0;max-width:44ch;font-size:15px}
+.controls{display:grid;grid-template-columns:1fr 360px;gap:var(--sp-5);align-items:end;margin-bottom:var(--sp-4)}
+.ctl-label{display:block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(45,0,17,.62);margin:0 0 8px}
+.lanes{display:flex;flex-wrap:wrap;gap:var(--sp-2)}
+.lane{min-height:38px;display:inline-flex;align-items:center;gap:8px;border:1px solid var(--stone-4);border-radius:var(--r-pill);padding:7px 14px 7px 10px;background:rgba(255,255,255,.6);font-size:13px;font-weight:500;color:var(--bordeaux);transition:background var(--dur-ui) var(--ease),border-color var(--dur-ui) var(--ease)}
+.lane i{width:22px;height:22px;border-radius:50%;display:inline-grid;place-items:center;font-style:normal;font-size:10.5px;font-weight:600;background:var(--stone-2);color:var(--bordeaux)}
+.lane:hover{background:var(--white);border-color:var(--calm-deep)}
+.lane[aria-checked="true"]{background:var(--bordeaux);color:var(--limestone);border-color:var(--bordeaux)}
+.lane[aria-checked="true"] i{background:var(--calm-pink)}
+.lane:active{transform:scale(.97)}
+.scrub{display:flex;flex-direction:column;gap:6px}
+.scrub-top{display:flex;justify-content:space-between;align-items:baseline}
+.scrub-now{font-family:var(--fl-display);font-weight:600;font-size:22px;color:var(--bordeaux);letter-spacing:-.01em}
+.scrub input[type=range]{-webkit-appearance:none;appearance:none;width:100%;height:32px;background:transparent;margin:0}
+.scrub input[type=range]::-webkit-slider-runnable-track{height:2px;background:var(--stone-deep);border-radius:2px}
+.scrub input[type=range]::-webkit-slider-thumb{-webkit-appearance:none;width:22px;height:22px;border-radius:50%;background:var(--bordeaux);border:3px solid var(--calm-pink);margin-top:-10px;box-shadow:var(--shadow-card)}
+.scrub input[type=range]::-moz-range-track{height:2px;background:var(--stone-deep)}
+.scrub input[type=range]::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--bordeaux);border:3px solid var(--calm-pink)}
+.stops{display:flex;justify-content:space-between;margin:-6px 4px 0}
+.stop{width:14px;height:14px;border-radius:50%;display:grid;place-items:center}
+.stop::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--stone-deep)}
+.stop.is-now::before{background:var(--bordeaux);width:8px;height:8px}
+.stop:hover::before{background:var(--calm-deep)}
+
+.stage{position:relative;height:640px;border-radius:var(--r-lg);overflow:hidden;background:var(--bordeaux);box-shadow:var(--shadow-soft)}
+.stage-media{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.stage-media.is-object{object-fit:contain;object-position:92% 100%;padding:28px 32px 0 0}
+.stage::after{content:"";position:absolute;inset:auto 0 0;height:62%;pointer-events:none;background:linear-gradient(180deg,rgba(45,0,17,0) 0%,rgba(45,0,17,.38) 45%,rgba(45,0,17,.66) 100%)}
+.stage-cap,.stage-count,.cards,.stage .empty{z-index:2}
+.stage-media.is-object.is-wide{object-position:88% 50%;padding:60px 40px 60px 30%}
+.stage-media.is-ribbon{object-fit:contain;object-position:100% 0%;padding:0;inset:-6% 16px auto auto;height:112%;width:auto}
+.stage-cap{position:absolute;top:22px;left:22px;max-width:420px;padding:16px 18px}
+.stage-cap .lane-name{font-family:var(--fl-display);font-weight:600;font-size:22px;line-height:1.1;margin:0;color:#F5F4F1;letter-spacing:-.01em}
+.stage-cap .purpose{margin:8px 0 0;font-size:13.5px;line-height:1.45;color:rgba(245,244,241,.92)}
+.stage-cap .prov{margin:10px 0 0;padding-top:8px;border-top:1px solid rgba(245,244,241,.2);font-size:11.5px;line-height:1.4;color:rgba(245,244,241,.72)}
+.stage-count{position:absolute;top:22px;right:22px;display:flex;gap:8px;align-items:center}
+.pill-glass{display:inline-flex;align-items:center;gap:6px;padding:8px 14px;border-radius:var(--r-pill);font-size:12px;font-weight:600;letter-spacing:.04em;text-transform:uppercase;color:#F5F4F1}
+.pill-glass.is-btn:hover{background:rgba(255,255,255,.28)}
+.cards{position:absolute;left:22px;right:22px;bottom:22px;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;max-width:760px}
+.card{display:flex;flex-direction:column;gap:8px;padding:14px 16px;text-align:left;color:#F5F4F1;min-height:104px;cursor:pointer;background:rgba(45,0,17,.68)}
+.card:hover{background:rgba(45,0,17,.82)}
+.stage-cap.glass-standard,.stage-count .pill-glass{background:rgba(45,0,17,.56)}
+.card .t{font-family:var(--fl-display);font-weight:600;font-size:16px;line-height:1.2;margin:0;color:#F5F4F1;letter-spacing:-.005em}
+.card .d{font-size:12px;color:rgba(245,244,241,.78);margin:0}
+.card .row{display:flex;gap:6px;flex-wrap:wrap;margin-top:auto}
+.cards.is-open .card{animation:fk-riseHead 700ms var(--ease-out) both;animation-delay:calc(var(--i,0)*70ms)}
+.cards.is-open .chip.chip-gate{animation:s6stamp .6s var(--ease-spring) both;animation-delay:calc(var(--i,0)*70ms + 320ms)}
+@keyframes s6stamp{0%{transform:scale(1)}40%{transform:scale(1.28)}100%{transform:scale(1)}}
+.stage .empty{position:absolute;inset:auto 22px 22px;color:#F5F4F1}
+@media (prefers-reduced-motion:reduce){.cards.is-open .card,.cards.is-open .chip.chip-gate,.feed.is-active .chip.chip-gate{animation:none!important}}
+
+/* ---- chips (sibling vocabulary + two from the token table) ---- */
+.chip{display:inline-flex;align-items:center;gap:6px;border-radius:var(--r-pill);padding:4px 10px;font-family:var(--fl-sans);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;white-space:nowrap;color:var(--bordeaux);background:var(--stone-2);line-height:1.3}
+.chip.chip-gate::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor;opacity:.75}
+.gate-none{background:var(--ok)}
+.gate-claims{background:var(--warn)}
+.gate-blocked{background:var(--bordeaux);color:var(--limestone)}
+.gate-jonas{background:var(--recover)}
+.gate-number{background:var(--pink-stone)}
+.gate-partner{background:var(--stone);border:1px dashed var(--stone-deep)}
+.chip-est{background:var(--calm-pink)}
+.chip-canon{background:var(--bordeaux);color:var(--limestone);text-transform:none;letter-spacing:.02em}
+.chip-slot{background:var(--pink-stone);border:1px dashed var(--calm-deep);text-transform:none;letter-spacing:0;white-space:normal;text-align:left;font-weight:500}
+.chip-verdict{background:var(--paper);border:1px solid var(--stone-4)}
+.chip.is-btn:hover{box-shadow:0 0 0 2px var(--calm-deep)}
+.chip.is-btn:active{transform:scale(.97)}
+
+/* ---- feed (L4 / L5 stage state) ---- */
+.feed{display:none;margin-top:var(--sp-5)}
+.feed.is-active{display:block}
+.feed-head{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 var(--sp-4)}
+.badge{display:inline-flex;align-items:center;gap:8px;border-radius:var(--r-pill);padding:8px 14px;background:var(--bordeaux);color:var(--limestone);font-size:12px;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.badge i{width:8px;height:8px;border-radius:50%;background:var(--calm-pink);font-style:normal}
+.feed-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--sp-5);grid-auto-rows:8px;align-items:start}
+.feed-grid .mock{grid-row-end:span var(--span,1)}
+.feed.is-active .mock{animation:fk-riseHead 700ms var(--ease-out) both;animation-delay:calc(var(--i,0)*70ms)}
+.feed.is-active .chip.chip-gate{animation:s6stamp .6s var(--ease-spring) both;animation-delay:calc(var(--i,0)*70ms + 420ms)}
+@media (prefers-reduced-motion:reduce){.feed.is-active .mock{animation:none!important}}
+.mock{background:var(--paper);border:1px solid var(--stone-4);border-radius:var(--r-card);overflow:hidden;display:flex;flex-direction:column}
+.mock-head{display:flex;align-items:center;gap:10px;padding:14px 16px 10px}
+.avatar{width:40px;height:40px;border-radius:50%;background:var(--bordeaux);display:grid;place-items:center;flex:none}
+.avatar svg{width:16px;height:auto;color:var(--calm-pink)}
+.mock-head b{display:block;font-size:14px;color:var(--bordeaux);line-height:1.2}
+.mock-head small{display:block;font-size:12px;color:var(--grey-1)}
+.mock-head .chip{margin-left:auto}
+.mock-copy{padding:0 16px 12px;font-size:14.5px;line-height:1.5;color:var(--grey-1)}
+.mock-copy p{margin:0 0 10px}
+.mock-copy p:last-child{margin-bottom:0}
+.mock-copy .hook{font-weight:600;color:var(--bordeaux)}
+.mock-copy.is-folded .fold{display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.more{font-size:13px;font-weight:600;color:var(--grey-2);margin-top:4px}
+.more:hover{color:var(--bordeaux)}
+.mock-media{position:relative;background:var(--stone-2);overflow:hidden}
+.mock-media.r16x9{aspect-ratio:16/9}
+.mock-media.r4x5{aspect-ratio:4/5}
+.mock-media.r1x1{aspect-ratio:1/1}
+.mock-media img,.mock-media video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block}
+.mock-media.is-object{background:var(--bordeaux)}
+.mock-media.is-object img{object-fit:contain;padding:8%}
+.mock-media.is-type{background:var(--limestone)}
+.mock-media.is-type img{opacity:.95;object-position:50% 100%}
+.mock-media.is-type .type{position:absolute;inset:0;padding:9% 10%;display:flex;align-items:flex-start;font-family:var(--fl-display);font-weight:600;font-size:clamp(22px,2.1vw,30px);line-height:1.08;color:var(--ink);letter-spacing:-.015em;text-wrap:balance}
+.mock-media.is-story{background:var(--bordeaux)}
+.mock-media.is-story img{opacity:.42;object-position:50% 18%}
+.mock-media.is-story::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,0,17,.55) 0%,rgba(45,0,17,.78) 55%,rgba(45,0,17,.92) 100%)}
+.mock-media.is-story .story{z-index:1}
+.mock-media.is-story .story{position:absolute;inset:0;padding:22px;display:flex;flex-direction:column;gap:12px;color:var(--limestone)}
+.mock-media.is-story .story p{margin:0;font-size:13px;line-height:1.45;color:rgba(245,244,241,.9);overflow:hidden;display:-webkit-box;-webkit-line-clamp:9;-webkit-box-orient:vertical}
+.mock-media .tag{position:absolute;left:12px;bottom:12px}
+.mock-media .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:5px}
+.mock-media .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
+.mock-media .dots i:first-child{background:var(--calm-pink)}
+.mock-media .cnum{position:absolute;top:12px;right:12px;background:rgba(45,0,17,.55);color:var(--limestone);border-radius:var(--r-pill);padding:3px 9px;font-size:11px;font-weight:600}
+.li-bar{display:flex;gap:22px;padding:10px 16px;border-top:1px solid var(--line);font-size:12.5px;font-weight:600;color:var(--grey-2)}
+.li-bar span{display:inline-flex;align-items:center;gap:6px}
+.li-bar svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ig-device{margin:14px 14px 0;border-radius:22px;border:7px solid var(--bordeaux);background:var(--paper);overflow:hidden;box-shadow:var(--shadow-card)}
+.ig-head{display:flex;align-items:center;gap:10px;padding:10px 12px}
+.ig-head .avatar{width:30px;height:30px}
+.ig-head .avatar svg{width:12px}
+.ig-head b{font-size:13px;color:var(--bordeaux)}
+.ig-head small{font-size:11px;color:var(--grey-2);margin-left:auto}
+.ig-bar{display:flex;gap:14px;padding:10px 12px 4px}
+.ig-bar svg{width:22px;height:22px;fill:none;stroke:var(--bordeaux);stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.ig-bar svg:last-child{margin-left:auto}
+.ig-cap{padding:4px 12px 12px;font-size:13.5px;line-height:1.45;color:var(--grey-1)}
+.ig-cap b{color:var(--bordeaux);margin-right:6px}
+.ig-cap .hook{font-weight:600;color:var(--bordeaux)}
+.mock-foot{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:10px 16px 12px;border-top:1px solid var(--line);margin-top:auto}
+.mock-foot .details{margin-left:auto;font-size:13px;font-weight:600;color:var(--bordeaux)}
+.mock-foot .details::after{content:"\2192";margin-left:4px}
+
+/* ---- sheet (tap target for chips / cards / details) ---- */
+.sheet{position:fixed;inset:0;z-index:50;display:none;align-items:flex-end;justify-content:center;background:rgba(45,0,17,.38);padding:0}
+.sheet.is-open{display:flex}
+.sheet-panel{width:min(720px,100%);max-height:86vh;overflow:auto;background:var(--paper);border-radius:var(--r-lg) var(--r-lg) 0 0;box-shadow:var(--shadow-lift);padding:var(--sp-6) var(--sp-6) var(--sp-7)}
+.sheet-panel h3{font-size:24px;line-height:1.1;margin:0 0 6px;padding-right:60px}
+.sheet-panel .close{position:absolute;top:18px;right:18px;width:36px;height:36px;border-radius:50%;border:1px solid var(--stone-4);display:grid;place-items:center;background:var(--paper);font-size:18px;color:var(--bordeaux)}
+.sheet-panel dl{margin:14px 0 0;display:grid;grid-template-columns:150px 1fr;gap:8px 16px;font-size:14px;line-height:1.5}
+.sheet-panel dt{font-size:11px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:rgba(45,0,17,.62);padding-top:3px}
+.sheet-panel dd{margin:0;color:var(--grey-1)}
+.sheet-panel dd p{margin:0 0 8px}
+.sheet-panel dd p:last-child{margin:0}
+.sheet-panel code,.md{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.92em;background:var(--pink-stone);border-radius:4px;padding:1px 5px}
+.sheet-panel .row{display:flex;gap:6px;flex-wrap:wrap}
+.sheet-panel .note{margin:12px 0 0;font-size:13px;color:var(--grey-2)}
+@media (min-width:760px){.sheet{align-items:center;padding:20px}.sheet-panel{border-radius:var(--r-lg)}}
+
+/* ---- responsive ---- */
+@media (max-width:980px){
+  .hero{min-height:0}
+  .hero-grid{grid-template-columns:1fr}
+  .hero-stage{height:auto;aspect-ratio:4/5;margin-right:0}
+  .hero-stage img{height:94%}
+  .controls{grid-template-columns:1fr}
+  .cards{grid-template-columns:1fr;max-width:none}
+  .feed-grid{grid-template-columns:1fr}
+  .stage{height:720px}
+  .stage-media.is-object{padding:0;object-position:50% 8%}
+  .stage-media.is-object.is-wide{padding:0 0 0 0;object-position:50% 12%}
+  .stage-media.is-ribbon{inset:-4% 0 auto auto;height:64%}
+  .stage-cap{max-width:calc(100% - 44px)}
+  .stage-cap{position:relative;top:auto;left:auto;margin:14px;max-width:none}
+  .stage-count{position:relative;top:auto;right:auto;margin:0 14px;flex-wrap:wrap}
+}
+@media (max-width:520px){
+  .hero h1{font-size:40px}
+  .numbers{gap:var(--sp-5)}
+  .numbers strong{font-size:36px}
+  .stage{height:780px;border-radius:var(--r-card)}
+  .stage-cap{padding:12px 14px}
+  .stage-cap .purpose{display:none}
+  .cards{left:14px;right:14px;bottom:14px}
+  .card{min-height:0;padding:12px 14px}
+  .sheet-panel dl{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body class="fl">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="frankly-logo" viewBox="0 0 147.16 36.63">
+    <path d="M139.652 17.19V13.63H138.352V12.71H142.082V13.63H140.782V17.19H139.652Z" fill="currentColor"></path>
+    <path d="M142.555 17.19V12.71H143.935L144.855 15.57H144.865L145.785 12.71H147.165V17.19H146.095V14.4H146.085L145.255 17.19H144.465L143.635 14.4H143.625V17.19H142.555Z" fill="currentColor"></path>
+    <path d="M39.8391 9.93012C40.3091 9.93012 40.7191 9.62012 40.7191 9.15012V6.15012C40.7191 5.78012 40.4691 5.47012 40.1091 5.38012C39.4291 5.20012 38.6091 5.12012 37.6491 5.12012C35.4291 5.12012 33.7391 5.75012 32.5791 7.01012C31.4191 8.27012 30.8291 10.0201 30.8291 12.2601V12.7201H28.5791C28.1491 12.7201 27.7891 13.0701 27.7891 13.5101V16.2801C27.7891 16.7101 28.1391 17.0701 28.5791 17.0701H30.0391C30.4691 17.0701 30.8291 17.4201 30.8291 17.8601V28.5201C30.8291 28.9501 31.1791 29.3101 31.6191 29.3101H35.9491C36.3791 29.3101 36.7391 28.9601 36.7391 28.5201V17.8601C36.7391 17.4301 37.0891 17.0701 37.5291 17.0701H40.9091C41.4191 17.0701 41.6991 17.4501 41.6991 17.8601V28.5101C41.6991 28.9401 42.0491 29.3001 42.4891 29.3001H46.8191C47.2491 29.3001 47.6091 28.9501 47.6091 28.5101V20.9801C47.6091 18.6101 48.8491 17.4201 51.3291 17.4201C51.3591 17.4201 51.3891 17.4201 51.4191 17.4201C52.8391 17.4401 54.0391 16.3601 54.0391 14.9401V13.2301C54.0391 12.8801 53.8191 12.5601 53.4891 12.4801C53.1291 12.3801 52.6891 12.3401 52.1791 12.3401C51.0891 12.3401 50.1091 12.6101 49.2391 13.1601C48.3691 13.7001 48.0091 14.4901 47.6191 15.5101V13.4201C47.5691 13.0301 47.2391 12.7301 46.8391 12.7301H36.7491V12.3401C36.7491 12.3401 36.7091 9.95012 39.8491 9.95012L39.8391 9.93012Z" fill="currentColor"></path>
+    <path d="M66.0619 14.83C65.5619 14.05 64.8619 13.42 63.9619 12.95C63.0619 12.48 62.0619 12.25 60.9819 12.25C59.5919 12.25 58.3419 12.62 57.2319 13.36C56.1219 14.1 55.2519 15.13 54.6219 16.46C53.9919 17.79 53.6719 19.31 53.6719 21.03C53.6719 22.75 53.9819 24.22 54.6019 25.51C55.2219 26.8 56.0819 27.8 57.1919 28.49C58.3019 29.19 59.5619 29.53 60.9719 29.53C62.0619 29.53 63.0619 29.31 63.9719 28.86C64.8819 28.41 65.5819 27.8 66.0619 27.02V28.48C66.0619 28.91 66.4119 29.27 66.8519 29.27H71.0819C71.5119 29.27 71.8719 28.92 71.8719 28.48V13.48C71.8719 13.05 71.5219 12.69 71.0819 12.69H66.8519C66.4219 12.69 66.0619 13.04 66.0619 13.48V14.81V14.83ZM65.2119 24.06C64.6419 24.78 63.8419 25.14 62.8019 25.14C61.7619 25.14 60.9219 24.79 60.3519 24.08C59.7819 23.37 59.5019 22.36 59.5019 21.03C59.5019 19.7 59.7919 18.6 60.3819 17.85C60.9719 17.1 61.7719 16.72 62.7919 16.72C63.8119 16.72 64.6419 17.08 65.2019 17.81C65.7619 18.54 66.0519 19.59 66.0519 20.96C66.0519 22.33 65.7719 23.34 65.2019 24.06H65.2119Z" fill="currentColor"></path>
+    <path d="M73.3984 28.49C73.3984 28.92 73.7484 29.28 74.1884 29.28H78.5184C78.9484 29.28 79.3084 28.93 79.3084 28.49V20.05C79.3084 19.07 79.5784 18.28 80.1284 17.69C80.6784 17.1 81.3884 16.79 82.2784 16.79C83.0184 16.79 83.5584 17.01 83.9084 17.46C84.2584 17.91 84.4284 18.64 84.4284 19.66V28.5C84.4284 28.93 84.7784 29.29 85.2184 29.29H89.5484C89.9784 29.29 90.3384 28.94 90.3384 28.5V19.4C90.3384 17.01 89.8584 15.22 88.8884 14.03C87.9184 12.85 86.4584 12.25 84.4984 12.25C83.3284 12.25 82.2684 12.5 81.3384 13C80.8884 13.24 80.4684 13.54 80.0884 13.88C79.6084 14.31 78.8584 14.04 78.7784 13.4C78.7284 13 78.3984 12.71 77.9984 12.71H74.2084C73.7484 12.71 73.3684 13.11 73.4184 13.57V28.49H73.3984Z" fill="currentColor"></path>
+    <path d="M108.896 27.2901L104.076 21.1701C103.846 20.8801 103.856 20.4701 104.086 20.1801L109.146 14.0301C109.566 13.5201 109.206 12.7401 108.536 12.7401H103.596C103.356 12.7401 103.136 12.8501 102.986 13.0301L99.0756 17.8801C98.6056 18.4601 97.6756 18.1301 97.6756 17.3901V5.90011C97.6756 5.47011 97.3256 5.11011 96.8856 5.11011H92.5556C92.1256 5.11011 91.7656 5.46011 91.7656 5.90011V28.5001C91.7656 28.9301 92.1156 29.2901 92.5556 29.2901H96.8856C97.3156 29.2901 97.6756 28.9401 97.6756 28.5001V24.4101C97.6756 23.6601 98.6156 23.3401 99.0756 23.9201L103.076 28.9901C103.226 29.1801 103.456 29.2901 103.696 29.2901H115.416C115.846 29.2901 116.206 28.9401 116.206 28.5001V5.90011C116.206 5.47011 115.856 5.11011 115.416 5.11011H111.086C110.656 5.11011 110.296 5.46011 110.296 5.90011V26.8101C110.296 27.5601 109.356 27.8801 108.896 27.3001V27.2901Z" fill="currentColor"></path>
+    <path d="M129.867 13.2002L126.957 20.4202C126.687 21.0802 125.757 21.0802 125.497 20.4202L122.697 13.2202C122.577 12.9202 122.287 12.7202 121.967 12.7202H117.577C117.007 12.7202 116.627 13.3002 116.857 13.8202C117.897 16.1402 120.367 21.5902 122.137 25.5002C124.017 28.8702 121.637 30.8402 118.357 32.0402C117.927 32.1502 117.667 32.6002 117.797 33.0302L118.727 36.0702C118.837 36.4402 119.217 36.6902 119.597 36.6202C121.517 36.3102 123.157 35.7002 124.517 34.7702C126.027 33.7402 127.287 32.1002 128.287 29.8602L135.397 13.8102C135.627 13.2902 135.247 12.7102 134.677 12.7102H130.607C130.287 12.7102 129.997 12.9002 129.877 13.2002H129.867Z" fill="currentColor"></path>
+    <path d="M17.7991 2.34995C17.8991 4.18995 17.6891 5.99995 16.1991 6.95995C15.6791 7.29995 15.1391 7.52995 14.5591 7.71995C13.6891 8.00995 12.8291 8.22995 11.9391 8.43995L8.5291 9.23995C7.2691 9.52995 6.0391 9.84995 4.8091 10.24C4.0891 10.47 3.4191 10.72 2.7291 11.03C2.1691 11.29 1.6491 11.59 1.1591 11.98C0.809101 12.25 0.549101 12.56 0.279101 12.99C0.229101 11.2 0.249101 9.81995 0.539101 8.08995C0.669101 7.29995 1.0191 6.62995 1.5491 6.10995C2.5691 5.10995 3.9991 4.47995 5.2691 4.04995C6.2091 3.72995 7.1291 3.45995 8.0891 3.22995L12.0991 2.23995C12.9891 2.01995 13.8391 1.77995 14.7091 1.46995C15.1791 1.30995 15.6091 1.10995 16.0391 0.869953C16.3491 0.659953 16.6391 0.469953 16.8891 0.169953C16.8891 0.169953 17.6391 -0.880047 17.8091 2.35995L17.7991 2.34995Z" fill="currentColor"></path>
+    <path d="M15.2815 13.3099L13.0515 12.8299C11.4715 12.4899 9.90149 12.1599 8.33149 11.7399C7.16149 11.4199 6.01149 11.0699 4.88149 10.6599L3.64149 11.0899C3.14149 11.2699 2.68149 11.5099 2.20149 11.7499C1.55149 12.1199 0.101486 13.0899 0.531486 14.1399C0.791486 14.7799 1.49149 15.1899 2.01149 15.4999C3.59149 16.3399 5.22149 16.9199 6.91149 17.4199C8.24149 17.0199 9.53149 16.6899 10.8915 16.3899L14.6115 15.5799C15.0715 15.4599 17.4215 14.9499 17.4015 14.3099C17.4015 13.9999 16.7915 13.7599 16.5615 13.6799C16.1415 13.5299 15.7315 13.3999 15.2915 13.3099H15.2815Z" fill="currentColor"></path>
+    <path d="M16.9588 15.27C15.8788 15.77 14.6688 16.01 13.5188 16.27L9.4388 17.18C8.3088 17.43 7.2188 17.76 6.1088 18.13C4.4888 18.68 2.3288 19.58 1.1088 20.96C0.6188 21.52 0.3288 22.22 0.2188 23.01C0.0988 23.85 0.0388 24.67 0.0088 25.51C-0.0212 26.29 0.0288 27.18 0.1088 27.98C1.7088 25.55 7.1388 23.85 9.6288 23.3L12.3588 22.7C13.5488 22.44 15.0288 22.19 16.0688 21.53C17.0988 20.87 17.4088 19.66 17.5488 18.38C17.6788 17.17 17.6988 15.98 17.6588 14.72C17.4588 14.95 17.2288 15.13 16.9588 15.26V15.27Z" fill="currentColor"></path>
+    <path d="M8.46775 35.2399C8.67775 35.5799 8.82775 35.9399 8.92775 36.3199C8.92775 36.3199 8.92775 36.3399 8.93775 36.3399C9.23775 37.5699 9.65775 34.4599 9.71775 33.9699C9.80775 32.8899 9.79775 31.8099 9.61775 30.8799C9.34775 29.4699 8.64775 28.3399 7.67775 27.4699C6.66775 26.6099 5.62775 26.0199 4.48775 25.4099C3.19775 26.0099 1.86775 26.6799 0.797752 27.6999C0.647752 27.8799 0.497752 28.0499 0.387752 28.2599C-0.0422485 29.0599 0.687752 29.6799 1.22775 30.0299C1.70775 30.3399 2.19775 30.5999 2.69775 30.8699L4.07775 31.6199C5.22775 32.2399 6.53775 33.0799 7.51775 34.0399C7.87775 34.4099 8.19775 34.7899 8.45775 35.2399H8.46775Z" fill="currentColor"></path>
+  </symbol>
+  <symbol id="frankly-mark" viewBox="0 0 18 37.6"><use href="#frankly-logo"/></symbol>
+</svg>
+
+<header class="fl-wrap fl-topbar">
+  <a class="fl-brand" href="../index.html" aria-label="Frankly Lab">
+    <svg role="img" aria-hidden="true" focusable="false" viewBox="0 0 147.16 36.63"><use href="#frankly-logo"/></svg>
+    <span class="lab">Lab</span>
+  </a>
+  <nav class="fl-nav" aria-label="Lab pages">
+    <a class="fl-pill" href="../index.html">Tools</a>
+    <a class="fl-pill" href="index.html">Marketing Engine</a>
+    <a class="fl-pill" href="kalender.html" aria-current="page">Calendar</a>
+  </nav>
+</header>
+
+<!-- ============================ HERO ============================ -->
+<section class="slide hero" id="hero" aria-labelledby="hero-title">
+  <div class="fl-wrap hero-grid">
+    <div class="hero-copy">
+      <p class="fl-kicker reveal rise-lead">Marketing calendar · proposal</p>
+      <h1 id="hero-title" class="reveal rise-words"><span>The plan, week by week.</span><span>Every item has a date — or the reason it doesn't.</span></h1>
+      <p class="sub reveal rise-lead">Seven lanes, August to March. A proposal, awaiting Jonas.</p>
+      <div class="numbers reveal rise-lead">
+        <div><strong class="reveal" id="n-items" data-count="0">0</strong><small>items</small></div>
+        <div><strong class="reveal" id="n-lanes" data-count="0">0</strong><small>lanes</small></div>
+        <div><strong class="reveal" id="n-jonas" data-count="0">0</strong><small>awaiting Jonas</small></div>
+      </div>
+      <p class="asof reveal rise-lead" id="asof" data-content></p>
+    </div>
+    <div class="hero-stage" aria-hidden="true">
+      <img class="reveal fade-only" src="../assets/design-reference/kalender-hero-main-visual.png" width="1252" height="1600" alt="" decoding="async" fetchpriority="high">
+    </div>
+  </div>
+</section>
+
+<!-- ============================ THE LOOM ============================ -->
+<section class="slide loom" id="loom" aria-labelledby="loom-title">
+  <div class="fl-wrap">
+    <div class="loom-head">
+      <div>
+        <p class="fl-kicker reveal rise-lead">The loom</p>
+        <h2 id="loom-title" class="reveal rise-head">Pick a lane, scrub a period.</h2>
+      </div>
+      <p class="reveal rise-lead">Chips explain themselves — tap one. Tap a card for its source.</p>
+    </div>
+
+    <div class="controls">
+      <div>
+        <span class="ctl-label" id="lanes-label">Lane</span>
+        <div class="lanes" role="radiogroup" aria-labelledby="lanes-label" id="lanes" data-content></div>
+      </div>
+      <div class="scrub">
+        <div class="scrub-top">
+          <span class="ctl-label" id="period-label" style="margin:0">Period</span>
+          <span class="scrub-now" id="period-now" data-content aria-live="polite"></span>
+        </div>
+        <input type="range" id="period" min="0" max="0" step="1" value="0" aria-labelledby="period-label">
+        <div class="stops" id="stops" data-content aria-hidden="true"></div>
+      </div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div id="stage-media-host"></div>
+      <div class="stage-cap glass glass-standard" id="stage-cap" data-content></div>
+      <div class="stage-count" id="stage-count" data-content></div>
+      <div class="cards" id="cards" data-content></div>
+    </div>
+
+    <div class="feed" id="feed" data-content>
+      <div class="feed-head" id="feed-head"></div>
+      <div class="feed-grid" id="feed-grid"></div>
+    </div>
+  </div>
+</section>
+
+<div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-labelledby="sheet-title" data-content>
+  <div class="sheet-panel" id="sheet-panel" tabindex="-1">
+    <button class="close" id="sheet-close" type="button" aria-label="Close">×</button>
+    <h3 id="sheet-title"></h3>
+    <div id="sheet-body"></div>
+  </div>
+</div>
+
+<!-- MARKETING-CALENDAR-SNAPSHOT:BEGIN -->
+<!-- GENERATED by scripts/build-marketing-calendar-snapshot.py — DO NOT HAND-EDIT. -->
+<script id="marketing-calendar-snapshot" type="application/json">
+{
+  "schema_version": "1.0",
+  "generated_at": "2026-08-22T14:14:27+02:00",
+  "generated_by": "frankly-os-site/scripts/build-marketing-calendar-snapshot.py",
+  "hand_edit_warning": "GENERATED BLOCK — do not hand-edit. Re-run the generator instead.",
+  "surface": {
+    "path": "/marketing/kalender.html",
+    "host": "os.franklydesign.dk",
+    "posture": "internal test surface · gated · noindex · Disallow: /marketing/",
+    "status": "Proposal"
+  },
+  "gate_glossary": {
+    "none": "Open — no gate. The item can proceed on its own source.",
+    "jonas": "Awaiting Jonas — a decision or approval from Jonas moves this item.",
+    "number-gate": "Number gate — a figure (reach, budget, price, rate, volume) is a [NUMBER-GATE] placeholder until Jonas sets it.",
+    "legal-blocked": "Legal-blocked — needs legal, not just a claims scope.",
+    "claims-gate": "Claims gate — needs a Jonas-named scope before any coverage or product wording is written.",
+    "partner-consent": "Partner consent — nothing is produced or named before written consent exists."
+  },
+  "est_note": "~ = estimate with basis + owner. The .est convention is unratified (open decision card 11); shipping it here does not ratify it.",
+  "meta": {
+    "period": "2026-W35 (Mon 2026-08-24) → 2027-03-31",
+    "generated_for": "run 20260822-marketing-calendar-social-examples",
+    "status": "PROPOSAL — awaiting Jonas (M4 amendments 1–11 applied 2026-08-22)",
+    "est_convention_note": "~ = estimate with basis + owner; the .est convention is unratified (card 11)",
+    "granularity": "week-level for 2026-W35 … 2026-W44 (through 2026-10-31); month-level 2026-11 … 2027-03",
+    "week_starts": {
+      "2026-W35": "2026-08-24",
+      "2026-W36": "2026-08-31",
+      "2026-W37": "2026-09-07",
+      "2026-W38": "2026-09-14",
+      "2026-W39": "2026-09-21",
+      "2026-W40": "2026-09-28",
+      "2026-W41": "2026-10-05",
+      "2026-W42": "2026-10-12",
+      "2026-W43": "2026-10-19",
+      "2026-W44": "2026-10-26"
+    },
+    "number_rule": "Reach, budget, price, rate and volume figures are written [NUMBER-GATE]. Dates, week ids and backlog ids are not figures.",
+    "written_by": "R6 Growth Operator, read-only seat — this JSON is a recommendation; M3 writes the files.",
+    "schema_version": "1.0",
+    "derived_from": "os-visualization/reports/20260822-marketing-calendar-social-examples/r6-calendar-proposal.json",
+    "rulings_applied": [
+      "waits_for_scope items carry no week/month; placement_note instead",
+      "source / est / gate / proposal / set_with / backlog_ids kept verbatim",
+      "items sorted by lane, then week/month start; date-less last",
+      "HTML entity for ampersand replaced with the plain character; no generated_at in JSON (md carries the stamp)",
+      "M4 amendments 1–11 applied 2026-08-22 (see m3-calendar-notes.md Pass 2)"
+    ],
+    "figures_note": "Spelled-out Danish counts (e.g. 'tredive prompts', 'fire motorer', 'de to indekssider', 'de tre første hubs') are structural counts verifiable at the item's cited source — not reach, budget, price, rate or volume figures. This exemption from the number rule is explicit, not silent. Digit-form counts stay disallowed outside the exemption classes listed in validate-calendar.py.",
+    "build_date": "2026-08-22",
+    "default_period": "2026-W35",
+    "default_period_reason": "build date precedes the first period — opens on 2026-W35"
+  },
+  "periods": [
+    {
+      "id": "2026-W35",
+      "kind": "week",
+      "label": "W35",
+      "start": "2026-08-24"
+    },
+    {
+      "id": "2026-W36",
+      "kind": "week",
+      "label": "W36",
+      "start": "2026-08-31"
+    },
+    {
+      "id": "2026-W37",
+      "kind": "week",
+      "label": "W37",
+      "start": "2026-09-07"
+    },
+    {
+      "id": "2026-W38",
+      "kind": "week",
+      "label": "W38",
+      "start": "2026-09-14"
+    },
+    {
+      "id": "2026-W39",
+      "kind": "week",
+      "label": "W39",
+      "start": "2026-09-21"
+    },
+    {
+      "id": "2026-W40",
+      "kind": "week",
+      "label": "W40",
+      "start": "2026-09-28"
+    },
+    {
+      "id": "2026-W41",
+      "kind": "week",
+      "label": "W41",
+      "start": "2026-10-05"
+    },
+    {
+      "id": "2026-W42",
+      "kind": "week",
+      "label": "W42",
+      "start": "2026-10-12"
+    },
+    {
+      "id": "2026-W43",
+      "kind": "week",
+      "label": "W43",
+      "start": "2026-10-19"
+    },
+    {
+      "id": "2026-W44",
+      "kind": "week",
+      "label": "W44",
+      "start": "2026-10-26"
+    },
+    {
+      "id": "2026-11",
+      "kind": "month",
+      "label": "Nov 2026",
+      "start": "2026-11-01"
+    },
+    {
+      "id": "2026-12",
+      "kind": "month",
+      "label": "Dec 2026",
+      "start": "2026-12-01"
+    },
+    {
+      "id": "2027-01",
+      "kind": "month",
+      "label": "Jan 2027",
+      "start": "2027-01-01"
+    },
+    {
+      "id": "2027-02",
+      "kind": "month",
+      "label": "Feb 2027",
+      "start": "2027-02-01"
+    },
+    {
+      "id": "2027-03",
+      "kind": "month",
+      "label": "Mar 2027",
+      "start": "2027-03-01"
+    },
+    {
+      "id": "no-date",
+      "kind": "no-date",
+      "label": "no date",
+      "start": null
+    }
+  ],
+  "lanes": [
+    {
+      "id": "all",
+      "label": "All lanes",
+      "purpose": null,
+      "stops": [
+        "2026-W35",
+        "2026-W36",
+        "2026-W37",
+        "2026-W38",
+        "2026-W39",
+        "2026-W40",
+        "2026-W41",
+        "2026-W42",
+        "2026-W43",
+        "2026-W44",
+        "2026-11",
+        "2026-12",
+        "2027-01",
+        "2027-02",
+        "2027-03",
+        "no-date"
+      ],
+      "total": 73
+    },
+    {
+      "id": "L1",
+      "label": "Beslutninger & gates",
+      "purpose": "Jonas-milepæle: de fem første kort, MK-03-arkivering, ejer for AI-mærkning, og commit/deploy af /marketing/. Intet nedstrøms flytter sig uden disse.",
+      "stops": [
+        "2026-W35",
+        "2026-W36",
+        "2026-W37",
+        "2026-W38",
+        "2026-W39",
+        "2026-11",
+        "2026-12",
+        "2027-01"
+      ],
+      "total": 18
+    },
+    {
+      "id": "L2",
+      "label": "Måling",
+      "purpose": "Prompt-panel baseline før første publicering, derefter månedligt; KPI-gennemgang F1–F8 + G1–G4 månedligt; tracking-dækning på hver publiceringsbatch.",
+      "stops": [
+        "2026-W36",
+        "2026-W37",
+        "2026-W40",
+        "2026-W41",
+        "2026-W42",
+        "2026-W44",
+        "2026-11",
+        "2026-12",
+        "2027-01",
+        "2027-02",
+        "2027-03"
+      ],
+      "total": 15
+    },
+    {
+      "id": "L3",
+      "label": "Læringscenter & tillidsryggrad",
+      "purpose": "Udkast i batches fra backloggens prioritet-1-items uden gate først, hubs før spokes. Publicering på franklyinsure.com er en menneskelig handling — maskinen leverer udkast.",
+      "stops": [
+        "2026-W37",
+        "2026-W38",
+        "2026-W39",
+        "2026-W40",
+        "2026-W41",
+        "2026-W42",
+        "2026-W43",
+        "2026-W44",
+        "2026-11",
+        "2026-12",
+        "2027-01",
+        "no-date"
+      ],
+      "total": 16
+    },
+    {
+      "id": "L4",
+      "label": "LinkedIn — virksomhed og medarbejderkit",
+      "purpose": "Kadence og pillemix som FORSLAG, sat med Jonas. Ingen benchmarks udefra.",
+      "stops": [
+        "2026-W35",
+        "2026-W36",
+        "2026-W37",
+        "2026-W38",
+        "2026-W40",
+        "2026-11",
+        "2027-01"
+      ],
+      "total": 8
+    },
+    {
+      "id": "L5",
+      "label": "Instagram",
+      "purpose": "Kadence og pillemix som FORSLAG, sat med Jonas. Kanalen har ingen historik og måles på output og læring.",
+      "stops": [
+        "2026-W35",
+        "2026-W36",
+        "2026-W39",
+        "2026-W43",
+        "2026-11",
+        "2027-01"
+      ],
+      "total": 6
+    },
+    {
+      "id": "L6",
+      "label": "Partner & digital PR",
+      "purpose": "Lukket indtil digital-pr-authority-udkastet er arkiveret (MK-03). Partner-hero-loop bygges som skabelon, ikke som projekt.",
+      "stops": [
+        "2026-W35",
+        "2026-11",
+        "2026-12",
+        "2027-01",
+        "no-date"
+      ],
+      "total": 5
+    },
+    {
+      "id": "L7",
+      "label": "Aktiveringsparathed",
+      "purpose": "Kontakten er gate-betingelsen i kpi-tree.md §3 — aldrig en kalenderdato. Produkttilgængelighed er et estimat.",
+      "stops": [
+        "2026-W36",
+        "2027-01",
+        "2027-02",
+        "2027-03",
+        "no-date"
+      ],
+      "total": 5
+    }
+  ],
+  "items": [
+    {
+      "id": "l1-kickoff-gennemgang",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "Kickoff: gennemgå de fem første beslutningskort",
+      "what": "Jonas læser 'Answer these five first'-tabellen og beslutter rækkefølgen for CA-01, CA-09, MK-SK-01, MB-03 og MK-02. Ingen produktion nedstrøms afhænger af, at alle fem er besvaret — men fire af dem flytter datoer i denne kalender.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md §Answer these five first",
+      "depends_on": [],
+      "gate": "jonas",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-ca-01-reviewer",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "CA-01: hvem gennemlæser money-sider, og med hvilken kredential?",
+      "what": "Navngiv forfatter- og gennemlæserrollen. Uden den er hele money-page-laget spærret ved reviewer-feltet, og lrn-eksperter kan ikke færdiggøres.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md CA-01 / MK-PB-11",
+      "depends_on": [
+        "l1-kickoff-gennemgang"
+      ],
+      "gate": "jonas",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-ca-09-doorway-gate",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "CA-09: er anti-doorway-gaten en build-fejl eller en advarsel?",
+      "what": "Beslut om en side, der mangler sine unikke datafelter, fejler byggeriet. At udskyde kortet er at beslutte imod det — eftermontering er et indholdsprojekt, ikke en config-ændring.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md CA-09",
+      "depends_on": [
+        "l1-kickoff-gennemgang"
+      ],
+      "gate": "jonas",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-ai-maerkning-ejer",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "Ejer for AI-mærkning udpeges (datoerne er allerede passeret)",
+      "what": "Ruten noterer to modstridende datoer — backloggen siger 2026-08-22, Dansk Erhverv-kilden 2026-08-02 — og tager ingen juridisk stilling. Udpeg en juridisk/kildeverificerende ejer, før det første AI-genererede aktiv publiceres.",
+      "owner": "Jonas",
+      "source": "os-visualization/routes/ai-marketing-labeling-compliance-route.md §Why This Exists",
+      "depends_on": [],
+      "gate": "legal-blocked",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-meas-1-scratch-mappe",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "MEAS-1: opret _scratch/marketing/prompt-panel-runs/",
+      "what": "Rå svartekst indeholder dækningsudsagn og må kun ligge i scratch-banen. Panelet må ikke køre, før mappen findes.",
+      "owner": "Jonas",
+      "source": "marketing-engine/measurement/prompt-panel.md §3 'Where the raw logs go' + §7 MEAS-1",
+      "depends_on": [],
+      "gate": "jonas",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-meas-2-4-5-panelkort",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "MEAS-2 / MEAS-4 / MEAS-5: operatør, gratis niveauer, brand-probes",
+      "what": "Navngiv den ene operatør og accepter det tilbagevendende kalenderblok; bekræft at vi kun kører gratis niveauer (betalt plan er en gate); bekræft at pp-06 og pp-10 må logges internt under claims-låsen.",
+      "owner": "Jonas",
+      "source": "marketing-engine/measurement/prompt-panel.md §7",
+      "depends_on": [],
+      "gate": "jonas",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-meas-3-raekkefoelge",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "MEAS-3: bekræft at baseline går forud for første publicering",
+      "what": "Bekræft rækkefølgen eksplicit. Uden baseline findes der ingen kontrafaktisk måling, og hele grenen bliver ufalsificerbar.",
+      "owner": "Jonas",
+      "source": "marketing-engine/measurement/prompt-panel.md §3 Cadence",
+      "depends_on": [],
+      "gate": "jonas",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-mk-in-03-feltdiff",
+      "lane": "L1",
+      "week": "2026-W35",
+      "title": "MK-IN-03: feltdiff mod elmo før run 1",
+      "what": "Diff elmos citation-extractor-felter mod panelets scoringsfelter. Et felt tilføjet efter run 1 nulstiller baseline; timingen er selve beslutningen.",
+      "owner": "R1 Researcher",
+      "source": "marketing-engine/DECISIONS-NEEDED.md MK-IN-03",
+      "depends_on": [
+        "l1-meas-3-raekkefoelge"
+      ],
+      "gate": "none",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l1-trk-6-gsc-ejerskab",
+      "lane": "L1",
+      "week": "2026-W36",
+      "title": "TRK-6: hvem ejer Search Console-propertyen?",
+      "what": "Afklar ejerskab og verifikation for hver overflade i scope. Intet i F1, F2 eller F3 virker, før det er besvaret.",
+      "owner": "Jonas",
+      "source": "marketing-engine/measurement/tracking-plan.md §11 TRK-6",
+      "depends_on": [],
+      "gate": "jonas",
+      "period": "2026-W36"
+    },
+    {
+      "id": "l1-mb-03-mobility",
+      "lane": "L1",
+      "week": "2026-W36",
+      "title": "MB-03: er Frankly Mobility live, eller udskudt til tidligt Q1 2027?",
+      "what": "To kilder på disken er uenige. Svaret flytter cykelklyngen mellem foundation og activation og afgør, hvornår L7-produktsiderne overhovedet kan skrives.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md MB-03",
+      "depends_on": [
+        "l1-kickoff-gennemgang"
+      ],
+      "gate": "jonas",
+      "period": "2026-W36"
+    },
+    {
+      "id": "l1-mk-sk-01-skills",
+      "lane": "L1",
+      "week": "2026-W36",
+      "title": "MK-SK-01: hvilken skill overlever AI-svar-tjekket?",
+      "what": "To live skills besvarer samme spørgsmål. At lade alle tre stå er det ene uacceptable svar — og det er repoets nuværende tilstand.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md MK-SK-01",
+      "depends_on": [
+        "l1-kickoff-gennemgang"
+      ],
+      "gate": "jonas",
+      "period": "2026-W36"
+    },
+    {
+      "id": "l1-mk-02-rutefamilie",
+      "lane": "L1",
+      "week": "2026-W37",
+      "title": "MK-02: Family A eller Family B for de tre ruteudkast?",
+      "what": "Det eneste kort, der ændrer selve udkastfilerne. Besvar det før arkivering, ikke efter.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md MK-02",
+      "depends_on": [
+        "l1-kickoff-gennemgang"
+      ],
+      "gate": "jonas",
+      "period": "2026-W37"
+    },
+    {
+      "id": "l1-trk-1-2-analytics",
+      "lane": "L1",
+      "week": "2026-W37",
+      "title": "TRK-1 + TRK-2: samtykkespørgsmålet og valget af analyseværktøj",
+      "what": "TRK-1 kræver en rigtig privatlivsgennemgang — flag, konkluder aldrig. TRK-2 er enten en betalt plan eller infrastruktur Frankly selv driver; begge veje er en gate.",
+      "owner": "Jonas",
+      "source": "marketing-engine/measurement/tracking-plan.md §11 TRK-1, TRK-2",
+      "depends_on": [
+        "l1-trk-6-gsc-ejerskab"
+      ],
+      "gate": "legal-blocked",
+      "period": "2026-W37"
+    },
+    {
+      "id": "l1-mk-03-arkiver-ruteudkast",
+      "lane": "L1",
+      "week": "2026-W38",
+      "title": "MK-03: arkivér de tre ruteudkast i Drive",
+      "what": "Nye ruter er en hård Jonas-gate. Digital PR (L6) er lukket, indtil digital-pr-authority-udkastet er arkiveret. Afviste udkast slettes ikke — de flyttes til _retired/.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md MK-03",
+      "depends_on": [
+        "l1-mk-02-rutefamilie"
+      ],
+      "gate": "jonas",
+      "period": "2026-W38"
+    },
+    {
+      "id": "l1-marketing-side-commit",
+      "lane": "L1",
+      "week": "2026-W39",
+      "title": "Commit + publish-dry-run; dispatch er Jonas' handling",
+      "what": "Den interne dashboard-side er en testoverflade og er åben, men workflowet er workflow_dispatch — push ændrer intet live. Terminaltrinnet herfra er publish-dry-run.py; selve dispatchen er en menneskelig handling.",
+      "owner": "Jonas",
+      "source": "marketing-engine/README.md §5 'Deploy is split by target'",
+      "depends_on": [
+        "l1-trk-1-2-analytics"
+      ],
+      "gate": "jonas",
+      "period": "2026-W39"
+    },
+    {
+      "id": "l1-kortgennemgang-maanedlig",
+      "lane": "L1",
+      "month": "2026-11",
+      "title": "Månedlig gennemgang af åbne beslutningskort",
+      "what": "Et fast punkt: hvilke af de åbne kort er besvaret, hvilke er stadig live defaults. Et ubesvaret kort er en levende standard, ikke en blokering — men det skal ses.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md §How to use this file",
+      "depends_on": [],
+      "gate": "jonas",
+      "period": "2026-11"
+    },
+    {
+      "id": "l1-juristsamling",
+      "lane": "L1",
+      "month": "2026-12",
+      "title": "Saml de juridiske spørgsmål til én gennemgang",
+      "what": "IDD, markedsføringsloven § 21, prismarkedsføring, god skik og tools, cookieless samtykke, AI-mærkning, privatlivsgrundlag for datasæt. De er listet ét sted, så de besvares én gang af en kvalificeret person i stedet for pr. side.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md §Questions that need a lawyer, not just Jonas",
+      "depends_on": [],
+      "gate": "legal-blocked",
+      "period": "2026-12"
+    },
+    {
+      "id": "l1-trustmedia-scoping",
+      "lane": "L1",
+      "month": "2027-01",
+      "title": "Trustmedia: afklar §8-listen før briefen sendes",
+      "what": "Verificér kvartalsbudgettet mod originaldokumentet, beslut ABM-optionen ind eller ud, aftal rapporteringsreglen før underskrift, og besvar forfatter/gennemlæser-spørgsmålet. Afsendelse er Jonas' handling.",
+      "owner": "Jonas",
+      "source": "marketing-engine/trustmedia-brief.md §8",
+      "depends_on": [
+        "l1-ca-01-reviewer"
+      ],
+      "gate": "jonas",
+      "period": "2027-01"
+    },
+    {
+      "id": "l2-panel-baseline-run-1",
+      "lane": "L2",
+      "week": "2026-W36",
+      "title": "Prompt-panel BASELINE run 1 (første tirsdag, 2026-09-01)",
+      "what": "Første kørsel af de tredive danske prompts på fire motorer, frisk session pr. prompt pr. motor, 09:00–13:00 CET. Skal ligge FØR den første nye side publiceres — det er det mest tidskritiske punkt i hele målingsfundamentet. September er også kvartalssweep.",
+      "owner": "M3 Builder (panelet) / R1 Researcher (konkurrentkortet)",
+      "source": "marketing-engine/measurement/prompt-panel.md §3 Cadence and calendar",
+      "depends_on": [
+        "l1-meas-1-scratch-mappe",
+        "l1-meas-2-4-5-panelkort",
+        "l1-meas-3-raekkefoelge",
+        "l1-mk-in-03-feltdiff"
+      ],
+      "gate": "none",
+      "period": "2026-W36"
+    },
+    {
+      "id": "l2-panel-baseline-udlaesning",
+      "lane": "L2",
+      "week": "2026-W37",
+      "title": "Baseline-udlæsning: konkurrent- og citationskort først",
+      "what": "Udlæsningen ledes af hvem der ejer hver svarplads, hvilke domæner motorerne citerer, kategoriholdning og motordivergens. Franklys egen linje rapporteres til sidst som 'baseline — intet signal endnu', aldrig som et nul.",
+      "owner": "R1 Researcher",
+      "source": "marketing-engine/measurement/prompt-panel.md §5",
+      "depends_on": [
+        "l2-panel-baseline-run-1"
+      ],
+      "gate": "none",
+      "period": "2026-W37"
+    },
+    {
+      "id": "l2-kpi-nulmaaling-f1-f8",
+      "lane": "L2",
+      "week": "2026-W37",
+      "title": "Nulmåling af F1–F8 og G1–G4",
+      "what": "Registrér udgangspunktet for indekserede sider, topical coverage, branded search, brand mentions, AI-synlighed, AI-henvisninger, tracking-dækning og intern linkhelbred — plus de fire guardrails. Fase 1 må kun bedømmes på denne liste.",
+      "owner": "R6 Growth Operator (F2, F3, F6) / R6.1 (F1, F7, F8) / R1 (F4)",
+      "source": "marketing-engine/measurement/kpi-tree.md §2",
+      "depends_on": [
+        "l1-trk-6-gsc-ejerskab"
+      ],
+      "gate": "none",
+      "period": "2026-W37"
+    },
+    {
+      "id": "l2-tracking-daekning-batch-1",
+      "lane": "L2",
+      "week": "2026-W40",
+      "title": "F7 tracking-dækning på første publiceringsbatch",
+      "what": "F7 køres på hver publiceringsbatch, ikke kun månedligt. Under fuld dækning er alle andre tal i træet forkerte med et ukendt beløb — ret F7 før noget andet læses.",
+      "owner": "R6.1 Technical SEO / schema owner",
+      "source": "marketing-engine/measurement/kpi-tree.md §2 F7",
+      "depends_on": [
+        "l3-publicering-batch-1"
+      ],
+      "gate": "none",
+      "period": "2026-W40"
+    },
+    {
+      "id": "l2-panel-run-2-oktober",
+      "lane": "L2",
+      "week": "2026-W41",
+      "title": "Prompt-panel run 2 (første tirsdag, 2026-10-06)",
+      "what": "Samme operatør, samme protokol, samme enhed. En forringet kørsel med kun P1-prompts slår et hul — et hul kan ikke genskabes bagud.",
+      "owner": "M3 Builder",
+      "source": "marketing-engine/measurement/prompt-panel.md §3 Cadence and calendar",
+      "depends_on": [
+        "l2-panel-baseline-run-1"
+      ],
+      "gate": "none",
+      "period": "2026-W41"
+    },
+    {
+      "id": "l2-kpi-gennemgang-oktober",
+      "lane": "L2",
+      "week": "2026-W42",
+      "title": "Månedlig KPI-gennemgang: F1–F8 med G1–G4 ved siden af",
+      "what": "Guardrails leveres sammen med den KPI de vogter, eller KPI'en leveres ikke. Er G1 rød, er F1 og F2 ugyldige for måneden.",
+      "owner": "R6 Growth Operator",
+      "source": "marketing-engine/measurement/kpi-tree.md §2 Foundation guardrails",
+      "depends_on": [
+        "l2-kpi-nulmaaling-f1-f8"
+      ],
+      "gate": "none",
+      "period": "2026-W42"
+    },
+    {
+      "id": "l2-tracking-daekning-batch-2",
+      "lane": "L2",
+      "week": "2026-W44",
+      "title": "F7 tracking-dækning på anden publiceringsbatch",
+      "what": "Gentag dækningstjekket efter batch to. Dækning er nødvendig, ikke tilstrækkelig — en side kan være perfekt trackeret og stadig sende forkert grupperede events.",
+      "owner": "R6.1 Technical SEO / schema owner",
+      "source": "marketing-engine/measurement/kpi-tree.md §2 F7",
+      "depends_on": [
+        "l3-publicering-batch-2"
+      ],
+      "gate": "none",
+      "period": "2026-W44"
+    },
+    {
+      "id": "l2-panel-run-november",
+      "lane": "L2",
+      "month": "2026-11",
+      "title": "Prompt-panel run 3 (første tirsdag)",
+      "what": "Normal månedskørsel. Log også nul-observationer: 'der kom ingen AI Overview' er et af de mest informative resultater panelet kan give.",
+      "owner": "M3 Builder",
+      "source": "marketing-engine/measurement/prompt-panel.md §3",
+      "depends_on": [
+        "l2-panel-run-2-oktober"
+      ],
+      "gate": "none",
+      "period": "2026-11"
+    },
+    {
+      "id": "l2-kpi-gennemgang-november",
+      "lane": "L2",
+      "month": "2026-11",
+      "title": "Månedlig KPI-gennemgang + F7 pr. batch",
+      "what": "F1–F8 og guardrails, plus tracking-dækning på hver publiceringsbatch i måneden. Små baser rapporteres som absolutte tal, ikke procentændring.",
+      "owner": "R6 Growth Operator",
+      "source": "marketing-engine/measurement/kpi-tree.md §5",
+      "depends_on": [
+        "l2-kpi-gennemgang-oktober"
+      ],
+      "gate": "none",
+      "period": "2026-11"
+    },
+    {
+      "id": "l2-kpi-5-q4-checkpoint",
+      "lane": "L2",
+      "month": "2026-12",
+      "title": "KPI-5: Q4-checkpoint med Foundation-listen som dagsorden",
+      "what": "Sæt den første 'hvordan går det med marketing'-samtale nu, med en defineret svarform, før nogen spørger. Fase 1 og Fase 2 optræder aldrig i samme tabel.",
+      "owner": "Jonas + R6 Growth Operator",
+      "source": "marketing-engine/measurement/kpi-tree.md §6 KPI-5",
+      "depends_on": [
+        "l2-kpi-gennemgang-november"
+      ],
+      "gate": "jonas",
+      "period": "2026-12"
+    },
+    {
+      "id": "l2-panel-kvartalssweep-december",
+      "lane": "L2",
+      "month": "2026-12",
+      "title": "Prompt-panel run 4 — kvartalssweep",
+      "what": "December er sweep-måned: fire motorer på P2 plus hele P3-sættet. Nye prompts må kun tilføjes ved en kvartalsgennemgang, og de starter deres egen serie.",
+      "owner": "M3 Builder",
+      "source": "marketing-engine/measurement/prompt-panel.md §3, §6",
+      "depends_on": [
+        "l2-panel-run-november"
+      ],
+      "gate": "none",
+      "period": "2026-12"
+    },
+    {
+      "id": "l2-panel-run-januar",
+      "lane": "L2",
+      "month": "2027-01",
+      "title": "Prompt-panel run 5 + månedlig KPI-gennemgang",
+      "what": "Normal kørsel. Franklys linje forventes stadig at være baseline; det er det forventede resultat, ikke en fejl.",
+      "owner": "M3 Builder / R6 Growth Operator",
+      "source": "marketing-engine/measurement/prompt-panel.md §5",
+      "depends_on": [
+        "l2-panel-kvartalssweep-december"
+      ],
+      "gate": "none",
+      "period": "2027-01"
+    },
+    {
+      "id": "l2-panel-run-februar",
+      "lane": "L2",
+      "month": "2027-02",
+      "title": "Prompt-panel run 6 + månedlig KPI-gennemgang",
+      "what": "Normal kørsel. Genafled spørgsmålsuniverset mod motorernes fan-out, så F2 ikke ender med at måle vores egen optimisme.",
+      "owner": "M3 Builder / R6 Growth Operator",
+      "source": "marketing-engine/measurement/kpi-tree.md §2 F2",
+      "depends_on": [
+        "l2-panel-run-januar"
+      ],
+      "gate": "none",
+      "period": "2027-02"
+    },
+    {
+      "id": "l2-panel-kvartalssweep-marts",
+      "lane": "L2",
+      "month": "2027-03",
+      "title": "Prompt-panel run 7 — kvartalssweep + panelvedligehold",
+      "what": "Sweep plus den kvartalsvise panelgennemgang: promptlisten er frosset mellem gennemgange, tilføjelser starter en ny serie, fjernelse sker som pensionering med priority 0.",
+      "owner": "M3 Builder",
+      "source": "marketing-engine/measurement/prompt-panel.md §6",
+      "depends_on": [
+        "l2-panel-run-februar"
+      ],
+      "gate": "none",
+      "period": "2027-03"
+    },
+    {
+      "id": "l2-seks-maaneders-falsifikation",
+      "lane": "L2",
+      "month": "2027-03",
+      "title": "Første falsifikationstjek: pp-02 seks måneder efter baseline",
+      "what": "Betingelsen er ikke datoen alene: pp-02 skal stadig være 'absent' på alle fire motorer seks måneder efter at elektronikklyngen er fuldt publiceret og indekseret. Er klyngen ikke publiceret, er tjekket ikke modent endnu.",
+      "owner": "R1 Researcher",
+      "source": "marketing-engine/measurement/prompt-panel.md §5 'When to actually worry'",
+      "depends_on": [
+        "l2-panel-baseline-run-1"
+      ],
+      "gate": "none",
+      "period": "2027-03"
+    },
+    {
+      "id": "l3-batch-1-roedder",
+      "lane": "L3",
+      "week": "2026-W37",
+      "title": "Udkastbatch 1 — afhængighedsrødderne",
+      "what": "Skriv udkast til de to indekssider og de redaktionelle principper. Det er dependency-rødderne: lrn-index åbner hubs, ord-index åbner opslagene. Hubs før spokes, uden undtagelse.",
+      "owner": "canon/library/routes/content-growth/blog-production.md / canon/library/routes/content-growth/seo-content-engine.md",
+      "source": "marketing-engine/backlog/backlog.md §Dependency roots",
+      "depends_on": [],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-index",
+          "legal_gate": "none"
+        },
+        {
+          "id": "ord-index",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-redaktionelle-principper",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W37"
+    },
+    {
+      "id": "l3-batch-2-hubs-a",
+      "lane": "L3",
+      "week": "2026-W38",
+      "title": "Udkastbatch 2 — de tre første hubs",
+      "what": "Telefon, cykel og værdi-hubben. Alle tre er prioritet 1 uden gate og hænger direkte på lrn-index.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.json",
+      "depends_on": [
+        "l3-batch-1-roedder"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-hub-telefon-i-stykker",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-hub-cykel-stjaalet",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-hub-hvad-er-mine-ting-vaerd",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W38"
+    },
+    {
+      "id": "l3-batch-3-hubs-b",
+      "lane": "L3",
+      "week": "2026-W39",
+      "title": "Udkastbatch 3 — flytning, hverdagsomhu og ekspertsiden",
+      "what": "De to sidste gate-frie hubs plus ekspertsiden. lrn-eksperter har legal_gate 'none', men afhænger af lrn-om-frankly (claims-gate) og kan ikke færdiggøres uden svar på CA-01 — skriv strukturen, lad navnefelterne stå åbne.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.json",
+      "depends_on": [
+        "l3-batch-2-hubs-a",
+        "l1-ca-01-reviewer"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-hub-flytning",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-hub-passe-paa-tingene",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-eksperter",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W39"
+    },
+    {
+      "id": "l3-batch-4-foerste-spokes",
+      "lane": "L3",
+      "week": "2026-W40",
+      "title": "Udkastbatch 4 — de to prioritet-1-spokes og ét opslag",
+      "what": "iPhone-skærm, cykeltyverianmeldelse og indbo-opslaget. Hver spoke linker til sin hub, og hubben linker tilbage — ellers fejler hub-and-spoke-tjekket.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.json",
+      "depends_on": [
+        "l3-batch-2-hubs-a"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-iphone-skaerm-pris",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-anmeld-cykeltyveri",
+          "legal_gate": "none"
+        },
+        {
+          "id": "ord-indbo",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W40"
+    },
+    {
+      "id": "l3-publicering-batch-1",
+      "lane": "L3",
+      "week": "2026-W40",
+      "title": "~ Publiceringsmilepæl 1 på franklyinsure.com (menneskelig handling)",
+      "what": "Maskinen leverer udkast; publicering på det rigtige site er en menneskelig/bureau-handling. Datoen er et estimat, fordi den afhænger af bureauets kapacitet og af, at CMS'et findes.",
+      "owner": "agency",
+      "est": {
+        "basis": "Trustmedia ejer eksekvering; ingen leveranceplan er aftalt, og content-architecture er en specifikation, ikke en implementering",
+        "owner": "Jonas"
+      },
+      "depends_on": [
+        "l3-batch-1-roedder",
+        "l3-batch-2-hubs-a",
+        "l2-panel-baseline-run-1"
+      ],
+      "gate": "jonas",
+      "week_is_estimate": true,
+      "period": "2026-W40"
+    },
+    {
+      "id": "l3-batch-5-cykel-spokes",
+      "lane": "L3",
+      "week": "2026-W41",
+      "title": "Udkastbatch 5 — cykelklyngens gate-frie spokes",
+      "what": "Stelnummer, tyverital, registrering og indboopgørelse. Cykel-læringsklyngen er foundation og kræver intet produkt — den venter ikke på MB-03.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.md §Full backlog",
+      "depends_on": [
+        "l3-batch-2-hubs-a"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-stelnummer",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-cykeltyveri-tal-danmark",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-registrer-din-cykel",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-indboopgoerelse",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W41"
+    },
+    {
+      "id": "l3-batch-6-flytte-spokes",
+      "lane": "L3",
+      "week": "2026-W42",
+      "title": "Udkastbatch 6 — flytteklyngen og dokumentation",
+      "what": "Flyttetjekliste, typiske flytteskader, pakning af elektronik og dokumentation af ting. Sidstnævnte åbner senere dokumentationssiden i skades-hubben.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.md §Full backlog",
+      "depends_on": [
+        "l3-batch-3-hubs-b"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-flyttetjekliste",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-skader-under-flytning",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-pak-elektronik",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-dokumenter-dine-ting",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W42"
+    },
+    {
+      "id": "l3-batch-7-telefon-spokes",
+      "lane": "L3",
+      "week": "2026-W43",
+      "title": "Udkastbatch 7 — telefonklyngens spokes",
+      "what": "Vand, reparere-eller-købe, datasikring og valg af værksted. lrn-garanti-eller-skade hører til klyngen, men er legal-blocked og indgår ikke.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.md §Full backlog",
+      "depends_on": [
+        "l3-batch-4-foerste-spokes"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-telefon-i-vand",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-reparere-eller-koebe-ny",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-data-foer-reparation",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-apple-vs-vaerksted-reparation",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W43"
+    },
+    {
+      "id": "l3-batch-8-hverdagsomhu",
+      "lane": "L3",
+      "week": "2026-W44",
+      "title": "Udkastbatch 8 — passe-på-tingene-klyngen",
+      "what": "Sikring af lejlighed, tasken på caféen, stjålet telefon, elektronik på farten og opbevaring af cyklen. Ingen frygtramme — hele klyngen skrives i 'let life happen'-tonen.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.md §Full backlog",
+      "depends_on": [
+        "l3-batch-3-hubs-b"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-sikr-lejlighed-indbrud",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-taske-stjaalet-cafe",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-telefon-stjaalet-spaer",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-elektronik-paa-rejse",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-opbevar-cykel-sikkert",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-W44"
+    },
+    {
+      "id": "l3-publicering-batch-2",
+      "lane": "L3",
+      "week": "2026-W44",
+      "title": "~ Publiceringsmilepæl 2 (menneskelig handling)",
+      "what": "Anden bølge udkast overdrages. Publicér i bølger, ikke som produktionsmål — backloggen er en prioritetsrækkefølge, ikke en kvote.",
+      "owner": "agency",
+      "est": {
+        "basis": "afledt af milepæl 1; ingen aftalt bureau-kadence findes",
+        "owner": "Jonas"
+      },
+      "depends_on": [
+        "l3-publicering-batch-1",
+        "l3-batch-5-cykel-spokes",
+        "l3-batch-6-flytte-spokes"
+      ],
+      "gate": "jonas",
+      "week_is_estimate": true,
+      "period": "2026-W44"
+    },
+    {
+      "id": "l3-intern-linkpas",
+      "lane": "L3",
+      "month": "2026-11",
+      "title": "Internt linkpas og forældreløse sider",
+      "what": "Efter hver batch: nul forældreløse sider, spoke→hub og hub→spoke komplet, kontekstuelle links talt for sig. En side med mange footer-links har dårlig linkning med et pænt tal.",
+      "owner": "R6.1 Technical SEO / schema owner",
+      "source": "marketing-engine/measurement/kpi-tree.md §2 F8",
+      "depends_on": [
+        "l3-publicering-batch-2"
+      ],
+      "gate": "none",
+      "period": "2026-11"
+    },
+    {
+      "id": "l3-p2-ordbog-gatefri",
+      "lane": "L3",
+      "month": "2026-12",
+      "title": "Ordbogens gate-frie opslag",
+      "what": "Police, præmie, skadesanmeldelse, taksator og løsøre. De resterende opslag er claims-gate eller legal-blocked og indgår ikke.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.md §Glossary",
+      "depends_on": [
+        "l3-batch-1-roedder"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "ord-police",
+          "legal_gate": "none"
+        },
+        {
+          "id": "ord-praemie",
+          "legal_gate": "none"
+        },
+        {
+          "id": "ord-skadesanmeldelse",
+          "legal_gate": "none"
+        },
+        {
+          "id": "ord-taksator",
+          "legal_gate": "none"
+        },
+        {
+          "id": "ord-loesoere",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2026-12"
+    },
+    {
+      "id": "l3-resterende-p3-gatefri",
+      "lane": "L3",
+      "month": "2027-01",
+      "title": "De sidste gate-frie spokes",
+      "what": "MacBook-brugtværdi, hvor cykler stjæles, hvad en husstand ejer, og hvad en flytning koster. Herefter er den gate-frie del af backloggen i al væsentlighed brugt op.",
+      "owner": "blog-production.md",
+      "source": "marketing-engine/backlog/backlog.md §Full backlog",
+      "depends_on": [
+        "l3-batch-8-hverdagsomhu"
+      ],
+      "gate": "none",
+      "backlog_ids": [
+        {
+          "id": "lrn-macbook-brugtvaerdi",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-hvor-stjaales-cykler",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-hvad-ejer-en-husstand",
+          "legal_gate": "none"
+        },
+        {
+          "id": "lrn-hvad-koster-en-flytning",
+          "legal_gate": "none"
+        }
+      ],
+      "period": "2027-01"
+    },
+    {
+      "id": "l3-tool-cykelvaerdi",
+      "lane": "L3",
+      "title": "Værktøj: cykelværdi — kun hvis rådgivningslinjen er afklaret",
+      "what": "Eneste gate-frie værktøj i backloggen, men MK-PB-13 spørger om de fem værktøjer krydser rådgivningslinjen. Anbefalingen i kortet er ikke at bygge værktøjer først.",
+      "owner": "seo-content-engine.md",
+      "source": "marketing-engine/DECISIONS-NEEDED.md MK-PB-13",
+      "depends_on": [
+        "l1-juristsamling"
+      ],
+      "gate": "legal-blocked",
+      "backlog_ids": [
+        {
+          "id": "tool-cykelvaerdi",
+          "legal_gate": "none"
+        }
+      ],
+      "waits_for_scope": true,
+      "placement_note": "ingen dato — venter på scope, ikke på kalenderen",
+      "period": "no-date"
+    },
+    {
+      "id": "l3-claims-blok-venter",
+      "lane": "L3",
+      "placement_note": "ingen dato — venter på scope, ikke på kalenderen",
+      "title": "Claims-blokken: venter på scope, ikke på en dato",
+      "what": "Om-siden, pris- og skades-hubben og de centrale ordbogsopslag kan ikke færdiggøres uden dækningsordlyd. Arbejdet må kun ske i _scratch/, og at flytte det ud er en menneskelig handling, der går til Jonas. Måneden her er en placering i kalenderen, ikke en aftale om, hvornår blokken åbner.",
+      "owner": "Jonas",
+      "source": "marketing-engine/backlog/backlog.md §Gate summary",
+      "depends_on": [
+        "l1-juristsamling"
+      ],
+      "gate": "claims-gate",
+      "waits_for_scope": true,
+      "backlog_ids": [
+        {
+          "id": "lrn-om-frankly",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "lrn-hub-hvad-koster-daekning",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "lrn-hub-skaden-er-sket",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "ord-selvrisiko",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "ord-daekningssum",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "ord-nyvaerdi",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "ord-dagsvaerdi",
+          "legal_gate": "claims-gate"
+        }
+      ],
+      "period": "no-date"
+    },
+    {
+      "id": "l3-legal-blok-venter",
+      "lane": "L3",
+      "placement_note": "ingen dato — venter på scope, ikke på kalenderen",
+      "title": "Legal-blokken: flag, konkludér aldrig",
+      "what": "Reklamationsret, opsigelsesvarsel, udlejers forsikring, afvist anmeldelse og klageadgang står stille, indtil et juridisk lag findes. Der er intet juridisk eller regulatorisk lag i canon overhovedet — det er et hul, ikke en tilladelse.",
+      "owner": "Jonas",
+      "source": "marketing-engine/backlog/backlog.md §Gate summary",
+      "depends_on": [
+        "l1-juristsamling"
+      ],
+      "gate": "legal-blocked",
+      "waits_for_scope": true,
+      "backlog_ids": [
+        {
+          "id": "ord-reklamationsret",
+          "legal_gate": "legal-blocked"
+        },
+        {
+          "id": "ord-opsigelsesvarsel",
+          "legal_gate": "legal-blocked"
+        },
+        {
+          "id": "lrn-udlejers-forsikring",
+          "legal_gate": "legal-blocked"
+        },
+        {
+          "id": "lrn-afvist-anmeldelse",
+          "legal_gate": "legal-blocked"
+        },
+        {
+          "id": "lrn-klageadgang",
+          "legal_gate": "legal-blocked"
+        },
+        {
+          "id": "cmp-000-juridisk-skabelon",
+          "legal_gate": "legal-blocked"
+        }
+      ],
+      "period": "no-date"
+    },
+    {
+      "id": "l4-kadenceforslag-linkedin",
+      "lane": "L4",
+      "week": "2026-W35",
+      "title": "FORSLAG: ugentligt opslagsantal på LinkedIn (virksomhed)",
+      "what": "Antallet pr. uge sættes med Jonas i denne samtale, ikke af en model. Kanalens job er troværdighed over for partnere, branche og kandidater. Ingen benchmarks hentes udefra; første periode måles på output og læring.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Channel roles, §Number gate",
+      "depends_on": [],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_weekly_posts": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2026-W35"
+    },
+    {
+      "id": "l4-ai-maerkning-tjek-foer-foerste-opslag",
+      "lane": "L4",
+      "week": "2026-W36",
+      "title": "AI-mærkningstjek før første AI-genererede aktiv publiceres",
+      "what": "Fotorealistisk AI-indhold skal mærkes; ruten tager ingen juridisk stilling, og ejeren er endnu ikke udpeget. Intet AI-aktiv går ud på nogen kanal før dette punkt er lukket.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Regulatory open item",
+      "depends_on": [
+        "l1-ai-maerkning-ejer"
+      ],
+      "gate": "legal-blocked",
+      "period": "2026-W36"
+    },
+    {
+      "id": "l4-pillemix-september-oktober",
+      "lane": "L4",
+      "week": "2026-W36",
+      "title": "FORSLAG: pillemix for september–oktober (LinkedIn)",
+      "what": "Fordelingen mellem 'Menneskene bag det', 'Klarhed', 'Objektuniverset' og 'Lad livet ske' for perioden. Mixet er en planlægningsbeslutning pr. periode, sat med Jonas — ikke et fast kanonisk forhold.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §The four content pillars",
+      "depends_on": [
+        "l4-kadenceforslag-linkedin"
+      ],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_mix": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2026-W36"
+    },
+    {
+      "id": "l4-foerste-laerings-opslag",
+      "lane": "L4",
+      "week": "2026-W37",
+      "title": "Første 'hvad vi lærer'-opslag først efter baseline",
+      "what": "Første udgave må ikke køre, før baseline-kørslen findes — opslaget rapporterer panelets første læring, ikke et resultat.",
+      "owner": "Jonas",
+      "source": "marketing-engine/social/content-examples-linkedin.md LI-08 + marketing-engine/measurement/prompt-panel.md §3 Run protocol",
+      "depends_on": [
+        "l2-panel-baseline-run-1"
+      ],
+      "gate": "none",
+      "period": "2026-W37"
+    },
+    {
+      "id": "l4-medarbejderkit-v1",
+      "lane": "L4",
+      "week": "2026-W38",
+      "title": "Medarbejderkit v1 bygges som skabelon",
+      "what": "Baggrundskort, motion-stingers, banner, en kort skrivevejledning og opslagsskabeloner — leveret som ét link plus en live gennemgang. Et kit, man skal lede efter, bliver ikke brugt.",
+      "owner": "social-content-engine.md",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Template thinking",
+      "depends_on": [
+        "l4-kadenceforslag-linkedin"
+      ],
+      "gate": "none",
+      "period": "2026-W38"
+    },
+    {
+      "id": "l4-medarbejderkit-walkthrough",
+      "lane": "L4",
+      "week": "2026-W40",
+      "title": "Live gennemgang af medarbejderkittet",
+      "what": "Personlige profiler er den reelle distribution; virksomhedens opgave er at levere et kit, ikke en kampagne. Gennemgangen er den del, der afgør, om kittet bliver brugt.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Channel roles",
+      "depends_on": [
+        "l4-medarbejderkit-v1"
+      ],
+      "gate": "none",
+      "period": "2026-W40"
+    },
+    {
+      "id": "l4-pillemix-november",
+      "lane": "L4",
+      "month": "2026-11",
+      "title": "FORSLAG: pillemix og kadence for november (LinkedIn)",
+      "what": "Gennemgå forrige periodes output og læring, og sæt månedens mix med Jonas. Ingen sammenligning mod eksterne tal.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Number gate",
+      "depends_on": [
+        "l4-pillemix-september-oktober"
+      ],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_mix": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2026-11"
+    },
+    {
+      "id": "l4-pillemix-q1-2027",
+      "lane": "L4",
+      "month": "2027-01",
+      "title": "FORSLAG: pillemix og kadence for december–marts (LinkedIn)",
+      "what": "Én samlet planlægningssamtale for kvartalsskiftet, hvor 'Menneskene bag det' vejer tungest på kanalen. Antal og fordeling sættes med Jonas.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §The four content pillars",
+      "depends_on": [
+        "l4-pillemix-november"
+      ],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_mix": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2027-01"
+    },
+    {
+      "id": "l5-kadenceforslag-instagram",
+      "lane": "L5",
+      "week": "2026-W35",
+      "title": "FORSLAG: ugentligt opslagsantal på Instagram",
+      "what": "Instagram er brandverden og genkendelse — det visuelle univers bor her. Antal pr. uge sættes med Jonas. Kanalen har ingen historik og måles på output og læring i første periode.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Channel roles, §Number gate",
+      "depends_on": [],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_weekly_posts": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2026-W35"
+    },
+    {
+      "id": "l5-pillemix-september-oktober",
+      "lane": "L5",
+      "week": "2026-W36",
+      "title": "FORSLAG: pillemix for september–oktober (Instagram)",
+      "what": "Forslag med tyngde i 'Objektuniverset' og 'Lad livet ske'. Sættes med Jonas. Instagram og TikTok deler kildemateriale, men ikke klip — genklip, repost ikke.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Channel roles",
+      "depends_on": [
+        "l5-kadenceforslag-instagram"
+      ],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_mix": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2026-W36"
+    },
+    {
+      "id": "l5-objektunivers-skabelonbatch",
+      "lane": "L5",
+      "week": "2026-W39",
+      "title": "Skabelonbatch: objektstills og ribbon-loops",
+      "what": "Byg som skabeloner, ikke som projekter — samme brief vender tilbage hver måned. AI ejer objekter; kamera ejer mennesker.",
+      "owner": "social-content-engine.md",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Method by asset type",
+      "depends_on": [
+        "l5-kadenceforslag-instagram",
+        "l4-ai-maerkning-tjek-foer-foerste-opslag"
+      ],
+      "gate": "none",
+      "period": "2026-W39"
+    },
+    {
+      "id": "l5-outputgennemgang-oktober",
+      "lane": "L5",
+      "week": "2026-W43",
+      "title": "Outputgennemgang: hvad holdt opmærksomheden?",
+      "what": "Første periode måles på output og læring, ikke på tal. Feedback går i feedback-registret; kun Jonas beslutter, hvad der bliver en systemregel.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Feedback loop",
+      "depends_on": [
+        "l5-objektunivers-skabelonbatch"
+      ],
+      "gate": "none",
+      "period": "2026-W43"
+    },
+    {
+      "id": "l5-pillemix-november",
+      "lane": "L5",
+      "month": "2026-11",
+      "title": "FORSLAG: pillemix og kadence for november (Instagram)",
+      "what": "Sæt månedens mix med Jonas efter outputgennemgangen. Ingen importerede benchmarks.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Number gate",
+      "depends_on": [
+        "l5-outputgennemgang-oktober"
+      ],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_mix": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2026-11"
+    },
+    {
+      "id": "l5-pillemix-q1-2027",
+      "lane": "L5",
+      "month": "2027-01",
+      "title": "FORSLAG: pillemix og kadence for december–marts (Instagram)",
+      "what": "Kvartalsplanlægning. 'Klarhed' kan først bære produktnær forklaring, når claims-blokken åbner — indtil da holdes pillen på proces og hverdag.",
+      "owner": "Jonas",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §The four content pillars",
+      "depends_on": [
+        "l5-pillemix-november"
+      ],
+      "gate": "number-gate",
+      "proposal": true,
+      "set_with": "Jonas",
+      "proposed_mix": "[NUMBER-GATE]",
+      "decision_shape": [
+        "opslag pr. uge",
+        "andel reels/loops",
+        "hvem udarbejder",
+        "hvem godkender",
+        "gennemgangskadence"
+      ],
+      "period": "2027-01"
+    },
+    {
+      "id": "l6-digital-pr-lukket",
+      "lane": "L6",
+      "week": "2026-W35",
+      "title": "Digital PR er lukket indtil ruteudkastet er arkiveret",
+      "what": "Digital-pr-authority-udkastet er stadig i drafts-inbox og må ikke citeres som canon. Rutens egen hårde regel: systemet sender aldrig selv.",
+      "owner": "Jonas",
+      "source": "marketing-engine/README.md §3 'Where the three new drafts fit'",
+      "depends_on": [],
+      "gate": "jonas",
+      "period": "2026-W35"
+    },
+    {
+      "id": "l6-citationsdomaener-maalliste",
+      "lane": "L6",
+      "month": "2026-11",
+      "title": "Målliste over citationsdomæner fra panelet",
+      "what": "Citation-domain share genererer digital-PR-mållisten ud fra evidens i stedet for antagelser. Listen findes først, når der er mindst to paneler at sammenligne.",
+      "owner": "R1 Researcher",
+      "source": "marketing-engine/measurement/prompt-panel.md §4 Derived metrics",
+      "depends_on": [
+        "l2-panel-run-november"
+      ],
+      "gate": "none",
+      "period": "2026-11"
+    },
+    {
+      "id": "l6-partner-hero-loop-skabelon",
+      "lane": "L6",
+      "month": "2026-12",
+      "title": "Partner-hero-loop som én genbrugelig skabelon",
+      "what": "Én skabelon, ny produktreference pr. partner. Det er forskellen på at sige ja til endnu en partner og at booke endnu en produktion. Et AI-render uden rigtig produktreference giver et plausibelt, men forkert produkt.",
+      "owner": "social-content-engine.md",
+      "source": "canon/library/routes/content-growth/social-content-engine.md §Template thinking",
+      "depends_on": [
+        "l5-objektunivers-skabelonbatch"
+      ],
+      "gate": "partner-consent",
+      "period": "2026-12"
+    },
+    {
+      "id": "l6-partner-samtykkeregister",
+      "lane": "L6",
+      "month": "2027-01",
+      "title": "Samtykkeregister pr. partner før noget partnermateriale bruges",
+      "what": "Logorettigheder og beskrivelsen af samarbejdet kræver skriftligt samtykke; uden det udgives partnermateriale uden logo og uden partner-entitet. Gate-enum'et har ikke et ord for det — det er MB-07.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md CA-06, MB-07",
+      "depends_on": [
+        "l6-partner-hero-loop-skabelon"
+      ],
+      "gate": "partner-consent",
+      "period": "2027-01"
+    },
+    {
+      "id": "l6-digital-pr-aabner",
+      "lane": "L6",
+      "title": "Digital PR kan åbne — betinget, ikke planlagt",
+      "what": "Åbner kun hvis MK-03 er arkiveret og det juridiske grundlag for et eventuelt datasæt er afklaret. Aldrig en Frankly-markedspåstand ud fra egen bog, aldrig et udsnit lille nok til genidentifikation.",
+      "owner": "Jonas",
+      "source": "marketing-engine/DECISIONS-NEEDED.md MK-PB-17",
+      "depends_on": [
+        "l1-mk-03-arkiver-ruteudkast",
+        "l6-citationsdomaener-maalliste"
+      ],
+      "gate": "legal-blocked",
+      "waits_for_scope": true,
+      "placement_note": "ingen dato — venter på scope, ikke på kalenderen",
+      "period": "no-date"
+    },
+    {
+      "id": "l7-gatebetingelsen-skrives-ned",
+      "lane": "L7",
+      "week": "2026-W36",
+      "title": "Aktiveringskontakten er en betingelse, ikke en dato",
+      "what": "Kontakten er: et købbart produkt, en fungerende checkout, og en konverteringsevent valideret under begge samtykketilstande — plus en fuld måned med rigtige konverteringer, før nogen rate citeres som tendens. Skriv betingelsen ind i dashboardet, så ingen sætter en dato på den.",
+      "owner": "R6 Growth Operator",
+      "source": "marketing-engine/measurement/kpi-tree.md §3 Gate condition",
+      "depends_on": [],
+      "gate": "none",
+      "period": "2026-W36"
+    },
+    {
+      "id": "l7-produkttilgaengelighed-estimat",
+      "lane": "L7",
+      "month": "2027-01",
+      "title": "~ Produkttilgængelighed: de nye linjer tidligst tidligt Q1 2027",
+      "what": "EasySure udskød Drive/Mobility/Companion til tidligt Q1 2027. Datoen er et estimat, og MB-03 registrerer at to kilder på disken er uenige — bekræft før noget aktiveringsarbejde begynder.",
+      "owner": "Jonas",
+      "est": {
+        "basis": "marketing-engine/README.md §2 — EasySure delayed the new product lines to early Q1 2027; modsagt af strategy.md pr. MB-03",
+        "owner": "Jonas"
+      },
+      "depends_on": [
+        "l1-mb-03-mobility"
+      ],
+      "gate": "jonas",
+      "period": "2027-01"
+    },
+    {
+      "id": "l7-konverteringsevent-validering",
+      "lane": "L7",
+      "month": "2027-02",
+      "title": "~ Validering af konverteringsevent under begge samtykketilstande",
+      "what": "Kan ikke planlægges før der findes en checkout. Trinnet er en forudsætning for gate-betingelsen, ikke en aktivering i sig selv.",
+      "owner": "R6.1 Technical SEO / schema owner",
+      "est": {
+        "basis": "afledt af produktestimatet ovenfor; ingen checkout findes, og analyseværktøj er ikke valgt (TRK-2)",
+        "owner": "Jonas"
+      },
+      "depends_on": [
+        "l7-produkttilgaengelighed-estimat",
+        "l1-trk-1-2-analytics"
+      ],
+      "gate": "jonas",
+      "period": "2027-02"
+    },
+    {
+      "id": "l7-ingen-aktiveringstal-foer-gate",
+      "lane": "L7",
+      "month": "2027-03",
+      "title": "Ingen A1–A5 beregnes før gaten er mødt",
+      "what": "En for tidligt beregnet aktiveringsmetrik er værre end ingen metrik: den skaber et tal, folk husker. CAC mod nul kunder er udefineret, ikke 'høj'.",
+      "owner": "R6 Growth Operator",
+      "source": "marketing-engine/measurement/kpi-tree.md §3",
+      "depends_on": [
+        "l7-gatebetingelsen-skrives-ned"
+      ],
+      "gate": "none",
+      "period": "2027-03"
+    },
+    {
+      "id": "l7-aktiveringssider-venter",
+      "lane": "L7",
+      "placement_note": "ingen dato — venter på scope, ikke på kalenderen",
+      "title": "Aktiveringssiderne venter på scope, ikke på kalenderen",
+      "what": "Cykel-, ladcykel- og mountainbike-produktsider, cyklist-personaen og de to cykelpartnersider er alle claims-gate og fase activation. De skrives ikke, før produktet kan købes og claims-blokken er åbnet.",
+      "owner": "Jonas",
+      "source": "marketing-engine/backlog/backlog.md §Phase: activation",
+      "depends_on": [
+        "l7-produkttilgaengelighed-estimat",
+        "l3-claims-blok-venter"
+      ],
+      "gate": "claims-gate",
+      "waits_for_scope": true,
+      "backlog_ids": [
+        {
+          "id": "prd-cykel",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "prd-ladcykel",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "prd-mountainbike",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "icp-cyklister",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "ptr-bikeandco",
+          "legal_gate": "claims-gate"
+        },
+        {
+          "id": "ptr-smartcykler",
+          "legal_gate": "claims-gate"
+        }
+      ],
+      "period": "no-date"
+    }
+  ],
+  "matrix": {
+    "L1": {
+      "2026-W35": 8,
+      "2026-W36": 3,
+      "2026-W37": 2,
+      "2026-W38": 1,
+      "2026-W39": 1,
+      "2026-W40": 0,
+      "2026-W41": 0,
+      "2026-W42": 0,
+      "2026-W43": 0,
+      "2026-W44": 0,
+      "2026-11": 1,
+      "2026-12": 1,
+      "2027-01": 1,
+      "2027-02": 0,
+      "2027-03": 0,
+      "no-date": 0
+    },
+    "L2": {
+      "2026-W35": 0,
+      "2026-W36": 1,
+      "2026-W37": 2,
+      "2026-W38": 0,
+      "2026-W39": 0,
+      "2026-W40": 1,
+      "2026-W41": 1,
+      "2026-W42": 1,
+      "2026-W43": 0,
+      "2026-W44": 1,
+      "2026-11": 2,
+      "2026-12": 2,
+      "2027-01": 1,
+      "2027-02": 1,
+      "2027-03": 2,
+      "no-date": 0
+    },
+    "L3": {
+      "2026-W35": 0,
+      "2026-W36": 0,
+      "2026-W37": 1,
+      "2026-W38": 1,
+      "2026-W39": 1,
+      "2026-W40": 2,
+      "2026-W41": 1,
+      "2026-W42": 1,
+      "2026-W43": 1,
+      "2026-W44": 2,
+      "2026-11": 1,
+      "2026-12": 1,
+      "2027-01": 1,
+      "2027-02": 0,
+      "2027-03": 0,
+      "no-date": 3
+    },
+    "L4": {
+      "2026-W35": 1,
+      "2026-W36": 2,
+      "2026-W37": 1,
+      "2026-W38": 1,
+      "2026-W39": 0,
+      "2026-W40": 1,
+      "2026-W41": 0,
+      "2026-W42": 0,
+      "2026-W43": 0,
+      "2026-W44": 0,
+      "2026-11": 1,
+      "2026-12": 0,
+      "2027-01": 1,
+      "2027-02": 0,
+      "2027-03": 0,
+      "no-date": 0
+    },
+    "L5": {
+      "2026-W35": 1,
+      "2026-W36": 1,
+      "2026-W37": 0,
+      "2026-W38": 0,
+      "2026-W39": 1,
+      "2026-W40": 0,
+      "2026-W41": 0,
+      "2026-W42": 0,
+      "2026-W43": 1,
+      "2026-W44": 0,
+      "2026-11": 1,
+      "2026-12": 0,
+      "2027-01": 1,
+      "2027-02": 0,
+      "2027-03": 0,
+      "no-date": 0
+    },
+    "L6": {
+      "2026-W35": 1,
+      "2026-W36": 0,
+      "2026-W37": 0,
+      "2026-W38": 0,
+      "2026-W39": 0,
+      "2026-W40": 0,
+      "2026-W41": 0,
+      "2026-W42": 0,
+      "2026-W43": 0,
+      "2026-W44": 0,
+      "2026-11": 1,
+      "2026-12": 1,
+      "2027-01": 1,
+      "2027-02": 0,
+      "2027-03": 0,
+      "no-date": 1
+    },
+    "L7": {
+      "2026-W35": 0,
+      "2026-W36": 1,
+      "2026-W37": 0,
+      "2026-W38": 0,
+      "2026-W39": 0,
+      "2026-W40": 0,
+      "2026-W41": 0,
+      "2026-W42": 0,
+      "2026-W43": 0,
+      "2026-W44": 0,
+      "2026-11": 0,
+      "2026-12": 0,
+      "2027-01": 1,
+      "2027-02": 1,
+      "2027-03": 1,
+      "no-date": 1
+    },
+    "all": {
+      "2026-W35": 11,
+      "2026-W36": 8,
+      "2026-W37": 6,
+      "2026-W38": 3,
+      "2026-W39": 3,
+      "2026-W40": 4,
+      "2026-W41": 2,
+      "2026-W42": 2,
+      "2026-W43": 2,
+      "2026-W44": 3,
+      "2026-11": 7,
+      "2026-12": 5,
+      "2027-01": 7,
+      "2027-02": 2,
+      "2027-03": 3,
+      "no-date": 5
+    }
+  },
+  "counts": {
+    "items": 73,
+    "lanes": 7,
+    "awaiting_jonas": 20,
+    "estimates": 4,
+    "by_gate": {
+      "jonas": 20,
+      "legal-blocked": 7,
+      "none": 34,
+      "claims-gate": 2,
+      "number-gate": 8,
+      "partner-consent": 2
+    },
+    "reachable_states": 70,
+    "dead_states": 0,
+    "populated_cells": 54
+  },
+  "examples": {
+    "linkedin": [
+      {
+        "id": "LI-01",
+        "title": "A good life isn't lived carefully",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "Let life happen",
+          "channel_job": "Company page — credibility toward partners and industry; states what Frankly™ is actually for, in plain language, before any product exists to point at.",
+          "format": "Company text post (no asset, or one quiet still if the feed needs it)",
+          "method": "Design / text only. No human identity carries this, so no camera is needed; nothing is documented, so nothing is generated either. The strongest version of this post is words on the page.",
+          "hook": "*A good life isn't lived carefully.* `[NEW LINE — not canon, Jonas item 9]`",
+          "copy": "A good life isn't lived carefully. `[NEW LINE — not canon, Jonas item 9]`\n\nPeople don't buy a bike to keep it in the hallway, or a laptop to work on the kitchen table with the lid half closed. They buy things to use them. Most of the friction around protecting those things comes later — in the paperwork, the waiting, the tone of the letter.\n\nThat's the part we work on. Not the category. The experience around it.\n\n*One less thing to think about.* (canon line)\n\n— Frankly™",
+          "visual_direction": "Optional. If the feed needs an asset, a single 3D-object-universe still per the 3D Object Universe route — one object, multi-coloured and sculptural, the pink ribbon wrapping it, Pale Calm background, generous empty space. Direction only: quiet, premium, no type baked in; headline set in design if type is needed.",
+          "gates": "`[CLAIMS-GATE]` — no coverage or product wording beyond the flagged canon line. `[NUMBER-GATE]` — none used, none allowed. AI labelling: only if the optional still is AI-generated and photorealistic; owner open per L0964.",
+          "kpi": "F4 brand mentions · F3 branded search",
+          "reuse": "Template — the anchor-line opener is a recurring shape, new everyday example each time.",
+          "bank_check": "PASS — sits beside *\"One less thing to think about.\"* and *\"You didn't buy it to be careful.\"* Same register: dry, outcome-first, no brand-leading opening. The check is on register only: the opening line *A good life isn't lived carefully.* is **not** in the §03 bank and is not canon-backed — see Jonas item 9."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook",
+          "copy": "Post copy",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": true,
+          "new_line_awaiting_jonas": true,
+          "camera": false
+        }
+      },
+      {
+        "id": "LI-02",
+        "title": "What actually happens when something breaks",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "Clarity",
+          "channel_job": "Company page — credibility toward industry and candidates by showing how the process is designed, not by asserting that it is good.",
+          "format": "Carousel / document post, 1:1, five to seven cards",
+          "method": "Design (graphics route). No people, no objects to render — this is typographic. Almarena Neue Display for card headlines, Switzer Variable for body. No AI generation, so no labelling question arises.",
+          "hook": "*Most of the stress isn't the broken thing. It's not knowing what happens next.*",
+          "copy": "Most of the stress isn't the broken thing. It's not knowing what happens next.\n\nSo we wrote the next steps down, in order, in the words a person would actually use. No conditions hidden in a paragraph on page nine. No tone that makes you feel like the problem.\n\nSwipe for the sequence. If a step reads as vague to you, that's useful — tell us and we'll rewrite it.\n\n*Relax. It's handled.* (canon line)",
+          "visual_direction": "Graphics route. Limestone card grounds, Off Black type, one Deep Calm accent per card so the sequence reads as a sequence. No illustrations, no icons doing decorative work. Card one carries the hook alone; the last card is empty except the anchor line. Type is set in design, never rendered by an image model.",
+          "gates": "`[CLAIMS-GATE]` — **the card bodies are empty slots.** Every step description is process wording that touches claims handling and cannot be written here. Do not fill them without Jonas and the claims scope. `[NUMBER-GATE]` — no response times, no day counts. AI labelling: n/a, designed asset.",
+          "kpi": "F5 AI visibility · F3 branded search",
+          "reuse": "Template — one carousel shape, one process per edition.",
+          "bank_check": "PASS — sits beside *\"No stress. Just clarity.\"* and *\"Relax. It's handled.\"* Calm-when-it-matters-most mode, no reassurance that isn't earned by the content."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook",
+          "copy": "Post copy",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": false,
+          "ai_label_open": false,
+          "canon_line": true,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "LI-03",
+        "title": "The ribbon, in motion",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "The object universe",
+          "channel_job": "Company page — pure brand signal. Makes Frankly™ recognisable in a feed where partners and candidates see it repeatedly before they ever read a word.",
+          "format": "Object loop (4:5 and 1:1 masters), three to six seconds, seamless",
+          "method": "AI. No human identity is involved and nothing is being documented — this is the object universe, image-to-video from an existing still per the Animation route. Camera would add nothing.",
+          "hook": "*One shape. Every category.*",
+          "copy": "One shape. Every category.\n\nThe ribbon is the only thing we repeat on purpose. It wraps a bike, a laptop, a pair of headphones, a front door — and it behaves the same way every time. Translucent, so you can see what's underneath. That's the whole idea, rendered.\n\nRecognition doesn't come from variety. It comes from doing one thing consistently for longer than feels interesting.\n\n*It just works. No drama.* (canon line)",
+          "visual_direction": "3D Object Universe plus Animation route. A single sculptural object, multi-coloured — not a pink monochrome — with the pink ribbon wrapping and releasing in a loop that has no visible cut. Glass or satin translucency so the object stays readable through the ribbon. Pale Calm atmosphere, Limestone floor. The ribbon is coverage, never a bow, never a figure-eight, never an awareness ribbon. Watch pink drifting to red.",
+          "gates": "`[CLAIMS-GATE]` — the word \"coverage\" appears here only as visual meaning, not as a product statement; no product wording in copy. `[NUMBER-GATE]` — none. AI labelling: **applies if the render reads as photorealistic** — label per the compliance route; legal owner open per L0964, so hold before public use.",
+          "kpi": "F4 brand mentions · F5 AI visibility",
+          "reuse": "Template — one loop template, new object per month.",
+          "bank_check": "PASS — sits beside *\"It just works. No drama.\"* Confident default, no adjectives doing the work."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook",
+          "copy": "Post copy",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": true,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "LI-04",
+        "title": "The room where the wording gets argued about",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "The people behind it",
+          "channel_job": "Company page — credibility toward candidates and partners. Shows the standard of the work by showing the work, not by describing the culture.",
+          "format": "Camera still or short cut (4:5), documentary",
+          "method": "**Camera only.** Real colleagues carry this message, so the core rule decides it before anything else. No AI face, no AI inserts of people, no generated office. Object-universe cutaways may be intercut if it becomes a video.",
+          "hook": "*We spent an hour on one sentence this week. It was the right call.*",
+          "copy": "We spent an hour on one sentence this week. It was the right call.\n\nThe sentence will be read by someone on a bad day, holding a broken thing, already annoyed. Every word in it either lowers the temperature or raises it. So the team read it out loud, cut four words, and read it again.\n\nNobody outside will notice the hour. They'll notice the tone.\n\nThat's most of the job.",
+          "visual_direction": "Lifestyle route, documentary register — a real photograph, not a set-up. Natural light, actual desks, actual screens, faces allowed to be unposed and mid-thought. Danish-urban and specific, not stock-photo Scandinavian. Brand colour enters through the room, not through a filter.",
+          "gates": "`[CLAIMS-GATE]` — no product wording; the \"sentence\" is deliberately never quoted. `[NUMBER-GATE]` — \"an hour\" is a description of a meeting, not a metric; keep it that way and add no counts. Consent: everyone visible approves the frame before use. AI labelling: n/a, camera.",
+          "kpi": "F4 brand mentions",
+          "reuse": "Template — a recurring \"one small decision\" shape, weekly or fortnightly.",
+          "bank_check": "PASS — sits beside *\"Real people. Real help.\"* Warm and concrete, no corporate gratitude, no \"proud of this team\"."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook",
+          "copy": "Post copy",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": false,
+          "ai_label_open": false,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": true
+        }
+      },
+      {
+        "id": "LI-05",
+        "title": "Employee kit: the post you can actually post",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "Let life happen",
+          "channel_job": "LinkedIn employees — real distribution. Personal profiles outperform the company page, so the company supplies a kit and a voice, and the colleague supplies the specifics. Written so it can be posted as their own without editing the voice out of it.",
+          "format": "Employee post template (text, optional phone photo)",
+          "method": "Design / text. If the colleague adds an image it is their own phone photo — camera, because it is their life being documented. Never a supplied AI image passed off as their day.",
+          "hook": "*`[one true thing that happened this week, in your words]`*",
+          "copy": "`[The thing you did with the thing you own — dropped it, rode it in the rain, took it on the train.]`\n\nIt survived. It usually does. But the reason I ended up working at Frankly™ isn't the object — it's the ten minutes afterwards, when you have to work out who to call and what you're entitled to. That part is still designed badly almost everywhere.\n\n`[One sentence on what you're working on that changes that. No product claims — describe the work, not the outcome.]`\n\n*You didn't buy it to be careful.* (canon line — optional sign-off, drop it if it doesn't sound like you)",
+          "writing_guide": "Write like you talk. One idea. Short sentences. No \"excited to announce\", no \"proud to\", no \"we believe\". Don't sell — describe. Never append \"Insure\" to the company name. Sub-brands in full: Frankly Care / Frankly Home / Frankly Go. English, even if your network is Danish. If you'd feel embarrassed reading it aloud, cut the embarrassing part rather than the honest part.",
+          "visual_direction": "No supplied asset by default. The kit provides an optional background card and a motion stinger from the graphics route, both plain enough to sit under a phone photo. A kit that has to be searched for does not get used — one link, one live walkthrough.",
+          "gates": "`[CLAIMS-GATE]` — the bracket for \"what you're working on\" is claims-adjacent; the guide must say describe the work, never the outcome. `[NUMBER-GATE]` — colleagues must not post figures of any kind. AI labelling: n/a unless a supplied AI card is used photorealistically; owner open per L0964.",
+          "kpi": "F4 brand mentions · F3 branded search",
+          "reuse": "Template — the core kit artefact, reused by every colleague, every month.",
+          "bank_check": "PASS — sits beside *\"You didn't buy it to be careful.\"* Playful-when-it-earns-it, and crucially not written in corporate voice, which is the one thing that guarantees a kit goes unused."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook (template)",
+          "copy": "Post copy (template — fill the brackets, change anything that doesn't sound like you)",
+          "writing_guide": "Writing guide shipped with the template",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "writing_guide",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "REWRITTEN — writing-guide naming rule reworded so the forbidden company name is described, not spelled out; the file no longer contains the literal string it bans.",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "LI-06",
+        "title": "Partner post: how it actually got built",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "The people behind it",
+          "channel_job": "Company page — credibility toward the next partner. A partner post is evidence that working with Frankly™ is undramatic, which is a more useful signal to a commercial reader than enthusiasm.",
+          "format": "Partner post — camera, documentation (4:5 still set or short cut)",
+          "method": "**Camera.** This documents something that actually happened with real people at a real partner, so the core rule sends it to camera without discussion. Object-universe inserts may cut in around the people. If a partner *product* needs to appear inside the brand world, that is a separate AI asset and it requires a real product reference — a text-only prompt produces a plausible-but-wrong product.",
+          "hook": "*Two teams, one afternoon, and a lot of questions about edge cases.*",
+          "copy": "Two teams, one afternoon, and a lot of questions about edge cases.\n\n`[PARTNER NAME — open, see Open for Jonas]` and Frankly™ spent the day going through the moments where a customer actually notices protection: the checkout, the follow-up, the day something goes wrong. Most of the work was cutting steps, not adding them.\n\n`[CLAIMS-GATE — one factual sentence about the integration, written only once product scope is open.]`\n\nThanks to the team for the questions. The awkward ones were the useful ones.",
+          "visual_direction": "Lifestyle route, documentary. Real room, real people, real screens — a working session, not a handshake photo. Wide frame plus two close details. If a hero asset is wanted, use the partner hero-loop template from the 3D Object Universe route with the partner's real product loaded as reference, so it is one template per partner rather than one production per partner.",
+          "gates": "**Partner consent required in writing before posting, including every face in frame and the partner's name.** `[CLAIMS-GATE]` — the integration sentence stays empty until scope opens. `[NUMBER-GATE]` — no volumes, no attachment figures, no partner facts of any kind. AI labelling: applies to any photorealistic AI hero asset; owner open per L0964.",
+          "kpi": "F4 brand mentions",
+          "reuse": "Template — one partner-post shape, one hero-loop template, new partner each time.",
+          "bank_check": "PASS — sits beside *\"We've got this.\"* Low temperature, no \"proud to partner with\", no category-positioning filler."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook",
+          "copy": "Post copy",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": true,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": true
+        }
+      },
+      {
+        "id": "LI-07",
+        "title": "Recruitment: what the job is actually like",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "The people behind it",
+          "channel_job": "Company page plus employee reshare — candidates. LinkedIn is where a candidate decides whether the tone in the job ad is real.",
+          "format": "Recruitment / employer post (text plus camera still, or a role-specific cut from the employer video)",
+          "method": "**Camera only.** Recruitment and job-post video is camera with no exceptions — a candidate seeing a generated colleague is the fastest possible way to lose the candidate. One shoot day yields a generic employer cut plus role-specific short cuts, reused across every job post rather than reshot per role.",
+          "hook": "*We're not going to tell you it's a rocket ship.*",
+          "copy": "We're not going to tell you it's a rocket ship.\n\nIt's a small team building something in a category that has trained people to expect very little. Some weeks that's satisfying. Some weeks it's a spreadsheet and a legal question.\n\nWhat we can promise: your work is visible, the decisions are made in the room you're in, and nobody will ask you to write a sentence you don't believe.\n\n`[ROLE — open]` is open. Link in the comments. If you're unsure whether you fit, that's usually a reason to write, not a reason not to.",
+          "visual_direction": "Lifestyle route, documentary. The employer cut, not a new production: real colleagues, real workspace, natural light, no voice-over selling culture. Role-specific cut chosen to match the open role. Casting is not casting — these are the actual people.",
+          "gates": "`[CLAIMS-GATE]` — n/a, no product wording. `[NUMBER-GATE]` — no headcount, no funding, no growth figures, no salary. Consent from everyone in frame. AI labelling: n/a, camera.",
+          "kpi": "F4 brand mentions · F3 branded search",
+          "reuse": "Template — one employer cut, role slot swapped per opening.",
+          "bank_check": "PASS — sits beside *\"Real people. Real help.\"* Dry, specific, no startup-voice mission statement."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook",
+          "copy": "Post copy",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": false,
+          "ai_label_open": false,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": true
+        }
+      },
+      {
+        "id": "LI-08",
+        "title": "What we're learning: how Danish answers get written now",
+        "channel": "linkedin",
+        "language": "en",
+        "fields": {
+          "pillar": "Clarity",
+          "channel_job": "Company page — credibility toward industry. A learning post earns more industry attention than a claim, and it costs nothing to be honest about what is still unknown.",
+          "format": "Company text post (optional single graphic card)",
+          "method": "Design / text. No people, no objects. If a card is added it is typographic, from the graphics route.",
+          "hook": "*More Danish questions about protection are now answered before anyone clicks a link.*",
+          "copy": "More Danish questions about protection are now answered before anyone clicks a link.\n\nSomeone asks an assistant in Danish, gets a paragraph back, and decides. The page that paragraph was assembled from may never be visited. We're not going to pretend we know how large that shift is yet — we haven't measured it, and neither has anyone quoting a figure at you.\n\nSo we're doing the boring version: write a fixed panel of real Danish questions, record what today's answers say, and re-run it monthly. Baseline first, opinions later.\n\nWe'll publish what we find, including the parts that make us look slow.",
+          "visual_direction": "Graphics route if a card is used. One Limestone card, Off Black Almarena Neue Display headline, no chart — a chart here would imply data that does not exist yet. Empty space is the point.",
+          "gates": "`[CLAIMS-GATE]` — no statement about the category, competitors or coverage. `[NUMBER-GATE]` — **hard: no percentages, no share-of-answer figures, no panel size.** The post is written specifically so that no figure is needed; do not add one later without the number gate. AI labelling: n/a.",
+          "kpi": "F5 AI visibility · F4 brand mentions",
+          "reuse": "Template — a recurring \"what we're learning\" shape; the monthly re-run gives it a natural rhythm. **The first edition must not run before the baseline exists**, or the post contradicts itself.",
+          "bank_check": "PASS — sits beside *\"No stress. Just clarity.\"* Calm mode, states the limit of its own knowledge, no category positioning."
+        },
+        "field_labels": {
+          "pillar": "Pillar",
+          "channel_job": "Channel job",
+          "format": "Format",
+          "method": "Method",
+          "hook": "Hook",
+          "copy": "Post copy",
+          "visual_direction": "Visual direction",
+          "gates": "Gates",
+          "kpi": "Feeds KPI",
+          "reuse": "Reuse",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": false,
+          "ai_label_open": false,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      }
+    ],
+    "instagram": [
+      {
+        "id": "IG-01",
+        "title": "Højttaleren i båndet",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Objektuniverset",
+          "channel_job": "Rent brandsignal. Etablere formsproget, så det næste post genkendes uden logo.",
+          "format": "4:5. Horisontal master ikke nødvendig — feed-only. 1:1-crop kan trækkes fra samme fil.",
+          "method": "AI. Ingen menneskelig identitet bærer budskabet, og motivet er et abstrakt objekt fra\n3D-universet. Per kernereglen: AI ejer objekter.",
+          "hook": "Den står fremme. Ikke i kassen.",
+          "copy": "Den står fremme, fordi den skal bruges. Ikke fordi den skal se pæn ud på en hylde.\nDer ligger ingen kasse med original emballage oppe i skabet, og der kommer ikke til at gøre det.\nTing, man bruger, kommer til at se brugte ud. Sådan skal det være.",
+          "visual_direction": "Rute: 3D-objektunivers. Ét skulpturelt højttalerobjekt i mættet petrolblå eller\nsennepsgul — objektet er flerfarvet, ikke lyserødt. Båndet er det lyserøde gennemgående element:\nglas/satin, translucent, det omslutter og rammer ind, aldrig en dekorativ strimmel, sløjfe eller\notte-tal. Baggrund i Pale Calm / Limestone, blød og rolig, tre lag dybde med intentionelt lys.\nRigelig ren copy space — typografi lægges i design, ikke i modellen.",
+          "gates": "`[CLAIMS-GATE]` hvis der senere skal stå noget om, hvad objektet er omfattet af — feltet\ner tomt her. Ingen tal. Ingen partner. AI-mærkning: motivet er stiliseret 3D, ikke fotorealistisk\n— mærkningskravet vurderes af den juridiske ejer (åben, L0964) før publicering.",
+          "kpi": "F4 brand mentions.",
+          "reuse": "Template. Samme opsætning, nyt objekt pr. måned (elektronik / hi-fi / hjem / mobilitet\n/ bolig). Instagram/TikTok: TikTok får en anden edit — samme still, men som hurtig kamerabevægelse\nmed lyd, ikke det stille feed-billede.",
+          "bank_check": "PASS — ligger ved siden af *\"Du købte det ikke for at passe på det.\"*"
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "REWRITTEN — captionens slutning var brandledende fog (\"vi bygger en verden af ting\"); erstattet med et konkret, tørt billede (kassen i skabet).",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": false,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "IG-02",
+        "title": "Båndet, der lukker sig",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Objektuniverset",
+          "channel_job": "Bevægelse i brandsignalet. Reels bærer rækkevidde, og loopet er det, folk husker.",
+          "format": "9:16 reel, 4–6 sekunder, sømløst loop. Horisontal master **ikke** nødvendig — men motivet\nkomponeres, så et 1:1-crop til feed holder inden for safe area fra start.",
+          "method": "AI, image-to-video fra et eksisterende still (IG-01-familien). Rute: Animation & Video.\nObjekt og bånd, ingen mennesker — derfor AI per kernereglen.",
+          "hook": "Se den lige én gang til.",
+          "copy": "Et bånd, der lægger sig om en ting, og bliver der. Det er hele idéen, og vi gider ikke\ngøre den mere kompliceret, end den er. Bliv hængende til den lukker sig. Så starter den forfra.",
+          "visual_direction": "Rute: Animation & Video, kildestill fra 3D-objektunivers. Én bevægelse: båndet\nglider ind, omslutter objektet, og loopet klippes usynligt der, hvor det begynder. Rolig hastighed,\ningen hakken, ingen kamerashake. Materialet skal aflæses som translucent glas/satin — lyset er det,\nder sælger transparensen. Lyserødt holdes i hex-området; ingen drift mod rødt, støvet eller neon.",
+          "gates": "Ingen produktslot i denne — `[CLAIMS-GATE]` udløses først, hvis captionen skal sige noget\nom omfang. Ingen tal. AI-mærkning: gældende regler og juridisk ejer er åbne (L0964) — afklares før\npublicering, også for ikke-fotorealistisk 3D.",
+          "kpi": "F4 brand mentions.",
+          "reuse": "Template — én loop-opskrift, nyt objekt pr. kategori. Instagram/TikTok: TikTok får\nsamme kildestill, men en råere edit med on-screen tekst og trendlyd. Aldrig samme fil to steder.",
+          "bank_check": "PASS — ligger ved siden af *\"Det virker bare. Ingen drama.\"*"
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": false,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "IG-03",
+        "title": "Køkkenbordet klokken syv",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Lad livet ske",
+          "channel_job": "Vise verden omkring tingene, så brandet ikke kun er objekter på en flade.",
+          "format": "4:5. Ingen horisontal master.",
+          "method": "AI, **betinget**. Generisk livsstilsscene uden genkendeligt ansigt — hænder, ryg,\nhalvt uden for kadren. Må aldrig placeres, så den læses som en rigtig kunde eller et rigtigt hjem.\nHvis scenen på noget tidspunkt skal bære en persons identitet, skifter den til kamera. Ingen\nundtagelser.",
+          "hook": "Der er kaffe på bordet. Der er også en telefon på bordet.",
+          "copy": "Morgener er ikke pæne. De er hurtige. Ting bliver stillet, hvor der er plads, og løftet\nop igen med den ene hånd. Vi laver ikke om på morgenen. Vi laver om på, hvor meget man skal tænke\nover den. Lad livet ske. Det gør det alligevel.",
+          "visual_direction": "Rute: Lifestyle. Hjemmeliv-territoriet: et rigtigt københavnsk køkken, levet i,\nlyst fra siden. Én hånd i kadren, intet ansigt. Objekter med historie frem for stylede rekvisitter.\nLyserødt er til stede naturligt — en flade, en kop, aldrig påklistret; vægfarvereglen for interiør\nfølges. Kompositionen er et øjeblik imellem to ting, ikke en pose. Ingen frygt, ingen rod som pointe.",
+          "gates": "`[CLAIMS-GATE]` — der er bevidst ingen linje om, hvad der er omfattet. **AI-mærkning:\ndenne er fotorealistisk og SKAL mærkes synligt**; juridisk ejer og gældende dato er åbne (L0964),\nså den kan ikke publiceres før det er afklaret. Ingen tal. Intet ansigt, ingen person påstået ægte.",
+          "kpi": "F3 branded search.",
+          "reuse": "Template — samme \"et øjeblik imellem\"-greb, ny situation pr. måned. Instagram/TikTok:\nTikTok får ikke denne. Rå telefon-optagelse virker bedre der (se IG-05).",
+          "bank_check": "PASS — ligger ved siden af *\"Mindre at holde styr på. Mere at leve i.\"*"
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": false,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "IG-04",
+        "title": "Telefonen gik i stykker. Det første du gør.",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Klarhed",
+          "channel_job": "Én ting forklaret kort, og en rute videre til læringscentret. Gemmes og deles.",
+          "format": "Carousel, 4:5, 4–5 kort. Ingen horisontal master. Kort 1 er hooket, sidste kort er ruten.",
+          "method": "Design (grafikruten) med AI-objekt på kort 1. Ingen mennesker, ingen troværdighedsrisiko\n— grafikkort og typografi laves i design, ikke i en billedmodel.",
+          "hook": "Telefonen gik i stykker. Det første du gør.",
+          "copy": "Fire kort. Det første du gør, det andet du gør, og de to ting folk plejer at gøre i den\nforkerte rækkefølge. Det tager et halvt minut at læse. Hele gennemgangen ligger i læringscentret\n— link i bio. Gem den nu, så du ikke skal lede efter den senere.",
+          "visual_direction": "Rute: Graphics, med ét stilleobjekt fra 3D-universet på forsidekortet. Stramt\ntekstgrid, Almarena Neue Display til overskrift, Switzer Variable til brødtekst, Lucide-ikoner der\nforklarer frem for pynter. Limestone-flader, lyserødt som accent og som båndets tilstedeværelse på\nkort 1. Ét trin pr. kort — ingen kort med to idéer. Sidste kort er rent: rute til læringscentret.",
+          "gates": "`[CLAIMS-GATE]` på hvert trin-slot i selve carouselen — indholdet af de fire trin er\n**ikke** skrevet her og skal komme fra læringscentersiden, når den er godkendt. Ingen formulering om\nomfang, vilkår eller sagsbehandling i captionen. Ingen tal. AI-mærkning: forsidens objekt er\nstiliseret 3D; vurderes af juridisk ejer (åben, L0964).",
+          "kpi": "F3 branded search.",
+          "reuse": "Template — \"det første du gør\"-carousel pr. læringscenter-hub. Instagram/TikTok:\nTikTok får samme fire trin som talt reel, ikke som carousel-eksport.",
+          "bank_check": "PASS — ligger ved siden af *\"Vi gør det enkelt, når det ikke er det.\"*"
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "REWRITTEN — \"sparer dig for en dårlig eftermiddag\" var konsekvens-framing; fjernet, CTA gjort neutral.",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": false,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "IG-05",
+        "title": "Fredag, halv fire, kontoret",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Menneskene bag",
+          "channel_job": "Vise at der er mennesker bag. Rå, hurtig, ikke produceret — modvægt til objekterne.",
+          "format": "9:16 reel, telefonoptaget, 15–25 sekunder. Ingen horisontal master. Undertekster på dansk.",
+          "method": "**Kamera. Ingen undtagelser.** En kollega bærer budskabet med sin egen identitet, og så\ner svaret kamera hver gang. Optages in-house på telefon; hastighed slår produktionsværdi her.",
+          "hook": "Vi spurgte, hvad der egentlig sker, når nogen skriver til os.",
+          "copy": "Ingen manuskript, ingen belysning, ingen anden optagelse. Bare et spørgsmål og et svar\npå vej ud ad døren. Der er rigtige mennesker i den anden ende — det er hele pointen med at vise dem.\nDer kommer flere. Vi har en del kollegaer.",
+          "visual_direction": "Rute: ingen billedgenerering — det her er dokumentation. Kollegaen filmes, som\npersonen er: håndholdt, dagslys, kontoret i baggrunden uden oprydning. Casting er ikke casting her,\nmen hvis der vælges mellem flere, følges personlighedsbiblioteket — 24–36, specifik frem for generisk,\nurbant dansk, ikke amerikansk-kodet, tydeligt ubureaukratisk. Ingen AI-indsæt i denne klipning.",
+          "gates": "`[CLAIMS-GATE]` — svaret i klippet må ikke beskrive omfang, vilkår eller sagsgang; hvis\ndet gør, skal klippet klippes om eller feltet gå til Jonas. Ingen tal. Intern samtykke fra kollegaen\nfør optagelse. AI-mærkning: ikke relevant — der er ingen AI i asset'et, og det skal blive sådan.",
+          "kpi": "F4 brand mentions.",
+          "reuse": "Template — \"ét spørgsmål, ét svar\", ny kollega hver gang; samme optagedag kan give flere.\nInstagram/TikTok: TikTok får en hårdere klipning med hooket flyttet til første halve sekund.",
+          "bank_check": "PASS — ligger ved siden af *\"Ring. Skriv. Vi svarer. Ingen sure\ntelefondamer.\"*"
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "REWRITTEN — sidste linje var selvrefererende og uklar; erstattet med en tør, konkret sætning.",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": false,
+          "partner_consent": false,
+          "ai_label_open": false,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": true
+        }
+      },
+      {
+        "id": "IG-06",
+        "title": "Citatkortet",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Lad livet ske",
+          "channel_job": "Ren stemme. Ét udsagn, ingen forklaring — det, folk screenshotter og sender videre.",
+          "format": "1:1. Kan trækkes til 4:5 med samme sats. Ingen horisontal master.",
+          "method": "Design. Typografikort uden troværdighedsrisiko; sættes i design, ikke genereres, fordi\nbrandskrifterne skal være præcise.",
+          "hook": "Ting går i stykker. Og det er helt ok. *(canon-linje)*",
+          "copy": "Den linje står på et kort, fordi den ikke har brug for mere end det. Vi kunne skrive tre\nafsnit om den. Vi lader være. Læs den igen, og stil kaffekoppen, hvor du plejer at stille den.",
+          "visual_direction": "Rute: Graphics. Ét udsagn, stort, i Almarena Neue Display, sat i det stramme\ntekstgrid mod en rolig Limestone- eller Pale Calm-flade. Ingen illustration, intet objekt, ingen\ngradient — hvidrummet er indholdet. Eventuelt en enkelt båndkant, der lige rører kadren i bunden.\nBaggrunden er aldrig neutral: fladen skal føles varm, ikke tom.",
+          "gates": "Overskriften er **verbatim fra eksempelbanken i brand-guide §03** og markeret\n`(canon-linje)` — ingen ny formulering er tilføjet, og linjen må ikke omskrives. `[CLAIMS-GATE]` på\nenhver tilføjelse. Ingen tal. AI-mærkning: ikke relevant, intet AI-billede.",
+          "kpi": "F4 brand mentions.",
+          "reuse": "Template — én canon-linje pr. kort, roteret fra eksempelbanken. Nye linjer kræver Jonas.\nInstagram/TikTok: TikTok får linjen som motion-typografi med lyd, ikke som stillbillede.",
+          "bank_check": "PASS — den *er* eksempelbankens linje *\"Ting går i stykker. Og det er\nhelt ok.\"*, gengivet ordret."
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "REWRITTEN — \"hvorfor vi mener den\" lå tæt på \"vi tror på\", og kaffekop-linjen var forvredet; begge strammet.",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": false,
+          "partner_consent": false,
+          "ai_label_open": false,
+          "canon_line": true,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "IG-07",
+        "title": "Jægersborggade, sidst på eftermiddagen",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Lad livet ske",
+          "channel_job": "Forankre brandet et sted. København er ikke kulisse, det er genkendelse.",
+          "format": "4:5. Ingen horisontal master.",
+          "method": "AI, betinget — bymiljø og stemning uden genkendeligt ansigt. Ingen persons identitet\nbærer budskabet, så AI er tilladt; i det sekund et ansigt skal bære noget, skifter det til kamera.",
+          "hook": "Cyklen står, hvor den plejer.",
+          "copy": "Smal gade, rød mursten, håndmalede skilte og for mange cykler til fortovet. Man kan bo\net sted i årevis og stadig gå den her gade langsommere end alle andre. Tingene, man har med, er\ntingene, man bruger. Det er hele forskellen.",
+          "visual_direction": "Rute: Lifestyle, byliv-territoriet, lokation pr. Copenhagen-biblioteket:\nJægersborggade — smal gade, varm rød mursten, dæmpede malede facader, håndmalede butiksfacader,\ncykler læn ind mod gaden, små potteplanter ved dørene. Gyldent sidelys virker her, fordi gaden er\nsmal. Ingen ansigter i fokus; ryg og bevægelse i baggrunden. Lyserødt findes naturligt i en facade\neller et blomsterdisplay — aldrig lagt oveni.",
+          "gates": "`[CLAIMS-GATE]` — ingen linje om omfang. **AI-mærkning: fotorealistisk, skal mærkes\nsynligt**; juridisk ejer og gældende dato åbne (L0964) — blokerer publicering til det er afklaret.\nIngen tal. Ingen genkendelige personer, ingen butiksfacade der kan læses som en rigtig navngiven\nforretning uden samtykke.",
+          "kpi": "F3 branded search.",
+          "reuse": "Template — ét kvarter pr. måned (Nørrebro, Vesterbro, Islands Brygge, Frederiksberg).\nInstagram/TikTok: TikTok får en gående telefonoptagelse fra samme gade i stedet — ikke dette still.",
+          "bank_check": "PASS — ligger ved siden af *\"Mindre at holde styr på. Mere at leve i.\"*"
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "PASS",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": false,
+          "partner_consent": false,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      },
+      {
+        "id": "IG-08",
+        "title": "Partnerproduktet i vores verden",
+        "channel": "instagram",
+        "language": "da",
+        "fields": {
+          "pillar": "Objektuniverset",
+          "channel_job": "Vise at brandverdenen kan rumme et rigtigt produkt uden at blive en produktannonce.",
+          "format": "4:5. **Horisontal master nødvendig** — partneren skal kunne bruge samme motiv i egne\nflader, og et 16:9-crop skal holde uden at motivet falder uden for safe area.",
+          "method": "AI **plus rigtig produktreference**. Objekt, ingen mennesker, så AI er svaret — men en\nren tekstprompt giver et plausibelt-forkert produkt. Partnerens egne produktfiler skal loades som\nreference, ellers laves asset'et ikke.",
+          "hook": "Det er deres produkt. Det er vores verden.",
+          "copy": "Deres produkt. Vores baggrund, vores farver, vores bånd. Ingen ekstra effekter, ingen\nny opsætning — bare noget i midten, som nogen faktisk har siddet og lavet, og en verden der kan\nholde til at rumme det. `[CLAIMS-GATE]` (partnerens navn og produktlinje sættes\nførst, når samtykket ligger).",
+          "visual_direction": "Rute: 3D-objektunivers med produktreference. Produktet gengives korrekt efter\npartnerens filer — form, proportion, materialer. Alt omkring det er vores: Pale Calm / Limestone\nbaggrund, tre lag dybde, båndet i translucent lyserødt der omslutter og rammer ind uden at dække\nproduktet. Ingen partnerlogo lagt ind af modellen; logo placeres i design efter partnerens\nretningslinjer. Copy space i venstre tredjedel.",
+          "gates": "**Partnersamtykke er en hård forudsætning** — asset'et produceres ikke og navnet nævnes\nikke, før samtykke og produktfiler foreligger. `[CLAIMS-GATE]` på ethvert udsagn om, hvad\nsamarbejdet omfatter. `[NUMBER-GATE]` på enhver partnerfakta, model, år eller andel. AI-mærkning:\nrenderet produkt kan aflæses fotorealistisk → skal mærkes; juridisk ejer åben (L0964).",
+          "kpi": "F5 AI visibility.",
+          "reuse": "Template — dette er partner-hero-loopets stillsøster: én opsætning, ny produktreference\npr. partner. Forskellen på at sige ja til én partner mere og at booke én produktion mere.\nInstagram/TikTok: TikTok får loop-versionen, ikke stillet.",
+          "bank_check": "PASS — ligger ved siden af *\"Brug det, som du plejer.\"*"
+        },
+        "field_labels": {
+          "pillar": "Søjle",
+          "channel_job": "Kanalens job",
+          "format": "Format",
+          "method": "Metode",
+          "hook": "Hook",
+          "copy": "Caption",
+          "visual_direction": "Visuel retning",
+          "gates": "Gates",
+          "kpi": "Fodrer KPI",
+          "reuse": "Genbrug",
+          "bank_check": "Sit-next-to-the-bank check"
+        },
+        "field_order": [
+          "pillar",
+          "channel_job",
+          "format",
+          "method",
+          "hook",
+          "copy",
+          "visual_direction",
+          "gates",
+          "kpi",
+          "reuse",
+          "bank_check"
+        ],
+        "verdict": "REWRITTEN — captionen var brandledende og fyldt med produktionsjargon (\"farvelogik\"); skrevet om til læserens sprog.",
+        "markers": {
+          "claims_gate": true,
+          "number_gate": true,
+          "partner_consent": true,
+          "ai_label_open": true,
+          "canon_line": false,
+          "new_line_awaiting_jonas": false,
+          "camera": false
+        }
+      }
+    ],
+    "note_en": "Drafts for Jonas — nothing is posted, scheduled or produced.",
+    "note_da": "Udkast til Jonas — intet er postet, intet er planlagt, intet er produceret."
+  },
+  "sources": [
+    "marketing-engine/calendar/marketing-calendar.json",
+    "marketing-engine/social/content-examples-linkedin.md",
+    "marketing-engine/social/content-examples-instagram.md"
+  ]
+}
+</script>
+<!-- MARKETING-CALENDAR-SNAPSHOT:END -->
+
+<script>
+(function () {
+  "use strict";
+  var raw = document.getElementById("marketing-calendar-snapshot");
+  var S;
+  try { S = JSON.parse(raw.textContent); } catch (e) { S = null; }
+  var $ = function (id) { return document.getElementById(id); };
+  if (!S || !S.schema_version) {
+    $("stage-cap").innerHTML = '<p class="lane-name">Snapshot block is empty.</p><p class="purpose">Run <code>python3 scripts/build-marketing-calendar-snapshot.py</code>.</p>';
+    return;
+  }
+  var REDUCED = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var ASSET = "../assets/design-reference/";
+
+  /* ---------- display helpers (source strings stay verbatim in the snapshot) ---------- */
+  function esc(v) {
+    return String(v === null || v === undefined ? "" : v)
+      .replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;")
+      .replace(/"/g, "&quot;").replace(/'/g, "&#39;");
+  }
+  function md(v) {
+    return esc(v)
+      .replace(/\*\*([^*\n]+?)\*\*/g, "<strong>$1</strong>")
+      .replace(/`([^`\n]+?)`/g, '<code class="md">$1</code>')
+      .replace(/(^|[\s(>])\*([^*\n]+?)\*(?=[\s.,;:)!?<]|$)/g, "$1<em>$2</em>");
+  }
+  function chip(cls, text, title) {
+    return '<span class="chip ' + cls + '" title="' + esc(title || "") + '">' + esc(text) + "</span>";
+  }
+  function chipBtn(cls, text, kind, key) {
+    return '<button type="button" class="chip is-btn ' + cls + '" data-sheet="' + esc(kind) + '" data-key="' + esc(key) + '">' + esc(text) + "</button>";
+  }
+  /* copy → paragraphs; bracket tokens become chips, markers become tags. Display only. */
+  function copyHtml(text, opts) {
+    opts = opts || {};
+    var t = String(text || "").replace(/`(\[[^\]]*\])`/g, "$1");
+    var paras = t.split(/\n\s*\n/);
+    return paras.map(function (p, i) {
+      var h = md(p);
+      h = h.replace(/\[NEW LINE — not canon, Jonas item 9\]/g, chip("gate-jonas chip-gate", "awaiting Jonas", "New line — not canon, Jonas item 9"));
+      h = h.replace(/\[CLAIMS-GATE([^\]]*)\]/g, function (m, rest) { return chip("gate-claims chip-gate", "Claims gate" + rest); });
+      h = h.replace(/\[NUMBER-GATE\]/g, chip("gate-number chip-gate", "Number gate"));
+      h = h.replace(/\((canon line|canon-linje)\)/g, chip("chip-canon", "canon"));
+      h = h.replace(/\[([^\]]+)\]/g, function (m, inner) { return '<span class="chip chip-slot">[' + inner + "]</span>"; });
+      var cls = (i === 0 && opts.hookFirst) ? ' class="hook"' : "";
+      return "<p" + cls + ">" + h.replace(/\n/g, "<br>") + "</p>";
+    }).join("");
+  }
+
+  var GATE = {
+    "none": ["gate-none", "Open"],
+    "jonas": ["gate-jonas", "Awaiting Jonas"],
+    "number-gate": ["gate-number", "Number gate"],
+    "legal-blocked": ["gate-blocked", "Legal-blocked"],
+    "claims-gate": ["gate-claims", "Claims gate"],
+    "partner-consent": ["gate-partner", "Partner consent"]
+  };
+  function gateChip(g) { var d = GATE[g] || ["", g]; return chipBtn(d[0] + " chip-gate", d[1], "gate", g); }
+
+  /* ---------- stage art (form decision, this pen) ---------- */
+  var STAGE = {
+    all: { img: "kalender-l1-ribbon.png", cls: "is-ribbon" },
+    L1: { img: "kalender-l1-lamp.png", cls: "is-object" },
+    L2: { img: "kalender-l2-devices.png", cls: "is-object" },
+    L3: { img: "kalender-l3-chair.png", cls: "is-object" },
+    L4: { img: "kalender-l4-speakers.png", cls: "is-object" },
+    L5: { img: "kalender-l5-camera.png", cls: "is-object" },
+    L6: { img: "kalender-l6-cargobike.png", cls: "is-object" },
+    L7: { img: "kalender-l7-espresso.png", cls: "is-object" }
+  };
+  var MEDIA = {
+    "LI-01": { kind: "img", file: "object-lifestyle-stack.jpg", r: "r4x5", tag: "3D object universe · approved still" },
+    "LI-02": { kind: "type", ground: "ribbon-static-sweep.png", r: "r1x1", tag: "Graphics route · card 1 of the carousel" },
+    "LI-03": { kind: "video", file: "espresso-motion.mp4", poster: "espresso-poster.jpg", r: "r4x5", tag: "Object loop · approved motion" },
+    "LI-04": { kind: "story", r: "r4x5" },
+    "LI-05": { kind: "story", r: "r16x9", label: "Camera · colleague's own phone photo" },
+    "LI-06": { kind: "story", r: "r4x5" },
+    "LI-07": { kind: "story", r: "r4x5" },
+    "LI-08": { kind: "type", ground: "ribbon-static-sweep.png", r: "r4x5", tag: "Graphics route · one card" },
+    "IG-01": { kind: "img", file: "object-speakers.png", r: "r4x5", object: true, tag: "3D object universe · approved still" },
+    "IG-02": { kind: "video", file: "device-motion.mp4", poster: "device-poster.jpg", r: "r4x5", tag: "Loop · approved motion, 4:5 crop" },
+    "IG-03": { kind: "img", file: "photo-home-couple.jpg", r: "r4x5", tag: "Territory reference · home life" },
+    "IG-04": { kind: "img", file: "object-bike.png", r: "r4x5", object: true, carousel: 4, tag: "Card 1 of 4 · steps are [CLAIMS-GATE]" },
+    "IG-05": { kind: "story", r: "r4x5" },
+    "IG-06": { kind: "type", ground: "ribbon-static-sweep.png", r: "r1x1", tag: "Graphics route · canon line" },
+    "IG-07": { kind: "img", file: "photo-flower-street.jpg", r: "r4x5", tag: "Territory reference · city life" },
+    "IG-08": { kind: "img", file: "object-ebike-ribbon.png", r: "r4x5", object: true, tag: "Partner product · approved still" }
+  };
+
+  /* ---------- data ---------- */
+  var LANES = S.lanes, PERIODS = S.periods, ITEMS = S.items;
+  var laneById = {}; LANES.forEach(function (l) { laneById[l.id] = l; });
+  var periodById = {}; PERIODS.forEach(function (p) { periodById[p.id] = p; });
+  var PAGE = 4;
+
+  function itemsFor(lane, period) {
+    return ITEMS.filter(function (it) { return (lane === "all" || it.lane === lane) && it.period === period; });
+  }
+  function periodLabel(p) {
+    var d = periodById[p]; if (!d) return p;
+    if (d.kind === "week") return d.label + " · " + fmtDate(d.start);
+    return d.label;
+  }
+  function fmtDate(iso) {
+    if (!iso) return "";
+    var m = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
+    var p = iso.split("-"); return parseInt(p[2], 10) + " " + m[parseInt(p[1], 10) - 1];
+  }
+
+  /* ---------- state (deep-linkable) ---------- */
+  var state = { lane: "all", period: S.meta.default_period, page: 0 };
+  function readHash() {
+    var h = location.hash.replace(/^#/, ""); var o = {};
+    h.split("&").forEach(function (kv) { var p = kv.split("="); if (p[0]) o[p[0]] = decodeURIComponent(p[1] || ""); });
+    var lane = laneById[o.lane] ? o.lane : "all";
+    var stops = laneById[lane].stops;
+    var period = stops.indexOf(o.period) >= 0 ? o.period : snapPeriod(stops, state.period);
+    var page = parseInt(o.page || "0", 10) || 0;
+    return { lane: lane, period: period, page: page };
+  }
+  function writeHash() {
+    var h = "#lane=" + state.lane + "&period=" + state.period + (state.page ? "&page=" + state.page : "");
+    if (location.hash !== h) { history.replaceState(null, "", h); }
+  }
+  function snapPeriod(stops, current) {
+    var order = PERIODS.map(function (p) { return p.id; });
+    var ci = order.indexOf(current);
+    for (var i = 0; i < stops.length; i++) { if (order.indexOf(stops[i]) >= ci) return stops[i]; }
+    return stops[stops.length - 1];
+  }
+
+  /* ---------- lanes (radio group, roving tabindex) ---------- */
+  var lanesEl = $("lanes");
+  lanesEl.innerHTML = LANES.map(function (l) {
+    var short = l.id === "all" ? "·" : l.id.replace("L", "");
+    return '<button type="button" class="lane" role="radio" aria-checked="false" data-lane="' + l.id + '" tabindex="-1"><i aria-hidden="true">' + short + "</i>" + esc(l.label) + "</button>";
+  }).join("");
+  lanesEl.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-lane]"); if (!b) return;
+    setLane(b.getAttribute("data-lane"));
+  });
+  lanesEl.addEventListener("keydown", function (e) {
+    var idx = LANES.findIndex(function (l) { return l.id === state.lane; });
+    var n = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowDown") n = (idx + 1) % LANES.length;
+    if (e.key === "ArrowLeft" || e.key === "ArrowUp") n = (idx - 1 + LANES.length) % LANES.length;
+    if (n === null) return;
+    e.preventDefault(); setLane(LANES[n].id);
+    lanesEl.querySelector('[data-lane="' + LANES[n].id + '"]').focus();
+  });
+  function setLane(id) {
+    if (id === state.lane) return;
+    state.lane = id;
+    state.period = snapPeriod(laneById[id].stops, state.period);
+    state.page = 0;
+    render();
+  }
+
+  /* ---------- period scrubber ---------- */
+  var range = $("period"), stopsEl = $("stops");
+  range.addEventListener("input", function () {
+    var stops = laneById[state.lane].stops;
+    var p = stops[parseInt(range.value, 10)];
+    if (p === state.period) return;
+    state.period = p; state.page = 0; render();
+  });
+  stopsEl.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-stop]"); if (!b) return;
+    state.period = b.getAttribute("data-stop"); state.page = 0; render();
+  });
+
+  /* ---------- render ---------- */
+  var mediaHost = $("stage-media-host"), capEl = $("stage-cap"), countEl = $("stage-count"), cardsEl = $("cards");
+  var feedEl = $("feed"), feedHead = $("feed-head"), feedGrid = $("feed-grid");
+  var lastLane = null, lastFeed = null;
+
+  function render() {
+    var lane = laneById[state.lane], stops = lane.stops;
+    /* controls */
+    lanesEl.querySelectorAll("[data-lane]").forEach(function (b) {
+      var on = b.getAttribute("data-lane") === state.lane;
+      b.setAttribute("aria-checked", on ? "true" : "false");
+      b.tabIndex = on ? 0 : -1;
+    });
+    range.max = String(stops.length - 1);
+    range.value = String(stops.indexOf(state.period));
+    range.setAttribute("aria-valuetext", periodLabel(state.period));
+    $("period-now").textContent = periodLabel(state.period);
+    stopsEl.innerHTML = stops.map(function (p) {
+      return '<button type="button" class="stop' + (p === state.period ? " is-now" : "") + '" data-stop="' + p + '" aria-label="' + esc(periodLabel(p)) + '" tabindex="-1"></button>';
+    }).join("");
+
+    /* stage media (swap only when the lane changes) */
+    if (lastLane !== state.lane) {
+      var art = STAGE[state.lane];
+      if (art.video) {
+        mediaHost.innerHTML = '<video class="stage-media reveal fade-only" muted loop playsinline preload="metadata" poster="' + ASSET + art.poster + '" src="' + ASSET + art.video + '" aria-hidden="true"></video>';
+        var v = mediaHost.querySelector("video");
+        if (!REDUCED) { v.play().catch(function () {}); }
+      } else {
+        mediaHost.innerHTML =
+          '<img class="stage-media fk-zoom reveal fade-only ' + (art.cls || "") + '" src="' + ASSET + art.img + '" alt="" decoding="async">';
+      }
+      $("loom").classList.add("is-active");
+      lastLane = state.lane;
+    }
+
+    /* caption */
+    var list = itemsFor(state.lane, state.period);
+    var pages = Math.max(1, Math.ceil(list.length / PAGE));
+    if (state.page >= pages) state.page = 0;
+    var shown = list.slice(state.page * PAGE, state.page * PAGE + PAGE);
+    capEl.innerHTML =
+      '<p class="lane-name">' + esc(lane.label) + "</p>" +
+      (lane.purpose ? '<p class="purpose">' + esc(lane.purpose) + "</p>" : '<p class="purpose">' + esc(S.meta.status) + "</p>") +
+      '<p class="prov">as of ' + esc(S.meta.build_date) + " · " + S.sources.map(function (s) { return esc(s.split("/").pop()); }).join(" · ") + " · ~ unratified (card 11)</p>";
+    var overflow = list.length - shown.length;
+    countEl.innerHTML =
+      '<span class="pill-glass glass glass-standard">' + esc(periodLabel(state.period)) + " · " + list.length + (list.length === 1 ? " item" : " items") +
+      (pages > 1 ? " · " + (state.page * PAGE + 1) + "–" + (state.page * PAGE + shown.length) : "") + "</span>" +
+      (pages > 1 ? '<button type="button" class="pill-glass glass glass-standard is-btn" id="more-btn">+' + overflow + " · scrub →</button>" : "");
+    if (pages > 1) { $("more-btn").addEventListener("click", function () { state.page = (state.page + 1) % pages; render(); }); }
+
+    /* cards ON the stage — ≤3 visible fields: title · date · gate (+ ~ chip) */
+    cardsEl.classList.remove("is-open");
+    cardsEl.innerHTML = shown.map(function (it, i) {
+      var title = it.title, est = it.est;
+      if (/^~\s*/.test(title)) { title = title.replace(/^~\s*/, ""); }
+      var date = it.period === "no-date" ? "no date" : periodLabel(it.period);
+      return '<div class="card glass glass-standard" role="button" tabindex="0" data-sheet="item" data-key="' + esc(it.id) + '" style="--i:' + i + '">' +
+        '<p class="t">' + esc(title) + "</p>" +
+        '<p class="d">' + esc(date) + "</p>" +
+        '<span class="row">' + gateChip(it.gate) + (est ? chipBtn("chip-est", "~ estimate · " + (est.owner || ""), "est", it.id) : "") + "</span>" +
+        "</div>";
+    }).join("");
+    void cardsEl.offsetWidth; cardsEl.classList.add("is-open");
+
+    /* feed = L4 / L5 stage state */
+    var feedKey = state.lane === "L4" ? "linkedin" : (state.lane === "L5" ? "instagram" : null);
+    if (feedKey !== lastFeed) {
+      feedEl.classList.remove("is-active");
+      if (feedKey) { renderFeed(feedKey); void feedEl.offsetWidth; feedEl.classList.add("is-active"); }
+      else { feedGrid.innerHTML = ""; feedHead.innerHTML = ""; }
+      lastFeed = feedKey;
+    }
+    writeHash();
+  }
+
+  function mediaHtml(ex) {
+    var m = MEDIA[ex.id] || { kind: "story", r: "r4x5" };
+    var tag = m.tag ? '<span class="chip tag" style="position:absolute">' + esc(m.tag) + "</span>" : "";
+    if (m.kind === "img") {
+      return '<div class="mock-media ' + m.r + (m.object ? " is-object" : "") + '"><img src="' + ASSET + m.file + '" alt="" loading="lazy" decoding="async">' +
+        (m.carousel ? '<span class="cnum">1/' + m.carousel + '</span><span class="dots">' + new Array(m.carousel + 1).join("<i></i>") + "</span>" : "") + tag + "</div>";
+    }
+    if (m.kind === "video") {
+      var auto = REDUCED ? "" : " autoplay";
+      return '<div class="mock-media ' + m.r + '"><video muted loop playsinline preload="metadata"' + auto + ' poster="' + ASSET + m.poster + '" src="' + ASSET + m.file + '"></video>' + tag + "</div>";
+    }
+    if (m.kind === "type") {
+      return '<div class="mock-media ' + m.r + ' is-type"><img src="' + ASSET + m.ground + '" alt="" loading="lazy" decoding="async"><div class="type">' + copyHtml(ex.fields.hook) + "</div>" + tag + "</div>";
+    }
+    return '<div class="mock-media ' + m.r + ' is-story"><img src="' + ASSET + 'object-lifestyle-stack.jpg" alt="" loading="lazy" decoding="async"><div class="story">' +
+      chip("gate-partner", m.label || "Camera · not yet shot") + "<p>" + md(ex.fields.visual_direction) + "</p></div></div>";
+  }
+  function markerChips(ex) {
+    var k = ex.markers, out = [];
+    if (k.claims_gate) out.push(chipBtn("gate-claims chip-gate", "Claims gate", "exgate", ex.id));
+    if (k.number_gate) out.push(chipBtn("gate-number chip-gate", "Number gate", "exgate", ex.id));
+    if (k.partner_consent) out.push(chipBtn("gate-partner chip-gate", "Partner consent", "exgate", ex.id));
+    if (k.ai_label_open) out.push(chipBtn("gate-jonas chip-gate", "AI label · owner open", "exgate", ex.id));
+    if (k.camera) out.push(chipBtn("gate-none chip-gate", "Camera", "exgate", ex.id));
+    if (k.new_line_awaiting_jonas) out.push(chipBtn("gate-jonas chip-gate", "Line awaiting Jonas", "exgate", ex.id));
+    if (k.canon_line) out.push(chip("chip-canon", "canon line"));
+    out.push(chip("chip-verdict", "R3.1 " + ex.verdict.split(" ")[0]));
+    return out.join("");
+  }
+  function renderFeed(key) {
+    var list = S.examples[key];
+    var li = key === "linkedin";
+    feedHead.innerHTML =
+      '<span class="badge"><i></i>' + (li ? "LinkedIn · EN" : "Instagram · DA") + "</span>" +
+      chip("is-draft", "Proposal · nothing posted") +
+      '<span style="font-size:13px;color:var(--grey-2)">' + esc(li ? S.examples.note_en : S.examples.note_da) + "</span>";
+    feedGrid.innerHTML = list.map(function (ex, i) {
+      var employee = /employee/i.test(ex.fields.channel_job) && /Employee post/i.test(ex.fields.format);
+      if (li) {
+        return '<article class="mock fk-card" style="--i:' + i + '" id="ex-' + ex.id + '">' +
+          '<div class="mock-head"><span class="avatar"><svg aria-hidden="true" viewBox="0 0 18 37.6"><use href="#frankly-mark"/></svg></span>' +
+          "<div><b>" + (employee ? "Colleague" : "Frankly") + "</b><small>" + (employee ? "Employee kit · template" : "Company page · proposal") + "</small></div>" +
+          chip("", ex.id) + "</div>" +
+          '<div class="mock-copy is-folded"><div class="fold">' + copyHtml(ex.fields.copy, { hookFirst: true }) + '</div><button type="button" class="more" data-more>…see more</button></div>' +
+          mediaHtml(ex) +
+          '<div class="li-bar"><span><svg viewBox="0 0 24 24"><path d="M7 11v9H3v-9zM7 11l4-8a2 2 0 0 1 2 2v5h5a2 2 0 0 1 2 2l-1.5 7a2 2 0 0 1-2 1H7"/></svg>Like</span><span><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg>Comment</span><span><svg viewBox="0 0 24 24"><path d="M17 2l4 4-4 4M3 11V8a2 2 0 0 1 2-2h16M7 22l-4-4 4-4M21 13v3a2 2 0 0 1-2 2H3"/></svg>Repost</span><span><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg>Send</span></div>' +
+          '<div class="mock-foot">' + markerChips(ex) + '<button type="button" class="details" data-sheet="example" data-key="' + ex.id + '">Details</button></div>' +
+          "</article>";
+      }
+      return '<article class="mock fk-card" style="--i:' + i + '" id="ex-' + ex.id + '">' +
+        '<div class="ig-device"><div class="ig-head"><span class="avatar"><svg aria-hidden="true" viewBox="0 0 18 37.6"><use href="#frankly-mark"/></svg></span><b>frankly</b><small>' + esc(ex.id) + " · " + esc(ex.fields.format.split(".")[0]) + "</small></div>" +
+        mediaHtml(ex) +
+        '<div class="ig-bar"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.6l-1-1a5.5 5.5 0 0 0-7.8 7.8l1 1L12 21l7.8-7.6 1-1a5.5 5.5 0 0 0 0-7.8z"/></svg><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.5 7.2L4 21l1.8-5.5A8 8 0 1 1 21 12z"/></svg><svg viewBox="0 0 24 24"><path d="M22 2L11 13M22 2l-7 20-4-9-9-4z"/></svg><svg viewBox="0 0 24 24"><path d="M19 21l-7-5-7 5V5a2 2 0 0 1 2-2h10a2 2 0 0 1 2 2z"/></svg></div>' +
+        '<div class="ig-cap mock-copy is-folded"><div class="fold"><p><b>frankly</b><span class="hook">' + esc(ex.fields.hook.replace(/\s*\*?\(canon-linje\)\*?/, "")) + "</span>" + (ex.markers.canon_line && /canon-linje/.test(ex.fields.hook) ? " " + chip("chip-canon", "canon") : "") + "</p>" + copyHtml(ex.fields.copy) + '</div><button type="button" class="more" data-more>more</button></div>' +
+        "</div>" +
+        '<div class="mock-foot">' + markerChips(ex) + '<button type="button" class="details" data-sheet="example" data-key="' + ex.id + '">Details</button></div>' +
+        "</article>";
+    }).join("");
+    feedGrid.querySelectorAll("video").forEach(function (v) { if (!REDUCED) { v.play().catch(function () {}); } });
+    spanFeed();
+    feedGrid.querySelectorAll("img").forEach(function (im) { im.addEventListener("load", spanFeed, { once: true }); });
+  }
+  /* masonry: grid-auto-rows 8px, each mock spans its own height (order preserved, no row stretch) */
+  function spanFeed() {
+    var gap = parseFloat(getComputedStyle(feedGrid).rowGap) || 0;
+    feedGrid.querySelectorAll(".mock").forEach(function (m) {
+      m.style.setProperty("--span", "1");
+      var h = m.getBoundingClientRect().height;
+      m.style.setProperty("--span", String(Math.ceil((h + gap) / (8 + gap))));
+    });
+  }
+  window.addEventListener("resize", spanFeed);
+  feedGrid.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-more]"); if (!b) return;
+    var box = b.closest(".mock-copy"); var folded = box.classList.toggle("is-folded");
+    b.textContent = folded ? (box.classList.contains("ig-cap") ? "more" : "…see more") : "less";
+    spanFeed();
+  });
+
+  /* ---------- sheet ---------- */
+  var sheet = $("sheet"), sheetTitle = $("sheet-title"), sheetBody = $("sheet-body"), lastFocus = null;
+  function openSheet(title, html) {
+    lastFocus = document.activeElement;
+    sheetTitle.textContent = title; sheetBody.innerHTML = html;
+    sheet.classList.add("is-open"); $("sheet-panel").focus();
+  }
+  function closeSheet() { sheet.classList.remove("is-open"); if (lastFocus && lastFocus.focus) lastFocus.focus(); }
+  $("sheet-close").addEventListener("click", closeSheet);
+  sheet.addEventListener("click", function (e) { if (e.target === sheet) closeSheet(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape" && sheet.classList.contains("is-open")) closeSheet(); });
+  function dl(rows) {
+    return "<dl>" + rows.filter(function (r) { return r[1] !== undefined && r[1] !== null && r[1] !== ""; })
+      .map(function (r) { return "<dt>" + esc(r[0]) + "</dt><dd>" + r[1] + "</dd>"; }).join("") + "</dl>";
+  }
+  function itemSheet(id) {
+    var it = ITEMS.find(function (x) { return x.id === id; }); if (!it) return;
+    var rows = [
+      ["Lane", esc(laneById[it.lane].label)],
+      ["Period", esc(it.period === "no-date" ? "no date" : periodLabel(it.period)) + (it.week_is_estimate ? " " + chip("chip-est", "~ estimate") : "")],
+      ["What", md(it.what)],
+      ["Owner", esc(it.owner)],
+      ["Source", it.source ? "<code>" + esc(it.source) + "</code>" : null],
+      ["Gate", gateChip(it.gate) + ' <span style="font-size:13px">' + esc(S.gate_glossary[it.gate] || "") + "</span>"],
+      ["Estimate", it.est ? "<p><b>Basis:</b> " + md(it.est.basis) + "</p><p><b>Owner:</b> " + esc(it.est.owner) + '</p><p class="note">' + esc(S.est_note) + "</p>" : null],
+      ["Depends on", it.depends_on && it.depends_on.length ? it.depends_on.map(function (d) { return "<code>" + esc(d) + "</code>"; }).join(" ") : null],
+      ["Decision shape", it.decision_shape ? '<span class="row">' + it.decision_shape.map(function (d) { return chip("", d); }).join("") + "</span>" : null],
+      ["Proposal", it.proposal ? "set with " + esc(it.set_with) + (it.proposed_weekly_posts ? " · weekly posts " + chip("gate-number", "Number gate") : "") + (it.proposed_mix ? " · mix " + esc(typeof it.proposed_mix === "string" ? it.proposed_mix : JSON.stringify(it.proposed_mix)) : "") : null],
+      ["Placement", it.placement_note ? esc(it.placement_note) : null],
+      ["Backlog", it.backlog_ids ? it.backlog_ids.map(function (b) { return "<code>" + esc(b.id) + "</code> " + gateChip(b.legal_gate === "none" ? "none" : b.legal_gate); }).join("<br>") : null],
+      ["Id", "<code>" + esc(it.id) + "</code>"]
+    ];
+    openSheet(it.title, dl(rows));
+  }
+  function exampleSheet(id) {
+    var ex = (S.examples.linkedin.concat(S.examples.instagram)).find(function (x) { return x.id === id; }); if (!ex) return;
+    var rows = ex.field_order.map(function (k) {
+      var v = ex.fields[k];
+      var html = (k === "copy" || k === "hook" || k === "gates") ? copyHtml(v) : md(v).replace(/\n/g, "<br>");
+      return [ex.field_labels[k], html];
+    });
+    rows.push(["R3.1", esc(ex.verdict)]);
+    openSheet(ex.id + " — " + ex.title, dl(rows));
+  }
+  document.addEventListener("keydown", function (e) {
+    if ((e.key === "Enter" || e.key === " ") && e.target.matches && e.target.matches('.card[role="button"]')) { e.preventDefault(); itemSheet(e.target.getAttribute("data-key")); }
+  });
+  document.addEventListener("click", function (e) {
+    var b = e.target.closest("[data-sheet]"); if (!b) return;
+    e.stopPropagation();
+    var kind = b.getAttribute("data-sheet"), key = b.getAttribute("data-key");
+    if (kind === "item") return itemSheet(key);
+    if (kind === "example") return exampleSheet(key);
+    if (kind === "gate") return openSheet((GATE[key] || [0, key])[1], "<p>" + esc(S.gate_glossary[key] || "") + "</p>" + '<p class="note">Value read verbatim from marketing-calendar.json.</p>');
+    if (kind === "est") {
+      var it = ITEMS.find(function (x) { return x.id === key; });
+      return openSheet("~ estimate", "<p><b>Basis:</b> " + md(it.est.basis) + "</p><p><b>Owner:</b> " + esc(it.est.owner) + '</p><p class="note">' + esc(S.est_note) + "</p>");
+    }
+    if (kind === "exgate") {
+      var ex = (S.examples.linkedin.concat(S.examples.instagram)).find(function (x) { return x.id === key; });
+      return openSheet(ex.id + " — " + ex.field_labels.gates, copyHtml(ex.fields.gates) + (ex.fields.method ? "<p><b>" + esc(ex.field_labels.method) + ":</b> " + md(ex.fields.method) + "</p>" : ""));
+    }
+  }, true);
+
+  /* ---------- hero numbers (snapshot only) + as-of ---------- */
+  $("n-items").setAttribute("data-count", S.counts.items);
+  $("n-lanes").setAttribute("data-count", S.counts.lanes);
+  $("n-jonas").setAttribute("data-count", S.counts.awaiting_jonas);
+  $("asof").textContent = "as of " + S.meta.build_date + " · " + S.meta.default_period_reason;
+
+  /* ---------- reveal engine — spec §2b + §4 ---------- */
+  function startCounts(slide) {
+    slide.querySelectorAll("[data-count]").forEach(function (el) {
+      if (el.__run) return; el.__run = 1;
+      var target = parseFloat(el.getAttribute("data-count")); if (!isFinite(target)) return;
+      if (REDUCED) { el.textContent = Math.round(target); return; }
+      var D = 1500, s0 = performance.now(), ease = function (t) { return 1 - Math.pow(1 - t, 3); };
+      el.style.fontVariantNumeric = "tabular-nums"; el.style.whiteSpace = "nowrap";
+      (function step(now) {
+        var t = Math.min(1, (now - s0) / D), v = ease(t) * target;
+        el.textContent = Math.round(v);
+        if (t < 1) requestAnimationFrame(step);
+        else { el.style.transition = "transform .48s var(--ease)"; el.style.transformOrigin = "center";
+               el.style.transform = "scale(1.10)"; setTimeout(function () { el.style.transform = "none"; }, 120); }
+      })(s0);
+    });
+  }
+  document.querySelectorAll(".slide").forEach(function (slide) {
+    slide.querySelectorAll(".reveal").forEach(function (el, i) { el.style.setProperty("--i", i); });
+    slide.querySelectorAll(".rise-words").forEach(function (el) {
+      if (el.__split) return; el.__split = 1;
+      Array.prototype.slice.call(el.childNodes).forEach(function (node) {
+        var host = node.nodeType === 1 ? node : el;
+        var text = node.textContent; if (node.nodeType === 1) node.textContent = ""; else el.removeChild(node);
+        var wi = 0;
+        text.split(/(\s+)/).forEach(function (p) {
+          if (p === "") return;
+          if (/^\s+$/.test(p)) { host.appendChild(document.createTextNode(p)); return; }
+          var s = document.createElement("span"); s.className = "fk-w"; s.style.setProperty("--wi", wi++); s.textContent = p; host.appendChild(s);
+        });
+      });
+    });
+  });
+  document.querySelectorAll(".slide").forEach(function (s) {
+    new IntersectionObserver(function (es) { es.forEach(function (e) {
+      if (e.isIntersecting && e.intersectionRatio >= .25) { e.target.classList.add("is-active"); startCounts(e.target); }
+      else if (!e.isIntersecting) { e.target.classList.remove("is-active"); e.target.querySelectorAll("[data-count]").forEach(function (x) { x.__run = 0; }); }
+    }); }, { threshold: [.25, .6] }).observe(s);
+  });
+
+  /* ---------- boot ---------- */
+  state = readHash();
+  render();
+  window.addEventListener("hashchange", function () { var n = readHash(); if (n.lane !== state.lane || n.period !== state.period || n.page !== state.page) { state = n; render(); } });
+})();
+</script>
+</body>
+</html>

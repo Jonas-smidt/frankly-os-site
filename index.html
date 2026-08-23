@@ -21,28 +21,30 @@
   .brand .lab{font-family:var(--fl-sans);font-weight:600;font-size:14px;letter-spacing:.02em;color:var(--bordeaux);padding-left:11px;border-left:1px solid var(--line-dark)}
   .nav{display:flex;gap:8px;flex-wrap:wrap;justify-content:flex-end}
 
-  /* ---- hero ---- */
-  .hero{display:grid;grid-template-columns:minmax(0,1.06fr) minmax(320px,.6fr);gap:34px;align-items:stretch;padding:44px 0 52px}
-  h1{font-size:clamp(52px,8.4vw,104px);line-height:.94;letter-spacing:-.02em;margin:16px 0 0;max-width:9ch}
-  .hero p.lede{font-family:var(--fl-sans);font-size:19px;line-height:1.55;max-width:660px;color:var(--grey-1);margin:22px 0 0}
-  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:28px}
-
-  /* ---- status panel ---- */
-  .status-panel{position:relative;isolation:isolate;overflow:hidden;min-height:420px;background:var(--bordeaux);color:var(--limestone);border-radius:var(--r-lg);padding:214px 26px 26px}
-  .status-panel::before{content:"";position:absolute;top:22px;left:22px;right:22px;height:166px;border:1px solid rgba(245,244,241,.18);border-radius:var(--r-card);background:linear-gradient(rgba(255,255,255,.22) 0 0) 24px 28px/112px 9px no-repeat,linear-gradient(rgba(255,211,227,.9) 0 0) 24px 54px/82px 38px no-repeat,linear-gradient(rgba(204,216,240,.9) 0 0) 116px 54px/58px 38px no-repeat,linear-gradient(rgba(207,232,191,.9) 0 0) 184px 54px/68px 38px no-repeat,linear-gradient(rgba(243,209,135,.9) 0 0) 24px 114px/228px 12px no-repeat,linear-gradient(rgba(255,255,255,.12) 0 0) 24px 144px/188px 8px no-repeat,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:auto,auto,auto,auto,auto,auto,28px 28px,28px 28px}
-  .status-panel::after{content:"LAB";position:absolute;right:30px;top:40px;color:rgba(255,255,255,.16);font-family:var(--fl-display);font-size:60px;line-height:1;letter-spacing:-.01em}
-  .status-panel > *{position:relative;z-index:1}
-  .status-panel .eyebrow{display:block;font-family:var(--fl-sans);font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.12em;color:rgba(245,244,241,.6)}
-  .status-panel b{display:block;font-family:var(--fl-display);font-weight:600;font-size:34px;line-height:1.04;letter-spacing:-.01em;margin:12px 0;color:var(--white)}
-  .status-panel p{margin:0;color:rgba(245,244,241,.74);font-family:var(--fl-sans);font-size:14px;line-height:1.5}
-  .metrics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:1px;margin-top:20px;background:rgba(245,244,241,.16);border:1px solid rgba(245,244,241,.14);border-radius:var(--r-sm);overflow:hidden}
-  .metrics div{padding:14px 13px;background:rgba(255,255,255,.05)}
-  .metrics strong{display:block;color:var(--white);font-family:var(--fl-display);font-weight:600;font-size:26px;line-height:1}
-  .metrics small{display:block;margin-top:8px;color:rgba(245,244,241,.6);font-family:var(--fl-sans);font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;line-height:1.2}
+  /* ---- hero — the grip (spec §2.8 / §6.3, block in frankly-lab-brand.css); page-level knobs on .lg-hero only ---- */
+  .lg-hero{--lg-hero-h:680px;--lg-hero-split-a:48fr;--lg-hero-split-b:52fr}   /* door: first tile row inside 1440×900 (brief gap 5); split widened so the couplet holds two lines */
+  .lg-hero .lg-couplet{max-width:20ch;font-size:clamp(40px,3.8vw,56px)}   /* width + size knob (gap 2: Option 1 is 20ch; 70px broke to four lines at 1440) */
+  .lg-hero .lg-numbers{margin-top:34px}
+  .lg-hero .lg-lanes{margin-top:26px}
+  .lg-hero .lg-asof.is-prov{margin-top:18px;white-space:nowrap;width:max-content;max-width:none}   /* one line (gap 6); may run ≤12px into the empty grid gap at 1440 */
+  @media (max-width:980px){.lg-hero .lg-asof.is-prov{white-space:normal;width:auto}}
+  .lg-hero__stage img{height:92%;margin-bottom:-18px;object-position:right bottom}   /* fix 4: the asset ends flat at the plinth — the stage edge now crops the base (kalender treatment) instead of the PNG edge floating 0px above it */
+  .lg-hero__copy .fk-w{display:inline-block}
+  .hero-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:24px}
+  .band .is-dup{display:none}                                   /* duplicate shelf lead: hidden, never deleted (gap 1); (0,2,0) so .shelf-block-head's grid cannot re-show it */
+  [data-shelf="tools"].band{padding-top:24px}
+  [data-shelf="tools"] .section-head{flex-wrap:wrap;row-gap:6px;margin-bottom:16px}
+  [data-shelf="tools"] .section-head .fl-kicker{flex:0 0 100%;max-width:none;margin:0}
+  [data-shelf="tools"] .section-head p{flex:1 1 auto;max-width:none;font-size:14px;line-height:1.5;padding-bottom:3px}
+  [data-shelf="tools"] .shelf-block{margin-top:0}                 /* the page's :first-of-type rule never matched (the section-head div is first) */
+  .band.is-focus .section-head h2,.band.is-focus .shelf-block-head h3{text-decoration:underline;text-decoration-color:var(--calm-deep);text-decoration-thickness:3px;text-underline-offset:.18em}
+  .band.is-focus .shelf-block-head{background:var(--blush);border-color:var(--calm-deep)}   /* fix 3: the chosen band is the only lit one */
+  main.lg-has-focus .band:not(.is-focus) .section-head h2,main.lg-has-focus .band:not(.is-focus) .shelf-block-head h3,main.lg-has-focus .band:not(.is-focus) .shelf-block-head .eyebrow,main.lg-has-focus .band:not(.is-focus) .fl-kicker{color:var(--grey-1)}
+  main.lg-has-focus .band:not(.is-focus) .shelf-block-head{background:var(--limestone-soft);border-color:var(--stone-4)}
 
   /* ---- bands ---- */
   .band{padding:34px 0 60px;border-top:1px solid var(--line)}
-  .hero + .band{border-top:0}
+  .lg-hero + .band{border-top:0}
   .section-head{display:flex;align-items:end;justify-content:space-between;gap:24px;margin-bottom:22px}
   .section-head h2{font-size:32px;line-height:1.04;margin:0}
   .section-head p{max-width:520px;margin:0;font-family:var(--fl-sans);color:var(--grey-1)}
@@ -126,38 +128,40 @@
   .note{border-top:1px solid var(--line);padding:26px 0 48px;font-family:var(--fl-sans);color:var(--grey-1);font-size:14px;line-height:1.6}
 
   /* ---- ribbon accent (real brand asset) ---- */
-  .hero{position:relative;overflow:visible}
-  .hero > div,.hero > aside{position:relative;z-index:1}
-  .hero-ribbon{position:absolute;top:8px;right:-64px;width:min(600px,52%);height:auto;z-index:0;pointer-events:none;user-select:none;filter:drop-shadow(0 26px 46px rgba(45,0,17,.12))}
   .ribbon-divider{display:block;width:min(460px,58%);height:auto;margin:6px auto -8px;pointer-events:none;user-select:none;opacity:.95}
-  @media (max-width:860px){.hero-ribbon{position:static;width:min(360px,80%);margin:4px auto -6px;display:block;right:auto;top:auto}}
 
   /* ---- motion ---- */
+  /* canon reveal keyframes — frankly-deck-motion-glass-spec.md §2a (pasted as every grip page does, §6.9) */
+  @keyframes fk-riseHead{from{opacity:0;transform:translateY(30px)}to{opacity:1;transform:none}}
+  @keyframes fk-fade{from{opacity:0}to{opacity:1}}
+  @keyframes fk-word{from{opacity:0;translate:0 .5em}to{opacity:1;translate:0 0}}
   @media (prefers-reduced-motion:no-preference){
-    .hero-ribbon{animation:ribbonFloat 9s var(--ease) infinite alternate}
-    @keyframes ribbonFloat{from{transform:translateY(0) rotate(-1deg)}to{transform:translateY(-16px) rotate(1.4deg)}}
-    .js .reveal-hero > *{opacity:0;transform:translateY(14px);animation:riseIn .7s var(--ease-out) forwards}
-    .js .reveal-hero > *:nth-child(1){animation-delay:.06s}
-    .js .reveal-hero > *:nth-child(2){animation-delay:.14s}
-    .js .reveal-hero > *:nth-child(3){animation-delay:.22s}
-    .js .reveal-hero > *:nth-child(4){animation-delay:.30s}
-    @keyframes riseIn{to{opacity:1;transform:none}}
-    .js .grid .item{opacity:0;animation:cardIn .6s var(--ease-out) forwards}
-    .js .grid .item:nth-child(1){animation-delay:.04s}
-    .js .grid .item:nth-child(2){animation-delay:.10s}
-    .js .grid .item:nth-child(3){animation-delay:.16s}
-    .js .grid .item:nth-child(4){animation-delay:.22s}
-    .js .grid .item:nth-child(5){animation-delay:.28s}
-    .js .grid .item:nth-child(6){animation-delay:.34s}
-    .js .grid .item:nth-child(7){animation-delay:.40s}
-    .js .grid .item:nth-child(8){animation-delay:.46s}
+    /* hero: one easing (--ease-out), one stagger (70ms via --i) — the numbers, the lanes and the first shelf share it */
+    .js .lg-hero__copy > .reveal{animation:fk-riseHead 700ms var(--ease-out) both;animation-delay:calc(var(--i,0)*70ms)}
+    .js .lg-hero__copy .lg-couplet .fk-w{animation:fk-word 680ms var(--ease-lead) both;animation-delay:calc(var(--wi,0)*70ms)}
+    .js .lg-hero__stage img{animation:fk-fade 900ms var(--ease-out) both}
+    /* first shelf joins the hero's motion on is-in (IntersectionObserver on #live only, gap 1) */
+    .js [data-shelf="tools"] .grid .item{opacity:0}
+    .js [data-shelf="tools"].is-in .grid .item{animation:fk-riseHead 700ms var(--ease-out) both;animation-delay:calc(var(--i,0)*70ms)}
+    /* the other three shelves keep the page's own cardIn */
+    .js .band:not([data-shelf="tools"]) .grid .item{opacity:0;animation:cardIn .6s var(--ease-out) forwards}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(1){animation-delay:.04s}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(2){animation-delay:.10s}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(3){animation-delay:.16s}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(4){animation-delay:.22s}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(5){animation-delay:.28s}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(6){animation-delay:.34s}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(7){animation-delay:.40s}
+    .js .band:not([data-shelf="tools"]) .grid .item:nth-child(8){animation-delay:.46s}
     @keyframes cardIn{from{opacity:0}to{opacity:1}}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .lg-hero__copy .reveal,.lg-hero__copy .fk-w,.lg-hero__stage img,[data-shelf="tools"] .grid .item{opacity:1!important;transform:none!important;translate:0!important;animation:none!important}
   }
 
   @media (max-width:860px){
     .topbar{align-items:flex-start;flex-direction:column;gap:14px}
     .nav{justify-content:flex-start}
-    .hero{grid-template-columns:1fr;padding-top:28px;gap:26px}
     .grid{grid-template-columns:1fr}
     .shelf-block-head{grid-template-columns:1fr}
     .item{min-height:0}
@@ -166,15 +170,9 @@
   }
   @media (max-width:520px){
     .wrap{width:min(100% - 30px,1180px)}
-    .hero{gap:18px;padding:14px 0 28px}
-    h1{font-size:46px;max-width:10ch}
-    .hero p.lede{font-size:16.5px}
+    .lg-hero__stage{max-height:360px}
+    .lg-hero .lg-lanes .lg-lane{flex:1 1 0;justify-content:center}
     .hero-actions .fl-btn{flex:1 1 150px}
-    .status-panel{min-height:236px;padding:96px 20px 20px}
-    .status-panel::before{top:16px;left:16px;right:16px;height:64px;background:linear-gradient(rgba(255,255,255,.22) 0 0) 18px 15px/86px 7px no-repeat,linear-gradient(rgba(255,211,227,.9) 0 0) 18px 34px/72px 20px no-repeat,linear-gradient(rgba(204,216,240,.9) 0 0) 96px 34px/46px 20px no-repeat,linear-gradient(rgba(207,232,191,.9) 0 0) 150px 34px/54px 20px no-repeat,linear-gradient(90deg,rgba(255,255,255,.07) 1px,transparent 1px),linear-gradient(0deg,rgba(255,255,255,.07) 1px,transparent 1px);background-size:auto,auto,auto,auto,22px 22px,22px 22px}
-    .status-panel::after{top:30px;right:26px;font-size:34px}
-    .status-panel b{font-size:26px}
-    .metrics{display:none}
     .section-head h2{font-size:27px}
   }
 </style>
@@ -210,36 +208,40 @@
   </header>
 
   <main>
-    <section class="wrap hero">
-      <img class="hero-ribbon" src="journal/images/ribbon-hero.png" alt="" aria-hidden="true">
-      <div class="reveal-hero">
-        <p class="fl-kicker">Gated upload bundle</p>
-        <h1>Frankly Lab.</h1>
-        <p class="lede">Frankly Lab online shows practical tools, approved preview pages and a separate play corner for games and small experiments.</p>
-        <div class="hero-actions">
-          <a class="fl-btn" href="#live">Open tools</a>
-          <a class="fl-btn fl-btn--ghost" href="#play">Open play</a>
+    <section class="lg-hero" aria-labelledby="hero-title">
+      <div class="wrap lg-hero__grid">
+        <div class="lg-hero__copy">
+          <p class="fl-kicker reveal">Gated preview</p>
+          <h1 id="hero-title" class="lg-couplet reveal rise-words"><span>Everything we build.</span><span>Before it ships.</span></h1>
+          <div class="lg-numbers reveal" aria-label="Shelf snapshot">
+            <div><strong data-count data-key="shelf">—</strong><small>on the shelf</small></div>
+            <div><strong data-count data-key="playShelf">—</strong><small>to play</small></div>
+          </div>
+          <div class="lg-lanes reveal" role="radiogroup" aria-label="Shelves">
+            <button type="button" class="lg-lane" role="radio" aria-checked="false" data-target="live" data-lane="tools" tabindex="0"><i data-content>·</i>Tools</button>
+            <button type="button" class="lg-lane" role="radio" aria-checked="false" data-target="play" data-lane="play" tabindex="-1"><i data-content>·</i>Play</button>
+            <button type="button" class="lg-lane" role="radio" aria-checked="false" data-target="pages" data-lane="pages" tabindex="-1"><i data-content>·</i>Pages</button>
+          </div>
+          <p class="lg-asof is-prov reveal" data-content>run scripts/build-index-hero-snapshot.py</p>
+          <div class="hero-actions reveal">
+            <a class="fl-btn" href="#live">Open tools</a>
+            <a class="fl-btn fl-btn--ghost" href="#play">Open play</a>
+          </div>
+        </div>
+        <div class="lg-hero__stage" aria-hidden="true">
+          <img src="assets/design-reference/kalender-hero-main-visual.png" width="1252" height="1600" alt="" decoding="async" fetchpriority="high">
         </div>
       </div>
-      <aside class="status-panel" aria-label="Bundle boundary">
-        <span class="eyebrow">Boundary</span>
-        <b>Tools, pages, play.</b>
-        <p>The upload bundle carries Lab tools, the online coverage overview, Start here preview, Journal and a separate play corner.</p>
-        <div class="metrics" aria-label="Lab bundle metrics">
-          <div><strong>17</strong><small>Lab pages</small></div>
-          <div><strong>1</strong><small>coverage page</small></div>
-          <div><strong>3</strong><small>noindex previews</small></div>
-        </div>
-      </aside>
     </section>
 
-    <section class="wrap band" id="live">
+    <section class="wrap band" id="live" data-shelf="tools">
       <div class="section-head">
+        <p class="fl-kicker">Practical shelf</p>
         <h2>Tools in the online Lab</h2>
-        <p>Practical generators, guides and brand helpers only. Games, toys and quizzes are not part of this overview.</p>
+        <p>Practical generators, guides and brand helpers. Games, toys and quizzes are not part of this overview.</p>
       </div>
       <div class="shelf-block tool-shelf">
-        <div class="shelf-block-head">
+        <div class="shelf-block-head is-dup">
           <div>
             <span class="eyebrow">Practical shelf</span>
             <h3>Tools</h3>
@@ -323,7 +325,7 @@
       </div>
     </section>
 
-    <section class="wrap band" id="play">
+    <section class="wrap band" id="play" data-shelf="play">
       <div class="shelf-block play-shelf">
         <div class="shelf-block-head">
           <div>
@@ -373,7 +375,7 @@
       </div>
     </section>
 
-    <section class="wrap band" id="pages">
+    <section class="wrap band" id="pages" data-shelf="pages">
       <div class="shelf-block page-shelf">
         <div class="shelf-block-head">
           <div>
@@ -411,7 +413,7 @@
       </div>
     </section>
 
-    <section class="wrap band" id="workbench">
+    <section class="wrap band" id="workbench" data-shelf="workbench">
       <div class="section-head">
         <h2>Built Lab shelf</h2>
         <p>The short shelf view groups the non-game things visitors can open in the online Lab.</p>
@@ -456,6 +458,47 @@
     This online Lab is gated but not treated as security. Jonas reopened Coverage overview as an online page and reopened Start here plus blog drafts as preview pages; source records, customer-facing claims and all other product/legal work stay out of the upload bundle.
   </footer>
   <script>document.documentElement.classList.add('js');</script>
+  <!-- INDEX-HERO-SNAPSHOT:BEGIN -->
+  <script id="index-hero-snapshot" type="application/json">{"schemaVersion":"1.0","generated":"2026-08-22T21:38:18+00:00","buildDate":"2026-08-22","shelfUpdated":"2026-08-21","shelf":{"value":24,"rule":"lane==public-lab && !retired"},"play":{"value":4,"rule":"lane==public-lab && !retired && shelf==play"},"playShelf":{"value":6,"rule":"tiles rendered inside <section id=play> whose href is a lane==public-lab && !retired feed entry","play":4,"experiments":2,"experimentsOffShelf":2,"split":"4 to play · 2 experiments"},"lanes":[{"id":"tools","target":"live","count":11},{"id":"play","target":"play","count":4},{"id":"pages","target":"pages","count":5}],"source":"data/tools-shelf.json","generator":"scripts/build-index-hero-snapshot.py"}</script>
+  <!-- INDEX-HERO-SNAPSHOT:END -->
+  <script>
+  (function(){
+    var R=window.matchMedia&&window.matchMedia("(prefers-reduced-motion: reduce)").matches,
+        narrow=window.matchMedia&&window.matchMedia("(max-width: 520px)").matches,
+        hero=document.querySelector(".lg-hero"),live=document.getElementById("live"),
+        copy=hero.querySelector(".lg-hero__copy"),ok=false,S=null;
+    try{S=JSON.parse(document.getElementById("index-hero-snapshot").textContent);ok=!!(S&&S.shelf);}catch(e){}
+    copy.querySelectorAll(".reveal").forEach(function(el,i){el.style.setProperty("--i",i);});
+    copy.querySelectorAll(".lg-couplet span").forEach(function(line){
+      var t=line.textContent,wi=0;line.textContent="";
+      t.split(/(\s+)/).forEach(function(p){if(!p)return;if(/^\s+$/.test(p)){line.appendChild(document.createTextNode(p));return;}
+        var s=document.createElement("span");s.className="fk-w";s.style.setProperty("--wi",wi++);s.textContent=p;line.appendChild(s);});});
+    function count(el,target){
+      if(R||narrow){el.textContent=target;return;}
+      var s0=performance.now(),D=1500,ease=function(t){return 1-Math.pow(1-t,3);};
+      (function step(now){var t=Math.min(1,(now-s0)/D);el.textContent=Math.round(ease(t)*target);if(t<1)requestAnimationFrame(step);})(s0);
+    }
+    if(ok){
+      copy.querySelectorAll("[data-count]").forEach(function(el){var k=S[el.getAttribute("data-key")];if(!k)return;count(el,k.value);if(k.split)el.title=k.split;});
+      (S.lanes||[]).forEach(function(l){var b=copy.querySelector('.lg-lane[data-lane="'+l.id+'"] i');if(b)b.textContent=(l.id==="play"&&S.playShelf)?S.playShelf.value:l.count;});
+      var prov=copy.querySelector(".lg-asof.is-prov");prov.textContent="Shelf as of "+S.shelfUpdated+" · built "+S.buildDate+" · "+S.source;prov.title="generated by "+S.generator;prov.setAttribute("data-generator",S.generator);
+    }
+    var lanes=Array.prototype.slice.call(copy.querySelectorAll(".lg-lane"));
+    function pick(i){lanes.forEach(function(b,j){b.setAttribute("aria-checked",j===i?"true":"false");b.tabIndex=j===i?0:-1;});
+      lanes[i].focus();var id=lanes[i].getAttribute("data-target");
+      document.querySelectorAll(".band[data-shelf]").forEach(function(s){s.classList.toggle("is-focus",s.id===id);});hero.parentNode.classList.add("lg-has-focus");
+      var sec=document.getElementById(id);if(sec)sec.scrollIntoView({block:"start",behavior:R?"auto":"smooth"});}
+    lanes.forEach(function(b,i){
+      b.addEventListener("click",function(){pick(i);});
+      b.addEventListener("keydown",function(e){
+        if(e.key==="ArrowRight"||e.key==="ArrowDown"){e.preventDefault();pick((i+1)%lanes.length);}
+        else if(e.key==="ArrowLeft"||e.key==="ArrowUp"){e.preventDefault();pick((i+lanes.length-1)%lanes.length);}
+        else if(e.key===" "||e.key==="Enter"){e.preventDefault();pick(i);}});});
+    if(live){live.querySelectorAll(".grid .item").forEach(function(el,i){el.style.setProperty("--i",i);});
+      if(R||!("IntersectionObserver" in window)){live.classList.add("is-in");}
+      else{new IntersectionObserver(function(es,io){es.forEach(function(e){if(e.isIntersecting){live.classList.add("is-in");io.disconnect();}});},{threshold:[.25,.6]}).observe(live);}}
+  })();
+  </script>
   <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-generated 2026-08-21T19:32:18+00:00; never hand-edit) -->
   <script id="toolsShelfSnapshot" type="application/json">{
   "schemaVersion": "1.0",
