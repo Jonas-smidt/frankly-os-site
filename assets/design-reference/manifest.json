@@ -10,7 +10,7 @@
   ],
   "authorityRule": "Only the four approved outputs are positive canon. Manual and Claude Design entries are supporting/reference-only.",
   "publicDistribution": "blocked",
-  "assetCount": 65,
+  "assetCount": 68,
   "assets": [
     {
       "id": "web-main-motion",
@@ -738,6 +738,45 @@
       "intendedUse": "marketing/index.html All stage — the same home family, second official file (house alone on the ribbon, no podium) so hero and All are not one render twice (M4.1 verdict 1, gap 1)",
       "slot": "marketing All stage",
       "addedBy": "run 20260822-lab-design-grip"
+    },
+    {
+      "id": "feed-ig04-smartphone",
+      "file": "feed-ig-04-smartphone.png",
+      "category": "3d-object-material",
+      "mediaType": "image/png",
+      "source": "~/Library/CloudStorage/GoogleDrive-js@franklyinsure.com/Shared drives/Frankly Team/09 - BRAND/Brand Assets/3D VISUALS - ALMARENA/8K IMAGES/1: ELECTRONICS & GADGETS/LAPTOP + SMARTPHONE/FRANKLY_8K_LAPTOP+SMARTPHONE_INDIVIDUAL.png",
+      "px": "1024x1280",
+      "provenanceStatus": "official-brand-asset",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "kalender.html feed IG-04 'Telefonen gik i stykker' — the official smartphone object IS the subject; 4:5 crop centred on the phone (Jonas 2026-08-23 subject-fit verdict, contact sheet approved)",
+      "slot": "kalender feed IG-04",
+      "addedBy": "run 20260823-feed-subject-fit"
+    },
+    {
+      "id": "feed-ig02-ribbon",
+      "file": "feed-ig-02-ribbon.png",
+      "category": "ribbon-static",
+      "mediaType": "image/png",
+      "source": "frankly-os-site/assets/design-reference/kalender-l1-ribbon.png (official derivative of ALM/RIBBON/FRANKLY_RUBANS_03.png)",
+      "px": "1280x1600",
+      "provenanceStatus": "approved-crop",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "kalender.html feed IG-02 'Se den lige én gang til' — ribbon-only 4:5 still; the seamless loop is an Animation-route job",
+      "slot": "kalender feed IG-02",
+      "addedBy": "run 20260823-feed-subject-fit"
+    },
+    {
+      "id": "feed-li03-poster",
+      "file": "feed-li-03-ribbon-stack.jpg",
+      "category": "ribbon-motion",
+      "mediaType": "image/jpeg",
+      "source": "frankly-os-site/assets/design-reference/main-visual-poster.jpg (static fallback of web-main-motion)",
+      "px": "576x720",
+      "provenanceStatus": "approved-crop",
+      "distributionStatus": "rights-unverified/internal-only",
+      "intendedUse": "kalender.html feed LI-03 'One shape. Every category.' — 4:5 poster for main-visual-motion.mp4",
+      "slot": "kalender feed LI-03 (poster)",
+      "addedBy": "run 20260823-feed-subject-fit"
     }
   ]
 }

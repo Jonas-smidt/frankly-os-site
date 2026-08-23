@@ -187,8 +187,9 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 .mock-media.is-story::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(45,0,17,.55) 0%,rgba(45,0,17,.78) 55%,rgba(45,0,17,.92) 100%)}
 .mock-media.is-story .story{z-index:1}
 .mock-media.is-story .story{position:absolute;inset:0;padding:22px;display:flex;flex-direction:column;gap:12px;color:var(--limestone)}
+.mock-media.is-story .story-label{display:block;font-family:var(--fl-display);font-weight:600;font-size:clamp(19px,1.7vw,24px);line-height:1.12;letter-spacing:-.012em;color:var(--limestone);text-wrap:balance}
 .mock-media.is-story .story p{margin:0;font-size:13px;line-height:1.45;color:rgba(245,244,241,.9);overflow:hidden;display:-webkit-box;-webkit-line-clamp:9;-webkit-box-orient:vertical}
-.mock-media .tag{position:absolute;left:12px;bottom:12px}
+.mock-media .tag{position:absolute;left:12px;bottom:12px;max-width:calc(100% - 24px);white-space:normal;text-align:left}
 .mock-media .dots{position:absolute;left:0;right:0;bottom:10px;display:flex;justify-content:center;gap:5px}
 .mock-media .dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.55)}
 .mock-media .dots i:first-child{background:var(--calm-pink)}
@@ -361,7 +362,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
 <script id="marketing-calendar-snapshot" type="application/json">
 {
   "schema_version": "1.0",
-  "generated_at": "2026-08-22T14:14:27+02:00",
+  "generated_at": "2026-08-23T11:02:46+02:00",
   "generated_by": "frankly-os-site/scripts/build-marketing-calendar-snapshot.py",
   "hand_edit_warning": "GENERATED BLOCK — do not hand-edit. Re-run the generator instead.",
   "surface": {
@@ -409,7 +410,7 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
       "M4 amendments 1–11 applied 2026-08-22 (see m3-calendar-notes.md Pass 2)"
     ],
     "figures_note": "Spelled-out Danish counts (e.g. 'tredive prompts', 'fire motorer', 'de to indekssider', 'de tre første hubs') are structural counts verifiable at the item's cited source — not reach, budget, price, rate or volume figures. This exemption from the number rule is explicit, not silent. Digit-form counts stay disallowed outside the exemption classes listed in validate-calendar.py.",
-    "build_date": "2026-08-22",
+    "build_date": "2026-08-23",
     "default_period": "2026-W35",
     "default_period_reason": "build date precedes the first period — opens on 2026-W35"
   },
@@ -3152,21 +3153,22 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
   var MEDIA = {
     "LI-01": { kind: "img", file: "object-lifestyle-stack.jpg", r: "r4x5", tag: "3D object universe · approved still" },
     "LI-02": { kind: "type", ground: "ribbon-static-sweep.png", r: "r1x1", tag: "Graphics route · card 1 of the carousel" },
-    "LI-03": { kind: "video", file: "espresso-motion.mp4", poster: "espresso-poster.jpg", r: "r4x5", tag: "Object loop · approved motion" },
-    "LI-04": { kind: "story", r: "r4x5" },
-    "LI-05": { kind: "story", r: "r16x9", label: "Camera · colleague's own phone photo" },
-    "LI-06": { kind: "story", r: "r4x5" },
-    "LI-07": { kind: "story", r: "r4x5" },
+    "LI-03": { kind: "video", file: "main-visual-motion.mp4", poster: "feed-li-03-ribbon-stack.jpg", r: "r4x5", tag: "Main-visual loop · approved motion" },
+    "LI-04": { kind: "story", r: "r4x5", label: "Camera · the wording session — desks, screens, four people mid-sentence", scene: "Documentary: real room, real screens, unposed faces mid-thought." },
+    "LI-05": { kind: "type", ground: "ribbon-static-sweep.png", r: "r4x5", tag: "Employee kit · optional background card" },
+    "LI-06": { kind: "story", r: "r4x5", label: "Camera · partner working session — wide frame plus two details · partner consent required", scene: "Documentary: real room, real session, wide frame and two close details." },
+    "LI-07": { kind: "story", r: "r4x5", label: "Camera · the employer cut — real colleagues, real workspace, role slot open", scene: "Documentary: real colleagues, natural light, nothing staged." },
     "LI-08": { kind: "type", ground: "ribbon-static-sweep.png", r: "r4x5", tag: "Graphics route · one card" },
     "IG-01": { kind: "img", file: "object-speakers.png", r: "r4x5", object: true, tag: "3D object universe · approved still" },
-    "IG-02": { kind: "video", file: "device-motion.mp4", poster: "device-poster.jpg", r: "r4x5", tag: "Loop · approved motion, 4:5 crop" },
-    "IG-03": { kind: "img", file: "photo-home-couple.jpg", r: "r4x5", tag: "Territory reference · home life" },
-    "IG-04": { kind: "img", file: "object-bike.png", r: "r4x5", object: true, carousel: 4, tag: "Card 1 of 4 · steps are [CLAIMS-GATE]" },
-    "IG-05": { kind: "story", r: "r4x5" },
+    "IG-02": { kind: "img", file: "feed-ig-02-ribbon.png", r: "r4x5", object: true, tag: "Ribbon still · loop is an Animation-route job" },
+    "IG-03": { kind: "story", r: "r4x5", label: "Levende foto · venter på din rute: køkkenbordet klokken syv", scene: "Københavnsk køkken, morgenlys fra siden, én hånd i billedet, intet ansigt." },
+    "IG-04": { kind: "img", file: "feed-ig-04-smartphone.png", r: "r4x5", object: true, carousel: 4, tag: "Card 1 of 4 · steps are [CLAIMS-GATE]" },
+    "IG-05": { kind: "story", r: "r4x5", label: "Kamera · kollega ved telefonen, fredag halv fire", scene: "Dokumentation: håndholdt telefon, dagslys, kontoret som det er." },
     "IG-06": { kind: "type", ground: "ribbon-static-sweep.png", r: "r1x1", tag: "Graphics route · canon line" },
-    "IG-07": { kind: "img", file: "photo-flower-street.jpg", r: "r4x5", tag: "Territory reference · city life" },
-    "IG-08": { kind: "img", file: "object-ebike-ribbon.png", r: "r4x5", object: true, tag: "Partner product · approved still" }
+    "IG-07": { kind: "story", r: "r4x5", label: "Levende foto · venter på din rute: Jægersborggade sidst på eftermiddagen", scene: "Smal gade, varm rød mursten, cyklen lænet mod væggen, ingen ansigter i fokus." },
+    "IG-08": { kind: "story", r: "r4x5", label: "Partnerprodukt · afventer partnerens egne produktfiler", scene: "Produktet gengives efter partnerens filer — ingen erstatningsobjekt." }
   };
+
 
   /* ---------- data ---------- */
   var LANES = S.lanes, PERIODS = S.periods, ITEMS = S.items;
@@ -3342,7 +3344,8 @@ button{font:inherit;color:inherit;background:none;border:0;padding:0;cursor:poin
       return '<div class="mock-media ' + m.r + ' is-type"><img src="' + ASSET + m.ground + '" alt="" loading="lazy" decoding="async"><div class="type">' + copyHtml(ex.fields.hook) + "</div>" + tag + "</div>";
     }
     return '<div class="mock-media ' + m.r + ' is-story"><img src="' + ASSET + 'object-lifestyle-stack.jpg" alt="" loading="lazy" decoding="async"><div class="story">' +
-      chip("gate-partner", m.label || "Camera · not yet shot") + "<p>" + md(ex.fields.visual_direction) + "</p></div></div>";
+      (m.label ? '<b class="story-label">' + esc(m.label) + "</b>" : "") +
+      "<p>" + (m.scene ? esc(m.scene) : md(ex.fields.visual_direction)) + "</p></div></div>";
   }
   function markerChips(ex) {
     var k = ex.markers, out = [];
