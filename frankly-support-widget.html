@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Frankly support-widget — klikbar prototype</title>
+<link rel="stylesheet" href="frankly-lab-brand.css">
+<style>
+:root{
+  --calm-pink:#FFD3E3; --calm-deep:#FFACCA; --limestone:#F5F4F1; --blush:#FFF6FA;
+  --stone:#ECE9E4; --stone-2:#F0EEE9; --stone-4:#E3DDD5; --stone-dark:#3D342B;
+  --bordeaux:#2D0011; --white:#fff; --grey-1:#585C60; --grey-2:#838383; --grey-4:#D9D9D9;
+  --success:#057642; --success-live:#27C966; --lavender:#F0EEFC;
+  --font-display:"Almarena Neue Display","Almarena Neue",Georgia,"Times New Roman",serif;
+  --font-sans:"Switzer",Inter,system-ui,-apple-system,sans-serif;
+  --r-sm:8px; --r-md:12px; --r-card:16px; --r-xl:24px; --r-pill:999px;
+  --ease-out:cubic-bezier(.16,1,.3,1);
+}
+*{box-sizing:border-box}
+body{
+  margin:0; font-family:var(--font-sans); color:var(--bordeaux);
+  background:var(--limestone); -webkit-font-smoothing:antialiased;
+  min-height:100vh;
+}
+
+/* ---------- demo stage ---------- */
+.stage{max-width:900px; margin:0 auto; padding:56px 28px 200px}
+.demo-note{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:26px 30px;
+}
+.demo-note .eyebrow{
+  font-size:12px; letter-spacing:.09em; text-transform:uppercase;
+  color:var(--grey-2); font-weight:600; margin:0 0 12px;
+}
+.demo-note h1{
+  font-family:var(--font-display); font-weight:600; font-size:30px; line-height:1.18;
+  margin:0 0 14px; letter-spacing:-.01em;
+}
+.demo-note p{margin:0 0 12px; line-height:1.6; max-width:70ch; font-size:16px}
+.demo-note p:last-child{margin-bottom:0}
+.demo-note code{
+  background:var(--lavender); padding:2px 7px; border-radius:5px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:14px; font-weight:600;
+}
+.warn{
+  margin-top:20px; padding:14px 18px; background:#FFF5F8;
+  border-left:4px solid var(--calm-deep); border-radius:0 var(--r-sm) var(--r-sm) 0;
+  font-size:14.5px; line-height:1.55;
+}
+.tries{display:flex; flex-wrap:wrap; gap:8px; margin-top:16px}
+.try{
+  background:var(--calm-pink); border:none; border-radius:var(--r-pill);
+  padding:8px 16px; font-family:var(--font-sans); font-size:14px; font-weight:500;
+  color:var(--bordeaux); cursor:pointer; transition:background .2s;
+}
+.try:hover{background:var(--calm-deep)}
+
+/* ---------- launcher ---------- */
+.launcher{
+  position:fixed; right:26px; bottom:26px; z-index:60;
+  width:60px; height:60px; border:none; border-radius:50%;
+  background:var(--bordeaux); color:var(--calm-pink); cursor:pointer;
+  box-shadow:0 8px 28px rgba(45,0,17,.26);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .28s var(--ease-out);
+}
+.launcher:hover{transform:scale(1.06)}
+.launcher svg{width:26px; height:26px}
+.launcher .badge{
+  position:absolute; top:-3px; right:-3px; width:18px; height:18px;
+  background:var(--calm-deep); color:var(--bordeaux); border-radius:50%;
+  font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--limestone);
+}
+
+/* ---------- panel ---------- */
+.panel{
+  position:fixed; right:26px; bottom:100px; z-index:59;
+  width:396px; max-width:calc(100vw - 32px);
+  height:634px; max-height:calc(100vh - 130px);
+  background:var(--limestone); border-radius:var(--r-xl);
+  box-shadow:0 24px 64px rgba(45,0,17,.22), 0 2px 8px rgba(45,0,17,.08);
+  display:flex; flex-direction:column; overflow:hidden;
+  opacity:0; transform:translateY(14px) scale(.98); pointer-events:none;
+  transition:opacity .3s var(--ease-out), transform .3s var(--ease-out);
+}
+.panel.open{opacity:1; transform:none; pointer-events:auto}
+
+.phead{background:var(--bordeaux); color:var(--white); padding:16px 18px 14px; flex:0 0 auto}
+.phead .row{display:flex; align-items:center; gap:11px}
+.iconbtn{
+  width:30px; height:30px; flex:0 0 auto; border:none; border-radius:50%;
+  background:rgba(255,255,255,.12); color:var(--white); cursor:pointer;
+  display:flex; align-items:center; justify-content:center; transition:background .2s;
+}
+.iconbtn:hover{background:rgba(255,255,255,.22)}
+.iconbtn svg{width:16px; height:16px}
+.iconbtn.hidden{visibility:hidden}
+.mark{
+  width:32px; height:32px; flex:0 0 auto; border-radius:50%;
+  background:var(--calm-pink); color:var(--bordeaux);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:600; font-size:17px;
+}
+.phead .who{flex:1 1 auto; min-width:0}
+.phead .who b{display:block; font-size:14.5px; font-weight:600; letter-spacing:-.01em}
+.phead .who span{
+  display:flex; align-items:center; gap:5px; font-size:12px; color:rgba(255,255,255,.72);
+}
+.dot{width:6px; height:6px; border-radius:50%; background:var(--success-live)}
+.trust{
+  margin-top:12px; padding-top:11px; border-top:1px solid rgba(255,255,255,.14);
+  font-size:11px; line-height:1.45; color:rgba(255,255,255,.66); letter-spacing:.01em;
+}
+
+.pbody{flex:1 1 auto; overflow-y:auto; padding:20px 18px 22px; scrollbar-width:thin}
+.pbody::-webkit-scrollbar{width:7px}
+.pbody::-webkit-scrollbar-thumb{background:var(--stone-4); border-radius:4px}
+
+.pfoot{
+  flex:0 0 auto; padding:11px 18px; background:var(--white);
+  border-top:1px solid var(--stone-4); font-size:11.5px; color:var(--grey-2);
+  text-align:center; line-height:1.4;
+}
+
+/* ---------- screens ---------- */
+.screen{display:none; animation:in .28s var(--ease-out)}
+.screen.on{display:block}
+@keyframes in{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+
+h2.q{
+  font-family:var(--font-display); font-weight:600; font-size:22px; line-height:1.22;
+  margin:0 0 6px; letter-spacing:-.01em;
+}
+p.sub{margin:0 0 18px; font-size:14.5px; line-height:1.5; color:var(--grey-1)}
+p.sub:last-of-type{margin-bottom:16px}
+
+.opt{
+  width:100%; text-align:left; background:var(--white); border:1px solid var(--stone-4);
+  border-radius:var(--r-card); padding:15px 16px; margin-bottom:9px; cursor:pointer;
+  font-family:var(--font-sans); color:var(--bordeaux);
+  display:flex; align-items:center; gap:13px;
+  transition:border-color .2s, background .2s, transform .18s var(--ease-out);
+}
+.opt:hover{border-color:var(--calm-deep); background:var(--blush); transform:translateX(2px)}
+.opt .ico{
+  width:36px; height:36px; flex:0 0 auto; border-radius:10px;
+  background:var(--calm-pink); color:var(--bordeaux);
+  display:flex; align-items:center; justify-content:center;
+}
+.opt .ico svg{width:18px; height:18px}
+.opt .tx{flex:1 1 auto; min-width:0}
+.opt .tx b{display:block; font-size:14.8px; font-weight:600; line-height:1.3; margin-bottom:2px}
+.opt .tx span{display:block; font-size:12.8px; color:var(--grey-1); line-height:1.4}
+.opt .arw{flex:0 0 auto; color:var(--grey-2)}
+.opt .arw svg{width:15px; height:15px}
+.opt.primary{background:var(--bordeaux); border-color:var(--bordeaux); color:var(--white)}
+.opt.primary .ico{background:rgba(255,211,227,.2); color:var(--calm-pink)}
+.opt.primary .tx span{color:rgba(255,255,255,.72)}
+.opt.primary .arw{color:rgba(255,255,255,.6)}
+.opt.primary:hover{background:#3d0018}
+
+/* form */
+label.fl{display:block; font-size:13px; font-weight:600; margin:0 0 7px}
+input.fi{
+  width:100%; height:46px; border:1.5px solid var(--stone-4); border-radius:var(--r-md);
+  padding:0 14px; font-family:var(--font-sans); font-size:16px; color:var(--bordeaux);
+  background:var(--white); outline:none; transition:border-color .2s;
+}
+input.fi:focus{border-color:var(--bordeaux)}
+.hint{font-size:12.5px; color:var(--grey-1); margin:8px 0 16px; line-height:1.45}
+.err{
+  font-size:13px; color:#9B1B49; background:#FFF5F8; border-radius:var(--r-sm);
+  padding:10px 13px; margin:12px 0 0; line-height:1.45; display:none;
+}
+.err.on{display:block}
+
+.btn{
+  width:100%; height:48px; border:none; border-radius:var(--r-pill); cursor:pointer;
+  font-family:var(--font-sans); font-size:15.5px; font-weight:500;
+  background:var(--bordeaux); color:var(--calm-pink); margin-top:4px;
+  transition:background .2s;
+}
+.btn:hover{background:#3d0018}
+.btn.sec{background:var(--white); color:var(--bordeaux); border:1.5px solid var(--bordeaux)}
+.btn.sec:hover{background:var(--blush)}
+.btn.ghost{background:transparent; color:var(--grey-1); height:42px; font-size:14px}
+.btn.ghost:hover{background:var(--stone-2)}
+.btn+.btn{margin-top:9px}
+
+/* recognition card */
+.pol{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:0; overflow:hidden; margin-bottom:12px;
+}
+.pol .top{background:var(--calm-pink); padding:14px 16px}
+.pol .top b{display:block; font-family:var(--font-display); font-size:17px; font-weight:600; line-height:1.25}
+.pol .top span{display:block; font-size:12.8px; color:rgba(45,0,17,.68); margin-top:3px}
+.pol dl{margin:0; padding:6px 16px 14px}
+.pol .r{display:flex; justify-content:space-between; gap:12px; padding:8px 0; border-bottom:1px solid var(--stone-2); font-size:13.5px}
+.pol .r:last-child{border-bottom:none}
+.pol dt{color:var(--grey-1); flex:0 0 auto}
+.pol dd{margin:0; font-weight:600; text-align:right}
+.pol dd.ok{color:var(--success)}
+.tot{
+  background:var(--blush); border:1px solid var(--calm-pink); border-radius:var(--r-card);
+  padding:14px 16px; margin-bottom:14px; display:flex; justify-content:space-between; align-items:baseline;
+}
+.tot span{font-size:13.5px; color:var(--grey-1)}
+.tot b{font-family:var(--font-display); font-size:22px; font-weight:600}
+
+/* reassure */
+.reassure{
+  background:var(--white); border-left:4px solid var(--success); border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:14px 16px; margin-bottom:16px; font-size:13.8px; line-height:1.55;
+}
+.reassure b{display:block; margin-bottom:4px}
+
+/* faq */
+.acc{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card); margin-bottom:8px; overflow:hidden}
+.acc summary{
+  padding:14px 16px; cursor:pointer; font-size:14.5px; font-weight:600; line-height:1.35;
+  list-style:none; display:flex; justify-content:space-between; gap:10px; align-items:center;
+}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+"; color:var(--grey-2); font-size:19px; font-weight:400; flex:0 0 auto; line-height:1}
+.acc[open] summary::after{content:"–"}
+.acc summary:hover{background:var(--blush)}
+.acc .ac{padding:0 16px 15px; font-size:13.8px; line-height:1.6; color:var(--grey-1)}
+.acc .ac > :last-child{margin-bottom:0}
+.acc .ac p{margin:0 0 9px}
+.acc .ac ol,.acc .ac ul{margin:0 0 9px; padding-left:19px}
+.acc .ac li{margin-bottom:4px}
+.acc .ac strong{color:var(--bordeaux)}
+
+/* video */
+.vid{
+  width:100%; text-align:left; background:var(--bordeaux); border:none; border-radius:var(--r-card);
+  padding:0; margin-bottom:10px; cursor:pointer; overflow:hidden; display:block;
+  font-family:var(--font-sans); transition:transform .2s var(--ease-out);
+}
+.vid:hover{transform:translateY(-2px)}
+.vid .frame{
+  height:104px; background:linear-gradient(135deg,#3d0018,#2D0011);
+  display:flex; align-items:center; justify-content:center; position:relative;
+}
+.vid .play{
+  width:46px; height:46px; border-radius:50%; background:var(--calm-pink); color:var(--bordeaux);
+  display:flex; align-items:center; justify-content:center;
+}
+.vid .play svg{width:18px; height:18px; margin-left:2px}
+.vid .dur{
+  position:absolute; right:10px; bottom:9px; background:rgba(0,0,0,.55); color:#fff;
+  font-size:11px; padding:2px 7px; border-radius:4px; font-variant-numeric:tabular-nums;
+}
+.vid .cap{padding:12px 14px; background:var(--white)}
+.vid .cap b{display:block; font-size:14.3px; font-weight:600; color:var(--bordeaux); margin-bottom:2px}
+.vid .cap span{font-size:12.5px; color:var(--grey-1)}
+.player{
+  background:var(--bordeaux); border-radius:var(--r-card); padding:20px 18px; margin-bottom:14px;
+  color:var(--white);
+}
+.player .badge{
+  display:inline-block; background:rgba(255,211,227,.18); color:var(--calm-pink);
+  font-size:11px; letter-spacing:.07em; text-transform:uppercase; font-weight:600;
+  padding:4px 10px; border-radius:var(--r-pill); margin-bottom:12px;
+}
+.player h3{font-family:var(--font-display); font-size:17px; font-weight:600; margin:0 0 12px; line-height:1.28}
+.player ol{margin:0; padding-left:20px; font-size:13.8px; line-height:1.65; color:rgba(255,255,255,.86)}
+.player li{margin-bottom:6px}
+.player li b{color:var(--calm-pink); font-weight:600}
+.player .note{font-size:12px; color:rgba(255,255,255,.5); margin:14px 0 0; line-height:1.5}
+
+/* reasons */
+.rsn{
+  width:100%; text-align:left; background:var(--white); border:1.5px solid var(--stone-4);
+  border-radius:var(--r-md); padding:13px 15px; margin-bottom:7px; cursor:pointer;
+  font-family:var(--font-sans); font-size:14px; line-height:1.4; color:var(--bordeaux);
+  transition:border-color .2s, background .2s;
+}
+.rsn:hover{border-color:var(--calm-deep); background:var(--blush)}
+.rsn.sel{border-color:var(--bordeaux); background:var(--calm-pink); font-weight:600}
+
+/* done */
+.done{text-align:center; padding:14px 0 4px}
+.done .tick{
+  width:60px; height:60px; margin:0 auto 18px; border-radius:50%;
+  background:var(--bordeaux); color:var(--calm-pink);
+  display:flex; align-items:center; justify-content:center;
+}
+.done .tick svg{width:27px; height:27px}
+.done h2{font-family:var(--font-display); font-size:22px; font-weight:600; margin:0 0 10px; line-height:1.25}
+.done p{font-size:14.3px; line-height:1.58; color:var(--grey-1); margin:0 0 12px; text-align:left}
+.done .receipt{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:14px 16px; margin:16px 0; text-align:left;
+}
+
+.triage{display:flex; flex-direction:column; gap:8px; margin-bottom:16px}
+.tri{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card); padding:14px 16px;
+}
+.tri b{display:block; font-size:14.5px; font-weight:600; margin-bottom:4px}
+.tri p{margin:0; font-size:13.3px; line-height:1.5; color:var(--grey-1)}
+.tri.on{border-color:var(--bordeaux); background:var(--blush)}
+
+.human{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:15px 16px; margin-top:16px;
+}
+.human .faces{display:flex; margin-bottom:9px}
+.human .f{
+  width:28px; height:28px; border-radius:50%; background:var(--calm-deep);
+  border:2px solid var(--white); margin-right:-8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:600; color:var(--bordeaux);
+}
+.human p{margin:0 0 10px; font-size:13.5px; line-height:1.5; color:var(--grey-1)}
+.human a{
+  display:block; text-align:center; background:var(--calm-pink); color:var(--bordeaux);
+  text-decoration:none; padding:11px; border-radius:var(--r-pill);
+  font-size:14.5px; font-weight:600;
+}
+.human a:hover{background:var(--calm-deep)}
+.human small{display:block; text-align:center; margin-top:8px; font-size:11.5px; color:var(--grey-2)}
+
+@media(max-width:520px){
+  .panel{right:8px; left:8px; bottom:88px; width:auto; height:calc(100vh - 106px)}
+  .launcher{right:16px; bottom:16px}
+  .stage{padding:32px 18px 180px}
+}
+</style>
+</head>
+<body>
+
+<div class="stage">
+  <div class="demo-note">
+    <p class="eyebrow">Frankly™ · Klikbar prototype · dummy-data</p>
+    <h1>Support-widget der afgør sagen i stedet for at sende den videre</h1>
+    <p>Grenstrukturen er inspireret af Zenegy, men indholdsmodellen er vendt om. Zenegy ruter kunden til login eller et menneske — det fungerer for bogholdere med en konto. Franklys problemkunde har ingen konto, kan ikke huske navnet og mistænker svindel. Hun skal have sit svar <em>i</em> widget'en.</p>
+    <p>Tryk på knappen nede til højre for at åbne. Prøv et af disse numre i opslaget:</p>
+    <div class="tries">
+      <button class="try" data-fill="26248812">26 24 88 12 — én dækning</button>
+      <button class="try" data-fill="40153869">40 15 38 69 — tre dækninger</button>
+      <button class="try" data-fill="11223344">11 22 33 44 — ikke fundet</button>
+    </div>
+    <div class="warn">
+      <strong>Om tallene:</strong> alle policer, priser, datoer og produkter er opdigtede testdata til prototypen. Prisen 49 kr. er taget fra en offentlig Trustpilot-anmeldelse og er ikke en verificeret Frankly-pris. Rigtige priser skal valideres af Niels og Alex, før noget forlader Frankly-miljøet. CVR-nummer og telefonnummer er derimod hentet fra jeres eget materiale.
+    </div>
+  </div>
+</div>
+
+<!-- =============== WIDGET =============== -->
+<button class="launcher" id="launcher" aria-label="Åbn Frankly support">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+  <span class="badge">?</span>
+</button>
+
+<div class="panel" id="panel" role="dialog" aria-label="Frankly support">
+  <div class="phead">
+    <div class="row">
+      <button class="iconbtn hidden" id="back" aria-label="Tilbage">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <div class="mark">F</div>
+      <div class="who">
+        <b id="htitle">Frankly support</b>
+        <span><i class="dot"></i> Vi er online nu · svar på ca. 1 min.</span>
+      </div>
+      <button class="iconbtn" id="close" aria-label="Luk">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+      </button>
+    </div>
+    <div class="trust">Frankly Insure ApS · CVR 42626449 · Nyhavn 63B, 1051 København K<br>Registreret hos Finanstilsynet</div>
+  </div>
+
+  <div class="pbody" id="pbody">
+
+    <!-- MENU -->
+    <section class="screen on" data-s="menu">
+      <h2 class="q">Hvad kan vi hjælpe med?</h2>
+      <p class="sub">Vælg det der passer bedst — så løser vi det her, uden at du skal logge ind eller vente.</p>
+
+      <button class="opt primary" data-go="lookup" data-intent="recognise">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg></span>
+        <span class="tx"><b>Jeg genkender ikke en betaling</b><span>Se hvad du har, og hvor det kommer fra</span></span>
+        <span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+      </button>
+
+      <button class="opt" data-go="lookup" data-intent="cancel">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64M12 2v10"/></svg></span>
+        <span class="tx"><b>Jeg vil stoppe min dækning</b><span>Tager under et minut · ingen binding</span></span>
+        <span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+      </button>
+
+      <button class="opt" data-go="faq">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><path d="M12 3l9 4.5-9 4.5L3 7.5z"/></svg></span>
+        <span class="tx"><b>Hvad dækker min Frankly?</b><span>Pris, dækning, binding, opsigelse</span></span>
+        <span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+      </button>
+
+      <button class="opt" data-go="triage">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></span>
+        <span class="tx"><b>Noget er gået i stykker</b><span>Find ud af om det er en Frankly-sag</span></span>
+        <span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+      </button>
+
+      <button class="opt" data-go="guides">
+        <span class="ico"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><polygon points="23 7 16 12 23 17 23 7"/><rect x="1" y="5" width="15" height="14" rx="2"/></svg></span>
+        <span class="tx"><b>Vis mig hvor jeg skal klikke</b><span>Korte videoguides · under 30 sek.</span></span>
+        <span class="arw"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"><path d="M9 18l6-6-6-6"/></svg></span>
+      </button>
+
+      <div class="human">
+        <div class="faces"><span class="f">A</span><span class="f">N</span><span class="f">M</span></div>
+        <p>Alex, Nicolai og Mette sidder klar. Du taler altid med et rigtigt menneske.</p>
+        <a href="tel:+4570604440">Ring 70 60 44 40</a>
+        <small>Man–tor 8.30–16.00 · fre 8.30–15.00</small>
+      </div>
+    </section>
+
+    <!-- LOOKUP -->
+    <section class="screen" data-s="lookup">
+      <h2 class="q" id="lu-h">Find din dækning</h2>
+      <p class="sub" id="lu-p">Din Frankly blev oprettet med det telefonnummer, du brugte til at betale. Skriv det, så viser vi præcis hvad du har.</p>
+      <label class="fl" for="tel">Telefonnummer</label>
+      <input class="fi" id="tel" type="tel" inputmode="numeric" placeholder="8 cifre" autocomplete="tel">
+      <p class="hint">Vi bruger kun nummeret til at finde din dækning. Du skal ikke oprette en konto eller logge ind.</p>
+      <div class="err" id="lu-err"></div>
+      <button class="btn" id="lu-go">Find min dækning</button>
+      <button class="btn ghost" data-go="menu">Tilbage</button>
+    </section>
+
+    <!-- RECOGNISE -->
+    <section class="screen" data-s="recognise">
+      <h2 class="q">Her er hvad du har.</h2>
+      <p class="sub" id="rc-sub"></p>
+      <div id="rc-cards"></div>
+      <div id="rc-total"></div>
+      <div class="reassure">
+        <b>Det er os, hævningen kommer fra.</b>
+        Den står som «Frankly Insure» på dit kontoudtog og i MobilePay. Der er ingen binding — du kan stoppe med ét tryk herunder, og du får en bekræftelse på mail med det samme.
+      </div>
+      <button class="btn" data-go="cancelconfirm">Stop min dækning nu</button>
+      <button class="btn sec" data-go="faq">Behold den — vis mig hvad den dækker</button>
+      <div class="human">
+        <div class="faces"><span class="f">A</span><span class="f">N</span><span class="f">M</span></div>
+        <p>Vil du tale med et menneske om det i stedet? Det er helt fint.</p>
+        <a href="tel:+4570604440">Ring 70 60 44 40</a>
+      </div>
+    </section>
+
+    <!-- CANCEL CONFIRM -->
+    <section class="screen" data-s="cancelconfirm">
+      <h2 class="q">Skal vi stoppe den?</h2>
+      <p class="sub" id="cc-sub"></p>
+      <div id="cc-cards"></div>
+      <div id="cc-total"></div>
+      <div class="reassure">
+        <b>Sådan gør vi det.</b>
+        Vi stopper betalingsaftalen med det samme. Der bliver ikke trukket flere penge. Du får en bekræftelse på mail inden for få minutter — behold den.
+      </div>
+      <button class="btn" id="cc-go">Ja, stop min dækning</button>
+      <button class="btn ghost" data-go="menu">Nej, behold den</button>
+    </section>
+
+    <!-- REASON -->
+    <section class="screen" data-s="reason">
+      <div class="done" style="padding-bottom:0">
+        <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h2>Det er stoppet.</h2>
+      </div>
+      <p class="sub" style="margin-top:4px">Der bliver ikke trukket flere penge. Bekræftelsen er på vej til din mail.</p>
+      <h2 class="q" style="font-size:17px; margin-top:22px">Må vi spørge hvorfor?</h2>
+      <p class="sub">Ét tryk. Det hjælper os med at undgå, at andre får samme oplevelse.</p>
+      <div id="rsn-list">
+        <button class="rsn" data-r="2">Jeg vidste ikke, at den ville blive betalt efter den gratis måned</button>
+        <button class="rsn" data-r="1">Jeg ville kun prøve den</button>
+        <button class="rsn" data-r="4">Jeg har ikke brug for den</button>
+        <button class="rsn" data-r="5">Jeg har allerede dækning et andet sted</button>
+        <button class="rsn" data-r="3">Prisen er for høj</button>
+        <button class="rsn" data-r="6">Jeg forstod ikke, hvad der var dækket</button>
+      </div>
+      <button class="btn ghost" data-go="done">Spring over</button>
+    </section>
+
+    <!-- DONE -->
+    <section class="screen" data-s="done">
+      <div class="done">
+        <div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+        <h2>Tak — det er noteret.</h2>
+        <div class="receipt" id="dn-receipt"></div>
+        <p>Hvis du senere får brug for dækning igen — på det samme eller noget helt andet — er du altid velkommen tilbage. Der er ingen karensperiode og intet du skal genoprette.</p>
+      </div>
+      <button class="btn sec" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- FAQ -->
+    <section class="screen" data-s="faq">
+      <h2 class="q">Det folk oftest spørger om</h2>
+      <p class="sub">Kan du ikke finde svaret, så ring. Vi svarer typisk inden for et minut.</p>
+
+      <details class="acc">
+        <summary>Hvordan stopper jeg min dækning?</summary>
+        <div class="ac">
+          <p>Der er to veje, og de virker begge:</p>
+          <p><strong>1 — Her i chatten.</strong> Vælg «Jeg vil stoppe min dækning», skriv dit telefonnummer, tryk stop. Under et minut, uden login.</p>
+          <p><strong>2 — I MobilePay.</strong></p>
+          <ol>
+            <li>Åbn MobilePay-appen</li>
+            <li>Tryk <strong>Mig</strong></li>
+            <li>Tryk <strong>Betalingsaftaler</strong></li>
+            <li>Vælg <strong>Frankly Insure – Produktforsikring</strong></li>
+            <li>Tryk <strong>Slet aftale</strong></li>
+          </ol>
+          <p>Stopper du betalingsaftalen i MobilePay, bliver dækningen automatisk opsagt. Du skal ikke gøre mere.</p>
+          <p><strong>Der er ingen binding og ingen opsigelsesfrist.</strong></p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvad koster det, og hvornår trækkes pengene?</summary>
+        <div class="ac">
+          <p>Prisen afhænger af, hvad du har dækket, og står på din police og i den mail du fik, da dækningen blev oprettet. Den er den samme hver måned — den stiger ikke, og der er ingen gebyrer oveni.</p>
+          <p><strong>Den første måned er gratis.</strong> Derefter trækkes beløbet én gang om måneden på samme dato som dit køb.</p>
+          <p>Vi sender dig en påmindelse en uge før den første betaling, med beløbet og datoen. Du bliver ikke overrasket.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvorfor står Frankly på mit kontoudtog — jeg husker ikke at have købt det?</summary>
+        <div class="ac">
+          <p>Frankly bliver typisk tilføjet i butikken, når du køber elektronik eller hvidevarer — for eksempel hos GreenMind. Du godkendte det i MobilePay som en separat aftale ved siden af selve købet, og fik en måned gratis.</p>
+          <p>Fordi den første måned er gratis, kommer den første betaling en måned senere — og der er navnet nemt at have glemt.</p>
+          <p>Vælg «Jeg genkender ikke en betaling» her i chatten, så viser vi dig præcis hvilket produkt, hvilken butik og hvilken dato det handler om. Så kan du selv se, om det passer.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvad dækker den — og hvad gør den ikke?</summary>
+        <div class="ac">
+          <p><strong>Dækket:</strong> uheld og hændelig skade — du taber den, spilder på den, slår en revne i den. Væskeskade. Brandskade. Reparation eller erstatning. Dækningen følger dig på rejser.</p>
+          <p><strong>Ikke dækket:</strong> tyveri og bortkomst (det hører under din indboforsikring). Produktfejl, hvor tingen holder op med at virke af sig selv (det er en garantisag hos butikken). Manglende pasning, slid og ælde. Tilbehør uden egen dækning. Følgeudgifter.</p>
+          <p>Er du i tvivl om en konkret skade, så ring. Vi siger det som det er, også når svaret er nej.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Er der binding eller skjulte gebyrer?</summary>
+        <div class="ac">
+          <p>Nej til begge. Ingen binding, ingen opsigelsesfrist, ingen oprettelsesgebyr, ingen gebyr for at stoppe. Samme pris hver måned.</p>
+          <p>Du kan stoppe hvornår som helst — også dagen efter en betaling.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvordan får jeg adgang til min Frankly-profil?</summary>
+        <div class="ac">
+          <p>Du logger ind på <strong>franklyinsure.com</strong> med det telefonnummer eller den mailadresse, dækningen blev oprettet med. Du får en kode tilsendt — du skal ikke huske et kodeord.</p>
+          <p>Virker det ikke, skal du ikke bruge tid på det: ring 70 60 44 40, så finder vi dig. Du behøver ikke en profil for at stoppe din dækning eller anmelde en skade.</p>
+          <p>Vælg «Vis mig hvor jeg skal klikke» her i chatten, hvis du vil se det på video.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Jeg kan ikke bruge MobilePay — hvad så?</summary>
+        <div class="ac">
+          <p>Ring til os på 70 60 44 40. Vi finder en løsning sammen. Du skal ikke undlade at få hjælp, fordi en app ikke virker på din telefon.</p>
+          <p>Skal du skifte betalingskort på en eksisterende aftale, gøres det i MobilePay under <strong>Mig → Betalingsaftaler → Frankly Insure</strong>.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Kan jeg tilføje flere ting senere?</summary>
+        <div class="ac">
+          <p>Ja. Du kan tilføje ting du allerede har købt, hvis der er gået under 30 dage siden købs- eller reparationsdatoen. Ring, eller gør det på din profil.</p>
+          <p>Har du flere dækninger, samler vi dem, så du får én betaling og ét overblik — ikke tre separate hævninger.</p>
+        </div>
+      </details>
+
+      <button class="btn ghost" data-go="menu" style="margin-top:14px">Tilbage til start</button>
+    </section>
+
+    <!-- TRIAGE -->
+    <section class="screen" data-s="triage">
+      <h2 class="q">Hvad skete der?</h2>
+      <p class="sub">Vi peger dig det rigtige sted hen — også hvis det ikke er os.</p>
+      <div class="triage">
+        <div class="tri on">
+          <b>Et uheld — den blev tabt, våd eller revnet</b>
+          <p>Det er en Frankly-sag. Anmeld den her, så vurderer vi den. Typisk svar inden for 30 minutter, og over 90 % af skader bliver godkendt.</p>
+        </div>
+        <div class="tri">
+          <b>Den holdt op med at virke af sig selv</b>
+          <p>Det lyder som en produktfejl, og så er det en garantisag hos butikken. Start der — det er både hurtigere og gratis for dig.</p>
+        </div>
+        <div class="tri">
+          <b>Den blev stjålet eller er forsvundet</b>
+          <p>Tyveri og bortkomst dækkes ikke af Frankly. Det hører under din indboforsikring. Kontakt dem først.</p>
+        </div>
+      </div>
+      <button class="btn">Anmeld et uheld</button>
+      <button class="btn sec" data-go="faq">Se hvad der er dækket</button>
+      <button class="btn ghost" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- GUIDES -->
+    <section class="screen" data-s="guides">
+      <h2 class="q">Vis mig hvor jeg skal klikke</h2>
+      <p class="sub">Korte klip uden lyd, med tekst på. Optaget i den rigtige app — ikke en animation.</p>
+
+      <button class="vid" data-v="cancel">
+        <span class="frame"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="dur">0:22</span></span>
+        <span class="cap"><b>Sådan stopper du i MobilePay</b><span>5 tryk · ingen login</span></span>
+      </button>
+
+      <button class="vid" data-v="login">
+        <span class="frame"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="dur">0:18</span></span>
+        <span class="cap"><b>Sådan logger du ind på din profil</b><span>Med kode på SMS — intet kodeord</span></span>
+      </button>
+
+      <button class="vid" data-v="add">
+        <span class="frame"><span class="play"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg></span><span class="dur">0:26</span></span>
+        <span class="cap"><b>Sådan tilføjer du en ting mere</b><span>Og samler betalingen til én</span></span>
+      </button>
+
+      <button class="btn ghost" data-go="menu" style="margin-top:6px">Tilbage til start</button>
+    </section>
+
+    <!-- PLAYER -->
+    <section class="screen" data-s="player">
+      <div class="player" id="pl-box"></div>
+      <button class="btn sec" data-go="guides">Se de andre guides</button>
+      <button class="btn ghost" data-go="menu">Tilbage til start</button>
+    </section>
+
+  </div>
+
+  <div class="pfoot" id="pfoot">Frankly™ · Du taler altid med rigtige mennesker · 70 60 44 40</div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- dummy data (prototype only) ---------- */
+  var DB = {
+    "26248812":{
+      name:"Mette",
+      policies:[{
+        product:"iPhone 15", shop:"GreenMind Nørrebro", bought:"12. juni 2026",
+        price:49, next:"12. august 2026", nr:"100036086", trialEnded:true
+      }]
+    },
+    "40153869":{
+      name:"Per",
+      policies:[
+        {product:"MacBook Air 13\"", shop:"GreenMind Aarhus C", bought:"3. juli 2026", price:49, next:"3. september 2026", nr:"100027373", trialEnded:true},
+        {product:"iPad 10. gen.",    shop:"GreenMind Aarhus C", bought:"3. juli 2026", price:39, next:"3. september 2026", nr:"100027374", trialEnded:true},
+        {product:"AirPods Pro",      shop:"GreenMind Aarhus C", bought:"3. juli 2026", price:19, next:"3. september 2026", nr:"100027375", trialEnded:true}
+      ]
+    }
+  };
+
+  var VIDEOS = {
+    cancel:{
+      title:"Sådan stopper du i MobilePay",
+      steps:["Åbn <b>MobilePay</b>","Tryk <b>Mig</b> nederst til højre","Tryk <b>Betalingsaftaler</b>","Vælg <b>Frankly Insure – Produktforsikring</b>","Tryk <b>Slet aftale</b>"],
+      note:"Når betalingsaftalen er slettet, bliver dækningen automatisk opsagt. Du skal ikke gøre mere — og du behøver ikke ringe."
+    },
+    login:{
+      title:"Sådan logger du ind på din profil",
+      steps:["Gå til <b>franklyinsure.com</b>","Tryk <b>Log ind</b> øverst til højre","Skriv dit <b>telefonnummer</b>","Indtast den kode du får på SMS"],
+      note:"Der er ikke noget kodeord at huske. Virker det ikke, så ring 70 60 44 40 — du behøver ikke en profil for at stoppe din dækning eller anmelde en skade."
+    },
+    add:{
+      title:"Sådan tilføjer du en ting mere",
+      steps:["Log ind på din profil","Tryk <b>Tilføj dækning</b>","Vælg hvad du vil dække","Se prisen, og godkend"],
+      note:"Der skal være gået under 30 dage siden købs- eller reparationsdatoen. Har du flere dækninger, samler vi dem til én betaling."
+    }
+  };
+
+  /* ---------- state ---------- */
+  var stack = ["menu"];
+  var current = null;   // matched customer
+  var intent = "recognise";
+  var chosenReason = null;
+
+  var TITLES = {
+    menu:"Frankly support", lookup:"Find din dækning", recognise:"Din dækning",
+    cancelconfirm:"Stop din dækning", reason:"Stoppet", done:"Stoppet",
+    faq:"Ofte stillede spørgsmål", triage:"Er det en Frankly-sag?",
+    guides:"Videoguides", player:"Videoguide"
+  };
+
+  var panel = document.getElementById("panel");
+  var body  = document.getElementById("pbody");
+  var back  = document.getElementById("back");
+  var htitle= document.getElementById("htitle");
+
+  function screens(){ return body.querySelectorAll(".screen"); }
+  function show(name, push){
+    var found = false;
+    screens().forEach(function(s){
+      var on = s.getAttribute("data-s") === name;
+      s.classList.toggle("on", on);
+      if(on) found = true;
+    });
+    if(!found) return;
+    if(push !== false){
+      if(stack[stack.length-1] !== name) stack.push(name);
+    }
+    back.classList.toggle("hidden", stack.length <= 1);
+    htitle.textContent = TITLES[name] || "Frankly support";
+    body.scrollTop = 0;
+  }
+
+  /* ---------- open / close ---------- */
+  document.getElementById("launcher").addEventListener("click", function(){
+    panel.classList.toggle("open");
+    if(panel.classList.contains("open")){
+      stack = ["menu"]; show("menu", false);
+    }
+  });
+  document.getElementById("close").addEventListener("click", function(){
+    panel.classList.remove("open");
+  });
+  back.addEventListener("click", function(){
+    if(stack.length > 1){ stack.pop(); show(stack[stack.length-1], false); }
+  });
+  document.addEventListener("keydown", function(e){
+    if(e.key === "Escape") panel.classList.remove("open");
+  });
+
+  /* ---------- generic navigation ---------- */
+  document.addEventListener("click", function(e){
+    var el = e.target.closest("[data-go]");
+    if(!el) return;
+    var to = el.getAttribute("data-go");
+    var it = el.getAttribute("data-intent");
+    if(it) intent = it;
+
+    if(to === "menu"){ stack = ["menu"]; show("menu", false); return; }
+
+    if(to === "lookup"){
+      var h = document.getElementById("lu-h"), p = document.getElementById("lu-p");
+      if(intent === "cancel"){
+        h.textContent = "Lad os finde din dækning";
+        p.textContent = "Vi skal lige se hvad du har, før vi stopper den. Skriv det telefonnummer du betalte med — du skal ikke logge ind.";
+      } else {
+        h.textContent = "Find din dækning";
+        p.textContent = "Din Frankly blev oprettet med det telefonnummer, du brugte til at betale. Skriv det, så viser vi præcis hvad du har.";
+      }
+      document.getElementById("lu-err").classList.remove("on");
+      show("lookup");
+      setTimeout(function(){ document.getElementById("tel").focus(); }, 320);
+      return;
+    }
+
+    if(to === "cancelconfirm"){ renderConfirm(); show("cancelconfirm"); return; }
+    if(to === "done"){ renderDone(); stack = ["done"]; show("done", false); return; }
+    show(to);
+  });
+
+  /* ---------- demo shortcuts ---------- */
+  document.querySelectorAll(".try").forEach(function(b){
+    b.addEventListener("click", function(){
+      if(!panel.classList.contains("open")) panel.classList.add("open");
+      stack = ["menu"]; show("menu", false);
+      intent = "recognise";
+      var h = document.getElementById("lu-h"), p = document.getElementById("lu-p");
+      h.textContent = "Find din dækning";
+      p.textContent = "Din Frankly blev oprettet med det telefonnummer, du brugte til at betale. Skriv det, så viser vi præcis hvad du har.";
+      document.getElementById("lu-err").classList.remove("on");
+      show("lookup");
+      document.getElementById("tel").value = b.getAttribute("data-fill");
+    });
+  });
+
+  /* ---------- lookup ---------- */
+  function digits(v){ return (v||"").replace(/\D/g,""); }
+
+  function doLookup(){
+    var raw = digits(document.getElementById("tel").value);
+    var err = document.getElementById("lu-err");
+
+    if(raw.length !== 8){
+      err.innerHTML = "Et dansk telefonnummer er 8 cifre. Prøv igen — eller ring til os på <strong>70 60 44 40</strong>, så finder vi dig.";
+      err.classList.add("on");
+      return;
+    }
+    if(!DB[raw]){
+      err.innerHTML = "Vi kan ikke finde en dækning på det nummer. Det kan være oprettet med et andet nummer — måske en ægtefælles. "
+        + "Ring <strong>70 60 44 40</strong>, så finder vi det på 1 minut. Du skal ikke bevise noget over for os.";
+      err.classList.add("on");
+      return;
+    }
+    err.classList.remove("on");
+    current = DB[raw];
+    if(intent === "cancel"){ renderConfirm(); show("cancelconfirm"); }
+    else { renderRecognise(); show("recognise"); }
+  }
+  document.getElementById("lu-go").addEventListener("click", doLookup);
+  document.getElementById("tel").addEventListener("keydown", function(e){
+    if(e.key === "Enter") doLookup();
+  });
+
+  /* ---------- renderers ---------- */
+  function cardHTML(p){
+    return '<div class="pol">'
+      + '<div class="top"><b>'+p.product+'</b><span>Købt hos '+p.shop+' den '+p.bought+'</span></div>'
+      + '<dl>'
+      + '<div class="r"><dt>Pris</dt><dd>'+p.price+' kr./md.</dd></div>'
+      + '<div class="r"><dt>Næste betaling</dt><dd>'+p.next+'</dd></div>'
+      + '<div class="r"><dt>Police</dt><dd>'+p.nr+'</dd></div>'
+      + '<div class="r"><dt>Binding</dt><dd class="ok">Ingen</dd></div>'
+      + '</dl></div>';
+  }
+  function total(ps){
+    return ps.reduce(function(a,p){ return a + p.price; }, 0);
+  }
+  function cardsHTML(ps){
+    return ps.map(cardHTML).join("");
+  }
+  function totalHTML(ps){
+    if(ps.length < 2) return "";
+    return '<div class="tot"><span>'+ps.length+' dækninger i alt</span><b>'+total(ps)+' kr./md.</b></div>';
+  }
+
+  function renderRecognise(){
+    var ps = current.policies;
+    var sub = document.getElementById("rc-sub");
+    if(ps.length > 1){
+      sub.innerHTML = "Hej "+current.name+". Du har <strong>"+ps.length+" dækninger</strong> — derfor ser du flere hævninger. "
+        + "De hører sammen og kommer alle fra os.";
+    } else {
+      sub.innerHTML = "Hej "+current.name+". Du har <strong>én dækning</strong> hos os.";
+    }
+    document.getElementById("rc-cards").innerHTML = cardsHTML(ps);
+    document.getElementById("rc-total").innerHTML = totalHTML(ps);
+  }
+
+  function renderConfirm(){
+    if(!current){ intent = "cancel"; show("lookup"); return; }
+    var ps = current.policies;
+    document.getElementById("cc-sub").innerHTML = ps.length > 1
+      ? "Vi stopper alle <strong>"+ps.length+"</strong> dækninger. Vil du kun stoppe én, så ring 70 60 44 40 — det tager et minut."
+      : "Vi stopper denne dækning med det samme.";
+    document.getElementById("cc-cards").innerHTML = cardsHTML(ps);
+    document.getElementById("cc-total").innerHTML = totalHTML(ps);
+  }
+
+  document.getElementById("cc-go").addEventListener("click", function(){
+    chosenReason = null;
+    document.querySelectorAll(".rsn").forEach(function(b){ b.classList.remove("sel"); });
+    show("reason");
+  });
+
+  document.querySelectorAll(".rsn").forEach(function(b){
+    b.addEventListener("click", function(){
+      document.querySelectorAll(".rsn").forEach(function(x){ x.classList.remove("sel"); });
+      b.classList.add("sel");
+      chosenReason = b.textContent.trim();
+      setTimeout(function(){ renderDone(); stack = ["done"]; show("done", false); }, 340);
+    });
+  });
+
+  function renderDone(){
+    var box = document.getElementById("dn-receipt");
+    var ps = current ? current.policies : [];
+    var lines = ps.map(function(p){
+      return '<div class="r"><dt>'+p.product+'</dt><dd class="ok">Stoppet</dd></div>';
+    }).join("");
+    box.innerHTML = '<dl style="margin:0">'
+      + lines
+      + (ps.length ? '<div class="r"><dt>Fremtidige betalinger</dt><dd class="ok">0 kr.</dd></div>' : '')
+      + '</dl>'
+      + (chosenReason ? '<p style="margin:12px 0 0; font-size:13px; color:#585C60; text-align:left">Din årsag: «'+chosenReason+'»</p>' : '');
+  }
+
+  /* ---------- video ---------- */
+  document.querySelectorAll(".vid").forEach(function(b){
+    b.addEventListener("click", function(){
+      var v = VIDEOS[b.getAttribute("data-v")];
+      if(!v) return;
+      document.getElementById("pl-box").innerHTML =
+        '<span class="badge">Video · uden lyd · tekst på</span>'
+        + '<h3>'+v.title+'</h3>'
+        + '<ol>'+v.steps.map(function(s){ return '<li>'+s+'</li>'; }).join("")+'</ol>'
+        + '<p class="note">'+v.note+'</p>'
+        + '<p class="note"><em>I prototypen vises trinnene som tekst. I den færdige widget spiller en skærmoptagelse her — og trinnene står stadig som tekst nedenunder, så guiden virker uden video.</em></p>';
+      show("player");
+    });
+  });
+
+})();
+</script>
+</body>
+</html>

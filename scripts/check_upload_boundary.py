@@ -38,7 +38,9 @@ OS_ONLY_PAGES = [
     # R11 CLEAR): frankly-os-deck.html, frankly-os-holdet.html and
     # frankly-linkedin-checker.html are deliberately NOT listed — they ship as gated,
     # noindex, robots-Disallowed Lab pages. frankly-support-widget.html and
-    # frankly-kundeoplevelse-strategi.html stay off the allowlist pending Jonas.
+    # frankly-kundeoplevelse-strategi.html were held pending Jonas in phase 1; on
+    # 2026-08-23 (phase 2) Jonas released all three held pages as-is behind the curtain
+    # and relaxed the claims lock for gated Lab pages, so they are NOT listed either.
     "agent-brief-builder.html",
     "control-cockpit.html",
     "frankly-os.html",

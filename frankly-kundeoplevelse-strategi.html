@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Frankly — Kundeoplevelse: årsagskæde og prioriteret plan</title>
+<link rel="stylesheet" href="frankly-lab-brand.css">
+<style>
+:root{
+  --calm-pink:#FFD3E3; --calm-deep:#FFACCA; --limestone:#F5F4F1; --blush:#FFF6FA;
+  --stone:#ECE9E4; --stone-2:#F0EEE9; --stone-4:#E3DDD5; --stone-dark:#3D342B;
+  --bordeaux:#2D0011; --white:#fff; --grey-1:#585C60; --grey-2:#838383; --grey-4:#D9D9D9;
+  --success:#057642; --lavender:#F0EEFC;
+  --font-display:"Almarena Neue Display","Almarena Neue",Georgia,"Times New Roman",serif;
+  --font-sans:"Switzer",Inter,system-ui,-apple-system,sans-serif;
+  --r-sm:8px; --r-md:12px; --r-card:16px; --r-xl:24px; --r-pill:999px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0; background:var(--limestone); color:var(--bordeaux);
+  font-family:var(--font-sans); font-size:16.5px; line-height:1.62;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:940px;margin:0 auto;padding:0 28px 120px}
+
+/* ---------- header ---------- */
+header.hero{
+  background:var(--calm-pink); padding:72px 0 56px; margin-bottom:56px;
+  border-bottom:1px solid rgba(45,0,17,.08);
+}
+header.hero .wrap{padding-bottom:0}
+.eyebrow{
+  font-size:12.5px; letter-spacing:.09em; text-transform:uppercase;
+  color:rgba(45,0,17,.55); font-weight:500; margin:0 0 18px;
+}
+h1{
+  font-family:var(--font-display); font-weight:600; font-size:clamp(34px,5.2vw,54px);
+  line-height:1.1; letter-spacing:-.015em; margin:0 0 20px; max-width:20ch;
+}
+.standfirst{font-size:19px; line-height:1.55; max-width:62ch; margin:0; color:rgba(45,0,17,.78)}
+.meta{
+  margin-top:32px; display:flex; flex-wrap:wrap; gap:8px;
+}
+.meta span{
+  background:rgba(255,255,255,.65); border-radius:var(--r-pill);
+  padding:6px 14px; font-size:13px; color:rgba(45,0,17,.7);
+}
+
+/* ---------- typography ---------- */
+h2{
+  font-family:var(--font-display); font-weight:600; font-size:29px; line-height:1.2;
+  letter-spacing:-.01em; margin:72px 0 8px; padding-top:28px;
+  border-top:1px solid var(--stone-4);
+}
+h2 .num{
+  display:block; font-family:var(--font-sans); font-size:12.5px; font-weight:500;
+  letter-spacing:.09em; text-transform:uppercase; color:var(--grey-2); margin-bottom:12px;
+}
+h3{font-family:var(--font-display); font-weight:600; font-size:21px; line-height:1.28; margin:40px 0 10px}
+h4{font-size:16px; font-weight:600; margin:28px 0 6px}
+p{margin:0 0 16px; max-width:74ch}
+a{color:var(--bordeaux); text-decoration-color:var(--calm-deep); text-decoration-thickness:2px; text-underline-offset:2px}
+strong{font-weight:600}
+ul,ol{margin:0 0 18px; padding-left:22px; max-width:74ch}
+li{margin-bottom:7px}
+small{font-size:13.5px; color:var(--grey-1)}
+
+/* ---------- toc ---------- */
+nav.toc{
+  background:var(--white); border-radius:var(--r-card); padding:26px 30px;
+  margin-bottom:8px; border:1px solid var(--stone-4);
+}
+nav.toc p{font-size:12.5px; letter-spacing:.09em; text-transform:uppercase; color:var(--grey-2); margin:0 0 14px; font-weight:500}
+nav.toc ol{margin:0; padding-left:20px; columns:2; column-gap:36px}
+nav.toc li{margin-bottom:6px; font-size:15px}
+nav.toc a{text-decoration:none; color:var(--bordeaux)}
+nav.toc a:hover{text-decoration:underline; text-decoration-color:var(--calm-deep)}
+
+/* ---------- components ---------- */
+.card{
+  background:var(--white); border-radius:var(--r-card); padding:26px 30px;
+  border:1px solid var(--stone-4); margin:24px 0;
+}
+.card.pink{background:var(--blush); border-color:var(--calm-pink)}
+.card.tight{padding:20px 24px}
+.card > :last-child{margin-bottom:0}
+.card h4:first-child,.card h3:first-child{margin-top:0}
+
+.callout{
+  border-left:4px solid var(--calm-deep); background:var(--white);
+  border-radius:0 var(--r-md) var(--r-md) 0; padding:20px 24px; margin:24px 0;
+}
+.callout.flag{border-left-color:#C2185B; background:#FFF5F8}
+.callout.good{border-left-color:var(--success); background:#F3FAF6}
+.callout > :last-child{margin-bottom:0}
+.callout .label{
+  font-size:12px; letter-spacing:.09em; text-transform:uppercase;
+  font-weight:600; color:var(--grey-1); display:block; margin-bottom:8px;
+}
+
+blockquote{
+  margin:20px 0; padding:18px 24px; background:var(--white);
+  border-radius:var(--r-md); border:1px solid var(--stone-4);
+  font-style:italic; color:rgba(45,0,17,.82); max-width:74ch;
+}
+blockquote p{margin-bottom:10px}
+blockquote > :last-child{margin-bottom:0}
+blockquote cite{display:block; font-style:normal; font-size:13.5px; color:var(--grey-2); margin-top:8px}
+
+table{
+  width:100%; border-collapse:collapse; margin:24px 0; font-size:15.5px;
+  background:var(--white); border-radius:var(--r-card); overflow:hidden;
+  border:1px solid var(--stone-4);
+}
+th,td{padding:13px 16px; text-align:left; border-bottom:1px solid var(--stone-2); vertical-align:top}
+th{
+  background:var(--stone-2); font-size:12.5px; letter-spacing:.05em;
+  text-transform:uppercase; font-weight:600; color:var(--grey-1);
+}
+tr:last-child td{border-bottom:none}
+td.num,th.num{text-align:right; font-variant-numeric:tabular-nums; white-space:nowrap}
+tr.hi td{background:var(--blush); font-weight:600}
+
+.bar{height:9px; background:var(--stone-2); border-radius:var(--r-pill); overflow:hidden; min-width:70px}
+.bar i{display:block; height:100%; background:var(--calm-deep); border-radius:var(--r-pill)}
+.bar i.strong{background:var(--bordeaux)}
+
+/* chain */
+.chain{display:flex; flex-direction:column; gap:0; margin:28px 0}
+.link{
+  display:grid; grid-template-columns:88px 1fr; gap:20px; align-items:start;
+  padding:18px 0; border-top:1px solid var(--stone-4);
+}
+.link:last-child{border-bottom:1px solid var(--stone-4)}
+.link .when{
+  font-family:var(--font-display); font-size:15px; font-weight:600;
+  color:var(--bordeaux); padding-top:1px;
+}
+.link .what strong{display:block; margin-bottom:3px}
+.link .what p{margin:0; font-size:15px; color:var(--grey-1)}
+.link.crit .when{color:#C2185B}
+
+/* effort/impact */
+.plan{display:flex; flex-direction:column; gap:14px; margin:26px 0}
+.item{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:22px 26px; display:grid; grid-template-columns:auto 1fr; gap:20px;
+}
+.item .rank{
+  font-family:var(--font-display); font-size:26px; font-weight:600;
+  color:var(--calm-deep); line-height:1; padding-top:4px; min-width:34px;
+}
+.item h4{margin:0 0 6px; font-size:17.5px}
+.item p{margin:0 0 12px; font-size:15.5px}
+.item p:last-child{margin-bottom:0}
+.tags{display:flex; flex-wrap:wrap; gap:7px}
+.tag{
+  font-size:12px; padding:4px 11px; border-radius:var(--r-pill);
+  background:var(--stone-2); color:var(--grey-1); font-weight:500;
+}
+.tag.eff{background:#EAF5EF; color:var(--success)}
+.tag.eff2{background:#FFF3E0; color:#8A5300}
+.tag.eff3{background:#FDEAF1; color:#9B1B49}
+.tag.imp{background:var(--calm-pink); color:var(--bordeaux)}
+
+/* copy blocks */
+.copyblock{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:0; overflow:hidden; margin:22px 0;
+}
+.copyblock .ch{
+  padding:12px 22px; background:var(--stone-2); font-size:12.5px;
+  letter-spacing:.06em; text-transform:uppercase; font-weight:600; color:var(--grey-1);
+  border-bottom:1px solid var(--stone-4);
+}
+.copyblock .cb{padding:24px 26px}
+.copyblock .cb > :last-child{margin-bottom:0}
+.copyblock.before .ch{background:#FDEAF1; color:#9B1B49}
+.copyblock.after .ch{background:#EAF5EF; color:var(--success)}
+.mailhead{font-family:var(--font-display); font-size:22px; font-weight:600; line-height:1.22; margin:0 0 14px}
+.ph{
+  background:var(--lavender); border-radius:4px; padding:1px 6px;
+  font-size:.94em; font-weight:600; white-space:nowrap;
+}
+.btnmock{
+  display:inline-block; background:var(--bordeaux); color:var(--calm-pink);
+  padding:11px 22px; border-radius:var(--r-pill); font-size:15px; font-weight:500;
+  margin:6px 8px 6px 0;
+}
+.btnmock.sec{background:var(--white); color:var(--bordeaux); border:1.5px solid var(--bordeaux)}
+
+.two{display:grid; grid-template-columns:1fr 1fr; gap:18px; margin:24px 0}
+@media(max-width:760px){
+  .two,nav.toc ol{grid-template-columns:1fr; columns:1}
+  .link{grid-template-columns:1fr; gap:6px}
+  .item{grid-template-columns:1fr}
+  body{font-size:16px}
+}
+footer{
+  margin-top:80px; padding-top:28px; border-top:1px solid var(--stone-4);
+  font-size:13.5px; color:var(--grey-2);
+}
+@media print{
+  body{background:#fff} header.hero{background:#fff; border-bottom:2px solid #000}
+  h2{page-break-after:avoid} .item,.card,table,.copyblock{page-break-inside:avoid}
+}
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="wrap">
+    <p class="eyebrow">Frankly™ · Intern analyse · 3. august 2026</p>
+    <h1>Kunderne er ikke utilfredse med produktet. De ved ikke, de har det.</h1>
+    <p class="standfirst">En gennemgang af alt tilgængeligt kundedata — Trustpilot, opsigelsessurvey, online-formular, support-postkassen, mails og butiksmateriale. Konklusionen peger på ét problem med seks tekniske og sproglige årsager. Fire af dem er tekst, ikke teknik.</p>
+    <div class="meta">
+      <span>48 Trustpilot-anmeldelser</span>
+      <span>60 kodede opsigelser</span>
+      <span>115 online-afmeldinger</span>
+      <span>51 support-tråde</span>
+      <span>Figma: velkomst- og dag-23-mail</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+<nav class="toc">
+  <p>Indhold</p>
+  <ol>
+    <li><a href="#konklusion">Konklusion</a></li>
+    <li><a href="#kaeden">Årsagskæden</a></li>
+    <li><a href="#data">Datagrundlaget</a></li>
+    <li><a href="#mailen">Dag-23-mailen</a></li>
+    <li><a href="#velkomst">Velkomstmailen</a></li>
+    <li><a href="#butik">Butik og samtykke</a></li>
+    <li><a href="#maaling">Målingen er brudt</a></li>
+    <li><a href="#beholde">Hvad skal væk — og blive</a></li>
+    <li><a href="#plan">Prioriteret plan</a></li>
+    <li><a href="#tekst">Konkrete tekstforslag</a></li>
+    <li><a href="#aabne">Åbne spørgsmål</a></li>
+    <li><a href="#kpi">Sådan måler vi</a></li>
+  </ol>
+</nav>
+
+<!-- =============================================== -->
+<h2 id="konklusion"><span class="num">01</span>Konklusion</h2>
+
+<p>Frankly har ikke et produktproblem, et prisproblem eller et dækningsproblem. Data siger det entydigt: <strong>af 60 kodede opsigelser nævnte én enkelt person prisen som årsag.</strong> Ingen opsagde, fordi de ikke forstod dækningen.</p>
+
+<p>Det Frankly har, er et <strong>genkendelsesproblem</strong>. Den hyppigste enkeltårsag til opsigelse er, at kunden ikke vidste, dækningen ville blive betalt — 24 af 60, altså 40 %. Og af de 24 lå 14 på dag 30–32: nøjagtigt når den første betaling ramte kontoen.</p>
+
+<div class="callout flag">
+  <span class="label">Kernen</span>
+  <p>Den første kommunikation kunden reelt oplever fra Frankly er en hævning på kontoen. Velkomstmailen findes, men indeholder intet kunden kan genkende — ikke produktets navn, ikke butikken, ikke prisen, ikke datoen. Dag-23-mailen findes også, og den beder kunden eksplicit om <em>ikke</em> at gøre noget.</p>
+</div>
+
+<p>Konsekvensen står i kundernes egne ord på Trustpilot: <em>bondefangeri</em> (to gange, uafhængigt), <em>scam</em>, <em>snydt</em>, <em>bedrageri</em>, <em>svineri</em>. Det er ikke sproget for utilfredshed. Det er sproget for at være blevet bestjålet — af en virksomhed man ikke kan huske at have mødt.</p>
+
+<p>Den gode nyhed ligger i samme data: <strong>når kontakten først sker, ender det næsten altid godt.</strong> En kunde gav 1 stjerne 29. maj med ordet «bedrageri» og skrev en positiv anmeldelse 16. juli efter en telefonsamtale. Support-trådene slutter med «tusind tak» og «god sommer». Genopretningen virker. Prisen er et menneskes tid — 51 tråde i postkassen på 18 dage — og en offentlig anmeldelse, der bliver stående for alle fremtidige kunder.</p>
+
+<p>Opgaven er derfor ikke at gøre supporten bedre. Den er allerede god. Opgaven er at <strong>flytte genopretningen frem i tiden</strong>, til før kunden bliver vred.</p>
+
+<!-- =============================================== -->
+<h2 id="kaeden"><span class="num">02</span>Årsagskæden</h2>
+
+<p>Problemet opstår ikke ét sted. Det akkumulerer gennem seks led, hvor hvert led fjerner en chance for at kunden forstår, hvad hun har sagt ja til.</p>
+
+<div class="chain">
+  <div class="link">
+    <div class="when">I butikken</div>
+    <div class="what">
+      <strong>Forventningen bliver aldrig sat</strong>
+      <p>Sælgerens onepager beskriver fire trin, fire betalingsmåder og skadetriagering — men nævner ikke gratisperiode, pris, abonnement, binding eller opsigelse. Sælgeren improviserer, og butiksskærmen tilbyder at sende resten på mail.</p>
+    </div>
+  </div>
+  <div class="link">
+    <div class="when">Dag 0</div>
+    <div class="what">
+      <strong>Velkomstmail uden ankre</strong>
+      <p>Ingen produktnavn, butik, købsdato, pris, policenummer eller opsigelsesvejledning. Kunden kan ikke holde mailen op mod sin hukommelse og genkende sit eget køb.</p>
+    </div>
+  </div>
+  <div class="link">
+    <div class="when">Dag 1–22</div>
+    <div class="what">
+      <strong>Stilhed</strong>
+      <p>Ingen kontakt. Kunden bruger sin ting og glemmer navnet Frankly, som hun i mange tilfælde aldrig registrerede.</p>
+    </div>
+  </div>
+  <div class="link crit">
+    <div class="when">Dag 23</div>
+    <div class="what">
+      <strong>Mail der siger «du behøver ikke gøre noget»</strong>
+      <p>Varslingen ankommer på det rigtige tidspunkt — og fortæller kunden, at hun ikke skal reagere. Beløb, dato og stop-mulighed mangler.</p>
+    </div>
+  </div>
+  <div class="link crit">
+    <div class="when">Dag 30</div>
+    <div class="what">
+      <strong>Hævning uden varsel</strong>
+      <p>Ukendt firmanavn, ukendt beløb. Ved flere policer sker det tre gange samtidig, hvilket ligner et kompromitteret betalingskort.</p>
+    </div>
+  </div>
+  <div class="link">
+    <div class="when">Efter</div>
+    <div class="what">
+      <strong>Vejen til hjælp er spærret</strong>
+      <p>Tom FAQ, forkert telefonnummer på hjemmesiden, og et opslag der kræver et telefonnummer kunden ikke bliver bedt om. Den vrede kunde får svaret «bevis hvem du er».</p>
+    </div>
+  </div>
+  <div class="link">
+    <div class="when">Bagefter</div>
+    <div class="what">
+      <strong>Målingen fanger det ikke</strong>
+      <p>Online-afmeldingsformularen har ingen svarmulighed for «jeg vidste ikke, jeg havde den». Den dominerende årsag er usynlig i det datasæt, der har størst volumen.</p>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================== -->
+<h2 id="data"><span class="num">03</span>Datagrundlaget</h2>
+
+<h3>Opsigelsessurvey (telefon og mail, 16. marts – 29. maj 2026)</h3>
+
+<p>79 registrerede opsigelser. 19 af dem er totalskade, hvor policen ophører fordi enheden er skrevet af — ikke reel churn. Tilbage: <strong>60 opsigelser med årsagskode.</strong></p>
+
+<table>
+  <thead>
+    <tr><th>Årsag</th><th class="num">Antal</th><th class="num">Andel</th><th style="width:150px">Fordeling</th></tr>
+  </thead>
+  <tbody>
+    <tr class="hi"><td>2 — Vidste ikke den blev betalt efter gratis måned</td><td class="num">24</td><td class="num">40 %</td><td><div class="bar"><i class="strong" style="width:100%"></i></div></td></tr>
+    <tr><td>4 — Mener ikke jeg har brug for den</td><td class="num">15</td><td class="num">25 %</td><td><div class="bar"><i style="width:63%"></i></div></td></tr>
+    <tr><td>1 — Ville kun prøve den</td><td class="num">10</td><td class="num">17 %</td><td><div class="bar"><i style="width:42%"></i></div></td></tr>
+    <tr><td>5 — Har dækning et andet sted</td><td class="num">10</td><td class="num">17 %</td><td><div class="bar"><i style="width:42%"></i></div></td></tr>
+    <tr><td>3 — Prisen er for høj</td><td class="num">1</td><td class="num">2 %</td><td><div class="bar"><i style="width:4%"></i></div></td></tr>
+    <tr><td>6 — Forstår ikke hvad der er dækket</td><td class="num">0</td><td class="num">0 %</td><td><div class="bar"></div></td></tr>
+  </tbody>
+</table>
+
+<div class="card pink">
+  <h4>Tre mønstre i de 24</h4>
+  <ul>
+    <li><strong>Muren på dag 30.</strong> 14 af 24 ligger på dag 30–32. Yderligere 7 på dag 38–62 — anden eller tredje betaling. Median: 32 dage. Til sammenligning har årsag 4 («har ikke brug for den») en median på 289 dage. Det er sund, informeret frafald. Årsag 2 er ikke frafald, det er en overraskelse.</li>
+    <li><strong>Alle 24 er ude af gratisperioden.</strong> Feltet «trial måned» står på «nej» i samtlige 24 tilfælde. De opdager det først, når betalingen begynder — aldrig før.</li>
+    <li><strong>Årsag 1 og 2 er samme kunde, før og efter chokket.</strong> Årsag 1 (10 stk., 8 af dem stadig i gratisperioden, median 14 dage) er kunden der huskede i tid og opsagde roligt. Årsag 2 er kunden der ikke blev mindet om det. Forholdet er 10 mod 24: cirka <strong>70 % af dem der ikke vil betale, når det ikke i tid.</strong></li>
+  </ul>
+</div>
+
+<h4>Forstærkeren: flere policer på samme kunde</h4>
+<p>Seks steder i loggen ligger police-ID'erne i sammenhængende blokke — for eksempel …373, …374 og …375: alle tre årsag 2, alle tre dag 30, alle tre samme dag i telefonen. Det er ikke tre kunder. Det er én person, der opdager tre hævninger på én gang. Andre klynger: …943/44, …322/23, …508/09, …299/300, …313/14.</p>
+
+<p>En glemt hævning er irriterende. Tre samtidige hævninger fra et ukendt firma ligner kortsvindel. Det forklarer sprogniveauet på Trustpilot.</p>
+
+<div class="callout flag">
+  <span class="label">Bemærk</span>
+  <p>Loggen stopper 29. maj. Der er godt to måneder uden registrering. Hvis den er droppet, mister vi det instrument der lige har vist os, hvor problemet er — og vi kan ikke måle, om noget af det her virker.</p>
+</div>
+
+<h3>Online-afmeldinger (14 dage, juli/august 2026)</h3>
+<p>115 svar. Formularen har tre faste svarmuligheder.</p>
+
+<table>
+  <thead><tr><th>Svar</th><th class="num">Antal</th><th class="num">Andel</th></tr></thead>
+  <tbody>
+    <tr><td>Jeg bruger den ikke længere</td><td class="num">53</td><td class="num">46 %</td></tr>
+    <tr><td>Jeg har fået forsikring et andet sted</td><td class="num">29</td><td class="num">25 %</td></tr>
+    <tr><td>Den er for dyr</td><td class="num">24</td><td class="num">21 %</td></tr>
+    <tr><td>Jeg er flyttet · «.» · øvrige fritekst</td><td class="num">9</td><td class="num">8 %</td></tr>
+  </tbody>
+</table>
+
+<p>Der findes <strong>ingen svarmulighed for «jeg vidste ikke, jeg havde den»</strong> — den årsag, der udgjorde 40 % i telefonsurveyen. Den kan kun sive ud i fritekst. Og det gør den:</p>
+
+<blockquote>
+  <p>«Det var meningen jeg kun skulle have den første måned gratis og dermed skulle den stoppe, men jeg fik ingen advarsel om at den var på vej ind i en ny bindingsperiode. DERFOR!»</p>
+  <p>«Dette var blot et gratis tilbud.. er ikke interesseret i at have en forsikring»</p>
+  <p>«Jeg har ikke brug for denne forsikring, og var ikke klar over, at den var blevet tegnet, da jeg købte min iPad»</p>
+  <cite>Fritekst fra online-afmeldinger, sidste 14 dage</cite>
+</blockquote>
+
+<p>Tre personer skrev det manuelt i et felt, der ikke spurgte om det. Sammenlign de to datasæt på samme variabel:</p>
+
+<table>
+  <thead><tr><th>Årsag</th><th class="num">Telefon-survey</th><th class="num">Online-formular</th></tr></thead>
+  <tbody>
+    <tr class="hi"><td>Vidste ikke den blev betalt</td><td class="num">40 %</td><td class="num">findes ikke som valg</td></tr>
+    <tr><td>Prisen er for høj</td><td class="num">2 %</td><td class="num">21 %</td></tr>
+  </tbody>
+</table>
+
+<p>Prisen springer fra 2 % til 21 %, alene fordi svarmulighederne skifter. Det er ikke en prisstigning. «For dyr» er den nærmeste tilgængelige kasse, når man vil sige <em>jeg vil ikke betale for noget jeg ikke bad om</em>. Samme mekanisme gør «bruger den ikke længere» (46 %) til en opsamlingsspand: for en kunde der aldrig vidste hun havde produktet, er det teknisk sandt og socialt nemmest.</p>
+
+<h3>Support-postkassen (51 tråde, 17. juli – 3. august 2026)</h3>
+
+<p>Cirka 36 af 51 tråde — omkring 70 % — er opsigelser. Hver enkelt koster et menneske et svar, og svaret er den samme sætning hver gang. Det er ikke support, det er manuel formularbehandling.</p>
+
+<p>Emnelinjer i kundernes egne ord: <em>Oprettet abonnement uden samtykke</em> · <em>Månedlig træk på min konto</em> · <em>Betaler for en aftale for meget?</em> · <em>Hvad er det jeg betaler til?</em></p>
+
+<div class="two">
+  <div class="card tight">
+    <h4>Velkomstmailen kommer retur</h4>
+    <p>Tre tråde har emnelinjer der er videresendelser af velkomstmailen: «Fwd: Velkommen til Frankly Insure!» og «VS: Velkommen…». To af dem endte med opsigelse. Kunden modtager mailen, forstår den ikke, og sender den tilbage som spørgsmål. I ét tilfælde blev policen oprettet 25. juni og kunden skrev 26. juli — dag 31.</p>
+  </div>
+  <div class="card tight">
+    <h4>Det bedste indhold er fanget i en makro</h4>
+    <p>Vejledningen <em>MobilePay → Mig → Betalingsaftaler → Frankly → stop</em> optræder ordret i mindst fem tråde. Det er det hyppigst gentagne indhold i postkassen — og det står ingen steder på hjemmesiden. Til én kunde forklares desuden, at opsigelse i MobilePay automatisk opsiger dækningen. Der er to gyldige udgange, og kunden kender ingen af dem.</p>
+  </div>
+</div>
+
+<h4>Frankly kan ikke genkende sine egne kunder</h4>
+<blockquote>
+  <p>«For at vi kan finde din forsikring i vores system og foretage opsigelsen, har vi brug for det telefonnummer, der er tilknyttet den MobilePay-aftale, som forsikringen er oprettet under.»</p>
+  <cite>Support-svar, gentaget i flere tråde</cite>
+</blockquote>
+<p>Kunden skriver fra en mailadresse der ikke kan matches, fordi onboarding sker via MobilePay — nøglen er et telefonnummer. Så en kunde der allerede tror hun er blevet snydt, får svaret <em>bevis hvem du er</em>. Det spejler Trustpilot næsten ordret: «de mener at for at jeg kan få mine penge tilbage skal jeg bevise at jeg ikke har en forsikring».</p>
+
+<p><strong>To konsekvenser for design:</strong> widget'en skal kunne slå op på telefonnummer, og dag-25-varslingen skal sendes som SMS eller MobilePay-besked, ikke e-mail. Telefonnummeret er den identifikator Frankly faktisk har.</p>
+
+<div class="callout flag">
+  <span class="label">Lukkes i dag</span>
+  <p><strong>Der står et forkert telefonnummer på hjemmesiden.</strong> En kunde skrev 31. juli: «I skal da lige vide at der står et andet nummer på jeres hjemmeside, 31424749, som lød som en privatperson.» En kunde der mistænker svindel, ringer til nummeret på siden og får en privatperson i røret. Det korrekte er 70 60 44 40.</p>
+</div>
+
+<h4>To ting vi skal være ærlige om</h4>
+<ul>
+  <li><strong>Nogle anklager har hold i virkeligheden.</strong> Én tråd: «Betaler for en aftale for meget?» → svar: «Det har du helt ret i. Vi har derfor refunderet de opkrævede betalinger for april og juli.» En anden kunde blev opkrævet for en låneenhed, der var afleveret tilbage. Det er ikke misforståelser, det er faktureringsfejl — og de rammer den gruppe, der i forvejen er mest på vagt.</li>
+  <li><strong>MobilePay-kravet ekskluderer folk.</strong> To kunder kan ikke bruge MobilePay; svaret er at der ikke findes alternativer. Det er den ældre del af kundebasen — samme gruppe som er forvirret i forvejen. Ingen widget løser det; de nye betalingsskærme i Figma gør.</li>
+</ul>
+
+<h3>Trustpilot (48 anmeldelser)</h3>
+<p>Fordelingen: 35 femstjernede, 7 firestjernede, 1 trestjernet, 0 tostjernede, 5 enstjernede.</p>
+<p>Fire af de fem enstjernede handler slet ikke om dækningen — de handler om ikke at vide man har den. Kun én er en reel produktklage: en skade afvist til reparation, hvor kunden fik et gavekort til GreenMind uden forklaring og uden at blive spurgt. <strong>Den er ubesvaret</strong>, og den er den farligste, fordi den er substantiel.</p>
+
+<div class="callout">
+  <span class="label">Svarmønsteret arbejder imod os i første træk</span>
+  <p>Rækkefølgen er konsekvent: først jura («oprettelse kræver en aktiv accept»), derefter generøsitet («vi refunderer alligevel»). Juraen er formentlig korrekt. Men for en læser lyder åbningen som <em>du husker forkert</em> — og alle der overvejer at købe, læser kun de første to linjer. Vend rækkefølgen, og samme svar læses som imødekommende.</p>
+</div>
+
+<div class="callout good">
+  <span class="label">Beviset for at genopretning virker</span>
+  <p>Samme kunde skrev 1 stjerne 29. maj med ordet «bedrageri». 16. juli skrev han igen: «En meget positiv oplevelse. Efter en telefonsamtale med en af stifterne blev fejlen rettet, pengene tilbageført. Hermed intet negativt at sige om firmaet.» Hele tesen bekræftet — problemet er at det krævede en telefonsamtale med en stifter.</p>
+</div>
+
+<!-- =============================================== -->
+<h2 id="mailen"><span class="num">04</span>Dag-23-mailen siger det modsatte af hvad den skal</h2>
+
+<p>Varslingsmailen findes allerede i Figma. Timingen er rigtig — syv dage før første betaling. Den ankommer til den rigtige person på det rigtige tidspunkt, og beder hende eksplicit om ikke at reagere.</p>
+
+<div class="copyblock before">
+  <div class="ch">Som den ser ud i dag</div>
+  <div class="cb">
+    <p class="mailhead">7 dage tilbage. Du behøver ikke gøre noget.</p>
+    <p>Hej [firstName],</p>
+    <p>Din gratis periode hos Frankly slutter om 7 dage.</p>
+    <p>Bare rolig – din dækning fortsætter automatisk bagefter, så du behøver ikke gøre noget for at blive hos Frankly. […] Du kan se og ændre dine dækninger ved at klikke på knappen herunder.</p>
+    <p><span class="btnmock">Gå til min Frankly profil</span></p>
+    <p><strong>Spørgsmål vi tit får:</strong><br>
+    <em>Skal jeg gøre noget for at fortsætte?</em> — Nej. Din dækning fortsætter automatisk, når den gratis periode slutter.</p>
+  </div>
+</div>
+
+<p>Læs det med de 24 kunder i hovedet, hvis opsigelsesårsag var «jeg var ikke klar over, den ville blive betalt». Beløbet står ingen steder. Datoen for første hævning står ingen steder. Der er ingen stop-knap. Sætningen om at ændre noget er begravet midt i et afsnit, hvor «ændre» ikke er «stop», og knappen kræver login.</p>
+
+<p>Mailen er skrevet som en retention-mail. Den skal være en oplysningsmail. Det er ikke et brandvalg — det er hele forskellen mellem en kunde der siger nej tak og en kunde der skriver «bondefangeri» offentligt.</p>
+
+<div class="callout good">
+  <span class="label">Derfor er den øverst på listen</span>
+  <p>Infrastrukturen findes. Timingen er rigtig. Modtagerlisten er rigtig. <strong>Kun teksten er forkert.</strong> Det er timers arbejde, ikke ugers — og det rammer 40 % af opsigelserne direkte.</p>
+</div>
+
+<!-- =============================================== -->
+<h2 id="velkomst"><span class="num">05</span>Velkomstmailen mangler alle ankre</h2>
+
+<div class="copyblock before">
+  <div class="ch">Som den ser ud i dag</div>
+  <div class="cb">
+    <p class="mailhead">Velkommen til Frankly™.</p>
+    <p>Tak fordi du har valgt at få dine ting dækket hos os.</p>
+    <p><strong>Kort fortalt: Du er dækket. Og du kan bruge dine ting uden at gå og tænke for meget over, hvad der kunne ske.</strong></p>
+    <p>Læs mere om din police og detaljerne på din Frankly™ profil. Hvis noget ser forkert ud, eller du er i tvivl om noget, så sig til. Vi hjælper altid gerne.</p>
+    <p><span class="btnmock">Gå til min Frankly™ profil</span></p>
+  </div>
+</div>
+
+<p><strong>Hvad der ikke står:</strong> produktets navn. Butikkens navn. Købsdatoen. Prisen. At første måned er gratis. Hvornår der trækkes første gang. Policenummeret. Hvordan man stopper.</p>
+
+<p>«Tak fordi du har valgt» — til en person der ikke husker at have valgt. Der er bogstaveligt talt intet i mailen, som en forvirret kunde kan holde op mod sin hukommelse og genkende. Den kan ikke verificeres. Derfor bliver den videresendt tilbage med et spørgsmålstegn.</p>
+
+<p>Og så det bitre: blokken «En fast pris» lover <em>Ingen overraskelser. Ingen binding. Stop når du vil.</em> — uden at nævne beløbet og uden at forklare hvordan man stopper. Mailen garanterer ingen overraskelser og udelader netop det, der bliver overraskelsen.</p>
+
+<!-- =============================================== -->
+<h2 id="butik"><span class="num">06</span>Butik og samtykke</h2>
+
+<h3>Onepageren mangler ét afsnit</h3>
+<p>Sælgerguiden er god på det den dækker: fire trin, fire betalingsmåder, og en skarp skadetriagering — <em>uheld → Frankly, fejl → garanti, tyveri → indbo</em>. Men den nævner ikke gratisperioden, at dækningen fortsætter som betalt abonnement, hvad den koster, at der ikke er binding, eller hvordan man opsiger. Sælgeren lærer at gennemføre transaktionen. Sælgeren lærer aldrig at sætte forventningen.</p>
+
+<p>Så improviserer de. Og en Trustpilot-anmeldelse viser hvad de improviserer:</p>
+
+<blockquote>
+  <p>«Men jeg får at vide at jeg vil få en notifikation om betaling om en måned, den kan jeg bare afvise, og så er denne ekstra forsikring afmeldt – så enkelt er det (ikke!)»</p>
+  <cite>Trustpilot, 21. maj 2026</cite>
+</blockquote>
+
+<p>Det er ikke en løgn sælgeren har opfundet. Det er et rimeligt gæt fra en person, der ikke har fået at vide hvordan det faktisk fungerer. Frankly forklarer teknikken korrekt i svaret til kunden — men forklaringen findes ikke i det materiale sælgeren har.</p>
+
+<p>Den gode nyhed: der er allerede en fuld guide, en samtaletræning og en quiz. Infrastrukturen til at rette det findes. Der mangler ét modul, og det kan koges ned til fire sætninger, sælgeren siger højt før kunden godkender.</p>
+
+<h3>Butiksskærmen afslutter sælgerens ansvar for tidligt</h3>
+<blockquote>
+  <p>«Kunden har fået linket på email. Kunden har fået et link med instrukser og kan færdiggøre betalingen, når det passer.»</p>
+  <cite>Aktiverings-skærm, Figma</cite>
+</blockquote>
+<p>Sælgeren kan lukke salget og overlade resten til en mail. Kombineret med onepageren betyder det, at oplysningen aldrig sker ansigt til ansigt. Den er delegeret til en mail uden ankre. <strong>Ingen siger nogensinde beløbet højt.</strong></p>
+
+<h3>De nye betalingsskærme: løser ét problem, skaber et andet</h3>
+<p>Kort, MobilePay og Apple Pay via Frisbii løser eksklusionsproblemet — de kunder der ikke kan bruge MobilePay. Godt og nødvendigt.</p>
+<p>Men skærmene viser intet produktnavn, ingen pris, og ingen oplysning om gratisperiode, løbende betaling eller opsigelse. Selve samtykkeøjeblikket har nul disclosure.</p>
+<div class="callout flag">
+  <span class="label">Afledt risiko</span>
+  <p>Flytter Frankly væk fra MobilePay-only, forsvinder samtidig en af de to udgange kunderne har i dag — ruten via <em>MobilePay → Betalingsaftaler</em>, som er supportens mest gentagne vejledning. Så bliver kundeportalen den eneste vej ud. Det hæver kravet til portalens opsigelsesflow betydeligt og bør planlægges samtidig, ikke bagefter.</p>
+</div>
+
+<!-- =============================================== -->
+<h2 id="maaling"><span class="num">07</span>Målingen er brudt</h2>
+
+<p>Online-formularen er det datasæt med langt størst volumen — 115 svar på 14 dage, mod 60 kodede telefonopsigelser over 2½ måned. Og den kan ikke udtrykke den dominerende årsag.</p>
+
+<p>Så længe det er tilfældet, kan vi ikke måle om noget af det her virker. Rettelsen er at give formularen telefonsurveyens seks årsager. Det er en times arbejde og en forudsætning for alt det andet.</p>
+
+<div class="callout">
+  <span class="label">En antagelse data ikke støtter</span>
+  <p>Det er blevet formuleret som «folk overser at de kan logge ind og opsige». Men 115 personer fandt selvbetjeningen på 14 dage. Discoverability er ikke brudt generelt. Det er den specifikke gruppe — ældre, MobilePay-onboardede, genkender ikke navnet — der aldrig kommer så langt som til at lede efter en kundeportal, fordi de først skal overbevises om at Frankly er en rigtig virksomhed. Det er en mindre gruppe end antaget, men det er dem der skriver på Trustpilot.</p>
+</div>
+
+<!-- =============================================== -->
+<h2 id="beholde"><span class="num">08</span>Hvilke henvendelser skal væk — og hvilke skal blive</h2>
+
+<p>Det rigtige spørgsmål er ikke «hvordan får vi folk til at ringe mindre». Det er hvilke henvendelser vi ønsker at fjerne, og hvilke vi faktisk vil have.</p>
+
+<div class="two">
+  <div class="card tight">
+    <h4>Skal væk — automatisér</h4>
+    <ul>
+      <li>«Hvad er det jeg betaler til?» — ren genkendelse</li>
+      <li>Opsigelse uden spørgsmål (~70 % af postkassen)</li>
+      <li>«Hvordan opsiger jeg i MobilePay?»</li>
+      <li>«Hvordan logger jeg ind?»</li>
+      <li>Skift af betalingskort</li>
+      <li>«Hvad dækker den?»</li>
+    </ul>
+  </div>
+  <div class="card tight">
+    <h4>Skal blive — værdifulde</h4>
+    <ul>
+      <li>Skadesager og totalskade-forklaringer</li>
+      <li>Faktureringsfejl og refusioner</li>
+      <li>Kunder der overvejer at tilføje flere ting</li>
+      <li>Kunder der er vrede og skal vindes tilbage</li>
+      <li>Alt hvor kunden er i tvivl om dækning i en konkret situation</li>
+    </ul>
+  </div>
+</div>
+
+<div class="callout flag">
+  <span class="label">Den spænding vi skal håndtere bevidst</span>
+  <p>Data viser at telefonsamtalen er det, der forvandler en vred kunde til en positiv anmelder. Hvis vi gør opsigelse helt friktionsfri, fjerner vi også den samtale. Det er stadig det rigtige valg — for de fleste af de 24 er samtalen ikke en mulighed for genopretning, den er en <em>omkostning</em> pålagt en kunde der bare vil ud. Men vi skal designe med det for øje: den friktionsfrie opsigelse skal <em>tilbyde</em> et menneske, ikke kræve det. Og den skal spørge hvorfor, så vi bevarer signalet.</p>
+</div>
+
+<h3>Mickeys spørgsmål — hvad data allerede svarer på</h3>
+<table>
+  <thead><tr><th>Spørgsmål</th><th>Svar fra data</th></tr></thead>
+  <tbody>
+    <tr><td>Hvad ringer og skriver folk om?</td><td>~70 % opsigelse. Derefter betaling/MobilePay-friktion, så skader.</td></tr>
+    <tr><td>Hvornår i rejsen opstår det?</td><td>Dag 30–32. Ved første betaling. Median 32 dage for den dominerende årsag.</td></tr>
+    <tr><td>Hvorfor kontakter de os?</td><td>Manglende information plus manglende tillid. Ikke pris, ikke dækningsforståelse.</td></tr>
+    <tr><td>Hvilke svar copy/pastes oftest?</td><td>Opsigelsesbekræftelsen og MobilePay-vejledningen. Begge er guld til FAQ, widget og video.</td></tr>
+    <tr><td>Hvor mister de tilliden?</td><td>Ved hævningen. Forstærket af tom FAQ, forkert telefonnummer og «bevis hvem du er».</td></tr>
+    <tr><td>Har vi data over tid?</td><td>Delvist. Telefonsurveyen stoppede 29. maj; online-formularen gemmer kun 14 dage. Begge bør rettes.</td></tr>
+  </tbody>
+</table>
+
+<!-- =============================================== -->
+<h2 id="plan"><span class="num">09</span>Prioriteret plan</h2>
+
+<p>Rækkefølgen følger effekt pr. arbejdstime, ikke ambitionsniveau. De fire første er tekst og konfiguration.</p>
+
+<div class="plan">
+
+  <div class="item">
+    <div class="rank">1</div>
+    <div>
+      <h4>Omskriv dag-23-mailen til en oplysningsmail</h4>
+      <p>Ny overskrift, beløb, dato, og en stop-knap der virker uden login. Rammer 40 % af opsigelserne på det tidspunkt hvor kunden stadig kan vælge roligt. Udkast i afsnit 10.</p>
+      <div class="tags"><span class="tag eff">Timer</span><span class="tag imp">Størst effekt</span><span class="tag">Ingen udvikling</span></div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="rank">2</div>
+    <div>
+      <h4>Quick fixes der lukker tillidshullerne</h4>
+      <p>Ret telefonnummeret på hjemmesiden. Udfyld de seks placeholder-svar i FAQ'en. Publicér MobilePay-opsigelsesvejledningen som en rigtig side. Tilføj de seks årsager til online-afmeldingsformularen. Svar på den ubesvarede enstjernede om totalskade og gavekort.</p>
+      <div class="tags"><span class="tag eff">Én dag</span><span class="tag imp">Fjerner selvmål</span></div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="rank">3</div>
+    <div>
+      <h4>Giv velkomstmailen ankre</h4>
+      <p>Produkt, butik, dato, pris, gratisperiodens slutdato, policenummer, to veje ud. Gør mailen verificerbar mod kundens hukommelse. Udkast i afsnit 10.</p>
+      <div class="tags"><span class="tag eff">Timer</span><span class="tag imp">Stopper «Fwd: Velkommen»</span></div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="rank">4</div>
+    <div>
+      <h4>Fire sætninger til sælgeren</h4>
+      <p>Ét modul i onepageren og i quizzen. Sælgeren siger beløbet højt, siger at det er et abonnement, siger at der ikke er binding, og siger hvordan man stopper. Kræver GreenMind-koordinering, men intet teknisk arbejde.</p>
+      <div class="tags"><span class="tag eff2">Dage + partneraftale</span><span class="tag imp">Løser problemet ved kilden</span></div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="rank">5</div>
+    <div>
+      <h4>Support-widget der afgør sagen</h4>
+      <p>Grenstruktur i stil med Zenegy, men uden routing: opslag på telefonnummer, genkendelseskort med produkt og butik, ét-kliks stop, videoguides, rigtig FAQ, tillidsstribe med Finanstilsynet og CVR i headeren. Klikbar prototype leveret sammen med dette dokument.</p>
+      <div class="tags"><span class="tag eff2">Uger</span><span class="tag imp">Fanger dem der alligevel søger hjælp</span></div>
+    </div>
+  </div>
+
+  <div class="item">
+    <div class="rank">6</div>
+    <div>
+      <h4>SMS-varsling og konsolidering ved flere policer</h4>
+      <p>Telefonnummeret er den identifikator Frankly har — varslingen bør sendes dertil, med dybt link direkte ind i widget'en på kundens police. Ved flere policer: én besked der viser alle og ét samlet beløb, aldrig tre separate hævninger uden kontekst.</p>
+      <div class="tags"><span class="tag eff3">Udvikling påkrævet</span><span class="tag imp">Fjerner «kortsvindel»-følelsen</span></div>
+    </div>
+  </div>
+
+</div>
+
+<div class="callout">
+  <span class="label">Om rækkefølgen</span>
+  <p>Widget'en sidder på hjemmesiden. Dag-30-kunden går ikke på hjemmesiden — hun går i sin bank-app, ser en ukendt hævning og googler firmanavnet. <strong>Widget'en er værktøjet; varslingen er distributionen.</strong> Bygger vi widget'en uden punkt 1, laver vi en flot dør, ingen går forbi.</p>
+</div>
+
+<!-- =============================================== -->
+<h2 id="tekst"><span class="num">10</span>Konkrete tekstforslag</h2>
+
+<p>Alle beløb, datoer og navne er markeret som <span class="ph">felt</span> — de skal komme fra systemet, ikke fra os. Prisen er ikke udfyldt nogen steder i dette dokument; den skal indsættes fra de faktiske policer.</p>
+
+<h3>Dag 23 — varslingsmail</h3>
+
+<div class="copyblock after">
+  <div class="ch">Forslag · emnelinje: «Om 7 dage koster din Frankly <span class="ph">PRIS</span> kr.»</div>
+  <div class="cb">
+    <p class="mailhead">Om 7 dage begynder du at betale for din Frankly.</p>
+    <p>Hej <span class="ph">FORNAVN</span>,</p>
+    <p>Du fik Frankly med, da du købte din <span class="ph">PRODUKT</span> hos <span class="ph">BUTIK</span> den <span class="ph">KØBSDATO</span>. Den første måned var gratis.</p>
+    <p><strong>Den <span class="ph">FØRSTE BETALINGSDATO</span> trækker vi <span class="ph">PRIS</span> kr. Derefter <span class="ph">PRIS</span> kr. hver måned.</strong></p>
+    <p>Der er ingen binding. Du kan stoppe når som helst, også i dag — det tager under et minut, og du skal ikke logge ind.</p>
+    <p><span class="btnmock">Behold min dækning</span><span class="btnmock sec">Stop min dækning</span></p>
+    <p><small>Police <span class="ph">NUMMER</span> · Frankly Insure ApS · CVR 42626449 · Registreret hos Finanstilsynet · Spørgsmål? Ring 70 60 44 40, man–tor 8.30–16, fre 8.30–15.</small></p>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Hvad der er ændret, og hvorfor</h4>
+  <ul>
+    <li><strong>Emnelinjen indeholder beløbet.</strong> Mange åbner ikke mailen. Emnelinjen alene skal kunne forhindre overraskelsen.</li>
+    <li><strong>Overskriften siger hvad der sker</strong>, ikke at man ikke skal gøre noget. «Du behøver ikke gøre noget» er sandt og katastrofalt.</li>
+    <li><strong>Ankrene kommer først:</strong> produkt, butik, dato. Kunden skal kunne genkende sit eget køb i linje ét.</li>
+    <li><strong>To lige store knapper.</strong> Ikke en primær «behold» og et begravet link. Data siger 24 mod 10 til fordel for dem der vil ud — at skjule udgangen producerer Trustpilot-anmeldelser, ikke kunder.</li>
+    <li><strong>Stop kræver ikke login.</strong> Den vrede kunde kan ikke huske, at hun har en konto.</li>
+    <li><strong>Legitimitet i footeren:</strong> CVR og Finanstilsynet. Billigste tillidssignal der findes.</li>
+  </ul>
+  <p><small>Bemærk om brand: canon foretrækker «dækning» frem for «forsikring». Her er «betale», «stoppe» og «binding» valgt bevidst, fordi mailens hele formål er juridisk klarhed. Anti-fear-reglen er ikke i konflikt — dette er ikke frygtsalg, det er ro gennem forudsigelighed.</small></p>
+</div>
+
+<h3>Dag 0 — velkomstmail</h3>
+
+<div class="copyblock after">
+  <div class="ch">Forslag · emnelinje: «Din <span class="ph">PRODUKT</span> fra <span class="ph">BUTIK</span> er nu dækket af Frankly»</div>
+  <div class="cb">
+    <p class="mailhead">Din <span class="ph">PRODUKT</span> er dækket.</p>
+    <p>Hej <span class="ph">FORNAVN</span>,</p>
+    <p>Du købte en <span class="ph">PRODUKT</span> hos <span class="ph">BUTIK</span> den <span class="ph">KØBSDATO</span> og valgte Frankly til. Her er hvad det betyder:</p>
+    <ul>
+      <li><strong>Første måned er gratis.</strong> Den slutter <span class="ph">TRIAL SLUT</span>.</li>
+      <li><strong>Derefter <span class="ph">PRIS</span> kr. om måneden.</strong> Første betaling <span class="ph">FØRSTE BETALINGSDATO</span>.</li>
+      <li><strong>Ingen binding.</strong> Du kan stoppe når som helst.</li>
+      <li>Dækningen gælder uheld — tab, væskeskade, revner. Ikke tyveri eller produktfejl.</li>
+    </ul>
+    <p>Vi minder dig om det igen, en uge før den første betaling. Du bliver ikke overrasket.</p>
+    <p><span class="btnmock">Se min dækning</span><span class="btnmock sec">Stop min dækning</span></p>
+    <p><small>Police <span class="ph">NUMMER</span> · Gem denne mail — policenummeret er det hurtigste for os at finde dig på.<br>
+    Frankly Insure ApS · Nyhavn 63B, 1051 København K · CVR 42626449 · Registreret hos Finanstilsynet · 70 60 44 40</small></p>
+  </div>
+</div>
+
+<div class="card">
+  <h4>Princippet</h4>
+  <p>Mailen skal kunne bestå én test: <em>kan en person, der ikke husker at have købt noget, læse den og genkende sit eget køb?</em> Det kræver mindst tre ankre — produkt, butik, dato — i de første to linjer. Og «vi minder dig om det igen» er en lille sætning der gør en stor forskel: den etablerer, at Frankly ikke har en interesse i at kunden glemmer det.</p>
+</div>
+
+<h3>I butikken — fire sætninger</h3>
+
+<div class="copyblock after">
+  <div class="ch">Forslag · sælgeren siger dette højt, før kunden godkender</div>
+  <div class="cb">
+    <ol>
+      <li>«Første måned er gratis.»</li>
+      <li>«Derefter er det <span class="ph">PRIS</span> kroner om måneden — det er et abonnement, ikke en engangsbetaling.»</li>
+      <li>«Der er ingen binding. Du kan stoppe når du vil, i MobilePay eller på deres side.»</li>
+      <li>«Du får en mail om det nu, og en påmindelse en uge før den første betaling.»</li>
+    </ol>
+    <p><small>Til quizzen: ét spørgsmål der tester om sælgeren kan forklare, at det at afvise en MobilePay-notifikation <em>ikke</em> opsiger dækningen. Det er den forkerte forklaring, kunderne rapporterer at have fået.</small></p>
+  </div>
+</div>
+
+<h3>Trustpilot — vend rækkefølgen</h3>
+<div class="two">
+  <div class="copyblock before" style="margin:0">
+    <div class="ch">I dag</div>
+    <div class="cb"><p>1. Jura: «oprettelse kræver aktiv accept»<br>2. Undersøgelse: «send os dit nummer»<br>3. Generøsitet: «vi refunderer alligevel»</p></div>
+  </div>
+  <div class="copyblock after" style="margin:0">
+    <div class="ch">Forslag</div>
+    <div class="cb"><p>1. Anerkendelse: «det skal du ikke opleve»<br>2. Handling: «vi har stoppet den og refunderer»<br>3. Forklaring: kort, uden at modsige kunden<br>4. Rettelse: hvad vi ændrer, så det ikke gentager sig</p></div>
+  </div>
+</div>
+<p>Juraen bliver ikke mindre sand af at komme sidst. Men de første to linjer er det eneste alle læser.</p>
+
+<!-- =============================================== -->
+<h2 id="aabne"><span class="num">11</span>Åbne spørgsmål</h2>
+
+<p>Data svarer på det meste. Disse kan kun besvares af de mennesker der sidder med kunderne, eller af Jonas.</p>
+
+<div class="card">
+  <ol>
+    <li><strong>Sender dag-23-mailen faktisk i dag, eller ligger den kun i Figma?</strong> Det ændrer punkt 1 fra «omskriv» til «byg og send».</li>
+    <li><strong>Hvad er den faktiske pris pr. kategori?</strong> Ingen tal i dette dokument er udfyldt, fordi ingen kilde bekræfter dem. Skal valideres af Niels og Alex før noget publiceres.</li>
+    <li><strong>Hvorfor stoppede opsigelsessurveyen 29. maj?</strong> Er den droppet, eller er dataen flyttet et andet sted?</li>
+    <li><strong>Hvor mange faktureringsfejl er der reelt?</strong> Vi har set to bekræftede tilfælde i 51 tråde. Hvis det tal er højere, skifter prioriteringen — så er problemet ikke kun kommunikation.</li>
+    <li><strong>Kan opsigelse gennemføres uden login, juridisk og teknisk?</strong> Hele designet i punkt 1, 3 og 5 hviler på det.</li>
+    <li><strong>Hvad siger GreenMinds personale i dag?</strong> Vi kender kun deres forklaringer gennem vrede kunders gengivelse. En dag i butikken ville være det mest værdifulde stykke research, der stadig mangler.</li>
+    <li><strong>Til supporten:</strong> hvis I skulle halvere antallet af opkald fra i morgen, hvilke fem ting ville I ændre først?</li>
+  </ol>
+</div>
+
+<!-- =============================================== -->
+<h2 id="kpi"><span class="num">12</span>Sådan måler vi om det virker</h2>
+
+<p>Alt herunder kræver, at online-formularen først får de seks årsager. Uden det måler vi ingenting.</p>
+
+<table>
+  <thead><tr><th>Mål</th><th>Baseline i dag</th><th>Hvad vi vil se</th></tr></thead>
+  <tbody>
+    <tr><td>Andel opsigelser med årsag «vidste ikke den blev betalt»</td><td>40 % (telefon, 60 sager)</td><td>Falder. Er den primære succesindikator.</td></tr>
+    <tr><td>Fordeling af opsigelser på dag siden start</td><td>Median 32 dage for årsag 2</td><td>Flytter tidligere — opsigelser <em>i</em> gratisperioden er et sundt tegn, ikke et tab.</td></tr>
+    <tr><td>Forhold mellem årsag 1 og årsag 2</td><td>10 mod 24</td><td>Vender. Samme kunder, roligere afgang.</td></tr>
+    <tr><td>Andel af support-postkassen der er ren opsigelse</td><td>~70 % af 51 tråde</td><td>Falder, i takt med at selvbetjening virker.</td></tr>
+    <tr><td>Nye enstjernede med ordene scam, bondefangeri, samtykke</td><td>4 af 5 enstjernede</td><td>Ophører. Det er den eneste måling der er offentlig.</td></tr>
+    <tr><td>Åbnings- og klikrate på dag-23-mailen</td><td>Ukendt</td><td>Etablér baseline før omskrivningen, så effekten kan læses.</td></tr>
+  </tbody>
+</table>
+
+<div class="callout good">
+  <span class="label">Den ene ting der betyder mest</span>
+  <p>Hvis kun én ting bliver gjort: <strong>sæt beløbet og datoen i emnelinjen på dag-23-mailen, og læg en stop-knap i den, der ikke kræver login.</strong> Det er timers arbejde og rammer den hyppigste årsag på det eneste tidspunkt, hvor kunden stadig kan vælge roligt.</p>
+</div>
+
+<footer>
+  <p><strong>Kilder:</strong> Trustpilot (48 anmeldelser, filtreret på 1 stjerne) · Churn_Customer_Cancellation_Survey, Google Sheets (79 rækker, 16.03–29.05.2026) · Afmeldingsårsager fra kodeholdet (115 svar, 14 dage) · Shopper-mappen, admin@franklyinsure.com (51 tråde, 17.07–03.08.2026) · Figma «Frankly Mails» og «Frankly Product» · franklyinsure.com/support · os.franklydesign.dk instore-onepager · zenegy.com (referencewidget).</p>
+  <p><strong>Talregler:</strong> Ingen tal i dette dokument er beregnet, estimeret eller ekstrapoleret. Optællinger af support-tråde og årsagskoder er lavet manuelt fra kildematerialet og er markeret med «cirka» hvor kategoriseringen kræver et skøn. Priser er ikke udfyldt og skal valideres af Niels (CFO) og Alex (CEO) før noget forlader Frankly-miljøet.</p>
+</footer>
+
+</div>
+</body>
+</html>

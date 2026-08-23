@@ -57,9 +57,15 @@ UPLOADABLE_HTML = (
     # The deck is a self-contained single file; Holdet is the agent-crew page; the
     # LinkedIn checker's 2026-07-13 hold ("until Jonas explicitly reopens") is lifted
     # by that instruction.
-    # frankly-os-deck.html held 2026-08-23 — R9 pixel pass flagged slide 06, awaiting Jonas
     pathlib.Path("frankly-os-holdet.html"),
     pathlib.Path("frankly-linkedin-checker.html"),
+    # Jonas 2026-08-23: released as-is behind the curtain; claims lock relaxed for gated
+    # Lab pages (CLAUDE.md §Gates). OS deck slide 06 unchanged, support widget FAQ
+    # unchanged, CX analysis as it is; gated + noindex + robots-Disallowed. Security
+    # lift parked: backlog card lab-security-lift-2026-08-23.
+    pathlib.Path("frankly-os-deck.html"),
+    pathlib.Path("frankly-support-widget.html"),
+    pathlib.Path("frankly-kundeoplevelse-strategi.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
