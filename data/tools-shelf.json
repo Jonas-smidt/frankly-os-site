@@ -232,7 +232,7 @@
       "statusLabelDa": "Prototype",
       "actionLabelEn": "Open Attach-rate simulator",
       "mark": "AR",
-      "art": "instore",
+      "art": "attach-rate",
       "retired": false
     },
     {
@@ -316,7 +316,7 @@
       "statusLabelDa": "Preview",
       "actionLabelEn": "Open the welcome page",
       "mark": "WF",
-      "art": "onboarding",
+      "art": "os-onboarding",
       "retired": false
     },
     {
@@ -694,7 +694,7 @@
       "statusLabelDa": "Prototype",
       "actionLabelEn": "Open board",
       "mark": "ME",
-      "art": "marketing",
+      "art": "marketing-board",
       "retired": false
     },
     {
@@ -715,7 +715,7 @@
       "statusLabelDa": "Prototype",
       "actionLabelEn": "Open calendar",
       "mark": "MK",
-      "art": "marketing",
+      "art": "marketing-kalender",
       "retired": false
     },
     {
@@ -770,5 +770,5 @@
     "gateNonPublic": 11,
     "retired": 2
   },
-  "syncedAt": "2026-08-23T14:54:58+00:00"
+  "syncedAt": "2026-08-23T19:58:20+00:00"
 }
