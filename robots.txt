@@ -12,6 +12,7 @@ Disallow: /observatory.html
 Disallow: /studio.html
 Disallow: /onboarding.html
 Disallow: /frankly-os-onboarding.html
+Disallow: /frankly-os-holdet.html
 Disallow: /frankly-signature-generator.html
 Disallow: /frankly-brand-reference.html
 Disallow: /frankly-brand-assistant.html
@@ -20,6 +21,7 @@ Disallow: /frankly-dictionary.html
 Disallow: /frankly-qr-link.html
 Disallow: /frankly-image-resizer.html
 Disallow: /frankly-drop-protection.html
+Disallow: /franklys-bmw.html
 Disallow: /the-decision-chicken.html
 Disallow: /frankly-quiz.html
 Disallow: /frankly-instore-onepager.html
@@ -32,5 +34,6 @@ Disallow: /frankly-ribbon-lab.html
 Disallow: /liquid-glass-hover.html
 Disallow: /frankly-linkedin-checker.html
 Disallow: /marketing/
+Disallow: /effekt-lab/
 
 Sitemap: https://os.franklydesign.dk/sitemap.xml

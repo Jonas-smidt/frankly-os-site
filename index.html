@@ -116,7 +116,11 @@
   .item[data-art="onboarding"]{--obj:url(assets/tools/onboarding.png)}
   .item[data-art="coverage"]{--obj:url(assets/tools/coverage.png)}
   .item[data-art="blog"]{--obj:url(assets/tools/blog.png)}
-  .item[data-art="bmw"]::before,.item[data-art="onboarding"]::before{background-size:cover;background-position:center}
+  .item[data-art="glass-lab"]{--obj:url(assets/tools/glass-lab.png)}
+  .item[data-art="glass-surface"]{--obj:url(assets/tools/glass-surface.png)}
+  .item[data-art="glass-hover"]{--obj:url(assets/tools/glass-hover.png)}
+  .item[data-art="glass-folders"]{--obj:url(assets/tools/glass-folders.png)}
+  .item[data-art="bmw"]::before,.item[data-art="onboarding"]::before,.item[data-art="glass-lab"]::before,.item[data-art="glass-surface"]::before,.item[data-art="glass-hover"]::before,.item[data-art="glass-folders"]::before{background-size:cover;background-position:center}
   .item[data-art="ribbon"]::before{background:var(--thumb);background-color:var(--limestone-soft)}
   .item[data-art="effekt-lab"]::before{background:url(effekt-lab/thumbs/iridescent-button.png) center/cover;background-color:#120009;border-bottom-color:rgba(45,0,17,.2)}
   /* Marketing Engine board — CSS-art only (no render exists yet): a phase-split
@@ -260,11 +264,23 @@
             <p>Status board for the marketing branch: backlog by phase and gate, the KPI tree, the prompt panel and the route map. Prototype — nothing here is approved.</p>
             <span class="go">Open board</span>
           </a>
+          <a class="item draft" href="marketing/kalender.html" data-art="marketing" data-mark="MK">
+            <span class="chip">Prototype surface</span>
+            <h3>Marketing calendar</h3>
+            <p>The plan week by week: every item has a date, or the reason it doesn't. Prototype — nothing here is approved.</p>
+            <span class="go">Open calendar</span>
+          </a>
           <a class="item live" href="frankly-instore-onepager.html" data-art="instore" data-mark="IN">
             <span class="chip">Online guide</span>
+            <h3>Instore onepager</h3>
+            <p>The Frankly instore sale on one page: flow, payment and coverage. In Danish.</p>
+            <span class="go">Open Instore onepager</span>
+          </a>
+          <a class="item live" href="frankly-instore-salgsguide.html" data-art="instore" data-mark="SG">
+            <span class="chip">Online guide</span>
             <h3>Instore salgsguide</h3>
-            <p>Overblik og fuld guide til Frankly Instore-salget: flow, betaling, dækning og quiz.</p>
-            <span class="go">Open guide</span>
+            <p>The full instore sales guide, step by step. In Danish.</p>
+            <span class="go">Open Instore salgsguide</span>
           </a>
           <a class="item draft" href="frankly-attach-rate.html" data-art="instore" data-mark="AR">
             <span class="chip">Prototype tool</span>
@@ -320,6 +336,12 @@
             <p>Resize local images to useful social and presentation formats.</p>
             <span class="go">Open tool</span>
           </a>
+          <a class="item draft" href="frankly-linkedin-checker.html" data-art="signature" data-mark="LI">
+            <span class="chip">Gated preview</span>
+            <h3>LinkedIn post checker</h3>
+            <p>Check a LinkedIn draft against Frankly tone and wording before you post — brand checklist and feed preview.</p>
+            <span class="go">Open checker</span>
+          </a>
         </div>
       </div>
     </section>
@@ -358,17 +380,29 @@
             <p>A short brand quiz for tone, gates and internal basics.</p>
             <span class="go">Take quiz</span>
           </a>
-          <a class="item live" href="glass-lab.html" data-art="quiz" data-mark="GL">
-            <small>Online playground</small>
+          <a class="item live" href="glass-lab.html" data-art="glass-lab" data-mark="GL">
+            <span class="chip">Online playground</span>
             <h3>Glass Lab</h3>
             <p>A graphical playground for Frankly liquid-glass surfaces: refraction, frost, edge light and iridescent hover-wash.</p>
-            <strong>Open playground</strong>
+            <span class="go">Open playground</span>
           </a>
-          <a class="item live" href="liquid-glass-hover.html" data-art="glass" data-mark="LG">
-            <small>Online prototype</small>
+          <a class="item live" href="liquid-glass-hover.html" data-art="glass-hover" data-mark="LG">
+            <span class="chip">Online prototype</span>
             <h3>Liquid Glass Hover</h3>
             <p>A Frankly environment prototype for 1:1 backdrop glass, mouse-light shadows and hero-card flare.</p>
-            <strong>Open prototype</strong>
+            <span class="go">Open prototype</span>
+          </a>
+          <a class="item live" href="glass-surface.html" data-art="glass-surface" data-mark="GS">
+            <span class="chip">Online experiment</span>
+            <h3>Glass Surface</h3>
+            <p>A focused study of a single glass surface: material, light and edge.</p>
+            <span class="go">Open experiment</span>
+          </a>
+          <a class="item live" href="glass-folders.html" data-art="glass-folders" data-mark="GF">
+            <span class="chip">Online experiment</span>
+            <h3>Glass Folders</h3>
+            <p>Frosted glass folders on a colored bokeh backdrop; files fan out on hover.</p>
+            <span class="go">Open experiment</span>
           </a>
         </div>
       </div>
@@ -390,6 +424,12 @@
             <p>How the machine works, what it decides itself, and where you come in — for new teammates.</p>
             <span class="go">Open the welcome page</span>
           </a>
+          <a class="item draft" href="frankly-os-holdet.html" data-art="onboarding" data-mark="HO">
+            <span class="chip">Internal · Team</span>
+            <h3>Frankly OS — the team</h3>
+            <p>The agent crew page: who the seats are, what the machine has built, and how to ask it for work.</p>
+            <span class="go">Open the team page</span>
+          </a>
           <a class="item draft" href="onboarding.html" data-art="onboarding" data-mark="ST">
             <span class="chip">Gated preview</span>
             <h3>Start here</h3>
@@ -400,6 +440,12 @@
             <span class="chip">Online page</span>
             <h3>Coverage overview</h3>
             <p>Approved for the online Lab bundle; still not a legal source.</p>
+            <span class="go">Open page</span>
+          </a>
+          <a class="item live" href="om-frankly-lab.html" data-art="brand-reference" data-mark="OM">
+            <span class="chip">Online page</span>
+            <h3>About Frankly Lab</h3>
+            <p>What the Lab is, shelf by shelf, and where the boundary sits.</p>
             <span class="go">Open page</span>
           </a>
           <a class="item public" href="journal/frankly-blog-index.html" data-art="blog" data-mark="JO">
@@ -458,7 +504,7 @@
   </footer>
   <script>document.documentElement.classList.add('js');</script>
   <!-- INDEX-HERO-SNAPSHOT:BEGIN -->
-  <script id="index-hero-snapshot" type="application/json">{"schemaVersion":"1.0","generated":"2026-08-22T21:38:18+00:00","buildDate":"2026-08-22","shelfUpdated":"2026-08-21","shelf":{"value":24,"rule":"lane==public-lab && !retired"},"play":{"value":4,"rule":"lane==public-lab && !retired && shelf==play"},"playShelf":{"value":6,"rule":"tiles rendered inside <section id=play> whose href is a lane==public-lab && !retired feed entry","play":4,"experiments":2,"experimentsOffShelf":2,"split":"4 to play · 2 experiments"},"lanes":[{"id":"tools","target":"live","count":11},{"id":"play","target":"play","count":4},{"id":"pages","target":"pages","count":5}],"source":"data/tools-shelf.json","generator":"scripts/build-index-hero-snapshot.py"}</script>
+  <script id="index-hero-snapshot" type="application/json">{"schemaVersion":"1.0","generated":"2026-08-23T13:44:13+00:00","buildDate":"2026-08-23","shelfUpdated":"2026-08-23","shelf":{"value":29,"rule":"lane==public-lab && !retired"},"play":{"value":4,"rule":"lane==public-lab && !retired && shelf==play"},"playShelf":{"value":8,"rule":"tiles rendered inside <section id=play> whose href is a lane==public-lab && !retired feed entry","play":4,"experiments":4,"experimentsOffShelf":1,"split":"4 to play · 4 experiments"},"lanes":[{"id":"tools","target":"live","count":14},{"id":"play","target":"play","count":4},{"id":"pages","target":"pages","count":6}],"source":"data/tools-shelf.json","generator":"scripts/build-index-hero-snapshot.py"}</script>
   <!-- INDEX-HERO-SNAPSHOT:END -->
   <script>
   (function(){
@@ -498,10 +544,10 @@
       else{new IntersectionObserver(function(es,io){es.forEach(function(e){if(e.isIntersecting){live.classList.add("is-in");io.disconnect();}});},{threshold:[.25,.6]}).observe(live);}}
   })();
   </script>
-  <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-generated 2026-08-21T19:32:18+00:00; never hand-edit) -->
+  <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-generated 2026-08-23T13:44:07+00:00; never hand-edit) -->
   <script id="toolsShelfSnapshot" type="application/json">{
   "schemaVersion": "1.0",
-  "generated": "2026-08-21T19:32:18+00:00",
+  "generated": "2026-08-23T13:44:07+00:00",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "tools": [
     {
@@ -778,6 +824,27 @@
       "retired": false
     },
     {
+      "id": "frankly-os-holdet",
+      "href": "frankly-os-holdet.html",
+      "labelEn": "Frankly OS — the team",
+      "labelDa": "Frankly OS — Holdet",
+      "descriptionEn": "The agent crew page: who the seats are, what the machine has built, and how to ask it for work.",
+      "descDa": "Holdsiden: hvem sæderne er, hvad maskinen har bygget, og hvordan man beder den om arbejde.",
+      "category": "Hverdag",
+      "shelf": "pages",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "live",
+      "statusLabelEn": "Live",
+      "statusLabelDa": "Live",
+      "actionLabelEn": "Open the team page",
+      "mark": "HO",
+      "art": "holdet",
+      "retired": false
+    },
+    {
       "id": "coverage-overview",
       "href": "frankly-daekningsoverblik.html",
       "labelEn": "Coverage overview",
@@ -988,6 +1055,27 @@
       "retired": false
     },
     {
+      "id": "linkedin-checker",
+      "href": "frankly-linkedin-checker.html",
+      "labelEn": "LinkedIn post checker",
+      "labelDa": "LinkedIn-tjekker",
+      "descriptionEn": "Check a LinkedIn draft against Frankly tone and wording before you post.",
+      "descDa": "Udkast, brandtjekliste og feed-forhåndsvisning før du poster.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "preview",
+      "statusLabelEn": "Gated preview",
+      "statusLabelDa": "Preview",
+      "actionLabelEn": "Open LinkedIn post checker",
+      "mark": "LI",
+      "art": "linkedin",
+      "retired": false
+    },
+    {
       "id": "glass-folders",
       "href": "glass-folders.html",
       "labelEn": "Glass Folders",
@@ -1006,6 +1094,69 @@
       "actionLabelEn": "Open Glass Folders",
       "mark": "GF",
       "art": "glass-folders",
+      "retired": false
+    },
+    {
+      "id": "effekt-lab",
+      "href": "effekt-lab/index.html",
+      "labelEn": "Effekt-lab",
+      "labelDa": "Effekt-lab",
+      "descriptionEn": "Motion gallery: design effects and animations recreated in the Frankly universe — glass, iridescent light and motion.",
+      "descDa": "Motion-galleri: design/animationer genskabt i Frankly-universet — glas, iriserende lys og motion.",
+      "category": "Leg",
+      "shelf": "experiments",
+      "lane": "public-lab",
+      "gate": "public",
+      "gateLabelEn": "Gated Lab",
+      "gateLabelDa": "Offentlig",
+      "status": "experiment",
+      "statusLabelEn": "Experiment",
+      "statusLabelDa": "Eksperiment",
+      "actionLabelEn": "Open gallery",
+      "mark": "EL",
+      "art": "effekt-lab",
+      "retired": false
+    },
+    {
+      "id": "marketing-board",
+      "href": "marketing/index.html",
+      "labelEn": "Marketing Engine board",
+      "labelDa": "Marketing Engine-tavle",
+      "descriptionEn": "Status board for the marketing branch: backlog by phase and gate, KPI tree, prompt panel and route map. Prototype — nothing here is approved.",
+      "descDa": "Statustavle for marketing-grenen: backlog pr. fase og gate, KPI-træ, prompt-panel og rutekort. Prototype — intet her er godkendt.",
+      "category": "OS",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "prototype",
+      "statusLabelEn": "Prototype",
+      "statusLabelDa": "Prototype",
+      "actionLabelEn": "Open board",
+      "mark": "ME",
+      "art": "marketing",
+      "retired": false
+    },
+    {
+      "id": "marketing-kalender",
+      "href": "marketing/kalender.html",
+      "labelEn": "Marketing calendar",
+      "labelDa": "Marketingkalender",
+      "descriptionEn": "The plan week by week: every item has a date, or the reason it does not. Prototype.",
+      "descDa": "Planen uge for uge: hvert punkt har en dato, eller grunden til at det ikke har. Prototype.",
+      "category": "OS",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "prototype",
+      "statusLabelEn": "Prototype",
+      "statusLabelDa": "Prototype",
+      "actionLabelEn": "Open calendar",
+      "mark": "MK",
+      "art": "marketing",
       "retired": false
     }
   ]

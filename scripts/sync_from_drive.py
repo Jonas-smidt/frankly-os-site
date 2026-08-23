@@ -51,6 +51,15 @@ UPLOADABLE_HTML = (
     # Internal teammate onboarding page (full-crew build 2026-08-21): gated + noindex
     # + robots-Disallowed like onboarding.html; describes the OS only, no claims copy.
     pathlib.Path("frankly-os-onboarding.html"),
+    # Lab completeness (Jonas 2026-08-23 "sikre dig at alt vores arbejde rent faktisk
+    # ligger i lab" + "andre widgets skal i lab"; run 20260823-lab-completeness-audit,
+    # R11 CLEAR): gated + noindex + robots-Disallowed like frankly-os-onboarding.html.
+    # The deck is a self-contained single file; Holdet is the agent-crew page; the
+    # LinkedIn checker's 2026-07-13 hold ("until Jonas explicitly reopens") is lifted
+    # by that instruction.
+    # frankly-os-deck.html held 2026-08-23 — R9 pixel pass flagged slide 06, awaiting Jonas
+    pathlib.Path("frankly-os-holdet.html"),
+    pathlib.Path("frankly-linkedin-checker.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),

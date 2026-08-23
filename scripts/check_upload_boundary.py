@@ -34,6 +34,11 @@ OS_ONLY_PAGES = [
     # glass-folders.html left this list 2026-08-21: Jonas reopened it as a public
     # Play experiment (card lab-glass-folders-shelf-feed-2026-07-24) — it is now an
     # allowlisted, gated Lab page like the other glass experiments.
+    # 2026-08-23 (run 20260823-lab-completeness-audit, Jonas "andre widgets skal i lab",
+    # R11 CLEAR): frankly-os-deck.html, frankly-os-holdet.html and
+    # frankly-linkedin-checker.html are deliberately NOT listed — they ship as gated,
+    # noindex, robots-Disallowed Lab pages. frankly-support-widget.html and
+    # frankly-kundeoplevelse-strategi.html stay off the allowlist pending Jonas.
     "agent-brief-builder.html",
     "control-cockpit.html",
     "frankly-os.html",

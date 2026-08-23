@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Det her byggede maskinen — Frankly OS · til holdet</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="stylesheet" href="frankly-lab-brand.css">
+<style>
+  /* ---- page-local layer. Alle gentagne værdier bor her ÉN gang (L0274) ---- */
+  :root{
+    --wrap:1120px;
+    --gap:clamp(18px,3vw,34px);
+    --sec-pad:clamp(38px,6vw,84px);
+    --rule:1px solid var(--line);
+    --code-bg:#FBF9F6;
+    --code-ink:#3A2530;
+    --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,Consolas,monospace;
+    --bar:linear-gradient(90deg,var(--calm-deep),var(--calm-pink));
+    /* WCAG 2.1 AA-overrides, lokale til denne side (kanonen i frankly-os-site/
+       roeres aldrig). Daempning styres med FARVE, ikke opacity, saa forholdet
+       kan maales deterministisk af build-holdet-page.py --check:
+         --kicker-ink  daempet bordeaux, erstatter bordeaux+opacity:.6 (4,38:1 = fald)
+         .muted        --grey-1 i stedet for --grey-2 (3,6:1 = fald) */
+    --kicker-ink:#743F50;
+    --muted-ink:var(--grey-1);
+  }
+  *{box-sizing:border-box}
+  .skiplink{position:absolute;left:-9999px;top:0;z-index:10;padding:12px 18px;
+    background:var(--bordeaux);color:var(--blush);text-decoration:none;font-weight:600;
+    border-radius:0 0 var(--r-sm) 0}
+  .skiplink:focus{left:0}
+  section{scroll-margin-top:12px}
+  html{-webkit-text-size-adjust:100%}
+  body.fl{background:var(--limestone);color:var(--grey-1);overflow-x:hidden}
+  .wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 clamp(18px,5vw,40px)}
+  section{padding:var(--sec-pad) 0;border-top:var(--rule)}
+  section:first-of-type{border-top:0}
+  .kicker{font-family:var(--fl-sans);font-weight:600;font-size:12px;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--kicker-ink);margin:0 0 14px}
+  h1{font-size:clamp(38px,7vw,74px);line-height:1.02;margin:0 0 22px}
+  h2{font-size:clamp(26px,4.2vw,44px);line-height:1.08;margin:0 0 18px}
+  h3{font-size:clamp(19px,2.4vw,24px);line-height:1.2;margin:0 0 10px}
+  p{margin:0 0 16px;max-width:68ch}
+  .lead{font-size:clamp(17px,2.1vw,21px);line-height:1.55;color:var(--bordeaux)}
+  .muted{color:var(--muted-ink)}
+  a{color:var(--bordeaux);text-decoration:underline;text-underline-offset:3px;
+    text-decoration-thickness:1px;border-radius:4px}
+  a:focus-visible,button:focus-visible{outline:3px solid var(--calm-deep);outline-offset:3px}
+
+  /* hero */
+  .hero{background:linear-gradient(180deg,var(--blush),var(--limestone));padding-top:clamp(46px,8vw,96px)}
+  .one-surface{margin-top:26px;padding:16px 20px;background:var(--paper);border:var(--rule);
+    border-radius:var(--r-card);box-shadow:var(--shadow-card);max-width:64ch}
+  .one-surface p{margin:0 0 8px;font-weight:500;color:var(--bordeaux)}
+  .stamp{margin-top:22px;font-family:var(--mono);font-size:12px;color:var(--muted-ink);word-break:break-word}
+
+  /* chips + buttons */
+  .chips{display:flex;flex-wrap:wrap;gap:10px;list-style:none;padding:0;margin:0 0 22px}
+  .chip{display:inline-flex;align-items:center;gap:8px;padding:7px 14px;border-radius:var(--r-pill);
+    background:var(--paper);border:var(--rule);font-size:13px;font-weight:500;color:var(--bordeaux)}
+  .chip.live{background:var(--ok);border-color:transparent;color:#0C3B22}
+  .chip.locked{background:var(--stone-4);border-color:transparent}
+  .chip.red{background:var(--pink-stone);border-color:transparent;color:#7A1030}
+  .dot{width:8px;height:8px;border-radius:50%;background:var(--success-live);flex:0 0 auto}
+  .ctas{display:flex;flex-wrap:wrap;gap:12px;margin:26px 0 0}
+  .btn{display:inline-block;padding:13px 22px;border-radius:var(--r-pill);background:var(--bordeaux);
+    color:var(--blush);text-decoration:none;font-weight:600;font-size:15px;
+    transition:transform var(--dur-hover) var(--ease)}
+  .btn:hover{transform:translateY(-2px)}
+  .btn.ghost{background:transparent;color:var(--bordeaux);border:1px solid var(--line-dark)}
+
+  /* grids + cards */
+  .grid{display:grid;gap:var(--gap)}
+  .g2{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .g3{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .g4{grid-template-columns:repeat(4,minmax(0,1fr))}
+  .card{background:var(--paper);border:var(--rule);border-radius:var(--r-lg);
+    padding:clamp(20px,2.6vw,30px);box-shadow:var(--shadow-card)}
+  .card.soft{background:var(--limestone-soft);box-shadow:none}
+  .stat{display:block}
+  .stat b{display:block;font-family:var(--fl-display);font-weight:600;color:var(--bordeaux);
+    font-size:clamp(30px,5vw,50px);line-height:1;letter-spacing:-.02em}
+  .stat span{display:block;margin-top:8px;font-size:13.5px;color:var(--grey-1)}
+
+  /* samlebånd */
+  .line-flow{display:grid;gap:12px;grid-template-columns:repeat(5,minmax(0,1fr));align-items:stretch}
+  .step{background:var(--paper);border:var(--rule);border-radius:var(--r-card);padding:16px;position:relative}
+  .step .seat{font-family:var(--mono);font-size:11.5px;color:var(--bordeaux);opacity:.75}
+  .step b{display:block;font-family:var(--fl-display);font-weight:600;color:var(--bordeaux);
+    font-size:16px;margin:6px 0 4px}
+  .step small{display:block;font-size:12.5px;color:var(--muted-ink);line-height:1.45}
+  .step.parallel{background:var(--blush)}
+  .step.bottleneck{border:1px solid var(--calm-deep);background:var(--pink-wash)}
+  .flowmeta{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:14px;font-size:12.5px;color:var(--muted-ink)}
+
+  /* seat bars */
+  .bars{list-style:none;padding:0;margin:0;display:grid;gap:10px}
+  .bars li{display:grid;grid-template-columns:64px 1fr 46px;gap:12px;align-items:center;font-size:13.5px}
+  .bars .track{height:12px;border-radius:var(--r-pill);background:var(--stone);overflow:hidden}
+  .bars .fill{display:block;height:100%;background:var(--bar);border-radius:var(--r-pill)}
+  .bars code{font-family:var(--mono);font-size:12.5px;color:var(--bordeaux)}
+  .bars li.rest span:first-child{font:400 12.5px/1.4 var(--mono,ui-monospace,monospace);color:var(--muted-ink);letter-spacing:.01em}
+    .bars li.rest .track.empty{background:none;border-top:1px dashed var(--line,#d9d5cd);height:0;align-self:center}
+    .bars b{text-align:right;color:var(--bordeaux)}
+
+  /* proofs */
+  .proof{border-left:4px solid var(--calm-deep);padding-left:clamp(16px,2.4vw,26px);margin:0 0 var(--gap)}
+  .proof.keystone{border-left-color:var(--bordeaux);background:var(--blush);
+    padding:clamp(20px,2.6vw,30px);border-radius:0 var(--r-lg) var(--r-lg) 0}
+  /* var bordeaux+opacity:.55 = 4,22:1 paa limestone → AA-fald; samme farve-greb som .kicker */
+  .proof .num{font-family:var(--fl-display);font-size:14px;color:var(--kicker-ink);
+    letter-spacing:.1em;margin:0 0 6px}
+  .point{background:var(--paper);border:var(--rule);border-radius:var(--r-card);padding:14px 18px;
+    margin:0 0 16px;max-width:70ch}
+  .proof.keystone .point{border-color:var(--line-dark)}
+  details.exhibit{border:var(--rule);border-radius:var(--r-sm);background:var(--code-bg);max-width:76ch}
+  details.exhibit summary{cursor:pointer;padding:10px 14px;font-size:12.5px;font-weight:600;
+    color:var(--bordeaux);letter-spacing:.02em}
+  details.exhibit > div{padding:0 14px 14px}
+  .codeline{font-family:var(--mono);font-size:12px;line-height:1.6;color:var(--code-ink);
+    white-space:pre-wrap;overflow-wrap:anywhere;margin:0 0 8px}
+  .codeline .path{display:block;color:var(--bordeaux);font-weight:600;margin-bottom:2px}
+  blockquote.lesson{margin:0 0 12px;padding:0;font-size:14px;line-height:1.6;color:var(--grey-1);
+    max-width:74ch}
+  blockquote.lesson cite{display:block;font-style:normal;font-family:var(--mono);font-size:11.5px;
+    color:var(--bordeaux);opacity:.8;margin-bottom:6px}
+
+  /* two rounds */
+  .rounds{display:grid;gap:12px;grid-template-columns:1fr auto 1fr;align-items:center;margin:0 0 16px}
+  .round{background:var(--paper);border:var(--rule);border-radius:var(--r-card);padding:16px}
+  .round .when{font-family:var(--mono);font-size:11.5px;color:var(--bordeaux)}
+  .round b{display:block;font-family:var(--fl-display);font-weight:600;color:var(--bordeaux);margin:6px 0 4px}
+  .round small{font-size:12.5px;color:var(--muted-ink);line-height:1.5;display:block}
+  .arrowgap{text-align:center;font-family:var(--mono);font-size:12px;color:var(--bordeaux);
+    line-height:1.4;white-space:nowrap}
+
+  /* growth curve */
+  .curve{background:var(--paper);border:var(--rule);border-radius:var(--r-lg);
+    padding:clamp(18px,2.4vw,28px);box-shadow:var(--shadow-card)}
+  .curve svg{display:block;width:100%;height:auto}
+  .legend{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:12px;font-size:12.5px;color:var(--muted-ink)}
+
+  /* honesty */
+  .stoplist{list-style:none;padding:0;margin:0 0 8px;display:grid;gap:8px}
+  .stoplist li{display:flex;gap:10px;align-items:flex-start;font-size:14.5px}
+  .stoplist li::before{content:"—";color:var(--calm-deep);font-weight:600;flex:0 0 auto}
+  table.facts{width:100%;border-collapse:collapse;font-size:13.5px}
+  table.facts th,table.facts td{text-align:left;padding:9px 10px;border-bottom:var(--rule);
+    vertical-align:top}
+  table.facts th{font-weight:600;color:var(--bordeaux);white-space:nowrap}
+  table.facts td:last-child{font-family:var(--mono);font-size:11.5px;overflow-wrap:anywhere}
+  .scroller{overflow-x:auto;-webkit-overflow-scrolling:touch}
+
+  footer{border-top:var(--rule);padding:var(--sec-pad) 0;background:var(--limestone-soft)}
+
+  @media (max-width:900px){
+    .g4{grid-template-columns:repeat(2,minmax(0,1fr))}
+    .g3{grid-template-columns:1fr}
+    .line-flow{grid-template-columns:1fr 1fr}
+    .rounds{grid-template-columns:1fr}
+    .arrowgap{text-align:left}
+  }
+  @media (max-width:620px){
+    .g2,.g4,.line-flow{grid-template-columns:1fr}
+    .bars li{grid-template-columns:58px 1fr 38px}
+  }
+  @media (prefers-reduced-motion:reduce){
+    .btn{transition:none}
+    .btn:hover{transform:none}
+  }
+  @media print{.btn{border:1px solid var(--bordeaux)}details.exhibit{page-break-inside:avoid}}
+</style>
+</head>
+<body class="fl">
+<a class="skiplink" href="#produktet">Spring til indhold</a>
+
+<!-- ═══ 1 · HOOK ═══════════════════════════════════════════ -->
+<section id="top" class="hero">
+  <div class="wrap">
+    <p class="kicker">Frankly OS · internt · 26.07.2026</p>
+    <h1>Det her byggede maskinen.</h1>
+    <p class="lead">Ikke et mockup. Ikke en plan. En blogserie, der ligger live lige nu, bygget af et hold
+      af specialister, og som blev lidt bedre af hver fejl, det opdagede undervejs.</p>
+    <div class="one-surface">
+      <p>Den levende flade er cockpittet. Det her er historien om, hvordan den blev det.</p>
+      <p class="muted" style="font-size:13.5px;font-weight:400">
+        <a href="http://127.0.0.1:8137/frankly-os-cockpit.html">http://127.0.0.1:8137/frankly-os-cockpit.html</a></p>
+    </div>
+    <div class="ctas">
+      <a class="btn" href="https://os.franklydesign.dk/journal/frankly-blog-index.html">Se Journalen live</a>
+      <a class="btn ghost" href="frankly-instore-salgsguide.html">Åbn salgsguiden</a>
+      <a class="btn ghost" href="http://127.0.0.1:8137/frankly-os-cockpit.html">Gå til cockpittet</a>
+    </div>
+    <p class="stamp">Genereret 2026-07-26 00:16 · regenerér med: python3 os-visualization/scripts/build-holdet-page.py</p>
+  </div>
+</section>
+
+<!-- ═══ 2 · PRODUKTET ══════════════════════════════════════ -->
+<section id="produktet">
+  <div class="wrap">
+    <p class="kicker">01 · Produktet</p>
+    <h2>Dette er ikke et eksempel. Det er live.</h2>
+    <ul class="chips">
+      <li class="chip live"><span class="dot" aria-hidden="true"></span>Live og ugatet</li>
+      <li class="chip">os.franklydesign.dk</li>
+    </ul>
+    <p class="lead">Frankly Journal ligger ugatet på <a href="https://os.franklydesign.dk/journal/frankly-blog-index.html">os.franklydesign.dk/journal/frankly-blog-index.html</a>
+      lige nu — 12 blogposter, 5 temasider, 55 rigtige
+      billeder. Ved siden af findes salgsguiden — samme byggeri, foldet ud til to helt forskellige måder at
+      bruge det på: den lange version og onepageren.</p>
+    <div class="grid g4" style="margin-top:var(--gap)">
+      <div class="card"><span class="stat"><b>12</b><span>blogposter</span></span></div>
+      <div class="card"><span class="stat"><b>5</b><span>temasider</span></span></div>
+      <div class="card"><span class="stat"><b>55</b><span>billeder i journalen</span></span></div>
+      <div class="card"><span class="stat"><b>5,5</b><span>MB selvstændig salgsguide — ét byg,
+        to abstraktionsniveauer</span></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 3 · SAMLEBÅNDET ════════════════════════════════════ -->
+<section id="samlebaandet">
+  <div class="wrap">
+    <p class="kicker">02 · Sådan blev det lavet</p>
+    <h2>Der er ingen &bdquo;AI, der skrev en blogpost&ldquo;. Der er et samlebånd.</h2>
+    <p class="lead">27 sæder, kontrakt v0-17, 133 registrerede sæde-kørsler.
+      Hver post går gennem brief, research og copy parallelt, byg, SEO/schema og et sidste uafhængigt
+      kvalitetstjek — ligesom et rigtigt redaktionsflow. Og ærligt: blandt de kørsler hvor sæderne faktisk er
+      registreret (46 af 138) står byggesædet for 24,1 % af sæde-aktiviteten — det er
+      stedet, der presser mest.</p>
+
+    <h3 style="margin-top:var(--gap)">Samlebåndet for ÉN blogpost</h3>
+    <div class="line-flow">
+      <div class="step"><span class="seat">R6</span><b>Brief</b><small>Rammen sættes: hvad posten skal, til hvem.</small></div>
+      <div class="step parallel"><span class="seat">R3 + R1</span><b>Copy + kilder</b>
+        <small>Tekst og research kører parallelt — de venter ikke på hinanden.</small></div>
+      <div class="step bottleneck"><span class="seat">M3</span><b>Byg</b>
+        <small>Eneste sæde der skriver filer. 24,1 % af den registrerede sæde-aktivitet sidder her.</small></div>
+      <div class="step"><span class="seat">R6.1</span><b>SEO + schema</b><small>Struktur og metadata lægges på.</small></div>
+      <div class="step"><span class="seat">R9</span><b>Terminal QA</b>
+        <small>Uafhængigt slut-tjek. Består den ikke, går posten ikke videre.</small></div>
+    </div>
+    <p class="flowmeta"><span>R3 + R1 kører samtidig</span><span>Én writer pr. flade</span>
+      <span>QA er terminal — ikke rådgivende</span></p>
+
+    <div class="grid g2" style="margin-top:var(--gap)">
+      <div class="card soft">
+        <h3>Hvor trykket sidder — målt, ikke gættet</h3>
+        <p class="muted" style="font-size:14px">De 5 travleste sæder af 133 registrerede sæde-kørsler (&bdquo;øvrige&ldquo; lukker totalen). Byggesædet er en
+          <strong>kendt og overvåget</strong> flaskehals: vi ved præcis hvor trykket sidder, og tallet
+          genberegnes hver gang siden bygges.</p>
+        <p class="muted" style="font-size:13px">Forbehold, så tallet ikke læses som mere end det er:
+          optællingen er konservativ med vilje og tæller <strong>kun</strong> kørsler med et eksplicit
+          <code>agentsUsed</code>-felt — 46 af 138 (33 %). Procenterne er
+          altså andele af det <strong>målte</strong> arbejde, ikke af alt arbejde.</p>
+        <ul class="bars"><li><code>M3</code><span class="track" role="img" aria-label="M3: 32 kørsler, 24,1 %"><span class="fill" style="width:100.0%"></span></span><b>32</b></li>
+<li><code>M4</code><span class="track" role="img" aria-label="M4: 20 kørsler, 15,0 %"><span class="fill" style="width:62.5%"></span></span><b>20</b></li>
+<li><code>R9</code><span class="track" role="img" aria-label="R9: 12 kørsler, 9,0 %"><span class="fill" style="width:37.5%"></span></span><b>12</b></li>
+<li><code>R4</code><span class="track" role="img" aria-label="R4: 10 kørsler, 7,5 %"><span class="fill" style="width:31.2%"></span></span><b>10</b></li>
+<li><code>R4.1</code><span class="track" role="img" aria-label="R4.1: 8 kørsler, 6,0 %"><span class="fill" style="width:25.0%"></span></span><b>8</b></li>
+<li class="rest"><span>øvrige 20 sæder</span><span class="track empty" role="img" aria-label="øvrige 20 sæder tilsammen: 51 kørsler, 38,3 % — vist som sum, ikke søjle"></span><b>51</b></li></ul>
+      </div>
+      <div class="card soft">
+        <h3>Og hvor der er kapacitet tilbage</h3>
+        <p class="muted" style="font-size:14px">2 sæder har aldrig kørt endnu
+          (M1, R4.4). Det er ikke spild — det er ubrugt kapacitet, som ligger klar og venter
+          på den type opgave, de er bygget til.</p>
+        <p class="muted" style="font-size:14px">Kontraktversionen læses ved kørsel som den nyeste
+          <code>frankly-crew-contract-v*.md</code> — aldrig hardcodet. I dag: <strong>v0-17</strong>,
+          27 sæder i rosteret og 27 genererede agent-filer.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 4 · COMPOUND — SIDENS KERNE ════════════════════════ -->
+<section id="kernen">
+  <div class="wrap">
+    <p class="kicker">03 · Kernen</p>
+    <h2>Hvorfor det bliver bedre hver gang</h2>
+    <p class="lead">Tre gange er en fejl blevet fanget i en revision af systemets egen kode, forstået — og
+      forståelsen skrevet ind i koden, hvor en permanent test nu vogter den. Almindeligt sprog først — koden
+      ligger som bilag under hver.</p>
+
+    <!-- ① keystone -->
+    <div class="proof keystone" style="margin-top:var(--gap)">
+      <p class="num">BEVIS ①</p>
+      <h3>Ordet &bdquo;check&ldquo; snød sig forbi vagten.</h3>
+      <p>Maskinens sikkerhedstjek kiggede efter ordet &bdquo;check&ldquo; for at genkende risikable handlinger.
+        Problemet: ordet &bdquo;check&ldquo; sidder også midt inde i &bdquo;checkout&ldquo; — og fordi tjekket
+        bare ledte efter bogstaverne, ikke betydningen, lod det den handling glide igennem, som om den var ufarlig.</p>
+      <div class="point"><strong>Pointen:</strong> Hullet blev fanget i en revision af systemets egen kode,
+        lukket <strong>samme aften</strong> — 25 minutter senere — og derefter låst fast med
+        en permanent test, der prøver præcis den fælde igen, så den ikke kan komme ind ubemærket.</div>
+      <p style="font-size:14px">Det stærkeste enkeltbevis på siden: koden citerer selv læringen
+        <strong>ved dato</strong>. Fejlen er ikke bare rettet — den er dokumenteret på gerningsstedet.</p>
+      <details class="exhibit" open>
+        <summary>Bilag ① — koden citerer læringen ved dato</summary>
+        <div>
+          <p class="codeline"><span class="path">os-visualization/scripts/classify_action.py:63</span>pat = r&quot;\b&quot; + re.escape(kw) + (r&quot;\b&quot; if both_sides else &quot;&quot;)</p>
+          <p class="codeline"><span class="path">os-visualization/scripts/classify_action.py:64</span>return re.search(pat, text) is not None</p>
+          <blockquote class="lesson"><cite>L0223 · 2026-07-23 · scope mission-runtime</cite>classify_action.py brugte ren substring-match (kw in text), saa safe-ordene &#x27;check&#x27;/&#x27;view&#x27; matchede inde i &#x27;checkout&#x27;/&#x27;review&#x27; og klassificerede muterende git-handlinger som safe-local i stedet for GATE. Fail-closed-gates skal matche paa ordgraenser (\b) eller eksakte tokens, ALDRIG substring — ellers arver alle gate-forbrugere (autopilot-triage, formidler-gate, evals) hullet.</blockquote>
+          <p class="codeline">Fundet i run 20260723-os-koderevision · lukket i run 20260723-classify-action-fix · permanent eval action_classifier_fail_closed ✓</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- ② -->
+    <div class="proof">
+      <p class="num">BEVIS ②</p>
+      <h3>Tre hænder i samme skuffe — uden at vide det.</h3>
+      <p>Tre forskellige dele af systemet skrev til de samme delte noter samtidig, uden at vente på hinanden.
+        Som tre personer, der redigerer det samme dokument uden &bdquo;spor ændringer&ldquo; — nogens rettelse
+        forsvinder bare, uden en lyd.</p>
+      <div class="point"><strong>Pointen:</strong> Systemet fik en lås om læs-ret-skriv, så to skrivere ikke
+        længere overskriver hinandens rettelser — og man kan se den fysisk ligge på disken. Ærligt forbehold:
+        låsen er rådgivende og <em>fail-open</em> — venter den forgæves, skriver den alligevel frem for at gå i
+        stå. Den fjerner det almindelige sammenstød, ikke enhver teoretisk race.</div>
+      <details class="exhibit">
+        <summary>Bilag ② — låsen i koden + 6 låsefiler fysisk på disken</summary>
+        <div>
+          <p class="codeline"><span class="path">os-visualization/scripts/os_state_io.py:92</span>def locked(path: str | os.PathLike, *, timeout: float = 10.0):</p>
+          <p class="codeline"><span class="path">os-visualization/scripts/os_state_io.py:108</span>fcntl.flock(fh.fileno(), fcntl.LOCK_EX | fcntl.LOCK_NB)</p>
+          <blockquote class="lesson"><cite>L0381 · 2026-07-23 · scope system-visualization</cite>Frankly OS har nu et delt state-I/O-modul (os-visualization/scripts/os_state_io.py): atomic_write_json (temp+fsync+os.replace — en samtidig laeser ser aldrig en halv fil) og locked() (raadgivende flock om read-modify-write, auto-frigivet ved procesdoed). Alle skrivninger til delte state-filer (backlog/run-registry/lessons-index/site-feeds/digest) skal gaa gennem det. Raadgivende laase binder KUN processer der ogsaa kalder locked(), saa ALLE read-modify-write-steder paa en fil skal bruge samme vej — cockpit-server + gap-finder + publish-prep + improvement-loop deler nu backlog-laasen; autopiloten skriver ikke backlog (kun laeser).</blockquote>
+          <p class="codeline">6 låsefiler på disken: autopilot-backlog.json.lock, autopilot.lock, backup-to-drive.lock, learning-capture-queue.json.lock, open-questions-resolved.json.lock, run-registry.json.lock</p>
+        </div>
+      </details>
+    </div>
+
+    <!-- ③ -->
+    <div class="proof">
+      <p class="num">BEVIS ③</p>
+      <h3>&bdquo;Godkendt&ldquo; er ikke det samme som &bdquo;gjort&ldquo;.</h3>
+      <p>Erfaringen blev skrevet ned den 2026-07-13: en godkendt opgave holdt op med at dukke op, fordi
+        &bdquo;godkendt&ldquo; blev læst som &bdquo;færdig&ldquo;. Den lå <strong>11 dage</strong>
+        før den blev bygget — og første udgave løste det med et flag. Et flag er bare et mærke, ikke en garanti:
+        allerede samme formiddag viste det sig, at mærket havde tabt 45 godkendte opgaver på gulvet,
+        fordi de aldrig fik det.</p>
+      <div class="point"><strong>Pointen:</strong> Anden gang — 4 timer og 38 minutter senere samme dag — blev det gjort
+        rigtigt: i stedet for at stole på et flag blev reglen bygget ind i selve systemet, hvor den ikke kan
+        tabes eller glemmes. Pointen er ikke at det lykkedes, men at det tog to forsøg og blev rettet med det samme.</div>
+      <div class="rounds">
+        <div class="round">
+          <span class="when">ERFARING · 2026-07-13</span>
+          <b>Set og skrevet ned</b>
+          <small>&bdquo;Godkendt&ldquo; er ikke &bdquo;gjort&ldquo;. Erfaringen lagt i hukommelsen — ikke i kode endnu.</small>
+        </div>
+        <div class="arrowgap">→ 11 dage →<br>først bygget som flag-fix</div>
+        <div class="round">
+          <span class="when">RUNDE 2 · 2026-07-24</span>
+          <b>Strukturelt fix</b>
+          <small>Flag-udgaven samme morgen tabte 45 items. Garantien lagt i systemet i stedet:
+            tæl ALLE, cap kun visningen.</small>
+        </div>
+      </div>
+      <details class="exhibit">
+        <summary>Bilag ③ — to runder i koden + permanent eval</summary>
+        <div>
+          <p class="codeline"><span class="path">os-visualization/scripts/autopilot.py:270</span>&quot;&quot;&quot;C6 (5.0) STRUKTUREL garanti: &#x27;ingen godkendt-gated item er usynligt&#x27;.</p>
+          <p class="codeline"><span class="path">os-visualization/scripts/autopilot.py:302</span>&quot;surfacedBy&quot;: &quot;needsExecution&quot; if t.get(&quot;needsExecution&quot;) else &quot;gated-approved-unexecuted&quot;,</p>
+          <blockquote class="lesson"><cite>L0188 · 2026-07-13 · runde 1</cite>A backlog task with status &#x27;approved&#x27; is skipped by autopilot&#x27;s triage, so approved-but-unexecuted work stops surfacing and goes invisible — &#x27;approved&#x27; is not &#x27;shipped&#x27;. The manual gate (e.g. git push) can still be pending long after the approval.</blockquote>
+          <blockquote class="lesson"><cite>L0396 · 2026-07-24 · runde 2</cite>Gør en synligheds-garanti STRUKTUREL, ikke flag-afhængig: surface approved+gated+uudførte items via classify_action UANSET needsExecution-flaget — en flag-nøglet bucket taber tavst de items der aldrig fik flaget (2026-07-24: 45 gated-approved items usynlige). Tæl ALLE, cap kun visning, log cappen — trunkér aldrig tavst.</blockquote>
+          <p class="codeline">Permanent eval approved_pending_visibility_c6 ✓ · i alt 42 eval-cases</p>
+        </div>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 5 · VÆKSTEN ════════════════════════════════════════ -->
+<section id="vaeksten">
+  <div class="wrap">
+    <p class="kicker">04 · Væksten</p>
+    <h2>Tallene vokser, fordi der er noget bag dem.</h2>
+    <p class="lead">706 erfaringer siden 30. juni, 138 kørsler, en
+      gennemsnitskvalitet på 0,77. Den stærkeste dag alene: 13. juli —
+      13 commits, 256 nye erfaringer. Ikke fordi maskinen blev presset,
+      men fordi den havde noget at lære af.</p>
+
+    <div class="curve" style="margin-top:var(--gap)">
+      <svg viewBox="0 0 960 300" role="img" aria-label="Kumulative erfaringer fra 2026-06-30 til 2026-07-26: 30 til 706. Største dag 2026-07-13 med 256 nye."><title>Erfaringer over tid</title><line x1="46" y1="258.0" x2="948" y2="258.0" stroke="var(--line)" stroke-width="1"/><text x="38" y="262.0" text-anchor="end" font-size="11" fill="var(--muted-ink)">0</text><line x1="46" y1="137.0" x2="948" y2="137.0" stroke="var(--line)" stroke-width="1"/><text x="38" y="141.0" text-anchor="end" font-size="11" fill="var(--muted-ink)">353</text><line x1="46" y1="16.0" x2="948" y2="16.0" stroke="var(--line)" stroke-width="1"/><text x="38" y="20.0" text-anchor="end" font-size="11" fill="var(--muted-ink)">706</text><polygon points="46.0,258.0 46.0,247.7 80.7,243.9 184.8,243.3 219.5,238.5 254.2,235.7 288.8,232.6 323.5,228.9 358.2,224.4 392.9,201.8 427.6,181.2 497.0,93.5 531.7,65.0 566.4,63.6 809.2,56.8 843.9,54.4 878.6,34.2 913.3,16.7 948.0,16.0 948.0,258.0" fill="var(--calm-pink)" opacity=".45"/><polyline points="46.0,247.7 80.7,243.9 184.8,243.3 219.5,238.5 254.2,235.7 288.8,232.6 323.5,228.9 358.2,224.4 392.9,201.8 427.6,181.2 497.0,93.5 531.7,65.0 566.4,63.6 809.2,56.8 843.9,54.4 878.6,34.2 913.3,16.7 948.0,16.0" fill="none" stroke="var(--bordeaux)" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round"/><text x="46.0" y="276.0" text-anchor="start" font-size="11" fill="var(--muted-ink)">06-30</text><circle cx="46.0" cy="247.7" r="4.5" fill="var(--bordeaux)"/><text x="46.0" y="235.7" text-anchor="start" font-size="12" font-weight="600" fill="var(--bordeaux)">30</text><text x="948.0" y="276.0" text-anchor="end" font-size="11" fill="var(--muted-ink)">07-26</text><circle cx="948.0" cy="16.0" r="4.5" fill="var(--bordeaux)"/><text x="948.0" y="36.0" text-anchor="end" font-size="12" font-weight="600" fill="var(--bordeaux)">706</text><text x="497.0" y="276.0" text-anchor="middle" font-size="11" fill="var(--muted-ink)">07-13</text><circle cx="497.0" cy="93.5" r="4.5" fill="var(--bordeaux)"/><text x="497.0" y="81.5" text-anchor="middle" font-size="12" font-weight="600" fill="var(--bordeaux)">480</text></svg>
+      <p class="legend"><span>Kumulative erfaringer pr. dag</span>
+        <span>568 ægte erfaringer + 138 run-noter</span>
+        <span>56 emneområder</span></p>
+    </div>
+
+    <div class="grid g4" style="margin-top:var(--gap)">
+      <div class="card"><span class="stat"><b>138</b><span>kørsler, heraf 96 validerede</span></span></div>
+      <div class="card"><span class="stat"><b>0,77</b><span>gennemsnitlig kvalitetsscore</span></span></div>
+      <div class="card"><span class="stat"><b>0</b><span>kørsler har rørt claims/produkt/jura —
+        låsen er holdt 100 %</span></span></div>
+      <div class="card"><span class="stat"><b>285</b><span>commits på tværs af de to repos
+        (153 + 132)</span></span></div>
+    </div>
+
+    <div class="card soft" style="margin-top:var(--gap)">
+      <h3>Den stærkeste enkeltdag: 13. juli</h3>
+      <p class="muted" style="font-size:14.5px">10:35 → 16:36 (6 timer og 1 minut) · 13 commits ·
+        67 unikke filer · +30.404/−11.324 linjer · 256 nye erfaringer.
+        Disciplin-pointen ved siden af væksten: <strong>0</strong> af 138 kørsler har
+        rørt det låste område.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ 6 · HVOR MASKINEN STOPPER ══════════════════════════ -->
+<section id="graensen">
+  <div class="wrap">
+    <p class="kicker">05 · Grænsen</p>
+    <h2>Grænsen er ikke en undskyldning. Den er en del af hvordan maskinen holder sig ærlig.</h2>
+
+    <div class="grid g2" style="margin-top:var(--gap)">
+      <div class="card">
+        <h3>Det rører maskinen aldrig af sig selv</h3>
+        <ul class="stoplist">
+          <li>sende noget offentligt live</li>
+          <li>skrive til Drive</li>
+          <li>bruge en betalt tjeneste</li>
+          <li>installere noget nyt</li>
+          <li>starte en tråd, nogen andre skal svare på</li>
+        </ul>
+        <p style="font-size:14.5px">De beslutninger går til Jonas, hver gang — ikke fordi maskinen ikke kan,
+          men fordi nogle beslutninger skal tages af et menneske.</p>
+        <ul class="chips" style="margin:0">
+          <li class="chip locked">claims · LOCKED</li>
+          <li class="chip locked">produkt · LOCKED</li>
+          <li class="chip locked">jura · LOCKED</li>
+        </ul>
+        <p style="font-size:14.5px;margin-top:14px">Claims, produkt og jura er helt lukket. Ikke midlertidigt
+          glemt — bevidst låst, indtil nogen med det ansvar åbner det igen ved navn.</p>
+      </div>
+      <div class="card">
+        <h3>Intet er rødt lige nu — og det er stadig maskinen selv, der siger det</h3>
+        <ul class="chips"><li class="chip live"><span class="dot" aria-hidden="true"></span>0 røde tjek</li></ul>
+        <p style="font-size:14.5px">Nyeste selvtjek (self-check-2026-07-25.md) står på <strong>PASS</strong>: 0 tjek er røde, 15 er grønne. Forrige selvtjek (self-check-2026-07-24.md) stod på <strong>FAIL</strong> — det her tal skifter, og siden følger det. Pointen er ikke at det er grønt i dag — det er, at siden trykker hvad selvtjekket faktisk siger. Var noget rødt, stod det her med navn, som det gjorde i går.</p>
+        <p style="font-size:14.5px">Præcist hvad der er rødt i eval-suiten: 42 af 42 tests består. De tests, der vogter beviserne ovenfor, <code>action_classifier_fail_closed</code> og <code>approved_pending_visibility_c6</code>, er <strong>grønne</strong>. Beskyttelsen står. Fejlede noget, ville testens navn stå her — som det gjorde i går.</p>
+        <p style="font-size:14.5px">Helbredet er <code>healthy</code>, så helbreds-porten spærrer ikke længere. Det der stadig står, er gatene: udgivelse, connector- og Drive-skrivning, betalt API, plugins, nye tråde — og claims, produkt og jura, som er låst. Maskinen har ikke selv-handlet én gang endnu; den holder sig inden for det safe-lokale, hvor den ikke kan gøre skade.</p>
+      </div>
+    </div>
+
+    <div class="card soft" style="margin-top:var(--gap)">
+      <h3>Varighed og token-forbrug måles slet ikke endnu</h3>
+      <p style="font-size:14.5px">Det er en pointe, ikke en mangel — og præcist målt: over 138 kørsler
+        findes feltet <code>duration</code> 0 gange, <code>startedAt</code> 0 gange,
+        <code>finishedAt</code> 0 gange og <code>tokenCount</code> 0 gange.
+        Kun datoen findes, på dag-niveau. Hvilke sæder der kørte, står i 46 af 138 kørsler
+        (33 %).</p>
+      <p style="font-size:14.5px">Telemetri-scriptet <code>telemetry-collect.py</code> ligger bygget;
+        <code>telemetry-summary.json</code> findes ikke endnu.</p>
+    </div>
+
+    <div class="one-surface" style="margin-top:var(--gap)">
+      <p>Den levende flade er cockpittet. Det her er historien om, hvordan den blev det.</p>
+      <p class="muted" style="font-size:13.5px;font-weight:400">
+        <a href="http://127.0.0.1:8137/frankly-os-cockpit.html">http://127.0.0.1:8137/frankly-os-cockpit.html</a></p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ APPENDIKS ══════════════════════════════════════════ -->
+<footer id="appendiks">
+  <div class="wrap">
+    <p class="kicker">Appendiks</p>
+    <h2>Tjek selv tallene.</h2>
+    <p>Hvert tal på denne side kommer fra en fil, ikke fra hukommelsen. Under er den præcise sti eller
+      kommando, der genererer det — så du ikke behøver tage vores ord for det.</p>
+    <div class="scroller">
+      <table class="facts">
+        <caption class="muted" style="text-align:left;padding:0 0 10px;font-size:13px">
+          Alle stier er relative til <code>/Users/jonas/Documents/Frankly os</code></caption>
+        <thead><tr><th scope="col">Tal</th><th scope="col">Værdi</th><th scope="col">Kilde / kommando</th></tr></thead>
+        <tbody><tr><th scope="row">Erfaringer i alt</th><td>706</td><td>os-visualization/system-intelligence/lessons-index.json → counts.lessons</td></tr>
+<tr><th scope="row">— heraf ægte / run-noter</th><td>568 / 138</td><td>lessons-index.json → counts.byKind (use + source) vs run</td></tr>
+<tr><th scope="row">Emneområder</th><td>56</td><td>lessons-index.json → counts.scopes</td></tr>
+<tr><th scope="row">Kørsler</th><td>138</td><td>run-registry.json → counts.runs</td></tr>
+<tr><th scope="row">Validerede kørsler</th><td>96</td><td>run-registry.json → counts.validatedRuns</td></tr>
+<tr><th scope="row">Gennemsnitskvalitet</th><td>0,77</td><td>run-registry.json → counts.avgQualityScore</td></tr>
+<tr><th scope="row">Kørsler i låst område</th><td>0</td><td>run-registry.json → counts.claimWorkRuns</td></tr>
+<tr><th scope="row">Sæder</th><td>27</td><td>agent-stats.json → antal agenter</td></tr>
+<tr><th scope="row">Sæde-kørsler (registrerede)</th><td>133 — kun kørsler med eksplicit agentsUsed indgår (46 af 138 = 33 % datadækning)</td><td>agent-stats.json → sum(usage.actualRuns); agent-stats.py tæller konservativt kun eksplicit agentsUsed</td></tr>
+<tr><th scope="row">M3&#x27;s andel af det MÅLTE arbejde</th><td>24,1 % af 133 registrerede sæde-kørsler — ikke af alt arbejde, da kun 33 % af kørslerne har sæderne registreret</td><td>agent-stats.json → M3.usage.actualRuns / sum(actualRuns)</td></tr>
+<tr><th scope="row">Sæder uden kørsler</th><td>M1, R4.4</td><td>agent-stats.json → usage.actualRuns == 0</td></tr>
+<tr><th scope="row">Genererede agent-filer</th><td>27</td><td>ls .claude/agents/*.md</td></tr>
+<tr><th scope="row">Kontraktversion</th><td>v0-17</td><td>glob nyeste system-intelligence/frankly-crew-contract-v*.md (L0390)</td></tr>
+<tr><th scope="row">Eval-cases</th><td>42 · 42 består / 0 fejler</td><td>python3 os-visualization/scripts/run-frankly-os-evals.py (kørt ved generering)</td></tr>
+<tr><th scope="row">Fejlende evals (navngivet)</th><td>ingen</td><td>run-frankly-os-evals.py → results[].status != passed</td></tr>
+<tr><th scope="row">Evals der vogter beviserne</th><td>action_classifier_fail_closed, approved_pending_visibility_c6 — begge grønne</td><td>run-frankly-os-evals.py → results[] for de to navne</td></tr>
+<tr><th scope="row">Beslutninger</th><td>146 linjer · 87 approved / 2 declined / 1 deferred</td><td>os-visualization/system-intelligence/cockpit-decisions.jsonl</td></tr>
+<tr><th scope="row">Blogposter</th><td>12</td><td>ls frankly-os-site/journal/frankly-blog-*.html (uden frankly-blog-index.html)</td></tr>
+<tr><th scope="row">Temasider</th><td>5</td><td>ls frankly-os-site/journal/tema-*.html</td></tr>
+<tr><th scope="row">Billeder i journalen</th><td>55</td><td>ls frankly-os-site/journal/images/ (kun filer)</td></tr>
+<tr><th scope="row">Salgsguidens størrelse</th><td>5.815.317 bytes ≈ 5,5 MB</td><td>stat frankly-os-site/frankly-instore-salgsguide.html</td></tr>
+<tr><th scope="row">Commits i alt</th><td>285 (153 + 132)</td><td>git rev-list --count HEAD i begge repos</td></tr>
+<tr><th scope="row">2026-07-13: commits</th><td>13</td><td>git log --since=&quot;2026-07-13 00:00&quot; --until=&quot;2026-07-13 23:59&quot; --oneline | wc -l</td></tr>
+<tr><th scope="row">2026-07-13: linjer</th><td>+30.404 / −11.324, 67 unikke filer</td><td>git log --since=&quot;2026-07-13 00:00&quot; --until=&quot;2026-07-13 23:59&quot; --numstat</td></tr>
+<tr><th scope="row">2026-07-13: nye erfaringer</th><td>256</td><td>lessons-index.json → optælling pr. date</td></tr>
+<tr><th scope="row">Låsefiler på disken</th><td>6: autopilot-backlog.json.lock, autopilot.lock, backup-to-drive.lock, learning-capture-queue.json.lock, open-questions-resolved.json.lock, run-registry.json.lock</td><td>ls os-visualization/system-intelligence/*.lock</td></tr>
+<tr><th scope="row">Røde tjek</th><td>ingen</td><td>os-visualization/reports/self-check-2026-07-25.md</td></tr>
+<tr><th scope="row">Grønne tjek</th><td>15</td><td>os-visualization/reports/self-check-2026-07-25.md</td></tr>
+<tr><th scope="row">Helbredsstatus</th><td>healthy</td><td>system-intelligence/autopilot-digest.json → status</td></tr>
+<tr><th scope="row">Selv-handling blokeret af</th><td>—</td><td>autopilot-digest.json → selfActDisabledReason</td></tr>
+<tr><th scope="row">Varighed / tokens målt</th><td>duration 0, startedAt 0, finishedAt 0, tokenCount 0</td><td>run-registry.json → feltforekomster over alle runs</td></tr>
+<tr><th scope="row">agentsUsed registreret</th><td>46 af 138 (33 %)</td><td>run-registry.json → feltforekomster</td></tr>
+<tr><th scope="row">Bevis ① kodecitat</th><td>os-visualization/scripts/classify_action.py:63</td><td>sed -n &quot;63p&quot; os-visualization/scripts/classify_action.py</td></tr>
+<tr><th scope="row">Bevis ② låsen</th><td>os-visualization/scripts/os_state_io.py:108</td><td>sed -n &quot;108p&quot; os-visualization/scripts/os_state_io.py</td></tr>
+<tr><th scope="row">Bevis ③ strukturel garanti</th><td>os-visualization/scripts/autopilot.py:270</td><td>sed -n &quot;270p&quot; os-visualization/scripts/autopilot.py</td></tr>
+<tr><th scope="row">Åbent spørgsmål (telemetri)</th><td>ikke citeret: 0 spørgsmål matchede kriteriet (kræver præcis 1)</td><td>lessons-index.json → openQuestions, valgt på tekstindhold (env-var + zshrc), aldrig på id/position</td></tr>
+<tr><th scope="row">Denne side</th><td>genereret</td><td>python3 os-visualization/scripts/build-holdet-page.py</td></tr></tbody>
+      </table>
+    </div>
+    <p class="stamp">Genereret 2026-07-26 00:16 · regenerér med: python3 os-visualization/scripts/build-holdet-page.py</p>
+    <p class="stamp">Denne fil er <strong>genereret</strong> — redigér aldrig i hånden. Skabelon:
+      <code>os-visualization/templates/holdet-page-template.html</code></p>
+    <div class="ctas">
+      <a class="btn" href="https://os.franklydesign.dk/journal/frankly-blog-index.html">Se Journalen live</a>
+      <a class="btn ghost" href="frankly-instore-salgsguide.html">Åbn salgsguiden</a>
+      <a class="btn ghost" href="http://127.0.0.1:8137/frankly-os-cockpit.html">Gå til cockpittet</a>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
