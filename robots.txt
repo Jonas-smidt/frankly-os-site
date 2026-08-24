@@ -36,6 +36,7 @@ Disallow: /frankly-linkedin-checker.html
 Disallow: /frankly-os-deck.html
 Disallow: /frankly-support-widget.html
 Disallow: /frankly-kundeoplevelse-strategi.html
+Disallow: /frankly-team-onboarding.html
 Disallow: /marketing/
 Disallow: /effekt-lab/
 

@@ -66,6 +66,10 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-os-deck.html"),
     pathlib.Path("frankly-support-widget.html"),
     pathlib.Path("frankly-kundeoplevelse-strategi.html"),
+    # Jonas 2026-08-24: the team onboarding guide (7-step self-guided setup, English,
+    # embedded brand fonts) onto the Lab — gated + noindex + robots-Disallowed like
+    # frankly-os-onboarding.html. Describes the system only, no claims copy.
+    pathlib.Path("frankly-team-onboarding.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
