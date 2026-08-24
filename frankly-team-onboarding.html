@@ -152,6 +152,8 @@
   .band h2{color:var(--white)}
   .band .sub{color:var(--pink-dirty)}
   .band p{color:#EAD9DF}
+  .band .prompt{color:var(--ink)}
+  .band .skills+.sub{margin-top:40px;margin-bottom:16px}
   .skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:26px}
   .skill{
     background:rgba(255,255,255,.06);border:1px solid rgba(255,211,227,.18);
@@ -286,9 +288,10 @@ GATES: Publishing, deploys, franklyinsure.com, customer or partner sends — "Jo
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </summary>
     <div class="step-body">
-      <p>In Claude's settings, open <strong>Connectors</strong> and connect <strong>Google Drive</strong> with your Frankly Google account. It must be able to see our shared drive — specifically the folder <strong>"Frankly os team folders"</strong>, where you have your own folder. That folder is your seat: your profile lives there, and your learnings land there.</p>
+      <p>In Claude, go to <strong>Settings → Customize → Connectors</strong> — the connector sits under <strong>Customize</strong>, not under Settings itself. Connect <strong>Google Drive</strong> with your Frankly Google account. It must be able to see our shared drive — specifically the folder <strong>"Frankly os team folders"</strong>, where you have your own folder. That folder is your seat: your profile lives there, and your learnings land there.</p>
+      <p>When it's connected, open the team folders and check that Claude reaches them.</p>
       <div class="actions">
-        <a class="btn" href="https://claude.ai/settings/connectors" target="_blank" rel="noopener">Open connector settings ↗</a>
+        <a class="btn ghost" href="https://drive.google.com/drive/folders/1_aWKkvQb8XSzx5xFhemd40dG5ZZB_I_D" target="_blank" rel="noopener">Open the team folders ↗</a>
         <button class="btn done-toggle" data-done-btn><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Mark done</button>
       </div>
     </div>
@@ -343,32 +346,15 @@ GATES: Publishing, deploys, franklyinsure.com, customer or partner sends — "Jo
   <details class="step" data-step="7">
     <summary class="step-head">
       <span class="num stamp">7</span>
-      <span class="step-title">Try a first task<small>Pick something you had to do anyway</small></span>
+      <span class="step-title">Run the system check<small>The system checks itself — and tells Jonas you're in</small></span>
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </summary>
     <div class="step-body">
-      <p>Choose your corner of Frankly and copy a prompt — or write your own. Plain English, the way you'd write to a colleague.</p>
-      <div class="tabs" role="tablist">
-        <button class="tab" role="tab" aria-selected="true" data-tab="mkt">Marketing / content</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="ptn">Partner / sales</button>
-        <button class="tab" role="tab" aria-selected="false" data-tab="dsn">Design / visual</button>
-      </div>
-      <div class="prompts active" data-panel="mkt">
-        <div class="prompt"><span>Write three social posts about [topic] in Frankly's voice</span><button data-copy="Write three social posts about [topic] in Frankly's voice">Copy</button></div>
-        <div class="prompt"><span>Draft the newsletter about [topic]</span><button data-copy="Draft the newsletter about [topic]">Copy</button></div>
-        <div class="prompt"><span>Research what competitors say about [topic]</span><button data-copy="Research what competitors say about [topic]">Copy</button></div>
-      </div>
-      <div class="prompts" data-panel="ptn">
-        <div class="prompt"><span>Make a one-pager for the meeting with [retailer]</span><button data-copy="Make a one-pager for the meeting with [retailer]">Copy</button></div>
-        <div class="prompt"><span>Find the three strongest arguments for an electronics chain</span><button data-copy="Find the three strongest arguments for an electronics chain">Copy</button></div>
-        <div class="prompt"><span>Build a short pitch on the partnership model</span><button data-copy="Build a short pitch on the partnership model">Copy</button></div>
-      </div>
-      <div class="prompts" data-panel="dsn">
-        <div class="prompt"><span>Make a lifestyle image with a bike in our style</span><button data-copy="Make a lifestyle image with a bike in our style">Copy</button></div>
-        <div class="prompt"><span>Upscale this image for print</span><button data-copy="Upscale this image for print">Copy</button></div>
-        <div class="prompt"><span>Make three icon proposals in Frankly's 2D style</span><button data-copy="Make three icon proposals in Frankly's 2D style">Copy</button></div>
-      </div>
+      <p>Open a new conversation and type <code>frankly system check</code>. The system runs through and confirms four things: the Google Drive connector reaches <strong>"Frankly os team folders"</strong> and your own folder, your <code>profile.md</code> is in place, the frankly-system plugin's skills are loaded, and the onboarding skill is loaded.</p>
+      <p>It reports the result back to you and writes a short confirmation file into your own team folder. That file is how Jonas's machine picks up that you're onboarded.</p>
       <div class="actions">
+        <button class="btn ghost" data-copy="frankly system check">Copy "frankly system check"</button>
+        <a class="btn ghost" href="mailto:js@franklyinsure.com?subject=Frankly%20OS%20%E2%80%94%20I%27m%20onboarded&body=Hi%20Jonas%20%E2%80%94%20I%27ve%20completed%20the%20setup%20and%20the%20system%20check%20runs%20clean.">Mail Jonas — I'm onboarded</a>
         <button class="btn done-toggle" data-done-btn><svg class="check" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M5 13l4 4L19 7"/></svg>Mark done</button>
       </div>
     </div>
@@ -391,6 +377,19 @@ GATES: Publishing, deploys, franklyinsure.com, customer or partner sends — "Jo
       <div class="skill"><b>image-upscaling</b><span>Makes images sharp enough for print and large formats.</span></div>
       <div class="skill"><b>log-feedback</b><span>Log a learning, an improvement or feedback into the system.</span></div>
       <div class="skill jonas-only"><b>system-maintenance</b><span>Changes to the system itself. Jonas only.</span></div>
+    </div>
+
+    <p class="sub">Nine prompts to start from — copy one, or write your own in plain English.</p>
+    <div class="prompts active">
+      <div class="prompt"><span>Marketing / content · Write three social posts about [topic] in Frankly's voice</span><button data-copy="Write three social posts about [topic] in Frankly's voice">Copy</button></div>
+      <div class="prompt"><span>Marketing / content · Draft the newsletter about [topic]</span><button data-copy="Draft the newsletter about [topic]">Copy</button></div>
+      <div class="prompt"><span>Marketing / content · Research what competitors say about [topic]</span><button data-copy="Research what competitors say about [topic]">Copy</button></div>
+      <div class="prompt"><span>Partner / sales · Make a one-pager for the meeting with [retailer]</span><button data-copy="Make a one-pager for the meeting with [retailer]">Copy</button></div>
+      <div class="prompt"><span>Partner / sales · Find the three strongest arguments for an electronics chain</span><button data-copy="Find the three strongest arguments for an electronics chain">Copy</button></div>
+      <div class="prompt"><span>Partner / sales · Build a short pitch on the partnership model</span><button data-copy="Build a short pitch on the partnership model">Copy</button></div>
+      <div class="prompt"><span>Design / visual · Make a lifestyle image with a bike in our style</span><button data-copy="Make a lifestyle image with a bike in our style">Copy</button></div>
+      <div class="prompt"><span>Design / visual · Upscale this image for print</span><button data-copy="Upscale this image for print">Copy</button></div>
+      <div class="prompt"><span>Design / visual · Make three icon proposals in Frankly's 2D style</span><button data-copy="Make three icon proposals in Frankly's 2D style">Copy</button></div>
     </div>
   </div>
 </section>
@@ -474,18 +473,6 @@ GATES: Publishing, deploys, franklyinsure.com, customer or partner sends — "Jo
         if(next&&next.classList.contains("step")&&!state[next.getAttribute("data-step")]){ next.setAttribute("open",""); }
       }
       save();render();
-    });
-  });
-
-  // tabs
-  var tabs=[].slice.call(document.querySelectorAll(".tab"));
-  tabs.forEach(function(t){
-    t.addEventListener("click",function(){
-      tabs.forEach(function(x){x.setAttribute("aria-selected","false");});
-      t.setAttribute("aria-selected","true");
-      [].slice.call(document.querySelectorAll(".prompts")).forEach(function(p){
-        p.classList.toggle("active",p.getAttribute("data-panel")===t.getAttribute("data-tab"));
-      });
     });
   });
 
