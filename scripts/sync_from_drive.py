@@ -70,6 +70,10 @@ UPLOADABLE_HTML = (
     # embedded brand fonts) onto the Lab — gated + noindex + robots-Disallowed like
     # frankly-os-onboarding.html. Describes the system only, no claims copy.
     pathlib.Path("frankly-team-onboarding.html"),
+    # Jonas 2026-08-24: the Claude Code (terminal) variant of the team onboarding guide
+    # (7 steps, English, embedded brand fonts) — gated + noindex + robots-Disallowed like
+    # frankly-team-onboarding.html. Describes the system only, no claims copy.
+    pathlib.Path("frankly-team-claude-code.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
