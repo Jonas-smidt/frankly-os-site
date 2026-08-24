@@ -153,7 +153,7 @@
   .band .sub{color:var(--pink-dirty)}
   .band p{color:#EAD9DF}
   .band .prompt{color:var(--ink)}
-  .band .skills+.sub{margin-top:40px;margin-bottom:16px}
+  .band .skills+.prompts{margin-top:40px}
   .skills{display:grid;grid-template-columns:repeat(auto-fill,minmax(240px,1fr));gap:10px;margin-top:26px}
   .skill{
     background:rgba(255,255,255,.06);border:1px solid rgba(255,211,227,.18);
@@ -379,7 +379,6 @@ GATES: Publishing, deploys, franklyinsure.com, customer or partner sends — "Jo
       <div class="skill jonas-only"><b>system-maintenance</b><span>Changes to the system itself. Jonas only.</span></div>
     </div>
 
-    <p class="sub">Nine prompts to start from — copy one, or write your own in plain English.</p>
     <div class="prompts active">
       <div class="prompt"><span>Marketing / content · Write three social posts about [topic] in Frankly's voice</span><button data-copy="Write three social posts about [topic] in Frankly's voice">Copy</button></div>
       <div class="prompt"><span>Marketing / content · Draft the newsletter about [topic]</span><button data-copy="Draft the newsletter about [topic]">Copy</button></div>
@@ -400,13 +399,8 @@ GATES: Publishing, deploys, franklyinsure.com, customer or partner sends — "Jo
   <div class="split">
     <div class="card">
       <h3>Say it, Claude logs it</h3>
-      <p>When you correct something, prefer one version over another, or get annoyed by the same thing twice — tell Claude. It offers to log it as a learning, which lands as a new file in Drive:</p>
-      <ul class="conv">
-        <li><b>Folder:</b> your own folder in <code>Frankly os team folders</code></li>
-        <li><b>Filename:</b> <code>YYYY-MM-DD-&lt;topic&gt;.md</code></li>
-        <li><b>Front matter:</b> <code>author · role · date · type</code></li>
-        <li><b>Body:</b> in English. New files only — nothing in Drive is ever edited or deleted.</li>
-      </ul>
+      <p>Correct Claude, prefer one version over another, or get annoyed by the same thing twice — and it logs that as a learning in your own team folder. It tells you in one line that it did. You file nothing. If you'd rather it didn't, say so, and it won't.</p>
+      <p>That's how what you learn reaches the system — so the next person doesn't hit the same wall.</p>
     </div>
     <div class="card pink">
       <h3>Nothing stops you</h3>
