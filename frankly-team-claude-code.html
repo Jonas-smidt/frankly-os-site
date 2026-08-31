@@ -327,7 +327,7 @@
   <details class="step" data-step="4">
     <summary class="step-head">
       <span class="num stamp">4</span>
-      <span class="step-title">Install the frankly-system plugin<small>Frankly's brand, routes and production skills &mdash; 11 of them</small></span>
+      <span class="step-title">Install the frankly-system plugin<small>Frankly's brand, routes and production skills &mdash; 11 of them, plus the specialists</small></span>
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </summary>
     <div class="step-body">
@@ -341,6 +341,7 @@
       <div class="note"><b>Now quit Claude and start it again.</b> Installing a plugin does nothing to a session that is already open, which is the single most common reason people think the plugin &ldquo;did not work&rdquo;. Type <code>/exit</code>, then <code>claude</code>.</div>
       <p>The checkpoint. This is the one command that tells you the truth about the plugin:</p>
       <div class="cmd"><code>claude plugin list</code><button data-copy="claude plugin list">Copy</button></div>
+      <div class="note"><b>Enabled also means the specialists are in.</b> The plugin carries a crew of specialists alongside the 11 skills; in the terminal they are live as soon as it says enabled, and <code>/agents</code> inside Claude lists them. <strong>The specialists run in Cowork and in Claude Code &mdash; never in the Chat tab.</strong> If you are sitting in Chat you will see the skills and no specialists, and nothing is broken: open the same work in Cowork and the crew is there.</div>
       <p class="expect"><b>Expect to see</b> <code>frankly-system</code> with the word <b>enabled</b>. Anything else &mdash; and it will print the reason &mdash; is one for Jonas: copy what it says into a mail to him rather than trying to fix it.</p>
       <p>Later on, when Jonas updates the plugin, you refresh it with the same two commands: <code>claude plugin marketplace update frankly</code>, then the install line again.</p>
       <div class="actions">
@@ -424,6 +425,20 @@
       <div class="skill"><b>Nothing new to learn</b><span>You still write in plain English, the way you would write to a colleague. The terminal is only the doorway.</span></div>
     </div>
 
+    <p class="sub" style="margin-top:46px">And a crew of specialists, which runs here.</p>
+    <p style="margin-bottom:14px;max-width:64ch">The plugin also brings a bench of specialists &mdash; a colleague with one job and one standard each: an editor who cuts, a researcher who brings sources, a positioning strategist, a judge whose only task is to say whether the work is good enough. There is no command to pick one. You type what you want done, in plain English, and Claude hands it to the right seat.</p>
+    <p style="margin-bottom:14px;max-width:64ch">What changes for you in practice: you can now type <strong>&ldquo;is this good enough to send?&rdquo;</strong> and get a real second opinion &mdash; something reading your draft against Frankly&rsquo;s standard instead of agreeing with you. That did not exist before. Inside Claude, <code>/agents</code> lists who is on the bench.</p>
+    <p style="margin-bottom:14px;max-width:64ch"><strong>The specialists run in Cowork and in Claude Code &mdash; never in the Chat tab.</strong> If you are sitting in Chat you will see the skills and no specialists, and nothing is broken: open the same work in Cowork and the crew is there. The terminal is one of the two places they work, so on this page you have them from the moment the plugin is enabled.</p>
+    <p style="margin-bottom:14px;max-width:64ch">Installing the plugin sets it up for you, on this Mac &mdash; it does not set it up for anyone else, and it is a separate install from the Claude app. When Jonas publishes a new version, he will say so, and you refresh it with the two commands in step 4.</p>
+    <div class="skills">
+      <div class="skill"><b>Words</b><span>Brand copy, an editor who actually cuts, positioning, partner strategy.</span></div>
+      <div class="skill"><b>Research &amp; numbers</b><span>Sourced research, investor analysis, growth, technical SEO.</span></div>
+      <div class="skill"><b>Look &amp; story</b><span>Visual direction, diagrams, story structure, page and deck execution.</span></div>
+      <div class="skill"><b>Moving pictures</b><span>Video production and editing, and the structure behind a social video.</span></div>
+      <div class="skill"><b>Build</b><span>Front-end and CMS work, building the thing, reviewing the code.</span></div>
+      <div class="skill"><b>Judgement</b><span>Planning, accessibility, the system critic &mdash; and the quality-bar judge, whose only job is to answer &ldquo;is this good enough to send?&rdquo;</span></div>
+    </div>
+
     <div class="prompts active">
       <div class="prompt"><span>Marketing / content &middot; Write three social posts about [topic] in Frankly's voice</span><button data-copy="Write three social posts about [topic] in Frankly's voice">Copy</button></div>
       <div class="prompt"><span>Partner / sales &middot; Make a one-pager for the meeting with [retailer]</span><button data-copy="Make a one-pager for the meeting with [retailer]">Copy</button></div>
@@ -446,6 +461,7 @@
       <p>If you write about coverage, pricing or legal terms, Claude marks it and <strong>keeps working</strong>:</p>
       <p><span class="flagline">&#9878; claims-review ved udgangen</span></p>
       <p>(Danish for &ldquo;claims review at the exit&rdquo; &mdash; the system's canonical marker.) The flag means Jonas reviews it before it gets published. The gate sits at the exit &mdash; never in your process.</p>
+      <p><strong>The specialists advise &mdash; they do not approve.</strong> Part of the crew stays on Jonas's machine on purpose: the connector guard and the QA runner need his gate scripts, and without them they would report a gate or a QA check as done when nothing had been checked. So a specialist calling your draft good is a good second opinion, not a company approval.</p>
       <p><strong>Publishing goes through Jonas.</strong> Anything that leaves the house &mdash; franklyinsure.com, customer and partner sends, deploys &mdash; he picks up. The cockpit is his machine; you don't need it.</p>
     </div>
   </div>
@@ -458,6 +474,9 @@
   <details><summary>Do I need to code?</summary><p>No. You paste the commands on this page once, and after that you write in plain English.</p></details>
   <details><summary>What if I make a mistake?</summary><p>Claude asks before it writes a file, and you cannot publish anything. Keep your drafts in your own folder and the worst case is a bad draft.</p></details>
   <details><summary>Something says <code>command not found</code>.</summary><p>Step 2, the two lines about <code>~/.zshrc</code> &mdash; then a brand-new terminal window. It catches nearly everyone.</p></details>
+  <details><summary>I only see the skills &mdash; where are the specialists?</summary><p>In the terminal they are live once <code>claude plugin list</code> says <b>enabled</b>; <code>/agents</code> lists them. In the Claude app they run in Cowork &mdash; the Chat tab greys them out, which is the usual reason people think they are missing.</p></details>
+  <details><summary>Do I have to choose which specialist to use?</summary><p>No. Type what you want done and Claude picks the seat. If you want a specific one, ask for it by what it does &mdash; &ldquo;let the editor cut this&rdquo;.</p></details>
+  <details><summary>Does a specialist approve my work?</summary><p>No. It gives you an honest second opinion. Publishing, sending and deploying still stop with Jonas.</p></details>
   <details><summary>Who do I ask when something's off?</summary><p>Jonas. Paste the exact line the terminal gave you into the mail &mdash; that is usually the whole diagnosis.</p></details>
 </section>
 
