@@ -1,6 +1,6 @@
 {
   "schemaVersion": "1.0",
-  "updated": "2026-08-23",
+  "updated": "2026-09-03",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "description": "Canonical Frankly Lab 4.0 shelf inventory. Consumers filter by lane and retired state; generated site copies are never edited by hand.",
   "tools": [
@@ -677,6 +677,27 @@
       "retired": false
     },
     {
+      "id": "marketing-app",
+      "href": "marketing/app.html",
+      "labelEn": "Marketing Engine app",
+      "labelDa": "Marketing Engine-app",
+      "descriptionEn": "The board and the calendar as one instrument: lanes, planned pages, dated items and the matrix, with every record on its own route. Prototype — nothing here is approved.",
+      "descDa": "Tavlen og kalenderen som ét instrument: spor, planlagte sider, daterede punkter og matricen, hvor hvert kort har sin egen rute. Prototype — intet her er godkendt.",
+      "category": "OS",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "prototype",
+      "statusLabelEn": "Prototype",
+      "statusLabelDa": "Prototype",
+      "actionLabelEn": "Open app",
+      "mark": "MA",
+      "art": "marketing",
+      "retired": false
+    },
+    {
       "id": "marketing-board",
       "href": "marketing/index.html",
       "labelEn": "Marketing Engine board",
@@ -762,13 +783,13 @@
     }
   ],
   "counts": {
-    "total": 36,
-    "active": 34,
-    "publicLab": 32,
+    "total": 37,
+    "active": 35,
+    "publicLab": 33,
     "localOs": 2,
     "gatePublic": 23,
-    "gateNonPublic": 11,
+    "gateNonPublic": 12,
     "retired": 2
   },
-  "syncedAt": "2026-08-23T20:34:55+00:00"
+  "syncedAt": "2026-09-03T10:21:10+00:00"
 }
