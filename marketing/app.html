@@ -60,6 +60,16 @@
 .kid.is-on,.nav a.kid.is-on{background:var(--stone-2);color:var(--bordeaux);font-weight:500}
 .kid--tail,.nav .kid--tail{color:var(--grey-1);font-weight:500;white-space:normal;line-height:1.4;font-size:12px}
 .rail__foot{margin-top:auto;padding-top:var(--sp-5)}
+/* the one route out of the instrument: back to the Lab front page (siblings carry it on their wordmark) */
+.rail__out{padding-top:var(--sp-2)}
+.rail__out a{
+  display:flex;align-items:center;gap:9px;padding:9px 14px;border-radius:var(--r-card);
+  font:500 12.5px/1.25 var(--fl-sans);color:var(--grey-1);text-decoration:none;
+  transition:background var(--dur-ui) var(--ease),color var(--dur-ui) var(--ease);
+}
+.rail__out a svg{width:14px;height:14px;flex:none;opacity:.45;transition:opacity var(--dur-ui) var(--ease)}
+.rail__out a:hover{background:var(--stone-2);color:var(--bordeaux)}
+.rail__out a:hover svg{opacity:.85}
 
 /* ---- canvas ---- */
 .canvas{margin-left:var(--rail-w);min-height:100vh;background:var(--limestone)}
@@ -347,6 +357,9 @@ table.mx tr.tot .lane{font-weight:600}
     </button>
     <nav id="nav" aria-label="Collections"></nav>
     <div class="rail__foot" id="railfoot"></div>
+    <div class="rail__out">
+      <a href="../index.html"><svg aria-hidden="true"><use href="#i-back"/></svg><span class="nav__l">Frankly Lab</span></a>
+    </div>
   </aside>
 
   <main class="canvas">
