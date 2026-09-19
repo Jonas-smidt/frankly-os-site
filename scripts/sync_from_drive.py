@@ -53,7 +53,9 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-os-onboarding.html"),
     # Lab completeness (Jonas 2026-08-23 "sikre dig at alt vores arbejde rent faktisk
     # ligger i lab" + "andre widgets skal i lab"; run 20260823-lab-completeness-audit,
-    # R11 CLEAR): gated + noindex + robots-Disallowed like frankly-os-onboarding.html.
+    # R11 CLEAR): gated + robots-Disallowed like frankly-os-onboarding.html; Holdet also
+    # carries the noindex meta, the LinkedIn checker does NOT (robots Disallow is its only
+    # crawl protection — measured 2026-09-18).
     # The deck is a self-contained single file; Holdet is the agent-crew page; the
     # LinkedIn checker's 2026-07-13 hold ("until Jonas explicitly reopens") is lifted
     # by that instruction.

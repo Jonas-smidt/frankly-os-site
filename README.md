@@ -11,7 +11,7 @@ The uploadable website bundle is generated into ignored `site/` by `scripts/sync
 
 <!-- BEGIN generated-allowlist (mirror of sync_from_drive.py — regenerate if that file changes) -->
 
-**Gated Lab pages** — `index.html` (entry) plus 19 pages from `UPLOADABLE_HTML`. Each is served behind the Lab preview curtain (a JS gate injected at build time). The curtain is **not security and not `noindex`**: it only stops casual browsing of fully-rendered HTML. Crawl protection for these pages comes from `robots.txt` `Disallow`, not from a `noindex` meta tag.
+**Gated Lab pages** — `index.html` (entry) plus 30 pages from `UPLOADABLE_HTML`. Each is served behind the Lab preview curtain (a JS gate injected at build time). The curtain is **not security and not `noindex`**: it only stops casual browsing of fully-rendered HTML. Crawl protection for these pages comes from `robots.txt` `Disallow`, not from a `noindex` meta tag.
 
 - `index.html`
 - `frankly-signature-generator.html`
@@ -28,11 +28,22 @@ The uploadable website bundle is generated into ignored `site/` by `scripts/sync
 - `frankly-quiz.html`
 - `onboarding.html`
 - `frankly-daekningsoverblik.html`
+- `om-frankly-lab.html`
 - `frankly-instore-onepager.html`
 - `frankly-instore-salgsguide.html`
+- `frankly-attach-rate.html`
 - `glass-lab.html`
 - `glass-surface.html`
 - `liquid-glass-hover.html`
+- `glass-folders.html`
+- `frankly-os-onboarding.html`
+- `frankly-os-holdet.html`
+- `frankly-linkedin-checker.html`
+- `frankly-os-deck.html`
+- `frankly-support-widget.html`
+- `frankly-kundeoplevelse-strategi.html`
+- `frankly-team-onboarding.html`
+- `frankly-team-claude-code.html`
 
 **Public Journal** — the whole `journal/` tree is copied verbatim (HTML pages, images, fonts). Unlike the Lab pages, the Journal is **NOT gated and IS indexable** — it is the one public surface of the Lab (see `robots.txt` allow + `sitemap.xml`). There is no `blog/` directory; the blog suite lives entirely under `journal/`.
 
