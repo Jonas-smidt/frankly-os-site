@@ -41,6 +41,7 @@ The uploadable website bundle is generated into ignored `site/` by `scripts/sync
 - `frankly-linkedin-checker.html`
 - `frankly-os-deck.html`
 - `frankly-support-widget.html`
+- `frankly-support-widget-v2.html`
 - `frankly-kundeoplevelse-strategi.html`
 - `frankly-team-onboarding.html`
 - `frankly-team-claude-code.html`

@@ -238,8 +238,8 @@
     {
       "id": "support-widget",
       "href": "frankly-support-widget.html",
-      "labelEn": "Support widget",
-      "labelDa": "Support-widget",
+      "labelEn": "Support widget v1",
+      "labelDa": "Support-widget v1",
       "descriptionEn": "Clickable prototype of a support widget that resolves the case in-widget instead of routing: phone-number lookup, one-tap stop, real FAQ. Dummy data. In Danish.",
       "descDa": "Klikbar prototype af en support-widget der afgør sagen i widget'en i stedet for at sende videre: opslag på telefonnummer, ét-kliks stop, rigtig FAQ. Testdata.",
       "category": "Hverdag",
@@ -251,8 +251,29 @@
       "status": "beta",
       "statusLabelEn": "Beta",
       "statusLabelDa": "Beta",
-      "actionLabelEn": "Open Support widget",
+      "actionLabelEn": "Open Support widget v1",
       "mark": "SW",
+      "art": "support-widget",
+      "retired": false
+    },
+    {
+      "id": "support-widget-v2",
+      "href": "frankly-support-widget-v2.html",
+      "labelEn": "Support widget v2",
+      "labelDa": "Support-widget v2",
+      "descriptionEn": "Embeddable support widget (shadow DOM, one script tag). No phone-number lookup: cancelling is a four-route guide — MobilePay, Mit Frankly, phone, email — plus coverage explainers for Care and Mobility and the warranty-versus-insurance question. In Danish.",
+      "descDa": "Indlejrbar support-widget (shadow DOM, ét script-tag). Intet telefonnummer-opslag: opsigelse er en guide med fire veje — MobilePay, Mit Frankly, telefon, mail — plus dækningsforklaringer for Care og Mobility og forskellen på garanti og forsikring.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "beta",
+      "statusLabelEn": "Beta",
+      "statusLabelDa": "Beta",
+      "actionLabelEn": "Open Support widget v2",
+      "mark": "S2",
       "art": "support-widget",
       "retired": false
     },
@@ -783,13 +804,13 @@
     }
   ],
   "counts": {
-    "total": 37,
-    "active": 35,
-    "publicLab": 33,
+    "total": 38,
+    "active": 36,
+    "publicLab": 34,
     "localOs": 2,
     "gatePublic": 23,
-    "gateNonPublic": 12,
+    "gateNonPublic": 13,
     "retired": 2
   },
-  "syncedAt": "2026-09-03T10:21:10+00:00"
+  "syncedAt": "2026-09-22T07:58:28+00:00"
 }

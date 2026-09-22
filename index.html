@@ -361,9 +361,15 @@
           </a>
           <a class="item draft" href="frankly-support-widget.html" data-art="support-widget" data-mark="SW">
             <span class="chip">Gated preview</span>
-            <h3>Support widget</h3>
+            <h3>Support widget v1</h3>
             <p>Clickable prototype of a support widget that resolves the case in-widget instead of routing: phone-number lookup, one-tap stop, real FAQ. Dummy data. In Danish.</p>
-            <span class="go">Open Support widget</span>
+            <span class="go">Open Support widget v1</span>
+          </a>
+          <a class="item draft" href="frankly-support-widget-v2.html" data-art="support-widget" data-mark="S2">
+            <span class="chip">Gated preview</span>
+            <h3>Support widget v2</h3>
+            <p>Embeddable support widget (shadow DOM, one script tag). No phone-number lookup: cancelling is a four-route guide — MobilePay, Mit Frankly, phone, email — plus coverage explainers for Care and Mobility and the warranty-versus-insurance question. In Danish.</p>
+            <span class="go">Open Support widget v2</span>
           </a>
           <a class="item draft" href="frankly-kundeoplevelse-strategi.html" data-art="cx-causal-chain" data-mark="CX">
             <span class="chip">Gated preview</span>
@@ -551,7 +557,7 @@
   </footer>
   <script>document.documentElement.classList.add('js');</script>
   <!-- INDEX-HERO-SNAPSHOT:BEGIN -->
-  <script id="index-hero-snapshot" type="application/json">{"schemaVersion":"1.0","generated":"2026-08-23T14:55:03+00:00","buildDate":"2026-08-23","shelfUpdated":"2026-08-23","shelf":{"value":32,"rule":"lane==public-lab && !retired"},"play":{"value":4,"rule":"lane==public-lab && !retired && shelf==play"},"playShelf":{"value":8,"rule":"tiles rendered inside <section id=play> whose href is a lane==public-lab && !retired feed entry","play":4,"experiments":4,"experimentsOffShelf":1,"split":"4 to play · 4 experiments"},"lanes":[{"id":"tools","target":"live","count":16},{"id":"play","target":"play","count":4},{"id":"pages","target":"pages","count":7}],"source":"data/tools-shelf.json","generator":"scripts/build-index-hero-snapshot.py"}</script>
+  <script id="index-hero-snapshot" type="application/json">{"schemaVersion":"1.0","generated":"2026-09-22T07:59:40+00:00","buildDate":"2026-09-22","shelfUpdated":"2026-09-03","shelf":{"value":34,"rule":"lane==public-lab && !retired"},"play":{"value":4,"rule":"lane==public-lab && !retired && shelf==play"},"playShelf":{"value":8,"rule":"tiles rendered inside <section id=play> whose href is a lane==public-lab && !retired feed entry","play":4,"experiments":4,"experimentsOffShelf":1,"split":"4 to play · 4 experiments"},"lanes":[{"id":"tools","target":"live","count":18},{"id":"play","target":"play","count":4},{"id":"pages","target":"pages","count":7}],"source":"data/tools-shelf.json","generator":"scripts/build-index-hero-snapshot.py"}</script>
   <!-- INDEX-HERO-SNAPSHOT:END -->
   <script>
   (function(){
@@ -591,10 +597,10 @@
       else{new IntersectionObserver(function(es,io){es.forEach(function(e){if(e.isIntersecting){live.classList.add("is-in");io.disconnect();}});},{threshold:[.25,.6]}).observe(live);}}
   })();
   </script>
-  <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-generated 2026-09-03T10:21:10+00:00; never hand-edit) -->
+  <!-- TOOLS-SHELF-SNAPSHOT:BEGIN (auto-generated 2026-09-22T07:58:28+00:00; never hand-edit) -->
   <script id="toolsShelfSnapshot" type="application/json">{
   "schemaVersion": "1.0",
-  "generated": "2026-09-03T10:21:10+00:00",
+  "generated": "2026-09-22T07:58:28+00:00",
   "source": "os-visualization/system-intelligence/tools-shelf.json",
   "tools": [
     {
@@ -831,8 +837,8 @@
     {
       "id": "support-widget",
       "href": "frankly-support-widget.html",
-      "labelEn": "Support widget",
-      "labelDa": "Support-widget",
+      "labelEn": "Support widget v1",
+      "labelDa": "Support-widget v1",
       "descriptionEn": "Clickable prototype of a support widget that resolves the case in-widget instead of routing: phone-number lookup, one-tap stop, real FAQ. Dummy data. In Danish.",
       "descDa": "Klikbar prototype af en support-widget der afgør sagen i widget'en i stedet for at sende videre: opslag på telefonnummer, ét-kliks stop, rigtig FAQ. Testdata.",
       "category": "Hverdag",
@@ -844,8 +850,29 @@
       "status": "beta",
       "statusLabelEn": "Beta",
       "statusLabelDa": "Beta",
-      "actionLabelEn": "Open Support widget",
+      "actionLabelEn": "Open Support widget v1",
       "mark": "SW",
+      "art": "support-widget",
+      "retired": false
+    },
+    {
+      "id": "support-widget-v2",
+      "href": "frankly-support-widget-v2.html",
+      "labelEn": "Support widget v2",
+      "labelDa": "Support-widget v2",
+      "descriptionEn": "Embeddable support widget (shadow DOM, one script tag). No phone-number lookup: cancelling is a four-route guide — MobilePay, Mit Frankly, phone, email — plus coverage explainers for Care and Mobility and the warranty-versus-insurance question. In Danish.",
+      "descDa": "Indlejrbar support-widget (shadow DOM, ét script-tag). Intet telefonnummer-opslag: opsigelse er en guide med fire veje — MobilePay, Mit Frankly, telefon, mail — plus dækningsforklaringer for Care og Mobility og forskellen på garanti og forsikring.",
+      "category": "Hverdag",
+      "shelf": "tools",
+      "lane": "public-lab",
+      "gate": "gated-preview",
+      "gateLabelEn": "Gated preview",
+      "gateLabelDa": "Kræver dit ja før offentlig",
+      "status": "beta",
+      "statusLabelEn": "Beta",
+      "statusLabelDa": "Beta",
+      "actionLabelEn": "Open Support widget v2",
+      "mark": "S2",
       "art": "support-widget",
       "retired": false
     },

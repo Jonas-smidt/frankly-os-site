@@ -35,6 +35,7 @@ Disallow: /liquid-glass-hover.html
 Disallow: /frankly-linkedin-checker.html
 Disallow: /frankly-os-deck.html
 Disallow: /frankly-support-widget.html
+Disallow: /frankly-support-widget-v2.html
 Disallow: /frankly-kundeoplevelse-strategi.html
 Disallow: /frankly-team-onboarding.html
 Disallow: /frankly-team-claude-code.html

@@ -67,6 +67,12 @@ UPLOADABLE_HTML = (
     # lift parked: backlog card lab-security-lift-2026-08-23.
     pathlib.Path("frankly-os-deck.html"),
     pathlib.Path("frankly-support-widget.html"),
+    # Jonas 2026-09-22: v2 of the support widget — same gate posture as v1
+    # (gated + noindex + robots-Disallowed). Built as an embeddable widget
+    # (shadow DOM); the cancel flow is a four-route guide with no phone-number
+    # lookup. v1 stays online unchanged for comparison; the local-only
+    # frankly-support-widget-v1-arkiv.html is the frozen copy of it.
+    pathlib.Path("frankly-support-widget-v2.html"),
     pathlib.Path("frankly-kundeoplevelse-strategi.html"),
     # Jonas 2026-08-24: the team onboarding guide (7-step self-guided setup, English,
     # embedded brand fonts) onto the Lab — gated + noindex + robots-Disallowed like
