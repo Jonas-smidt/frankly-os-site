@@ -67,12 +67,11 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
   <div class="card">
     <h2>Sådan er menuen bygget</h2>
     <ul>
-      <li><strong>Jeg vil stoppe min dækning</strong> → fire veje: MobilePay, Mit Frankly, telefon, mail.</li>
-      <li><strong>Jeg genkender ikke en betaling</strong> → hvordan dækningen blev købt (partner-checkout eller MobilePay i butikken), og hvor hun selv ser den.</li>
-      <li><strong>Hvad dækker min forsikring?</strong> → egen undermenu med Frankly Care™ og Frankly Mobility™.</li>
-      <li><strong>Garanti eller forsikring?</strong> → den forskel folk ringer om.</li>
-      <li><strong>Noget er gået i stykker</strong> → triage.</li>
-      <li><strong>Det folk oftest spørger om</strong> → FAQ, nu sit eget punkt. I v1 landede man her, når man trykkede på dækningsspørgsmålet.</li>
+      <li><strong>Jeg genkender ikke en betaling</strong> → det primære punkt, fordi det er dét, der bringer folk hertil. Søg i mailen først, så de to signup-veje, så Mit Frankly.</li>
+      <li><strong>Hvad dækker min forsikring?</strong> → undermenu med Frankly Care™ og Frankly Mobility™, og en vej videre til de øvrige dækninger.</li>
+      <li><strong>Noget er gået i stykker</strong> → triage. «Garanti eller forsikring?» ligger bagved som egen skærm, ikke ved siden af som eget menupunkt.</li>
+      <li><strong>Det folk oftest spørger om</strong> → FAQ, sit eget punkt. I v1 landede man her, når man trykkede på dækningsspørgsmålet.</li>
+      <li><strong>Jeg vil stoppe min dækning</strong> → nederst og neddæmpet: fire veje, hvor telefonen er den sidste. Alt over den kan kunden selv gøre færdig.</li>
     </ul>
     <p>Videoguiderne er taget ud.</p>
   </div>
@@ -403,10 +402,6 @@ p.body:last-of-type{margin-bottom:16px}
 .opt.primary .arw{color:rgba(255,255,255,.6)}
 .opt.primary:hover{background:#3d0018; box-shadow:0 8px 22px rgba(45,0,17,.28)}
 .opt.primary:hover .ico{background:rgba(255,211,227,.34)}
-.opt.quiet{background:transparent; border-style:dashed}
-.opt.quiet .ico{background:var(--stone-2)}
-.opt.quiet:hover{border-style:solid; background:var(--white)}
-.opt.quiet:hover .ico{background:var(--pink)}
 
 /* dækningskort i undermenuen */
 .cov{
@@ -700,7 +695,6 @@ ol.steps li strong{font-weight:600}
     <!-- ===== MENU ===== -->
     <section class="screen on" data-s="menu">
       <h2 class="q">Hvad kan vi hjælpe med?</h2>
-      <p class="sub">Vælg det, der passer bedst. Du skal ikke oprette noget eller logge ind for at komme videre.</p>
 
 
       <button class="opt primary" type="button" data-go="signup">
@@ -722,7 +716,7 @@ ol.steps li strong{font-weight:600}
         <span class="arw" aria-hidden="true">${ico.chev}</span>
       </button>
 
-      <button class="opt quiet" type="button" data-go="faq">
+      <button class="opt" type="button" data-go="faq">
         <span class="ico" aria-hidden="true">${ico.help}</span>
         <span class="tx"><b>Det folk oftest spørger om</b><span>Pris, binding, opsigelse, MobilePay</span></span>
         <span class="arw" aria-hidden="true">${ico.chev}</span>
