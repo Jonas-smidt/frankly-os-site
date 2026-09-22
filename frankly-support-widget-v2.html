@@ -1,0 +1,1272 @@
+<!DOCTYPE html>
+<html lang="da">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Frankly support-widget v2 — indlejrbar</title>
+<link rel="stylesheet" href="frankly-lab-brand.css">
+<style>
+/* ============================================================
+   VÆRTSSIDE — kun demo.
+   Med vilje sat op som en fremmed webshop: mørk, Verdana,
+   grønne stiplede knapper. Widget'en ligger i en shadow root
+   og mærker intet til det.
+   ============================================================ */
+*{box-sizing:border-box}
+body{margin:0; background:#0F1115; color:#E7E9EE;
+  font-family:Verdana,Geneva,sans-serif; line-height:1.6; -webkit-font-smoothing:antialiased}
+button{font-family:inherit; font-size:15px; background:#1DB954; color:#00110A;
+  border:3px dashed #7CFFB2; border-radius:0; padding:10px 14px}
+a{color:#7CC5FF}
+h1,h2,h3{font-family:Verdana,Geneva,sans-serif; letter-spacing:-.01em; line-height:1.2}
+
+.wrap{max-width:860px; margin:0 auto; padding:56px 24px 220px}
+.kicker{font-size:12px; letter-spacing:.14em; text-transform:uppercase; color:#8A93A5; margin:0 0 10px}
+h1{font-size:32px; margin:0 0 14px}
+.lede{font-size:17px; color:#B9C0CE; margin:0 0 30px; max-width:66ch}
+
+.card{background:#171A21; border:1px solid #262B36; border-radius:14px; padding:24px 26px; margin-bottom:18px}
+.card h2{font-size:18px; margin:0 0 12px; color:#fff}
+.card p{margin:0 0 12px; color:#B9C0CE; font-size:15px}
+.card p:last-child{margin-bottom:0}
+.card ul{margin:0 0 12px; padding-left:20px; color:#B9C0CE; font-size:15px}
+.card li{margin-bottom:6px}
+code{background:#0B0D11; border:1px solid #262B36; padding:2px 6px; border-radius:4px;
+  font-family:ui-monospace,SFMono-Regular,Menlo,monospace; font-size:13.5px; color:#9FE6C1}
+pre{background:#0B0D11; border:1px solid #262B36; border-radius:10px; padding:16px 18px; overflow-x:auto; margin:0}
+pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px; line-height:1.7; white-space:pre}
+.tbl{width:100%; border-collapse:collapse; font-size:14px}
+.tbl th,.tbl td{text-align:left; padding:9px 12px; border-bottom:1px solid #262B36; vertical-align:top}
+.tbl th{color:#8A93A5; font-weight:600; font-size:12.5px; letter-spacing:.04em; text-transform:uppercase}
+.tbl td code{font-size:12.5px}
+.tbl td:last-child{color:#B9C0CE}
+.demo-btns{display:flex; flex-wrap:wrap; gap:10px}
+.demo-btns button{background:#2D0011; color:#FFD3E3; border:1px solid #4A1128; border-radius:999px;
+  padding:9px 16px; font-size:14px; cursor:pointer; font-family:Verdana,sans-serif}
+.demo-btns button:hover{background:#3d0018}
+.flag{margin-top:16px; padding:14px 16px; background:#1B1508; border-left:3px solid #C9A227;
+  border-radius:0 8px 8px 0; font-size:14.5px; color:#E4D8B4}
+.flag b{color:#FFE9A8}
+.flag + .flag{margin-top:10px}
+@media(max-width:560px){ .wrap{padding:32px 18px 200px} h1{font-size:25px} }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+  <p class="kicker">Frankly™ · v2 · indlejrbar widget · testmiljø</p>
+  <h1>Support-widget der forklarer i stedet for at slå op</h1>
+  <p class="lede">
+    v2 spørger ikke om telefonnummer og har ingen database. Den forklarer, hvordan tingene hænger
+    sammen, og sender kunden det rigtige sted hen — MobilePay, Mit Frankly, telefonen eller mailen.
+    Denne demoside er med vilje en fremmed webshop. Widget'en nede i højre hjørne ligger i sin egen
+    shadow root og rører sig ikke.
+  </p>
+
+  <div class="card">
+    <h2>Sådan er menuen bygget</h2>
+    <ul>
+      <li><strong>Jeg vil stoppe min dækning</strong> → fire veje: MobilePay, Mit Frankly, telefon, mail.</li>
+      <li><strong>Jeg genkender ikke en betaling</strong> → hvordan dækningen blev købt (partner-checkout eller MobilePay i butikken), og hvor hun selv ser den.</li>
+      <li><strong>Hvad dækker min forsikring?</strong> → egen undermenu med Frankly Care™ og Frankly Mobility™.</li>
+      <li><strong>Garanti eller forsikring?</strong> → den forskel folk ringer om.</li>
+      <li><strong>Noget er gået i stykker</strong> → triage.</li>
+      <li><strong>Det folk oftest spørger om</strong> → FAQ, nu sit eget punkt. I v1 landede man her, når man trykkede på dækningsspørgsmålet.</li>
+    </ul>
+    <p>Videoguiderne er taget ud.</p>
+  </div>
+
+  <div class="card">
+    <h2>Sådan lægges den på et site</h2>
+    <pre><code>&lt;script src="https://os.franklydesign.dk/frankly-widget.js"
+        data-phone="+4570604440"
+        data-email="contact@franklyinsure.com"
+        data-portal="https://my.frankly.insure/"
+        data-partners="GreenMind|/logo/greenmind.svg, Expert|/logo/expert.svg"
+        defer&gt;&lt;/script&gt;</code></pre>
+    <p style="margin-top:12px">Scriptet på denne side er præcis den samme kode, bare indlejret direkte i filen.</p>
+  </div>
+
+  <div class="card">
+    <h2>Konfiguration</h2>
+    <table class="tbl">
+      <tr><th>Attribut</th><th>Standard</th><th>Hvad den styrer</th></tr>
+      <tr><td><code>data-phone</code></td><td><code>+4570604440</code></td><td>Nummeret bag ring-knapperne</td></tr>
+      <tr><td><code>data-phone-label</code></td><td><code>70 60 44 40</code></td><td>Sådan skrives nummeret</td></tr>
+      <tr><td><code>data-email</code></td><td><code>contact@franklyinsure.com</code></td><td>Modtager af opsigelse på mail</td></tr>
+      <tr><td><code>data-portal</code></td><td><code>my.frankly.insure</code></td><td>Mit Frankly-login</td></tr>
+      <tr><td><code>data-claim</code></td><td><code>franklyinsure.com/anmeld-skade</code></td><td>Skadeanmeldelse</td></tr>
+      <tr><td><code>data-hours</code></td><td><em>Man–tor 8.30–16.00…</em></td><td>Åbningstider i telefonen</td></tr>
+      <tr><td><code>data-agents</code></td><td><code>Alex,Nicolai,Bence</code></td><td>Navne og initialer på holdet</td></tr>
+      <tr><td><code>data-partners</code></td><td><em>tom</em></td><td>Partnerlogoer: <code>Navn|logo-url</code>, adskilt af komma. Uden url vises navnet som tekst. Er den tom, udelades striben.</td></tr>
+    </table>
+  </div>
+
+  <div class="card">
+    <h2>Prøv den</h2>
+    <p>Widget'en åbner nederst til højre. Genvejene her springer direkte til et skærmbillede — kun til demoen.</p>
+    <div class="demo-btns">
+      <button data-demo="menu">Forsiden</button>
+      <button data-demo="cancel">Stop min dækning</button>
+      <button data-demo="signup">Genkender ikke betaling</button>
+      <button data-demo="coverage">Hvad dækker min forsikring</button>
+      <button data-demo="warranty">Garanti eller forsikring</button>
+      <button data-demo="faq">FAQ</button>
+    </div>
+    <p style="margin-top:14px; font-size:13.5px; color:#8A93A5">
+      Åbn konsollen for at se widget'ens events:
+      <code>frankly-support:open</code>, <code>:screen</code>, <code>:route</code>, <code>:close</code>.
+    </p>
+  </div>
+
+  <div class="flag">
+    <b>Partnerlogoerne er pladsholdere.</b> Der ligger ingen partnerlogoer i repoet, så striben på
+    denne demoside er sat op med opdigtede navne for at vise layoutet. Læg de rigtige filer i
+    <code>assets/partners/</code> og sæt <code>data-partners</code> med rigtige navne og stier,
+    før den bliver vist for nogen uden for huset.
+  </div>
+
+  <div class="flag">
+    <b>Mobility-teksten er skrevet efter de rigtige betingelser</b> —
+    <em>Frankly Insure · Forsikringsbetingelser · Cykelforsikring, v1.0, 2026-08-13</em>
+    (TC_Frankly_ConsumerCykelforsikring_DK_v1_0_081326). Dækning, undtagelser, låsekrav,
+    selvrisiko, erstatningslofter og geografi kommer derfra, ikke fra marketingteksten.
+    Tre ting jeg havde gættet forkert, er rettet: <strong>løbehjul er ikke omfattet</strong>
+    (kun almindelig cykel, elcykel og ladcykel), <strong>tyveri har 10 % selvrisiko, mindst
+    1.500 kr.</strong>, og <strong>låsekravene</strong> — Varefakta-lås, fastlåst gennem stellet
+    til noget fast, også i fælles cykelkælder — stod slet ikke nævnt. Det er dem, tyverisager
+    falder på, så de har fået deres egen sektion.
+  </div>
+
+  <div class="flag">
+    <b>Care-teksten er stadig skrevet efter det offentlige materiale.</b> Jeg har ikke set
+    betingelserne for Frankly Care™. Send dem, så får den samme behandling — især undtagelser,
+    selvrisiko og erstatningsloft, som kunden ikke kan gætte sig til.
+  </div>
+
+  <div class="flag">
+    <b>To modsigelser der skal afgøres.</b>
+    <strong>1 — Hvornår ophører dækningen?</strong> Widget'en siger «du betaler kun frem til den dag,
+    du stopper», hentet fra FAQ'en på franklyinsure.com. Betingelsernes pkt. 13 siger, at forsikringen
+    opsiges «til udgangen af din forsikringsperiode», altså månedens udløb. Det er to forskellige løfter
+    om penge.
+    <strong>2 — Tyveri på tværs.</strong> Partnersiden skriver stadig «Fuld dækning: uheld, spild, tab,
+    skader og tyveri» på tværs af kategorier. Det passer ikke med Care, og det skaber præcis den
+    forventning, widget'en nu skal aflive. Udvidet garanti («op til 5 år») er af samme grund ikke
+    skrevet ind.
+  </div>
+</div>
+
+
+<!-- ============================================================
+     WIDGET — alt herunder er det, der ville ligge i
+     frankly-widget.js. Det rører ikke siden omkring sig.
+     ============================================================ -->
+<script id="frankly-support-widget"
+        data-phone="+4570604440"
+        data-phone-label="70 60 44 40"
+        data-email="contact@franklyinsure.com"
+        data-portal="https://my.frankly.insure/"
+        data-claim="https://franklyinsure.com/anmeld-skade"
+        data-hours="Man–tor 8.30–16.00 · fre 8.30–15.00"
+        data-agents="Alex,Nicolai,Bence"
+        data-partners="Butik A, Butik B, Webshop C, Butik D, Webshop E">
+(function () {
+  "use strict";
+
+  /* ---------------------------------------------------------
+     1 — Konfiguration
+     --------------------------------------------------------- */
+  var me  = document.currentScript || document.getElementById("frankly-support-widget");
+  var cfg = function (key, fallback) {
+    var v = me && me.getAttribute("data-" + key);
+    return (v === null || v === undefined || v === "") ? fallback : v;
+  };
+
+  var CFG = {
+    phone:      cfg("phone", "+4570604440"),
+    phoneLabel: cfg("phone-label", "70 60 44 40"),
+    email:      cfg("email", "contact@franklyinsure.com"),
+    portal:     cfg("portal", "https://my.frankly.insure/"),
+    claim:      cfg("claim", "https://franklyinsure.com/anmeld-skade"),
+    hours:      cfg("hours", "Man–tor 8.30–16.00 · fre 8.30–15.00"),
+    agents:     cfg("agents", "Alex,Nicolai,Bence").split(",").map(function (s) { return s.trim(); }),
+    /* "Navn|logo-url, Navn|logo-url" — url er valgfri */
+    partners:   cfg("partners", "").split(",").map(function (s) {
+                  var p = s.split("|");
+                  return { name: (p[0] || "").trim(), logo: (p[1] || "").trim() };
+                }).filter(function (p) { return p.name; })
+  };
+
+  /* Skrifter: hentes relativt til scriptets egen placering, så de også virker
+     på et fremmed domæne. @font-face skal ligge i dokumentet — font faces er
+     dokument-scopede, ikke shadow-scopede. */
+  (function loadFonts() {
+    if (document.querySelector("style[data-frankly-fonts]")) return;
+    var base = cfg("font-base", "");
+    if (!base) {
+      var src = (me && me.src) || document.baseURI || "";
+      base = src ? src.replace(/[?#].*$/, "").replace(/[^/]*$/, "") : "";
+    }
+    if (!base) return;
+    var s = document.createElement("style");
+    s.setAttribute("data-frankly-fonts", "");
+    s.textContent =
+      '@font-face{font-family:"Almarena Neue Display";font-weight:600;font-display:swap;' +
+        'src:url("' + base + 'journal/fonts/AlmarenaNeue-Ds-SemiBold.woff2") format("woff2")}' +
+      '@font-face{font-family:"Switzer";font-weight:400;font-display:swap;' +
+        'src:url("' + base + 'journal/fonts/Switzer-Regular.otf") format("opentype")}' +
+      '@font-face{font-family:"Switzer";font-weight:500;font-display:swap;' +
+        'src:url("' + base + 'journal/fonts/Switzer-Medium.otf") format("opentype")}' +
+      '@font-face{font-family:"Switzer";font-weight:600;font-display:swap;' +
+        'src:url("' + base + 'journal/fonts/Switzer-Semibold.otf") format("opentype")}';
+    document.head.appendChild(s);
+  })();
+
+  var tel = "tel:" + CFG.phone.replace(/\s/g, "");
+  var mailtoCancel = "mailto:" + CFG.email +
+    "?subject=" + encodeURIComponent("Opsigelse af min Frankly-dækning") +
+    "&body="    + encodeURIComponent(
+      "Hej Frankly\n\n" +
+      "Jeg vil gerne opsige min dækning.\n\n" +
+      "Dækningen er oprettet med denne mailadresse eller dette telefonnummer:\n\n" +
+      "Hvad jeg vil opsige (skriv «det hele», hvis det er alt):\n\n" +
+      "Venlig hilsen\n");
+  var mailtoAsk = "mailto:" + CFG.email +
+    "?subject=" + encodeURIComponent("Spørgsmål til min Frankly-dækning");
+
+  /* ---------------------------------------------------------
+     2 — Skal (shadow root)
+     --------------------------------------------------------- */
+  var host = document.createElement("div");
+  host.setAttribute("data-frankly-support", "");
+  var root = host.attachShadow ? host.attachShadow({ mode: "open" }) : null;
+  if (!root) return;
+
+  var STYLE = `
+:host{ all: initial; }
+*{box-sizing:border-box}
+
+.fw{
+  --pink:#FFD3E3; --pink-deep:#FFACCA; --limestone:#F5F4F1; --blush:#FFF6FA;
+  --stone-2:#F0EEE9; --stone-4:#E3DDD5;
+  --bordeaux:#2D0011; --white:#fff; --grey-1:#585C60; --grey-2:#838383;
+  --success:#057642; --success-live:#27C966; --lavender:#F0EEFC;
+  --font-display:"Almarena Neue Display","Almarena Neue",Georgia,serif;
+  --font-sans:"Switzer",Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --r-sm:8px; --r-md:12px; --r-card:16px; --r-xl:24px; --r-pill:999px;
+  --ease:cubic-bezier(.16,1,.3,1);
+  font-family:var(--font-sans); font-size:16px; line-height:1.5;
+  color:var(--bordeaux); font-weight:400; letter-spacing:normal;
+  text-align:left; -webkit-font-smoothing:antialiased;
+}
+
+/* ---------- launcher ---------- */
+.launcher{
+  position:fixed; right:26px; bottom:calc(26px + env(safe-area-inset-bottom, 0px)); z-index:2147483000;
+  width:60px; height:60px; border:none; border-radius:50%;
+  background:var(--bordeaux); color:var(--pink); cursor:pointer;
+  box-shadow:0 8px 28px rgba(45,0,17,.28);
+  display:flex; align-items:center; justify-content:center;
+  transition:transform .28s var(--ease); padding:0; font:inherit;
+}
+.launcher:hover{transform:scale(1.06)}
+.launcher:focus-visible{outline:3px solid var(--pink-deep); outline-offset:3px}
+.launcher svg{width:26px; height:26px}
+.launcher .badge{
+  position:absolute; top:-3px; right:-3px; width:18px; height:18px;
+  background:var(--pink-deep); color:var(--bordeaux); border-radius:50%;
+  font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;
+  border:2px solid var(--limestone);
+}
+
+/* ---------- panel ---------- */
+.panel{
+  position:fixed; right:26px; bottom:calc(100px + env(safe-area-inset-bottom, 0px)); z-index:2147482999;
+  width:396px; max-width:calc(100vw - 32px);
+  height:640px; max-height:calc(100vh - 130px);
+  background:var(--limestone); border-radius:var(--r-xl);
+  box-shadow:0 24px 64px rgba(45,0,17,.24), 0 2px 8px rgba(45,0,17,.08);
+  display:flex; flex-direction:column; overflow:hidden;
+  opacity:0; transform:translateY(14px) scale(.98); pointer-events:none;
+  transition:opacity .3s var(--ease), transform .3s var(--ease);
+}
+.panel.open{opacity:1; transform:none; pointer-events:auto}
+
+.phead{background:var(--bordeaux); color:var(--white); padding:16px 18px 14px; flex:0 0 auto}
+.phead .row{display:flex; align-items:center; gap:11px}
+.iconbtn{
+  width:30px; height:30px; flex:0 0 auto; border:none; border-radius:50%;
+  background:rgba(255,255,255,.12); color:var(--white); cursor:pointer;
+  display:flex; align-items:center; justify-content:center;
+  transition:background .2s; padding:0; font:inherit;
+}
+.iconbtn:hover{background:rgba(255,255,255,.22)}
+.iconbtn:focus-visible{outline:2px solid var(--pink); outline-offset:2px}
+.iconbtn svg{width:16px; height:16px}
+.iconbtn[hidden]{visibility:hidden; display:flex}
+.mark{
+  width:32px; height:32px; flex:0 0 auto; border-radius:50%;
+  background:var(--pink); color:var(--bordeaux);
+  display:flex; align-items:center; justify-content:center;
+  font-family:var(--font-display); font-weight:600; font-size:17px;
+}
+.who{flex:1 1 auto; min-width:0}
+.who b{display:block; font-size:14.5px; font-weight:600; letter-spacing:-.01em}
+.who span{display:flex; align-items:center; gap:5px; font-size:12px; color:rgba(255,255,255,.72)}
+.dot{width:6px; height:6px; border-radius:50%; background:var(--success-live); flex:0 0 auto}
+.trust{
+  margin-top:12px; padding-top:11px; border-top:1px solid rgba(255,255,255,.14);
+  font-size:11px; line-height:1.45; color:rgba(255,255,255,.66);
+}
+
+.pbody{flex:1 1 auto; overflow-y:auto; padding:20px 18px 22px; scrollbar-width:thin}
+.pbody::-webkit-scrollbar{width:7px}
+.pbody::-webkit-scrollbar-thumb{background:var(--stone-4); border-radius:4px}
+.pfoot{
+  flex:0 0 auto; padding:11px 18px; background:var(--white);
+  border-top:1px solid var(--stone-4); font-size:11.5px; color:var(--grey-2);
+  text-align:center; line-height:1.4;
+}
+
+/* ---------- skærme ---------- */
+.screen{display:none}
+.screen.on{display:block; animation:in .28s var(--ease)}
+@keyframes in{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
+
+h2.q{font-family:var(--font-display); font-weight:600; font-size:22px; line-height:1.22;
+     margin:0 0 6px; letter-spacing:-.01em}
+p.sub{margin:0 0 18px; font-size:14.5px; line-height:1.5; color:var(--grey-1)}
+p.body{margin:0 0 12px; font-size:14px; line-height:1.6; color:var(--grey-1)}
+p.body strong{color:var(--bordeaux); font-weight:600}
+p.body:last-of-type{margin-bottom:16px}
+
+/* menuvalg */
+.opt{
+  width:100%; text-align:left; background:var(--white); border:1px solid var(--stone-4);
+  border-radius:var(--r-card); padding:15px 16px; margin-bottom:9px; cursor:pointer;
+  font-family:var(--font-sans); color:var(--bordeaux);
+  display:flex; align-items:center; gap:13px;
+  transition:border-color .2s, background .2s, transform .18s var(--ease);
+}
+.opt:hover{border-color:var(--pink-deep); background:var(--blush); transform:translateX(2px)}
+.opt:focus-visible{outline:2px solid var(--bordeaux); outline-offset:2px}
+.opt .ico{
+  width:36px; height:36px; flex:0 0 auto; border-radius:10px;
+  background:var(--pink); color:var(--bordeaux);
+  display:flex; align-items:center; justify-content:center;
+}
+.opt .ico svg{width:18px; height:18px}
+.opt .tx{flex:1 1 auto; min-width:0}
+.opt .tx b{display:block; font-size:14.8px; font-weight:600; line-height:1.3; margin-bottom:2px}
+.opt .tx span{display:block; font-size:12.8px; color:var(--grey-1); line-height:1.4}
+.opt .arw{flex:0 0 auto; color:var(--grey-2)}
+.opt .arw svg{width:15px; height:15px}
+.opt.primary{background:var(--bordeaux); border-color:var(--bordeaux); color:var(--white)}
+.opt.primary .ico{background:rgba(255,211,227,.2); color:var(--pink)}
+.opt.primary .tx span{color:rgba(255,255,255,.72)}
+.opt.primary .arw{color:rgba(255,255,255,.6)}
+.opt.primary:hover{background:#3d0018}
+.opt.quiet{background:transparent; border-style:dashed}
+.opt.quiet .ico{background:var(--stone-2)}
+
+/* dækningskort i undermenuen */
+.cov{
+  width:100%; text-align:left; background:var(--white); border:1px solid var(--stone-4);
+  border-radius:var(--r-card); padding:0; margin-bottom:10px; cursor:pointer;
+  font-family:var(--font-sans); color:var(--bordeaux); overflow:hidden; display:block;
+  transition:border-color .2s, transform .18s var(--ease);
+}
+.cov:hover{border-color:var(--pink-deep); transform:translateY(-2px)}
+.cov:focus-visible{outline:2px solid var(--bordeaux); outline-offset:2px}
+.cov .band{background:var(--pink); padding:13px 16px}
+.cov .band b{display:block; font-family:var(--font-display); font-size:17.5px; font-weight:600; line-height:1.2}
+.cov .band span{display:block; font-size:12.8px; color:rgba(45,0,17,.7); margin-top:3px}
+.cov .meat{padding:12px 16px 14px}
+.cov .meat p{margin:0 0 8px; font-size:13.4px; line-height:1.5; color:var(--grey-1)}
+.cov .meat .from{margin:0; font-size:12.5px; font-weight:600; color:var(--bordeaux)}
+
+/* knapper */
+.btn{
+  display:block; width:100%; height:48px; border:none; border-radius:var(--r-pill); cursor:pointer;
+  font-family:var(--font-sans); font-size:15.5px; font-weight:500;
+  background:var(--bordeaux); color:var(--pink); margin-top:10px;
+  line-height:48px; text-align:center; text-decoration:none; padding:0;
+  transition:background .2s;
+}
+.btn:hover{background:#3d0018}
+.btn:focus-visible{outline:2px solid var(--bordeaux); outline-offset:2px}
+.btn.sec{background:var(--white); color:var(--bordeaux); border:1.5px solid var(--bordeaux); line-height:45px}
+.btn.sec:hover{background:var(--blush)}
+.btn.ghost{background:transparent; color:var(--grey-1); height:42px; line-height:42px; font-size:14px}
+.btn.ghost:hover{background:var(--stone-2)}
+
+/* løfte-boks */
+.promise{
+  background:var(--white); border-left:4px solid var(--success);
+  border-radius:0 var(--r-md) var(--r-md) 0;
+  padding:14px 16px; margin:0 0 18px; font-size:13.8px; line-height:1.55; color:var(--grey-1);
+}
+.promise b{display:block; margin-bottom:4px; color:var(--bordeaux)}
+
+/* rute-kort */
+.route{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  margin-bottom:10px; overflow:hidden}
+.route[open]{border-color:var(--pink-deep)}
+.route > summary{padding:14px 16px; cursor:pointer; list-style:none; display:flex; align-items:center; gap:12px}
+.route > summary::-webkit-details-marker{display:none}
+.route > summary:hover{background:var(--blush)}
+.route > summary:focus-visible{outline:2px solid var(--bordeaux); outline-offset:-2px}
+.route .rico{width:34px; height:34px; flex:0 0 auto; border-radius:9px;
+  background:var(--pink); color:var(--bordeaux); display:flex; align-items:center; justify-content:center}
+.route .rico svg{width:17px; height:17px}
+.route .rtx{flex:1 1 auto; min-width:0}
+.route .rtx b{display:block; font-size:14.8px; font-weight:600; line-height:1.3}
+.route .rtx span{display:block; font-size:12.5px; color:var(--grey-1); margin-top:2px; line-height:1.4}
+.route .chev{flex:0 0 auto; color:var(--grey-2); transition:transform .2s var(--ease)}
+.route .chev svg{width:15px; height:15px; display:block}
+.route[open] .chev{transform:rotate(90deg)}
+.route .rbody{padding:2px 16px 16px; font-size:13.8px; line-height:1.6; color:var(--grey-1)}
+.route .rbody p{margin:0 0 10px}
+.route .rbody > :last-child{margin-bottom:0}
+.route .rbody strong{color:var(--bordeaux)}
+
+.key{background:var(--lavender); border-radius:var(--r-md); padding:12px 14px;
+  margin:0 0 12px; font-size:13.6px; line-height:1.55; color:var(--bordeaux)}
+.key b{font-weight:600}
+
+ol.steps{margin:0 0 12px; padding:0; list-style:none; counter-reset:s}
+ol.steps li{counter-increment:s; position:relative; padding:0 0 0 30px; margin-bottom:9px;
+  font-size:13.8px; line-height:1.5; color:var(--bordeaux)}
+ol.steps li::before{content:counter(s); position:absolute; left:0; top:1px;
+  width:21px; height:21px; border-radius:50%; background:var(--pink);
+  color:var(--bordeaux); font-size:11.5px; font-weight:700;
+  display:flex; align-items:center; justify-content:center}
+ol.steps li strong{font-weight:600}
+.after{font-size:12.8px; color:var(--grey-2); line-height:1.5; margin:0}
+
+/* partnerstribe */
+.partners{margin:0 0 4px}
+.partners .plabel{font-size:12px; color:var(--grey-2); margin:0 0 8px; letter-spacing:.02em}
+.partners .plist{display:flex; flex-wrap:wrap; gap:7px}
+.partners .p{
+  background:var(--stone-2); border:1px solid var(--stone-4); border-radius:var(--r-sm);
+  padding:7px 11px; font-size:12.5px; font-weight:600; color:var(--bordeaux);
+  display:flex; align-items:center; height:32px;
+}
+.partners .p img{max-height:16px; max-width:84px; display:block}
+
+/* dækningslister */
+.cols{margin:0 0 14px}
+.col{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:14px 16px; margin-bottom:9px}
+.col > b{display:flex; align-items:center; gap:7px; font-size:13.5px; font-weight:600; margin-bottom:9px}
+.col > b .m{width:18px; height:18px; flex:0 0 auto; border-radius:50%;
+  display:flex; align-items:center; justify-content:center; font-size:12px; font-weight:700}
+.col.yes > b .m{background:#DDF1E6; color:var(--success)}
+.col.no  > b .m{background:#FCE3EA; color:#9B1B49}
+.col ul{margin:0; padding:0; list-style:none}
+.col li{position:relative; padding-left:15px; font-size:13.4px; line-height:1.5;
+  color:var(--grey-1); margin-bottom:6px}
+.col li:last-child{margin-bottom:0}
+.col li::before{content:""; position:absolute; left:0; top:8px; width:5px; height:5px;
+  border-radius:50%; background:var(--stone-4)}
+
+/* tommelfingerregel */
+.rule{background:var(--bordeaux); color:var(--white); border-radius:var(--r-card);
+  padding:16px 18px; margin:0 0 16px}
+.rule b{display:block; font-family:var(--font-display); font-size:16.5px; font-weight:600;
+  line-height:1.3; margin-bottom:6px; color:var(--pink)}
+.rule p{margin:0; font-size:13.5px; line-height:1.55; color:rgba(255,255,255,.82)}
+
+/* faq */
+.acc{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card); margin-bottom:8px; overflow:hidden}
+.acc summary{padding:14px 16px; cursor:pointer; font-size:14.5px; font-weight:600; line-height:1.35;
+  list-style:none; display:flex; justify-content:space-between; gap:10px; align-items:center}
+.acc summary::-webkit-details-marker{display:none}
+.acc summary::after{content:"+"; color:var(--grey-2); font-size:19px; font-weight:400; flex:0 0 auto; line-height:1}
+.acc[open] summary::after{content:"–"}
+.acc summary:hover{background:var(--blush)}
+.acc summary:focus-visible{outline:2px solid var(--bordeaux); outline-offset:-2px}
+.acc .ac{padding:0 16px 15px; font-size:13.8px; line-height:1.6; color:var(--grey-1)}
+.acc .ac > :last-child{margin-bottom:0}
+.acc .ac p{margin:0 0 9px}
+.acc .ac strong{color:var(--bordeaux)}
+
+/* triage */
+.tri{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card); padding:14px 16px; margin-bottom:8px}
+.tri b{display:block; font-size:14.5px; font-weight:600; margin-bottom:4px}
+.tri p{margin:0; font-size:13.3px; line-height:1.5; color:var(--grey-1)}
+.tri.on{border-color:var(--bordeaux); background:var(--blush)}
+
+/* menneske-kort */
+.human{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:15px 16px; margin-top:16px}
+.human .faces{display:flex; margin-bottom:9px}
+.human .f{width:28px; height:28px; border-radius:50%; background:var(--pink-deep);
+  border:2px solid var(--white); margin-right:-8px;
+  display:flex; align-items:center; justify-content:center;
+  font-size:11px; font-weight:600; color:var(--bordeaux)}
+.human p{margin:0 0 10px; font-size:13.5px; line-height:1.5; color:var(--grey-1)}
+.human a.call{display:block; text-align:center; background:var(--pink); color:var(--bordeaux);
+  text-decoration:none; padding:11px; border-radius:var(--r-pill); font-size:14.5px; font-weight:600}
+.human a.call:hover{background:var(--pink-deep)}
+.human small{display:block; text-align:center; margin-top:8px; font-size:11.5px; color:var(--grey-2)}
+
+@media(max-width:520px){
+  .panel{right:8px; left:8px; bottom:calc(84px + env(safe-area-inset-bottom, 0px)); width:auto;
+    height:calc(100vh - 100px - env(safe-area-inset-bottom, 0px)); max-height:none}
+  .launcher{right:16px; bottom:calc(16px + env(safe-area-inset-bottom, 0px))}
+}
+@media(prefers-reduced-motion:reduce){
+  .panel,.launcher,.opt,.cov,.route .chev{transition:none}
+  .screen.on{animation:none}
+}
+`;
+
+  /* ---------------------------------------------------------
+     3 — Ikoner
+     --------------------------------------------------------- */
+  var ico = {
+    chat:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    back:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
+    close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>',
+    chev:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
+    stop:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64M12 2v10"/></svg>',
+    info:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
+    book:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
+    scale: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M3 8l4-4 4 4M3 8a4 4 0 0 0 8 0M13 8l4-4 4 4M13 8a4 4 0 0 0 8 0"/></svg>',
+    shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
+    help:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
+    phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
+    mail:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-10 6L2 7"/></svg>',
+    mobile:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M12 18h.01"/></svg>',
+    cart:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="20" r="1.4"/><circle cx="18" cy="20" r="1.4"/><path d="M2 3h3l2.6 12.2a2 2 0 0 0 2 1.6h8.2a2 2 0 0 0 2-1.6L21.5 7H6"/></svg>',
+    user:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
+  };
+
+  var esc = function (s) {
+    return String(s).replace(/[&<>"]/g, function (c) {
+      return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
+    });
+  };
+
+  /* ---------------------------------------------------------
+     4 — Byggeklodser
+     --------------------------------------------------------- */
+  var faces = CFG.agents.map(function (n) {
+    return '<span class="f">' + esc(n.charAt(0)) + "</span>";
+  }).join("");
+
+  var agentLine = CFG.agents.length > 1
+    ? CFG.agents.slice(0, -1).map(esc).join(", ") + " og " + esc(CFG.agents[CFG.agents.length - 1])
+    : esc(CFG.agents[0] || "Vi");
+
+  function humanCard(line) {
+    return '<div class="human">' +
+      '<div class="faces">' + faces + "</div>" +
+      "<p>" + line + "</p>" +
+      '<a class="call" href="' + tel + '">Ring ' + esc(CFG.phoneLabel) + "</a>" +
+      "<small>" + esc(CFG.hours) + "</small>" +
+      "</div>";
+  }
+
+  function partnerStrip() {
+    if (!CFG.partners.length) return "";
+    return '<div class="partners">' +
+      '<p class="plabel">Blandt de butikker og webshops, der tilbyder Frankly:</p>' +
+      '<div class="plist">' + CFG.partners.map(function (p) {
+        return '<span class="p">' + (p.logo
+          ? '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '">'
+          : esc(p.name)) + "</span>";
+      }).join("") + "</div></div>";
+  }
+
+  /* ---------------------------------------------------------
+     5 — Markup
+     --------------------------------------------------------- */
+  var MARKUP = `
+<button class="launcher" id="launcher" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Åbn Frankly support">
+  ${ico.chat}<span class="badge" aria-hidden="true">?</span>
+</button>
+
+<div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="htitle">
+  <div class="phead">
+    <div class="row">
+      <button class="iconbtn" id="back" type="button" hidden aria-label="Tilbage">${ico.back}</button>
+      <div class="mark" aria-hidden="true">F</div>
+      <div class="who">
+        <b id="htitle">Frankly support</b>
+        <span><i class="dot" aria-hidden="true"></i> Vi er online nu · svar på ca. 1 min.</span>
+      </div>
+      <button class="iconbtn" id="close" type="button" aria-label="Luk">${ico.close}</button>
+    </div>
+    <div class="trust">Frankly Insure ApS · CVR 42626449 · Nyhavn 63B, 1051 København K<br>Registreret hos Finanstilsynet</div>
+  </div>
+
+  <div class="pbody" id="pbody">
+
+    <!-- ===== MENU ===== -->
+    <section class="screen on" data-s="menu">
+      <h2 class="q">Hvad kan vi hjælpe med?</h2>
+      <p class="sub">Vælg det, der passer bedst. Du skal ikke oprette noget eller logge ind for at komme videre.</p>
+
+      <button class="opt primary" type="button" data-go="cancel">
+        <span class="ico" aria-hidden="true">${ico.stop}</span>
+        <span class="tx"><b>Jeg vil stoppe min dækning</b><span>Fire veje — vælg den hurtigste for dig</span></span>
+        <span class="arw" aria-hidden="true">${ico.chev}</span>
+      </button>
+
+      <button class="opt" type="button" data-go="signup">
+        <span class="ico" aria-hidden="true">${ico.info}</span>
+        <span class="tx"><b>Jeg genkender ikke en betaling</b><span>Hvor dækningen kommer fra, og hvor du ser den</span></span>
+        <span class="arw" aria-hidden="true">${ico.chev}</span>
+      </button>
+
+      <button class="opt" type="button" data-go="coverage">
+        <span class="ico" aria-hidden="true">${ico.shield}</span>
+        <span class="tx"><b>Hvad dækker min forsikring?</b><span>Frankly Care™ og Frankly Mobility™</span></span>
+        <span class="arw" aria-hidden="true">${ico.chev}</span>
+      </button>
+
+      <button class="opt" type="button" data-go="warranty">
+        <span class="ico" aria-hidden="true">${ico.scale}</span>
+        <span class="tx"><b>Garanti eller forsikring?</b><span>Hvornår er det butikken, og hvornår er det os</span></span>
+        <span class="arw" aria-hidden="true">${ico.chev}</span>
+      </button>
+
+      <button class="opt" type="button" data-go="triage">
+        <span class="ico" aria-hidden="true">${ico.cart}</span>
+        <span class="tx"><b>Noget er gået i stykker</b><span>Find ud af om det er en Frankly-sag</span></span>
+        <span class="arw" aria-hidden="true">${ico.chev}</span>
+      </button>
+
+      <button class="opt quiet" type="button" data-go="faq">
+        <span class="ico" aria-hidden="true">${ico.help}</span>
+        <span class="tx"><b>Det folk oftest spørger om</b><span>Pris, binding, opsigelse, MobilePay</span></span>
+        <span class="arw" aria-hidden="true">${ico.chev}</span>
+      </button>
+
+      ${humanCard(agentLine + " sidder klar. Du taler altid med et rigtigt menneske.")}
+    </section>
+
+    <!-- ===== STOP DÆKNING — fire veje ===== -->
+    <section class="screen" data-s="cancel">
+      <h2 class="q">Sådan stopper du din dækning</h2>
+      <p class="sub">Fire veje. De virker alle sammen — vælg den, der passer dig. Du skal ikke bevise noget over for os.</p>
+
+      <div class="promise">
+        <b>Ingen binding, ingen opsigelsesperiode.</b>
+        Du kan opsige når som helst. Stopper du midt i måneden, betaler du kun frem til den dag, du stopper.
+      </div>
+
+      <details class="route" open data-route="mobilepay">
+        <summary>
+          <span class="rico" aria-hidden="true">${ico.mobile}</span>
+          <span class="rtx"><b>Slet betalingsaftalen i MobilePay</b><span>Hurtigst · ca. 30 sekunder · ingen login</span></span>
+          <span class="chev" aria-hidden="true">${ico.chev}</span>
+        </summary>
+        <div class="rbody">
+          <div class="key">
+            <b>Sletter du betalingsaftalen, er forsikringen opsagt.</b> Det er den samme handling —
+            du skal ikke ringe eller skrive til os bagefter.
+          </div>
+          <ol class="steps">
+            <li>Åbn <strong>MobilePay</strong></li>
+            <li>Tryk <strong>Mig</strong> nederst til højre</li>
+            <li>Tryk <strong>Betalingsaftaler</strong></li>
+            <li>Vælg <strong>Frankly Insure</strong></li>
+            <li>Tryk <strong>Slet aftale</strong></li>
+          </ol>
+          <p class="after">Du får en bekræftelse fra os på mail. Er den ikke kommet inden for et døgn, så ring — så tjekker vi det.</p>
+        </div>
+      </details>
+
+      <details class="route" data-route="portal">
+        <summary>
+          <span class="rico" aria-hidden="true">${ico.user}</span>
+          <span class="rtx"><b>Opsig selv på Mit Frankly</b><span>Når du kun vil stoppe én af flere dækninger</span></span>
+          <span class="chev" aria-hidden="true">${ico.chev}</span>
+        </summary>
+        <div class="rbody">
+          <p>Log ind med den <strong>mailadresse</strong>, dækningen er oprettet med. Så ser du alle dine
+             forsikringer samlet og kan opsige præcis dem, du vil af med — resten fortsætter uændret.</p>
+          <ol class="steps">
+            <li>Gå til <strong>my.frankly.insure</strong></li>
+            <li>Skriv din mailadresse — du får en kode tilsendt</li>
+            <li>Vælg den forsikring, du vil stoppe</li>
+            <li>Tryk <strong>Opsig</strong></li>
+          </ol>
+          <p class="after">Intet kodeord at huske. Kan du ikke komme ind, så ring — du behøver ikke en profil for at opsige.</p>
+          <a class="btn" href="${esc(CFG.portal)}" target="_blank" rel="noopener" data-route-action="portal">Åbn Mit Frankly</a>
+        </div>
+      </details>
+
+      <details class="route" data-route="phone">
+        <summary>
+          <span class="rico" aria-hidden="true">${ico.phone}</span>
+          <span class="rtx"><b>Ring, så gør vi det for dig</b><span>Mens du er i røret · svar på ca. 1 min.</span></span>
+          <span class="chev" aria-hidden="true">${ico.chev}</span>
+        </summary>
+        <div class="rbody">
+          <p>Du kommer direkte til et menneske — ingen menu, ingen ventetid på et svar i en indbakke.
+             Vi opsiger forsikringen, mens du er i telefonen, og sender bekræftelsen med det samme.</p>
+          <p class="after">${esc(CFG.hours)}</p>
+          <a class="btn" href="${tel}" data-route-action="phone">Ring ${esc(CFG.phoneLabel)}</a>
+        </div>
+      </details>
+
+      <details class="route" data-route="email">
+        <summary>
+          <span class="rico" aria-hidden="true">${ico.mail}</span>
+          <span class="rtx"><b>Skriv en mail, så opsiger vi den</b><span>Uden for åbningstid · svar samme hverdag</span></span>
+          <span class="chev" aria-hidden="true">${ico.chev}</span>
+        </summary>
+        <div class="rbody">
+          <p>Skriv til <strong>${esc(CFG.email)}</strong> og fortæl, hvad du vil opsige. Så gør vi det
+             og sender dig en bekræftelse.</p>
+          <p>Skriv gerne den <strong>mailadresse eller det telefonnummer, dækningen er oprettet med</strong> —
+             så finder vi dig med det samme i stedet for at skulle spørge igen.</p>
+          <p class="after">Opsigelsen gælder fra den dag, vi modtager din mail — ikke fra den dag, vi når at svare.</p>
+          <a class="btn" href="${mailtoCancel}" data-route-action="email">Skriv til os</a>
+        </div>
+      </details>
+
+      <button class="btn ghost" type="button" data-go="coverage" style="margin-top:14px">Jeg er i tvivl om, hvad jeg egentlig har</button>
+      <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- ===== GENKENDER IKKE BETALING ===== -->
+    <section class="screen" data-s="signup">
+      <h2 class="q">Hvor kommer betalingen fra?</h2>
+      <p class="sub">Frankly er en forsikring, du har tilkøbt til noget, du har købt. Den bliver oprettet på to måder.</p>
+
+      <div class="promise">
+        <b>Hævningen står som «Frankly Insure».</b>
+        Den hører til en ting, du ejer — ikke til et abonnement, du har glemt at sige nej til.
+      </div>
+
+      <details class="route" open data-route="signup-online">
+        <summary>
+          <span class="rico" aria-hidden="true">${ico.cart}</span>
+          <span class="rtx"><b>Du tilvalgte den, da du handlede online</b><span>I checkout hos en af vores partnere</span></span>
+          <span class="chev" aria-hidden="true">${ico.chev}</span>
+        </summary>
+        <div class="rbody">
+          <p>Da du lagde varen i kurven, kunne du sætte flueben ved en dækning til den. Den bliver
+             oprettet som en selvstændig aftale ved siden af selve købet — derfor er det to
+             forskellige linjer på din konto.</p>
+          ${partnerStrip()}
+        </div>
+      </details>
+
+      <details class="route" data-route="signup-store">
+        <summary>
+          <span class="rico" aria-hidden="true">${ico.mobile}</span>
+          <span class="rtx"><b>Du oprettede den i butikken via MobilePay</b><span>På stedet, ved siden af selve købet</span></span>
+          <span class="chev" aria-hidden="true">${ico.chev}</span>
+        </summary>
+        <div class="rbody">
+          <p>Står du fysisk i butikken, opretter du dækningen ved at godkende en <strong>betalingsaftale
+             til Frankly Insure</strong> i MobilePay. Selve varen betaler du som du plejer.</p>
+          <p class="after">Derfor kan du finde aftalen igen under <strong>Mig → Betalingsaftaler</strong> i MobilePay.</p>
+        </div>
+      </details>
+
+      <div class="key" style="margin-top:16px">
+        <b>Vil du se, hvad du har?</b> Log ind på Mit Frankly med din mailadresse. Der ligger oversigten
+        over alle dine forsikringer — og derinde kan du også opsige dem. Ingen binding, du kan opsige når som helst.
+      </div>
+
+      <a class="btn" href="${esc(CFG.portal)}" target="_blank" rel="noopener" data-route-action="portal">Åbn Mit Frankly</a>
+      <button class="btn sec" type="button" data-go="cancel">Jeg vil bare stoppe den</button>
+
+      ${humanCard("Kan du ikke få det til at passe? Ring eller skriv, så finder vi det sammen — du skal ikke bevise noget.")}
+      <a class="btn ghost" href="${mailtoAsk}" data-route-action="email">Skriv til ${esc(CFG.email)}</a>
+      <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- ===== DÆKNING — undermenu ===== -->
+    <section class="screen" data-s="coverage">
+      <h2 class="q">Hvad dækker din forsikring?</h2>
+      <p class="sub">Vælg den, du har. Er du i tvivl, står det på Mit Frankly.</p>
+
+      <button class="cov" type="button" data-go="care">
+        <span class="band"><b>Frankly Care™</b><span>Ting du ikke kan leve uden</span></span>
+        <span class="meat">
+          <p>Elektronik og maskiner: telefon, laptop, tablet, kamera, konsol, høretelefoner,
+             espressomaskine, robotstøvsuger, vaskemaskine.</p>
+          <p class="from">Fra 10 kr./md. · Se hvad der er dækket →</p>
+        </span>
+      </button>
+
+      <button class="cov" type="button" data-go="mobility">
+        <span class="band"><b>Frankly Mobility™</b><span>Cykel, elcykel og ladcykel</span></span>
+        <span class="meat">
+          <p>Din cykel med det fastmonterede tilbehør, der stod på kvitteringen.
+             <strong>Tyveri er dækket her</strong> — hvis låsekravene er overholdt.</p>
+          <p class="from">Fra 19 kr./md. · Se hvad der er dækket →</p>
+        </span>
+      </button>
+
+      <button class="btn ghost" type="button" data-go="warranty" style="margin-top:8px">Er det garanti eller forsikring?</button>
+      <a class="btn ghost" href="${esc(CFG.portal)}" target="_blank" rel="noopener" data-route-action="portal">Se mine egne dækninger</a>
+      <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- ===== FRANKLY CARE ===== -->
+    <section class="screen" data-s="care">
+      <h2 class="q">Frankly Care™</h2>
+      <p class="sub">Dækning til de ting, du bruger hver dag — og som det gør ondt at undvære.</p>
+
+      <p class="body">
+        Care lægges på <strong>én ting ad gangen</strong>: telefonen, computeren, kameraet,
+        espressomaskinen, robotstøvsugeren. Du vælger selv hvilke, og du kan tilføje og fjerne, som du vil.
+      </p>
+
+      <div class="cols">
+        <div class="col yes">
+          <b><span class="m" aria-hidden="true">✓</span> Det er dækket</b>
+          <ul>
+            <li>Uheld og hændelig skade — du taber den, spilder på den, slår en revne i den</li>
+            <li>Væskeskade</li>
+            <li>Brandskade</li>
+            <li>Reparation eller erstatning, alt efter hvad der giver mening</li>
+          </ul>
+        </div>
+        <div class="col no">
+          <b><span class="m" aria-hidden="true">–</span> Det er ikke dækket</b>
+          <ul>
+            <li><strong>Tyveri og bortkomst.</strong> Det hører under din indboforsikring</li>
+            <li>Produktfejl, hvor tingen holder op med at virke af sig selv — det er en garantisag hos butikken</li>
+            <li>Manglende pasning, slid og ælde</li>
+            <li>Følgeudgifter</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="body">Er du i tvivl om en konkret skade, så ring. Vi siger det, som det er — også når svaret er nej.</p>
+
+      <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
+      <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
+      <button class="btn ghost" type="button" data-go="coverage">Se den anden dækning</button>
+      <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- ===== FRANKLY MOBILITY ===== -->
+    <section class="screen" data-s="mobility">
+      <h2 class="q">Frankly Mobility™</h2>
+      <p class="sub">Dækning til cyklen — almindelig cykel, elcykel og ladcykel.</p>
+
+      <p class="body">
+        Dækningen følger den cykel, der står på din police, og det <strong>fastmonterede tilbehør</strong>
+        der stod på købskvitteringen: sadel, styr, lygter og den tilhørende lås. Den gælder dig og
+        dem, du bor sammen med på samme adresse.
+      </p>
+
+      <div class="cols">
+        <div class="col yes">
+          <b><span class="m" aria-hidden="true">✓</span> Det er dækket</b>
+          <ul>
+            <li><strong>Tyveri</strong> — indbrud, røveri, eller at låsen bliver brudt op</li>
+            <li><strong>Forsøg på tyveri</strong> — skader på stel, lås og dele</li>
+            <li>Uheld og hændelig skade — styrt, kollision, sammenstød, skade under transport</li>
+            <li>Hærværk begået af andre</li>
+            <li>Brand, lynnedslag og eksplosion</li>
+            <li>Skade på batteri og oplader. Displayet på en elcykel tæller som en del af cyklen</li>
+          </ul>
+        </div>
+        <div class="col no">
+          <b><span class="m" aria-hidden="true">–</span> Det er ikke dækket</b>
+          <ul>
+            <li><strong>Glemt, bortkommet eller forlagt.</strong> Tyveri er dækket — at have mistet den er ikke</li>
+            <li>Løst tilbehør: sadeltaske, barnestol, drikkedunk, pumpe. Og hjelm, cykeltøj og værktøj</li>
+            <li>Elektronik du selv har sat på: hastighedsmåler, navigation, telefonholder</li>
+            <li>Slid, rust og ridser i lakken, der ikke går ud over funktionen</li>
+            <li>Sliddele — dæk, slanger, kæde, bremseklodser — medmindre de ryger ved en dækket skade</li>
+            <li>At batteriet med tiden holder mindre strøm</li>
+            <li>Skader butikkens eller producentens garanti dækker</li>
+            <li>Erhvervsmæssig kurerkørsel, konkurrencer med tidtagning, og tuning af motoren</li>
+            <li>Speed pedelecs over 25 km/t</li>
+            <li>Cyklen udlånt til nogen uden for din husstand</li>
+          </ul>
+        </div>
+      </div>
+
+      <details class="acc">
+        <summary>Låsekravene — læs dem, før cyklen bliver væk</summary>
+        <div class="ac">
+          <p>Det er her, tyverisager falder. Overholder du ikke kravene, kan erstatningen blive sat ned
+             eller helt bortfalde.</p>
+          <p><strong>Altid:</strong> en <strong>Varefakta-godkendt lås</strong>, når cyklen står uden opsyn.</p>
+          <p><strong>Uden for din egen bolig, kælder, skur eller garage:</strong> cyklen skal desuden være
+             låst <strong>gennem stellet til noget fast</strong> — en lygtepæl eller et faststøbt stativ.
+             <strong>Det gælder også i fælles cykelkælder</strong>, hvis andre end din husstand har adgang.</p>
+          <p><strong>Elcykel:</strong> tag batteriet med dig, når du efterlader cyklen — medmindre det sidder
+             fast i stellet og ikke kan tages af uden værktøj.</p>
+          <p><strong>Cykler til 25.000 kr. og derover:</strong> to uafhængige Varefakta-låse. Én om stellet,
+             én der låser cyklen fast til noget fast.</p>
+          <p><strong>I bil:</strong> aldrig i en ulåst bil. På cykelholder skal den være låst fast til bilen.</p>
+          <p>Tyveri og hærværk skal <strong>også anmeldes til politiet</strong>.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Selvrisiko og erstatning</summary>
+        <div class="ac">
+          <p><strong>Ingen selvrisiko</strong> ved hændelig skade, forsøg på tyveri, hærværk, brand og
+             skade på batteri eller oplader.</p>
+          <p><strong>Ved tyveri:</strong> 10 % af erstatningen, dog mindst 1.500 kr.</p>
+          <p>Vi <strong>reparerer først</strong> — på et værksted vi anviser. Kan den ikke reddes, får du en
+             tilsvarende ny cykel. De første tre år uden afskrivning; derefter trækkes 20 % pr. påbegyndt år,
+             højst 80 %. Der udbetales som udgangspunkt ikke kontanter.</p>
+          <p><strong>Loft:</strong> almindelig cykel 25.000 kr. · elcykel 40.000 kr. · ladcykel 75.000 kr.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvor gælder den?</summary>
+        <div class="ac">
+          <p>I Danmark. På rejse dækker den i op til <strong>60 dage om året</strong> resten af verden —
+             der må du bruge en lås af tilsvarende dokumenteret kvalitet, hvis Varefakta ikke findes.</p>
+        </div>
+      </details>
+
+      <p class="body" style="margin-top:14px">Er du i tvivl om en konkret skade, så ring, før du gør noget ved cyklen.</p>
+
+      <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
+      <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
+      <button class="btn ghost" type="button" data-go="coverage">Se den anden dækning</button>
+      <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- ===== GARANTI VS FORSIKRING ===== -->
+    <section class="screen" data-s="warranty">
+      <h2 class="q">Garanti eller forsikring?</h2>
+      <p class="sub">Det er det, folk oftest ringer om. Her er forskellen på under et minut.</p>
+
+      <div class="rule">
+        <b>Gik den i stykker af sig selv? Garanti.<br>Skete der noget med den? Forsikring.</b>
+        <p>Det er hele forskellen. Resten er detaljer.</p>
+      </div>
+
+      <div class="cols">
+        <div class="col">
+          <b>Garantien kommer fra butikken</b>
+          <ul>
+            <li>Dækker fejl ved produktet selv — noget der var galt fra starten, eller som går i stykker uden at nogen har gjort noget</li>
+            <li>Følger med købet, og du betaler ikke ekstra for den</li>
+            <li>Gælder i en bestemt periode efter købet</li>
+            <li>Du går tilbage til butikken, ikke til os</li>
+          </ul>
+        </div>
+        <div class="col">
+          <b>Forsikringen kommer fra os</b>
+          <ul>
+            <li>Dækker det, du selv kommer til — du taber den, spilder på den, den bliver våd eller revner</li>
+            <li>Er ikke en fejl ved produktet. Det er hverdagen</li>
+            <li>Løber, så længe du betaler, og kan opsiges når som helst</li>
+            <li>Du anmelder direkte til os</li>
+          </ul>
+        </div>
+      </div>
+
+      <p class="body">
+        Det står også i betingelserne: skader, som producentens eller forhandlerens garanti dækker,
+        er undtaget hos os. Ikke for at slippe billigere, men fordi garantien kommer først — den er
+        hurtigere og gratis for dig. Er det ikke en garantisag, tager vi den.
+      </p>
+      <p class="body">Er du i tvivl, så ring. Så finder vi ud af det sammen, før du bruger tid det forkerte sted.</p>
+
+      <button class="btn" type="button" data-go="triage">Fortæl mig, hvad der skete</button>
+      <button class="btn ghost" type="button" data-go="coverage">Hvad dækker min forsikring?</button>
+      <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- ===== TRIAGE ===== -->
+    <section class="screen" data-s="triage">
+      <h2 class="q">Hvad skete der?</h2>
+      <p class="sub">Vi peger dig det rigtige sted hen — også hvis det ikke er os.</p>
+
+      <div class="tri on">
+        <b>Et uheld — den blev tabt, våd eller revnet</b>
+        <p>Det er en Frankly-sag. Anmeld den, så vurderer vi den. Typisk svar inden for 30 minutter, og over 90 % af skader bliver godkendt.</p>
+      </div>
+      <div class="tri">
+        <b>Den holdt op med at virke af sig selv</b>
+        <p>Det lyder som en produktfejl, og så er det en garantisag hos butikken. Start der — det er både hurtigere og gratis for dig.</p>
+      </div>
+      <div class="tri">
+        <b>Den blev stjålet</b>
+        <p>Er det en cykel eller et løbehjul med Frankly Mobility™, er tyveri dækket — anmeld den her.
+           Er det elektronik med Frankly Care™, hører tyveri under din indboforsikring. Start der.</p>
+      </div>
+      <div class="tri">
+        <b>Jeg kan ikke afgøre, hvad det er</b>
+        <p>Så ring. Beskriv det med dine egne ord, så siger vi, om det er os eller butikken. Du skal ikke gætte.</p>
+      </div>
+
+      <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim" style="margin-top:14px">Anmeld en skade</a>
+      <button class="btn sec" type="button" data-go="warranty">Garanti eller forsikring?</button>
+      <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
+    </section>
+
+    <!-- ===== FAQ ===== -->
+    <section class="screen" data-s="faq">
+      <h2 class="q">Det folk oftest spørger om</h2>
+      <p class="sub">Kan du ikke finde svaret, så ring. Vi svarer typisk inden for et minut.</p>
+
+      <details class="acc">
+        <summary>Hvordan stopper jeg min dækning?</summary>
+        <div class="ac">
+          <p>Fire veje, og de virker alle sammen: slet betalingsaftalen i MobilePay, opsig selv på
+             Mit Frankly, ring til os, eller skriv en mail.</p>
+          <p><strong>Ingen binding og ingen opsigelsesperiode.</strong> Stopper du midt i måneden,
+             betaler du kun frem til den dag, du stopper.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Er det nok at slette betalingsaftalen i MobilePay?</summary>
+        <div class="ac">
+          <p>Ja. <strong>Sletter du betalingsaftalen, er forsikringen opsagt.</strong> Det er den samme
+             handling — du skal ikke ringe eller skrive bagefter.</p>
+          <p>Du får en bekræftelse fra os på mail. Er den ikke kommet inden for et døgn, så ring, så tjekker vi det.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvorfor står Frankly på mit kontoudtog?</summary>
+        <div class="ac">
+          <p>Fordi du har tilkøbt en forsikring til noget, du har købt — enten i checkout hos en af vores
+             partnere, eller i butikken via MobilePay.</p>
+          <p>Log ind på <strong>Mit Frankly</strong> med din mailadresse, så ser du præcis, hvilke
+             forsikringer du har. Eller ring, så finder vi dem for dig.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvad er forskellen på garanti og forsikring?</summary>
+        <div class="ac">
+          <p><strong>Gik den i stykker af sig selv? Garanti</strong> — den kommer fra butikken og følger med købet.</p>
+          <p><strong>Skete der noget med den? Forsikring</strong> — den kommer fra os og dækker uheld, spild og skader.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Er tyveri dækket?</summary>
+        <div class="ac">
+          <p>Det kommer an på, hvad du har dækket.</p>
+          <p><strong>Frankly Mobility™</strong> — cykel, elcykel, ladcykel: <strong>ja</strong>.
+             Anmeld det til os og til politiet. Selvrisikoen er 10 % af erstatningen, mindst 1.500 kr.
+             Og læs låsekravene — det er dem, tyverisager falder på.</p>
+          <p><strong>Frankly Care™</strong> — elektronik og maskiner: <strong>nej</strong>. Tyveri og
+             bortkomst hører under din indboforsikring. Care dækker det, du selv kommer til.</p>
+          <p>Er cyklen <strong>glemt eller forlagt</strong> frem for stjålet, er den ikke dækket nogen af stederne.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Er der binding eller skjulte gebyrer?</summary>
+        <div class="ac">
+          <p>Nej til begge. Ingen binding, ingen opsigelsesperiode, intet oprettelsesgebyr, intet gebyr for
+             at stoppe. Samme pris hver måned.</p>
+          <p>Du kan opsige når som helst — også dagen efter en betaling. Du betaler kun frem til den dag, du stopper.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvordan får jeg adgang til Mit Frankly?</summary>
+        <div class="ac">
+          <p>Gå til <strong>my.frankly.insure</strong> og skriv den mailadresse, dækningen blev oprettet med.
+             Du får en kode tilsendt — du skal ikke huske et kodeord.</p>
+          <p>Virker det ikke, skal du ikke bruge tid på det: ring ${esc(CFG.phoneLabel)}, så finder vi dig.
+             Du behøver ikke en profil for at opsige eller anmelde en skade.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Jeg kan ikke bruge MobilePay — hvad så?</summary>
+        <div class="ac">
+          <p>Ring til os på ${esc(CFG.phoneLabel)}. Vi finder en løsning sammen. Du skal ikke undlade at få
+             hjælp, fordi en app ikke virker på din telefon.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Kan jeg tilføje flere ting senere?</summary>
+        <div class="ac">
+          <p>Ja. Du tilføjer nye ting, når du vil, og fjerner dem, du ikke længere bruger.</p>
+          <p>Har du flere dækninger, ser du dem samlet på Mit Frankly i stedet for at skulle holde styr på dem hver for sig.</p>
+        </div>
+      </details>
+
+      <button class="btn ghost" type="button" data-go="menu" style="margin-top:14px">Tilbage til start</button>
+    </section>
+
+  </div>
+
+  <div class="pfoot">Frankly™ · Du taler altid med rigtige mennesker · ${esc(CFG.phoneLabel)}</div>
+</div>
+`;
+
+  var style = document.createElement("style");
+  style.textContent = STYLE;
+  var shell = document.createElement("div");
+  shell.className = "fw";
+  shell.innerHTML = MARKUP;
+  root.appendChild(style);
+  root.appendChild(shell);
+
+  function mount() { (document.body || document.documentElement).appendChild(host); }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", mount);
+  else mount();
+
+  /* ---------------------------------------------------------
+     6 — Adfærd
+     --------------------------------------------------------- */
+  var $  = function (s) { return root.querySelector(s); };
+  var $$ = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
+
+  var panel    = $("#panel");
+  var launcher = $("#launcher");
+  var pbody    = $("#pbody");
+  var backBtn  = $("#back");
+  var htitle   = $("#htitle");
+
+  var TITLES = {
+    menu:      "Frankly support",
+    cancel:    "Stop din dækning",
+    signup:    "Hvor kommer den fra?",
+    coverage:  "Hvad dækker den?",
+    care:      "Frankly Care™",
+    mobility:  "Frankly Mobility™",
+    warranty:  "Garanti eller forsikring",
+    triage:    "Er det en Frankly-sag?",
+    faq:       "Ofte stillede spørgsmål"
+  };
+
+  var stack = ["menu"];
+  var lastFocus = null;
+
+  function emit(name, detail) {
+    document.dispatchEvent(new CustomEvent("frankly-support:" + name, {
+      detail: detail || {}, bubbles: true
+    }));
+  }
+
+  function show(name, push) {
+    var found = false;
+    $$(".screen").forEach(function (s) {
+      var on = s.getAttribute("data-s") === name;
+      s.classList.toggle("on", on);
+      if (on) found = true;
+    });
+    if (!found) return;
+    if (push !== false && stack[stack.length - 1] !== name) stack.push(name);
+    backBtn.hidden = stack.length <= 1;
+    htitle.textContent = TITLES[name] || "Frankly support";
+    pbody.scrollTop = 0;
+    emit("screen", { screen: name });
+  }
+
+  function focusables() {
+    return $$("button, a[href], details > summary, [tabindex]:not([tabindex='-1'])")
+      .filter(function (el) {
+        return el.closest(".panel") && !el.hidden && el.offsetParent !== null;
+      });
+  }
+
+  function open(screen) {
+    lastFocus = document.activeElement;
+    panel.classList.add("open");
+    launcher.setAttribute("aria-expanded", "true");
+    stack = ["menu"];
+    show("menu", false);
+    if (screen && screen !== "menu") show(screen);
+    emit("open", { screen: screen || "menu" });
+    setTimeout(function () {
+      var f = focusables();
+      if (f.length) f[0].focus();
+    }, 320);
+  }
+
+  function close() {
+    if (!panel.classList.contains("open")) return;
+    panel.classList.remove("open");
+    launcher.setAttribute("aria-expanded", "false");
+    emit("close", {});
+    if (lastFocus && lastFocus.focus) lastFocus.focus(); else launcher.focus();
+  }
+
+  launcher.addEventListener("click", function () {
+    if (panel.classList.contains("open")) close(); else open();
+  });
+  $("#close").addEventListener("click", close);
+  backBtn.addEventListener("click", function () {
+    if (stack.length > 1) { stack.pop(); show(stack[stack.length - 1], false); }
+  });
+
+  /* Escape lukker, Tab bliver inde i panelet */
+  root.addEventListener("keydown", function (e) {
+    if (!panel.classList.contains("open")) return;
+    if (e.key === "Escape") { e.preventDefault(); close(); return; }
+    if (e.key !== "Tab") return;
+    var f = focusables();
+    if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], active = root.activeElement;
+    if (e.shiftKey && active === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && active === last) { e.preventDefault(); first.focus(); }
+  });
+
+  /* Navigation */
+  shell.addEventListener("click", function (e) {
+    var go = e.target.closest("[data-go]");
+    if (go) {
+      var to = go.getAttribute("data-go");
+      if (to === "menu") { stack = ["menu"]; show("menu", false); } else show(to);
+      return;
+    }
+    var act = e.target.closest("[data-route-action]");
+    if (act) emit("route", { route: act.getAttribute("data-route-action") });
+  });
+
+  /* Rute-kort: ét åbent ad gangen, pr. skærm */
+  $$(".route").forEach(function (d) {
+    d.addEventListener("toggle", function () {
+      if (!d.open) return;
+      var screen = d.closest(".screen");
+      $$(".route").forEach(function (o) {
+        if (o !== d && o.closest(".screen") === screen) o.open = false;
+      });
+      emit("route", { route: d.getAttribute("data-route"), opened: true });
+    });
+  });
+
+  /* ---------------------------------------------------------
+     7 — Offentligt API
+     --------------------------------------------------------- */
+  window.FranklySupport = {
+    open: open,
+    close: close,
+    show: function (screen) {
+      if (!panel.classList.contains("open")) open(screen); else show(screen);
+    },
+    config: CFG
+  };
+})();
+</script>
+
+<!-- Demoside-genveje — hører ikke til widget'en -->
+<script>
+document.querySelectorAll("[data-demo]").forEach(function (b) {
+  b.addEventListener("click", function () { window.FranklySupport.open(b.getAttribute("data-demo")); });
+});
+["open", "screen", "route", "close"].forEach(function (n) {
+  document.addEventListener("frankly-support:" + n, function (e) { console.log("frankly-support:" + n, e.detail); });
+});
+</script>
+
+</body>
+</html>
