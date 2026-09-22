@@ -128,17 +128,33 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
   </div>
 
   <div class="flag">
-    <b>Tyveri er skrevet ind som Jonas har oplyst:</b> ikke dækket på Frankly Care™, dækket på
-    Frankly Mobility™. Forskellen står tre steder — på hvert dækningskort, i triagen og som eget
-    FAQ-punkt — fordi det er dét, der afgør, om kunden skal til os eller til sit indboselskab.
-    Partnersiden på franklyinsure.com skriver stadig «Fuld dækning: … og tyveri» på tværs af
-    kategorier; den formulering bør rettes samme sted.
+    <b>Mobility-teksten er skrevet efter de rigtige betingelser</b> —
+    <em>Frankly Insure · Forsikringsbetingelser · Cykelforsikring, v1.0, 2026-08-13</em>
+    (TC_Frankly_ConsumerCykelforsikring_DK_v1_0_081326). Dækning, undtagelser, låsekrav,
+    selvrisiko, erstatningslofter og geografi kommer derfra, ikke fra marketingteksten.
+    Tre ting jeg havde gættet forkert, er rettet: <strong>løbehjul er ikke omfattet</strong>
+    (kun almindelig cykel, elcykel og ladcykel), <strong>tyveri har 10 % selvrisiko, mindst
+    1.500 kr.</strong>, og <strong>låsekravene</strong> — Varefakta-lås, fastlåst gennem stellet
+    til noget fast, også i fælles cykelkælder — stod slet ikke nævnt. Det er dem, tyverisager
+    falder på, så de har fået deres egen sektion.
   </div>
 
   <div class="flag">
-    <b>Udvidet garanti er ikke skrevet ind.</b> Partnersiden nævner «op til 5 år oveni producentens
-    egen garanti». Det står ikke i widget'en, fordi det ikke er afklaret, hvornår det gælder.
-    Alex og Niels skal sige til, hvis det skal med.
+    <b>Care-teksten er stadig skrevet efter det offentlige materiale.</b> Jeg har ikke set
+    betingelserne for Frankly Care™. Send dem, så får den samme behandling — især undtagelser,
+    selvrisiko og erstatningsloft, som kunden ikke kan gætte sig til.
+  </div>
+
+  <div class="flag">
+    <b>To modsigelser der skal afgøres.</b>
+    <strong>1 — Hvornår ophører dækningen?</strong> Widget'en siger «du betaler kun frem til den dag,
+    du stopper», hentet fra FAQ'en på franklyinsure.com. Betingelsernes pkt. 13 siger, at forsikringen
+    opsiges «til udgangen af din forsikringsperiode», altså månedens udløb. Det er to forskellige løfter
+    om penge.
+    <strong>2 — Tyveri på tværs.</strong> Partnersiden skriver stadig «Fuld dækning: uheld, spild, tab,
+    skader og tyveri» på tværs af kategorier. Det passer ikke med Care, og det skaber præcis den
+    forventning, widget'en nu skal aflive. Udvidet garanti («op til 5 år») er af samme grund ikke
+    skrevet ind.
   </div>
 </div>
 
@@ -248,7 +264,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 
 /* ---------- launcher ---------- */
 .launcher{
-  position:fixed; right:26px; bottom:26px; z-index:2147483000;
+  position:fixed; right:26px; bottom:calc(26px + env(safe-area-inset-bottom, 0px)); z-index:2147483000;
   width:60px; height:60px; border:none; border-radius:50%;
   background:var(--bordeaux); color:var(--pink); cursor:pointer;
   box-shadow:0 8px 28px rgba(45,0,17,.28);
@@ -267,7 +283,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 
 /* ---------- panel ---------- */
 .panel{
-  position:fixed; right:26px; bottom:100px; z-index:2147482999;
+  position:fixed; right:26px; bottom:calc(100px + env(safe-area-inset-bottom, 0px)); z-index:2147482999;
   width:396px; max-width:calc(100vw - 32px);
   height:640px; max-height:calc(100vh - 130px);
   background:var(--limestone); border-radius:var(--r-xl);
@@ -499,8 +515,9 @@ ol.steps li strong{font-weight:600}
 .human small{display:block; text-align:center; margin-top:8px; font-size:11.5px; color:var(--grey-2)}
 
 @media(max-width:520px){
-  .panel{right:8px; left:8px; bottom:84px; width:auto; height:calc(100vh - 100px); max-height:none}
-  .launcher{right:16px; bottom:16px}
+  .panel{right:8px; left:8px; bottom:calc(84px + env(safe-area-inset-bottom, 0px)); width:auto;
+    height:calc(100vh - 100px - env(safe-area-inset-bottom, 0px)); max-height:none}
+  .launcher{right:16px; bottom:calc(16px + env(safe-area-inset-bottom, 0px))}
 }
 @media(prefers-reduced-motion:reduce){
   .panel,.launcher,.opt,.cov,.route .chev{transition:none}
@@ -785,10 +802,10 @@ ol.steps li strong{font-weight:600}
       </button>
 
       <button class="cov" type="button" data-go="mobility">
-        <span class="band"><b>Frankly Mobility™</b><span>Cykel, løbehjul m.m.</span></span>
+        <span class="band"><b>Frankly Mobility™</b><span>Cykel, elcykel og ladcykel</span></span>
         <span class="meat">
-          <p>Cykler, el-cykler, ladcykler og løbehjul — det du kommer rundt på til hverdag.
-             <strong>Tyveri er dækket her.</strong></p>
+          <p>Din cykel med det fastmonterede tilbehør, der stod på kvitteringen.
+             <strong>Tyveri er dækket her</strong> — hvis låsekravene er overholdt.</p>
           <p class="from">Fra 19 kr./md. · Se hvad der er dækket →</p>
         </span>
       </button>
@@ -840,34 +857,83 @@ ol.steps li strong{font-weight:600}
     <!-- ===== FRANKLY MOBILITY ===== -->
     <section class="screen" data-s="mobility">
       <h2 class="q">Frankly Mobility™</h2>
-      <p class="sub">Dækning til det, du kommer rundt på.</p>
+      <p class="sub">Dækning til cyklen — almindelig cykel, elcykel og ladcykel.</p>
 
       <p class="body">
-        Mobility dækker <strong>cykler, el-cykler, ladcykler og løbehjul</strong> — det køretøj, der står
-        i opgangen eller i skuret, og som du er afhængig af hver dag.
+        Dækningen følger den cykel, der står på din police, og det <strong>fastmonterede tilbehør</strong>
+        der stod på købskvitteringen: sadel, styr, lygter og den tilhørende lås. Den gælder dig og
+        dem, du bor sammen med på samme adresse.
       </p>
 
       <div class="cols">
         <div class="col yes">
           <b><span class="m" aria-hidden="true">✓</span> Det er dækket</b>
           <ul>
-            <li><strong>Tyveri.</strong> Bliver cyklen stjålet, er det en Frankly-sag</li>
-            <li>Uheld og hændelig skade — væltet, påkørt, slået skæv</li>
-            <li>Skade på rammen og på de dele, der hører til cyklen</li>
-            <li>Reparation eller erstatning, alt efter hvad der giver mening</li>
+            <li><strong>Tyveri</strong> — indbrud, røveri, eller at låsen bliver brudt op</li>
+            <li><strong>Forsøg på tyveri</strong> — skader på stel, lås og dele</li>
+            <li>Uheld og hændelig skade — styrt, kollision, sammenstød, skade under transport</li>
+            <li>Hærværk begået af andre</li>
+            <li>Brand, lynnedslag og eksplosion</li>
+            <li>Skade på batteri og oplader. Displayet på en elcykel tæller som en del af cyklen</li>
           </ul>
         </div>
         <div class="col no">
           <b><span class="m" aria-hidden="true">–</span> Det er ikke dækket</b>
           <ul>
-            <li>Produktfejl, hvor noget går i stykker af sig selv — det er en garantisag hos butikken</li>
-            <li>Manglende vedligeholdelse, slid og ælde</li>
-            <li>Punktering og almindelige sliddele</li>
+            <li><strong>Glemt, bortkommet eller forlagt.</strong> Tyveri er dækket — at have mistet den er ikke</li>
+            <li>Løst tilbehør: sadeltaske, barnestol, drikkedunk, pumpe. Og hjelm, cykeltøj og værktøj</li>
+            <li>Elektronik du selv har sat på: hastighedsmåler, navigation, telefonholder</li>
+            <li>Slid, rust og ridser i lakken, der ikke går ud over funktionen</li>
+            <li>Sliddele — dæk, slanger, kæde, bremseklodser — medmindre de ryger ved en dækket skade</li>
+            <li>At batteriet med tiden holder mindre strøm</li>
+            <li>Skader butikkens eller producentens garanti dækker</li>
+            <li>Erhvervsmæssig kurerkørsel, konkurrencer med tidtagning, og tuning af motoren</li>
+            <li>Speed pedelecs over 25 km/t</li>
+            <li>Cyklen udlånt til nogen uden for din husstand</li>
           </ul>
         </div>
       </div>
 
-      <p class="body">Er du i tvivl om en konkret skade, så ring. Vi kigger på den, før du gør noget ved cyklen.</p>
+      <details class="acc">
+        <summary>Låsekravene — læs dem, før cyklen bliver væk</summary>
+        <div class="ac">
+          <p>Det er her, tyverisager falder. Overholder du ikke kravene, kan erstatningen blive sat ned
+             eller helt bortfalde.</p>
+          <p><strong>Altid:</strong> en <strong>Varefakta-godkendt lås</strong>, når cyklen står uden opsyn.</p>
+          <p><strong>Uden for din egen bolig, kælder, skur eller garage:</strong> cyklen skal desuden være
+             låst <strong>gennem stellet til noget fast</strong> — en lygtepæl eller et faststøbt stativ.
+             <strong>Det gælder også i fælles cykelkælder</strong>, hvis andre end din husstand har adgang.</p>
+          <p><strong>Elcykel:</strong> tag batteriet med dig, når du efterlader cyklen — medmindre det sidder
+             fast i stellet og ikke kan tages af uden værktøj.</p>
+          <p><strong>Cykler til 25.000 kr. og derover:</strong> to uafhængige Varefakta-låse. Én om stellet,
+             én der låser cyklen fast til noget fast.</p>
+          <p><strong>I bil:</strong> aldrig i en ulåst bil. På cykelholder skal den være låst fast til bilen.</p>
+          <p>Tyveri og hærværk skal <strong>også anmeldes til politiet</strong>.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Selvrisiko og erstatning</summary>
+        <div class="ac">
+          <p><strong>Ingen selvrisiko</strong> ved hændelig skade, forsøg på tyveri, hærværk, brand og
+             skade på batteri eller oplader.</p>
+          <p><strong>Ved tyveri:</strong> 10 % af erstatningen, dog mindst 1.500 kr.</p>
+          <p>Vi <strong>reparerer først</strong> — på et værksted vi anviser. Kan den ikke reddes, får du en
+             tilsvarende ny cykel. De første tre år uden afskrivning; derefter trækkes 20 % pr. påbegyndt år,
+             højst 80 %. Der udbetales som udgangspunkt ikke kontanter.</p>
+          <p><strong>Loft:</strong> almindelig cykel 25.000 kr. · elcykel 40.000 kr. · ladcykel 75.000 kr.</p>
+        </div>
+      </details>
+
+      <details class="acc">
+        <summary>Hvor gælder den?</summary>
+        <div class="ac">
+          <p>I Danmark. På rejse dækker den i op til <strong>60 dage om året</strong> resten af verden —
+             der må du bruge en lås af tilsvarende dokumenteret kvalitet, hvis Varefakta ikke findes.</p>
+        </div>
+      </details>
+
+      <p class="body" style="margin-top:14px">Er du i tvivl om en konkret skade, så ring, før du gør noget ved cyklen.</p>
 
       <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
       <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
@@ -907,8 +973,9 @@ ol.steps li strong{font-weight:600}
       </div>
 
       <p class="body">
-        Derfor siger vi nogle gange: <strong>start hos butikken</strong>. Ikke for at sende dig videre,
-        men fordi en garantisag er hurtigere og gratis for dig. Er det ikke en garantisag, tager vi den.
+        Det står også i betingelserne: skader, som producentens eller forhandlerens garanti dækker,
+        er undtaget hos os. Ikke for at slippe billigere, men fordi garantien kommer først — den er
+        hurtigere og gratis for dig. Er det ikke en garantisag, tager vi den.
       </p>
       <p class="body">Er du i tvivl, så ring. Så finder vi ud af det sammen, før du bruger tid det forkerte sted.</p>
 
@@ -991,10 +1058,12 @@ ol.steps li strong{font-weight:600}
         <summary>Er tyveri dækket?</summary>
         <div class="ac">
           <p>Det kommer an på, hvad du har dækket.</p>
-          <p><strong>Frankly Mobility™</strong> — cykel, el-cykel, ladcykel, løbehjul: <strong>ja</strong>,
-             tyveri er dækket. Anmeld det til os.</p>
+          <p><strong>Frankly Mobility™</strong> — cykel, elcykel, ladcykel: <strong>ja</strong>.
+             Anmeld det til os og til politiet. Selvrisikoen er 10 % af erstatningen, mindst 1.500 kr.
+             Og læs låsekravene — det er dem, tyverisager falder på.</p>
           <p><strong>Frankly Care™</strong> — elektronik og maskiner: <strong>nej</strong>. Tyveri og
              bortkomst hører under din indboforsikring. Care dækker det, du selv kommer til.</p>
+          <p>Er cyklen <strong>glemt eller forlagt</strong> frem for stjålet, er den ikke dækket nogen af stederne.</p>
         </div>
       </details>
 
