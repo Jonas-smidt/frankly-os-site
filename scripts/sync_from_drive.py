@@ -187,6 +187,14 @@ def build_manifest(root=pathlib.Path(".")):
         for src in sorted(design_ref_dir.iterdir()):
             if src.is_file():
                 manifest[src.relative_to(root).as_posix()] = src
+    # Partner logos — the support widget's signup screen names the shops that sell
+    # Frankly, and the widget loads them by absolute URL so they also resolve when
+    # it is embedded on a partner's own site.
+    partners_dir = root / "assets" / "partners"
+    if partners_dir.exists():
+        for src in sorted(partners_dir.iterdir()):
+            if src.is_file():
+                manifest[src.relative_to(root).as_posix()] = src
     journal_dir = root / "journal"
     if journal_dir.exists():
         for src in sorted(journal_dir.rglob("*")):
@@ -362,6 +370,13 @@ def main():
     design_ref_dir = pathlib.Path("assets/design-reference")
     if design_ref_dir.exists():
         for src in sorted(design_ref_dir.iterdir()):
+            if src.is_file():
+                copy_file(src, SITE_DIR / src)
+
+    # Partner logos — used by the support widget's signup screen (see build_manifest).
+    partners_dir = pathlib.Path("assets/partners")
+    if partners_dir.exists():
+        for src in sorted(partners_dir.iterdir()):
             if src.is_file():
                 copy_file(src, SITE_DIR / src)
 
