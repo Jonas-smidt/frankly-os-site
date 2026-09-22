@@ -195,6 +195,12 @@ def build_manifest(root=pathlib.Path(".")):
         for src in sorted(partners_dir.iterdir()):
             if src.is_file():
                 manifest[src.relative_to(root).as_posix()] = src
+    # Team portraits — the widget shows the people who answer the phone.
+    team_dir = root / "assets" / "team"
+    if team_dir.exists():
+        for src in sorted(team_dir.iterdir()):
+            if src.is_file():
+                manifest[src.relative_to(root).as_posix()] = src
     journal_dir = root / "journal"
     if journal_dir.exists():
         for src in sorted(journal_dir.rglob("*")):
@@ -377,6 +383,13 @@ def main():
     partners_dir = pathlib.Path("assets/partners")
     if partners_dir.exists():
         for src in sorted(partners_dir.iterdir()):
+            if src.is_file():
+                copy_file(src, SITE_DIR / src)
+
+    # Team portraits — used by the support widget (see build_manifest).
+    team_dir = pathlib.Path("assets/team")
+    if team_dir.exists():
+        for src in sorted(team_dir.iterdir()):
             if src.is_file():
                 copy_file(src, SITE_DIR / src)
 
