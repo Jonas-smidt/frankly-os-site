@@ -53,7 +53,9 @@ UPLOADABLE_HTML = (
     pathlib.Path("frankly-os-onboarding.html"),
     # Lab completeness (Jonas 2026-08-23 "sikre dig at alt vores arbejde rent faktisk
     # ligger i lab" + "andre widgets skal i lab"; run 20260823-lab-completeness-audit,
-    # R11 CLEAR): gated + noindex + robots-Disallowed like frankly-os-onboarding.html.
+    # R11 CLEAR): gated + robots-Disallowed like frankly-os-onboarding.html; Holdet also
+    # carries the noindex meta, the LinkedIn checker does NOT (robots Disallow is its only
+    # crawl protection — measured 2026-09-18).
     # The deck is a self-contained single file; Holdet is the agent-crew page; the
     # LinkedIn checker's 2026-07-13 hold ("until Jonas explicitly reopens") is lifted
     # by that instruction.
@@ -65,6 +67,12 @@ UPLOADABLE_HTML = (
     # lift parked: backlog card lab-security-lift-2026-08-23.
     pathlib.Path("frankly-os-deck.html"),
     pathlib.Path("frankly-support-widget.html"),
+    # Jonas 2026-09-22: v2 of the support widget — same gate posture as v1
+    # (gated + noindex + robots-Disallowed). Built as an embeddable widget
+    # (shadow DOM); the cancel flow is a four-route guide with no phone-number
+    # lookup. v1 stays online unchanged for comparison; the local-only
+    # frankly-support-widget-v1-arkiv.html is the frozen copy of it.
+    pathlib.Path("frankly-support-widget-v2.html"),
     pathlib.Path("frankly-kundeoplevelse-strategi.html"),
     # Jonas 2026-08-24: the team onboarding guide (7-step self-guided setup, English,
     # embedded brand fonts) onto the Lab — gated + noindex + robots-Disallowed like
