@@ -287,13 +287,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 }
 .launcher:hover{transform:scale(1.06)}
 .launcher:focus-visible{outline:3px solid var(--pink-deep); outline-offset:3px}
-.launcher svg{width:26px; height:26px}
-.launcher .badge{
-  position:absolute; top:-3px; right:-3px; width:18px; height:18px;
-  background:var(--pink-deep); color:var(--bordeaux); border-radius:50%;
-  font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;
-  border:2px solid var(--limestone);
-}
+.launcher svg{width:28px; height:28px}
 
 /* ---------- panel ---------- */
 .panel{
@@ -594,7 +588,9 @@ ol.steps li strong{font-weight:600}
      3 - Ikoner
      --------------------------------------------------------- */
   var ico = {
-    chat:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
+    /* Spørgsmålstegn, ikke en taleboble: man kan ikke chatte med Frankly,
+       og en boble lover præcis det. */
+    ask:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4a3.5 3.5 0 0 1 6.8 1.2c0 2.3-3.4 3.4-3.4 3.4"/><path d="M12 17.6h.01"/></svg>',
     back:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
     close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>',
     chev:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
@@ -674,7 +670,7 @@ ol.steps li strong{font-weight:600}
      --------------------------------------------------------- */
   var MARKUP = `
 <button class="launcher" id="launcher" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Åbn Frankly support">
-  ${ico.chat}<span class="badge" aria-hidden="true">?</span>
+  ${ico.ask}
 </button>
 
 <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="htitle">
