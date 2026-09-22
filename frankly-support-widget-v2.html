@@ -638,10 +638,6 @@ ol.steps li strong{font-weight:600}
       : '<span class="f">' + esc(a.name.charAt(0)) + "</span>";
   }).join("");
 
-  var names = CFG.agents.map(function (a) { return esc(a.name); });
-  var agentLine = names.length > 1
-    ? names.slice(0, -1).join(", ") + " og " + names[names.length - 1]
-    : (names[0] || "Vi");
 
   function humanCard(line) {
     return '<div class="human">' +
@@ -693,11 +689,6 @@ ol.steps li strong{font-weight:600}
       <h2 class="q">Hvad kan vi hjælpe med?</h2>
 
 
-      <button class="opt primary" type="button" data-go="signup">
-        <span class="ico" aria-hidden="true">${ico.info}</span>
-        <span class="tx"><b>Jeg genkender ikke en betaling</b><span>Hvor dækningen kommer fra, og hvor du ser den</span></span>
-        <span class="arw" aria-hidden="true">${ico.chev}</span>
-      </button>
 
       <button class="opt" type="button" data-go="coverage">
         <span class="ico" aria-hidden="true">${ico.shield}</span>
@@ -718,13 +709,19 @@ ol.steps li strong{font-weight:600}
         <span class="arw" aria-hidden="true">${ico.chev}</span>
       </button>
 
+      <button class="opt" type="button" data-go="signup">
+        <span class="ico" aria-hidden="true">${ico.info}</span>
+        <span class="tx"><b>Jeg genkender ikke en betaling</b><span>Hvor dækningen kommer fra, og hvor du ser den</span></span>
+        <span class="arw" aria-hidden="true">${ico.chev}</span>
+      </button>
+
       <button class="opt" type="button" data-go="cancel">
         <span class="ico" aria-hidden="true">${ico.stop}</span>
         <span class="tx"><b>Jeg vil stoppe min dækning</b><span>Fire veje - vælg den hurtigste for dig</span></span>
         <span class="arw" aria-hidden="true">${ico.chev}</span>
       </button>
 
-      ${humanCard(agentLine + " sidder klar. Du taler altid med et rigtigt menneske.")}
+      ${humanCard("Vi sidder klar til at hjælpe dig. Du taler altid med et rigtigt menneske.")}
     </section>
 
     <!-- ===== STOP DÆKNING - fire veje ===== -->
