@@ -97,6 +97,9 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
       <tr><td><code>data-email</code></td><td><code>contact@franklyinsure.com</code></td><td>Modtager af opsigelse på mail</td></tr>
       <tr><td><code>data-portal</code></td><td><code>my.frankly.insure</code></td><td>Mit Frankly-login</td></tr>
       <tr><td><code>data-claim</code></td><td><code>franklyinsure.com/anmeld-skade</code></td><td>Skadeanmeldelse</td></tr>
+      <tr><td><code>data-care-url</code></td><td><code>/daekning/elektronik</code></td><td>Produktside for Frankly Care™</td></tr>
+      <tr><td><code>data-mobility-url</code></td><td><code>/daekning/cykler</code></td><td>Produktside for Frankly Mobility™</td></tr>
+      <tr><td><code>data-quote-url</code></td><td><code>snapsure.frankly.insure</code></td><td>«Se alle dækninger» - prisflowet</td></tr>
       <tr><td><code>data-hours</code></td><td><em>Man-tor 8.30-16.00…</em></td><td>Åbningstider i telefonen</td></tr>
       <tr><td><code>data-agents</code></td><td><code>Alex,Nicolai,Micky</code></td><td>Holdet: <code>Navn|portræt-url</code>, adskilt af komma. Uden url vises forbogstavet i en pink cirkel.</td></tr>
       <tr><td><code>data-partners</code></td><td><em>tom</em></td><td>Partnerlogoer: <code>Navn|logo-url</code>, adskilt af komma. Brug absolutte URL'er, så de også findes når widget'en ligger på et fremmed domæne. Uden url vises navnet som tekst; er den tom, udelades striben.</td></tr>
@@ -195,6 +198,9 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
     email:      cfg("email", "contact@franklyinsure.com"),
     portal:     cfg("portal", "https://my.frankly.insure/"),
     claim:      cfg("claim", "https://franklyinsure.com/anmeld-skade"),
+    careUrl:     cfg("care-url", "https://franklyinsure.com/daekning/elektronik"),
+    mobilityUrl: cfg("mobility-url", "https://franklyinsure.com/daekning/cykler"),
+    quoteUrl:    cfg("quote-url", "https://snapsure.frankly.insure?distributor=frankly"),
     hours:      cfg("hours", "Man-tor 8.30-16.00 · fre 8.30-15.00"),
     /* "Navn|portræt-url, …" - portrættet er valgfrit; uden det vises forbogstavet */
     agents:     cfg("agents", "Alex,Nicolai,Micky").split(",").map(function (s) {
@@ -477,6 +483,22 @@ p.body:last-of-type{margin-bottom:16px}
   margin:0 0 12px; font-size:13.6px; line-height:1.55; color:var(--bordeaux)}
 .key b{font-weight:600}
 
+/* Videre-blok. Ligger efter svaret, aldrig før - det er et tilbud, ikke en tragt. */
+.more{
+  background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
+  padding:14px 15px; margin:16px 0 4px;
+}
+.more > b{display:block; font-size:14px; font-weight:600; color:var(--bordeaux); margin-bottom:4px}
+.more > p{margin:0 0 11px; font-size:13.2px; line-height:1.5; color:var(--grey-1)}
+.mlinks{display:flex; flex-wrap:wrap; gap:7px}
+.mlinks a{
+  background:var(--pink); color:var(--bordeaux); text-decoration:none;
+  padding:7px 13px; border-radius:var(--r-pill); font-size:13px; font-weight:600;
+  transition:background .2s, transform .2s var(--ease);
+}
+.mlinks a:hover{background:var(--pink-deep); transform:translateY(-1px)}
+.mlinks a:focus-visible{outline:2px solid var(--bordeaux); outline-offset:2px}
+
 ol.steps{margin:0 0 12px; padding:0; list-style:none; counter-reset:s}
 ol.steps li{counter-increment:s; position:relative; padding:0 0 0 30px; margin-bottom:9px;
   font-size:13.8px; line-height:1.5; color:var(--bordeaux)}
@@ -693,11 +715,6 @@ ol.steps li strong{font-weight:600}
         <span class="arw" aria-hidden="true">${ico.chev}</span>
       </button>
 
-      <button class="opt" type="button" data-go="warranty">
-        <span class="ico" aria-hidden="true">${ico.signpost}</span>
-        <span class="tx"><b>Garanti eller forsikring?</b><span>Hvornår er det butikken, og hvornår er det os</span></span>
-        <span class="arw" aria-hidden="true">${ico.chev}</span>
-      </button>
 
       <button class="opt" type="button" data-go="triage">
         <span class="ico" aria-hidden="true">${ico.broken}</span>
@@ -881,7 +898,17 @@ ol.steps li strong{font-weight:600}
         </span>
       </button>
 
-      <button class="btn ghost" type="button" data-go="warranty" style="margin-top:8px">Er det garanti eller forsikring?</button>
+      <div class="more">
+        <b>Har du noget, der ikke er dækket endnu?</b>
+        <p>Vi dækker også hvidevarer, møbler, rejser og indbo. Du ser prisen på under to minutter.</p>
+        <div class="mlinks">
+          <a href="${esc(CFG.careUrl)}" target="_blank" rel="noopener" data-route-action="explore-care">Elektronik</a>
+          <a href="${esc(CFG.mobilityUrl)}" target="_blank" rel="noopener" data-route-action="explore-mobility">Cykler</a>
+          <a href="${esc(CFG.quoteUrl)}" target="_blank" rel="noopener" data-route-action="quote">Se alle dækninger</a>
+        </div>
+      </div>
+
+      <button class="btn ghost" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
       <a class="btn ghost" href="${esc(CFG.portal)}" target="_blank" rel="noopener" data-route-action="portal">Se mine egne dækninger</a>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
@@ -921,6 +948,7 @@ ol.steps li strong{font-weight:600}
 
       <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
       <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
+      <a class="btn ghost" href="${esc(CFG.careUrl)}" target="_blank" rel="noopener" data-route-action="explore-care">Læs mere om Frankly Care™</a>
       <button class="btn ghost" type="button" data-go="coverage">Se den anden dækning</button>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
@@ -1008,6 +1036,7 @@ ol.steps li strong{font-weight:600}
 
       <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
       <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
+      <a class="btn ghost" href="${esc(CFG.mobilityUrl)}" target="_blank" rel="noopener" data-route-action="explore-mobility">Læs mere om Frankly Mobility™</a>
       <button class="btn ghost" type="button" data-go="coverage">Se den anden dækning</button>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
