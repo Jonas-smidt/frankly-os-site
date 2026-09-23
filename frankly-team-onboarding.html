@@ -268,7 +268,7 @@
       <p>In the Claude app, open <strong>Cowork</strong>, start a new conversation and type <code>onboarding</code>. There is nothing to install first: the Frankly plugins arrive by themselves for everyone in the organisation, and the onboarding skill ships inside them.</p>
       <p>That one word starts a conversation that does the rest of the setup with you: it finds your folder in <strong>"Frankly os team folders"</strong> and puts your name on your work, it sets up your <strong>Frankly OS project</strong> (it hands you the texts to paste &mdash; they no longer live on this page), it runs an honest check of your setup and tells you plainly what it found, and it files the note that tells Jonas you&rsquo;re in. Nothing else is required from you.</p>
       <p><strong>The specialists run in Cowork and in Claude Code &mdash; never in the Chat tab.</strong> If you are sitting in Chat you will see the skills and no specialists, and nothing is broken: open the same work in Cowork and the crew is there. More about them further down this page.</p>
-      <p>No folder with your name in the team folders? Ask Jonas &mdash; he creates it, and the folder is your access.</p>
+      <p>Your access is not a folder: it is that Jonas has added you to the team roster before sending you this link. The onboarding conversation finds your folder in <strong>"Frankly os team folders"</strong>, creates your profile there and puts your name on your work. If it cannot find a folder with your name, it tells you so and carries on without it &mdash; mail Jonas and he sorts it out.</p>
       <div class="actions">
         <button class="btn ghost" data-copy="onboarding">Copy "onboarding"</button>
         <a class="btn ghost" href="mailto:js@franklyinsure.com?subject=Frankly%20OS%20onboarding&body=Hi%20Jonas%20%E2%80%94%20something%20in%20the%20onboarding%20isn%27t%20working%20for%20me.">Something not working &mdash; mail Jonas</a>
@@ -293,6 +293,7 @@
       <div class="skill"><b>animation-video</b><span>Animation and short video.</span></div>
       <div class="skill"><b>image-upscaling</b><span>Makes images sharp enough for print and large formats.</span></div>
       <div class="skill"><b>log-feedback</b><span>Log a learning, an improvement or feedback into the system.</span></div>
+      <div class="skill"><b>onboarding</b><span>Gets you set up and checks your seat — the conversation step 3 starts.</span></div>
       <div class="skill jonas-only"><b>system-maintenance</b><span>Changes to the system itself. Jonas only.</span></div>
     </div>
 
@@ -335,9 +336,9 @@
     </div>
     <div class="card pink">
       <h3>Nothing stops you</h3>
-      <p>If you write about coverage, pricing or legal terms, Claude marks it and <strong>keeps working</strong>:</p>
+      <p>If you write about coverage, pricing or legal terms, Claude <strong>keeps working</strong>. It does not rewrite your draft and it does not put a flag inside your text — it notes the review need separately, for Jonas:</p>
       <p><span class="flagline">⚑ claims-review ved udgangen</span></p>
-      <p>(Danish for "claims review at the exit" — the system's canonical marker.) The flag means Jonas reviews it before it gets published. The gate sits at the exit — never in your process.</p>
+      <p>(Danish for "claims review at the exit" — the system's canonical marker, kept in the review notes, never in your draft.) The note means Jonas reviews it before it gets published. The gate sits at the exit — never in your process.</p>
       <p><strong>The specialists advise — they do not approve.</strong> Part of the crew stays on Jonas's machine on purpose: the connector guard and the QA runner need his gate scripts, and without them they would tell you a gate or a check had happened when nothing had been checked. So a specialist saying your draft is good is a good second opinion, not a company approval.</p>
       <p><strong>Publishing goes through Jonas.</strong> Anything that leaves the house — franklyinsure.com, customer and partner sends, deploys — he picks up. The cockpit is his machine; you don't need it.</p>
     </div>
@@ -349,7 +350,7 @@
   <details><summary>Do I need to code?</summary><p>No. You write in plain English, the way you'd write to a colleague.</p></details>
   <details><summary>What if I make a mistake?</summary><p>You can't break anything. You can't publish and you can't delete in Drive. Worst case is a bad draft.</p></details>
   <details><summary>Why does it ask who I am?</summary><p>Because your work is stamped with your name, and because a learning has to be traceable to a person.</p></details>
-  <details><summary>Can I write about coverage and pricing?</summary><p>Yes. Write freely. It gets flagged for review — not stopped.</p></details>
+  <details><summary>Can I write about coverage and pricing?</summary><p>Yes. Write freely. It gets noted for Jonas's review at the exit — not stopped, and not marked up inside your draft.</p></details>
   <details><summary>I only see the skills — where are the specialists?</summary><p>You are in the Chat tab. The specialists run in Cowork and in Claude Code, and Chat greys them out. Same work, same conversation — just open it in Cowork.</p></details>
   <details><summary>Do I have to choose which specialist to use?</summary><p>No. Describe the work and Claude picks the seat. If you want a specific one, ask for it by what it does — &ldquo;let the editor cut this&rdquo;.</p></details>
   <details><summary>Does a specialist approve my work?</summary><p>No. It gives you an honest second opinion. Publishing, sending and deploying still stop with Jonas.</p></details>
@@ -357,7 +358,7 @@
 </section>
 
 <footer class="wrap">
-  <p>Frankly OS · onboarding guide · August 2026 · Questions: <a href="mailto:js@franklyinsure.com">Jonas</a></p>
+  <p>Frankly OS · onboarding guide · September 2026 · plugin 0.12.2 · Questions: <a href="mailto:js@franklyinsure.com">Jonas</a></p>
 </footer>
 
 <div class="toast" id="toast">Copied</div>
