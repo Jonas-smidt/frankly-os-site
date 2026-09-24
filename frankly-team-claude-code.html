@@ -246,7 +246,7 @@
 <header class="wrap">
   <span class="eyebrow rise d1">Frankly OS &middot; Claude Code</span>
   <h1 class="rise d2">Frankly OS, in your <span class="u">terminal</span>.</h1>
-  <p class="lede rise d3">Same Frankly OS, different door &mdash; with one honest caveat up front: <strong>in Claude Code, the Frankly plugins install from a private GitHub repository, so you need a GitHub account that Jonas has given access.</strong> In the Claude app they arrive on their own, and Cowork stays the normal route for a colleague&rsquo;s Frankly work. This page takes you from an empty Terminal to a working setup &mdash; Claude Code itself, the Frankly plugins, onboarding, and Drive as a folder on your Mac. You do not need to know anything about terminals &mdash; every command has a Copy button and every step tells you what you should see. Questions at any point: Jonas.</p>
+  <p class="lede rise d3">Same Frankly OS, different door &mdash; with one caveat up front: <strong>here the Frankly plugins need a GitHub account with access.</strong> Using Claude Code inside the Claude desktop app (the Code tab)? Then the plugins are already there and you can skip this page. It takes you from an empty Terminal to a working setup. Every command has a Copy button and every step tells you what you should see. Questions at any point: Jonas.</p>
 </header>
 
 <div class="progress rise d4" id="progress">
@@ -332,10 +332,9 @@
       <svg class="chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
     </summary>
     <div class="step-body">
-      <p>Both Frankly plugins &mdash; <strong>frankly-system</strong> (the skills, onboarding included) and <strong>frankly-seats</strong> (the specialists) &mdash; live in one private GitHub repository, <code>frankly-insure-os/frankly-seats</code>. Claude Code installs from it with your own GitHub login, so this step needs a GitHub account that Jonas has given read access. Not sure you have one? Ask him before you start.</p>
-      <p>Git on this Mac has to be able to log in to GitHub. If you use the GitHub CLI, <code>gh auth status</code> tells you; SSH keys work too. Then add the Frankly catalogue:</p>
+      <p><strong>frankly-system</strong> (the skills, onboarding included) and <strong>frankly-seats</strong> (the specialists) install from a private GitHub repository with your own GitHub login &mdash; Jonas gives the access. Add the Frankly catalogue:</p>
       <div class="cmd"><code>claude plugin marketplace add frankly-insure-os/frankly-seats</code><button data-copy="claude plugin marketplace add frankly-insure-os/frankly-seats">Copy</button></div>
-      <p class="expect"><b>Expect to see</b> <code>Successfully added marketplace: frankly</code>. Then install both plugins:</p>
+      <p class="expect"><b>Expect to see</b> <code>Successfully added marketplace: frankly</code>. Git must be logged in to GitHub &mdash; <code>gh auth status</code> tells you, SSH keys work too. Then install both plugins:</p>
       <div class="cmd"><code>claude plugin install frankly-system@frankly</code><button data-copy="claude plugin install frankly-system@frankly">Copy</button></div>
       <div class="cmd"><code>claude plugin install frankly-seats@frankly</code><button data-copy="claude plugin install frankly-seats@frankly">Copy</button></div>
       <p class="expect"><b>Expect to see</b> <code>Successfully installed plugin</code> twice.</p>
