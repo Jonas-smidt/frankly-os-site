@@ -4,19 +4,11 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex,nofollow">
-<<<<<<< HEAD
-<title>Frankly support-widget v2 — indlejrbar</title>
-<link rel="stylesheet" href="frankly-lab-brand.css">
-<style>
-/* ============================================================
-   VÆRTSSIDE — kun demo.
-=======
 <title>Frankly support-widget v2 - indlejrbar</title>
 <link rel="stylesheet" href="frankly-lab-brand.css">
 <style>
 /* ============================================================
    VÆRTSSIDE - kun demo.
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
    Med vilje sat op som en fremmed webshop: mørk, Verdana,
    grønne stiplede knapper. Widget'en ligger i en shadow root
    og mærker intet til det.
@@ -67,11 +59,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
   <h1>Support-widget der forklarer i stedet for at slå op</h1>
   <p class="lede">
     v2 spørger ikke om telefonnummer og har ingen database. Den forklarer, hvordan tingene hænger
-<<<<<<< HEAD
-    sammen, og sender kunden det rigtige sted hen — MobilePay, Mit Frankly, telefonen eller mailen.
-=======
     sammen, og sender kunden det rigtige sted hen - MobilePay, Mit Frankly, telefonen eller mailen.
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     Denne demoside er med vilje en fremmed webshop. Widget'en nede i højre hjørne ligger i sin egen
     shadow root og rører sig ikke.
   </p>
@@ -79,20 +67,11 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
   <div class="card">
     <h2>Sådan er menuen bygget</h2>
     <ul>
-<<<<<<< HEAD
-      <li><strong>Jeg vil stoppe min dækning</strong> → fire veje: MobilePay, Mit Frankly, telefon, mail.</li>
-      <li><strong>Jeg genkender ikke en betaling</strong> → hvordan dækningen blev købt (partner-checkout eller MobilePay i butikken), og hvor hun selv ser den.</li>
-      <li><strong>Hvad dækker min forsikring?</strong> → egen undermenu med Frankly Care™ og Frankly Mobility™.</li>
-      <li><strong>Garanti eller forsikring?</strong> → den forskel folk ringer om.</li>
-      <li><strong>Noget er gået i stykker</strong> → triage.</li>
-      <li><strong>Det folk oftest spørger om</strong> → FAQ, nu sit eget punkt. I v1 landede man her, når man trykkede på dækningsspørgsmålet.</li>
-=======
       <li><strong>Jeg genkender ikke en betaling</strong> → det primære punkt, fordi det er dét, der bringer folk hertil. Søg i mailen først, så de to signup-veje, så Mit Frankly.</li>
       <li><strong>Hvad dækker min forsikring?</strong> → undermenu med Frankly Care™ og Frankly Mobility™, og en vej videre til de øvrige dækninger.</li>
       <li><strong>Noget er gået i stykker</strong> → triage. «Garanti eller forsikring?» ligger bagved som egen skærm, ikke ved siden af som eget menupunkt.</li>
       <li><strong>Det folk oftest spørger om</strong> → FAQ, sit eget punkt. I v1 landede man her, når man trykkede på dækningsspørgsmålet.</li>
       <li><strong>Jeg vil stoppe min dækning</strong> → nederst og neddæmpet: fire veje, hvor telefonen er den sidste. Alt over den kan kunden selv gøre færdig.</li>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     </ul>
     <p>Videoguiderne er taget ud.</p>
   </div>
@@ -103,11 +82,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
         data-phone="+4570604440"
         data-email="contact@franklyinsure.com"
         data-portal="https://my.frankly.insure/"
-<<<<<<< HEAD
-        data-partners="GreenMind|/logo/greenmind.svg, Expert|/logo/expert.svg"
-=======
         data-partners="GreenMind|https://os.franklydesign.dk/assets/partners/greenmind.svg"
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         defer&gt;&lt;/script&gt;</code></pre>
     <p style="margin-top:12px">Scriptet på denne side er præcis den samme kode, bare indlejret direkte i filen.</p>
   </div>
@@ -121,28 +96,18 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
       <tr><td><code>data-email</code></td><td><code>contact@franklyinsure.com</code></td><td>Modtager af opsigelse på mail</td></tr>
       <tr><td><code>data-portal</code></td><td><code>my.frankly.insure</code></td><td>Mit Frankly-login</td></tr>
       <tr><td><code>data-claim</code></td><td><code>franklyinsure.com/anmeld-skade</code></td><td>Skadeanmeldelse</td></tr>
-<<<<<<< HEAD
-      <tr><td><code>data-hours</code></td><td><em>Man–tor 8.30–16.00…</em></td><td>Åbningstider i telefonen</td></tr>
-      <tr><td><code>data-agents</code></td><td><code>Alex,Nicolai,Bence</code></td><td>Navne og initialer på holdet</td></tr>
-      <tr><td><code>data-partners</code></td><td><em>tom</em></td><td>Partnerlogoer: <code>Navn|logo-url</code>, adskilt af komma. Uden url vises navnet som tekst. Er den tom, udelades striben.</td></tr>
-=======
       <tr><td><code>data-care-url</code></td><td><code>/daekning/elektronik</code></td><td>Produktside for Frankly Care™</td></tr>
       <tr><td><code>data-mobility-url</code></td><td><code>/daekning/cykler</code></td><td>Produktside for Frankly Mobility™</td></tr>
       <tr><td><code>data-quote-url</code></td><td><code>snapsure.frankly.insure</code></td><td>«Se alle dækninger» - prisflowet</td></tr>
       <tr><td><code>data-hours</code></td><td><em>Man-tor 8.30-16.00…</em></td><td>Åbningstider i telefonen</td></tr>
       <tr><td><code>data-agents</code></td><td><code>Alex,Nicolai,Micky</code></td><td>Holdet: <code>Navn|portræt-url</code>, adskilt af komma. Uden url vises forbogstavet i en pink cirkel.</td></tr>
       <tr><td><code>data-partners</code></td><td><em>tom</em></td><td>Partnerlogoer: <code>Navn|logo-url</code>, adskilt af komma. Brug absolutte URL'er, så de også findes når widget'en ligger på et fremmed domæne. Uden url vises navnet som tekst; er den tom, udelades striben.</td></tr>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     </table>
   </div>
 
   <div class="card">
     <h2>Prøv den</h2>
-<<<<<<< HEAD
-    <p>Widget'en åbner nederst til højre. Genvejene her springer direkte til et skærmbillede — kun til demoen.</p>
-=======
     <p>Widget'en åbner nederst til højre. Genvejene her springer direkte til et skærmbillede - kun til demoen.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     <div class="demo-btns">
       <button data-demo="menu">Forsiden</button>
       <button data-demo="cancel">Stop min dækning</button>
@@ -158,16 +123,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
   </div>
 
   <div class="flag">
-<<<<<<< HEAD
-    <b>Partnerlogoerne er pladsholdere.</b> Der ligger ingen partnerlogoer i repoet, så striben på
-    denne demoside er sat op med opdigtede navne for at vise layoutet. Læg de rigtige filer i
-    <code>assets/partners/</code> og sæt <code>data-partners</code> med rigtige navne og stier,
-    før den bliver vist for nogen uden for huset.
-  </div>
-
-  <div class="flag">
-    <b>Mobility-teksten er skrevet efter de rigtige betingelser</b> —
-=======
     <b>Partnerlogoer og portrætter er de rigtige</b> - GreenMind, Green, Smartcykler.dk og
     Sharkgaming ligger i <code>assets/partners/</code>, holdet i <code>assets/team/</code>, og
     begge hentes med absolut URL, så de også virker når widget'en er indlejret andre steder.
@@ -177,52 +132,33 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 
   <div class="flag">
     <b>Mobility-teksten er skrevet efter de rigtige betingelser</b> -
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     <em>Frankly Insure · Forsikringsbetingelser · Cykelforsikring, v1.0, 2026-08-13</em>
     (TC_Frankly_ConsumerCykelforsikring_DK_v1_0_081326). Dækning, undtagelser, låsekrav,
     selvrisiko, erstatningslofter og geografi kommer derfra, ikke fra marketingteksten.
     Tre ting jeg havde gættet forkert, er rettet: <strong>løbehjul er ikke omfattet</strong>
     (kun almindelig cykel, elcykel og ladcykel), <strong>tyveri har 10 % selvrisiko, mindst
-<<<<<<< HEAD
-    1.500 kr.</strong>, og <strong>låsekravene</strong> — Varefakta-lås, fastlåst gennem stellet
-    til noget fast, også i fælles cykelkælder — stod slet ikke nævnt. Det er dem, tyverisager
-=======
     1.500 kr.</strong>, og <strong>låsekravene</strong> - Varefakta-lås, fastlåst gennem stellet
     til noget fast, også i fælles cykelkælder - stod slet ikke nævnt. Det er dem, tyverisager
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     falder på, så de har fået deres egen sektion.
   </div>
 
   <div class="flag">
     <b>Care-teksten er stadig skrevet efter det offentlige materiale.</b> Jeg har ikke set
-<<<<<<< HEAD
-    betingelserne for Frankly Care™. Send dem, så får den samme behandling — især undtagelser,
-    selvrisiko og erstatningsloft, som kunden ikke kan gætte sig til.
-=======
     betingelserne for Frankly Care™. Send dem, så får den samme behandling - især undtagelser,
     selvrisiko og erstatningsloft, som kunden ikke kan gætte sig til.
     <br><br>
     <b>Og ét navn passer ikke:</b> franklyinsure.com skriver «Alex, Nicolai og Bence står klar»,
     men portrætterne er Alex, Nicolai og Micky. Widget'en følger portrætterne. Ret det ene sted,
     der er forkert.
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
   </div>
 
   <div class="flag">
     <b>To modsigelser der skal afgøres.</b>
-<<<<<<< HEAD
-    <strong>1 — Hvornår ophører dækningen?</strong> Widget'en siger «du betaler kun frem til den dag,
-    du stopper», hentet fra FAQ'en på franklyinsure.com. Betingelsernes pkt. 13 siger, at forsikringen
-    opsiges «til udgangen af din forsikringsperiode», altså månedens udløb. Det er to forskellige løfter
-    om penge.
-    <strong>2 — Tyveri på tværs.</strong> Partnersiden skriver stadig «Fuld dækning: uheld, spild, tab,
-=======
     <strong>1 - Hvornår ophører dækningen?</strong> Widget'en siger «du betaler kun frem til den dag,
     du stopper», hentet fra FAQ'en på franklyinsure.com. Betingelsernes pkt. 13 siger, at forsikringen
     opsiges «til udgangen af din forsikringsperiode», altså månedens udløb. Det er to forskellige løfter
     om penge.
     <strong>2 - Tyveri på tværs.</strong> Partnersiden skriver stadig «Fuld dækning: uheld, spild, tab,
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     skader og tyveri» på tværs af kategorier. Det passer ikke med Care, og det skaber præcis den
     forventning, widget'en nu skal aflive. Udvidet garanti («op til 5 år») er af samme grund ikke
     skrevet ind.
@@ -231,11 +167,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 
 
 <!-- ============================================================
-<<<<<<< HEAD
-     WIDGET — alt herunder er det, der ville ligge i
-=======
      WIDGET - alt herunder er det, der ville ligge i
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
      frankly-widget.js. Det rører ikke siden omkring sig.
      ============================================================ -->
 <script id="frankly-support-widget"
@@ -244,24 +176,14 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
         data-email="contact@franklyinsure.com"
         data-portal="https://my.frankly.insure/"
         data-claim="https://franklyinsure.com/anmeld-skade"
-<<<<<<< HEAD
-        data-hours="Man–tor 8.30–16.00 · fre 8.30–15.00"
-        data-agents="Alex,Nicolai,Bence"
-        data-partners="Butik A, Butik B, Webshop C, Butik D, Webshop E">
-=======
         data-hours="Man-tor 8.30-16.00 · fre 8.30-15.00"
         data-agents="Alex|https://os.franklydesign.dk/assets/team/alex.png, Nicolai|https://os.franklydesign.dk/assets/team/nicolai.png, Micky|https://os.franklydesign.dk/assets/team/micky.png"
         data-partners="GreenMind|https://os.franklydesign.dk/assets/partners/greenmind.svg, Green|https://os.franklydesign.dk/assets/partners/green.svg, Smartcykler.dk|https://os.franklydesign.dk/assets/partners/smartcykler.webp, Sharkgaming|https://os.franklydesign.dk/assets/partners/sharkgaming.svg">
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 (function () {
   "use strict";
 
   /* ---------------------------------------------------------
-<<<<<<< HEAD
-     1 — Konfiguration
-=======
      1 - Konfiguration
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
      --------------------------------------------------------- */
   var me  = document.currentScript || document.getElementById("frankly-support-widget");
   var cfg = function (key, fallback) {
@@ -275,11 +197,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
     email:      cfg("email", "contact@franklyinsure.com"),
     portal:     cfg("portal", "https://my.frankly.insure/"),
     claim:      cfg("claim", "https://franklyinsure.com/anmeld-skade"),
-<<<<<<< HEAD
-    hours:      cfg("hours", "Man–tor 8.30–16.00 · fre 8.30–15.00"),
-    agents:     cfg("agents", "Alex,Nicolai,Bence").split(",").map(function (s) { return s.trim(); }),
-    /* "Navn|logo-url, Navn|logo-url" — url er valgfri */
-=======
     careUrl:     cfg("care-url", "https://franklyinsure.com/daekning/elektronik"),
     mobilityUrl: cfg("mobility-url", "https://franklyinsure.com/daekning/cykler"),
     quoteUrl:    cfg("quote-url", "https://snapsure.frankly.insure?distributor=frankly"),
@@ -290,7 +207,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
                   return { name: (p[0] || "").trim(), photo: (p[1] || "").trim() };
                 }).filter(function (a) { return a.name; }),
     /* "Navn|logo-url, Navn|logo-url" - url er valgfri */
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     partners:   cfg("partners", "").split(",").map(function (s) {
                   var p = s.split("|");
                   return { name: (p[0] || "").trim(), logo: (p[1] || "").trim() };
@@ -298,11 +214,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
   };
 
   /* Skrifter: hentes relativt til scriptets egen placering, så de også virker
-<<<<<<< HEAD
-     på et fremmed domæne. @font-face skal ligge i dokumentet — font faces er
-=======
      på et fremmed domæne. @font-face skal ligge i dokumentet - font faces er
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
      dokument-scopede, ikke shadow-scopede. */
   (function loadFonts() {
     if (document.querySelector("style[data-frankly-fonts]")) return;
@@ -339,11 +251,7 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
     "?subject=" + encodeURIComponent("Spørgsmål til min Frankly-dækning");
 
   /* ---------------------------------------------------------
-<<<<<<< HEAD
-     2 — Skal (shadow root)
-=======
      2 - Skal (shadow root)
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
      --------------------------------------------------------- */
   var host = document.createElement("div");
   host.setAttribute("data-frankly-support", "");
@@ -379,22 +287,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 }
 .launcher:hover{transform:scale(1.06)}
 .launcher:focus-visible{outline:3px solid var(--pink-deep); outline-offset:3px}
-<<<<<<< HEAD
-.launcher svg{width:26px; height:26px}
-.launcher .badge{
-  position:absolute; top:-3px; right:-3px; width:18px; height:18px;
-  background:var(--pink-deep); color:var(--bordeaux); border-radius:50%;
-  font-size:11px; font-weight:700; display:flex; align-items:center; justify-content:center;
-  border:2px solid var(--limestone);
-}
-
-/* ---------- panel ---------- */
-.panel{
-  position:fixed; right:26px; bottom:calc(100px + env(safe-area-inset-bottom, 0px)); z-index:2147482999;
-  width:396px; max-width:calc(100vw - 32px);
-  height:640px; max-height:calc(100vh - 130px);
-  background:var(--limestone); border-radius:var(--r-xl);
-=======
 .launcher svg{width:28px; height:28px}
 
 /* ---------- panel ---------- */
@@ -406,7 +298,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
      headerens antialiasede hjørner; med samme farve kan man ikke se det.
      .pbody maler selv det lyse felt nedenunder. */
   background:var(--bordeaux); border-radius:var(--r-xl);
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
   box-shadow:0 24px 64px rgba(45,0,17,.24), 0 2px 8px rgba(45,0,17,.08);
   display:flex; flex-direction:column; overflow:hidden;
   opacity:0; transform:translateY(14px) scale(.98); pointer-events:none;
@@ -414,9 +305,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 }
 .panel.open{opacity:1; transform:none; pointer-events:auto}
 
-<<<<<<< HEAD
-.phead{background:var(--bordeaux); color:var(--white); padding:16px 18px 14px; flex:0 0 auto}
-=======
 /* Egen afrunding i toppen: uden den lyser panelets lyse bund igennem
    som hvide hjørner, hvor den mørke header møder den afrundede kant. */
 .phead{
@@ -424,7 +312,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
   border-radius:var(--r-xl) var(--r-xl) 0 0;
 }
 .pfoot{border-radius:0 0 var(--r-xl) var(--r-xl)}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 .phead .row{display:flex; align-items:center; gap:11px}
 .iconbtn{
   width:30px; height:30px; flex:0 0 auto; border:none; border-radius:50%;
@@ -437,13 +324,6 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 .iconbtn svg{width:16px; height:16px}
 .iconbtn[hidden]{visibility:hidden; display:flex}
 .mark{
-<<<<<<< HEAD
-  width:32px; height:32px; flex:0 0 auto; border-radius:50%;
-  background:var(--pink); color:var(--bordeaux);
-  display:flex; align-items:center; justify-content:center;
-  font-family:var(--font-display); font-weight:600; font-size:17px;
-}
-=======
   width:32px; height:32px; flex:0 0 auto; display:block; padding:0; border:none;
   background:none; cursor:pointer; border-radius:7px; font:inherit;
   transition:transform .2s var(--ease);
@@ -451,26 +331,10 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 .mark:hover{transform:scale(1.07)}
 .mark:focus-visible{outline:2px solid var(--pink); outline-offset:3px}
 .mark svg{width:100%; height:100%; display:block; border-radius:7px}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 .who{flex:1 1 auto; min-width:0}
 .who b{display:block; font-size:14.5px; font-weight:600; letter-spacing:-.01em}
 .who span{display:flex; align-items:center; gap:5px; font-size:12px; color:rgba(255,255,255,.72)}
 .dot{width:6px; height:6px; border-radius:50%; background:var(--success-live); flex:0 0 auto}
-<<<<<<< HEAD
-.trust{
-  margin-top:12px; padding-top:11px; border-top:1px solid rgba(255,255,255,.14);
-  font-size:11px; line-height:1.45; color:rgba(255,255,255,.66);
-}
-
-.pbody{flex:1 1 auto; overflow-y:auto; padding:20px 18px 22px; scrollbar-width:thin}
-.pbody::-webkit-scrollbar{width:7px}
-.pbody::-webkit-scrollbar-thumb{background:var(--stone-4); border-radius:4px}
-.pfoot{
-  flex:0 0 auto; padding:11px 18px; background:var(--white);
-  border-top:1px solid var(--stone-4); font-size:11.5px; color:var(--grey-2);
-  text-align:center; line-height:1.4;
-}
-=======
 
 .pbody{flex:1 1 auto; overflow-y:auto; padding:16px 16px 18px; scrollbar-width:thin;
   background:var(--limestone)}
@@ -483,22 +347,15 @@ pre code{background:none; border:none; padding:0; color:#D6DEE9; font-size:13px;
 }
 .pfoot .fmain{display:block; font-size:11.5px}
 .pfoot .freg{display:block; font-size:10px; color:#A5A5A5; margin-top:2px}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
 /* ---------- skærme ---------- */
 .screen{display:none}
 .screen.on{display:block; animation:in .28s var(--ease)}
 @keyframes in{from{opacity:0; transform:translateY(8px)}to{opacity:1; transform:none}}
 
-<<<<<<< HEAD
-h2.q{font-family:var(--font-display); font-weight:600; font-size:22px; line-height:1.22;
-     margin:0 0 6px; letter-spacing:-.01em}
-p.sub{margin:0 0 18px; font-size:14.5px; line-height:1.5; color:var(--grey-1)}
-=======
 h2.q{font-family:var(--font-display); font-weight:600; font-size:21px; line-height:1.2;
      margin:0 0 5px; letter-spacing:-.01em}
 p.sub{margin:0 0 14px; font-size:14px; line-height:1.45; color:var(--grey-1)}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 p.body{margin:0 0 12px; font-size:14px; line-height:1.6; color:var(--grey-1)}
 p.body strong{color:var(--bordeaux); font-weight:600}
 p.body:last-of-type{margin-bottom:16px}
@@ -506,14 +363,6 @@ p.body:last-of-type{margin-bottom:16px}
 /* menuvalg */
 .opt{
   width:100%; text-align:left; background:var(--white); border:1px solid var(--stone-4);
-<<<<<<< HEAD
-  border-radius:var(--r-card); padding:15px 16px; margin-bottom:9px; cursor:pointer;
-  font-family:var(--font-sans); color:var(--bordeaux);
-  display:flex; align-items:center; gap:13px;
-  transition:border-color .2s, background .2s, transform .18s var(--ease);
-}
-.opt:hover{border-color:var(--pink-deep); background:var(--blush); transform:translateX(2px)}
-=======
   border-radius:var(--r-card); padding:12px 14px; margin-bottom:8px; cursor:pointer;
   font-family:var(--font-sans); color:var(--bordeaux);
   display:flex; align-items:center; gap:12px;
@@ -524,16 +373,11 @@ p.body:last-of-type{margin-bottom:16px}
   transform:translateY(-2px); box-shadow:0 6px 18px rgba(45,0,17,.10);
 }
 .opt:active{transform:translateY(0); box-shadow:none}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 .opt:focus-visible{outline:2px solid var(--bordeaux); outline-offset:2px}
 .opt .ico{
   width:36px; height:36px; flex:0 0 auto; border-radius:10px;
   background:var(--pink); color:var(--bordeaux);
   display:flex; align-items:center; justify-content:center;
-<<<<<<< HEAD
-}
-.opt .ico svg{width:18px; height:18px}
-=======
   transition:background .25s, transform .4s var(--ease);
 }
 .opt .ico svg{width:18px; height:18px; transition:transform .4s var(--ease)}
@@ -541,7 +385,6 @@ p.body:last-of-type{margin-bottom:16px}
 .opt:hover .ico svg{transform:scale(1.14) rotate(8deg)}
 .opt .arw{transition:transform .3s var(--ease)}
 .opt:hover .arw{transform:translateX(4px)}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 .opt .tx{flex:1 1 auto; min-width:0}
 .opt .tx b{display:block; font-size:14.8px; font-weight:600; line-height:1.3; margin-bottom:2px}
 .opt .tx span{display:block; font-size:12.8px; color:var(--grey-1); line-height:1.4}
@@ -551,14 +394,8 @@ p.body:last-of-type{margin-bottom:16px}
 .opt.primary .ico{background:rgba(255,211,227,.2); color:var(--pink)}
 .opt.primary .tx span{color:rgba(255,255,255,.72)}
 .opt.primary .arw{color:rgba(255,255,255,.6)}
-<<<<<<< HEAD
-.opt.primary:hover{background:#3d0018}
-.opt.quiet{background:transparent; border-style:dashed}
-.opt.quiet .ico{background:var(--stone-2)}
-=======
 .opt.primary:hover{background:#3d0018; box-shadow:0 8px 22px rgba(45,0,17,.28)}
 .opt.primary:hover .ico{background:rgba(255,211,227,.34)}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
 /* dækningskort i undermenuen */
 .cov{
@@ -567,16 +404,6 @@ p.body:last-of-type{margin-bottom:16px}
   font-family:var(--font-sans); color:var(--bordeaux); overflow:hidden; display:block;
   transition:border-color .2s, transform .18s var(--ease);
 }
-<<<<<<< HEAD
-.cov:hover{border-color:var(--pink-deep); transform:translateY(-2px)}
-.cov:focus-visible{outline:2px solid var(--bordeaux); outline-offset:2px}
-.cov .band{background:var(--pink); padding:13px 16px}
-.cov .band b{display:block; font-family:var(--font-display); font-size:17.5px; font-weight:600; line-height:1.2}
-.cov .band span{display:block; font-size:12.8px; color:rgba(45,0,17,.7); margin-top:3px}
-.cov .meat{padding:12px 16px 14px}
-.cov .meat p{margin:0 0 8px; font-size:13.4px; line-height:1.5; color:var(--grey-1)}
-.cov .meat .from{margin:0; font-size:12.5px; font-weight:600; color:var(--bordeaux)}
-=======
 .cov:hover{border-color:var(--pink-deep); transform:translateY(-2px);
   box-shadow:0 6px 18px rgba(45,0,17,.10)}
 .cov .meat .from em{transition:transform .3s var(--ease); display:inline-block}
@@ -593,7 +420,6 @@ p.body:last-of-type{margin-bottom:16px}
   display:flex; align-items:center; justify-content:space-between; gap:10px;
 }
 .cov .meat .from em{font-style:normal; font-weight:400; color:var(--grey-2)}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
 /* knapper */
 .btn{
@@ -610,15 +436,6 @@ p.body:last-of-type{margin-bottom:16px}
 .btn.ghost{background:transparent; color:var(--grey-1); height:42px; line-height:42px; font-size:14px}
 .btn.ghost:hover{background:var(--stone-2)}
 
-<<<<<<< HEAD
-/* løfte-boks */
-.promise{
-  background:var(--white); border-left:4px solid var(--success);
-  border-radius:0 var(--r-md) var(--r-md) 0;
-  padding:14px 16px; margin:0 0 18px; font-size:13.8px; line-height:1.55; color:var(--grey-1);
-}
-.promise b{display:block; margin-bottom:4px; color:var(--bordeaux)}
-=======
 /* Ledeboks. Samme greb som .key - ét komponentsprog, ikke to. */
 .promise{
   background:var(--lavender); border-radius:var(--r-md);
@@ -626,7 +443,6 @@ p.body:last-of-type{margin-bottom:16px}
 }
 .promise b{display:block; margin-bottom:3px; color:var(--bordeaux); font-weight:600}
 .promise strong{color:var(--bordeaux); font-weight:600}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
 /* rute-kort */
 .route{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
@@ -642,17 +458,11 @@ p.body:last-of-type{margin-bottom:16px}
 .route .rtx{flex:1 1 auto; min-width:0}
 .route .rtx b{display:block; font-size:14.8px; font-weight:600; line-height:1.3}
 .route .rtx span{display:block; font-size:12.5px; color:var(--grey-1); margin-top:2px; line-height:1.4}
-<<<<<<< HEAD
-.route .chev{flex:0 0 auto; color:var(--grey-2); transition:transform .2s var(--ease)}
-.route .chev svg{width:15px; height:15px; display:block}
-.route[open] .chev{transform:rotate(90deg)}
-=======
 /* Lukket: peger ned (fold ud). Åben: peger op (fold sammen). */
 .route .chev{flex:0 0 auto; color:var(--grey-2); transition:transform .25s var(--ease);
   transform:rotate(90deg)}
 .route .chev svg{width:15px; height:15px; display:block}
 .route[open] .chev{transform:rotate(-90deg); color:var(--bordeaux)}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 .route .rbody{padding:2px 16px 16px; font-size:13.8px; line-height:1.6; color:var(--grey-1)}
 .route .rbody p{margin:0 0 10px}
 .route .rbody > :last-child{margin-bottom:0}
@@ -662,8 +472,6 @@ p.body:last-of-type{margin-bottom:16px}
   margin:0 0 12px; font-size:13.6px; line-height:1.55; color:var(--bordeaux)}
 .key b{font-weight:600}
 
-<<<<<<< HEAD
-=======
 /* Videre-blok. Ligger efter svaret, aldrig før - det er et tilbud, ikke en tragt. */
 .more{
   background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
@@ -680,7 +488,6 @@ p.body:last-of-type{margin-bottom:16px}
 .mlinks a:hover{background:var(--pink-deep); transform:translateY(-1px)}
 .mlinks a:focus-visible{outline:2px solid var(--bordeaux); outline-offset:2px}
 
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 ol.steps{margin:0 0 12px; padding:0; list-style:none; counter-reset:s}
 ol.steps li{counter-increment:s; position:relative; padding:0 0 0 30px; margin-bottom:9px;
   font-size:13.8px; line-height:1.5; color:var(--bordeaux)}
@@ -692,17 +499,6 @@ ol.steps li strong{font-weight:600}
 .after{font-size:12.8px; color:var(--grey-2); line-height:1.5; margin:0}
 
 /* partnerstribe */
-<<<<<<< HEAD
-.partners{margin:0 0 4px}
-.partners .plabel{font-size:12px; color:var(--grey-2); margin:0 0 8px; letter-spacing:.02em}
-.partners .plist{display:flex; flex-wrap:wrap; gap:7px}
-.partners .p{
-  background:var(--stone-2); border:1px solid var(--stone-4); border-radius:var(--r-sm);
-  padding:7px 11px; font-size:12.5px; font-weight:600; color:var(--bordeaux);
-  display:flex; align-items:center; height:32px;
-}
-.partners .p img{max-height:16px; max-width:84px; display:block}
-=======
 .partners{margin:4px 0 0}
 .partners .plabel{font-size:12px; color:var(--grey-2); margin:0 0 9px; letter-spacing:.02em; line-height:1.4}
 .partners .plist{display:grid; grid-template-columns:repeat(auto-fit,minmax(112px,1fr)); gap:8px}
@@ -713,7 +509,6 @@ ol.steps li strong{font-weight:600}
 }
 .partners .p img{max-height:26px; max-width:100%; width:auto; display:block}
 .partners .pmore{font-size:12px; color:var(--grey-2); margin:9px 0 0; line-height:1.45}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
 /* dækningslister */
 .cols{margin:0 0 14px}
@@ -744,11 +539,7 @@ ol.steps li strong{font-weight:600}
   list-style:none; display:flex; justify-content:space-between; gap:10px; align-items:center}
 .acc summary::-webkit-details-marker{display:none}
 .acc summary::after{content:"+"; color:var(--grey-2); font-size:19px; font-weight:400; flex:0 0 auto; line-height:1}
-<<<<<<< HEAD
-.acc[open] summary::after{content:"–"}
-=======
 .acc[open] summary::after{content:"-"}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 .acc summary:hover{background:var(--blush)}
 .acc summary:focus-visible{outline:2px solid var(--bordeaux); outline-offset:-2px}
 .acc .ac{padding:0 16px 15px; font-size:13.8px; line-height:1.6; color:var(--grey-1)}
@@ -764,14 +555,6 @@ ol.steps li strong{font-weight:600}
 
 /* menneske-kort */
 .human{background:var(--white); border:1px solid var(--stone-4); border-radius:var(--r-card);
-<<<<<<< HEAD
-  padding:15px 16px; margin-top:16px}
-.human .faces{display:flex; margin-bottom:9px}
-.human .f{width:28px; height:28px; border-radius:50%; background:var(--pink-deep);
-  border:2px solid var(--white); margin-right:-8px;
-  display:flex; align-items:center; justify-content:center;
-  font-size:11px; font-weight:600; color:var(--bordeaux)}
-=======
   padding:13px 14px; margin-top:14px}
 .human .faces{display:flex; margin-bottom:8px}
 .human .f{
@@ -781,7 +564,6 @@ ol.steps li strong{font-weight:600}
   font-size:12px; font-weight:600; color:var(--bordeaux);
 }
 .human img.f{display:block}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 .human p{margin:0 0 10px; font-size:13.5px; line-height:1.5; color:var(--grey-1)}
 .human a.call{display:block; text-align:center; background:var(--pink); color:var(--bordeaux);
   text-decoration:none; padding:11px; border-radius:var(--r-pill); font-size:14.5px; font-weight:600}
@@ -794,47 +576,32 @@ ol.steps li strong{font-weight:600}
   .launcher{right:16px; bottom:calc(16px + env(safe-area-inset-bottom, 0px))}
 }
 @media(prefers-reduced-motion:reduce){
-<<<<<<< HEAD
-  .panel,.launcher,.opt,.cov,.route .chev{transition:none}
-=======
   .panel,.launcher,.opt,.cov,.route .chev,.mark,
   .opt .ico,.opt .ico svg,.opt .arw,.cov .meat .from em{transition:none}
   .opt:hover,.opt:active,.cov:hover,.launcher:hover,.mark:hover{transform:none}
   .opt:hover .ico,.opt:hover .ico svg,.opt:hover .arw,.cov:hover .meat .from em{transform:none}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
   .screen.on{animation:none}
 }
 `;
 
   /* ---------------------------------------------------------
-<<<<<<< HEAD
-     3 — Ikoner
-     --------------------------------------------------------- */
-  var ico = {
-    chat:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>',
-=======
      3 - Ikoner
      --------------------------------------------------------- */
   var ico = {
     /* Spørgsmålstegn, ikke en taleboble: man kan ikke chatte med Frankly,
        og en boble lover præcis det. */
     ask:   '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"><path d="M8.6 8.4a3.5 3.5 0 0 1 6.8 1.2c0 2.3-3.4 3.4-3.4 3.4"/><path d="M12 17.6h.01"/></svg>',
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     back:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M15 18l-6-6 6-6"/></svg>',
     close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>',
     chev:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M9 18l6-6-6-6"/></svg>',
     stop:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M18.36 6.64A9 9 0 1 1 5.64 6.64M12 2v10"/></svg>',
     info:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4M12 8h.01"/></svg>',
     book:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>',
-<<<<<<< HEAD
-    scale: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M7 21h10M3 8l4-4 4 4M3 8a4 4 0 0 0 8 0M13 8l4-4 4 4M13 8a4 4 0 0 0 8 0"/></svg>',
-=======
     /* Vejgaffel: én vej der deler sig i to - butikken eller os */
     signpost: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22v-8"/><path d="M12 14 5.5 7.5"/><path d="M5 12V6.5H10.5"/><path d="m12 14 6.5-6.5"/><path d="M19 12V6.5H13.5"/></svg>',
     /* Revnet telefonskærm. Revnen løber fra kant til kant og skærer et
        skår af - det er dét, der gør den til en revne og ikke et lyn. */
     broken: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="5" y="2" width="14" height="20" rx="3"/><path d="M14.5 2 9.5 10 19 15"/></svg>',
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     shield:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>',
     help:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 0 1 5.8 1c0 2-3 3-3 3"/><path d="M12 17h.01"/></svg>',
     phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/></svg>',
@@ -844,8 +611,6 @@ ol.steps li strong{font-weight:600}
     user:  '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>'
   };
 
-<<<<<<< HEAD
-=======
   /* Frankly-mærket, inlinet så det ikke kræver en ekstra hentning
      når widget'en ligger på et fremmed domæne. */
   var FRANKLY_MARK =
@@ -858,7 +623,6 @@ ol.steps li strong{font-weight:600}
     '<path d="m43.82 73.34c0.71 0.64 1.33 1.25 1.84 2.03 0.75 1.04 1.12 2.16 1.24 3.51 1.11-3.19 1.74-7.56 1.02-10.83-0.53-2.37-1.9-4.27-3.79-5.72-1.99-1.45-4.03-2.43-6.24-3.45-2.53 1-5.14 2.13-7.23 3.86q-0.46 0.43-0.79 0.94c-0.84 1.35 0.59 2.39 1.63 2.96 0.94 0.53 1.9 0.96 2.88 1.41l2.7 1.25c2.24 1.04 4.82 2.45 6.74 4.06z"/>' +
     "</g></svg>";
 
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
   var esc = function (s) {
     return String(s).replace(/[&<>"]/g, function (c) {
       return { "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c];
@@ -866,17 +630,6 @@ ol.steps li strong{font-weight:600}
   };
 
   /* ---------------------------------------------------------
-<<<<<<< HEAD
-     4 — Byggeklodser
-     --------------------------------------------------------- */
-  var faces = CFG.agents.map(function (n) {
-    return '<span class="f">' + esc(n.charAt(0)) + "</span>";
-  }).join("");
-
-  var agentLine = CFG.agents.length > 1
-    ? CFG.agents.slice(0, -1).map(esc).join(", ") + " og " + esc(CFG.agents[CFG.agents.length - 1])
-    : esc(CFG.agents[0] || "Vi");
-=======
      4 - Byggeklodser
      --------------------------------------------------------- */
   var faces = CFG.agents.map(function (a) {
@@ -885,7 +638,6 @@ ol.steps li strong{font-weight:600}
       : '<span class="f">' + esc(a.name.charAt(0)) + "</span>";
   }).join("");
 
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
   function humanCard(line) {
     return '<div class="human">' +
@@ -896,25 +648,6 @@ ol.steps li strong{font-weight:600}
       "</div>";
   }
 
-<<<<<<< HEAD
-  function partnerStrip() {
-    if (!CFG.partners.length) return "";
-    return '<div class="partners">' +
-      '<p class="plabel">Blandt de butikker og webshops, der tilbyder Frankly:</p>' +
-      '<div class="plist">' + CFG.partners.map(function (p) {
-        return '<span class="p">' + (p.logo
-          ? '<img src="' + esc(p.logo) + '" alt="' + esc(p.name) + '">'
-          : esc(p.name)) + "</span>";
-      }).join("") + "</div></div>";
-  }
-
-  /* ---------------------------------------------------------
-     5 — Markup
-     --------------------------------------------------------- */
-  var MARKUP = `
-<button class="launcher" id="launcher" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Åbn Frankly support">
-  ${ico.chat}<span class="badge" aria-hidden="true">?</span>
-=======
   function partnerStrip(label) {
     if (!CFG.partners.length) return "";
     return '<div class="partners">' +
@@ -934,28 +667,19 @@ ol.steps li strong{font-weight:600}
   var MARKUP = `
 <button class="launcher" id="launcher" type="button" aria-haspopup="dialog" aria-expanded="false" aria-label="Åbn Frankly support">
   ${ico.ask}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 </button>
 
 <div class="panel" id="panel" role="dialog" aria-modal="true" aria-labelledby="htitle">
   <div class="phead">
     <div class="row">
       <button class="iconbtn" id="back" type="button" hidden aria-label="Tilbage">${ico.back}</button>
-<<<<<<< HEAD
-      <div class="mark" aria-hidden="true">F</div>
-=======
       <button class="mark" type="button" data-go="menu" aria-label="Tilbage til forsiden">${FRANKLY_MARK}</button>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       <div class="who">
         <b id="htitle">Frankly support</b>
         <span><i class="dot" aria-hidden="true"></i> Vi er online nu · svar på ca. 1 min.</span>
       </div>
       <button class="iconbtn" id="close" type="button" aria-label="Luk">${ico.close}</button>
     </div>
-<<<<<<< HEAD
-    <div class="trust">Frankly Insure ApS · CVR 42626449 · Nyhavn 63B, 1051 København K<br>Registreret hos Finanstilsynet</div>
-=======
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
   </div>
 
   <div class="pbody" id="pbody">
@@ -963,13 +687,6 @@ ol.steps li strong{font-weight:600}
     <!-- ===== MENU ===== -->
     <section class="screen on" data-s="menu">
       <h2 class="q">Hvad kan vi hjælpe med?</h2>
-<<<<<<< HEAD
-      <p class="sub">Vælg det, der passer bedst. Du skal ikke oprette noget eller logge ind for at komme videre.</p>
-
-      <button class="opt primary" type="button" data-go="cancel">
-        <span class="ico" aria-hidden="true">${ico.stop}</span>
-        <span class="tx"><b>Jeg vil stoppe min dækning</b><span>Fire veje — vælg den hurtigste for dig</span></span>
-=======
 
 
 
@@ -989,7 +706,6 @@ ol.steps li strong{font-weight:600}
       <button class="opt" type="button" data-go="faq">
         <span class="ico" aria-hidden="true">${ico.help}</span>
         <span class="tx"><b>Det folk oftest spørger om</b><span>Pris, binding, opsigelse, MobilePay</span></span>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         <span class="arw" aria-hidden="true">${ico.chev}</span>
       </button>
 
@@ -999,43 +715,6 @@ ol.steps li strong{font-weight:600}
         <span class="arw" aria-hidden="true">${ico.chev}</span>
       </button>
 
-<<<<<<< HEAD
-      <button class="opt" type="button" data-go="coverage">
-        <span class="ico" aria-hidden="true">${ico.shield}</span>
-        <span class="tx"><b>Hvad dækker min forsikring?</b><span>Frankly Care™ og Frankly Mobility™</span></span>
-        <span class="arw" aria-hidden="true">${ico.chev}</span>
-      </button>
-
-      <button class="opt" type="button" data-go="warranty">
-        <span class="ico" aria-hidden="true">${ico.scale}</span>
-        <span class="tx"><b>Garanti eller forsikring?</b><span>Hvornår er det butikken, og hvornår er det os</span></span>
-        <span class="arw" aria-hidden="true">${ico.chev}</span>
-      </button>
-
-      <button class="opt" type="button" data-go="triage">
-        <span class="ico" aria-hidden="true">${ico.cart}</span>
-        <span class="tx"><b>Noget er gået i stykker</b><span>Find ud af om det er en Frankly-sag</span></span>
-        <span class="arw" aria-hidden="true">${ico.chev}</span>
-      </button>
-
-      <button class="opt quiet" type="button" data-go="faq">
-        <span class="ico" aria-hidden="true">${ico.help}</span>
-        <span class="tx"><b>Det folk oftest spørger om</b><span>Pris, binding, opsigelse, MobilePay</span></span>
-        <span class="arw" aria-hidden="true">${ico.chev}</span>
-      </button>
-
-      ${humanCard(agentLine + " sidder klar. Du taler altid med et rigtigt menneske.")}
-    </section>
-
-    <!-- ===== STOP DÆKNING — fire veje ===== -->
-    <section class="screen" data-s="cancel">
-      <h2 class="q">Sådan stopper du din dækning</h2>
-      <p class="sub">Fire veje. De virker alle sammen — vælg den, der passer dig. Du skal ikke bevise noget over for os.</p>
-
-      <div class="promise">
-        <b>Ingen binding, ingen opsigelsesperiode.</b>
-        Du kan opsige når som helst. Stopper du midt i måneden, betaler du kun frem til den dag, du stopper.
-=======
       <button class="opt" type="button" data-go="cancel">
         <span class="ico" aria-hidden="true">${ico.stop}</span>
         <span class="tx"><b>Jeg vil stoppe min dækning</b><span>Fire veje - vælg den hurtigste for dig</span></span>
@@ -1053,7 +732,6 @@ ol.steps li strong{font-weight:600}
         <b>Ingen binding, ingen opsigelsesperiode.</b>
         Fire veje, der alle virker - vælg den, der passer dig. Stopper du midt i måneden, betaler du
         kun frem til den dag, du stopper. Du skal ikke bevise noget over for os.
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       </div>
 
       <details class="route" open data-route="mobilepay">
@@ -1064,11 +742,7 @@ ol.steps li strong{font-weight:600}
         </summary>
         <div class="rbody">
           <div class="key">
-<<<<<<< HEAD
-            <b>Sletter du betalingsaftalen, er forsikringen opsagt.</b> Det er den samme handling —
-=======
             <b>Sletter du betalingsaftalen, er forsikringen opsagt.</b> Det er den samme handling -
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
             du skal ikke ringe eller skrive til os bagefter.
           </div>
           <ol class="steps">
@@ -1078,11 +752,7 @@ ol.steps li strong{font-weight:600}
             <li>Vælg <strong>Frankly Insure</strong></li>
             <li>Tryk <strong>Slet aftale</strong></li>
           </ol>
-<<<<<<< HEAD
-          <p class="after">Du får en bekræftelse fra os på mail. Er den ikke kommet inden for et døgn, så ring — så tjekker vi det.</p>
-=======
           <p class="after">Du får en bekræftelse fra os på mail. Er den ikke kommet inden for et døgn, så ring - så tjekker vi det.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         </div>
       </details>
 
@@ -1094,16 +764,6 @@ ol.steps li strong{font-weight:600}
         </summary>
         <div class="rbody">
           <p>Log ind med den <strong>mailadresse</strong>, dækningen er oprettet med. Så ser du alle dine
-<<<<<<< HEAD
-             forsikringer samlet og kan opsige præcis dem, du vil af med — resten fortsætter uændret.</p>
-          <ol class="steps">
-            <li>Gå til <strong>my.frankly.insure</strong></li>
-            <li>Skriv din mailadresse — du får en kode tilsendt</li>
-            <li>Vælg den forsikring, du vil stoppe</li>
-            <li>Tryk <strong>Opsig</strong></li>
-          </ol>
-          <p class="after">Intet kodeord at huske. Kan du ikke komme ind, så ring — du behøver ikke en profil for at opsige.</p>
-=======
              forsikringer samlet og kan opsige præcis dem, du vil af med - resten fortsætter uændret.</p>
           <ol class="steps">
             <li>Gå til <strong>my.frankly.insure</strong></li>
@@ -1112,28 +772,10 @@ ol.steps li strong{font-weight:600}
             <li>Tryk <strong>Opsig</strong></li>
           </ol>
           <p class="after">Intet kodeord at huske. Kan du ikke komme ind, så ring - du behøver ikke en profil for at opsige.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
           <a class="btn" href="${esc(CFG.portal)}" target="_blank" rel="noopener" data-route-action="portal">Åbn Mit Frankly</a>
         </div>
       </details>
 
-<<<<<<< HEAD
-      <details class="route" data-route="phone">
-        <summary>
-          <span class="rico" aria-hidden="true">${ico.phone}</span>
-          <span class="rtx"><b>Ring, så gør vi det for dig</b><span>Mens du er i røret · svar på ca. 1 min.</span></span>
-          <span class="chev" aria-hidden="true">${ico.chev}</span>
-        </summary>
-        <div class="rbody">
-          <p>Du kommer direkte til et menneske — ingen menu, ingen ventetid på et svar i en indbakke.
-             Vi opsiger forsikringen, mens du er i telefonen, og sender bekræftelsen med det samme.</p>
-          <p class="after">${esc(CFG.hours)}</p>
-          <a class="btn" href="${tel}" data-route-action="phone">Ring ${esc(CFG.phoneLabel)}</a>
-        </div>
-      </details>
-
-=======
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       <details class="route" data-route="email">
         <summary>
           <span class="rico" aria-hidden="true">${ico.mail}</span>
@@ -1143,21 +785,13 @@ ol.steps li strong{font-weight:600}
         <div class="rbody">
           <p>Skriv til <strong>${esc(CFG.email)}</strong> og fortæl, hvad du vil opsige. Så gør vi det
              og sender dig en bekræftelse.</p>
-<<<<<<< HEAD
-          <p>Skriv gerne den <strong>mailadresse eller det telefonnummer, dækningen er oprettet med</strong> —
-             så finder vi dig med det samme i stedet for at skulle spørge igen.</p>
-          <p class="after">Opsigelsen gælder fra den dag, vi modtager din mail — ikke fra den dag, vi når at svare.</p>
-=======
           <p>Skriv gerne den <strong>mailadresse eller det telefonnummer, dækningen er oprettet med</strong> -
              så finder vi dig med det samme i stedet for at skulle spørge igen.</p>
           <p class="after">Opsigelsen gælder fra den dag, vi modtager din mail - ikke fra den dag, vi når at svare.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
           <a class="btn" href="${mailtoCancel}" data-route-action="email">Skriv til os</a>
         </div>
       </details>
 
-<<<<<<< HEAD
-=======
       <details class="route" data-route="phone">
         <summary>
           <span class="rico" aria-hidden="true">${ico.phone}</span>
@@ -1172,7 +806,6 @@ ol.steps li strong{font-weight:600}
         </div>
       </details>
 
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       <button class="btn ghost" type="button" data-go="coverage" style="margin-top:14px">Jeg er i tvivl om, hvad jeg egentlig har</button>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
@@ -1180,16 +813,6 @@ ol.steps li strong{font-weight:600}
     <!-- ===== GENKENDER IKKE BETALING ===== -->
     <section class="screen" data-s="signup">
       <h2 class="q">Hvor kommer betalingen fra?</h2>
-<<<<<<< HEAD
-      <p class="sub">Frankly er en forsikring, du har tilkøbt til noget, du har købt. Den bliver oprettet på to måder.</p>
-
-      <div class="promise">
-        <b>Hævningen står som «Frankly Insure».</b>
-        Den hører til en ting, du ejer — ikke til et abonnement, du har glemt at sige nej til.
-      </div>
-
-      <details class="route" open data-route="signup-online">
-=======
 
       <div class="promise">
         <b>Hævningen står som «Frankly Insure».</b>
@@ -1214,7 +837,6 @@ ol.steps li strong{font-weight:600}
       </details>
 
       <details class="route" data-route="signup-online">
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         <summary>
           <span class="rico" aria-hidden="true">${ico.cart}</span>
           <span class="rtx"><b>Du tilvalgte den, da du handlede online</b><span>I checkout hos en af vores partnere</span></span>
@@ -1222,56 +844,25 @@ ol.steps li strong{font-weight:600}
         </summary>
         <div class="rbody">
           <p>Da du lagde varen i kurven, kunne du sætte flueben ved en dækning til den. Den bliver
-<<<<<<< HEAD
-             oprettet som en selvstændig aftale ved siden af selve købet — derfor er det to
-             forskellige linjer på din konto.</p>
-          ${partnerStrip()}
-        </div>
-      </details>
-
-      <details class="route" data-route="signup-store">
-        <summary>
-          <span class="rico" aria-hidden="true">${ico.mobile}</span>
-          <span class="rtx"><b>Du oprettede den i butikken via MobilePay</b><span>På stedet, ved siden af selve købet</span></span>
-          <span class="chev" aria-hidden="true">${ico.chev}</span>
-        </summary>
-        <div class="rbody">
-          <p>Står du fysisk i butikken, opretter du dækningen ved at godkende en <strong>betalingsaftale
-             til Frankly Insure</strong> i MobilePay. Selve varen betaler du som du plejer.</p>
-          <p class="after">Derfor kan du finde aftalen igen under <strong>Mig → Betalingsaftaler</strong> i MobilePay.</p>
-=======
              oprettet som en selvstændig aftale ved siden af selve købet - derfor er det to
              forskellige linjer på din konto.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         </div>
       </details>
 
       <div class="key" style="margin-top:16px">
         <b>Vil du se, hvad du har?</b> Log ind på Mit Frankly med din mailadresse. Der ligger oversigten
-<<<<<<< HEAD
-        over alle dine forsikringer — og derinde kan du også opsige dem. Ingen binding, du kan opsige når som helst.
-=======
         over alle dine forsikringer - og derinde kan du også opsige dem. Ingen binding, du kan opsige når som helst.
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       </div>
 
       <a class="btn" href="${esc(CFG.portal)}" target="_blank" rel="noopener" data-route-action="portal">Åbn Mit Frankly</a>
       <button class="btn sec" type="button" data-go="cancel">Jeg vil bare stoppe den</button>
 
-<<<<<<< HEAD
-      ${humanCard("Kan du ikke få det til at passe? Ring eller skriv, så finder vi det sammen — du skal ikke bevise noget.")}
-=======
       ${humanCard("Kan du ikke få det til at passe? Ring eller skriv, så finder vi det sammen - du skal ikke bevise noget.")}
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       <a class="btn ghost" href="${mailtoAsk}" data-route-action="email">Skriv til ${esc(CFG.email)}</a>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
 
-<<<<<<< HEAD
-    <!-- ===== DÆKNING — undermenu ===== -->
-=======
     <!-- ===== DÆKNING - undermenu ===== -->
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
     <section class="screen" data-s="coverage">
       <h2 class="q">Hvad dækker din forsikring?</h2>
       <p class="sub">Vælg den, du har. Er du i tvivl, står det på Mit Frankly.</p>
@@ -1279,30 +870,15 @@ ol.steps li strong{font-weight:600}
       <button class="cov" type="button" data-go="care">
         <span class="band"><b>Frankly Care™</b><span>Ting du ikke kan leve uden</span></span>
         <span class="meat">
-<<<<<<< HEAD
-          <p>Elektronik og maskiner: telefon, laptop, tablet, kamera, konsol, høretelefoner,
-             espressomaskine, robotstøvsuger, vaskemaskine.</p>
-          <p class="from">Fra 10 kr./md. · Se hvad der er dækket →</p>
-=======
           <span class="ln">Elektronik og maskiner: telefon, laptop, tablet, kamera, konsol, høretelefoner,
              espressomaskine, robotstøvsuger, vaskemaskine.</span>
           <span class="from">Fra 10 kr./md. <em>Se hvad der er dækket →</em></span>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         </span>
       </button>
 
       <button class="cov" type="button" data-go="mobility">
         <span class="band"><b>Frankly Mobility™</b><span>Cykel, elcykel og ladcykel</span></span>
         <span class="meat">
-<<<<<<< HEAD
-          <p>Din cykel med det fastmonterede tilbehør, der stod på kvitteringen.
-             <strong>Tyveri er dækket her</strong> — hvis låsekravene er overholdt.</p>
-          <p class="from">Fra 19 kr./md. · Se hvad der er dækket →</p>
-        </span>
-      </button>
-
-      <button class="btn ghost" type="button" data-go="warranty" style="margin-top:8px">Er det garanti eller forsikring?</button>
-=======
           <span class="ln">Din cykel med det fastmonterede tilbehør, der stod på kvitteringen.
              <strong>Tyveri er dækket her</strong> - hvis låsekravene er overholdt.</span>
           <span class="from">Fra 19 kr./md. <em>Se hvad der er dækket →</em></span>
@@ -1320,7 +896,6 @@ ol.steps li strong{font-weight:600}
       </div>
 
       <button class="btn ghost" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       <a class="btn ghost" href="${esc(CFG.portal)}" target="_blank" rel="noopener" data-route-action="portal">Se mine egne dækninger</a>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
@@ -1328,11 +903,7 @@ ol.steps li strong{font-weight:600}
     <!-- ===== FRANKLY CARE ===== -->
     <section class="screen" data-s="care">
       <h2 class="q">Frankly Care™</h2>
-<<<<<<< HEAD
-      <p class="sub">Dækning til de ting, du bruger hver dag — og som det gør ondt at undvære.</p>
-=======
       <p class="sub">Dækning til de ting, du bruger hver dag - og som det gør ondt at undvære.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
       <p class="body">
         Care lægges på <strong>én ting ad gangen</strong>: telefonen, computeren, kameraet,
@@ -1343,46 +914,28 @@ ol.steps li strong{font-weight:600}
         <div class="col yes">
           <b><span class="m" aria-hidden="true">✓</span> Det er dækket</b>
           <ul>
-<<<<<<< HEAD
-            <li>Uheld og hændelig skade — du taber den, spilder på den, slår en revne i den</li>
-=======
             <li>Uheld og hændelig skade - du taber den, spilder på den, slår en revne i den</li>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
             <li>Væskeskade</li>
             <li>Brandskade</li>
             <li>Reparation eller erstatning, alt efter hvad der giver mening</li>
           </ul>
         </div>
         <div class="col no">
-<<<<<<< HEAD
-          <b><span class="m" aria-hidden="true">–</span> Det er ikke dækket</b>
-          <ul>
-            <li><strong>Tyveri og bortkomst.</strong> Det hører under din indboforsikring</li>
-            <li>Produktfejl, hvor tingen holder op med at virke af sig selv — det er en garantisag hos butikken</li>
-=======
           <b><span class="m" aria-hidden="true">-</span> Det er ikke dækket</b>
           <ul>
             <li><strong>Tyveri og bortkomst.</strong> Det hører under din indboforsikring</li>
             <li>Produktfejl, hvor tingen holder op med at virke af sig selv - det er en garantisag hos butikken</li>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
             <li>Manglende pasning, slid og ælde</li>
             <li>Følgeudgifter</li>
           </ul>
         </div>
       </div>
 
-<<<<<<< HEAD
-      <p class="body">Er du i tvivl om en konkret skade, så ring. Vi siger det, som det er — også når svaret er nej.</p>
-
-      <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
-      <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
-=======
       <p class="body">Er du i tvivl om en konkret skade, så ring. Vi siger det, som det er - også når svaret er nej.</p>
 
       <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
       <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
       <a class="btn ghost" href="${esc(CFG.careUrl)}" target="_blank" rel="noopener" data-route-action="explore-care">Læs mere om Frankly Care™</a>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       <button class="btn ghost" type="button" data-go="coverage">Se den anden dækning</button>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
@@ -1390,11 +943,7 @@ ol.steps li strong{font-weight:600}
     <!-- ===== FRANKLY MOBILITY ===== -->
     <section class="screen" data-s="mobility">
       <h2 class="q">Frankly Mobility™</h2>
-<<<<<<< HEAD
-      <p class="sub">Dækning til cyklen — almindelig cykel, elcykel og ladcykel.</p>
-=======
       <p class="sub">Dækning til cyklen - almindelig cykel, elcykel og ladcykel.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 
       <p class="body">
         Dækningen følger den cykel, der står på din police, og det <strong>fastmonterede tilbehør</strong>
@@ -1406,30 +955,15 @@ ol.steps li strong{font-weight:600}
         <div class="col yes">
           <b><span class="m" aria-hidden="true">✓</span> Det er dækket</b>
           <ul>
-<<<<<<< HEAD
-            <li><strong>Tyveri</strong> — indbrud, røveri, eller at låsen bliver brudt op</li>
-            <li><strong>Forsøg på tyveri</strong> — skader på stel, lås og dele</li>
-            <li>Uheld og hændelig skade — styrt, kollision, sammenstød, skade under transport</li>
-=======
             <li><strong>Tyveri</strong> - indbrud, røveri, eller at låsen bliver brudt op</li>
             <li><strong>Forsøg på tyveri</strong> - skader på stel, lås og dele</li>
             <li>Uheld og hændelig skade - styrt, kollision, sammenstød, skade under transport</li>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
             <li>Hærværk begået af andre</li>
             <li>Brand, lynnedslag og eksplosion</li>
             <li>Skade på batteri og oplader. Displayet på en elcykel tæller som en del af cyklen</li>
           </ul>
         </div>
         <div class="col no">
-<<<<<<< HEAD
-          <b><span class="m" aria-hidden="true">–</span> Det er ikke dækket</b>
-          <ul>
-            <li><strong>Glemt, bortkommet eller forlagt.</strong> Tyveri er dækket — at have mistet den er ikke</li>
-            <li>Løst tilbehør: sadeltaske, barnestol, drikkedunk, pumpe. Og hjelm, cykeltøj og værktøj</li>
-            <li>Elektronik du selv har sat på: hastighedsmåler, navigation, telefonholder</li>
-            <li>Slid, rust og ridser i lakken, der ikke går ud over funktionen</li>
-            <li>Sliddele — dæk, slanger, kæde, bremseklodser — medmindre de ryger ved en dækket skade</li>
-=======
           <b><span class="m" aria-hidden="true">-</span> Det er ikke dækket</b>
           <ul>
             <li><strong>Glemt, bortkommet eller forlagt.</strong> Tyveri er dækket - at have mistet den er ikke</li>
@@ -1437,7 +971,6 @@ ol.steps li strong{font-weight:600}
             <li>Elektronik du selv har sat på: hastighedsmåler, navigation, telefonholder</li>
             <li>Slid, rust og ridser i lakken, der ikke går ud over funktionen</li>
             <li>Sliddele - dæk, slanger, kæde, bremseklodser - medmindre de ryger ved en dækket skade</li>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
             <li>At batteriet med tiden holder mindre strøm</li>
             <li>Skader butikkens eller producentens garanti dækker</li>
             <li>Erhvervsmæssig kurerkørsel, konkurrencer med tidtagning, og tuning af motoren</li>
@@ -1448,25 +981,15 @@ ol.steps li strong{font-weight:600}
       </div>
 
       <details class="acc">
-<<<<<<< HEAD
-        <summary>Låsekravene — læs dem, før cyklen bliver væk</summary>
-=======
         <summary>Låsekravene - læs dem, før cyklen bliver væk</summary>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         <div class="ac">
           <p>Det er her, tyverisager falder. Overholder du ikke kravene, kan erstatningen blive sat ned
              eller helt bortfalde.</p>
           <p><strong>Altid:</strong> en <strong>Varefakta-godkendt lås</strong>, når cyklen står uden opsyn.</p>
           <p><strong>Uden for din egen bolig, kælder, skur eller garage:</strong> cyklen skal desuden være
-<<<<<<< HEAD
-             låst <strong>gennem stellet til noget fast</strong> — en lygtepæl eller et faststøbt stativ.
-             <strong>Det gælder også i fælles cykelkælder</strong>, hvis andre end din husstand har adgang.</p>
-          <p><strong>Elcykel:</strong> tag batteriet med dig, når du efterlader cyklen — medmindre det sidder
-=======
              låst <strong>gennem stellet til noget fast</strong> - en lygtepæl eller et faststøbt stativ.
              <strong>Det gælder også i fælles cykelkælder</strong>, hvis andre end din husstand har adgang.</p>
           <p><strong>Elcykel:</strong> tag batteriet med dig, når du efterlader cyklen - medmindre det sidder
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
              fast i stellet og ikke kan tages af uden værktøj.</p>
           <p><strong>Cykler til 25.000 kr. og derover:</strong> to uafhængige Varefakta-låse. Én om stellet,
              én der låser cyklen fast til noget fast.</p>
@@ -1481,11 +1004,7 @@ ol.steps li strong{font-weight:600}
           <p><strong>Ingen selvrisiko</strong> ved hændelig skade, forsøg på tyveri, hærværk, brand og
              skade på batteri eller oplader.</p>
           <p><strong>Ved tyveri:</strong> 10 % af erstatningen, dog mindst 1.500 kr.</p>
-<<<<<<< HEAD
-          <p>Vi <strong>reparerer først</strong> — på et værksted vi anviser. Kan den ikke reddes, får du en
-=======
           <p>Vi <strong>reparerer først</strong> - på et værksted vi anviser. Kan den ikke reddes, får du en
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
              tilsvarende ny cykel. De første tre år uden afskrivning; derefter trækkes 20 % pr. påbegyndt år,
              højst 80 %. Der udbetales som udgangspunkt ikke kontanter.</p>
           <p><strong>Loft:</strong> almindelig cykel 25.000 kr. · elcykel 40.000 kr. · ladcykel 75.000 kr.</p>
@@ -1495,11 +1014,7 @@ ol.steps li strong{font-weight:600}
       <details class="acc">
         <summary>Hvor gælder den?</summary>
         <div class="ac">
-<<<<<<< HEAD
-          <p>I Danmark. På rejse dækker den i op til <strong>60 dage om året</strong> resten af verden —
-=======
           <p>I Danmark. På rejse dækker den i op til <strong>60 dage om året</strong> resten af verden -
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
              der må du bruge en lås af tilsvarende dokumenteret kvalitet, hvis Varefakta ikke findes.</p>
         </div>
       </details>
@@ -1508,10 +1023,7 @@ ol.steps li strong{font-weight:600}
 
       <a class="btn" href="${esc(CFG.claim)}" target="_blank" rel="noopener" data-route-action="claim">Anmeld en skade</a>
       <button class="btn sec" type="button" data-go="warranty">Er det garanti eller forsikring?</button>
-<<<<<<< HEAD
-=======
       <a class="btn ghost" href="${esc(CFG.mobilityUrl)}" target="_blank" rel="noopener" data-route-action="explore-mobility">Læs mere om Frankly Mobility™</a>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
       <button class="btn ghost" type="button" data-go="coverage">Se den anden dækning</button>
       <button class="btn ghost" type="button" data-go="menu">Tilbage til start</button>
     </section>
@@ -1530,11 +1042,7 @@ ol.steps li strong{font-weight:600}
         <div class="col">
           <b>Garantien kommer fra butikken</b>
           <ul>
-<<<<<<< HEAD
-            <li>Dækker fejl ved produktet selv — noget der var galt fra starten, eller som går i stykker uden at nogen har gjort noget</li>
-=======
             <li>Dækker fejl ved produktet selv - noget der var galt fra starten, eller som går i stykker uden at nogen har gjort noget</li>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
             <li>Følger med købet, og du betaler ikke ekstra for den</li>
             <li>Gælder i en bestemt periode efter købet</li>
             <li>Du går tilbage til butikken, ikke til os</li>
@@ -1543,11 +1051,7 @@ ol.steps li strong{font-weight:600}
         <div class="col">
           <b>Forsikringen kommer fra os</b>
           <ul>
-<<<<<<< HEAD
-            <li>Dækker det, du selv kommer til — du taber den, spilder på den, den bliver våd eller revner</li>
-=======
             <li>Dækker det, du selv kommer til - du taber den, spilder på den, den bliver våd eller revner</li>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
             <li>Er ikke en fejl ved produktet. Det er hverdagen</li>
             <li>Løber, så længe du betaler, og kan opsiges når som helst</li>
             <li>Du anmelder direkte til os</li>
@@ -1557,11 +1061,7 @@ ol.steps li strong{font-weight:600}
 
       <p class="body">
         Det står også i betingelserne: skader, som producentens eller forhandlerens garanti dækker,
-<<<<<<< HEAD
-        er undtaget hos os. Ikke for at slippe billigere, men fordi garantien kommer først — den er
-=======
         er undtaget hos os. Ikke for at slippe billigere, men fordi garantien kommer først - den er
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         hurtigere og gratis for dig. Er det ikke en garantisag, tager vi den.
       </p>
       <p class="body">Er du i tvivl, så ring. Så finder vi ud af det sammen, før du bruger tid det forkerte sted.</p>
@@ -1574,34 +1074,19 @@ ol.steps li strong{font-weight:600}
     <!-- ===== TRIAGE ===== -->
     <section class="screen" data-s="triage">
       <h2 class="q">Hvad skete der?</h2>
-<<<<<<< HEAD
-      <p class="sub">Vi peger dig det rigtige sted hen — også hvis det ikke er os.</p>
-
-      <div class="tri on">
-        <b>Et uheld — den blev tabt, våd eller revnet</b>
-=======
       <p class="sub">Vi peger dig det rigtige sted hen - også hvis det ikke er os.</p>
 
       <div class="tri on">
         <b>Et uheld - den blev tabt, våd eller revnet</b>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         <p>Det er en Frankly-sag. Anmeld den, så vurderer vi den. Typisk svar inden for 30 minutter, og over 90 % af skader bliver godkendt.</p>
       </div>
       <div class="tri">
         <b>Den holdt op med at virke af sig selv</b>
-<<<<<<< HEAD
-        <p>Det lyder som en produktfejl, og så er det en garantisag hos butikken. Start der — det er både hurtigere og gratis for dig.</p>
-      </div>
-      <div class="tri">
-        <b>Den blev stjålet</b>
-        <p>Er det en cykel eller et løbehjul med Frankly Mobility™, er tyveri dækket — anmeld den her.
-=======
         <p>Det lyder som en produktfejl, og så er det en garantisag hos butikken. Start der - det er både hurtigere og gratis for dig.</p>
       </div>
       <div class="tri">
         <b>Den blev stjålet</b>
         <p>Er det en cykel eller et løbehjul med Frankly Mobility™, er tyveri dækket - anmeld den her.
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
            Er det elektronik med Frankly Care™, hører tyveri under din indboforsikring. Start der.</p>
       </div>
       <div class="tri">
@@ -1633,11 +1118,7 @@ ol.steps li strong{font-weight:600}
         <summary>Er det nok at slette betalingsaftalen i MobilePay?</summary>
         <div class="ac">
           <p>Ja. <strong>Sletter du betalingsaftalen, er forsikringen opsagt.</strong> Det er den samme
-<<<<<<< HEAD
-             handling — du skal ikke ringe eller skrive bagefter.</p>
-=======
              handling - du skal ikke ringe eller skrive bagefter.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
           <p>Du får en bekræftelse fra os på mail. Er den ikke kommet inden for et døgn, så ring, så tjekker vi det.</p>
         </div>
       </details>
@@ -1645,32 +1126,20 @@ ol.steps li strong{font-weight:600}
       <details class="acc">
         <summary>Hvorfor står Frankly på mit kontoudtog?</summary>
         <div class="ac">
-<<<<<<< HEAD
-          <p>Fordi du har tilkøbt en forsikring til noget, du har købt — enten i checkout hos en af vores
-             partnere, eller i butikken via MobilePay.</p>
-          <p>Log ind på <strong>Mit Frankly</strong> med din mailadresse, så ser du præcis, hvilke
-             forsikringer du har. Eller ring, så finder vi dem for dig.</p>
-=======
           <p>Fordi du har tilkøbt en forsikring til noget, du har købt - enten i checkout hos en af vores
              partnere, eller i butikken via MobilePay.</p>
           <p><strong>Søg efter «Frankly» i din mail</strong> - også i spam. Bekræftelsen fra dengang
              står med butikken, hvad der er dækket, og hvad det koster.</p>
           <p>Du kan også logge ind på <strong>Mit Frankly</strong> med din mailadresse og se dem alle
              samlet. Eller ringe, så finder vi dem for dig.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         </div>
       </details>
 
       <details class="acc">
         <summary>Hvad er forskellen på garanti og forsikring?</summary>
         <div class="ac">
-<<<<<<< HEAD
-          <p><strong>Gik den i stykker af sig selv? Garanti</strong> — den kommer fra butikken og følger med købet.</p>
-          <p><strong>Skete der noget med den? Forsikring</strong> — den kommer fra os og dækker uheld, spild og skader.</p>
-=======
           <p><strong>Gik den i stykker af sig selv? Garanti</strong> - den kommer fra butikken og følger med købet.</p>
           <p><strong>Skete der noget med den? Forsikring</strong> - den kommer fra os og dækker uheld, spild og skader.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         </div>
       </details>
 
@@ -1678,17 +1147,10 @@ ol.steps li strong{font-weight:600}
         <summary>Er tyveri dækket?</summary>
         <div class="ac">
           <p>Det kommer an på, hvad du har dækket.</p>
-<<<<<<< HEAD
-          <p><strong>Frankly Mobility™</strong> — cykel, elcykel, ladcykel: <strong>ja</strong>.
-             Anmeld det til os og til politiet. Selvrisikoen er 10 % af erstatningen, mindst 1.500 kr.
-             Og læs låsekravene — det er dem, tyverisager falder på.</p>
-          <p><strong>Frankly Care™</strong> — elektronik og maskiner: <strong>nej</strong>. Tyveri og
-=======
           <p><strong>Frankly Mobility™</strong> - cykel, elcykel, ladcykel: <strong>ja</strong>.
              Anmeld det til os og til politiet. Selvrisikoen er 10 % af erstatningen, mindst 1.500 kr.
              Og læs låsekravene - det er dem, tyverisager falder på.</p>
           <p><strong>Frankly Care™</strong> - elektronik og maskiner: <strong>nej</strong>. Tyveri og
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
              bortkomst hører under din indboforsikring. Care dækker det, du selv kommer til.</p>
           <p>Er cyklen <strong>glemt eller forlagt</strong> frem for stjålet, er den ikke dækket nogen af stederne.</p>
         </div>
@@ -1699,11 +1161,7 @@ ol.steps li strong{font-weight:600}
         <div class="ac">
           <p>Nej til begge. Ingen binding, ingen opsigelsesperiode, intet oprettelsesgebyr, intet gebyr for
              at stoppe. Samme pris hver måned.</p>
-<<<<<<< HEAD
-          <p>Du kan opsige når som helst — også dagen efter en betaling. Du betaler kun frem til den dag, du stopper.</p>
-=======
           <p>Du kan opsige når som helst - også dagen efter en betaling. Du betaler kun frem til den dag, du stopper.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         </div>
       </details>
 
@@ -1711,22 +1169,14 @@ ol.steps li strong{font-weight:600}
         <summary>Hvordan får jeg adgang til Mit Frankly?</summary>
         <div class="ac">
           <p>Gå til <strong>my.frankly.insure</strong> og skriv den mailadresse, dækningen blev oprettet med.
-<<<<<<< HEAD
-             Du får en kode tilsendt — du skal ikke huske et kodeord.</p>
-=======
              Du får en kode tilsendt - du skal ikke huske et kodeord.</p>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
           <p>Virker det ikke, skal du ikke bruge tid på det: ring ${esc(CFG.phoneLabel)}, så finder vi dig.
              Du behøver ikke en profil for at opsige eller anmelde en skade.</p>
         </div>
       </details>
 
       <details class="acc">
-<<<<<<< HEAD
-        <summary>Jeg kan ikke bruge MobilePay — hvad så?</summary>
-=======
         <summary>Jeg kan ikke bruge MobilePay - hvad så?</summary>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
         <div class="ac">
           <p>Ring til os på ${esc(CFG.phoneLabel)}. Vi finder en løsning sammen. Du skal ikke undlade at få
              hjælp, fordi en app ikke virker på din telefon.</p>
@@ -1746,14 +1196,10 @@ ol.steps li strong{font-weight:600}
 
   </div>
 
-<<<<<<< HEAD
-  <div class="pfoot">Frankly™ · Du taler altid med rigtige mennesker · ${esc(CFG.phoneLabel)}</div>
-=======
   <div class="pfoot">
     <span class="fmain">Frankly™ · Du taler altid med rigtige mennesker · ${esc(CFG.phoneLabel)}</span>
     <span class="freg">Frankly Insure ApS · CVR 42626449 · Registreret hos Finanstilsynet</span>
   </div>
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 </div>
 `;
 
@@ -1770,11 +1216,7 @@ ol.steps li strong{font-weight:600}
   else mount();
 
   /* ---------------------------------------------------------
-<<<<<<< HEAD
-     6 — Adfærd
-=======
      6 - Adfærd
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
      --------------------------------------------------------- */
   var $  = function (s) { return root.querySelector(s); };
   var $$ = function (s) { return Array.prototype.slice.call(root.querySelectorAll(s)); };
@@ -1895,11 +1337,7 @@ ol.steps li strong{font-weight:600}
   });
 
   /* ---------------------------------------------------------
-<<<<<<< HEAD
-     7 — Offentligt API
-=======
      7 - Offentligt API
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
      --------------------------------------------------------- */
   window.FranklySupport = {
     open: open,
@@ -1912,11 +1350,7 @@ ol.steps li strong{font-weight:600}
 })();
 </script>
 
-<<<<<<< HEAD
-<!-- Demoside-genveje — hører ikke til widget'en -->
-=======
 <!-- Demoside-genveje - hører ikke til widget'en -->
->>>>>>> d970ce32fc2990ddfb057f3ed013eb6672b9e603
 <script>
 document.querySelectorAll("[data-demo]").forEach(function (b) {
   b.addEventListener("click", function () { window.FranklySupport.open(b.getAttribute("data-demo")); });
