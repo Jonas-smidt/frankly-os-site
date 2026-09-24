@@ -82,6 +82,11 @@ UPLOADABLE_HTML = (
     # (7 steps, English, embedded brand fonts) — gated + noindex + robots-Disallowed like
     # frankly-team-onboarding.html. Describes the system only, no claims copy.
     pathlib.Path("frankly-team-claude-code.html"),
+    # Jonas 2026-09-24 ("ligerne siden op på lab ... du har tilladelse"): the simple
+    # Frankly OS explainer one-pager with the explainer film on top — gated + noindex
+    # + robots-Disallowed like frankly-team-onboarding.html. Describes the system only,
+    # no claims copy.
+    pathlib.Path("frankly-os-simply.html"),
 )
 STATIC_FILES = (
     pathlib.Path("robots.txt"),
@@ -96,6 +101,8 @@ STATIC_FILES = (
     pathlib.Path("assets/frankly-logo-small.png"),
     pathlib.Path("assets/frankly-wordmark.png"),
     pathlib.Path("assets/three.module.min.js"),
+    # The explainer film shown at the top of frankly-os-simply.html.
+    pathlib.Path("assets/video/frankly-os-simply-explainer.mp4"),
 )
 
 # Simple preview curtain. This is not security; it only prevents casual browsing.

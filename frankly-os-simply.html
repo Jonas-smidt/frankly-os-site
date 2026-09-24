@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Frankly OS, Simply</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@500;600;700&family=Inter:wght@400;500;600&display=swap">
+<style>
+  :root{
+    --limestone:#F5F4F1;
+    --paper:#FFFFFF;
+    --pink:#FFD3E3;
+    --pink-strong:#FFACCA;
+    --grounded:#2D0011;
+    --muted:#6E5A60;
+    --line:#E4DCDC;
+    --display:"League Spartan","Almarena Neue Display","Helvetica Neue",Arial,sans-serif;
+    --body:"Inter","Switzer",-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+    color-scheme:light;
+  }
+  *{box-sizing:border-box}
+  body{margin:0}
+  body{background:var(--limestone);color:var(--grounded);font-family:var(--body);font-size:17px;line-height:1.55;padding-inline:20px;padding-block:0 64px}
+  .wrap{max-width:1040px;margin:0 auto}
+  h1,h2,h3{font-family:var(--display);font-weight:700;line-height:1.05;text-wrap:balance;margin:0}
+  h1{font-size:clamp(44px,8vw,88px);letter-spacing:-.02em}
+  h2{font-size:clamp(30px,4.6vw,46px);letter-spacing:-.01em}
+  h3{font-size:22px;font-weight:600}
+  p{margin:0;max-width:62ch}
+  .eyebrow{font-family:var(--body);font-size:12px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+  section{padding-block:72px 8px;display:grid;gap:28px}
+  .lede{font-size:clamp(19px,2.2vw,23px);color:var(--grounded);max-width:40ch}
+  .soft{color:var(--muted)}
+
+  /* hero */
+  header{padding-block:56px 16px;display:grid;gap:22px}
+  .hero-mark{display:inline-block;background:var(--pink);padding:0 .18em;border-radius:.12em}
+  .example{background:var(--paper);border-radius:22px;padding:24px;display:grid;gap:12px;overflow-x:auto}
+  .grows{background:var(--pink);border-radius:22px;padding:24px;display:grid;grid-template-columns:1.3fr 1fr;gap:20px;align-items:center}
+  .grows div:first-child{display:grid;gap:8px}
+  .grows .soft{color:rgba(45,0,17,.75)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px}
+  .chip{font-size:14px;font-weight:600;padding:8px 14px;border-radius:99px}
+  .chip.on{background:var(--grounded);color:var(--pink)}
+  .chip.off{border:2px dashed var(--grounded);color:var(--grounded)}
+  @media (max-width:760px){.grows{grid-template-columns:1fr}}
+  .example svg{display:block;width:100%;height:auto;margin-top:8px}
+
+  figure.film{padding:0}
+  .film{margin:0;background:var(--grounded);border-radius:22px;overflow:hidden}
+  .film video{display:block;width:100%;height:auto;max-width:100%;background:var(--grounded)}
+  /* figures */
+  figure{margin:0;background:var(--paper);border-radius:22px;padding:24px;overflow-x:auto}
+  figure svg{display:block;width:100%;height:auto;min-width:0}
+  figcaption{font-size:14px;color:var(--muted);margin-top:10px}
+  .pair{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  .pair figure{display:grid;gap:12px;align-content:start}
+  .tag{display:inline-block;font-size:12px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;padding:5px 10px;border-radius:99px;justify-self:start}
+  .tag.before{background:var(--limestone);color:var(--muted)}
+  .tag.after{background:var(--pink);color:var(--grounded)}
+
+  /* can-do grid */
+  .grid{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .tile{background:var(--paper);border-radius:18px;padding:20px;display:grid;gap:10px;align-content:start}
+  .tile svg{width:44px;height:44px}
+  .tile p{font-size:15px;color:var(--muted)}
+
+  /* numbers */
+  .nums{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .num{border-top:2px solid var(--grounded);padding-top:12px;display:grid;gap:4px}
+  .num strong{font-family:var(--display);font-size:clamp(34px,5vw,52px);font-weight:700;font-variant-numeric:tabular-nums;line-height:1}
+  .num span{font-size:14px;color:var(--muted)}
+  .src{font-size:12px;color:var(--muted)}
+
+  /* recipe analogy */
+  .analogy{display:grid;grid-template-columns:repeat(3,1fr);gap:0;background:var(--pink);border-radius:22px;overflow:hidden}
+  .analogy div{padding:22px;display:grid;gap:6px;align-content:start}
+  .analogy div+div{border-left:1px solid rgba(45,0,17,.15)}
+  .analogy .is{font-size:13px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:rgba(45,0,17,.6)}
+
+  /* glossary */
+  .words{display:grid;grid-template-columns:repeat(5,1fr);gap:12px}
+  .word{background:var(--paper);border-radius:18px;padding:18px;display:grid;grid-template-rows:auto auto 1fr auto;gap:10px}
+  .word svg{width:44px;height:44px}
+  .word p{font-size:15px;color:var(--muted)}
+  .like{font-size:13px;font-weight:600;background:var(--pink);border-radius:10px;padding:6px 10px;justify-self:start}
+  @media (max-width:1000px){.words{grid-template-columns:1fr 1fr}.word:last-child{grid-column:1/-1}}
+  @media (max-width:560px){.words{grid-template-columns:1fr}}
+
+  /* inventory */
+  .inv{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .invbox{background:var(--paper);border-radius:18px;padding:22px;display:grid;gap:10px;align-content:start}
+  .invbox.wide{grid-column:1/-1}
+  .invbox h3 small{font-family:var(--body);font-size:13px;font-weight:600;background:var(--pink);border-radius:99px;padding:3px 9px;margin-left:6px;vertical-align:middle}
+  .invbox ul{list-style:none;margin:0;padding:0}
+  .defs{display:grid;gap:0}
+  .defs li{display:grid;grid-template-columns:minmax(120px,40%) 1fr;gap:12px;padding:9px 0;border-top:1px solid var(--line);font-size:15px}
+  .defs li span{color:var(--muted)}
+  .defs.two{grid-template-columns:1fr 1fr;column-gap:28px}
+  .chiplist{display:flex;flex-wrap:wrap;gap:8px}
+  .chiplist li{font-size:14px;background:var(--limestone);border-radius:99px;padding:6px 12px}
+  .rgroups{display:grid;grid-template-columns:repeat(5,1fr);gap:18px}
+  .rgroup h4{font-family:var(--display);font-size:17px;margin:0 0 6px}
+  .rgroup li{font-size:14px;color:var(--muted);padding:5px 0;border-top:1px solid var(--line)}
+  @media (max-width:900px){.rgroups{grid-template-columns:1fr 1fr}}
+  @media (max-width:760px){.inv,.defs.two{grid-template-columns:1fr}.rgroups{grid-template-columns:1fr}}
+
+  /* why list */
+  .why{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  .why div{background:var(--paper);border-radius:18px;padding:20px;display:grid;gap:6px}
+
+  /* future */
+  .future{background:var(--grounded);color:var(--limestone);border-radius:26px;padding:clamp(24px,4vw,44px);display:grid;gap:26px}
+  .future .eyebrow{color:var(--pink-strong)}
+  .future p{color:#E9DDE1}
+  .future figure{background:transparent;padding:0}
+  .fut-list{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  .fut-list div{border:1px solid rgba(255,211,227,.28);border-radius:16px;padding:18px;display:grid;gap:6px}
+  .fut-list h3{color:var(--pink)}
+
+  /* start */
+  .steps{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;counter-reset:s}
+  .steps div{background:var(--paper);border-radius:18px;padding:20px;display:grid;gap:8px;counter-increment:s}
+  .steps div::before{content:counter(s);font-family:var(--display);font-weight:700;font-size:20px;width:36px;height:36px;border-radius:50%;background:var(--pink);display:grid;place-items:center}
+  code{font-family:ui-monospace,Menlo,monospace;font-size:.9em;background:var(--limestone);padding:1px 6px;border-radius:6px}
+  footer{padding-top:56px;font-size:13px;color:var(--muted)}
+
+  @media (max-width:760px){
+    .pair,.grid,.why,.fut-list,.steps,.analogy{grid-template-columns:1fr}
+    .analogy div+div{border-left:0;border-top:1px solid rgba(45,0,17,.15)}
+    .nums{grid-template-columns:1fr 1fr}
+  }
+  @media (prefers-reduced-motion:no-preference){
+    .pulse{animation:pulse 3.2s ease-in-out infinite;transform-origin:center;transform-box:fill-box}
+    @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  }
+</style>
+</head>
+<body>
+
+<div class="wrap">
+
+<header>
+  <span class="eyebrow">For everyone at Frankly</span>
+  <h1>Frankly OS is our <span class="hero-mark">shared brain.</span></h1>
+  <p class="lede">When one of us learns something, all of us know it. That's the whole idea.</p>
+  <figure class="film">
+    <video controls playsinline preload="metadata" src="assets/video/frankly-os-simply-explainer.mp4" aria-label="Frankly OS explained, short film with voice-over">Your browser can't play this video. <a href="assets/video/frankly-os-simply-explainer.mp4">Download the film</a>.</video>
+  </figure>
+  <div class="example">
+    <span class="tag after">A real example</span>
+    <h3>Anyone on the team can now make images the way Jonas does.</h3>
+    <p class="soft">Jonas spent many rounds learning what a Frankly image needs: light and positive, real Copenhagen places, life being lived. Every one of those lessons went into the system. Now a teammate can just ask for a lifestyle photo and get one in the same style.</p>
+    <svg viewBox="0 0 960 190" role="img" aria-label="Jonas learns how to make Frankly images, the lessons are saved in Frankly OS, and a teammate asks and gets an image in the same style">
+      <defs><marker id="ar0" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2D0011"/></marker></defs>
+      <g stroke="#2D0011" stroke-width="2.5" fill="none" marker-end="url(#ar0)">
+        <line x1="196" y1="84" x2="262" y2="84"/><line x1="452" y1="84" x2="518" y2="84"/><line x1="708" y1="84" x2="774" y2="84"/>
+      </g>
+      <g font-family="Inter,Arial,sans-serif" text-anchor="middle">
+        <!-- jonas -->
+        <circle cx="110" cy="70" r="34" fill="#FFD3E3"/><circle cx="110" cy="61" r="10" fill="#2D0011"/><path d="M92 87 q18 -20 36 0" fill="#2D0011"/>
+        <text x="110" y="134" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="18" fill="#2D0011">Jonas learns</text>
+        <text x="110" y="156" font-size="13" fill="#6E5A60">what makes a Frankly image</text>
+        <!-- lessons -->
+        <circle cx="357" cy="70" r="40" fill="#FFACCA"/>
+        <rect x="341" y="50" width="32" height="40" rx="5" fill="#2D0011"/><rect x="347" y="58" width="20" height="3" fill="#FFD3E3"/><rect x="347" y="66" width="20" height="3" fill="#FFD3E3"/><rect x="347" y="74" width="12" height="3" fill="#FFD3E3"/>
+        <text x="357" y="134" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="18" fill="#2D0011">Saved in Frankly OS</text>
+        <text x="357" y="156" font-size="13" fill="#6E5A60">light, places, people, mood</text>
+        <!-- teammate -->
+        <circle cx="613" cy="70" r="34" fill="#FFD3E3"/><circle cx="613" cy="61" r="10" fill="#2D0011"/><path d="M595 87 q18 -20 36 0" fill="#2D0011"/>
+        <path d="M640 30 h40 a8 8 0 0 1 8 8 v14 a8 8 0 0 1 -8 8 h-26 l-8 7 v-7 h-6 a8 8 0 0 1 -8 -8 v-14 a8 8 0 0 1 8 -8z" fill="#FFFFFF" stroke="#2D0011" stroke-width="1.5"/>
+        <text x="662" y="50" font-size="12" fill="#2D0011">Nyhavn?</text>
+        <text x="613" y="134" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="18" fill="#2D0011">A teammate asks</text>
+        <text x="613" y="156" font-size="13" fill="#6E5A60">"a lifestyle photo, please"</text>
+        <!-- image -->
+        <rect x="790" y="30" width="150" height="88" rx="10" fill="#FFD3E3"/>
+        <circle cx="905" cy="54" r="11" fill="#FFFFFF"/>
+        <path d="M790 118 v-26 l32 -26 l30 24 l22 -16 l66 44 z" fill="#FFACCA"/>
+        <path d="M790 118 v-14 l40 -18 l50 22 l60 -8 v18 a10 10 0 0 1 -10 10 h-130 a10 10 0 0 1 -10 -10z" fill="#2D0011" opacity=".85"/>
+        <text x="865" y="156" font-size="13" fill="#6E5A60">same Frankly style</text>
+      </g>
+    </svg>
+  </div>
+  <div class="grows">
+    <div>
+      <h3>It's only as good as what we've used it for.</h3>
+      <p class="soft">What it can do today is simply the work it has done so far, mostly images, copy and pitches. When you use it for your kind of task, it learns that skill too, and then everyone has it.</p>
+    </div>
+    <div class="chips" aria-label="Skills learned so far, plus open slots for new ones">
+      <span class="chip on">Images</span><span class="chip on">Copy</span><span class="chip on">Pitches</span><span class="chip on">Research</span>
+      <span class="chip off">Your task?</span><span class="chip off">Your task?</span><span class="chip off">…</span>
+    </div>
+  </div>
+</header>
+
+<!-- HOW TO START -->
+<section>
+  <span class="eyebrow">How do I use it?</span>
+  <h2>Three things to remember.</h2>
+  <div class="steps">
+    <div><h3>Just describe the work</h3><p class="soft">Say what you need in plain words. You don't pick a helper; it finds the right one.</p></div>
+    <div><h3>Tell it what you learned</h3><p class="soft">If something worked or went wrong, say "log this as feedback". That's how your lesson becomes everyone's.</p></div>
+    <div><h3>Use Cowork or Claude Code</h3><p class="soft">That's where the specialist helpers live. The plain Chat tab has the recipes but not the helpers.</p></div>
+  </div>
+</section>
+
+<!-- BEFORE / AFTER -->
+<section>
+  <span class="eyebrow">What problem does it solve?</span>
+  <h2>Before, everyone learned alone.</h2>
+  <div class="pair">
+    <figure>
+      <span class="tag before">Before</span>
+      <svg viewBox="0 0 400 300" role="img" aria-label="Four people, each with their own separate lessons that never meet">
+        <g font-family="Inter,Arial,sans-serif" font-size="13" fill="#6E5A60" text-anchor="middle">
+          <!-- four isolated people -->
+          <g><circle cx="90" cy="80" r="26" fill="#F5F4F1" stroke="#C9BCC0" stroke-width="2"/><circle cx="90" cy="72" r="8" fill="#C9BCC0"/><path d="M76 96 q14 -16 28 0" fill="#C9BCC0"/>
+             <rect x="120" y="50" width="44" height="30" rx="8" fill="none" stroke="#C9BCC0" stroke-dasharray="4 4"/><text x="142" y="70">idea</text></g>
+          <g><circle cx="310" cy="80" r="26" fill="#F5F4F1" stroke="#C9BCC0" stroke-width="2"/><circle cx="310" cy="72" r="8" fill="#C9BCC0"/><path d="M296 96 q14 -16 28 0" fill="#C9BCC0"/>
+             <rect x="236" y="50" width="44" height="30" rx="8" fill="none" stroke="#C9BCC0" stroke-dasharray="4 4"/><text x="258" y="70">tip</text></g>
+          <g><circle cx="90" cy="220" r="26" fill="#F5F4F1" stroke="#C9BCC0" stroke-width="2"/><circle cx="90" cy="212" r="8" fill="#C9BCC0"/><path d="M76 236 q14 -16 28 0" fill="#C9BCC0"/>
+             <rect x="120" y="190" width="44" height="30" rx="8" fill="none" stroke="#C9BCC0" stroke-dasharray="4 4"/><text x="142" y="210">fix</text></g>
+          <g><circle cx="310" cy="220" r="26" fill="#F5F4F1" stroke="#C9BCC0" stroke-width="2"/><circle cx="310" cy="212" r="8" fill="#C9BCC0"/><path d="M296 236 q14 -16 28 0" fill="#C9BCC0"/>
+             <rect x="236" y="190" width="44" height="30" rx="8" fill="none" stroke="#C9BCC0" stroke-dasharray="4 4"/><text x="258" y="210">rule</text></g>
+          <text x="200" y="150" font-size="15" fill="#6E5A60">no connection</text>
+          <line x1="150" y1="143" x2="170" y2="143" stroke="#C9BCC0" stroke-width="2"/><line x1="230" y1="143" x2="250" y2="143" stroke="#C9BCC0" stroke-width="2"/>
+        </g>
+      </svg>
+      <p class="soft">Good lessons stayed in one person's head or one old chat. Every new task started from zero. We explained the brand again and again.</p>
+    </figure>
+    <figure>
+      <span class="tag after">With Frankly OS</span>
+      <svg viewBox="0 0 400 300" role="img" aria-label="Four people all connected to one shared brain in the middle, with arrows going both ways">
+        <defs><marker id="ar" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto-start-reverse"><path d="M0 0 L10 5 L0 10z" fill="#2D0011"/></marker></defs>
+        <g stroke="#2D0011" stroke-width="2" fill="none" marker-end="url(#ar)" marker-start="url(#ar)">
+          <line x1="114" y1="96" x2="162" y2="126"/><line x1="286" y1="96" x2="238" y2="126"/>
+          <line x1="114" y1="204" x2="162" y2="174"/><line x1="286" y1="204" x2="238" y2="174"/>
+        </g>
+        <g class="pulse"><circle cx="200" cy="150" r="48" fill="#FFACCA"/></g>
+        <circle cx="200" cy="150" r="36" fill="#FFD3E3"/>
+        <text x="200" y="146" text-anchor="middle" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="17" fill="#2D0011">shared</text>
+        <text x="200" y="164" text-anchor="middle" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="17" fill="#2D0011">brain</text>
+        <g fill="#2D0011">
+          <g><circle cx="90" cy="80" r="26" fill="#FFD3E3"/><circle cx="90" cy="72" r="8"/><path d="M76 96 q14 -16 28 0"/></g>
+          <g><circle cx="310" cy="80" r="26" fill="#FFD3E3"/><circle cx="310" cy="72" r="8"/><path d="M296 96 q14 -16 28 0"/></g>
+          <g><circle cx="90" cy="220" r="26" fill="#FFD3E3"/><circle cx="90" cy="212" r="8"/><path d="M76 236 q14 -16 28 0"/></g>
+          <g><circle cx="310" cy="220" r="26" fill="#FFD3E3"/><circle cx="310" cy="212" r="8"/><path d="M296 236 q14 -16 28 0"/></g>
+        </g>
+      </svg>
+      <p class="soft">Everything we learn goes into one place, and everyone gets it back. Your best trick becomes the team's normal way of working.</p>
+    </figure>
+  </div>
+</section>
+
+<!-- HOW IT WORKS LOOP -->
+<section>
+  <span class="eyebrow">How does it work?</span>
+  <h2>A loop that gets smarter every time.</h2>
+  <p class="lede">You ask for something in plain words. The system does the rest, and it remembers what it learned.</p>
+  <figure>
+    <svg viewBox="0 0 960 300" role="img" aria-label="Four steps in a loop: you ask, the right helper takes it, the work is made and checked, the lesson is saved for everyone, then back to the start">
+      <defs><marker id="ar2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="8" markerHeight="8" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2D0011"/></marker></defs>
+      <g stroke="#2D0011" stroke-width="2.5" fill="none" marker-end="url(#ar2)">
+        <line x1="200" y1="120" x2="258" y2="120"/><line x1="440" y1="120" x2="498" y2="120"/><line x1="680" y1="120" x2="738" y2="120"/>
+        <path d="M850 190 C 850 270, 110 270, 110 196"/>
+      </g>
+      <text x="480" y="286" text-anchor="middle" font-family="Inter,Arial,sans-serif" font-size="14" fill="#6E5A60">…and the next person starts smarter</text>
+      <g font-family="Inter,Arial,sans-serif" text-anchor="middle">
+        <!-- 1 ask -->
+        <rect x="20" y="50" width="180" height="140" rx="20" fill="#F5F4F1"/>
+        <path d="M82 78 h36 a10 10 0 0 1 10 10 v18 a10 10 0 0 1 -10 10 h-22 l-10 9 v-9 h-4 a10 10 0 0 1 -10 -10 v-18 a10 10 0 0 1 10 -10z" fill="#FFACCA"/>
+        <text x="110" y="152" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="19" fill="#2D0011">1. You ask</text>
+        <text x="110" y="174" font-size="13" fill="#6E5A60">"Make a pitch for X"</text>
+        <!-- 2 helper -->
+        <rect x="260" y="50" width="180" height="140" rx="20" fill="#F5F4F1"/>
+        <circle cx="330" cy="98" r="14" fill="#FFD3E3"/><circle cx="350" cy="90" r="16" fill="#FFACCA"/><circle cx="372" cy="98" r="14" fill="#FFD3E3"/>
+        <text x="350" y="152" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="19" fill="#2D0011">2. A helper takes it</text>
+        <text x="350" y="174" font-size="13" fill="#6E5A60">the right specialist</text>
+        <!-- 3 make + check -->
+        <rect x="500" y="50" width="180" height="140" rx="20" fill="#F5F4F1"/>
+        <circle cx="590" cy="98" r="22" fill="#FFACCA"/><path d="M579 98 l8 8 l15 -16" stroke="#2D0011" stroke-width="3.5" fill="none" stroke-linecap="round" stroke-linejoin="round"/>
+        <text x="590" y="152" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="19" fill="#2D0011">3. Made + checked</text>
+        <text x="590" y="174" font-size="13" fill="#6E5A60">on-brand, quality-tested</text>
+        <!-- 4 save -->
+        <rect x="740" y="50" width="200" height="140" rx="20" fill="#FFD3E3"/>
+        <rect x="822" y="78" width="36" height="42" rx="5" fill="#2D0011"/><rect x="829" y="86" width="22" height="3" fill="#FFD3E3"/><rect x="829" y="94" width="22" height="3" fill="#FFD3E3"/><rect x="829" y="102" width="14" height="3" fill="#FFD3E3"/>
+        <text x="840" y="152" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="19" fill="#2D0011">4. Lesson saved</text>
+        <text x="840" y="174" font-size="13" fill="#2D0011">for everyone, forever</text>
+      </g>
+    </svg>
+  </figure>
+</section>
+
+<!-- FUTURE -->
+<section>
+  <div class="future">
+    <span class="eyebrow">Where is it going?</span>
+    <h2>The more we use it, the smarter it gets.</h2>
+    <p>Like a snowball: every job adds a little. Today one person teaches it the most. Soon all of us will.</p>
+    <figure>
+      <svg viewBox="0 0 900 200" role="img" aria-label="Illustration: a snowball that grows larger as it rolls from today to the future">
+        <line x1="20" y1="180" x2="880" y2="180" stroke="#FFD3E3" stroke-opacity=".35" stroke-width="2"/>
+        <circle cx="70" cy="168" r="12" fill="#FFD3E3"/>
+        <circle cx="230" cy="160" r="20" fill="#FFD3E3"/>
+        <circle cx="420" cy="148" r="32" fill="#FFACCA"/>
+        <circle cx="650" cy="126" r="54" fill="#FFACCA"/>
+        <circle cx="820" cy="100" r="80" fill="#FFD3E3" opacity=".95"/>
+        <g font-family="Inter,Arial,sans-serif" font-size="14" fill="#F5F4F1" text-anchor="middle">
+          <text x="70" y="140">Today</text><text x="230" y="124">+ team</text><text x="420" y="100">+ every job</text>
+        </g>
+        <text x="820" y="106" text-anchor="middle" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="20" fill="#2D0011">Future</text>
+      </svg>
+      <figcaption style="color:#E9DDE1">Illustration of the idea, not measured data.</figcaption>
+    </figure>
+    <div class="fut-list">
+      <div><h3>Everyone teaches it</h3><p>Your feedback lands in your own team folder and becomes part of the shared brain, with your name on it.</p></div>
+      <div><h3>It takes on more</h3><p>More recipes, more helpers, more of the everyday jobs handled end to end.</p></div>
+      <div><h3>Still asks first</h3><p>However much it grows, anything that goes to customers, the website or money stays a human decision.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- ANALOGY -->
+<section>
+  <span class="eyebrow">Three words you'll hear</span>
+  <h2>Think of it as a family kitchen.</h2>
+  <div class="analogy">
+    <div><span class="is">Routes = recipes</span><h3>The recipe book</h3><p>A step-by-step way to make one kind of thing: a pitch, a lifestyle photo, a blog post.</p></div>
+    <div><span class="is">Specialists = helpers</span><h3>The cooks</h3><p>Each helper is good at one job: writing, images, research, checking quality.</p></div>
+    <div><span class="is">Lessons = notes in the margin</span><h3>"Less salt next time"</h3><p>After every job, we write down what worked and what didn't, right inside the recipe.</p></div>
+  </div>
+</section>
+
+<!-- GLOSSARY -->
+<section>
+  <span class="eyebrow">The tech words, made simple</span>
+  <h2>Skill, plugin, connector, agent, crew.</h2>
+  <div class="words">
+    <div class="word">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><rect x="13" y="11" width="18" height="22" rx="3" fill="#2D0011"/><rect x="17" y="16" width="10" height="2" fill="#FFD3E3"/><rect x="17" y="21" width="10" height="2" fill="#FFD3E3"/><rect x="17" y="26" width="6" height="2" fill="#FFD3E3"/></svg>
+      <h3>Skill</h3>
+      <p>A how-to card. Claude picks it up by itself when your task matches, e.g. "how we make a partner pitch".</p>
+      <span class="like">Like a recipe card</span>
+    </div>
+    <div class="word">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><rect x="11" y="17" width="22" height="15" rx="3" fill="#2D0011"/><path d="M17 17 v-3 a2 2 0 0 1 2 -2 h6 a2 2 0 0 1 2 2 v3" stroke="#2D0011" stroke-width="2.5" fill="none"/><rect x="11" y="22" width="22" height="2" fill="#FFACCA"/></svg>
+      <h3>Plugin</h3>
+      <p>A package you install once. It brings a whole bundle of skills and helpers onto your computer in one go.</p>
+      <span class="like">Like a lunchbox full of recipe cards</span>
+    </div>
+    <div class="word">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><rect x="12" y="17" width="10" height="10" rx="2" fill="#2D0011"/><rect x="8" y="19" width="4" height="2" fill="#2D0011"/><rect x="8" y="23" width="4" height="2" fill="#2D0011"/><path d="M22 22 h10" stroke="#2D0011" stroke-width="3" stroke-linecap="round"/><circle cx="33" cy="22" r="3" fill="#FFACCA" stroke="#2D0011" stroke-width="2"/></svg>
+      <h3>Connector</h3>
+      <p>A cable into another app, like Drive, Notion, Figma or Slack, so Claude can look at what's in there.</p>
+      <span class="like">Like a plug in the wall</span>
+    </div>
+    <div class="word">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><circle cx="22" cy="17" r="6" fill="#2D0011"/><path d="M12 33 q10 -14 20 0" fill="#2D0011"/><path d="M30 12 l4 -3" stroke="#2D0011" stroke-width="2.5" stroke-linecap="round"/></svg>
+      <h3>Agent</h3>
+      <p>A Claude that gets one job, goes off and does it on its own, then comes back with the result.</p>
+      <span class="like">Like a helper sent on one errand</span>
+    </div>
+    <div class="word">
+      <svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><circle cx="22" cy="15" r="5" fill="#2D0011"/><circle cx="13" cy="25" r="4" fill="#2D0011"/><circle cx="22" cy="29" r="4" fill="#2D0011"/><circle cx="31" cy="25" r="4" fill="#2D0011"/></svg>
+      <h3>Frankly crew</h3>
+      <p>Our own team of 22 agents, each with a speciality, plus a coordinator who hands out the jobs and puts the answers together.</p>
+      <span class="like">Like the kitchen team and its head chef</span>
+    </div>
+  </div>
+
+  <figure>
+    <svg viewBox="0 0 960 330" role="img" aria-label="How the pieces fit: a plugin box holds skills and the Frankly crew of agents; connectors run from Claude out to Drive, Notion, Figma and Slack">
+      <defs><marker id="ar3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="7" markerHeight="7" orient="auto"><path d="M0 0 L10 5 L0 10z" fill="#2D0011"/></marker></defs>
+      <g font-family="Inter,Arial,sans-serif" text-anchor="middle">
+        <!-- you -->
+        <circle cx="70" cy="165" r="34" fill="#FFD3E3"/><circle cx="70" cy="156" r="10" fill="#2D0011"/><path d="M52 182 q18 -20 36 0" fill="#2D0011"/>
+        <text x="70" y="225" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="17" fill="#2D0011">You</text>
+        <line x1="110" y1="165" x2="158" y2="165" stroke="#2D0011" stroke-width="2.5" marker-end="url(#ar3)"/>
+        <!-- claude -->
+        <circle cx="210" cy="165" r="46" fill="#2D0011"/>
+        <text x="210" y="171" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="19" fill="#FFD3E3">Claude</text>
+        <line x1="258" y1="165" x2="300" y2="165" stroke="#2D0011" stroke-width="2.5" marker-end="url(#ar3)"/>
+        <!-- plugin box -->
+        <rect x="306" y="28" width="380" height="274" rx="22" fill="#F5F4F1" stroke="#2D0011" stroke-width="2" stroke-dasharray="7 6"/>
+        <text x="496" y="58" font-family="League Spartan,Arial,sans-serif" font-weight="700" font-size="18" fill="#2D0011">Plugin (the lunchbox)</text>
+        <!-- skills -->
+        <text x="400" y="92" font-size="13" font-weight="600" fill="#6E5A60">SKILLS</text>
+        <g fill="#FFFFFF" stroke="#E4DCDC">
+          <rect x="336" y="104" width="128" height="34" rx="8"/><rect x="336" y="146" width="128" height="34" rx="8"/><rect x="336" y="188" width="128" height="34" rx="8"/><rect x="336" y="230" width="128" height="34" rx="8"/>
+        </g>
+        <g font-size="13" fill="#2D0011"><text x="400" y="126">Brand copy</text><text x="400" y="168">Partner pitch</text><text x="400" y="210">Lifestyle photos</text><text x="400" y="252">Research</text></g>
+        <!-- crew -->
+        <text x="590" y="92" font-size="13" font-weight="600" fill="#6E5A60">FRANKLY CREW</text>
+        <circle cx="590" cy="140" r="22" fill="#2D0011"/><text x="590" y="145" font-size="11" fill="#FFD3E3">lead</text>
+        <g fill="#FFACCA"><circle cx="530" cy="206" r="16"/><circle cx="570" cy="226" r="16"/><circle cx="610" cy="226" r="16"/><circle cx="650" cy="206" r="16"/></g>
+        <g stroke="#2D0011" stroke-width="1.5"><line x1="578" y1="158" x2="538" y2="192"/><line x1="585" y1="162" x2="572" y2="210"/><line x1="595" y1="162" x2="608" y2="210"/><line x1="602" y1="158" x2="642" y2="192"/></g>
+        <text x="590" y="268" font-size="13" fill="#6E5A60">22 agents</text>
+        <!-- connectors -->
+        <text x="840" y="42" font-size="13" font-weight="600" fill="#6E5A60">CONNECTORS</text>
+        <g stroke="#2D0011" stroke-width="2" fill="none" stroke-dasharray="2 5" stroke-linecap="round">
+          <path d="M688 165 C 740 165, 740 79, 780 79"/>
+          <path d="M688 165 C 740 165, 740 139, 780 139"/>
+          <path d="M688 165 C 740 165, 740 199, 780 199"/>
+          <path d="M688 165 C 740 165, 740 259, 780 259"/>
+        </g>
+        <g fill="#FFD3E3"><rect x="782" y="60" width="120" height="38" rx="19"/><rect x="782" y="120" width="120" height="38" rx="19"/><rect x="782" y="180" width="120" height="38" rx="19"/><rect x="782" y="240" width="120" height="38" rx="19"/></g>
+        <g font-size="14" font-weight="600" fill="#2D0011"><text x="842" y="84">Drive</text><text x="842" y="144">Notion</text><text x="842" y="204">Figma</text><text x="842" y="264">Slack</text></g>
+      </g>
+    </svg>
+    <figcaption>How it fits together: you talk to Claude. The plugin gives Claude the skills and the crew. Connectors let Claude look into our other apps.</figcaption>
+  </figure>
+</section>
+
+<!-- WHAT IT CAN DO -->
+<section>
+  <span class="eyebrow">What can it do today?</span>
+  <h2>It already knows how Frankly works.</h2>
+  <div class="grid">
+    <div class="tile"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><path d="M12 24 c4 -10 16 -10 20 0 c-4 6 -16 6 -20 0z" fill="#2D0011"/></svg><h3>Knows our brand</h3><p>Colours, fonts, tone of voice and past decisions. No re-explaining.</p></div>
+    <div class="tile"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><rect x="13" y="14" width="18" height="3" rx="1.5" fill="#2D0011"/><rect x="13" y="21" width="18" height="3" rx="1.5" fill="#2D0011"/><rect x="13" y="28" width="11" height="3" rx="1.5" fill="#2D0011"/></svg><h3>Writes copy</h3><p>Headlines, emails, posts and web text in the Frankly voice.</p></div>
+    <div class="tile"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><rect x="11" y="13" width="22" height="18" rx="3" fill="#2D0011"/><path d="M13 29 l6 -7 l5 5 l3 -3 l5 5z" fill="#FFACCA"/><circle cx="27" cy="18" r="2.5" fill="#FFACCA"/></svg><h3>Makes images</h3><p>Lifestyle photos, 3D objects and graphics, with real Copenhagen places.</p></div>
+    <div class="tile"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><rect x="11" y="13" width="22" height="15" rx="2" fill="#2D0011"/><rect x="21" y="28" width="2" height="5" fill="#2D0011"/><rect x="15" y="17" width="9" height="2" fill="#FFACCA"/><rect x="15" y="21" width="14" height="2" fill="#FFACCA"/></svg><h3>Builds decks</h3><p>Partner pitches and presentations, structured from our proof points.</p></div>
+    <div class="tile"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><circle cx="20" cy="20" r="7" stroke="#2D0011" stroke-width="3" fill="none"/><path d="M25 25 l7 7" stroke="#2D0011" stroke-width="3.5" stroke-linecap="round"/></svg><h3>Does research</h3><p>Finds what is known, with sources, and says what we still don't know.</p></div>
+    <div class="tile"><svg viewBox="0 0 44 44" aria-hidden="true"><circle cx="22" cy="22" r="21" fill="#FFD3E3"/><path d="M22 11 l9 4 v7 c0 6 -4 9 -9 11 c-5 -2 -9 -5 -9 -11 v-7z" fill="#2D0011"/><path d="M18 22 l3 3 l5 -6" stroke="#FFD3E3" stroke-width="2.5" fill="none" stroke-linecap="round"/></svg><h3>Plays it safe</h3><p>It never sends, posts or publishes by itself. A human says yes first.</p></div>
+  </div>
+  <div class="nums">
+    <div class="num"><strong>22</strong><span>specialist helpers</span></div>
+    <div class="num"><strong>23</strong><span>recipes (routes)</span></div>
+    <div class="num"><strong>1,333</strong><span>lessons saved</span></div>
+    <div class="num"><strong>451</strong><span>jobs completed</span></div>
+  </div>
+  <p class="src">Source: Frankly OS system status, 24 September 2026 (version 7.37).</p>
+</section>
+
+<!-- WHY -->
+<section>
+  <span class="eyebrow">Why did we build it?</span>
+  <h2>So a small team can work like a big one.</h2>
+  <div class="why">
+    <div><h3>Nobody starts from zero</h3><p class="soft">Open a chat and it already knows Frankly. You skip the warm-up.</p></div>
+    <div><h3>The best way becomes everyone's way</h3><p class="soft">When someone finds a better method, it spreads to the whole team.</p></div>
+    <div><h3>Mistakes happen once</h3><p class="soft">A lesson written down today stops the same slip tomorrow, for all of us.</p></div>
+    <div><h3>Everything looks and sounds like Frankly</h3><p class="soft">Same brand, same tone, whoever does the work.</p></div>
+  </div>
+</section>
+
+<!-- EVERYTHING -->
+<section id="everything">
+  <span class="eyebrow">The full list</span>
+  <h2>Everything Frankly OS has today.</h2>
+  <p class="soft">This is the toolbox right now. It will grow as we use it for new things.</p>
+  <div class="inv">
+    <div class="invbox"><h3>Skills <small>12</small></h3><p class="soft">Recipe cards Claude picks up by itself.</p><ul class="defs"><li><b>Frankly canon</b><span>Knows the brand and rules. Loads first, every time.</span></li><li><b>Brand copy</b><span>Writes text in the Frankly voice.</span></li><li><b>Lifestyle photos</b><span>Real-looking photos of life in Copenhagen.</span></li><li><b>3D objects</b><span>Product-style renders, one object on pink.</span></li><li><b>2D graphics</b><span>Icons, illustrations and flat assets.</span></li><li><b>Image upscaling</b><span>Makes images bigger and sharper.</span></li><li><b>Animation &amp; video</b><span>Turns stills and ideas into motion.</span></li><li><b>Partner pitch</b><span>Builds the case and deck for a partner.</span></li><li><b>Research</b><span>Finds facts with sources.</span></li><li><b>Log feedback</b><span>Saves your lesson for everyone.</span></li><li><b>Onboarding</b><span>Shows new people around.</span></li><li><b>Frankly crew</b><span>Hands a big job to the right specialists.</span></li></ul></div>
+    <div class="invbox"><h3>Specialists <small>22</small></h3><p class="soft">The helpers in the Frankly crew.</p><ul class="chiplist"><li>Scout: works out what you really need</li><li>Builder: makes the first version</li><li>Code reviewer</li><li>Web page builder</li><li>Critic: pokes holes in a plan</li><li>Quality judge: is it good enough?</li><li>Researcher</li><li>Partner strategist</li><li>Copywriter</li><li>Editor</li><li>Visual director</li><li>Diagram designer</li><li>Story designer</li><li>Video producer</li><li>Design craftsman: builds pages and decks</li><li>Social video director</li><li>Positioning strategist</li><li>Investor analyst</li><li>Growth operator</li><li>Technical SEO</li><li>Mission planner</li><li>Accessibility checker</li></ul></div>
+    <div class="invbox wide"><h3>Recipes (routes) <small>23</small></h3><p class="soft">Step-by-step ways of making one kind of thing.</p><div class="rgroups"><div class="rgroup"><h4>Brand &amp; visuals</h4><ul><li>Brand &amp; image production</li><li>Animation video</li><li>Video production</li><li>Presentations</li></ul></div><div class="rgroup"><h4>Partners</h4><ul><li>Partner pitch</li><li>Partner activation</li><li>Partner case study</li></ul></div><div class="rgroup"><h4>Website &amp; growth</h4><ul><li>Blog &amp; SEO content</li><li>Technical SEO audit</li><li>Website publishing</li><li>Website analytics</li><li>Lifecycle email audit</li><li>Email consent setup</li></ul></div><div class="rgroup"><h4>Checks &amp; research</h4><ul><li>AI labelling compliance</li><li>Coverage at a glance</li><li>Expert research panel</li><li>Skill research</li><li>Capability radar</li></ul></div><div class="rgroup"><h4>Running the system</h4><ul><li>Missions</li><li>Software issue to handoff</li><li>Notion roadmap</li><li>System maps</li><li>System upkeep</li></ul></div></div></div>
+    <div class="invbox wide"><h3>Tools &amp; abilities</h3><ul class="defs two"><li><b>Image making</b><span>Flow / Nano Banana, run in the browser</span></li><li><b>Copenhagen place library</b><span>22 real places with reference photos</span></li><li><b>Gemini</b><span>Used through the browser, never paid</span></li><li><b>Video analysis</b><span>Reads other videos, locally and free</span></li><li><b>Cockpit</b><span>The control room that shows tasks and status</span></li><li><b>Connectors</b><span>Drive, Notion, Figma, Gmail, Calendar, Chrome</span></li><li><b>Quality checks</b><span>Screenshots, brand and accessibility tests</span></li><li><b>Memory</b><span>1,333 lessons, added after every job</span></li></ul></div>
+  </div>
+  <p class="src">Source: Frankly OS system files, 24 September 2026.</p>
+</section>
+
+<footer>Frankly OS · internal explainer for the Frankly team · questions go to Jonas.</footer>
+</div>
+</body>
+</html>

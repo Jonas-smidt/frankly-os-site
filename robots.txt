@@ -39,6 +39,8 @@ Disallow: /frankly-support-widget-v2.html
 Disallow: /frankly-kundeoplevelse-strategi.html
 Disallow: /frankly-team-onboarding.html
 Disallow: /frankly-team-claude-code.html
+Disallow: /frankly-os-simply.html
+Disallow: /assets/video/
 Disallow: /marketing/
 Disallow: /effekt-lab/
 
