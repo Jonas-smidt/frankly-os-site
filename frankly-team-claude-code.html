@@ -358,7 +358,7 @@
       <div class="cmd"><code>claude plugin list</code><button data-copy="claude plugin list">Copy</button></div>
       <p class="expect"><b>Expect to see</b> <code>frankly-system@frankly</code> and <code>frankly-seats@frankly</code>, both <code>enabled</code>. The onboarding skill is inside frankly-system &mdash; there is no separate skill file to unpack any more.</p>
       <div class="note"><b>If an earlier version of this page had you unzip <code>frankly-onboarding-3.skill</code>,</b> that file is retired and the command no longer works. Nothing is wrong with your setup. If you did unpack it, remove the old copy so it does not compete with the current one:<br><code>rm -rf ~/.claude/skills/frankly-onboarding</code></div>
-      <p>The terminal does not update these plugins on its own. When Jonas says a new version is out, run:</p>
+      <p><strong>Turn on automatic updates once</strong> &mdash; the terminal leaves them off for this catalogue. Inside Claude, type <code>/plugin</code>, open <strong>Marketplaces</strong>, choose <strong>frankly</strong> and select <strong>Enable auto-update</strong>. New versions then arrive by themselves on the next start. If one ever seems stuck, update by hand:</p>
       <div class="cmd"><code>claude plugin marketplace update frankly</code><button data-copy="claude plugin marketplace update frankly">Copy</button></div>
       <div class="cmd"><code>claude plugin update frankly-system@frankly</code><button data-copy="claude plugin update frankly-system@frankly">Copy</button></div>
       <div class="cmd"><code>claude plugin update frankly-seats@frankly</code><button data-copy="claude plugin update frankly-seats@frankly">Copy</button></div>
