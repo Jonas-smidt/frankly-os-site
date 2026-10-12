@@ -287,3 +287,11 @@ the storyboard had designed match cuts. Rules from this: (1) a Frankly film roun
 through the seats, never hand-written by the facilitator; (2) ordinary Copenhagen from the
 culture cards, no landmark anchors; (3) a test cut must carry the transitions and camera
 language, or it tests nothing Jonas judges by.
+
+## Process lesson (Jonas, 2026-10-12, second time)
+
+"Lav det ordentligt" after a rejection means: fix the plan and the method. It is not a go to
+render. The cloud session submitted five v4 jobs (two stills, three clips, 38 credits) before
+Jonas said "det er spild af tokens, du skal ikke gøre sådan noget uden at spørge". Standing rule,
+now covering corrections AND rebuilds: no generation of any kind starts without Jonas's explicit
+go in the same thread, and the cost is stated before the question.
