@@ -262,7 +262,7 @@ Two batch 02 films where the laughing was most visible were remade: 25 → 42, 2
 Expression check across the batch: no laughing or grinning anywhere; the strongest smile is 43's small one. The correction holds.
 | 44 | pass | Retake of 42: the friend rides ahead on the right and glances back with a calm face. No actual high five this time, which suits the correction better anyway. Job c7614b1d-fa4a-43eb-8e1c-b886f34706d2. |
 
-Batch 03 total: 18 generations × 35 = 630 credits. Balance after: 2,315.06.
+Batch 03 total: 18 generations × 35 = 630 credits. Balance after: 2,350.06.
 
 ## Lessons — batch 03
 
