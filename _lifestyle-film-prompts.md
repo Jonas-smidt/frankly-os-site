@@ -269,3 +269,9 @@ Batch 03 total: 18 generations × 35 = 630 credits. Balance after: 2,350.06.
 - The understated-expression anchor works on Seedance 2.5: zero laughing across 18 films once the prompt names what to do instead (calm, absorbed, eyes on the road) rather than only what not to do.
 - A second person in a POV shot needs an explicit position ("right half of the frame, fully visible from the start") or the model leaves them off-screen.
 - Fabric with a print (tote bags) and quay stone attract illegible lettering; say "plain" for those surfaces.
+
+## Process lesson (Jonas, 2026-10-12)
+
+A correction from Jonas ("people are a bit too played-up") is a rule change. Apply it to the
+prompt sheet and stop. It is not an instruction to generate. Generation only happens when Jonas
+asks for films. Batch 03 was produced without that ask and cost 630 credits.
