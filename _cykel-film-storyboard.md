@@ -127,3 +127,38 @@ forest trail, open field and skatepark reached no card; the scene-type list has 
 them (gaps today: balcony, cafe-interior, courtyard, flat-kitchen, flat-living-room, rooftop,
 shop-interior, stairwell). Three new card candidates for the library: `hareskoven-mtb-trail`,
 `amager-faelled`, `faelledparken-skatepark`.
+
+## A/B test before the clips: still as reference, or not (Jonas, 2026-10-12)
+
+Question: does the Flow still, used as the Seedance start frame, give a better clip than text
+alone? The still locks place, person and grade but can stiffen the motion; text alone moves
+freely but can drift off the real place. Measure before committing all seven clips.
+
+**Shots tested:** 2 (child through the puddle, Superkilen: a place-fidelity test with a hard
+object, the red painted ground) and 5 (three friends riding home at night, Dronning Louises Bro:
+a motion-and-people test with lamps and a bridge the model gets wrong).
+
+**Three arms per shot, Seedance 2.5, 16:9, 720p, 4 s, audio on, same seed-free run:**
+
+| Arm | Input | Prompt |
+|---|---|---|
+| A · still as start frame | `start_image` = the approved Flow still | the motion-only I2V prompt from this storyboard, with the preserve line |
+| B · text only | none | the full six-block Flow prompt for the shot (card Location block included) plus the motion line and "real-time speed, no slow motion" |
+| C · still as look reference | `image_references` = the Flow still (omni-reference mode, not a start frame) | the six-block prompt plus the motion line, and one role line: "use the reference only for the place, the grade and the rider's look; do not copy its composition" |
+
+Six clips, 6 × 35 = 210 credits. Then one contact strip per clip (four frames) and a blind
+side-by-side per shot.
+
+**Judged on four things, each pass/fail, no averaging:**
+1. Place: the card's tells. Superkilen's painted red ground and striped bollards; the bridge's
+   low granite parapet, globe lanterns and water on both sides.
+2. Energy: real-time, visible forward motion in every frame, nothing slowed.
+3. People: the storyboard's rider, understated, no grins, hands and wheels intact.
+4. Grade: warm highlights, teal shadows, no flare, no blown sky.
+
+**Decision rule:** the arm that passes most across both shots becomes the method for all seven.
+If A wins on place but B wins on energy, C is the likely compromise and gets one more shot
+before deciding. The result and the winning arm are recorded here and as a lesson.
+
+**Timing:** runs as soon as the Storyboard builder session delivers stills 2 and 5; the B arm
+needs no still but runs in the same batch so the comparison is same-day.
