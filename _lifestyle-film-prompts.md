@@ -275,3 +275,15 @@ Batch 03 total: 18 generations × 35 = 630 credits. Balance after: 2,350.06.
 A correction from Jonas ("people are a bit too played-up") is a rule change. Apply it to the
 prompt sheet and stop. It is not an instruction to generate. Generation only happens when Jonas
 asks for films. Batch 03 was produced without that ask and cost 630 credits.
+
+## Process lesson (Jonas, 2026-10-12, bike film test cut)
+
+The v3 test cut was rejected: no transitions, boring camera work, and landmark places that read
+as near-misses ("det skal ikke være sådan kendte steder, fordi så det for tydeligt at man ikke
+kender dem"). Cause: the cloud session wrote the Seedance prompts itself from the canon and the
+location cards instead of staffing the R4.3 video producer and R4 visual director seats, did not
+apply the Seedance best-practices prompt anatomy, and rendered the test as straight cuts although
+the storyboard had designed match cuts. Rules from this: (1) a Frankly film round is staffed
+through the seats, never hand-written by the facilitator; (2) ordinary Copenhagen from the
+culture cards, no landmark anchors; (3) a test cut must carry the transitions and camera
+language, or it tests nothing Jonas judges by.
