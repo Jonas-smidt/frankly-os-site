@@ -138,7 +138,7 @@ freely but can drift off the real place. Measure before committing all seven cli
 object, the red painted ground) and 5 (three friends riding home at night, Dronning Louises Bro:
 a motion-and-people test with lamps and a bridge the model gets wrong).
 
-**Three arms per shot, Seedance 2.5, 16:9, 720p, 4 s, audio on, same seed-free run:**
+**Three arms per shot, Seedance 2.5, 16:9, 480p (Jonas: the test runs at 480), 4 s, audio on, same seed-free run:**
 
 | Arm | Input | Prompt |
 |---|---|---|
@@ -146,7 +146,7 @@ a motion-and-people test with lamps and a bridge the model gets wrong).
 | B · text only | none | the full six-block Flow prompt for the shot (card Location block included) plus the motion line and "real-time speed, no slow motion" |
 | C · still as look reference | `image_references` = the Flow still (omni-reference mode, not a start frame) | the six-block prompt plus the motion line, and one role line: "use the reference only for the place, the grade and the rider's look; do not copy its composition" |
 
-Six clips, 6 × 35 = 210 credits. Then one contact strip per clip (four frames) and a blind
+Six clips at 480p, 6 × 12 = 72 credits (preflighted 2026-10-12). Then one contact strip per clip (four frames) and a blind
 side-by-side per shot.
 
 **Judged on four things, each pass/fail, no averaging:**
