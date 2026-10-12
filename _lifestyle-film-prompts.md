@@ -194,3 +194,78 @@ Each gets the shared style anchor prepended.
 39 · Camera on the bridge. Medium shot of a single man in his 30s raising a compact film camera to his eye on an iron bridge at sunset, hair moving in the wind, harbour and pastel facades behind, a cyclist blurring past. Camera: static medium, shallow focus. Ambient: wind, shutter click, bike passing.
 
 40 · Speaker on the quay. Wide shot of a small group of friends in their 20s sitting on the stone edge of the harbour at dusk with a small portable speaker between them, feet dangling over the water, city lights starting across the harbour. Camera: static wide, slow push-in. Ambient: music from the speaker, water, laughter.
+
+
+---
+
+# Standing correction — expressions (Jonas, 2026-10-12)
+
+People in the films are a little too played-up: too much laughing, grinning and smiling at
+once. They should still be warm and happy, but understated. From now on every prompt carries:
+
+> Observed not staged: people are calm and absorbed in what they are doing, with understated
+> natural expressions, a small quiet smile at most, never laughing or grinning, nobody performs
+> for the camera.
+
+Words banned from prompts: laughing, laughs, giggling, joyful, grinning, beaming, excited,
+"smiles at the camera". Cues to use instead: calm, content, absorbed, concentrated, relaxed,
+quiet, "looking out at the water", "eyes on the road", "a small quiet smile".
+
+# Batch 03 — hero-film style, 16:9, 5 s, understated expressions (2026-10-12)
+
+Credits topped up to 2,980.06 before this batch. 17 films × 35 = 595 credits.
+The 15 queued prompts from batch 02 were rewritten with the correction and renumbered 27 to 41.
+Two batch 02 films where the laughing was most visible were remade: 25 → 42, 26 → 43.
+
+| # | Working title | Job ID |
+|---|---|---|
+| 27 | Dog and tennis ball, grass level | 9d55f73c-a859-4a33-a6ca-a13e851da467 |
+| 28 | Washing machine POV, pink towel | f52a588d-06ac-4fd2-a72b-62980b190ab8 |
+| 29 | Underwater plunge | 1ce2e5a2-d49d-4f43-8a13-1db7ad5234cc |
+| 30 | Balcony, towel on the rail | 37e7e366-0ccf-4008-a720-11dc723eb47a |
+| 31 | Tablet sketch at the canal | 854d1059-3f5b-40e5-9ea8-c6b1d406527a |
+| 32 | Foot on the jetty edge | c709af99-721c-4692-8312-bb3f5454f961 |
+| 33 | Park football in long grass | eed5951b-98fb-45cb-85c8-d2e22b0e6104 |
+| 34 | Jogging past the brick wall | b8a60b92-f850-486d-b6ac-90cb65e7d030 |
+| 35 | Phone at the window, macro | 546e0c5e-f7f1-425d-a512-804ddcf3a2f7 |
+| 36 | Living room, evening | aeea0efa-22a2-4c5d-9866-190d09d26257 |
+| 37 | Scooter through the street | a6bc4e72-27f7-4d6f-bfd2-1a9b9e1db98e |
+| 38 | Keys on the hallway hook | e909cd22-83f5-4444-81a1-0dcbed76af9c |
+| 39 | Game controller on the sofa | 4fb09ff3-c287-4a5c-b495-9e6b21fd3d33 |
+| 40 | Film camera on the bridge | 0d4802b0-15ed-4f02-a42e-2d46e2f7afa7 |
+| 41 | Speaker on the quay at dusk | 554580c4-7ff2-4062-8108-7ba2d977052c |
+| 42 | Handlebar POV high five (remake of 25, understated) | d80da8f4-4648-4ea1-be7e-121d7a43af11 |
+| 43 | Flower street (remake of 26, understated) | 0fa49818-ad2e-4c0f-8df9-a7f3ba752b9d |
+
+## Review (pass³) — batch 03
+
+| # | Result | Note |
+|---|---|---|
+| 27 | pass | Dog trots straight to the lens with the ball, backlit grass. One of the strongest. |
+| 28 | pass | Towel goes into the drum rather than out, which reads fine. Face calm. |
+| 29 | pass | Plunge, bubbles and sun rays all read. No face, so no expression risk. |
+| 30 | pass | Two people small in frame, calm, towel on the rail, big lens flare. |
+| 31 | pass | Concentrated sketching, harbour facades behind. Understated. |
+| 32 | pass | Feet correct, drops on skin, towel behind. |
+| 33 | pass | Four friends in long grass, absorbed in the game, no celebration. |
+| 34 | pass | Two joggers, neutral faces, pink bag. |
+| 35 | pass | Macro listening, eyes down, two-tone light. Very understated. |
+| 36 | pass | Seen through a doorway, one reading on the floor, one at the window. Quietest film of all. |
+| 37 | pass | Calm rider, eyes on the road, pastel facades. |
+| 38 | pass | Illegible lettering on the tote bag at the bottom edge; crop or ignore. |
+| 39 | pass | Two concentrated faces, no laughing. The players read young, around 18. |
+| 40 | pass | Calm, raises the camera, flare through the truss. |
+| 41 | pass | Three on the quay seen from behind, pink and teal dusk. Faint illegible graffiti on the stone. |
+| 42 | retake → 44 | Understated as asked, but the friend never enters the frame; a hand reaches in from off-screen. Retake 44 places her on the right half of the frame from the start. |
+| 43 | pass | Flower street remade: talking quietly, calm faces. This is the corrected tone. |
+
+Expression check across the batch: no laughing or grinning anywhere; the strongest smile is 43's small one. The correction holds.
+| 44 | pass | Retake of 42: the friend rides ahead on the right and glances back with a calm face. No actual high five this time, which suits the correction better anyway. Job c7614b1d-fa4a-43eb-8e1c-b886f34706d2. |
+
+Batch 03 total: 18 generations × 35 = 630 credits. Balance after: 2,315.06.
+
+## Lessons — batch 03
+
+- The understated-expression anchor works on Seedance 2.5: zero laughing across 18 films once the prompt names what to do instead (calm, absorbed, eyes on the road) rather than only what not to do.
+- A second person in a POV shot needs an explicit position ("right half of the frame, fully visible from the start") or the model leaves them off-screen.
+- Fabric with a print (tote bags) and quay stone attract illegible lettering; say "plain" for those surfaces.
