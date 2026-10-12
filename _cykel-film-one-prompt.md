@@ -35,3 +35,13 @@ Avoid: slow motion, speed ramps, grinning, open-mouth laughing, arms raised, hig
 
 ## Risk
 Seven shots in one generation is beyond the canon's motion budget for a single clip (10-15 s: two beats or one transition). The model may merge shots, drop the match cuts, or drift on identity across the film. That is the test: if it holds, it is the method; if it does not, the fallback is the seats' per-shot plan with shared frames. Judge pass/fail on place, energy, people, grade and on whether the seven cuts are visible.
+
+## Result — 2026-10-12, one generation, 480p, 30.08 s, 90 credits
+Job ecb8da78-41c4-470d-b050-861ebabfd9cc. All seven shots came out in order and the transitions
+held: mud spray on the lens, cut to the puddle; yellow jacket fills the lens; tilt up to the sky,
+BMX rises into it; through the spokes at the lake; handlebar POV at night; black arch; out of the
+cargo-box passage into the morning stream. Camera placed as written in every shot; real-time
+throughout; faces understated; places ordinary (sett side street, five-storey brick, open common,
+concrete skatepark, lake bank with no towers, wire lamps at night, blue crossing in the morning).
+Tells seen: the night bus came out blue-teal, not egg-yolk yellow (movia-bus card tell); the blue
+cycle paint runs longer than a junction crossing; the 2→3 jersey fill is softer than written.
