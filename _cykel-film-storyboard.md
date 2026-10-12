@@ -162,3 +162,23 @@ before deciding. The result and the winning arm are recorded here and as a lesso
 
 **Timing:** runs as soon as the Storyboard builder session delivers stills 2 and 5; the B arm
 needs no still but runs in the same batch so the comparison is same-day.
+
+### Test result, arm B (text only), full film — 2026-10-12
+
+Jonas asked to judge the whole film, not single clips, so arm B was run for all seven shots
+(7 × 12 = 84 credits at 480p) and cut to 30.0 s with the end card. Job IDs: 01 10297fa6,
+02 1e9fd9fe, 03 54cfc4e2, 04 30d379dd, 05 85765792, 06 623037a8, 07 c044d249.
+
+| Shot | Place | Energy | People | Grade | Note |
+|---|---|---|---|---|---|
+| 1 forest | pass (beech trunks, copper leaves, mud rut) | pass | n/a | pass | mud sheet flies as asked |
+| 2 Superkilen | pass (red ground, striped bollards, lamp masts, brick blocks) | pass | pass | pass | front-on, the puddle splash is not in the frame, so cut 1→2 does not match yet |
+| 3 Amager Fælled | pass (flat grassland, low horizon, gravel track) | pass | pass | pass | opens on the jersey fill as asked |
+| 4 skatepark | pass as a type, no card to judge against | pass | pass | pass | clean arc and landing |
+| 5 bridge, night | pass (red-brown lamp standards with globes, Søtorvet, flat deck) | pass | pass | pass | front tracking, not alongside |
+| 6 lake bank | pass (benches, lake, Søtorvet towers) | pass | pass, a smile arriving | pass | ends on the towers as asked |
+| 7 bridge, day | pass (lamp standards, Søtorvet, cycle lane, cargo trike, pink child's bike, yellow bus) | pass | pass | pass | |
+
+Text alone lands the real place on all six carded shots. The misses are composition on 2 and 5,
+which is exactly what the still-as-start-frame arm is meant to fix. Arm A (and C) could not run
+yet: the stills are committed on Jonas's Mac (3593bd9) but the branch is not pushed.
