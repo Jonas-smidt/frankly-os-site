@@ -295,3 +295,13 @@ render. The cloud session submitted five v4 jobs (two stills, three clips, 38 cr
 Jonas said "det er spild af tokens, du skal ikke gøre sådan noget uden at spørge". Standing rule,
 now covering corrections AND rebuilds: no generation of any kind starts without Jonas's explicit
 go in the same thread, and the cost is stated before the question.
+
+## Standing rule — films (Jonas, 2026-10-12)
+
+Films are made in Google Flow first, as a test version, iterated there until the film is right
+(Flow does not bill per generation on our plan). Only then do we work out how to make the final
+version in Higgsfield. No Higgsfield video generation during the test phase. Flow runs from a
+session on Jonas's Mac; the cloud session supplies prompts, storyboards and review.
+Known constraint: Flow's video clips are short (about 8 s each), so a 30 s film in Flow is built
+as scenes or extensions inside Flow, not as one 30 s generation; the one-prompt form still
+applies per scene and the transitions are described at each scene boundary.
