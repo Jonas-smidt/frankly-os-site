@@ -1,6 +1,6 @@
 # Frankly Go™ · "Cyklen er til at cykle på" — 30-second film storyboard
 
-Status: storyboard for Jonas's approval. Nothing generated yet. Internal Lab material.
+Status: storyboard for Jonas's approval. Eight storyboard stills rendered (8 credits); no video generated. Internal Lab material.
 Source message: `journal/frankly-blog-05-cyklen.html` (published, approved copy).
 Direction from Jonas (2026-10-12): real-time energy, not slow motion; real Copenhagen places
 only; storyboard before film; no batch of new clips.
@@ -84,3 +84,23 @@ looks at the camera. Ambient sound only. No dialogue, no text, no logos.*
 6. Inderhavnsbroen in Copenhagen at evening: the low flat steel cycle and pedestrian bridge across the inner harbour, with the coloured townhouses and old masts of Nyhavn behind, city lights coming on over calm water. A single woman in her 30s on a pale pink city bike and two friends on bikes cross the bridge toward the camera at real speed. Camera: front tracking, low, the three bikes filling the frame.
 7. Refshaleøen in Copenhagen at night: a former shipyard with corrugated-steel industrial halls, string lights, a dense pile of parked bikes outside an open door spilling warm light and music. A single woman in her 30s rides up on a pale pink city bike, drops it among the other bikes and walks into the light without looking back. Camera: handheld, following her from behind the bikes.
 8. Christianshavns Kanal in Copenhagen in the morning: a cobbled quay along a narrow canal lined with wooden houseboats and old coloured merchant houses, low sun on the water. A single woman in her 30s on a pale pink city bike rides fast along the quay. Camera: side tracking at bike speed, she exits frame right.
+
+## Storyboard stills (2026-10-12, Nano Banana, 1 credit each)
+
+| Shot | Job ID | Location read |
+|---|---|---|
+| 1 | 588d6453-be6b-45ec-af05-b900a9f6d78d | Generic Nørrebro courtyard; fine, nothing to verify. |
+| 2 | e3e9bf10-4c40-4d2d-a623-ac50137f6c42 | Stone bridge, lamp posts, lake both sides, facades at the end. Reads as Dronning Louises Bro; lamp design approximate. |
+| 3 | 6e986a73-eca2-466f-8db7-cd4b330e640a | Orange floor, white railing, curve past glass facade over water. Reads as Cykelslangen. Strongest match. |
+| 4 | 2dcfb390-fe06-4d58-b83c-929dc2c421f5 | Benches, swans, lake, apartment blocks. Reads as Søerne. |
+| 5 | 5104e2cb-e0f6-411a-8787-21d8806a9618 | Narrow brick street, plant shop, bikes. Plausible Jægersborggade. |
+| 6 | 6acb7f2d-171e-4bba-a0c0-aff1d9c2af88 | Flat bridge with Nyhavn houses behind. The bridge itself is generic; the real Inderhavnsbroen has angled steel sections. Weakest location read. Needs the location agent or a reference photo. |
+| 7 | c1e5e8c4-2764-4d5d-9e2c-18fb86c95050 | Corrugated halls, string lights, bike pile. Plausible Refshaleøen. |
+| 8 | 58425335-d693-48f2-92d1-4fd047a9853d | Coloured houses, houseboats, cobbled quay. Reads as Christianshavn/Nyhavn canal. |
+
+Rider consistency: the stills show four different jackets. For the film the rider must be
+fixed in every prompt (short dark hair tied back, beige cotton jacket, white sneakers, pale pink
+city bike with a basket) and, better, passed as an image reference from shot 1 so Seedance
+keeps her identity across the eight clips.
+
+Still frames contact sheet: delivered in chat; Higgsfield job IDs above.
